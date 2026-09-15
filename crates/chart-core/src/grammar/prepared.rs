@@ -322,6 +322,13 @@ pub struct PreparedTable {
     pub(crate) operations: Vec<OperationRecord>,
 }
 impl PreparedTable {
+    /// Last population-producing operation, looking through identity consumers.
+    pub(super) fn population_operation(&self) -> Option<&OperationRecord> {
+        self.operations
+            .iter()
+            .rfind(|op| !matches!(op.parameters, super::StatParameters::Identity))
+    }
+
     pub(crate) fn work_units(&self) -> usize {
         let fields = match &self.schema {
             OutputSchema::Statistical { fields, .. } | OutputSchema::Custom { fields, .. } => {
@@ -391,6 +398,10 @@ pub struct DomainContributions {
 /// Portable prepared geometry, explicitly in calculation/data units, never pixels.
 #[derive(Clone, Debug, PartialEq)]
 pub enum PreparedGeometry {
+    /// Reference point with an infinite source coordinate. These are data values,
+    /// not finite scene geometry; coordinate projection must resolve both values
+    /// before constructing a destination point. NaN positions are omitted earlier.
+    UnboundedPoint([crate::interpolate::Number; 2]),
     /// Deferred hierarchy occurrence; numerical layout follows destination panel allocation.
     HierarchyNode(crate::hierarchy::NodeHandle),
     /// Deferred derived hierarchy edge, separate from source node identity.
@@ -517,6 +528,7 @@ pub struct PreparedLayer {
     pub(crate) interactions: BTreeMap<usize, super::GeometryInteraction>,
     pub(crate) numeric_scales: BTreeMap<super::NumericAesthetic, super::NumericEncoding>,
     pub(crate) value_scales: BTreeMap<super::ValueAesthetic, super::NumericEncoding>,
+    pub(crate) value_guides: super::style_channels::ValueGuides,
     pub(crate) paint_legends: BTreeMap<super::PaintAesthetic, crate::scales::ColorLegend>,
     pub(crate) color_legend: Option<crate::scales::ColorLegend>,
     pub(crate) symbol_legends: Vec<super::SymbolLegend>,
@@ -556,6 +568,18 @@ impl PreparedLayer {
     /// Exact trained text and line-type scales for guide sampling and inspection.
     pub fn value_scales(&self) -> &BTreeMap<super::ValueAesthetic, super::NumericEncoding> {
         &self.value_scales
+    }
+    /// Selected non-color discrete keys and labels, before guide composition.
+    pub fn discrete_value_guides(
+        &self,
+    ) -> &BTreeMap<crate::ScaleId, Vec<crate::scales::GgplotDiscreteGuideEntry>> {
+        &self.value_guides.discrete
+    }
+    /// Non-color numeric guide candidates and labels before guide composition.
+    pub fn numeric_value_guides(
+        &self,
+    ) -> &BTreeMap<crate::ScaleId, Vec<crate::scales::GgplotContinuousGuideEntry>> {
+        &self.value_guides.numeric
     }
     /// Independent fill and stroke legends evaluated through each mark's exact scale.
     pub fn paint_legends(&self) -> &BTreeMap<super::PaintAesthetic, crate::scales::ColorLegend> {
@@ -620,6 +644,11 @@ pub struct PreparationMetrics {
 /// It owns no typed source rows or callbacks; its handle pins one coherent source snapshot.
 #[derive(Clone, Debug)]
 pub struct PreparedChart {
+    pub(crate) positional_empty: std::collections::BTreeSet<crate::ScaleId>,
+    pub(crate) positional_limits: BTreeMap<crate::ScaleId, Vec<crate::interpolate::Number>>,
+    pub(crate) palette_registrations:
+        Arc<super::scale_palette_extensions::ScalePaletteRegistrations>,
+    pub(crate) break_registrations: Arc<super::scale_break_extensions::ScaleBreakRegistrations>,
     pub(crate) guide_registrations: Arc<super::guide_extensions::GuideRegistrations>,
     pub(crate) scale_registrations: Arc<super::scale_extensions::ScaleRegistrations>,
     pub(crate) panels: Vec<super::PreparedPanel>,
@@ -635,6 +664,11 @@ pub struct PreparedChart {
     pub(crate) metrics: PreparationMetrics,
 }
 impl PreparedChart {
+    /// Final transformed positional function results, preserving endpoint order and arity.
+    pub fn positional_limits(&self) -> &BTreeMap<crate::ScaleId, Vec<crate::interpolate::Number>> {
+        &self.positional_limits
+    }
+
     /// Explicit ordered facet populations; empty for a single-panel chart.
     pub fn panels(&self) -> &[super::PreparedPanel] {
         &self.panels

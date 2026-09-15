@@ -321,6 +321,7 @@ pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<shape_radial::ShapeAreaRadialHandle>()?;
     module.add_class::<shape_radial::ShapeLinkHandle>()?;
     module.add_class::<shape_radial::ShapeLinkRadialHandle>()?;
+    module.add_function(wrap_pyfunction!(shape_radial::_point_radial, module)?)?;
     module.add_class::<shape_arc_pie::ShapeArcHandle>()?;
     module.add_class::<shape_arc_pie::ShapePieHandle>()?;
     module.add_class::<shape_symbol::ShapeSymbolHandle>()?;

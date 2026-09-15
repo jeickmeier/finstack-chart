@@ -1,0 +1,200 @@
+{
+  "status": "GG05_EXPLICIT_EVEN_STEP_BOUNDARIES_QUALIFIED",
+  "revision": "6e74ae6453b20ab0ffca5b88bbfee5a69d63bd9e",
+  "requirements": [
+    "GG2-04",
+    "FIX-GG05"
+  ],
+  "reference": {
+    "fixture": "fixtures/parity/ggplot2/colorsteps-boundaries.json",
+    "sha256": "1e480c1c5389f6e6e47ae9e6de2dbe86070732484652078009a89af780345451",
+    "generator": "tools/reference/r/colorsteps-boundaries.R",
+    "environment": "R 4.6.1 / ggplot2 4.0.3",
+    "cases": 60,
+    "represented": 57,
+    "excluded": "Three explicit binned NULL breaks inputs have no authored enum variant."
+  },
+  "validation": {
+    "test": {
+      "path": "/tmp/gg05-step-boundaries-final3-test.log",
+      "sha256": "a2fbc99667f59a5c7d9db3b1a27a5e126912199562cc4ba6234681c4b840f68b",
+      "exit_code": 0,
+      "tests": 878,
+      "nonempty_targets": 187,
+      "total_targets": 199
+    },
+    "check": {
+      "path": "/tmp/gg05-step-boundaries-final3-check.log",
+      "sha256": "cc1b50e94b33c650e8dda853a23ee33270fbf8cd55bc8b4ed96f6a98402f55eb",
+      "exit_code": 0
+    },
+    "hosts": {
+      "path": "/tmp/gg05-step-boundaries-hosts-final3.log",
+      "sha256": "1d92a1c3b2c055fdf307b0849e749040150c5679bdd97d34ad4826fe5b129521",
+      "exit_code": 0
+    },
+    "focused": {
+      "path": "/tmp/gg05-step-boundaries-draw-rejection2.log",
+      "sha256": "423bfd6a23ab3e52630548be8257ef38b4454c4c63c3baeb2d5fa5f23f59293f",
+      "exit_code": 0,
+      "tests": 26
+    },
+    "native_build": {
+      "path": "/tmp/gg05-step-boundaries-native-final3.log",
+      "sha256": "a84d250fd4a9e929d565989925b042331788083afeac2db0409ad38c054764f8",
+      "exit_code": 0
+    }
+  },
+  "hosts": {
+    "states": 2692,
+    "publication_files": 729,
+    "modes": {
+      "alpha-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/alpha-comparison.json",
+        "sha256": "30411bcb1747ace365f949748972083ec4af8cba133219059110a389e381b3c8",
+        "states": 384,
+        "publication_files": 72
+      },
+      "boundaries-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/boundaries-comparison.json",
+        "sha256": "05581986033d8198f1f48843507ea6e72133cf9412956bce98a799368ae96584",
+        "states": 180,
+        "publication_files": 48
+      },
+      "comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/comparison.json",
+        "sha256": "5782cfb3b267a3ce33dc986c6f26596feb40c6cbef20f05691845d6c9aa5530f",
+        "states": 108,
+        "publication_files": 27
+      },
+      "constant-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/constant-comparison.json",
+        "sha256": "47fa676837364fb42d7324b0a3f06e2ca26044c4b2630814305cc0fe22829ca3",
+        "states": 48,
+        "publication_files": 36
+      },
+      "demand-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/demand-comparison.json",
+        "sha256": "411d32d578c060d7b0728755f0b55a09d7617c70dcb74d5a6ea0413ce3e85c58",
+        "states": 60,
+        "publication_files": 0
+      },
+      "display-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/display-comparison.json",
+        "sha256": "e8e8f12205132be76f4e8198f21be449744ddae21f5c483d29217299bc794603",
+        "states": 704,
+        "publication_files": 120
+      },
+      "orientation-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/orientation-comparison.json",
+        "sha256": "d4570791f366f3a277b8b7b6b2e6e7ac96f7752ff31398e328f87347f907c118",
+        "states": 192,
+        "publication_files": 144
+      },
+      "presentation-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/presentation-comparison.json",
+        "sha256": "d5f3ca226db121223b9781afe9ffe0db8720a7a1446c0bcd0a03eaaa4140f560",
+        "states": 512,
+        "publication_files": 120
+      },
+      "sampling-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/sampling-comparison.json",
+        "sha256": "547d1d9a117cf60884a89e5b1a9f7e73fe8a5485402ff83c94aaa0559c5b486f",
+        "states": 432,
+        "publication_files": 108
+      },
+      "steps-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/steps-comparison.json",
+        "sha256": "7cc2e71148328acd752eb6dd4470fedd3bdc9ed251ea514079df3437d0dd45ec",
+        "states": 72,
+        "publication_files": 54
+      }
+    },
+    "comparison": "Exact Python/WASM states and byte-identical Rust/Python/WASM publications."
+  },
+  "inspection": {
+    "publication_files": 48,
+    "review_pages": {
+      "boundaries-inspection/review-1.png": "6cbdfa6e2f16c3c19a7e8228a61a475e889a8c5802e0476250451114021d510d",
+      "boundaries-inspection/review-2.png": "7d884fde07ce2402b1b3aff6106682d3d99f02d795614aef4dc58ddc2ae5317a",
+      "boundaries-inspection/review-3.png": "218cb58af9a388bcca9a0f62396384798e429fabecadf5916510e665606a5eb5",
+      "boundaries-inspection/review-4.png": "2f37ce362ce6c0658a845d4a4d8f1c3c5f160d7a876171453252252b35d2dba1",
+      "boundaries-inspection/review-5.png": "89984eed0f785ac6f0f40ac26485e9dd370262ab61c5dba62566b10c2f44996b",
+      "boundaries-inspection/review-6.png": "d05641d112934d343d5d349450fa74613fbe40f7116dd7e9cda7e15d402d2747"
+    },
+    "native": {
+      "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/native-window.png",
+      "sha256": "9d7d0cdf61d6170d21fbc908a510e21000407154c2c51c9078e97a24c2786321",
+      "charts": 4,
+      "mode": "--steps-boundaries"
+    },
+    "previous_qualified_publications_unchanged": 677,
+    "reversed_svg_roundoff": {
+      "files": [
+        "steps-001.svg",
+        "steps-005.svg",
+        "steps-009.svg",
+        "steps-013.svg"
+      ],
+      "explanation": "Ordinal reversal changes tick/text coordinates by about 1.4e-14 points; source tolerance passes, PNG/PDF bytes unchanged, SVGs reinspected.",
+      "review": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/reversal-inspection/review.png",
+        "sha256": "d1a8f3546686470f1f44fe8e5774ef65662f4bb5f7b8f2f2205d930b48f6864c"
+      }
+    },
+    "all_publications_unchanged_after_final_corrections": 729
+  },
+  "regressions": [
+    "Existing degenerate-domain test caught empty classifier-bound indexing; first/last access is now guarded.",
+    "Existing 1080-case label-function build contract caught premature zero-interval rejection; rejection now belongs to layout."
+  ],
+  "owned_changes_from_even_steps": [
+    "docs/implementation-status.md",
+    "crates/chart-export/examples/ggplot_colorbar_layout.rs",
+    "fixtures/parity/ggplot2/colorsteps-boundaries.json",
+    "crates/chart-core/src/layout/legend_colorbar.rs",
+    "crates/chart-core/src/layout/facets.rs",
+    "crates/chart-core/src/scales/ggplot_bins.rs",
+    "crates/chart-core/src/scales/mapped.rs",
+    "crates/chart-core/src/scales/color.rs",
+    "tools/reference/r/colorsteps-boundaries.R",
+    "scripts/run_primary_authoring_proofs.py",
+    "scripts/bindings/ggplot_colorbar_layout.cjs",
+    "scripts/bindings/ggplot_colorbar_layout.py",
+    "crates/chart-core/tests/ggplot_colorbar_layout.rs",
+    "examples/common/ggplot_colorsteps_boundary_fixtures.rs",
+    "examples/chart-gallery/examples/ggplot_colorbars.rs",
+    "docs/adr/024-sampled-gradient-paint.md",
+    "docs/evidence/phase-2-ggplot-colorsteps-even-2026-09-14.json"
+  ],
+  "qualified_source_hashes": {
+    "docs/implementation-status.md": "cd37684141fac40ae1d2f1bc922259a145aa69821bec9ea8a81851a82766620c",
+    "crates/chart-export/examples/ggplot_colorbar_layout.rs": "975a47d2d98547290cdc5606e36ab69e9d3d2e5ed0a6cb3f77c9b8a8875a363a",
+    "fixtures/parity/ggplot2/colorsteps-boundaries.json": "1e480c1c5389f6e6e47ae9e6de2dbe86070732484652078009a89af780345451",
+    "crates/chart-core/src/layout/legend_colorbar.rs": "330e166c66d595e1653aa05909c1226a8b90ea8ca0d9d1dd9e22f5c43a7607b1",
+    "crates/chart-core/src/layout/facets.rs": "81c5bfd04838a065b1dd00d533ba1fea539cc3b07c2dbbf3c65572c6c7c124d9",
+    "crates/chart-core/src/scales/ggplot_bins.rs": "9d273796047429563aba4efc2d0b8e83055f5e794323d4ec3000803c58b7010b",
+    "crates/chart-core/src/scales/mapped.rs": "0ff3854705f8f50068036c63af3cbcb61b73e8e4dd60b91623d303a6b8f3c19b",
+    "crates/chart-core/src/scales/color.rs": "5b7cd97b0add63ddd814be57ff99c90ca1e46f13a0d9a684afe574dbe80a07da",
+    "tools/reference/r/colorsteps-boundaries.R": "7d4706ba8dd1cb2f5ae6f4a9569147d81889d40e68fe71cece3da061633012a5",
+    "scripts/run_primary_authoring_proofs.py": "a3986f56b400e65f9fa253192ea31fa71c826708727ad2c9c85651eea150d8ea",
+    "scripts/bindings/ggplot_colorbar_layout.cjs": "9ed6811c9439b2cd2f63a8bed49933f5697ce57983a740b17dd845f69fe78465",
+    "scripts/bindings/ggplot_colorbar_layout.py": "c24c2d8340c874f670ac68bc40358034bf2842e3f6ab29fe45a3c8c9f4b1a24b",
+    "crates/chart-core/tests/ggplot_colorbar_layout.rs": "499233c9b39454f421179eadf2df2023f46185f610222eb8eebcc6b8d66c1c1c",
+    "examples/common/ggplot_colorsteps_boundary_fixtures.rs": "7ed7369630d53c2997384cf6ffea44220f4d5439864b48eb26b2f282e332a439",
+    "examples/chart-gallery/examples/ggplot_colorbars.rs": "ebee171b5a0ecb68f5e3aa8617fdd2cd74af496e3faf2bcdbd0e741f3c1050d6",
+    "docs/adr/024-sampled-gradient-paint.md": "4d5800493b71e422eeba000a44cbc0fd530eb2acd92005c220440d18a0333403",
+    "docs/evidence/phase-2-ggplot-colorsteps-even-2026-09-14.json": "8e39bd9f95cdc5e72d7f32ca03081242dba1b71dbada0b194aaa851f86142156"
+  },
+  "source_baseline": {
+    "path": "/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries/source-baseline.json",
+    "sha256": "a621274ae8e1f62efbc58ced210bec271fce9d9a0659871ffa5fe2ddb4eb4cc9"
+  },
+  "limitations": [
+    "GG05 and GG06-19 remain unfinished.",
+    "Default binned outside/nonfinite cells remain a known follow-up.",
+    "Unequal widths, limit labels, composition/components and remaining guide requirements are open.",
+    "No new full cumulative binding or Linux run."
+  ],
+  "next": "Default binned boundary correction, followed by unequal widths and limit-label controls."
+}

@@ -120,6 +120,45 @@ impl Sample<Value> for RegisteredInterpolator {
         Ok(value)
     }
 }
+pub(crate) fn mapped_scales_mut(
+    definition: &mut super::ChartDefinition,
+) -> impl Iterator<Item = &mut crate::scales::MappedScaleSpec> {
+    definition.layers.iter_mut().flat_map(|layer| {
+        // Keep the same active paint channels as colors::encodings, which is
+        // used by the read-only traversal and palette-selection ordering.
+        let fill = layer.style.fill.is_none();
+        let stroke = layer.style.stroke.is_none();
+        layer
+            .numeric_scales
+            .values_mut()
+            .map(|encoding| &mut encoding.scale)
+            .chain(
+                layer
+                    .value_scales
+                    .values_mut()
+                    .map(|encoding| &mut encoding.scale),
+            )
+            .chain(
+                layer
+                    .color
+                    .iter_mut()
+                    .chain(
+                        layer
+                            .paint_scales
+                            .iter_mut()
+                            .filter(move |(channel, _)| match channel {
+                                super::PaintAesthetic::Fill => fill,
+                                super::PaintAesthetic::Stroke => stroke,
+                            })
+                            .map(|(_, encoding)| encoding),
+                    )
+                    .filter_map(|encoding| match &mut encoding.scale {
+                        crate::scales::ColorScale::Mapped { scale, .. } => Some(scale),
+                        _ => None,
+                    }),
+            )
+    })
+}
 impl ExtensionRegistry {
     /// Install one exact native factory version. Existing prepared snapshots are unchanged.
     pub fn register_interpolation(
@@ -205,7 +244,55 @@ impl ExtensionRegistry {
         definition: &super::ChartDefinition,
         portable: bool,
     ) -> ChartResult<()> {
+        let transform_error = std::cell::RefCell::new(None);
+        definition.any_ggplot_transform(|transform| {
+            if let Err(error) =
+                transform.validate_registration_references(&self.transforms_function, portable)
+            {
+                *transform_error.borrow_mut() = Some(error);
+                true
+            } else {
+                false
+            }
+        });
+        if let Some(error) = transform_error.into_inner() {
+            return Err(error);
+        }
+        if let Some(theme) = &definition.theme {
+            for call in theme.scale_palettes.values() {
+                if let crate::theme::ThemeScalePalette::Registered(call) = call {
+                    self.palette_function.validate(call, portable)?;
+                }
+            }
+        }
+        for axis in &definition.axes {
+            if let Some(call) = axis
+                .discrete
+                .as_ref()
+                .and_then(|p| p.palette_function.as_deref())
+            {
+                self.palette_function.validate(call, portable)?;
+            }
+            if let Some(call) = &axis.oob_function {
+                self.scale_vectors.validate(call, portable)?;
+            }
+            if let Some(call) = &axis.limits_function {
+                self.limits_function.validate(call, portable)?;
+            }
+        }
         for scale in mapped_scales(definition) {
+            for call in [&scale.oob_function, &scale.rescaler_function]
+                .into_iter()
+                .flatten()
+            {
+                self.scale_vectors.validate(call, portable)?;
+            }
+            if let Some(call) = &scale.palette_function {
+                self.palette_function.validate(call, portable)?;
+            }
+            if let Some(call) = &scale.breaks_function {
+                self.breaks_function.validate(call, portable)?;
+            }
             if let Some(call) = &scale.limits_function {
                 self.limits_function.validate(call, portable)?;
             }

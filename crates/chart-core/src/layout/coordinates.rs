@@ -71,8 +71,8 @@ impl ResolvedAxis {
     pub fn capabilities(&self) -> crate::scales::ScaleCapabilities {
         use crate::scales::ScaleCapabilities;
         match &self.scale {
-            ResolvedScale::Unbounded(_) => ScaleCapabilities {
-                numeric_inverse: false,
+            ResolvedScale::Unbounded(s) => ScaleCapabilities {
+                numeric_inverse: s.has_numeric_inverse(),
                 category_lookup: false,
             },
             ResolvedScale::Provider(s) => s.capabilities(),
@@ -100,9 +100,7 @@ impl ResolvedAxis {
     /// Invert a destination position with the resolved numeric/time policy.
     pub fn invert_value(&self, p: f64) -> ChartResult<ScaleValue> {
         match &self.scale {
-            ResolvedScale::Unbounded(_) => Err(unsupported(
-                "An unbounded reference range has no finite numeric inverse.",
-            )),
+            ResolvedScale::Unbounded(s) => s.invert(p).map(ScaleValue::Number),
             ResolvedScale::Provider(s) => s.invert(p),
             ResolvedScale::Linear(s) => s.invert(p).map(ScaleValue::Number),
             ResolvedScale::Numeric(s) => s.invert(p).map(ScaleValue::Number),

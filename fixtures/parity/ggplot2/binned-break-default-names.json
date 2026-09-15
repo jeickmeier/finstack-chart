@@ -1,0 +1,2803 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "identity",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "#22496C",
+          "#448DC6"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "identity",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "#22496C",
+          "#448DC6"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "identity",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            4,
+            4
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "identity",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "#22496C",
+          "#22496C"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "identity",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "#448DC6"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "identity",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "grey50",
+          "#448DC6"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "identity",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "-Infinity",
+            "Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "identity",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "identity",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [],
+        "mapped": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "identity",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "sqrt",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "#265176",
+          "#265176",
+          "#4895D2"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "sqrt",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "#265176",
+          "#265176",
+          "#4895D2"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "sqrt",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            4,
+            4
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "sqrt",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "#265176",
+          "#265176"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "sqrt",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "#265176",
+          "#4895D2"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "sqrt",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "#265176",
+          "#4895D2"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "sqrt",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "sqrt",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "sqrt",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [],
+        "mapped": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "sqrt",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "log10",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "#2A5981",
+          "#2A5981",
+          "#4D9EDE"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "log10",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "#2A5981",
+          "#2A5981",
+          "#4D9EDE"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "log10",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            4,
+            4
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "log10",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "#2A5981",
+          "#2A5981"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "log10",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "#2A5981",
+          "#4D9EDE"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "log10",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "#2A5981",
+          "#4D9EDE"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "log10",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            0,
+            "Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "log10",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "log10",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [],
+        "mapped": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "log10",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ],
+        "mapped": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "reverse",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "#448DC6",
+          "#448DC6",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "reverse",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "#448DC6",
+          "#448DC6",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "reverse",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            4,
+            4
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "reverse",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "#448DC6",
+          "#448DC6"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "reverse",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "#448DC6",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "reverse",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "#448DC6",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "reverse",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "-Infinity",
+            "Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "reverse",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": [
+          "grey50",
+          "grey50"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "reverse",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [],
+        "mapped": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_steps",
+      "transform": "reverse",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again",
+              "positive"
+            ]
+          }
+        ],
+        "mapped": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "identity",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "identity",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "identity",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            4,
+            4
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "identity",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "identity",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "identity",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "identity",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "-Infinity",
+            "Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "identity",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "identity",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [],
+        "mapped": [],
+        "boundaries": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "identity",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "sqrt",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "sqrt",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "sqrt",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            4,
+            4
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "'x' must be numeric"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "sqrt",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "sqrt",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "sqrt",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "sqrt",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "sqrt",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "sqrt",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [],
+        "mapped": [],
+        "boundaries": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "sqrt",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "log10",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "log10",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "log10",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            4,
+            4
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "'x' must be numeric"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "log10",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "log10",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "log10",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "log10",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            0,
+            "Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "log10",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "log10",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [],
+        "mapped": [],
+        "boundaries": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "log10",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 6 rows, data has 4"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "reverse",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "reverse",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "reverse",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            4,
+            4
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "reverse",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "reverse",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "reverse",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "reverse",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "-Infinity",
+            "Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "reverse",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "reverse",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [],
+        "mapped": [],
+        "boundaries": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "binned_scale",
+      "transform": "reverse",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "error": "replacement has 7 rows, data has 5"
+      }
+    }
+  ]
+}

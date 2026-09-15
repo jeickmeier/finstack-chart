@@ -38,13 +38,13 @@ def check(t,actual):
   for row,want in zip(rows,wanted):
    expected_size=2.+.1*(want if want is not None else 0.)
    assert abs(row['radius']-expected_size)<3e-12,(t,row,want)
-   assert row['color']['alpha']==(255 if want is None else math.floor(min(1.,max(0.,want))*255+.5)),(t,row,want)
+   assert row['color']['alpha']==(255 if want is None else round(min(1.,max(0.,want))*255)),(t,row,want)
  else:
   wanted=[v for v in wanted if v is not None];rows=actual.get('styles',[]);assert len(rows)==len(wanted),(t,rows,wanted)
   for row,want in zip(rows,wanted):assert abs(row['radius']-want)<3e-12*max(abs(want),1),(t,row,want)
  return {'styles':actual.get('styles',[]),'aesthetics':actual.get('aesthetics',[])}
-cases=[x for x in json.loads((ROOT/'fixtures/parity/ggplot2/limit-functions.json').read_text())['cases'] if 'transform' in x]
-cases += [dict(t,transform='identity') for t in json.loads((ROOT/'fixtures/parity/ggplot2/limit-rescalers.json').read_text())['cases']]
+cases=[x for x in json.loads((ROOT/'fixtures/parity/ggplot2/limit-function-builds.json').read_text())['cases'] if 'transform' in x]
+cases += [dict(t,transform='identity') for t in json.loads((ROOT/'fixtures/parity/ggplot2/limit-rescaler-builds.json').read_text())['cases']]
 cases += [dict(t,transform='identity',unit=unit,variant=variant,units=units) for t in json.loads((ROOT/'fixtures/parity/ggplot2/temporal-limit-functions.json').read_text())['cases'] for unit,variant,units in [('s','Seconds',1),('ms','Milliseconds',1000),('us','Microseconds',1000000),('ns','Nanoseconds',1000000000)] if not (t['kind']=='datetime' and t['population']=='fractional' and units==1)]
 for index,t in enumerate(cases):
  owned=[];failure=t['result'].get('error') or (t['result'].get('guide',{}).get('error') if 'units' in t else None)
@@ -60,11 +60,11 @@ for index,t in enumerate(cases):
     request=output.request(current,options);owned.append(request);frame=request.prepare();owned.append(frame)
     for fmt in ('svg','pdf','png'):(out/f"{t['kind']}-{t['control']}.{fmt}").write_bytes(frame.export(fmt))
  except c.ChartError as error:
-  diagnostic=json.loads(str(error));assert failure,(index,diagnostic);assert diagnostic['code']=='CHART_NUMERICAL_DOMAIN',(index,diagnostic)
+  diagnostic=json.loads(str(error));assert failure,(index,diagnostic);assert diagnostic['code'] in ('CHART_NUMERICAL_DOMAIN','CHART_VALIDATION'),(index,diagnostic)
   records.append({'index':index,'error':diagnostic['code']})
  finally:
   for obj in reversed(owned):obj.dispose()
-assert len(records)==1362,len(records)
+assert len(records)==1302,len(records)
 for kind in ('continuous','binned','identity','date','datetime'):
  for control in ('fixed','single'):
   owned=[]
@@ -79,5 +79,5 @@ for kind in ('continuous','binned','identity','date','datetime'):
     records.append({'kind':kind,'control':control,'replacement':population,**actual})
   finally:
    for obj in reversed(owned):obj.dispose()
-assert len(records)==1408,len(records)
+assert len(records)==1348,len(records)
 (out/'numeric-limit-records.json').write_text(json.dumps(records,indent=2));options.dispose();output.dispose();registry.dispose();print('PASS Python:',len(records),'numeric limit states.')

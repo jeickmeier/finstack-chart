@@ -225,7 +225,37 @@ impl Session {
                     "color_legend":l.color_legend(),"invalid_geometry":l.invalid_geometry(),
                     "targets":l.marks().iter().flat_map(|m|m.targets.iter()).collect::<Vec<_>>(),
                 });
+                if prepared
+                    .definition()
+                    .axes
+                    .iter()
+                    .any(|a| a.oob_function.is_some())
+                {
+                    use crate::{grammar::PreparedGeometry, interpolate::Number};
+                    value["point_positions"] = json!(
+                        l.marks()
+                            .iter()
+                            .filter_map(|m| {
+                                match m.geometry {
+                                    PreparedGeometry::Point(p) => {
+                                        Some([Number(p.x()), Number(p.y())])
+                                    }
+                                    PreparedGeometry::UnboundedPoint(p) => Some(p),
+                                    _ => None,
+                                }
+                            })
+                            .collect::<Vec<_>>()
+                    );
+                }
+                if !l.discrete_value_guides().is_empty() {
+                    value["discrete_value_guides"] = json!(l.discrete_value_guides());
+                }
+                if !l.numeric_value_guides().is_empty() {
+                    value["numeric_value_guides"] = json!(l.numeric_value_guides());
+                }
                 if !l.paint_legends().is_empty()
+                    || !l.numeric_scales().is_empty()
+                    || !l.value_scales().is_empty()
                     || l.marks().iter().any(|m| {
                         !m.aesthetics.is_empty()
                             || m.style.fill.is_some()
@@ -259,11 +289,15 @@ impl Session {
             .collect::<ChartResult<Vec<_>>>()?;
         let panels = prepared.panels().iter().map(|p| {
             let layers = p.chart.layers().iter().map(&layer_semantics).collect::<ChartResult<Vec<_>>>()?;
-            Ok(json!({"key":p.key,"row":p.row,"column":p.column,"scale_domains":p.chart.scale_domains(),"layers":layers}))
+            let mut value = json!({"key":p.key,"row":p.row,"column":p.column,"scale_domains":p.chart.scale_domains(),"layers":layers});
+            if !p.chart.positional_limits().is_empty() { value["positional_limits"] = json!(p.chart.positional_limits()); }
+            Ok(value)
         }).collect::<ChartResult<Vec<_>>>()?;
         let transforms=self.definition().transforms.iter().filter_map(|node|prepared.transform(node.id).map(|table|json!({"id":node.id,"rows":table.rows(),"schema":table.schema(),"operations":table.operations(),"space":table.space()}))).collect::<Vec<_>>();
-        encode(
-            &json!({"version":VERSION,"definition_revision":prepared.definition_revision(),"store_revision":data.revision(),"state":StateEnvelope::capture(self.definition(),self.state()),"datasets":datasets,"layers":layers,"panels":panels,"transforms":transforms}),
-        )
+        let mut result = json!({"version":VERSION,"definition_revision":prepared.definition_revision(),"store_revision":data.revision(),"state":StateEnvelope::capture(self.definition(),self.state()),"datasets":datasets,"layers":layers,"panels":panels,"transforms":transforms});
+        if !prepared.positional_limits().is_empty() {
+            result["positional_limits"] = json!(prepared.positional_limits());
+        }
+        encode(&result)
     }
 }

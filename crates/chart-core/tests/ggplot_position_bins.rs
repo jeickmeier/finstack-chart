@@ -289,14 +289,17 @@ fn compare_primary_panels(cases: &[serde_json::Value]) {
             .as_array()
             .unwrap()
             .iter()
-            .filter_map(|v| v.as_f64())
+            .map(|v| number(v).0)
+            .filter(|v| !v.is_nan())
             .collect::<Vec<_>>();
         assert_eq!(prepared.layers()[0].marks().len(), wanted.len(), "{case}");
         for (mark, value) in prepared.layers()[0].marks().iter().zip(wanted) {
-            let PreparedGeometry::Point(point) = mark.geometry else {
-                panic!()
+            let actual = match mark.geometry {
+                PreparedGeometry::Point(point) => point.x(),
+                PreparedGeometry::UnboundedPoint(p) => p[0].0,
+                _ => panic!("expected retained point"),
             };
-            equal(point.x(), value, case);
+            equal(actual, value, case);
         }
         let axis = &frame.axes()[&ScaleId::new(0)];
         if matches!(axis.scale, ResolvedScale::Unbounded(_)) {
@@ -505,9 +508,12 @@ fn nested_binned_projections_require_v18_without_an_axis() {
         binned,
         transform: None,
         limits: None,
+        function_limits: None,
+        missing: None,
         outside: ScaleOob::Keep,
     };
     let binned = Numeric::Scaled {
+        samples: None,
         input: Box::new(Numeric::Literal(4.)),
         scale: Box::new(projection(Some(std::sync::Arc::new(
             GgplotBinnedPosition::default()
@@ -517,6 +523,7 @@ fn nested_binned_projections_require_v18_without_an_axis() {
     };
     let mut definition = ChartDefinition::new(Revision::INITIAL);
     definition.mappings.x = Some(Numeric::Scaled {
+        samples: None,
         input: Box::new(binned),
         scale: Box::new(projection(None)),
     });

@@ -1,0 +1,7900 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "1/5",
+          "2/5",
+          "3/5",
+          "4/5",
+          "5/5"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.167777777777778,
+              0.44462962962963,
+              0.721481481481482,
+              0.998333333333333
+            ],
+            "labels": [
+              "2/5",
+              "3/5",
+              "4/5",
+              "5/5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "1/5",
+          null,
+          "3/5",
+          null,
+          "5/5"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.167777777777778,
+              0.44462962962963,
+              0.721481481481482,
+              0.998333333333333
+            ],
+            "labels": [
+              null,
+              "3/5",
+              null,
+              "5/5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          "1/5",
+          "2/5",
+          "3/5",
+          "4/5",
+          "5/5"
+        ],
+        "label_names": [
+          "10",
+          "7.5",
+          "5",
+          "2.5",
+          "0"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.167777777777778,
+              0.44462962962963,
+              0.721481481481482,
+              0.998333333333333
+            ],
+            "labels": [
+              "2/5",
+              "3/5",
+              "4/5",
+              "5/5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -1,
+          0,
+          0.1,
+          1,
+          5,
+          10,
+          20,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          "2/10",
+          "3/10",
+          "4/10",
+          "5/10",
+          "6/10",
+          "7/10",
+          "8/10",
+          "9/10",
+          "10/10"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.44462962962963,
+              0.998333333333333
+            ],
+            "labels": [
+              "4/10",
+              "5/10",
+              "6/10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -1,
+          0,
+          0.1,
+          1,
+          5,
+          10,
+          20,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          null,
+          "3/10",
+          null,
+          "5/10",
+          null,
+          "7/10",
+          null,
+          "9/10",
+          null
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.44462962962963,
+              0.998333333333333
+            ],
+            "labels": [
+              null,
+              "5/10",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -1,
+          0,
+          0.1,
+          1,
+          5,
+          10,
+          20,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          "2/10",
+          "3/10",
+          "4/10",
+          "5/10",
+          "6/10",
+          "7/10",
+          "8/10",
+          "9/10",
+          "10/10"
+        ],
+        "label_names": [
+          "NaN",
+          null,
+          "Inf",
+          "20",
+          "10",
+          "5",
+          "1",
+          "0.1",
+          "0",
+          "-1"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.44462962962963,
+              0.998333333333333
+            ],
+            "labels": [
+              "4/10",
+              "5/10",
+              "6/10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "identity",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "1/5",
+          "2/5",
+          "3/5",
+          "4/5",
+          "5/5"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.269533144372158,
+              0.571412066899951,
+              0.803051911257537,
+              0.998333333333333
+            ],
+            "labels": [
+              "2/5",
+              "3/5",
+              "4/5",
+              "5/5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "1/5",
+          null,
+          "3/5",
+          null,
+          "5/5"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.269533144372158,
+              0.571412066899951,
+              0.803051911257537,
+              0.998333333333333
+            ],
+            "labels": [
+              null,
+              "3/5",
+              null,
+              "5/5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0,
+          1.58113883008419,
+          2.23606797749979,
+          2.73861278752583,
+          3.16227766016838
+        ],
+        "labels": [
+          "1/5",
+          "2/5",
+          "3/5",
+          "4/5",
+          "5/5"
+        ],
+        "label_names": [
+          "10",
+          "7.5",
+          "5",
+          "2.5",
+          "0"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.269533144372158,
+              0.571412066899951,
+              0.803051911257537,
+              0.998333333333333
+            ],
+            "labels": [
+              "2/5",
+              "3/5",
+              "4/5",
+              "5/5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          null,
+          0,
+          0.316227766016838,
+          1,
+          2.23606797749979,
+          3.16227766016838,
+          4.47213595499958,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          "2/10",
+          "3/10",
+          "4/10",
+          "5/10",
+          "6/10",
+          "7/10",
+          "8/10",
+          "9/10",
+          "10/10"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.571412066899951,
+              0.998333333333333
+            ],
+            "labels": [
+              "4/10",
+              "5/10",
+              "6/10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          null,
+          0,
+          0.316227766016838,
+          1,
+          2.23606797749979,
+          3.16227766016838,
+          4.47213595499958,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          null,
+          "3/10",
+          null,
+          "5/10",
+          null,
+          "7/10",
+          null,
+          "9/10",
+          null
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.571412066899951,
+              0.998333333333333
+            ],
+            "labels": [
+              null,
+              "5/10",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          null,
+          0,
+          0.316227766016838,
+          1,
+          2.23606797749979,
+          3.16227766016838,
+          4.47213595499958,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          "2/10",
+          "3/10",
+          "4/10",
+          "5/10",
+          "6/10",
+          "7/10",
+          "8/10",
+          "9/10",
+          "10/10"
+        ],
+        "label_names": [
+          null,
+          null,
+          "Inf",
+          "20",
+          "10",
+          "5",
+          "1",
+          "0.1",
+          "0",
+          null
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.571412066899951,
+              0.998333333333333
+            ],
+            "labels": [
+              "4/10",
+              "5/10",
+              "6/10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "sqrt",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          2
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            1,
+            3,
+            10,
+            30
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966
+        ],
+        "labels": [
+          "1/4",
+          "2/4",
+          "3/4",
+          "4/4"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            1,
+            3,
+            10,
+            30
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.47719751720393,
+              0.998333333333333
+            ],
+            "labels": [
+              "1/4",
+              "2/4",
+              "3/4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            1,
+            3,
+            10,
+            30
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966
+        ],
+        "labels": [
+          "1/4",
+          null,
+          "3/4",
+          null
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            1,
+            3,
+            10,
+            30
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.47719751720393,
+              0.998333333333333
+            ],
+            "labels": [
+              "1/4",
+              null,
+              "3/4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            1,
+            3,
+            10,
+            30
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            1,
+            3,
+            10,
+            30
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            1,
+            3,
+            10,
+            30
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            1,
+            3,
+            10,
+            30
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            1,
+            3,
+            10,
+            30
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0,
+          0.477121254719662,
+          1,
+          1.47712125471966
+        ],
+        "labels": [
+          "1/4",
+          "2/4",
+          "3/4",
+          "4/4"
+        ],
+        "label_names": [
+          "30",
+          "10",
+          "3",
+          "1"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            1,
+            3,
+            10,
+            30
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.47719751720393,
+              0.998333333333333
+            ],
+            "labels": [
+              "1/4",
+              "2/4",
+              "3/4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          null,
+          "-Infinity",
+          -1,
+          0,
+          0.698970004336019,
+          1,
+          1.30102999566398,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          "2/10",
+          "3/10",
+          "4/10",
+          "5/10",
+          "6/10",
+          "7/10",
+          "8/10",
+          "9/10",
+          "10/10"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.698306770988232,
+              0.998333333333333
+            ],
+            "labels": [
+              "4/10",
+              "5/10",
+              "6/10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          null,
+          "-Infinity",
+          -1,
+          0,
+          0.698970004336019,
+          1,
+          1.30102999566398,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          null,
+          "3/10",
+          null,
+          "5/10",
+          null,
+          "7/10",
+          null,
+          "9/10",
+          null
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.698306770988232,
+              0.998333333333333
+            ],
+            "labels": [
+              null,
+              "5/10",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          null,
+          "-Infinity",
+          -1,
+          0,
+          0.698970004336019,
+          1,
+          1.30102999566398,
+          "Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          "2/10",
+          "3/10",
+          "4/10",
+          "5/10",
+          "6/10",
+          "7/10",
+          "8/10",
+          "9/10",
+          "10/10"
+        ],
+        "label_names": [
+          "NaN",
+          null,
+          "Inf",
+          "20",
+          "10",
+          "5",
+          "1",
+          "0.1",
+          "0",
+          "NaN"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.698306770988232,
+              0.998333333333333
+            ],
+            "labels": [
+              "4/10",
+              "5/10",
+              "6/10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "log10",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          0.602059991327962
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "1/5",
+          "2/5",
+          "3/5",
+          "4/5",
+          "5/5"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.832222222222222,
+              0.55537037037037,
+              0.278518518518518,
+              0.00166666666666667
+            ],
+            "labels": [
+              "2/5",
+              "3/5",
+              "4/5",
+              "5/5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "1/5",
+          null,
+          "3/5",
+          null,
+          "5/5"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.832222222222222,
+              0.55537037037037,
+              0.278518518518518,
+              0.00166666666666667
+            ],
+            "labels": [
+              null,
+              "3/5",
+              null,
+              "5/5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "auto",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -0,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          "1/5",
+          "2/5",
+          "3/5",
+          "4/5",
+          "5/5"
+        ],
+        "label_names": [
+          "10",
+          "7.5",
+          "5",
+          "2.5",
+          "0"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            0,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.832222222222222,
+              0.55537037037037,
+              0.278518518518518,
+              0.00166666666666667
+            ],
+            "labels": [
+              "2/5",
+              "3/5",
+              "4/5",
+              "5/5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          1,
+          -0,
+          -0.1,
+          -1,
+          -5,
+          -10,
+          -20,
+          "-Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          "2/10",
+          "3/10",
+          "4/10",
+          "5/10",
+          "6/10",
+          "7/10",
+          "8/10",
+          "9/10",
+          "10/10"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.55537037037037,
+              0.00166666666666667
+            ],
+            "labels": [
+              "4/10",
+              "5/10",
+              "6/10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          1,
+          -0,
+          -0.1,
+          -1,
+          -5,
+          -10,
+          -20,
+          "-Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          null,
+          "3/10",
+          null,
+          "5/10",
+          null,
+          "7/10",
+          null,
+          "9/10",
+          null
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.55537037037037,
+              0.00166666666666667
+            ],
+            "labels": [
+              null,
+              "5/10",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "explicit",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          1,
+          -0,
+          -0.1,
+          -1,
+          -5,
+          -10,
+          -20,
+          "-Infinity",
+          null,
+          null
+        ],
+        "labels": [
+          "1/10",
+          "2/10",
+          "3/10",
+          "4/10",
+          "5/10",
+          "6/10",
+          "7/10",
+          "8/10",
+          "9/10",
+          "10/10"
+        ],
+        "label_names": [
+          "NaN",
+          null,
+          "Inf",
+          "20",
+          "10",
+          "5",
+          "1",
+          "0.1",
+          "0",
+          "-1"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            -1,
+            0,
+            0.1,
+            1,
+            5,
+            10,
+            20,
+            "Infinity",
+            null,
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.55537037037037,
+              0.00166666666666667
+            ],
+            "labels": [
+              "4/10",
+              "5/10",
+              "6/10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        1,
+        10
+      ],
+      "break_mode": "empty",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "auto",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "explicit",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "kind": "continuous",
+      "transform": "reverse",
+      "limits": [
+        4,
+        4
+      ],
+      "break_mode": "empty",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          -4
+        ],
+        "labels": [
+          "1/1"
+        ],
+        "label_names": [
+          "4"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            4
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "1/1"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "auto",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            "c"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c"
+        ],
+        "labels": [
+          "1/3",
+          "2/3",
+          "3/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            "c"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "1/3",
+              "2/3",
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "auto",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            "c"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c"
+        ],
+        "labels": [
+          "1/3",
+          null,
+          "3/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            "c"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "1/3",
+              null,
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "auto",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            "c"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c"
+        ],
+        "labels": [
+          "1/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            "c"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "1/3",
+              "1/3",
+              "1/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "auto",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            "c"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c"
+        ],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            "c"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "replacement has 0 rows, data has 3"
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "auto",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            "c"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          "c"
+        ],
+        "labels": [
+          "1/3",
+          "2/3",
+          "3/3"
+        ],
+        "label_names": [
+          "c",
+          "b",
+          "a"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            "c"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "1/3",
+              "2/3",
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "explicit",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          "a"
+        ],
+        "labels": [
+          "1/2",
+          "2/2"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              "a"
+            ],
+            "labels": [
+              "1/2",
+              "2/2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "explicit",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          "a"
+        ],
+        "labels": [
+          "1/2",
+          null
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              "a"
+            ],
+            "labels": [
+              "1/2",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          "a"
+        ],
+        "labels": [
+          "1/2"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              "a"
+            ],
+            "labels": [
+              "1/2",
+              "1/2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "explicit",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          "a"
+        ],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "replacement has 0 rows, data has 2"
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "explicit",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          "a"
+        ],
+        "labels": [
+          "1/2",
+          "2/2"
+        ],
+        "label_names": [
+          "a",
+          "b"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              "a"
+            ],
+            "labels": [
+              "1/2",
+              "2/2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "named",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": [
+            "B",
+            "A"
+          ]
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          "a"
+        ],
+        "labels": [
+          "1/2",
+          "2/2"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": [
+            "B",
+            "A"
+          ]
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              "a"
+            ],
+            "labels": [
+              "1/2",
+              "2/2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "named",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": [
+            "B",
+            "A"
+          ]
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          "a"
+        ],
+        "labels": [
+          "1/2",
+          null
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": [
+            "B",
+            "A"
+          ]
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              "a"
+            ],
+            "labels": [
+              "1/2",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "named",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": [
+            "B",
+            "A"
+          ]
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          "a"
+        ],
+        "labels": [
+          "1/2"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": [
+            "B",
+            "A"
+          ]
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              "a"
+            ],
+            "labels": [
+              "1/2",
+              "1/2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "named",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": [
+            "B",
+            "A"
+          ]
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          "a"
+        ],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": [
+            "B",
+            "A"
+          ]
+        }
+      ],
+      "build": {
+        "error": "replacement has 0 rows, data has 2"
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "named",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": [
+            "B",
+            "A"
+          ]
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          "a"
+        ],
+        "labels": [
+          "1/2",
+          "2/2"
+        ],
+        "label_names": [
+          "a",
+          "b"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            "a"
+          ],
+          "names": [
+            "B",
+            "A"
+          ]
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              "a"
+            ],
+            "labels": [
+              "1/2",
+              "2/2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "empty",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [
+          "/0"
+        ],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "empty",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [
+          "/0"
+        ],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "empty",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [
+          "/0"
+        ],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "empty",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "ordinary",
+      "break_mode": "empty",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [
+          "/0"
+        ],
+        "label_names": [
+          null
+        ]
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "auto",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          null
+        ],
+        "labels": [
+          "1/3",
+          "2/3",
+          "3/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              null
+            ],
+            "labels": [
+              "1/3",
+              "2/3",
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "auto",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          null
+        ],
+        "labels": [
+          "1/3",
+          null,
+          "3/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              null
+            ],
+            "labels": [
+              "1/3",
+              null,
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "auto",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          null
+        ],
+        "labels": [
+          "1/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              null
+            ],
+            "labels": [
+              "1/3",
+              "1/3",
+              "1/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "auto",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          null
+        ],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "replacement has 0 rows, data has 3"
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "auto",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            null
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "a",
+          "b",
+          null
+        ],
+        "labels": [
+          "1/3",
+          "2/3",
+          "3/3"
+        ],
+        "label_names": [
+          null,
+          "b",
+          "a"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            "a",
+            "b",
+            null
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              null
+            ],
+            "labels": [
+              "1/3",
+              "2/3",
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "explicit",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          null,
+          "a"
+        ],
+        "labels": [
+          "1/3",
+          "2/3",
+          "3/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              null,
+              "a"
+            ],
+            "labels": [
+              "1/3",
+              "2/3",
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "explicit",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          null,
+          "a"
+        ],
+        "labels": [
+          "1/3",
+          null,
+          "3/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              null,
+              "a"
+            ],
+            "labels": [
+              "1/3",
+              null,
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          null,
+          "a"
+        ],
+        "labels": [
+          "1/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              null,
+              "a"
+            ],
+            "labels": [
+              "1/3",
+              "1/3",
+              "1/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "explicit",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          null,
+          "a"
+        ],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "error": "replacement has 0 rows, data has 3"
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "explicit",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          null,
+          "a"
+        ],
+        "labels": [
+          "1/3",
+          "2/3",
+          "3/3"
+        ],
+        "label_names": [
+          "a",
+          null,
+          "b"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": []
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              null,
+              "a"
+            ],
+            "labels": [
+              "1/3",
+              "2/3",
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "named",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": [
+            "B",
+            "M",
+            "A"
+          ]
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          null,
+          "a"
+        ],
+        "labels": [
+          "1/3",
+          "2/3",
+          "3/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": [
+            "B",
+            "M",
+            "A"
+          ]
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              null,
+              "a"
+            ],
+            "labels": [
+              "1/3",
+              "2/3",
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "named",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": [
+            "B",
+            "M",
+            "A"
+          ]
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          null,
+          "a"
+        ],
+        "labels": [
+          "1/3",
+          null,
+          "3/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": [
+            "B",
+            "M",
+            "A"
+          ]
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              null,
+              "a"
+            ],
+            "labels": [
+              "1/3",
+              null,
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "named",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": [
+            "B",
+            "M",
+            "A"
+          ]
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          null,
+          "a"
+        ],
+        "labels": [
+          "1/3"
+        ],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": [
+            "B",
+            "M",
+            "A"
+          ]
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              null,
+              "a"
+            ],
+            "labels": [
+              "1/3",
+              "1/3",
+              "1/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "named",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": [
+            "B",
+            "M",
+            "A"
+          ]
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          null,
+          "a"
+        ],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": [
+            "B",
+            "M",
+            "A"
+          ]
+        }
+      ],
+      "build": {
+        "error": "replacement has 0 rows, data has 3"
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "named",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": [
+            "B",
+            "M",
+            "A"
+          ]
+        }
+      ],
+      "result": {
+        "breaks": [
+          "b",
+          null,
+          "a"
+        ],
+        "labels": [
+          "1/3",
+          "2/3",
+          "3/3"
+        ],
+        "label_names": [
+          "a",
+          null,
+          "b"
+        ]
+      },
+      "build_calls": [
+        {
+          "values": [
+            "b",
+            null,
+            "a"
+          ],
+          "names": [
+            "B",
+            "M",
+            "A"
+          ]
+        }
+      ],
+      "build": {
+        "keys": [
+          {
+            "values": [
+              "b",
+              null,
+              "a"
+            ],
+            "labels": [
+              "1/3",
+              "2/3",
+              "3/3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "empty",
+      "label_mode": "indexed",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [
+          "/0"
+        ],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "empty",
+      "label_mode": "missing",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [
+          "/0"
+        ],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "empty",
+      "label_mode": "short",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [
+          "/0"
+        ],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "empty",
+      "label_mode": "empty",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "nullable",
+      "break_mode": "empty",
+      "label_mode": "named",
+      "calls": [
+        {
+          "values": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "breaks": [],
+        "labels": [
+          "/0"
+        ],
+        "label_names": [
+          null
+        ]
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "auto",
+      "label_mode": "indexed",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "auto",
+      "label_mode": "missing",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "auto",
+      "label_mode": "short",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "auto",
+      "label_mode": "empty",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "auto",
+      "label_mode": "named",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "explicit",
+      "label_mode": "indexed",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "explicit",
+      "label_mode": "missing",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "explicit",
+      "label_mode": "short",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "explicit",
+      "label_mode": "empty",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "explicit",
+      "label_mode": "named",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "named",
+      "label_mode": "indexed",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "named",
+      "label_mode": "missing",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "named",
+      "label_mode": "short",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "named",
+      "label_mode": "empty",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "named",
+      "label_mode": "named",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "empty",
+      "label_mode": "indexed",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "empty",
+      "label_mode": "missing",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "empty",
+      "label_mode": "short",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "empty",
+      "label_mode": "empty",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    },
+    {
+      "kind": "discrete",
+      "population": "empty",
+      "break_mode": "empty",
+      "label_mode": "named",
+      "calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "label_names": []
+      },
+      "build_calls": [],
+      "build": {
+        "keys": []
+      }
+    }
+  ]
+}

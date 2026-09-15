@@ -131,6 +131,10 @@ pub fn extension_input_space(
 /// portable JSON can only select an existing entry and never supplies executable code.
 #[derive(Clone, Default)]
 pub struct ExtensionRegistry {
+    pub(crate) transforms_function: Arc<super::transform_extensions::TransformRegistrations>,
+    pub(crate) scale_vectors: Arc<super::scale_vector_extensions::ScaleVectorRegistrations>,
+    pub(crate) breaks_function: Arc<super::scale_break_extensions::ScaleBreakRegistrations>,
+    pub(crate) palette_function: Arc<super::scale_palette_extensions::ScalePaletteRegistrations>,
     pub(crate) limits_function: Arc<super::scale_limit_extensions::ScaleLimitRegistrations>,
     pub(crate) hierarchies: Arc<super::hierarchy_extensions::HierarchyRegistrations>,
     pub(crate) interpolations: Arc<super::interpolation_extensions::InterpolationRegistrations>,

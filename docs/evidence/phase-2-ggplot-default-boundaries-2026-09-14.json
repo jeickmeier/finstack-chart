@@ -1,0 +1,77 @@
+{
+  "date": "2026-09-14",
+  "revision": "6e74ae6 plus dirty working tree",
+  "work_package": "GG-05",
+  "requirements": [
+    "GG2-04",
+    "FIX-GG05"
+  ],
+  "status": "core implementation checkpoint; qualification incomplete",
+  "source": {
+    "runtime": "R 4.6.1 / ggplot2 4.0.3",
+    "command": "CHART_REFERENCE_R_LIBRARY=/private/tmp/finstack-chart-tools/r-library CHART_REFERENCE_R_WORK=/private/tmp/finstack-chart-tools/r-work mise exec -- python3 tools/reference/r/run.py tools/reference/r/colorsteps-boundaries.R --default",
+    "cases": 33,
+    "log": "/tmp/gg05-default-boundaries-reference.log"
+  },
+  "reproduction": {
+    "log": "/tmp/gg05-default-before.log",
+    "result": "failed on outside case: five guide cells versus source three"
+  },
+  "checks": {
+    "focused": {
+      "command": "mise exec -- cargo test -p chart-core --test ggplot_colorbar_layout --test ggplot_binned_palette_functions --test ggplot_continuous_palette_functions --test ggplot_pipeline_compositions --test ggplot_temporal_guide_selection --test ggplot_label_functions --test ggplot_degenerate_mapping --locked",
+      "result": "pass",
+      "tests": 39,
+      "log": "/tmp/gg05-default-focused.log"
+    },
+    "workspace_test": {
+      "command": "mise run test",
+      "result": "pass",
+      "log": "/tmp/gg05-default-test.log",
+      "tests": 879,
+      "targets": 199,
+      "nonempty_targets": 187
+    },
+    "workspace_check": {
+      "command": "mise run check",
+      "result": "pass",
+      "log": "/tmp/gg05-default-check.log"
+    },
+    "whitespace": {
+      "command": "git diff --check",
+      "result": "pass"
+    }
+  },
+  "coverage": {
+    "source_cases_tested": 20,
+    "guide_selections": [
+      "implicit",
+      "explicit default"
+    ],
+    "direct_comparisons": 40,
+    "layouts": [
+      "single",
+      "collected",
+      "local"
+    ],
+    "assertions": [
+      "cell colors",
+      "tick positions",
+      "label text and positions"
+    ],
+    "position_tolerance": "absolute < 3e-12"
+  },
+  "limitations": [
+    "Constant populations and NULL breaks excluded from new acceptance",
+    "No fresh Python/WASM runtime proof for default boundary cases",
+    "No new native or SVG/PDF/PNG visual inspection",
+    "No Linux runtime execution",
+    "GG-05 and GG-06 through GG-19 remain open"
+  ],
+  "sha256": {
+    "crates/chart-core/src/scales/mapped.rs": "6d1791bb54a09c3a6336fb637628c10cce526a1f7775af0c9cd0d287b74534d8",
+    "crates/chart-core/tests/ggplot_colorbar_layout.rs": "c4fe57c0111cefe7d16fc8dd15000f2b0bcbaf6a67078f2606c0119611ddec51",
+    "tools/reference/r/colorsteps-boundaries.R": "bba82f42d72de8db60e4bfc365d33ad1f4697b50512258f8d6bc28ef4d3011b0",
+    "fixtures/parity/ggplot2/colorsteps-default-boundaries.json": "9511c509e04601b2d29d31ed7d10c031f71e7f8872ea8d1c5cddf1baa95d1bab"
+  }
+}

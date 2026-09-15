@@ -1,0 +1,187 @@
+{
+  "status": "GG05_FINITE_DISTINCT_EVEN_COLORSTEPS_QUALIFIED",
+  "revision": "6e74ae6453b20ab0ffca5b88bbfee5a69d63bd9e",
+  "scope": [
+    "GG2-04 / FIX-GG05 finite distinct-cut even stepped color guide rendering",
+    "Explicit continuous/binned stepped guides and default binned guides; shared palette batch retention",
+    "Single/collected/local facets, orientation, reversal, authored endpoint keys and unchanged mark mapping"
+  ],
+  "reference": {
+    "fixture": "fixtures/parity/ggplot2/colorsteps-layout.json",
+    "sha256": "0c38b1ad6b052bd9bbc807e604e069b6d91be9755316fdd4bf4801b5d810fbed",
+    "generator": "tools/reference/r/colorsteps-layout.R",
+    "cases": 66,
+    "selected_cases": 18,
+    "selection": "even_steps true and show_limits false",
+    "core_layout_comparisons": 54,
+    "environment": "R 4.6.1 / ggplot2 4.0.3"
+  },
+  "validation": {
+    "check": {
+      "path": "/tmp/gg05-steps-final-check.log",
+      "sha256": "15ec356ee4979699c9d5b2ba9afc523c55031f2ca29b07bfc4c6ea8e1dc81a34",
+      "exit_code": 0
+    },
+    "test": {
+      "path": "/tmp/gg05-steps-final-test.log",
+      "sha256": "0fcc02a7e1e2c39ccff8d480e211da917ab8ba56b6c83735a9c6f626069c09a2",
+      "exit_code": 0,
+      "tests": 877,
+      "nonempty_targets": 187,
+      "total_targets": 199
+    },
+    "hosts": {
+      "path": "/tmp/gg05-steps-hosts.log",
+      "sha256": "0f8722338998e1aeae1c9ae1d9f1be56d508d02a62c82d243e4637dab30eab6c",
+      "exit_code": 0
+    },
+    "focused": {
+      "path": "/tmp/gg05-steps-contracts2.log",
+      "sha256": "b3ef7671f57a66066e7d67a2883b6ef569b074734964ac484283a851f2bceb4b",
+      "exit_code": 0,
+      "tests": 24
+    },
+    "native_build": {
+      "path": "/tmp/gg05-steps-final-native-build.log",
+      "sha256": "3d66e912802034abf56e163edee5b10325af6ca6e37c18a036a0f484966b8c94",
+      "exit_code": 0
+    },
+    "reference": {
+      "path": "/tmp/gg05-colorsteps-reference2.log",
+      "sha256": "17a7282ded48b053991e9aac0d0f64aaf9d63c1107e7ccc0161bc4f5c2d02dab",
+      "exit_code": 0
+    }
+  },
+  "hosts": {
+    "states": 2512,
+    "publication_files": 681,
+    "comparison": "exact Python/WASM parsed states; byte-identical corresponding Rust/Python/WASM publication files",
+    "modes": {
+      "alpha-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps/alpha-comparison.json",
+        "sha256": "30411bcb1747ace365f949748972083ec4af8cba133219059110a389e381b3c8",
+        "states": 384,
+        "publication_files": 72
+      },
+      "comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps/comparison.json",
+        "sha256": "5782cfb3b267a3ce33dc986c6f26596feb40c6cbef20f05691845d6c9aa5530f",
+        "states": 108,
+        "publication_files": 27
+      },
+      "constant-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps/constant-comparison.json",
+        "sha256": "47fa676837364fb42d7324b0a3f06e2ca26044c4b2630814305cc0fe22829ca3",
+        "states": 48,
+        "publication_files": 36
+      },
+      "demand-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps/demand-comparison.json",
+        "sha256": "411d32d578c060d7b0728755f0b55a09d7617c70dcb74d5a6ea0413ce3e85c58",
+        "states": 60,
+        "publication_files": 0
+      },
+      "display-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps/display-comparison.json",
+        "sha256": "e8e8f12205132be76f4e8198f21be449744ddae21f5c483d29217299bc794603",
+        "states": 704,
+        "publication_files": 120
+      },
+      "orientation-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps/orientation-comparison.json",
+        "sha256": "d4570791f366f3a277b8b7b6b2e6e7ac96f7752ff31398e328f87347f907c118",
+        "states": 192,
+        "publication_files": 144
+      },
+      "presentation-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps/presentation-comparison.json",
+        "sha256": "d5f3ca226db121223b9781afe9ffe0db8720a7a1446c0bcd0a03eaaa4140f560",
+        "states": 512,
+        "publication_files": 120
+      },
+      "sampling-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps/sampling-comparison.json",
+        "sha256": "547d1d9a117cf60884a89e5b1a9f7e73fe8a5485402ff83c94aaa0559c5b486f",
+        "states": 432,
+        "publication_files": 108
+      },
+      "steps-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps/steps-comparison.json",
+        "sha256": "011f8dd4b284e033ce1f89ac79e7453c0836dc3975bfda8d6adbf9883018ce3c",
+        "states": 72,
+        "publication_files": 54
+      }
+    }
+  },
+  "inspection": {
+    "status": "inspected",
+    "publication_files": 54,
+    "review_pages": {
+      "steps-inspection/review-1.png": "39514689c697fbcc45e04ba433494a6045da87c703c513045bba6a02105b4057",
+      "steps-inspection/review-2.png": "3408f1068acaa75e7b38ede70605d2823a8efad790b378f2ce3e6a006758a944",
+      "steps-inspection/review-3.png": "d9164d779e2453c120b19139a84088fa444d7ead22d66e9dde9b06cf02d78717",
+      "steps-inspection/review-4.png": "b9d1f44cb6fa1a63afb3aec50551956e53e864b9779333f100819a9c86888cba",
+      "steps-inspection/review-5.png": "cc79e07a62b38a5f3cd0e00652d647428ce0032334fa3ab7dbfbd11fe0c5e80b",
+      "steps-inspection/review-6.png": "c0c222a642a9b5e6c58ffcce5011294daa1388cf2e095a662cd437f962087b6d"
+    },
+    "native": {
+      "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps/native-window.png",
+      "sha256": "182d5118dc1adeabd353a32c878be52a700621270934ff01e643f38720113604",
+      "charts": 4,
+      "mode": "--steps"
+    },
+    "unchanged_previous_publications": 627,
+    "observations": [
+      "All six pages covering 18 SVG/PDF/PNG triplets inspected: flat equal cells, selected keys, endpoints, reversal and default binned guides agree across formats.",
+      "Native four-chart window covers continuous and binned steps, local/collected guides, reversal and explicit endpoint keys."
+    ]
+  },
+  "owned_changes_from_alpha": [
+    "docs/implementation-status.md",
+    "examples/common/ggplot_colorsteps_fixtures.rs",
+    "fixtures/parity/ggplot2/colorsteps-layout.json",
+    "examples/chart-gallery/examples/ggplot_colorbars.rs",
+    "scripts/run_primary_authoring_proofs.py",
+    "tools/reference/r/colorsteps-layout.R",
+    "scripts/bindings/ggplot_colorbar_layout.py",
+    "scripts/bindings/ggplot_colorbar_layout.cjs",
+    "crates/chart-core/src/scales/mapped.rs",
+    "crates/chart-core/src/scales/color.rs",
+    "crates/chart-core/src/layout/legend_colorbar.rs",
+    "crates/chart-core/src/layout/facets.rs",
+    "docs/adr/024-sampled-gradient-paint.md",
+    "crates/chart-export/examples/ggplot_colorbar_layout.rs",
+    "docs/evidence/phase-2-ggplot-colorbar-alpha-2026-09-14.json",
+    "crates/chart-core/tests/ggplot_colorbar_layout.rs"
+  ],
+  "qualified_source_hashes": {
+    "docs/implementation-status.md": "7178b946bbb322e0faaa5ee5ec86b01039650259b8e2f43da87a62385aa94d08",
+    "examples/common/ggplot_colorsteps_fixtures.rs": "425367d7d915a3ebb0f34026ed3b0eecbf0cc723e331a694b0806c1a79f5d53d",
+    "fixtures/parity/ggplot2/colorsteps-layout.json": "0c38b1ad6b052bd9bbc807e604e069b6d91be9755316fdd4bf4801b5d810fbed",
+    "examples/chart-gallery/examples/ggplot_colorbars.rs": "7210b73a6b891ef1cc71900799a13339727fe336e20fe0bc061836d4e3382157",
+    "scripts/run_primary_authoring_proofs.py": "ef35f0ac811f3084260ba7dcf43427fd9526e957fcfd3045583f6660e9a81b83",
+    "tools/reference/r/colorsteps-layout.R": "8a531534ddff5b4aa99180afac26adf7631e5ab0237d5bc052232db559ef62bb",
+    "scripts/bindings/ggplot_colorbar_layout.py": "87d144becf28f16be76b8856868a33a122ec104b955cb2cb3f539ce17ac166ac",
+    "scripts/bindings/ggplot_colorbar_layout.cjs": "53fc34f11a3a554f25c0775e641e4f97dd1f4e2a2b21d1896ac5009c1b64483f",
+    "crates/chart-core/src/scales/mapped.rs": "e84d44795b7f7dac3a0d9bb259ac98d2e10486de91da46ff3ca7115257f86f40",
+    "crates/chart-core/src/scales/color.rs": "e5b9eec65ee871e9e8a99b3ba80f946327cdfd08c3e9b2604f8c774b7ce4e1a7",
+    "crates/chart-core/src/layout/legend_colorbar.rs": "99b9368f71e0f9401a5ceee2ae8bd76807468fe8192745a9be7ad0720969a44d",
+    "crates/chart-core/src/layout/facets.rs": "7f27838b85366da7e0aa94168af498dcb022c3fbcdde5ba3e68e663255c891c4",
+    "docs/adr/024-sampled-gradient-paint.md": "a81288cbb78e3067f01758d14b36fc21fa934aa165610689de3bd7fb6b56a00e",
+    "crates/chart-export/examples/ggplot_colorbar_layout.rs": "93449c31ef552be8fb3957d7efa6a6c2135d70ec7238a1b976272f8cb2bc1931",
+    "docs/evidence/phase-2-ggplot-colorbar-alpha-2026-09-14.json": "cf18f936532df7340f3aa7cff58c838cd4928bf571c0c5ac66be114e18ab9b04",
+    "crates/chart-core/tests/ggplot_colorbar_layout.rs": "5e902b4387a6d1d834972338fc421452ec1b66c9ee8811f983b0f03db45e1967"
+  },
+  "source_baseline": {
+    "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps/source-baseline.json",
+    "sha256": "22878cccf9901b238348a98b4b913c92ab02c62403e2a6992f3fcb9273cf61a6"
+  },
+  "limitations": [
+    "Full GG05 and GG05-19 remain open.",
+    "This slice does not qualify duplicate/out-of-order/nonfinite/degenerate cuts, nonuniform spacing or show-limits controls.",
+    "Mixed keys, guide composition, component identity and axis/custom guide contracts remain.",
+    "No new full cumulative bindings or Linux run.",
+    "The 60-case boundary fixture is preparation only and excluded from this qualification."
+  ],
+  "next": "Retain reference sequential key placement and handle nonfinite/degenerate stepped guides using the prepared boundary fixture."
+}

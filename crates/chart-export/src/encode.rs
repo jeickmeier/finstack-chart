@@ -123,6 +123,9 @@ pub(crate) fn pdf(
     }
     let mut active: Option<&chart_core::scene::GuideComponent> = None;
     for (index, item) in scene.items().iter().enumerate() {
+        if crate::snapshot::point_is_clipped(item, scene.bounds()) {
+            continue;
+        }
         let next = item.guide.as_ref().filter(|g| g.animation.is_some());
         let same = active.zip(next).is_some_and(|(a, b)| {
             a.scope == b.scope
@@ -309,6 +312,58 @@ pub(crate) fn pdf(
                                 DiagnosticCode::UnsupportedCapability,
                                 "Native painters cannot be encoded as PDF.",
                             ));
+                        }
+                        Primitive::SampledGradientRectangle {
+                            bounds,
+                            direction,
+                            colors,
+                            mode,
+                        } => {
+                            let x1 = p.f32(bounds.origin().x())?;
+                            let y1 = p.f32(bounds.origin().y())?;
+                            let (x2, y2) = match direction {
+                                chart_core::scene::GradientDirection::Horizontal => {
+                                    (p.f32(bounds.max_x())?, y1)
+                                }
+                                chart_core::scene::GradientDirection::Vertical => {
+                                    (x1, p.f32(bounds.max_y())?)
+                                }
+                            };
+                            let stops = mode
+                                .stops(colors)
+                                .map(|(position, c)| {
+                                    let offset = p.f32(position)?;
+                                    Ok(krilla::paint::Stop {
+                                        offset: NormalizedF32::new(offset).ok_or_else(|| {
+                                            error(
+                                                DiagnosticCode::ExportFidelity,
+                                                "Invalid gradient stop offset.",
+                                            )
+                                        })?,
+                                        color: krilla::color::rgb::Color::new(
+                                            c.red, c.green, c.blue,
+                                        )
+                                        .into(),
+                                        opacity: opacity(c),
+                                    })
+                                })
+                                .collect::<ChartResult<Vec<_>>>()?;
+                            surface.set_fill(Some(Fill {
+                                paint: krilla::paint::LinearGradient {
+                                    x1,
+                                    y1,
+                                    x2,
+                                    y2,
+                                    transform: Transform::identity(),
+                                    spread_method: krilla::paint::SpreadMethod::Pad,
+                                    stops,
+                                    anti_alias: true,
+                                }
+                                .into(),
+                                opacity: NormalizedF32::ONE,
+                                rule: FillRule::NonZero,
+                            }));
+                            surface.set_stroke(None);
                         }
                         Primitive::GradientRectangle { bounds, gradient } => {
                             let x1 = p.f32(bounds.origin().x())?;

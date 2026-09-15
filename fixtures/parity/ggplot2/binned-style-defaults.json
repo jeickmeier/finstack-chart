@@ -1,0 +1,1496 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "route": "default",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16,
+          17,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "default",
+      "theme_mode": "absent",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "labels": [
+              "3.95",
+              "4.05"
+            ],
+            "mapped": [
+              16,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "default",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          16,
+          17,
+          null,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "default",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    },
+    {
+      "route": "default",
+      "theme_mode": "vector",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16,
+          17,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "default",
+      "theme_mode": "vector",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "labels": [
+              "3.95",
+              "4.05"
+            ],
+            "mapped": [
+              16,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "default",
+      "theme_mode": "vector",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          16,
+          17,
+          null,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "default",
+      "theme_mode": "vector",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    },
+    {
+      "route": "default",
+      "theme_mode": "count",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16,
+          17,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "default",
+      "theme_mode": "count",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "labels": [
+              "3.95",
+              "4.05"
+            ],
+            "mapped": [
+              16,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "default",
+      "theme_mode": "count",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          16,
+          17,
+          null,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "default",
+      "theme_mode": "count",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16,
+          17,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "absent",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "labels": [
+              "3.95",
+              "4.05"
+            ],
+            "mapped": [
+              16,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          16,
+          17,
+          null,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "vector",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16,
+          17,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "vector",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "labels": [
+              "3.95",
+              "4.05"
+            ],
+            "mapped": [
+              16,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "vector",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          16,
+          17,
+          null,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "vector",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "count",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16,
+          17,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "count",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          16,
+          16
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "labels": [
+              "3.95",
+              "4.05"
+            ],
+            "mapped": [
+              16,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "count",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          16,
+          17,
+          null,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              16,
+              17,
+              15,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "solid",
+      "theme_mode": "count",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          1,
+          1,
+          2,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              1,
+              2,
+              0,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "absent",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          1,
+          1
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "labels": [
+              "3.95",
+              "4.05"
+            ],
+            "mapped": [
+              1,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          1,
+          2,
+          null,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              1,
+              2,
+              0,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "vector",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          1,
+          1,
+          2,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              1,
+              2,
+              0,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "vector",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          1,
+          1
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "labels": [
+              "3.95",
+              "4.05"
+            ],
+            "mapped": [
+              1,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "vector",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          1,
+          2,
+          null,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              1,
+              2,
+              0,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "vector",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "count",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          1,
+          1,
+          2,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              1,
+              2,
+              0,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "count",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          1,
+          1
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "labels": [
+              "3.95",
+              "4.05"
+            ],
+            "mapped": [
+              1,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "count",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          1,
+          2,
+          null,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              1,
+              2,
+              0,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "hollow",
+      "theme_mode": "count",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "error": "argument is of length zero"
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "absent",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "result": {
+        "error": "argument is of length zero"
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [],
+      "result": {
+        "error": "argument is of length zero"
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "vector",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [
+        [0.125, 0.375, 0.625, 0.875]
+      ],
+      "result": {
+        "mapped": [
+          3,
+          3,
+          3,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              3,
+              3,
+              3,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "vector",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        0.5
+      ],
+      "result": {
+        "mapped": [
+          3,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "labels": [
+              "3.95",
+              "4.05"
+            ],
+            "mapped": [
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "vector",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [
+        [0.125, 0.375, 0.625, 0.875]
+      ],
+      "result": {
+        "mapped": [
+          null,
+          3,
+          3,
+          null,
+          3
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10"
+            ],
+            "mapped": [
+              3,
+              3,
+              3,
+              3,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "vector",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "count",
+      "population": "ordinary",
+      "inputs": [
+        0,
+        1,
+        4,
+        9
+      ],
+      "calls": [
+        [0.125, 0.375, 0.625, 0.875]
+      ],
+      "result": {
+        "error": "invalid 'times' argument"
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "count",
+      "population": "constant",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        0.5
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              1
+            ],
+            "labels": [
+              "3.95",
+              "4.05"
+            ],
+            "mapped": [
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "count",
+      "population": "missing",
+      "inputs": [
+        null,
+        0,
+        4,
+        null,
+        9
+      ],
+      "calls": [
+        [0.125, 0.375, 0.625, 0.875]
+      ],
+      "result": {
+        "error": "invalid 'times' argument"
+      }
+    },
+    {
+      "route": "null",
+      "theme_mode": "count",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "guides": []
+      }
+    }
+  ]
+}

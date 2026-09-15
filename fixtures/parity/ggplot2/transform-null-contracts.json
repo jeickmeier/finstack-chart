@@ -1,0 +1,584 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "cases": [
+    {
+      "constructor": "asinh",
+      "args": [],
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "asn",
+      "args": [],
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "atanh",
+      "args": [],
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "boxcox",
+      "args": {
+        "p": 0
+      },
+      "forward_null": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "boxcox",
+      "args": {
+        "p": 0.5
+      },
+      "forward_null": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "boxcox",
+      "args": {
+        "p": -1,
+        "offset": 2
+      },
+      "forward_null": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "exp",
+      "args": [],
+      "forward_null": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "exp",
+      "args": {
+        "base": 2
+      },
+      "forward_null": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "identity",
+      "args": [],
+      "forward_null": {
+        "values": [],
+        "is_null": true
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": true
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "log",
+      "args": [],
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "log",
+      "args": {
+        "base": 0.5
+      },
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "log10",
+      "args": [],
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "log2",
+      "args": [],
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "log1p",
+      "args": [],
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "logit",
+      "args": [],
+      "forward_null": {
+        "error": "Non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "error": "Non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "probit",
+      "args": [],
+      "forward_null": {
+        "error": "Non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "error": "Non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "modulus",
+      "args": {
+        "p": 0
+      },
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "modulus",
+      "args": {
+        "p": 0.5
+      },
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "modulus",
+      "args": {
+        "p": 2,
+        "offset": 2
+      },
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "pseudo_log",
+      "args": [],
+      "forward_null": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "pseudo_log",
+      "args": {
+        "sigma": 0.5,
+        "base": 10
+      },
+      "forward_null": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "reciprocal",
+      "args": [],
+      "forward_null": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "reverse",
+      "args": [],
+      "forward_null": {
+        "error": "invalid argument to unary operator"
+      },
+      "inverse_null": {
+        "error": "invalid argument to unary operator"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "sqrt",
+      "args": [],
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "yj",
+      "args": {
+        "p": 0
+      },
+      "forward_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "error": "non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "yj",
+      "args": {
+        "p": 1
+      },
+      "forward_null": {
+        "error": "invalid argument to unary operator"
+      },
+      "inverse_null": {
+        "values": [],
+        "is_null": false
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "yj",
+      "args": {
+        "p": 2
+      },
+      "forward_null": {
+        "error": "invalid argument to unary operator"
+      },
+      "inverse_null": {
+        "error": "invalid argument to unary operator"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "probability",
+      "args": {
+        "distribution": "norm",
+        "mean": 2,
+        "sd": 3
+      },
+      "forward_null": {
+        "error": "Non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "error": "Non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    },
+    {
+      "constructor": "probability",
+      "args": {
+        "distribution": "logis",
+        "location": 2,
+        "scale": 3
+      },
+      "forward_null": {
+        "error": "Non-numeric argument to mathematical function"
+      },
+      "inverse_null": {
+        "error": "Non-numeric argument to mathematical function"
+      },
+      "forward_empty": {
+        "values": [],
+        "is_null": false
+      },
+      "inverse_empty": {
+        "values": [],
+        "is_null": false
+      }
+    }
+  ]
+}

@@ -352,8 +352,13 @@ export type GuideFormatter = {Labels:ReadonlyArray<string>} |
  {Registered:{operation:{id:string;version:number|bigint|string};parameters:JSONValue}};
 
 export class Axis extends Component {
+ missing_value(value:number|Options|null):this; missingValue(value:number|Options|null):this;
  expansion(policy:GgplotExpansion|null):this;
  discrete_policy(policy:Options|null):this; discretePolicy(policy:Options|null):this;
+ temporal_limits(limits:readonly [Options|null,Options|null]|null):this; temporalLimits(limits:readonly [Options|null,Options|null]|null):this;
+ numeric_limits(limits:readonly [number|Options|null,number|Options|null]|null):this; numericLimits(limits:readonly [number|Options|null,number|Options|null]|null):this;
+ limits_function(operation:Options):this; limitsFunction(operation:Options):this;
+ oob_function(operation:Options|null):this; oobFunction(operation:Options|null):this;
  continuous_limits(values:ReadonlyArray<number|boolean|Options>|null):this; continuousLimits(values:ReadonlyArray<number|boolean|Options>|null):this;
  guide_profile(profile:GuideProfile):this; guideProfile(profile:GuideProfile):this;
  guide_components(components:GuideComponents|null):this; guideComponents(components:GuideComponents|null):this;
@@ -364,6 +369,7 @@ export class Axis extends Component {
  tick_padding(padding:number):this; tickPadding(padding:number):this;
  tick_offset(offset:number|null):this; tickOffset(offset:number|null):this;
  tick_arguments(arguments_:GuideTickArguments|null):this; tickArguments(arguments_:GuideTickArguments|null):this;
+ breaks_function(operation:Options|null):this; breaksFunction(operation:Options|null):this;
  tick_values(values:ReadonlyArray<ScaleValue>|null):this; tickValues(values:ReadonlyArray<ScaleValue>|null):this;
  minor_breaks(policy:MinorBreaks|null):this; minorBreaks(policy:MinorBreaks|null):this;
  tick_format(format:GuideFormatter|null):this; tickFormat(format:GuideFormatter|null):this;
@@ -453,6 +459,7 @@ export class Style extends Component {
 }
 
 export class Theme extends Component {
+  scale_palettes(values: Record<string, JSONValue>): this; scalePalettes(values: Record<string, JSONValue>): this;
   geometry(value: {ink?: Color; paper?: Color; accent?: Color; point_size?: number; line_width?: number}): this;
   private readonly _family: "Theme";
   preset(value: string): this;
@@ -674,6 +681,7 @@ export class Link extends Component {
   missing(value: string): this;
 }
 export function aes(): Aes;
+export function blank(): Layer;
 export function points(): Layer;
 export function line(): Layer;
 export function area(): Layer;
@@ -710,7 +718,10 @@ export function scale_binned(spec: Options): Scale;
 export function scaleBinned(spec: Options): Scale;
 export function scale_log(base: number): Scale;
 export function scale_reverse(): Scale;
+export function scaleReverse(): Scale;
 export function scale_sqrt(): Scale;
+export function scale_transform(transform: Options): Scale;
+export function scaleSqrt(): Scale;
 export function scaleLog(base: number): Scale;
 export function scale_symlog(threshold: number): Scale;
 export function scaleSymlog(threshold: number): Scale;
@@ -736,6 +747,7 @@ export class Guide extends Component {
  tick_padding(padding:number):this; tickPadding(padding:number):this;
  tick_offset(offset:number|null):this; tickOffset(offset:number|null):this;
  tick_arguments(arguments_:GuideTickArguments|null):this; tickArguments(arguments_:GuideTickArguments|null):this;
+ breaks_function(operation:Options|null):this; breaksFunction(operation:Options|null):this;
  tick_values(values:ReadonlyArray<ScaleValue>|null):this; tickValues(values:ReadonlyArray<ScaleValue>|null):this;
  minor_breaks(policy:MinorBreaks|null):this; minorBreaks(policy:MinorBreaks|null):this;
  tick_format(format:GuideFormatter|null):this; tickFormat(format:GuideFormatter|null):this;
@@ -760,6 +772,8 @@ export class Guide extends Component {
 }
 export function axis_guide(name: string, scale: string): Guide;
 export const axisGuide: typeof axis_guide;
+export function xlim(limits: Options): Axis;
+export function ylim(limits: Options): Axis;
 export function x_axis(): Axis;
 export function xAxis(): Axis;
 export function y_axis(): Axis;
@@ -1247,6 +1261,6 @@ export const hierarchySunburst:typeof hierarchy_sunburst;
 export const hierarchyTreemap:typeof hierarchy_treemap;
 export const hierarchyPack:typeof hierarchy_pack;
 
-export type MinorBreaks = "Automatic" | "Hidden" | {Numeric: ReadonlyArray<number | Options>} | {TimeWidth:string} | {Timestamps:ReadonlyArray<Options|null>};
+export type MinorBreaks = "Automatic" | "Hidden" | {Registered:Options} | {Numeric: ReadonlyArray<number | Options>} | {TimeWidth:string} | {Timestamps:ReadonlyArray<Options|null>};
 
 export interface GgplotExpansion {mult:ReadonlyArray<number>;add:ReadonlyArray<number>; }

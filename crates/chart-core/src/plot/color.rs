@@ -89,6 +89,9 @@ impl ColorScaleBuilder {
     pub fn missing(mut self, missing: impl Into<Paint>) -> Self {
         let missing = missing.into();
         self.scale = self.scale.map(|mut s| {
+            if let ColorScale::Mapped { scale, .. } = &mut s {
+                scale.missing_paint_is_na = false;
+            }
             match &mut s {
                 ColorScale::Discrete { missing: m, .. }
                 | ColorScale::Continuous { missing: m, .. }
@@ -153,13 +156,23 @@ pub fn color_mapped(
     name: impl Into<String>,
     scale: crate::scales::MappedScaleSpec,
 ) -> ColorScaleBuilder {
-    let missing = if scale.reference_guides() { 127 } else { 128 };
+    let shade = if scale.reference_guides() { 127 } else { 128 };
+    let missing = if scale.missing_paint_is_na {
+        crate::scene::Color {
+            red: 0,
+            green: 0,
+            blue: 0,
+            alpha: 0,
+        }
+    } else {
+        crate::theme::rgb(shade, shade, shade)
+    };
     ColorScaleBuilder {
         name: name.into(),
         id: fresh_id().map(ScaleId::new),
         scale: Ok(ColorScale::Mapped {
             scale,
-            missing: crate::theme::rgb(missing, missing, missing).into(),
+            missing: missing.into(),
         }),
     }
 }

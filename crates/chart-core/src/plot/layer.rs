@@ -610,6 +610,10 @@ impl LayerBuilder {
         Ok((layer, mapped))
     }
 }
+/// Train mapped scales without painting marks; x and y mappings are optional.
+pub fn blank() -> LayerBuilder {
+    LayerBuilder::new(Geom::Blank)
+}
 /// Circular source points.
 pub fn points() -> LayerBuilder {
     LayerBuilder::new(Geom::Point)

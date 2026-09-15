@@ -17,6 +17,7 @@ enum Mode {
     Fixed,
     Append,
     Empty,
+    Null,
     Numeric,
 }
 #[derive(serde::Deserialize)]
@@ -59,6 +60,7 @@ impl CustomScaleLimits for Limits {
                 Some(keys)
             }
             Mode::Empty => Some(vec![]),
+            Mode::Null => None,
             Mode::Numeric => Some([3., 1.].map(|v| ScaleKey::Number(Number(v))).to_vec()),
         })
     }

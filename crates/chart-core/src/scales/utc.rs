@@ -305,6 +305,33 @@ pub(crate) fn absolute(relative: f64, origin: i64) -> ChartResult<i64> {
         )
     })
 }
+/// Convert an already represented numeric callback offset, including exact large
+/// integers. Source-origin admission continues to use the stricter span contract.
+pub(crate) fn absolute_number(relative: f64, origin: i64) -> ChartResult<i64> {
+    if !relative.is_finite() || relative.fract() != 0. || relative.abs() > u64::MAX as f64 {
+        return Err(error(
+            DiagnosticCode::PrecisionLoss,
+            "Numeric timestamp offset is not a represented integer.",
+        ));
+    }
+    i64::try_from(i128::from(origin) + relative as i128).map_err(|_| {
+        error(
+            DiagnosticCode::PrecisionLoss,
+            "Numeric timestamp exceeds the source integer representation.",
+        )
+    })
+}
+pub(crate) fn relative_number(value: i64, origin: i64) -> ChartResult<f64> {
+    let delta = i128::from(value) - i128::from(origin);
+    let number = delta as f64;
+    if number as i128 != delta {
+        return Err(error(
+            DiagnosticCode::PrecisionLoss,
+            "Numeric timestamp offset loses source ticks.",
+        ));
+    }
+    Ok(number)
+}
 pub(crate) fn ticks_per_second(unit: TimeUnit) -> i128 {
     match unit {
         TimeUnit::Seconds => 1,
@@ -454,4 +481,22 @@ pub(crate) fn shift_bounds(value: TimeBounds, offset: i64) -> ChartResult<TimeBo
         start: shift_timestamp(value.start, offset)?,
         end: shift_timestamp(value.end, offset)?,
     })
+}
+
+#[cfg(test)]
+mod numeric_origin_tests {
+    use super::*;
+    #[test]
+    fn represented_callback_offsets_preserve_exact_ticks_without_relaxing_source_spans() {
+        let origin = 1_700_000_000_000_000_000_i64;
+        let value = 1_000_000_000_i64;
+        let offset = relative_number(value, origin).unwrap();
+        assert_eq!(absolute_number(offset, origin).unwrap(), value);
+        assert!(relative(value, origin).is_err());
+        assert!(absolute(offset, origin).is_err());
+        assert!(relative_number(value + 1, origin).is_err());
+        assert!(absolute_number(0.5, origin).is_err());
+        assert!(absolute_number(f64::INFINITY, origin).is_err());
+        assert!(absolute_number(u64::MAX as f64, origin).is_err());
+    }
 }

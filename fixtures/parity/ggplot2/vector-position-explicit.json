@@ -1,0 +1,6915 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "configurations": [
+    {
+      "family": "cardinality",
+      "composed": false
+    },
+    {
+      "family": "cardinality",
+      "composed": true
+    },
+    {
+      "family": "center",
+      "composed": false
+    },
+    {
+      "family": "center",
+      "composed": true
+    }
+  ],
+  "cases": [
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          4,
+          7
+        ],
+        "minor": [
+          4,
+          5.5,
+          7
+        ],
+        "positions": [
+          0.045454545454545421,
+          0.95454545454545447
+        ],
+        "labels": [
+          "2",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          4,
+          7
+        ],
+        "minor": [
+          4,
+          5.5,
+          7
+        ],
+        "positions": [
+          0.045454545454545421,
+          0.95454545454545447
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          4,
+          5,
+          7,
+          7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          4,
+          4.5,
+          5,
+          6,
+          7,
+          7,
+          7
+        ],
+        "positions": [
+          0.045454545454545421,
+          0.34848484848484845,
+          0.95454545454545447,
+          0.95454545454545447,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "-3",
+          "-2",
+          "0",
+          "0",
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          4,
+          5,
+          7,
+          7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          4,
+          4.5,
+          5,
+          6,
+          7,
+          7,
+          7
+        ],
+        "positions": [
+          0.045454545454545421,
+          0.34848484848484845,
+          0.95454545454545447,
+          0.95454545454545447,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          4,
+          7
+        ],
+        "minor": [
+          4,
+          5.5,
+          7,
+          8.5,
+          10
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.3863636363636363
+        ],
+        "labels": [
+          "2",
+          "5"
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          4,
+          7
+        ],
+        "minor": [
+          4,
+          5.5,
+          7,
+          8.5,
+          10
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.3863636363636363
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          4,
+          5,
+          7,
+          7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          4,
+          4.5,
+          5,
+          6,
+          7,
+          7,
+          7,
+          7.5,
+          8
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.3863636363636363,
+          0.3863636363636363,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "-3",
+          "-2",
+          "0",
+          "0",
+          null,
+          null,
+          null
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          4,
+          5,
+          7,
+          7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          4,
+          4.5,
+          5,
+          6,
+          7,
+          7,
+          7,
+          7.5,
+          8
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.3863636363636363,
+          0.3863636363636363,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          4,
+          7
+        ],
+        "minor": [
+          4,
+          5.5,
+          7
+        ],
+        "positions": [
+          0.045454545454545421,
+          0.95454545454545447
+        ],
+        "labels": [
+          "2",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          4,
+          7
+        ],
+        "minor": [
+          4,
+          5.5,
+          7
+        ],
+        "positions": [
+          0.045454545454545421,
+          0.95454545454545447
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          4,
+          5,
+          7,
+          7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          4,
+          4.5,
+          5,
+          6,
+          7,
+          7,
+          7
+        ],
+        "positions": [
+          0.045454545454545421,
+          0.34848484848484845,
+          0.95454545454545447,
+          0.95454545454545447,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "-3",
+          "-2",
+          "0",
+          "0",
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          4,
+          5,
+          7,
+          7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          4,
+          4.5,
+          5,
+          6,
+          7,
+          7,
+          7
+        ],
+        "positions": [
+          0.045454545454545421,
+          0.34848484848484845,
+          0.95454545454545447,
+          0.95454545454545447,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          4,
+          7
+        ],
+        "minor": [
+          4,
+          5.5,
+          7,
+          8.5,
+          10
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.3863636363636363
+        ],
+        "labels": [
+          "2",
+          "5"
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          4,
+          7
+        ],
+        "minor": [
+          4,
+          5.5,
+          7,
+          8.5,
+          10
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.3863636363636363
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          4,
+          5,
+          7,
+          7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          4,
+          4.5,
+          5,
+          6,
+          7,
+          7,
+          7,
+          7.5,
+          8
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.3863636363636363,
+          0.3863636363636363,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "-3",
+          "-2",
+          "0",
+          "0",
+          null,
+          null,
+          null
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          4,
+          5,
+          7,
+          7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          4,
+          4.5,
+          5,
+          6,
+          7,
+          7,
+          7,
+          7.5,
+          8
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.3863636363636363,
+          0.3863636363636363,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          -4,
+          -7
+        ],
+        "minor": [
+          -4,
+          -5.5,
+          -7
+        ],
+        "positions": [
+          0.95454545454545459,
+          0.04545454545454556
+        ],
+        "labels": [
+          "2",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          -4,
+          -7
+        ],
+        "minor": [
+          -4,
+          -5.5,
+          -7
+        ],
+        "positions": [
+          0.95454545454545459,
+          0.04545454545454556
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          -4,
+          -5,
+          -7,
+          -7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          -4,
+          -4.5,
+          -5,
+          -6,
+          -7,
+          -7,
+          -7
+        ],
+        "positions": [
+          0.95454545454545459,
+          0.6515151515151516,
+          0.04545454545454556,
+          0.04545454545454556,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "-3",
+          "-2",
+          "0",
+          "0",
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          -4,
+          -5,
+          -7,
+          -7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          -4,
+          -4.5,
+          -5,
+          -6,
+          -7,
+          -7,
+          -7
+        ],
+        "positions": [
+          0.95454545454545459,
+          0.6515151515151516,
+          0.04545454545454556,
+          0.04545454545454556,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -4,
+          -7
+        ],
+        "minor": [
+          -4,
+          -5.5,
+          -7
+        ],
+        "positions": [
+          0.95454545454545447,
+          0.61363636363636365
+        ],
+        "labels": [
+          "2",
+          "5"
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -4,
+          -7
+        ],
+        "minor": [
+          -4,
+          -5.5,
+          -7
+        ],
+        "positions": [
+          0.95454545454545447,
+          0.61363636363636365
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -4,
+          -5,
+          -7,
+          -7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          -4,
+          -4.5,
+          -5,
+          -6,
+          -7,
+          -7,
+          -7
+        ],
+        "positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.61363636363636365,
+          0.61363636363636365,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "-3",
+          "-2",
+          "0",
+          "0",
+          null,
+          null,
+          null
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -4,
+          -5,
+          -7,
+          -7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          -4,
+          -4.5,
+          -5,
+          -6,
+          -7,
+          -7,
+          -7
+        ],
+        "positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.61363636363636365,
+          0.61363636363636365,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          -4,
+          -7
+        ],
+        "minor": [
+          -4,
+          -5.5,
+          -7
+        ],
+        "positions": [
+          0.95454545454545459,
+          0.04545454545454556
+        ],
+        "labels": [
+          "2",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          -4,
+          -7
+        ],
+        "minor": [
+          -4,
+          -5.5,
+          -7
+        ],
+        "positions": [
+          0.95454545454545459,
+          0.04545454545454556
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          -4,
+          -5,
+          -7,
+          -7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          -4,
+          -4.5,
+          -5,
+          -6,
+          -7,
+          -7,
+          -7
+        ],
+        "positions": [
+          0.95454545454545459,
+          0.6515151515151516,
+          0.04545454545454556,
+          0.04545454545454556,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "-3",
+          "-2",
+          "0",
+          "0",
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          -4,
+          -5,
+          -7,
+          -7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          -4,
+          -4.5,
+          -5,
+          -6,
+          -7,
+          -7,
+          -7
+        ],
+        "positions": [
+          0.95454545454545459,
+          0.6515151515151516,
+          0.04545454545454556,
+          0.04545454545454556,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -4,
+          -7
+        ],
+        "minor": [
+          -4,
+          -5.5,
+          -7
+        ],
+        "positions": [
+          0.95454545454545447,
+          0.61363636363636365
+        ],
+        "labels": [
+          "2",
+          "5"
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -4,
+          -7
+        ],
+        "minor": [
+          -4,
+          -5.5,
+          -7
+        ],
+        "positions": [
+          0.95454545454545447,
+          0.61363636363636365
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -4,
+          -5,
+          -7,
+          -7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          -4,
+          -4.5,
+          -5,
+          -6,
+          -7,
+          -7,
+          -7
+        ],
+        "positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.61363636363636365,
+          0.61363636363636365,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "-3",
+          "-2",
+          "0",
+          "0",
+          null,
+          null,
+          null
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -4,
+          -5,
+          -7,
+          -7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          -4,
+          -4.5,
+          -5,
+          -6,
+          -7,
+          -7,
+          -7
+        ],
+        "positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.61363636363636365,
+          0.61363636363636365,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -1.4833333333333334,
+          1.8166666666666664
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.90404040404040409
+        ],
+        "labels": [
+          null,
+          "1.5"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -1.4833333333333334,
+          1.8166666666666664
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.90404040404040409
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -1.4833333333333334,
+          1.8166666666666664
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -1.4833333333333334,
+          1.8166666666666664
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -1.4833333333333334,
+          1.8166666666666664
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -1.4833333333333334,
+          1.8166666666666664
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          -1.5,
+          1.5
+        ],
+        "minor": [
+          -3,
+          -1.5,
+          0,
+          1.5,
+          3
+        ],
+        "positions": [
+          0.32954545454545459,
+          0.67045454545454541
+        ],
+        "labels": [
+          "-1.5",
+          "1.5"
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          -1.5,
+          1.5
+        ],
+        "minor": [
+          -3,
+          -1.5,
+          0,
+          1.5,
+          3
+        ],
+        "positions": [
+          0.32954545454545459,
+          0.67045454545454541
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -1.6499999999999999,
+          1.6499999999999999
+        ],
+        "breaks": [
+          -1.5,
+          1.5
+        ],
+        "minor": [
+          -1.5,
+          0,
+          1.5
+        ],
+        "positions": [
+          0.045454545454545428,
+          0.95454545454545459
+        ],
+        "labels": [
+          "-1.5",
+          "1.5"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -1.6499999999999999,
+          1.6499999999999999
+        ],
+        "breaks": [
+          -1.5,
+          1.5
+        ],
+        "minor": [
+          -1.5,
+          0,
+          1.5
+        ],
+        "positions": [
+          0.045454545454545428,
+          0.95454545454545459
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -1.6499999999999999,
+          1.6499999999999999
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -1.6499999999999999,
+          1.6499999999999999
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -1.6499999999999999,
+          1.6499999999999999
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -1.6499999999999999,
+          1.6499999999999999
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          -1.5,
+          1.5
+        ],
+        "minor": [
+          -3,
+          -1.5,
+          0,
+          1.5,
+          3
+        ],
+        "positions": [
+          0.32954545454545459,
+          0.67045454545454541
+        ],
+        "labels": [
+          "-1.5",
+          "1.5"
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          -1.5,
+          1.5
+        ],
+        "minor": [
+          -3,
+          -1.5,
+          0,
+          1.5,
+          3
+        ],
+        "positions": [
+          0.32954545454545459,
+          0.67045454545454541
+        ],
+        "labels": [
+          "key-1",
+          "key-2"
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          "key-1",
+          "key-2",
+          "key-3",
+          "key-4",
+          "key-5",
+          "key-6",
+          "key-7"
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "`breaks` and `labels` have different lengths."
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": null,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "pair",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2"
+      ],
+      "break_values": [
+        2,
+        5
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "empty",
+      "label_mode": "explicit",
+      "explicit_labels": [],
+      "break_values": [],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "default",
+      "explicit_labels": null,
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "explicit_mode": "mixed",
+      "label_mode": "explicit",
+      "explicit_labels": [
+        "key-1",
+        "key-2",
+        "key-3",
+        "key-4",
+        "key-5",
+        "key-6",
+        "key-7"
+      ],
+      "break_values": [
+        -3,
+        -2,
+        0,
+        0,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "-Infinity"
+        }
+      ],
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    }
+  ]
+}

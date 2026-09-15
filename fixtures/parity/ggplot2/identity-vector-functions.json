@@ -1,0 +1,9761 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "configurations": [
+    {
+      "family": "cardinality",
+      "composed": false
+    },
+    {
+      "family": "cardinality",
+      "composed": true
+    },
+    {
+      "family": "center",
+      "composed": false
+    },
+    {
+      "family": "center",
+      "composed": true
+    }
+  ],
+  "cases": [
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [
+              6,
+              7
+            ],
+            "mapped": [
+              6,
+              7
+            ],
+            "labels": [
+              "2",
+              "3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [
+              4,
+              7
+            ],
+            "mapped": [
+              4,
+              7
+            ],
+            "labels": [
+              "2",
+              "5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              7,
+              9,
+              11
+            ],
+            "mapped": [
+              7,
+              9,
+              11
+            ],
+            "labels": [
+              "2",
+              "4",
+              "6"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              4,
+              12
+            ],
+            "mapped": [
+              4,
+              12
+            ],
+            "labels": [
+              "2",
+              "10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              9,
+              9
+            ],
+            "mapped": [
+              9,
+              9
+            ],
+            "labels": [
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [
+              6,
+              7
+            ],
+            "mapped": [
+              6,
+              7
+            ],
+            "labels": [
+              "2",
+              "3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [
+              4,
+              7
+            ],
+            "mapped": [
+              4,
+              7
+            ],
+            "labels": [
+              "2",
+              "5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              7,
+              9,
+              11
+            ],
+            "mapped": [
+              7,
+              9,
+              11
+            ],
+            "labels": [
+              "2",
+              "4",
+              "6"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              4,
+              12
+            ],
+            "mapped": [
+              4,
+              12
+            ],
+            "labels": [
+              "2",
+              "10"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              9,
+              9
+            ],
+            "mapped": [
+              9,
+              9
+            ],
+            "labels": [
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -6,
+              -7
+            ],
+            "mapped": [
+              -6,
+              -7
+            ],
+            "labels": [
+              "2",
+              "3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -7,
+              -4
+            ],
+            "mapped": [
+              -7,
+              -4
+            ],
+            "labels": [
+              "5",
+              "2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -7,
+              -9,
+              -11
+            ],
+            "mapped": [
+              -7,
+              -9,
+              -11
+            ],
+            "labels": [
+              "2",
+              "4",
+              "6"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -12,
+              -4
+            ],
+            "mapped": [
+              -12,
+              -4
+            ],
+            "labels": [
+              "10",
+              "2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -9
+            ],
+            "mapped": [
+              -9
+            ],
+            "labels": [
+              "last"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -6,
+              -7
+            ],
+            "mapped": [
+              -6,
+              -7
+            ],
+            "labels": [
+              "2",
+              "3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -7,
+              -4
+            ],
+            "mapped": [
+              -7,
+              -4
+            ],
+            "labels": [
+              "5",
+              "2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            5,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -7,
+              -9,
+              -11
+            ],
+            "mapped": [
+              -7,
+              -9,
+              -11
+            ],
+            "labels": [
+              "2",
+              "4",
+              "6"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -12,
+              -4
+            ],
+            "mapped": [
+              -12,
+              -4
+            ],
+            "labels": [
+              "10",
+              "2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -9
+            ],
+            "mapped": [
+              -9
+            ],
+            "labels": [
+              "last"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            10,
+            2
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            2,
+            10
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "invalid argument to unary operator"
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "invalid argument to unary operator"
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "invalid argument to unary operator"
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "invalid argument to unary operator"
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "invalid argument to unary operator"
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "invalid argument to unary operator"
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [
+          -1.3333333333333335,
+          1.6666666666666665
+        ],
+        "keys": [
+          {
+            "values": [
+              -0.5,
+              0.5,
+              1.5
+            ],
+            "mapped": [
+              -0.5,
+              0.5,
+              1.5
+            ],
+            "labels": [
+              "-0.5",
+              "0.5",
+              "1.5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            -1.3333333333333335,
+            1.6666666666666665
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [
+          -1.3333333333333335,
+          1.6666666666666665
+        ],
+        "keys": [
+          {
+            "values": [
+              1.5
+            ],
+            "mapped": [
+              1.5
+            ],
+            "labels": [
+              "1.5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            -1.3333333333333335,
+            1.6666666666666665
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [
+          -1.3333333333333335,
+          1.6666666666666665
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -1.3333333333333335,
+            1.6666666666666665
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.3333333333333335,
+            1.6666666666666665
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [
+          -1.3333333333333335,
+          1.6666666666666665
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -1.3333333333333335,
+            1.6666666666666665
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.3333333333333335,
+            1.6666666666666665
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            1.5,
+            -1.5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [
+          -1.3333333333333335,
+          1.6666666666666665
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -1.3333333333333335,
+            1.6666666666666665
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.3333333333333335,
+            1.6666666666666665
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            1.5,
+            -1.5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [
+          -1.3333333333333335,
+          1.6666666666666665
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [
+              -4,
+              -2,
+              0,
+              2,
+              4
+            ],
+            "mapped": [
+              -4,
+              -2,
+              0,
+              2,
+              4
+            ],
+            "labels": [
+              "-4",
+              "-2",
+              "0",
+              "2",
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [
+              -4,
+              4
+            ],
+            "mapped": [
+              -4,
+              4
+            ],
+            "labels": [
+              "-4",
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            4,
+            -4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            4,
+            -4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [
+          -1.5,
+          1.5
+        ],
+        "keys": [
+          {
+            "values": [
+              -1.5,
+              -1,
+              -0.5,
+              0,
+              0.5,
+              1,
+              1.5
+            ],
+            "mapped": [
+              -1.5,
+              -1,
+              -0.5,
+              0,
+              0.5,
+              1,
+              1.5
+            ],
+            "labels": [
+              "-1.5",
+              "-1.0",
+              "-0.5",
+              "0.0",
+              "0.5",
+              "1.0",
+              "1.5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            -1.5,
+            1.5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [
+          -1.5,
+          1.5
+        ],
+        "keys": [
+          {
+            "values": [
+              -1.5,
+              1.5
+            ],
+            "mapped": [
+              -1.5,
+              1.5
+            ],
+            "labels": [
+              "-1.5",
+              "1.5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            -1.5,
+            1.5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [
+          -1.5,
+          1.5
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -1.5,
+            1.5
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.5,
+            1.5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [
+          -1.5,
+          1.5
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -1.5,
+            1.5
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.5,
+            1.5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            1.5,
+            -1.5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [
+          -1.5,
+          1.5
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -1.5,
+            1.5
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.5,
+            1.5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            1.5,
+            -1.5
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [
+          -1.5,
+          1.5
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [
+              -4,
+              -2,
+              0,
+              2,
+              4
+            ],
+            "mapped": [
+              -4,
+              -2,
+              0,
+              2,
+              4
+            ],
+            "labels": [
+              "-4",
+              "-2",
+              "0",
+              "2",
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [
+              -4,
+              4
+            ],
+            "mapped": [
+              -4,
+              4
+            ],
+            "labels": [
+              "-4",
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            4,
+            -4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            4,
+            -4
+          ],
+          "names": [],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [],
+            "mapped": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": true
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": true
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": true
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": true
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": true
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [
+        {
+          "values": [],
+          "names": [],
+          "is_null": true
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "one",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "none",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "layers": "two",
+      "limit_mode": "reverse",
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    }
+  ]
+}

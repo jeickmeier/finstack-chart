@@ -1,0 +1,2777 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "colour",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF",
+          "#FDE725FF",
+          "#FDE725FF",
+          "#FDE725FF",
+          "#FDE725FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#440154",
+          "#FDE725",
+          "#FDE725",
+          "#FDE725",
+          "#FDE725"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF",
+          "#31688EFF",
+          "#31688EFF",
+          "#35B779FF",
+          "#FDE725FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#440154",
+          "#31688E",
+          "#31688E",
+          "#35B779",
+          "#FDE725"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF",
+          "#472F7DFF",
+          "#31688EFF",
+          "#54C568FF",
+          "#FDE725FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#440154",
+          "#472F7D",
+          "#31688E",
+          "#54C568",
+          "#FDE725"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#440154FF",
+          "grey50",
+          "#440154FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#440154",
+          "#7F7F7F",
+          "#440154",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#440154FF",
+          "grey50",
+          "#FDE725FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#440154",
+          "#7F7F7F",
+          "#FDE725",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#440154FF",
+          "grey50",
+          "#FDE725FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#440154",
+          "#7F7F7F",
+          "#FDE725",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#E41A1C",
+          "#377EB8",
+          "#377EB8",
+          "#377EB8",
+          "#377EB8"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#E41A1C",
+          "#377EB8",
+          "#377EB8",
+          "#377EB8",
+          "#377EB8"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#E41A1C",
+          "#377EB8",
+          "#377EB8",
+          "#4DAF4A",
+          "#984EA3"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#E41A1C",
+          "#377EB8",
+          "#377EB8",
+          "#4DAF4A",
+          "#984EA3"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#E41A1C",
+          "#4DAF4A",
+          "#FFFF33",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#E41A1C",
+          "#4DAF4A",
+          "#FFFF33",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#E41A1C",
+          "grey50",
+          "#E41A1C",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#E41A1C",
+          "#7F7F7F",
+          "#E41A1C",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#E41A1C",
+          "grey50",
+          "#4DAF4A",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#E41A1C",
+          "#7F7F7F",
+          "#4DAF4A",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#E41A1C",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#E41A1C",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#F8766D",
+          "#00BFC4",
+          "#00BFC4",
+          "#00BFC4",
+          "#00BFC4"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#F8766D",
+          "#00BFC4",
+          "#00BFC4",
+          "#00BFC4",
+          "#00BFC4"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#F8766D",
+          "#7CAE00",
+          "#7CAE00",
+          "#00BFC4",
+          "#C77CFF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#F8766D",
+          "#7CAE00",
+          "#7CAE00",
+          "#00BFC4",
+          "#C77CFF"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#F8766D",
+          "#CD9600",
+          "#0BB702",
+          "#8494FF",
+          "#FF68A1"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#F8766D",
+          "#CD9600",
+          "#0BB702",
+          "#8494FF",
+          "#FF68A1"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#F8766D",
+          "grey50",
+          "#F8766D",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#F8766D",
+          "#7F7F7F",
+          "#F8766D",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#F8766D",
+          "grey50",
+          "#619CFF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#F8766D",
+          "#7F7F7F",
+          "#619CFF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#F8766D",
+          "grey50",
+          "#FF64B0",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#F8766D",
+          "#7F7F7F",
+          "#FF64B0",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#002F70",
+          "#5F1415",
+          "#5F1415",
+          "#5F1415",
+          "#5F1415"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#002F70",
+          "#5F1415",
+          "#5F1415",
+          "#5F1415",
+          "#5F1415"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#002F70",
+          "#B4C2EB",
+          "#B4C2EB",
+          "#EDB4B5",
+          "#5F1415"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#002F70",
+          "#B4C2EB",
+          "#B4C2EB",
+          "#EDB4B5",
+          "#5F1415"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#002F70",
+          "#346AC0",
+          "#B4C2EB",
+          "#DE9393",
+          "#5F1415"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#002F70",
+          "#346AC0",
+          "#B4C2EB",
+          "#DE9393",
+          "#5F1415"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#002F70",
+          "grey50",
+          "#002F70",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#002F70",
+          "#7F7F7F",
+          "#002F70",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#002F70",
+          "grey50",
+          "#5F1415",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#002F70",
+          "#7F7F7F",
+          "#5F1415",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#002F70",
+          "grey50",
+          "#5F1415",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#002F70",
+          "#7F7F7F",
+          "#5F1415",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#00ff00",
+          "#00ff00",
+          "#00ff00",
+          "#00ff00"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#00FF00",
+          "#00FF00",
+          "#00FF00",
+          "#00FF00"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#00ff00",
+          "#00ff00",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#00FF00",
+          "#00FF00",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#0000ff",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#ff0000",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF",
+          "#FDE725FF",
+          "#FDE725FF",
+          "#FDE725FF",
+          "#FDE725FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#440154",
+          "#FDE725",
+          "#FDE725",
+          "#FDE725",
+          "#FDE725"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF",
+          "#31688EFF",
+          "#31688EFF",
+          "#35B779FF",
+          "#FDE725FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#440154",
+          "#31688E",
+          "#31688E",
+          "#35B779",
+          "#FDE725"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF",
+          "#472F7DFF",
+          "#31688EFF",
+          "#54C568FF",
+          "#FDE725FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#440154",
+          "#472F7D",
+          "#31688E",
+          "#54C568",
+          "#FDE725"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#440154FF",
+          "grey50",
+          "#440154FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#440154",
+          "#7F7F7F",
+          "#440154",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#440154FF",
+          "grey50",
+          "#FDE725FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#440154",
+          "#7F7F7F",
+          "#FDE725",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#440154FF",
+          "grey50",
+          "#FDE725FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#440154",
+          "#7F7F7F",
+          "#FDE725",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "viridis",
+      "palette": [
+        "viridis"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#E41A1C",
+          "#377EB8",
+          "#377EB8",
+          "#377EB8",
+          "#377EB8"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#E41A1C",
+          "#377EB8",
+          "#377EB8",
+          "#377EB8",
+          "#377EB8"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#E41A1C",
+          "#377EB8",
+          "#377EB8",
+          "#4DAF4A",
+          "#984EA3"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#E41A1C",
+          "#377EB8",
+          "#377EB8",
+          "#4DAF4A",
+          "#984EA3"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#E41A1C",
+          "#4DAF4A",
+          "#FFFF33",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#E41A1C",
+          "#4DAF4A",
+          "#FFFF33",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#E41A1C",
+          "grey50",
+          "#E41A1C",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#E41A1C",
+          "#7F7F7F",
+          "#E41A1C",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#E41A1C",
+          "grey50",
+          "#4DAF4A",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#E41A1C",
+          "#7F7F7F",
+          "#4DAF4A",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#E41A1C",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#E41A1C",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "brewer",
+      "palette": [
+        "Set1"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#F8766D",
+          "#00BFC4",
+          "#00BFC4",
+          "#00BFC4",
+          "#00BFC4"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#F8766D",
+          "#00BFC4",
+          "#00BFC4",
+          "#00BFC4",
+          "#00BFC4"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#F8766D",
+          "#7CAE00",
+          "#7CAE00",
+          "#00BFC4",
+          "#C77CFF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#F8766D",
+          "#7CAE00",
+          "#7CAE00",
+          "#00BFC4",
+          "#C77CFF"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#F8766D",
+          "#CD9600",
+          "#0BB702",
+          "#8494FF",
+          "#FF68A1"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#F8766D",
+          "#CD9600",
+          "#0BB702",
+          "#8494FF",
+          "#FF68A1"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#F8766D",
+          "grey50",
+          "#F8766D",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#F8766D",
+          "#7F7F7F",
+          "#F8766D",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#F8766D",
+          "grey50",
+          "#619CFF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#F8766D",
+          "#7F7F7F",
+          "#619CFF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#F8766D",
+          "grey50",
+          "#FF64B0",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#F8766D",
+          "#7F7F7F",
+          "#FF64B0",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hue",
+      "palette": [
+        "hue"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#002F70",
+          "#5F1415",
+          "#5F1415",
+          "#5F1415",
+          "#5F1415"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#002F70",
+          "#5F1415",
+          "#5F1415",
+          "#5F1415",
+          "#5F1415"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#002F70",
+          "#B4C2EB",
+          "#B4C2EB",
+          "#EDB4B5",
+          "#5F1415"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#002F70",
+          "#B4C2EB",
+          "#B4C2EB",
+          "#EDB4B5",
+          "#5F1415"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#002F70",
+          "#346AC0",
+          "#B4C2EB",
+          "#DE9393",
+          "#5F1415"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#002F70",
+          "#346AC0",
+          "#B4C2EB",
+          "#DE9393",
+          "#5F1415"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#002F70",
+          "grey50",
+          "#002F70",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#002F70",
+          "#7F7F7F",
+          "#002F70",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#002F70",
+          "grey50",
+          "#5F1415",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#002F70",
+          "#7F7F7F",
+          "#5F1415",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#002F70",
+          "grey50",
+          "#5F1415",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#002F70",
+          "#7F7F7F",
+          "#5F1415",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "hcl",
+      "palette": [
+        "Blue-Red 3"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#00ff00",
+          "#00ff00",
+          "#00ff00",
+          "#00ff00"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#00FF00",
+          "#00FF00",
+          "#00FF00",
+          "#00FF00"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#00ff00",
+          "#00ff00",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#00FF00",
+          "#00FF00",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#0000ff",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#ff0000",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "manual",
+      "palette": [
+        "#ff0000",
+        "#00ff00",
+        "#0000ff"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-palette"
+      ],
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "result": {
+        "error": "Unknown palette: not-a-palette"
+      }
+    }
+  ]
+}

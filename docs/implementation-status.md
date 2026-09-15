@@ -1,11 +1,2666 @@
 # Implementation status
 
-Updated: 11 September 2026. Specification version: 0.5.0.
+Updated: 14 September 2026. Specification version: 0.5.0.
 Bootstrap committed at `fbc9782` (starting commit: `19f4a27`); WP-01 committed at `dfe38e8`.
 WP-02 committed at `435e127`; WP-03 at `3a86189`; WP-04 at `d0a6c48`.
 WP-05 is committed at `3cf1b33`; WP-06 at `f8657fb`; WP-07/08 at `fac148a`.
 WP-09/10 are committed at `c5ec829`; WP-11 at `a6fb2ea`; WP-12 at `63dbcc2`.
 Original reports retain the revision context from their evidence runs.
+
+## GG-05 default binned boundary cells — 14 September 2026
+
+Core implementation for GG2-04 / FIX-GG05 on `6e74ae6` plus owned changes now
+collapses finite outside guide intervals onto scale limits and retains infinite
+edge cells. Guide key positions use the scale limits rather than the extended
+classifier bounds. Classifier intervals and cached palette evaluation are preserved.
+The regression reproduced five cells instead of the source's three for outside
+breaks before the fix.
+
+The pinned R 4.6.1 / ggplot2 4.0.3 capture contains 33 default-guide cases.
+The new core test covers 20 ordinary/empty cases with both implicit and explicit
+default guide selection (40 comparisons), plus single, collected and panel-local
+layout colors, ticks and labels. Constant populations and NULL breaks remain outside
+this slice's acceptance. All 39 tests across seven focused guide, palette, label,
+temporal and degenerate-input targets pass. `mise run test` passes with 879 tests
+across 187 nonempty / 199 total targets; `mise run check` and
+`git diff --check` pass. Logs: `/tmp/gg05-default-{focused,test,check}.log`.
+
+This is a core implementation checkpoint, not a completed GG-05 gate. Fresh
+Python/WASM runtime parity and native/SVG/PDF/PNG inspection for these default cases
+remain required. Next: qualify those surfaces, then unequal widths and limit-label
+controls. GG-06–19 remain unfinished. Evidence:
+[default boundary core checks](evidence/phase-2-ggplot-default-boundaries-2026-09-14.json).
+
+## GG-05 even-step boundary handling — 14 September 2026
+
+The explicit stepped-guide boundary slice is qualified on `6e74ae6` plus owned
+changes. Shared scale metadata retains ordinal key positions before missing cuts
+are removed, preserving duplicate and unsorted keys. Infinite edge intervals keep
+their missing-color cells. Zero-interval guides preserve build-time labels and
+callbacks and reject when drawn. Existing regression tests exposed and verified
+fixes for an empty default-binned boundary panic and premature build-time rejection.
+
+The pinned 60-case reference covers ordinary, constant and empty populations.
+All 57 representable cases pass; three rejected binned NULL inputs have no authored
+enum variant and are excluded. Fresh Python/WASM proofs agree across 2,692 states,
+including 180 new boundary lifecycle states. All 729 publication files match the
+independent Rust author; 677 of the earlier 681 retain qualified bytes. Four reversed-guide SVGs differ only
+in floating-point coordinate serialization; their PNG/PDF bytes match and their SVGs were
+reinspected. All 48 new
+SVG/PDF/PNG files and the final four-chart native gallery were inspected.
+
+`mise run test` and `mise run check` pass: 878 macOS tests across 187 nonempty /
+199 total targets. Final logs are `/tmp/gg05-step-boundaries-final3-{test,check}.log`
+and `/tmp/gg05-step-boundaries-hosts-final3.log`. Artifacts are under
+`/private/tmp/finstack-chart-proof-20260914/gg05-step-boundaries`.
+[Boundary qualification evidence](evidence/phase-2-ggplot-colorsteps-boundaries-2026-09-14.json)
+records hashes, regressions and exclusions. No new full cumulative bindings or
+Linux execution is claimed.
+
+GG-04 is complete. Full GG-05 and GG-06–19 remain unfinished. Next: correct default
+binned outside/nonfinite guide cells, then implement unequal widths and limit-label
+controls. Temporary reference probes cover 30 default-guide and 240 control cases;
+they are preparation only. Guide composition, components and the other GG-05
+requirements remain open. No commits were created for this slice.
+
+## GG-05 stepped color guides — 14 September 2026
+
+The finite, distinct-cut even-step slice is qualified on `6e74ae6` plus owned changes.
+A source-based test reproduced missing stepped bars. Shared guide metadata now
+retains the existing interval palette batch and paints equal-width cells through
+the existing stepped primitive. Default binned guides reuse trained palette colors;
+explicit continuous/binned guides retain their midpoint batch without another callback.
+Reversal and orientation leave mark mapping unchanged. Scene version 18 already
+represents the resulting cells; this slice adds no authored definition capability.
+
+The 66-case reference fixture includes 18 cases selected for this slice: 16 explicit
+even-step cases plus two default binned cases. All 54 single/collected/local layout
+comparisons pass. The focused colorbar and palette/pipeline/temporal suite passes
+24 tests. Fresh Python/WASM builds agree across 2,512 states; all 681 publication
+files also match the independent Rust author. All 54 new SVG/PDF/PNG files and the
+four-chart native window were inspected. The earlier 627 files retain qualified bytes.
+
+`mise run check` and `mise run test` pass: 877 macOS tests across 187 nonempty /
+199 total targets. Logs are `/tmp/gg05-steps-final-{check,test}.log` and
+`/tmp/gg05-steps-hosts.log`; artifacts are under
+`/private/tmp/finstack-chart-proof-20260914/gg05-colorsteps`.
+[Qualification and inspection evidence](evidence/phase-2-ggplot-colorsteps-even-2026-09-14.json)
+record hashes and limitations. No new full cumulative bindings or Linux run is claimed.
+Next: the prepared 60-case boundary fixture, including sequential duplicate keys,
+nonfinite edge cells and degenerate-guide rejection; then nonuniform spacing and
+limit-label controls. These cases are not qualified by this slice. Full GG-05 remains open.
+
+## GG-05 colorbar alpha — 14 September 2026
+
+The bounded alpha slice is qualified on `6e74ae6` plus owned changes. Shared
+`GgplotColorbarOptions::alpha` replaces sampled guide alpha without changing marks
+or keys; omission preserves palette alpha. Definition version 67 retains an explicit
+override. Missing paint remains missing; explicit transparent paint can become opaque.
+Invalid finite alpha and NaN reject even with hidden guides; infinities retain the
+reference's zero coverage behavior through the existing alpha encoder.
+
+The pinned source fixture captures 96 display/palette/alpha/direction/reversal
+cases, ten constructor boundaries and six missing-paint comparisons. Eleven core
+colorbar tests pass, including 288 alpha/layout comparisons and a registered-palette
+missing-versus-transparent test. Fresh Python/WASM builds agree across 2,440 states;
+all 627 publication files also match the independent Rust author. All 72 new
+SVG/PDF/PNG files and the four-chart native window were inspected. The previous 555
+files retain qualified bytes.
+
+`mise run check` and `mise run test` pass: 876 macOS tests across 187 nonempty /
+199 total targets. Logs are `/tmp/gg05-alpha-final-{check,test}.log` and
+`/tmp/gg05-alpha-hosts.log`; artifacts are under
+`/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-alpha`.
+[Qualification and inspection evidence](evidence/phase-2-ggplot-colorbar-alpha-2026-09-14.json)
+record hashes and limitations. No new full cumulative bindings or Linux run is claimed.
+Next: stepped guide rendering, then remaining guide composition and component contracts.
+The 64-case stepped-guide reference fixture is preparation only. Full GG-05 remains open.
+
+## GG-05 gradient and rectangle displays — 14 September 2026
+
+The bounded display slice is qualified on `6e74ae6` plus owned changes. Shared options select raster,
+rectangles or gradient. Gradient defaults to 15 samples and uses endpoint-aligned
+keys/stops; rectangles keep authored-count key padding and actual-count cells.
+Definition version 66 retains non-raster display. Scene version 18 adds endpoint and stepped modes to the existing sampled-gradient
+primitive; previous centered scenes remain version 17. Degenerate gradient domains lower to a solid bar while retaining
+the prepared samples. Native endpoint paint crops through the first/last image sample centers. A pixel
+regression reproduced light seams from separate rectangle cells; stepped mode now
+uses coincident stops in one headless paint and native quads. The regression passes.
+
+The new pinned `colorbar-display` fixture captures 80 actual source bars, including
+constant domains, defaults and fractional counts. The focused core suite passes
+528 display/layout comparisons plus the existing colorbar contracts. Fresh post-fix
+Python/WASM builds agree across 2,056 states; all 555 publication files also match
+the independent Rust author. All 120 new SVG/PDF/PNG files and the four-chart
+native window were inspected. The earlier 435 files retain qualified bytes.
+The initial iteration matched hosts but failed dense rectangle PNG inspection;
+its replacement passes the regression and visual review.
+
+`mise run check` and `mise run test` pass: 874 macOS tests across 187 nonempty /
+199 total targets. Logs are `/tmp/gg05-display-final-{check,test,hosts}.log`;
+artifacts are under `/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-display-final`.
+[Qualification and inspection evidence](evidence/phase-2-ggplot-colorbar-display-2026-09-14.json)
+record hashes and limitations. No new full cumulative bindings or Linux run is claimed.
+Next: alpha controls, then remaining guide composition and component contracts.
+Full GG-05 and GG-05–19 remain open.
+
+## GG-05 raster presentation controls — 14 September 2026
+
+The bounded raster presentation slice is qualified on `6e74ae6` plus owned changes.
+Shared guide options retain horizontal/vertical direction, reversal and first/last
+selected-tick controls. Nondefault presentation requires definition version 65;
+sampling-only plots retain version 64. Reversal leaves mark colors unchanged.
+Ticks and labels paint independently; non-finite keys have no ink. Horizontal
+allocation reserves measured label overhang and the configured minimum plot span.
+
+The pinned R 4.6.1 / ggplot2 4.0.3 presentation fixture captures 128 actual gtable
+cases. Eight core colorbar tests and 22 core contracts pass, including 432
+orientation/layout cases, 128 tick/label cases and endpoint/tiny-frame pressure.
+Fresh Python/WASM builds agree across 1,352 states. All 435 corresponding
+SVG/PDF/PNG files also match the independent Rust author. All 264 new publication files and the four-chart native window
+were inspected. The remaining 171 files match previously qualified bytes.
+One-sample keys intentionally coincide, including overlapping source labels.
+
+`mise run check` and `mise run test` pass; the latter runs 872 macOS tests across
+186 nonempty / 198 total targets. Logs are `/tmp/gg05-presentation-final-{check,test}.log`
+and `/tmp/gg05-presentation-hosts.log`. Artifacts are under
+`/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-presentation`.
+[Qualification and inspection evidence](evidence/phase-2-ggplot-colorbar-presentation-2026-09-14.json)
+record hashes and scope. No new full cumulative bindings or Linux run is claimed.
+
+Next: gradient/rectangles display modes, then remaining guide composition and
+component contracts. Full GG-05 and GG-05–19 remain open.
+
+## GG-05 authored raster sampling — 14 September 2026
+
+The bounded raster-sampling slice is qualified on `6e74ae6` plus owned changes.
+`GgplotColorbarOptions::nbin` retains authored counts on the shared mapped scale.
+Fractional counts round up for sampling while raster keys use the original count.
+Zero uses unique limit colors and omits non-finite keys; one paints the lower-limit
+sample as a solid rectangle. Visible keys demand validation; hidden guides or
+absent breaks bypass it, while hidden labels still demand samples. The retained
+control requires definition version 64; existing plots keep their earlier version.
+
+Five pinned R 4.6.1 / ggplot2 4.0.3 generators retain 257 records: 26 constructor
+controls, 144 display/direction/reversal boundaries, 60 demand cases, 15 fractional
+edges and 12 equal-limit cases. Captured presentation controls beyond sampling are
+preparation evidence, not implemented behavior. Five core colorbar tests plus 22
+core contracts pass, including 81 authored-count single/shared/local layouts,
+12 constant-limit builds, 60 demand cases, stale-envelope rejection and the bounded
+sample guard. A source-backed regression reproduced two samples versus one for
+zero count with equal limits, then passed after unique-limit fallback was fixed.
+
+Fresh Python/WASM builds pass 108 default, 432 authored-count, 60 demand and 48
+constant-limit states. All 171 corresponding Rust/Python/WASM SVG/PDF/PNG files
+are byte-identical. The 108 sampled files and 36 constant-limit files were visually
+inspected; the 27 default files remain byte-identical to the previously qualified
+outputs. An actual native window was inspected for four nonconstant counts across
+single/shared/local layouts. That capture precedes the equal-limit correction;
+its captured configurations and final publication bytes are unchanged. No separate
+constant-limit native capture is claimed.
+
+`mise run check` passes and the final `mise run test` passes 869 macOS tests across
+186 nonempty / 198 total targets (`/tmp/gg05-sampling-final-{check,test}.log`).
+Fresh host evidence is in `/tmp/gg05-sampling-final-hosts.log` and
+`/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-sampling-final`.
+[Qualification and evidence boundaries](evidence/phase-2-ggplot-colorbar-sampling-2026-09-14.json)
+retain hashes, source ownership and scoped/native inspection details. The cumulative
+runner includes the new sampling, demand and constant modes; this slice does not
+claim a new full cumulative or Linux run.
+
+Next: direction/reversal, tick-limit controls and independent tick/label painting.
+A new 96-case source-grob probe confirms that hidden labels must retain ticks;
+the current painter still drops those ticks. This is a named GG-05 presentation
+gap, not a sampling acceptance claim. Display modes, guide composition, component
+metadata and the other guide contracts remain open. GG-05–19 are unfinished.
+
+## GG-05 default continuous colorbar integration — 14 September 2026
+
+After GG-04 qualification, 25 source paths were integrated from the qualified
+isolated slice. All destination preconditions and incoming hashes were checked;
+the complete baseline comparison found no unrelated production differences.
+The first guide slice draws the full prepared ramp in shared single/faceted
+layout, including independent fill/stroke guides. Full GG-05 remains open.
+
+A single sampled gradient avoids seams reproduced with adjacent gradient segments.
+Scene wire v17 retains uniformly spaced, center-aligned samples and charges their
+payload against the existing aggregate path/paint budget. SVG/PDF use one gradient;
+PNG consumes the SVG renderer. The native adapter uses an owned BGRA image with
+replicated edge pixels and an interior crop, fixing atlas bleed reproduced in the
+first native capture. ADR-024 records the existing locked image 0.25.10 dependency
+edge and the rendering contract.
+
+Three pinned default colorbar source builds cover ordinary, asymmetric and sharp
+transition palettes, each with 300 samples and four normalized keys. Seventy focused
+core tests pass, including 27 channel/facet configurations, hidden/restored guides,
+scene cardinality/work budgets and related layout/aesthetic regressions. Actual
+Python/WASM match 108 geometry/lifecycle states and 27 publication files; all files
+also match the independent primary Rust author byte-for-byte. Nine SVG/PDF/PNG
+triplets and the corrected three-chart native window were inspected. The initial
+seamed export and atlas-bleed native images are retained as failed iterations.
+
+Evidence is under `/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-sampled`
+and sibling `gg05-colorbar-draft/rust-seamless`, including `inspection.json`,
+`comparison.json` and `native-comparison.json`. Logs include
+`/tmp/gg05-sampled-gradient-{native2,hosts2}.log` and
+`/tmp/gg05-native-window-padded.log`. Full isolated `mise run check` passes
+(`/tmp/gg05-colorbar-draft-full-check3.log`); the initial Clippy item-count guard
+failure was corrected with a saturating comparison and formatted. The final 24
+core contract/colorbar tests pass (`/tmp/gg05-colorbar-final-guard.log`). The full
+isolated macOS suite passes 866 tests across 186 nonzero targets (198 total), and
+fresh final Python/WASM proofs pass 108 states each. All 27 final Rust/Python/WASM
+publications are byte-identical and match the previously inspected artifacts;
+`gg05-colorbar-final/qualification.json` records hashes and validation boundaries.
+The prior selection proof also passes 351 host states and 63 byte-identical files
+(`selection-comparison.json`); those additional files were not separately inspected.
+The cumulative runner now includes independent native/host colorbar authors and
+an optional native byte comparison. No source grob pixel or broad device
+certification is claimed.
+
+The remaining guide source contracts and preparatory cases are grouped in
+`/private/tmp/finstack-chart-proof-20260914/gg05-guide-entry/manifest.json` and
+`readiness.md`: all 47 exports, display/sample-count/demand boundaries, unequal
+stepped geometry, merged-key inclusion behavior and 153 actual draws for all 17
+key glyphs. These captures are inputs to later slices, not additional implemented
+capabilities; the key-glyph PDF has not been visually inspected.
+
+Main `mise run check`, 24 focused core tests and fresh Rust/Python/WASM proofs
+also pass. The main builds reproduce 108 colorbar states and 351 existing
+selection states per host, with 27 and 63 byte-identical publication files.
+All 207 exported file copies match the isolated artifacts, including the dedicated
+inspected set. The full production-source comparison transfers the isolated
+866-test evidence; that aggregate was not rerun in main. Final evidence:
+[default colorbar qualification](evidence/phase-2-ggplot-colorbar-2026-09-14.json),
+`/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-main`, and
+`/tmp/gg05-colorbar-main-{check,focused,hosts}.log`.
+
+Next: implement the captured display/sample-count/direction controls. Authored guide controls, complete legend component metadata,
+stepped/noncolor/multi-aesthetic keys, overrides, placement and AX/custom policies
+remain GG-05; angular policies complete with GG-13. GG-05 is open.
+
+## GG-04 scale qualification — 14 September 2026
+
+GG-04 is complete for its owned scale contracts at `6e74ae6` plus the frozen owned
+changes. The final cumulative primary-authoring runner exited zero: all 672
+declared commands and their inline assertions passed. The integrated macOS suite
+passes 862 tests/doctests across 185 nonzero targets (197 total), and full
+`mise run check` passes. Final verification matches all 6,343 baseline paths except
+the three permitted evidence documents. The temporary R-device PDF side effect was
+restored to its baseline bytes; it was not executable source or a runner input.
+
+The coverage reconciliation accounts for all 152 assigned exports, 960 formal
+argument occurrences, 276 inherited method occurrences and 160 fields. Scale
+computation is qualified through the shared core and actual Python/WASM adapters;
+full reference class/export acceptance retains the explicitly named GG-05/GG-16
+contracts and GG-19 certification. Numerical comparisons use the runner's declared
+tolerances and exclusions. This does not claim fresh Linux or general device
+pixel certification.
+
+Evidence: [final qualification](evidence/phase-2-ggplot-scales-2026-09-14.json),
+[per-control coverage](evidence/ggplot-scales-coverage.md), and the source/host/artifact
+records in `/private/tmp/finstack-chart-proof-20260914/cumulative-final-positional`.
+The complete log is `/tmp/ggplot-final-positional-cumulative.log`. Earlier slice
+entries below preserve their own revision and validation context.
+
+Follow-on work is recorded in the GG-05 entry above. GG-05–19 remain open.
+
+## GG-04 explicit and minor vector guide selection — 14 September 2026
+
+Eleven verified paths are integrated at `6e74ae6` plus the owned changes.
+Explicit positional break lists and coupled labels use the shared batch transform
+and label pipeline. Empty selections retain explicit-label length validation.
+Explicit minor lists transform as a batch; registered minor callbacks receive full
+inverse domains and major vectors, preserve transformed major context, and apply
+the shared NULL protocol. The coupled-label adaptation retains the LibraryV1 guide
+profile boundary. No new wire field is required.
+
+Pinned source builds cover 144 explicit/coupled-label configurations (96 successes,
+48 expected errors) and 240 minor configurations (180 successes, 60 expected errors).
+Final native checks pass all 18 vector-transform tests and 14 related guide tests.
+Strict core/example all-target Clippy passes. The isolated macOS suite passes 860
+tests/doctests across 185 nonzero targets (197 total); this aggregate precedes the
+final guide-profile guard, which is covered by the final focused checks and hosts.
+
+Fresh Python/WASM match 360 explicit and 600 minor lifecycle/error records, with
+54 and 36 byte-equal publication files. All thirty triplets were inspected. The
+preceding callback proof remains unchanged at 180 records and 27 files per host;
+the explicit proof also remains unchanged after the minor correction. Source minor
+positions and callback inputs are checked numerically; the publications do not
+claim minor-tick painting or source grob drawing equivalence. Guide painting and
+coincident-label presentation remain GG-05.
+
+Qualification, frozen source and integration manifests are under
+`/private/tmp/finstack-chart-proof-20260914/vector-position-complete`; actual host
+and inspection artifacts are in sibling `vector-position-explicit` and
+`vector-position-minors` directories. Logs include
+`/tmp/vector-position-complete-{native,macos,guide-regression,clippy,regression}.log`
+and `/tmp/vector-position-minors-hosts2.log`. The earlier interrupted cumulative
+run is retained as incomplete evidence.
+
+The integrated macOS aggregate passes 862 tests/doctests across 185 nonzero targets
+(197 total), and full `mise run check` passes. Logs are
+`/tmp/ggplot-eleven-slices-main-{macos,check}.log`; their hashes and exit codes are
+recorded in the integration manifest. The restarted cumulative proof uses the
+integrated source, with 6,343 baseline path hashes, at
+`/private/tmp/finstack-chart-proof-20260914/cumulative-final-positional` and
+`/tmp/ggplot-final-positional-cumulative.log`. Next: finish these checks and reconcile
+the final results with the per-control coverage index before closing GG-04 and
+advancing GG-05. GG-04 and GG-05–19 remain open.
+
+## GG-04 positional vector callback dispatch — 14 September 2026
+
+Ten verified paths are integrated at `6e74ae6` plus the owned changes. Positional
+break callbacks receive the complete inverse-domain vector. NULL results follow
+the shared transform protocol, selected breaks transform as a batch, labels retain
+their vector context, and empty panels suppress callback demand.
+
+The pinned corpus contains 72 primary builds (54 successes and 18 expected
+construction errors). Native checks cover callback demand/inputs, mapped marks,
+major/minor positions and exact labels. The isolated macOS suite passes 858
+tests/doctests across 185 nonzero targets (197 total), excluding the two main-only
+named-limit tests. Strict core/example all-target Clippy passes. Fresh Python/WASM
+match 180 lifecycle/error records and 27 byte-equal publications; all nine triplets
+were inspected. The preceding NULL-break proof remains unchanged at 1,056 records
+and 36 files per host. No new wire field is required.
+
+Frozen source, qualification, integration, comparison and inspection manifests are
+under `/private/tmp/finstack-chart-proof-20260914/vector-position-callbacks`.
+Logs are `/tmp/vector-position-callbacks-{reference,native4,macos,clippy,hosts3,regression}.log`.
+The first host attempts exposed stable-sort and expected error-stage count issues
+in the harness; the final run asserts the precise 18 construction-error indices.
+The combined main aggregate passes 860 tests/doctests across 185 nonzero targets
+(197 total), and full `mise run check` passes. The cumulative actual-host run was
+interrupted after a separate explicit positional break-list defect was reproduced;
+it is not a complete pass. Inspections compare native formats; source build/key
+semantics are checked independently, without claiming source grob drawing parity.
+
+The coverage index now maps every export and formal control (152 exports, 960
+formal occurrences, 276 inherited methods and 160 fields) to computation, typed
+adaptation or GG-05/GG-16 ownership. Structural equality with the captured source
+and all linked file paths is verified. This mapping does not pass a runtime gate.
+
+Next: qualify explicit positional break vectors and coupled labels for registered
+vector-dependent transforms. A pinned 144-build corpus reproduces incorrect scalar
+mapping and an empty-panel explicit-label rejection gap in the isolated draft.
+Then rerun final cumulative qualification. GG-04 and GG-05–19 remain open.
+
+## GG-04 NULL transform and break dispatch — 14 September 2026
+
+Thirteen verified paths are integrated at `6e74ae6` plus the owned changes.
+Numeric limit and continuous/binned break callbacks share NULL transform dispatch,
+including registered kernels and ordered compositions. Binned selection preserves
+NULL versus typed empty output. A separate raw capture verifies forward/inverse
+NULL and typed-empty behavior for all 29 built-in configurations (116 outcomes),
+including the distinct Box–Cox and Yeo–Johnson branches.
+
+`vector-null-breaks.json` captures 384 primary builds, with 272 successes and 112
+expected errors. Native tests check callback inputs/demand, mark mappings and guide
+keys. The isolated macOS suite passes 857 tests/doctests across 185 nonzero targets
+(197 total), excluding the two main-only named-limit tests. Strict core/example
+all-target Clippy passes. Fresh Python/WASM match 1,056 lifecycle/error records
+and 36 byte-equal publications; all twelve triplets were inspected. The preceding
+vector callback proof remains unchanged at 3,168 records and 39 files per host.
+No new wire field is needed.
+
+Evidence and frozen source/integration manifests are under
+`/private/tmp/finstack-chart-proof-20260914/vector-null-breaks`. Logs are
+`/tmp/vector-null-breaks-{reference,native2,macos,clippy,hosts,regression}.log` and
+`/tmp/transform-null-contracts-{reference,native}.log`. Main `mise run check` passes
+(`/tmp/ggplot-nine-slices-main-check.log`), including strict workspace Clippy,
+rustdoc and WASM core compilation. The combined main aggregate
+and cumulative host proof remain pending. Inspections compare native formats,
+not source grob drawings. Numeric legend painting remains GG-05.
+
+Next: the positional caller still has scalar inverse and blanket NULL dispatch;
+72 pinned primary builds are captured for its bounded callback audit; its first
+case reproduces the axis caller rejecting a valid registered NULL break result. Finish that
+shared contract before final cumulative/export reconciliation. GG-04 and GG-05–19
+remain open.
+
+## GG-04 continuous and binned vector callback composition — 14 September 2026
+
+At revision `6e74ae6` plus the owned changes, 14 verified paths are integrated
+from the qualified vector-scale callback snapshot. Non-pointwise transformations
+now retain per-layer training batches when limits/breaks are registered. The
+complete inverse domain reaches callbacks, transformed limit pairs retain their
+batch identity, and continuous/binned guide palettes consume transformed keys
+without an invalid inverse/forward round trip. Registered transforms have checked
+NULL forward dispatch; built-in logarithmic NULL rejection is preserved.
+
+`vector-scale-functions.json` captures 1,152 primary builds: 808 successes and
+344 expected failures, across continuous/binned size/paint, nullable/empty data,
+hidden/visible guides, one/two layers and function limits/breaks. The native test
+checks raw marks, mapped guide values, exact labels, callback demand and every
+observed callback vector/NULL input. The isolated macOS suite passes 855 tests and
+doctests across 185 nonzero targets (197 total); strict core/example all-target
+Clippy passes. The two main-only named-limit tests are excluded from that count.
+
+Fresh actual Python/WASM pass 3,168 exactly equal lifecycle/error records and
+39 byte-equal publication files. All thirteen SVG/PDF/PNG triplets were inspected,
+including the visible centered-transform colour legend. The prior identity
+callback proof remains unchanged at 864 records and 18 files per host. Evidence,
+source hashes, inspection and integration manifests are under
+`/private/tmp/finstack-chart-proof-20260914/vector-scale-functions`; logs are
+`/tmp/vector-scale-functions-{native7,macos2,clippy,hosts3,regression}.log`.
+Ordinary authoring remains v55; existing retained transformed bounds use v56.
+
+The combined main macOS aggregate passes 857 tests/doctests across 185 nonzero
+targets (197 total). Full `mise run check` passes, including strict workspace
+Clippy, rustdoc and WASM core compilation. Their logs are `/tmp/ggplot-eight-slices-main-{macos,check}.log`. Final cumulative host
+qualification must use this combined source. The reference captures build/key
+computation, not source grob image comparisons. Numeric legend painting remains
+GG-05. Export reconciliation found a further NULL break-callback dispatch gap: a
+384-case source corpus reproduces the blanket transform rejection. Its isolated
+correction and built-in NULL/empty protocol audit are underway; final cumulative
+qualification follows that correction. GG-04 and GG-05–19 remain open.
+
+## GG-04 discrete identity callback demand and NULL limits — 14 September 2026
+
+The colour/fill identity callback slice is integrated in 16 verified paths after
+its isolated qualification. Primary hidden identity guides now retain observations
+without invoking limit/break callbacks; visible identity scales accept the existing
+discrete break protocol. A resolved NULL limit flag distinguishes NULL from typed
+empty vectors when evaluating break functions. Retained NULL metadata requires
+v63, with restoration, downgrade, missing-registration and replacement-reset
+checks; ordinary authoring keeps versions 17/28/33.
+
+`discrete-identity-functions.json` captures 192 primary builds and independent
+R named-colour resolution: 182 successes and ten expected named-NULL rejections.
+Native checks verify callback presence, every observed domain/NULL input, factor
+ordering, named guides, raw paints and three authoring states. All six discrete
+limit tests pass, including the prior 90-case standalone corpus. The isolated
+macOS suite passes 854 tests/doctests across 185 nonzero targets (197 total),
+excluding the two main-only named-limit tests. Strict core/example all-target
+Clippy passes (`/tmp/discrete-identity-functions-{macos,clippy}.log`).
+
+Fresh Python/WASM pass 577 exactly equal lifecycle/wire records and 18 byte-equal
+publication files. All six triplets were inspected: unused factor colours and
+callback names agree across formats. The prior discrete-limit proof remains
+unchanged at 198 states and 12 files per host. All evidence, inspection, regression,
+source and integration manifests are under
+`/private/tmp/finstack-chart-proof-20260914/discrete-identity-functions`; execution
+logs are `/tmp/discrete-identity-functions-{reference,native4,python,wasm,regression}.log`.
+The combined main macOS suite passes 856 tests/doctests across 185 nonzero
+targets (197 total), and full `mise run check` passes repository/dependency rules,
+formatting, native examples, workspace all-target check/strict Clippy, warning-free
+rustdoc and WASM core compilation. Logs are
+`/tmp/ggplot-seven-slices-main-{macos,check,fmt,repository}.log`; the integration
+manifest records their hashes. All 16 integrated source paths still match.
+
+The source is primary-build evidence, not a source drawing comparison. Fill guide
+metadata is verified, but publications still omit its legend; that painting remains
+GG-05. The next concrete inherited contract is continuous/binned per-layer vector
+transforms combined with function limits/breaks; 1,152 source builds are captured
+for that audit. Final cumulative qualification must use the final combined source.
+GG-04 and GG-05–19 remain open.
+
+## GG-04 cumulative proof and six-slice integration — 14 September 2026
+
+The complete primary-authoring runner exited successfully on the frozen main
+baseline at revision `6e74ae6` plus the recorded changes. All 621 logged commands
+completed, including actual Rust/Python/WASM execution, retained update proofs,
+publication comparisons and host typing checks. The final 6,303-path hash audit
+found only the two allowed evidence-document changes. The source-verification
+record and baseline hashes are in
+`/private/tmp/finstack-chart-proof-20260914/cumulative-current`; the complete log
+is `/tmp/ggplot-current-cumulative-hosts.log`.
+
+Following that exit, 57 verified source/reference paths were integrated from six
+immutable slice snapshots: positional palettes, secondary guide callbacks, factor
+labels, identity transform guides, identity vector batches, and identity vector
+callbacks. Ordered baseline checks passed before writing. The integration manifest
+is `/private/tmp/finstack-chart-proof-20260914/qualified-slices-integration.json`.
+The combined main macOS suite passes 854 tests/doctests across 185 nonzero
+targets (197 total). Full `mise run check` also passes repository/dependency rules,
+formatting, native examples, workspace all-target check/strict Clippy, warning-free
+rustdoc and WASM core compilation. Logs are
+`/tmp/ggplot-six-slices-main-{macos,check,fmt,repository}.log`; hashes and scope are
+recorded in the integration manifest. All 57 integrated source hashes still match. These results
+supersede the integration-pending statements in the historical entries below.
+The successful cumulative run predates the six slices; it is not the final
+cumulative qualification for their combined source. GG-04 remains open while
+that qualification and inherited discrete identity callback contracts are resolved.
+
+## GG-04 identity vector limit and break callbacks — 14 September 2026
+
+The isolated draft now passes 288 pinned primary identity builds with vector
+transforms and callback limits/breaks: 198 successes and 90 source rejections.
+The shared limit owner uses per-layer transformed training extents and complete
+inverse endpoint vectors. Break callbacks receive the complete inverse domain,
+and their results transform as one vector. Numeric identity scales now accept
+registered break operations, and hidden primary guides invoke neither callback.
+The prepared transform protocol adds an inverse-NULL operation so registered
+identity inverses preserve NULL while arithmetic inverses return typed empty
+vectors; reverse compositions retain their source rejection before callback entry.
+
+The native proof compares mapped values, trained ranges, visible guide keys and
+labels, callback presence, NULL identity and every observed callback input. It does
+not require reproducing redundant R invocation counts. Existing identity cases
+share the same test helper. Focused transform/limit/secondary regressions pass;
+strict core/example all-target Clippy and formatting pass. The full draft macOS
+suite passes 852 tests/doctests across 185 nonzero targets (197 total), excluding
+the two main-only named-limit tests (`/tmp/identity-vector-functions-{regression,
+macos,clippy,fmt-check}.log`).
+
+Fresh Python/WASM pass 864 exactly equal original/layer-edit/theme-edit states
+and existing v55 restoration. All 18 publication files are byte-identical, and
+all six SVG/PDF/PNG triplets were inspected. The prior 288-state identity vector
+proof and its 18 files remain unchanged on these modules. Evidence, inspection,
+regression and frozen source manifests are under
+`/private/tmp/finstack-chart-proof-20260914/identity-vector-functions`;
+host logs are `/tmp/identity-vector-functions-{hosts,host-regression}.log`.
+Eleven paths are frozen, and all six staged slices pass the 57-path integration
+dry run. Main source still matches the running cumulative proof baseline except
+for the two evidence documents. Integration and the final main aggregate remain
+pending. Source evidence is build-only; numeric guide painting remains GG-05.
+Discrete identity callback demand and remaining inherited contracts are next.
+GG-04 and GG-05–19 remain open.
+
+## GG-04 identity vector batches and shared edit identity — 14 September 2026
+
+A follow-up reference probe found identity scales applying vector transforms to
+individual observations: `x + length(x)` mapped `[1,2,4]` to `[2,3,5]`, while the
+source produces `[4,5,7]`. The isolated draft now uses the existing vector transform
+owner for identity mapping, per-layer guide training and authored limits. Guide
+candidates retain their transformed range and map directly as identity values.
+The host replay also exposed DAT-02 sharing loss when an unchanged numeric scale
+was reauthored: layer editing now retains the previous ID when its input and scale
+definition are unchanged. Two-layer sharing is explicit in the portable definition.
+
+`identity-vector-transforms.json` captures 96 builds across cardinality/centering,
+reverse composition, ordinary/nullable/empty data, hidden/legend selection,
+automatic/fixed limits and one/two layers. All 72 successes and 24 invalid-composition
+rejections match native mapping, shared training ranges and exact guide labels,
+including reauthored layer scale identities. Fresh Python/WASM pass 288 exactly
+equal original/layer-edit/theme-edit states, raw mark sizes and v55 restoration.
+All 18 SVG/PDF/PNG files are byte-identical; all six triplets were inspected.
+The prior 696-state identity proof and its 24 files remain unchanged on these
+modules (`/tmp/identity-vector-{native,python,wasm,host-regression}.log`, comparison,
+regression and inspection JSON under
+`/private/tmp/finstack-chart-proof-20260914/identity-vector-transforms`).
+
+The full draft macOS workspace passes 851 tests/doctests across 185 nonzero targets
+(197 total); strict all-target core/example Clippy and formatting pass
+(`/tmp/identity-vector-{macos,clippy,fmt}.log`). That aggregate excludes the two
+main-only named-limit tests. Nine source/reference paths are frozen with baseline
+and final hashes in `source-manifest.json`; all five staged slices pass the
+52-path integration dry run. The running main cumulative proof still precedes
+these slices, so main integration and its aggregate remain pending. The source
+capture is build-only; numeric guide painting remains GG-05. Vector identity
+limit/break-function compositions still require source reconciliation. GG-04 and
+GG-05–19 remain open.
+
+## GG-04 identity transform guide reconciliation — 14 September 2026
+
+The inherited identity-scale contract exposed a concrete defect in the isolated
+draft: `ScaleTransform::Ggplot` mapped values correctly but its guide path fell
+back to a linear family. Reverse and reciprocal identity guides consequently
+marked every candidate invisible. The correction selects the existing transform
+owner and retains the full identity candidate vector before label formatting;
+the latter also repairs natural-log and base-two-log label precision. Other guide
+routes retain their existing candidate-censor policy.
+
+The new `identity-transform-guides.json` captures 232 pinned builds across all 29
+built-in transform configurations, ordinary/empty populations, hidden/legend
+selection and automatic/explicit breaks: 231 successes and one reference error.
+The focused native test compares mapped values, transformed guide candidates and
+exact labels. All 28 tests across the transform, identity, registered-transform
+plot and label targets pass. Strict all-target core Clippy and formatting pass
+(`/tmp/identity-transform-guides-{native,regression,clippy,fmt}.log`).
+
+Fresh Python and WASM pass 696 exactly equal original/layer-edit/theme-edit states
+and version-53 restoration. All 24 publication files match byte-for-byte, and all
+eight SVG/PDF/PNG triplets were inspected. Log/log1p small glyphs and reciprocal
+descending sizes agree across destinations, with legible, unclipped axis labels
+(`/tmp/identity-transform-guides-{python,wasm}.log`, inspection and comparison under
+`/private/tmp/finstack-chart-proof-20260914/identity-transform-guides`). Numeric
+identity guide painting remains GG-05; the reference capture uses `ggplot_build`,
+so these publications do not certify full source visual parity. The existing host
+script's original/label/secondary modes also pass: all 777 states and 594
+publication files per host are unchanged from the main cumulative outputs
+(`/tmp/identity-transform-guides-host-regression.log`, `regression.json`). The eight
+source/reference paths are frozen in `source-snapshot`, with hashes and the
+preceding factor-slice baseline in `source-manifest.json`. The four staged slices
+now verify 47 unique paths in the integration dry run. Repository and whitespace
+checks pass. Main integration and its aggregate validation remain pending;
+GG-04 and GG-05–19 remain open.
+
+## GG-04 factor label policy interaction — 14 September 2026
+
+The existing non-color discrete label proof now covers both `drop` and
+`na.translate` values with explicit retained factor levels: 640 successful source
+builds across size, alpha, linewidth, shape and linetype, four populations,
+trained/explicit limits, automatic/named breaks and indexed/scalar label callbacks.
+All seven tests in `ggplot_label_functions` pass on a fresh isolated Cargo target,
+including exact callback inputs/names and guide keys/labels for the new 640 cases
+(`/tmp/ggplot-factor-label-native-fresh.log`). Production behavior is unchanged.
+
+Actual Python/WASM use the qualified secondary-slice native modules and match 1,360
+states, including all 80 replacement versus fresh cases and unchanged held scenes.
+The existing 1,515-state mode still matches the main cumulative pre-change records
+exactly. All 39 publication files match byte-for-byte; all 13 SVG/PDF/PNG triplets
+were inspected (`/tmp/ggplot-factor-label-{python,wasm,base-python,base-wasm}.log`,
+`/private/tmp/finstack-chart-proof-20260914/factor-labels/inspection/review.json`).
+Scoped strict Clippy and formatting pass. The proof scripts and runner share the
+existing test/adapter path through `--factors`; no second scale owner was introduced.
+All six changed/reference paths are frozen in that output's `source-snapshot`, with
+baseline and qualified hashes in `source-manifest.json`.
+
+The full-draw capture separately retains 64 varying-linetype single-group geometry
+rejections after successful scale/guide preparation. Those source `draw_error`
+outcomes remain open for geometry work; successful-publication samples exclude them.
+The initial combined-error capture is preserved at
+`/private/tmp/factor-label-initial-draw-errors.json`. Non-color guide painting remains
+GG-05; these publications certify destination consistency, not full visual parity.
+No new full-workspace pass is claimed for this test-only slice. Main integration
+waits for the running cumulative proof; GG-04 and GG-05–19 remain open.
+
+## GG-04 discrete positional palette callbacks — 14 September 2026
+
+A concrete constructor gap is being closed in the isolated draft at
+`/private/tmp/finstack-chart-continuous-guide-work`. `scale_x_discrete` and
+`scale_y_discrete` forward a population-dependent numeric palette. The existing
+fixed-vector positional palette did not express this callback. The new
+`positional-palette-functions.json` captures 84 pinned reference draws across
+seven callback routes, four populations and automatic/retained/empty limits:
+49 successful draws and 35 errors. Count inputs include missing-category slots;
+returned names are ignored. Short and nonnumeric results reject, and untrained
+empty populations bypass callback evaluation. The reference encoder was corrected
+to retain signed infinities rather than letting JSON convert them to null.
+
+The draft reuses the pure scale-palette registry, captures it with prepared charts,
+and resolves a numeric palette after bounded categorical training. A typed
+`palette_function` in the existing discrete policy requires primary/definition
+version 61; older definitions retain their previous versions. Two new native tests
+match direct mapping/range and primary band/point mapping/guides, restoration,
+missing-registration rejection and envelope downgrade rejection. The existing six
+discrete-position tests also pass. The final refinement records the exact count input and verifies one pure
+palette evaluation per training pass. It passes in the complete draft macOS run:
+847 tests/doctests across 184 nonzero targets (196 total). Strict all-target core
+and example Clippy and formatting pass (`/tmp/ggplot-positional-palette-{macos,clippy,fmt}.log`).
+The shared example supplies bounded count operations; the typed nonnumeric route
+uses an explicit rejecting operation rather than retaining an R vector type.
+
+Fresh Python/WASM pass 298 exactly equal records, including 32 replacement versus
+fresh-batch states and preservation of held figures. All 18 SVG/PDF/PNG publications
+are byte-identical; all six triplets were visually inspected. Reverse and squared
+spacing, ignored names and retained unused levels are correct, with no missing
+glyphs or clipped labels (`/tmp/ggplot-positional-palette-hosts.log`, inspection at
+`/private/tmp/finstack-chart-proof-20260914/positional-palette/inspection/review.json`).
+The primary runner now schedules this proof in the draft. The complete qualified
+21-path source is frozen under that output's `qualified-source`, with hashes and
+11 verified main baselines in `qualified-source-manifest.json`. Its suite excludes
+the two main-only named-limit tests, which retain their separate six-test evidence.
+Main production integration remains pending while `cumulative-current` runs.
+
+The next reference capture, `secondary-guide-functions.json`, has 292 actual draws:
+166 successes and 126 errors. Discrete secondary break callbacks reject in the
+reference itself. Numeric/Date/datetime callbacks have successful source cases;
+labels see complete candidates before tick filtering, and Date secondary candidates
+retain fractional days. Empty numeric callbacks with the authored label function
+reject its length mismatch, while the captured bare numeric empty/NULL outputs reject
+in time transforms. The isolated draft now passes 778 native configurations across four timestamp
+units, including exact callback names, resolved UTC resource metadata, source-unit
+values within 2e-12, complete pre-filter label inputs, guide keys/positions and
+version-62 restoration/downgrade/missing-registration checks. Native changes admit
+numeric secondary callbacks, preserve NULL versus empty results and fractional Date
+candidates, and use the sampled transformed range with sorted approximation knots.
+The knot sorting/duplicate reduction is shared with gradient remapping. A registered
+square function expresses R's x^2; the D3 signed-power family is not equivalent for
+the expanded negative range of an empty chart. Numeric unexpanded zero-range
+secondary guides retain their source interpolation rejection after label evaluation;
+temporal constant secondary guides remain valid. Explicit UTC capture supersedes the
+initial process-timezone-dependent source file, retained in /private/tmp.
+
+Fresh Python/WASM now pass all 1,266 exactly equal states and 24 byte-identical
+publication files (`/tmp/ggplot-secondary-guide-functions-hosts.log`). All eight
+SVG/PDF/PNG triplets were inspected: numeric identity/affine/square, Date and UTC
+datetime identity/shift, plus the empty square panel. Secondary labels align without
+clipping across destinations; hashes and findings are in
+`/private/tmp/finstack-chart-proof-20260914/secondary-guide-functions/inspection/review.json`.
+The draft primary runner now schedules the native, both host and comparison proofs.
+The complete draft macOS regression passes 848 tests/doctests across 185 nonzero
+targets (197 total), with exit code zero
+(`/tmp/ggplot-secondary-guide-functions-macos.log`).
+Gradient remapping, nonfinite and invalid-position regressions pass on these fresh
+modules: 288/468/240 exactly equal states, respectively, and 96/156/6 matching
+publication files. All 258 files also match the main cumulative pre-change outputs
+byte-for-byte (`secondary-guide-functions/gradient-regression.json`). Strict
+all-target core/example Clippy passes after simplifying a conditional in the new
+test; the final focused native test also passes
+(`/tmp/ggplot-secondary-guide-functions-{clippy,native-final}.log`). Formatting, repository and whitespace checks pass. The complete 18-path secondary
+source is frozen under that output's `source-snapshot`; `source-manifest.json` records
+its hashes, evidence and pre-change baselines after the positional-palette slice.
+The draft aggregate excludes the two main-only named-limit tests, which retain their
+separate six-test evidence. Main integration remains
+pending for both frozen positional-palette and secondary slices; GG-04 and
+GG-05–19 remain open.
+
+## GG-04 named limit dispatch — 14 September 2026
+
+At `6e74ae6` plus working-tree changes, `named-limit-dispatch.R` captures 300
+`lims` versus selected public-constructor comparisons: ten aesthetic spellings,
+five input types and six endpoint modes. All 216 successful builds match in
+mapped values, limits and selected breaks/labels; all 84 rejection outcomes agree
+on rejection (diagnostic text is retained, not asserted identical). Two additional
+reference compositions check x/y ordering and duplicate-axis last-scale wins.
+The 48 numeric/character/Date/UTC positional outcomes now run through the existing
+typed builders. No new production API, scale implementation or wire version was needed.
+
+Validation: pinned R 4.6.1 / ggplot2 4.0.3 capture passes
+(`/tmp/ggplot-named-limit-reference.log`); all six tests in
+`ggplot_temporal_authored_limits` pass, including two new named-reference tests
+(`/tmp/ggplot-named-limit-native.log`). Actual Python/WASM adapters reuse the
+latest temporal-interval-label native modules, whose production source is unchanged
+by this evidence slice. They pass 181 exactly equal records and 48 byte-identical
+SVG/PDF/PNG files, including original/restored/edited definitions and exact timestamp
+replacement checks (`/tmp/ggplot-named-limit-{python,wasm,compare}.log`). All 16
+publication triplets were visually inspected across six contact sheets; hashes and
+findings are in `/private/tmp/finstack-chart-proof-20260914/named-limits/inspection/review.json`.
+The primary acceptance runner schedules the named-reference mode. Scoped strict
+Clippy passes (`/tmp/ggplot-named-limit-clippy.log`).
+
+This qualifies named positional dispatch through the typed API and reconciles the
+R helper's constructor selection. It does not newly certify every nonpositional
+constructor, factor interaction, composed native scale replacement or third-party
+R dispatch. Those computations remain with their scale-family evidence. GG-04 and
+GG-05–19 remain open. Next: reconcile the remaining constructor arguments against
+current evidence, then complete the latest cumulative qualification before GG-05.
+
+## GG-04 current cumulative run and binned shape follow-up — 14 September 2026
+
+The current primary acceptance runner is active against the main checkout with
+fresh native host modules (`/tmp/ggplot-current-cumulative-hosts.log`, output
+`/private/tmp/finstack-chart-proof-20260914/cumulative-current`). Its initial
+`source-baseline.json` records 6,303 paths. Production source remains fixed during
+this run; later evidence-only files and ledger edits are outside that snapshot.
+Completion has not been observed, so this is not cumulative acceptance.
+
+The next constructor reconciliation captures 48 binned shape draws in
+`binned-style-defaults.json`: omitted/TRUE/FALSE/NULL `solid`, absent/vector/count
+theme palettes, and ordinary/constant/missing/empty populations. Omitted/TRUE/FALSE
+bypass theme lookup. NULL consults `palette.shape.continuous` with normalized bin
+midpoints; its absent-solid fallback fails only when evaluated. A count-style R
+callback applied to vector input also retains its error/zero-length outcomes.
+The source contains 43 successful draws and five errors. The original 32-case
+count-only capture is retained at `/private/tmp/ggplot-binned-style-initial-count-reference.json`.
+
+An isolated draft uses the existing palette-function and theme-selection APIs to
+express the fallback and callbacks. No core scale change was needed. Two bounded
+proof-operation modes in the shared extension example provide explicit failure
+and repeat-count behavior. Its new native test matches all 48 outcomes, guide
+labels/mapped keys and exact callback input vectors. Fresh Python/WASM now pass 134 exactly equal records and 30 byte-identical publication files (`/tmp/ggplot-binned-style-default-{python,wasm,compare}.log`). All ten ordinary-population triplets were inspected in four sheets, with hashes and findings under `/private/tmp/finstack-chart-proof-20260914/binned-style-default/inspection/review.json`. All 76 extension-example tests/doctests pass across 17 nonzero targets; strict all-target example Clippy and formatting also pass. The initial host descriptor omitted required binned `oob`/break fields; supplying the same explicit defaults as the native builder corrected the harness. There was no engine correction or fixture weakening. The draft runner schedules this new proof. Integration remains pending while main source stays fixed for the cumulative run. GG-04 and
+GG-05–19 remain open.
+
+## GG-04 cumulative integration corrections — 13 September 2026
+
+The cumulative main-checkout run reached `shape-arc-typescript` and stopped because
+its negative fixture used the now-supported `Radius` channel. Arc and symbol
+Python/TypeScript fixtures now use `UnknownChannel`, preserving rejection coverage.
+The resumed run passed the remaining stack checks, then found that Python's existing
+`_point_radial` implementation was not registered. Registration is repaired; its
+rebuilt Python module passes the radial scalar/path checks, strict declarations,
+697 interaction comparisons and 760 update comparisons. The remaining run is at
+`/tmp/ggplot-empty-glyph-cumulative-resume-radial.log`, output
+`/private/tmp/finstack-chart-proof-20260913/cumulative-empty-glyph`; earlier portions
+remain in the initial, arc and symbol logs. The next stop was a hierarchy input-type mismatch: Python explicitly supplied floating values while WASM inferred integer arrays. The WASM fixture now supplies Float64Array, preserving exact source-value comparison. The final resumed run passes all remaining hierarchy replay/ownership/publication, GG-03 aesthetics and strict declaration checks (`/tmp/ggplot-empty-glyph-cumulative-resume-hierarchy.log`). Together these runs qualify the pre-transform cumulative source with the recorded integration repairs; they do not claim a fresh cumulative run of the newly integrated transforms.
+
+The broader draft workspace run additionally exposed an unhandled
+`ScaleValue::MissingCategory` in native annotation descriptions and a stale
+version-32 assertion in the example label test. Native descriptions now identify
+missing categories. The label test requires version 45, matching its default
+theme-palette selection in both continuous and discrete scales, and rejects
+version 44; all reference label comparisons pass. These corrections are in both
+checkouts. The full draft rerun is `/tmp/ggplot-transform-macos-final.log`.
+
+## GG-04 transform integration — 14 September 2026
+
+At `6e74ae6` plus working-tree changes, the qualified built-in and composition
+slices are now transferred to the main checkout. Saved SHA-256 baselines verified
+all 38 built-in and 39 composition paths before transfer; copied bytes were
+verified afterward. The runner includes the original/label/secondary matrices,
+composition chart matrix and both standalone wire suites. Draft qualification
+below remains the evidence for the transferred source: 808 macOS Rust tests and
+doctests, strict scoped Clippy/formatting, actual host records and inspected
+publications. The integrated main-checkout contract target passes all ten tests (`/tmp/ggplot-transform-integrated-contracts.log`), and repository dependency/host-isolation/link checks pass (`/tmp/ggplot-transform-integrated-repository.log`).
+
+The next custom-transform reference capture has 36 actual chart cases for affine
+and cubic forward/inverse functions, custom default breaks/labels, positional and
+continuous/binned paint routes, and empty/nonfinite populations
+(`registered-transforms.json`, `/tmp/ggplot-registered-transforms-reference.log`).
+The capture now separates successful build/draw from direct scale/panel queries:
+all 36 charts draw, while six empty custom scale-label queries and two empty
+custom panel-label queries reject their length mismatch. The initial capture
+incorrectly reported those later getter errors as chart failures; the original
+phase diagnosis is `/tmp/ggplot-registered-transforms-reference-phases.log`.
+The registered-pointwise slice is now integrated from
+`/private/tmp/finstack-chart-registered-work`: saved baselines verified 34 owned
+paths, with 32 changed files transferred and two reference files already identical.
+Nine focused Rust tests pass its 36 chart mapping/positional-guide outcomes,
+24 separate paint-scale query outcomes, population/domain/inverse validation,
+registry snapshots and retained-binned portability checks. The final macOS run
+passes 817 tests/doctests across 176 nonzero targets (184 total), with strict scoped
+Clippy and formatting (`/tmp/ggplot-registered-macos-final.log`,
+`/tmp/ggplot-registered-clippy-final.log`). Actual Python/WASM runs match 108
+lifecycle states and all 36 publication files; twelve ordinary plots were inspected
+in PNG/SVG/PDF. Cubic custom labels overlap under the authored Preserve policy;
+paint guides are hidden in this publication fixture. The final host log is
+`/tmp/ggplot-registered-hosts-qualified.log`, with artifacts/comparison/inspection
+under `/private/tmp/finstack-chart-proof-20260913/registered-transforms`.
+
+Both hosts additionally pass five standalone containers at version 10, 45 rejected
+envelope downgrades, copying, reconfiguration, option changes, missing registrations
+and native-only serialization rejection. Primary/definition version 55 and direct
+numeric version 4 preserve the older built-in envelopes. Strict Python/TypeScript
+consumers pass on the existing generic descriptor surface
+(`/tmp/ggplot-registered-mypy.log`, `/tmp/ggplot-registered-typescript.log`).
+The first draft Python run used the wrong build feature and failed during import;
+the final run uses the repository's `extension-module,extension-proof` command.
+The integrated repository/dependency/link checks pass
+(`/tmp/ggplot-registered-integrated-repository.log`).
+
+The transform-owned minor-break slice is integrated from
+`/private/tmp/finstack-chart-transform-minor-work`; saved SHA-256 baselines verified
+all ten owned source paths before and after transfer. Two focused Rust tests pass all
+120 captured charts, callback input/order/empty-population rules, six additional
+registered explicit-override routes, callback errors/output budgets and collapsed
+range precedence. Existing positional minor callbacks and all ten built-in/composed
+transform tests also pass (`/tmp/ggplot-transform-minors-core-final.log` and earlier
+focused runs). The shared resolver retains semantic major order before presentation
+sorting, consumes transformed minor coordinates once, and resets transform defaults
+under composition. The ggplot projection now uses trained constant limits before
+reference expansion, matching the independently checked zero-width R range
+(`/tmp/ggplot-transform-minors-zero-reference.log`). The existing source/pointwise
+factory gains an optional bounded minor method; the example uses a separate versioned
+`example.scale_transform_minor` identity without changing the original factory.
+
+Fresh Python/WASM each pass 360 matching lifecycle states and 36 byte-identical
+SVG/PDF/PNG publications (`/tmp/ggplot-transform-minors-hosts-final.log`, artifacts
+under `/private/tmp/finstack-chart-proof-20260913/transform-minors`). All twelve
+ordinary charts were inspected in all three formats. This proves retained minor
+selection; minor tick/grid painting remains guide work. The initial harness treated
+omitted empty `minor_ticks` as a missing required field; it now reads the documented
+empty default. Strict scoped Clippy passes (`/tmp/ggplot-transform-minors-clippy-final.log`).
+The final macOS workspace run passes 819 tests/doctests across 177 nonzero targets
+(185 total) after the constant-limit and registered explicit-override fixes
+(`/tmp/ggplot-transform-minors-macos-final.log`). The refreshed four inspection sheets
+are byte-identical to those inspected. This remains scoped transform qualification;
+it is not a new cumulative host or Linux/native-platform certification. The integrated
+main-checkout target passes both focused tests, and repository/format/diff checks pass
+(`/tmp/ggplot-transform-minors-integrated-contracts.log`,
+`/tmp/ggplot-transform-minors-integrated-repository.log`).
+
+The next reference capture has 72 vector-coupled transform cases, including
+whole-vector cardinality/centering arithmetic, composition, position and continuous/
+binned paint, counts and nonfinite/empty data (`vector-transforms.json`,
+`/tmp/ggplot-vector-transforms-reference.log`). Fifty-two build/draw outcomes succeed;
+eighteen composed-centering constructions reject an invalid domain and two binned
+centering draws reject their breaks. This is reference evidence only. Arbitrary
+vector-coupled transforms, additional probability distributions and remaining
+argument combinations remain open. GG-04 and GG-05–19 remain unfinished.
+
+## GG-04 vector transform draft — 14 September 2026
+
+The reference capture now includes ten direct forward/inverse population records in
+addition to the 72 chart outcomes. A separate qualification draft at
+`/private/tmp/finstack-chart-vector-transform-work` extends the existing registry
+with length-preserving batch arithmetic and retains transformed guide candidates.
+Two external-example kernel tests pass against all ten R records, including empty,
+nonfinite and composition-domain rejection; one positional test matches all 24
+captured configurations for mapping, labels, major/minor positions and JSON restore
+(`/tmp/ggplot-vector-transform-kernels.log`,
+`/tmp/ggplot-vector-transform-position-minors.log`). Existing registered and built-in
+transform tests also pass in the draft (`/tmp/ggplot-vector-transform-guides.log`).
+This paragraph records the initial draft stage; the qualified integration and
+expanded evidence are recorded later in this section.
+The draft now retains transformed training bounds in optional scale metadata and
+uses batch arithmetic for paint inputs, binned cuts and inverse endpoints. The two
+chart tests pass all 72 captured mapping/error outcomes, including all 24 positional
+cases (`/tmp/ggplot-vector-transform-paint-draft.log`). The extended paint comparison also passes candidate counts and visible labels
+(`/tmp/ggplot-vector-transform-paint-guides-draft.log`), after fixing scalar binned-cut
+handling and retained nonfinite bounds. Reference labels are captured before guide
+censoring; this comparison asserts labels only for visible retained candidates. Eighteen existing transform
+and guide tests passed before these latest paint edits
+(`/tmp/ggplot-vector-transform-guides-batch.log`). The core cumulative suite then passed 691 tests and doctests across 145 targets
+(`/tmp/ggplot-vector-transform-core-all.log`). Three external-example kernel tests
+also pass invalid-length and callback-error handling, including empty input
+(`/tmp/ggplot-vector-transform-kernel-errors.log`). The subsequent draft introduces
+primary/definition version 56 only when transformed training metadata is retained;
+all five external-example vector tests pass, including primary round trips and
+version-55 downgrade rejection (`/tmp/ggplot-vector-transform-wire56.log`). Authored
+registered selections without that metadata retain version 55. Metadata restrictions
+still need negative qualification; authored limits, batch boundaries across
+layers/facets and broader controls remain unresolved. Actual rebuilt hosts,
+publication inspection and cumulative checks after versioning have not run for this
+draft.
+Authored-limit reference capture adds 360 single-layer configurations (reversed,
+partial and infinite limits). The draft passes all of them plus the original 72;
+seven example tests also pass structural metadata rejection and kernel error tests
+(`/tmp/ggplot-vector-transform-limits-all.log`). Shared endpoint batching and positional
+training fixes passed all 691 core tests/doctests across 145 targets
+(`/tmp/ggplot-vector-transform-limits-core.log`); that run predates the following
+multilayer changes. A further 72 two-layer reference charts exposed concatenated paint
+training; retaining population batch boundaries fixes both layers' mapped outputs
+(`/tmp/ggplot-vector-transform-layers-draft-final.log`, five passing example tests).
+The test harness compares standalone guide APIs only to single-population oracles;
+multilayer records exercise primary chart preparation and both layers' marks.
+The additional 360 combined layer/limit cases exposed the same concatenation in
+positional limit training. Retaining the collector's layer/input batch boundaries
+fixes all 864 single-layer and multilayer cases
+(`/tmp/ggplot-vector-transform-layer-limits-draft.log`, six example tests).
+A further 144 fixed/free-facet records reproduce pre-panel paint transformation.
+The draft retains source-row order and layer/input groups during shared training,
+and maps the full source population before selecting each panel's rows. Seven
+example tests now pass all 1,008 cases, including both layers' marks and positional
+facet major/minor coordinates and labels through the combined facet layout
+(`/tmp/ggplot-vector-transform-facets-guides-draft.log`). Directly laying out an
+isolated fixed panel does not supply the figure's shared range and is not used as
+the facet guide oracle. Strict Clippy passed before the facet edits
+(`/tmp/ggplot-vector-transform-layers-clippy-final.log`). The updated macOS workspace
+passes 829 tests/doctests across 187 test targets, excluding the host adapter crates,
+and strict core/export/example Clippy passes
+(`/tmp/ggplot-vector-transform-facets-workspace.log`,
+`/tmp/ggplot-vector-transform-facets-clippy.log`). These runs precede the next shared-sampler edit.
+The draft now shares source-vector sampling and panel-row selection across paint,
+numeric and value style consumers. Twenty-four additional pinned R point-size facet
+cases pass, with all eight example tests passing
+(`/tmp/ggplot-vector-transform-size-tests.log`). Restoring the earlier panel-local
+numeric path reproduces a dropped point in the first ordinary cardinality facet
+(`/tmp/ggplot-vector-transform-size-counterexample.log`); the shared sampler is restored.
+A further 720 facet/authored-limit R cases pass, bringing focused coverage to
+1,752 reference charts across nine example tests
+(`/tmp/ggplot-vector-transform-facet-limits-tests.log`). Panel reconstruction now
+rebinds vector transforms, limit training transforms each full source vector before
+selecting panel rows, and missing automatic guide candidates do not enter scene
+identity metadata. Strict core/export/example Clippy passes after these edits
+(`/tmp/ggplot-vector-transform-facet-limits-clippy.log`). The core/example aggregate
+found three failing targets, all concerning empty binned callback limits
+(`/tmp/ggplot-vector-transform-facet-limits-core.log`). Panel selection now preserves
+the original training state for empty source inputs; all three affected targets pass
+(`/tmp/ggplot-vector-empty-binned-regression.log`,
+`/tmp/ggplot-vector-empty-callback-regressions.log`).
+Eight additional R count-statistic charts reproduce scalar transformation of
+generated aesthetics. Row encoding is now separated from palette/position mapping,
+so generated vectors transform across all panels of each layer first. All ten
+focused tests pass 1,760 reference charts
+(`/tmp/ggplot-vector-statistics-batched.log`), and strict core/export/example Clippy
+passes (`/tmp/ggplot-vector-statistics-clippy.log`). The fresh macOS workspace passes
+832 tests/doctests across 187 targets, excluding host adapter crates
+(`/tmp/ggplot-vector-statistics-workspace.log`). Fresh Python/WASM builds each pass
+180 states over the original 72 vector configurations (54 configurations through
+three states, plus 18 matching construction rejections). All 180 records match
+exactly, and 54 SVG/PDF/PNG files are byte-identical
+(`/tmp/ggplot-vector-{python,wasm}-final.log`, `/tmp/ggplot-vector-host-compare.log`).
+The harness uses the reference-visible guide configuration; hiding binned guides
+changes training and is not the same oracle. All 18 successful ordinary charts
+were inspected in all three formats on six contact sheets under
+`/private/tmp/finstack-chart-proof-20260913/vector-transforms/inspection`.
+These host/publication proofs do not yet cover the expanded facet/statistic matrix
+or a retained-metadata v56 host round trip.
+The qualified slice is now integrated into the working tree over revision
+`6e74ae6`: 44 files were transferred after checking their prior and qualified
+hashes; the unchanged original fixture was preserved. Formatting, repository
+structure/link validation and `git diff --check` pass
+(`/tmp/ggplot-vector-integrated-{fmt,repository,diffcheck}.log`). All 13 focused external-example tests pass in the actual checkout
+(`/tmp/ggplot-vector-integrated-contracts.log`).
+Other numeric/value style outputs, broader generated-statistic populations, callback
+combinations and expanded host coverage remain open.
+Next: continue those remaining batch boundaries and the GG-04 constructor inventory.
+GG-04 and GG-05–19 remain open.
+
+The generated-style extension is also integrated over revision `6e74ae6`: 11 files
+were transferred from `/private/tmp/finstack-chart-generated-style-work` after checking
+prior and qualified hashes. Its 16 count-to-paint/size R fixtures include fixed facets
+and reverse composition. The first faceted cardinality paint case reproduced an
+incorrect light color where the reference uses the darkest color
+(`/tmp/ggplot-vector-statistic-styles-counterexample.log`). Shared layer sampling now
+retains generated panel/ordinal identities and transforms one generated layer vector.
+All eleven focused tests pass 1,776 reference charts
+(`/tmp/ggplot-vector-statistic-styles-batched.log`). Strict Clippy passes and the
+macOS workspace passes 833 tests/doc tests across 187 targets, excluding host crates
+(`/tmp/ggplot-vector-statistic-styles-{clippy,workspace}.log`).
+Fresh Python and WASM extension-proof builds pass 44 original/edit/error states and
+36 byte-identical PNG/SVG/PDF files
+(`/tmp/ggplot-vector-statistic-styles-hosts-final.log`). Paint rejects the invalid
+center/reverse composition during construction; size rejects it during chart evaluation.
+The primary authoring runner includes these proofs. All 12 successful charts were
+visually inspected in all three formats on four contact sheets at
+`/private/tmp/finstack-chart-proof-20260913/vector-statistic-styles/inspection`;
+`review.json` records hashes and the inspection boundary. This does not establish
+full guide/layout parity. Broader generated statistics, callback combinations and
+other retained-metadata variants remain open. Both hosts now also pass the 44
+states with explicit transformed bounds in version-56 descriptors, reject version-55
+downgrades, and retain immutable wires through edits. Their 36 exports are identical
+to each other and the inspected version-55 originals
+(`/tmp/ggplot-vector-retained-{python,wasm,compare}.log`). These descriptors use
+eligible replacement training; binned host variants remain outside this evidence. Repository, format and diff checks pass
+(`/tmp/ggplot-vector-style-integrated-{fmt,repository,diffcheck}.log`). Next: continue those boundaries
+and the GG-04 constructor inventory. The actual-checkout external-example target
+passes all eleven tests (`/tmp/ggplot-vector-style-integrated-contracts.log`).
+The isolated frozen-scale probe at `/private/tmp/finstack-chart-authored-vector-work`
+rejects construction under the existing rule that ggplot policies require eligible
+training (`/tmp/ggplot-vector-authored-counterexample.log`). This is an intentional
+policy boundary, not an unimplemented frozen ggplot mode; no draft changes were
+transferred. Retained metadata is compatible with eligible replacement training.
+The base vector matrix additionally passes 180 exactly matching retained-metadata
+host states, version-55 downgrade rejection for paint/binned descriptors and 54
+byte-identical publications (`/tmp/ggplot-vector-retained-base-{python,wasm}.log`).
+All 54 files are identical to the previously inspected base-vector exports;
+`/private/tmp/finstack-chart-proof-20260913/retained-vectors/inspection-equivalence.json`
+records the hashes. The primary runner now includes both retained suites.
+The cumulative main-checkout authoring run reached all 588 scheduled commands,
+ending with the successful strict GG-03 Python typing stage. Its per-stage logs
+and source hashes are under
+`/private/tmp/finstack-chart-proof-20260914/cumulative-vectors`, with the aggregate
+log at `/tmp/ggplot-vector-cumulative-hosts.log` and a recorded completion boundary
+in `completion-boundary.json`. Host modules predate the later probability,
+continuous/interval and temporal integrations; native stages used main at execution
+time. This completes the recorded older-module run, not a fresh cumulative
+qualification of the latest source or a new whole-corpus visual inspection.
+GG-04 and GG-05–19 remain open.
+
+The probability adapter is integrated over revision `6e74ae6`: eight files were
+transferred from `/private/tmp/finstack-chart-probability-work` after checking prior
+and qualified hashes (`transfer-baseline.json`). Four uniform/exponential
+configurations qualify 36 chart draws and 120 raw quantile/CDF outcomes, including
+domain endpoints, infinities and missing values. All four native tests pass
+(`/tmp/ggplot-probability-native-final.log`) and strict external-example all-target
+Clippy passes (`/tmp/ggplot-probability-clippy.log`). Fresh actual Python/WASM builds
+match 108 original/edit states and 36 byte-identical PNG/SVG/PDF publications
+(`/tmp/ggplot-probability-hosts.log`). All twelve ordinary charts were inspected in
+all formats under `/private/tmp/finstack-chart-proof-20260914/probability-transforms/inspection`;
+`review.json` records file hashes and findings. Exponential positional cases 18/27
+retain crowded 0.00/0.25 labels under the authored `Preserve` policy; collision
+handling and complete stepped-guide presentation remain GG-05.
+The initial harness hid binned guides, changing reference training; retaining guide
+selection fixes the color discrepancy without engine edits. Guide candidates
+explicitly adapt raw reference labels to native visibility semantics. This
+supplements normal/logistic built-in proofs and qualifies the existing registered
+quantile/CDF adaptation, not an embedded R distribution library. The primary runner
+now includes it. The already-running cumulative process started before this addition;
+its eventual result must be reported with this separately qualified supplement.
+The integrated four-test target, formatting, repository and whitespace checks pass
+(`/tmp/ggplot-probability-integrated-{native,fmt,repository}.log`). Generic palette
+reconciliation now links all three generic constructors to the existing 324-draw
+`do.call` capture and 979-state/54-publication proof, avoiding duplicate fallback
+work. Its explicit hidden guides leave default selection/NULL-break suppression
+as the next distinct constructor boundary. No new runtime gate is claimed by that
+coverage-index update. Next: reconcile that boundary and finish the cumulative run.
+GG-04 and GG-05–19 remain open.
+
+## GG-04 temporal interval label callbacks — 14 September 2026
+
+The next isolated FIX-GG04 draft reuses the temporal selection proof with a
+2,160-draw callback/format capture. It records 1,654 successful draws and 506
+reference rejections over Date/datetime, color/size/alpha, bins/steps, five callback
+result modes, two format controls, fixed/inferred limits and three populations.
+Reference command: `R_LIBS_USER=/private/tmp/finstack-chart-tools/r-library
+/usr/local/bin/Rscript tools/reference/r/temporal-interval-label-functions.R`;
+log `/tmp/ggplot-temporal-interval-label-reference.log`.
+
+The native counterexample found missing automatic calendar names on interval
+callback inputs (`/tmp/ggplot-temporal-interval-label-counterexample.log`). The draft
+now retains those names in the common temporal selector and honors explicit
+`date_labels` precedence over registered labels at interior and endpoint calls.
+Both native tests pass: the existing 648-case selection matrix plus 2,160 new
+cases in all four units (`/tmp/ggplot-temporal-interval-label-native.log`). Callback
+values, class, timezone, names, sequence and labels match the reference.
+
+The fix is integrated at `6e74ae6` plus owned changes. Seven files were transferred
+after checking all baseline hashes and the two shared captures; the identities are
+in `/private/tmp/finstack-chart-proof-20260914/temporal-interval-label/integration.json`.
+The macOS workspace passes 844 tests across 194 targets with no failed or ignored
+tests (`/tmp/ggplot-temporal-interval-label-workspace.log`). Strict core Clippy,
+formatting and repository checks pass
+(`/tmp/ggplot-temporal-interval-label-{clippy-final,fmt,repository}.log`).
+
+Fresh actual Python/WASM modules match 21,872 records: 1,654 successful cases in
+four units and three original/edit states, plus 2,024 expected rejections. All 180
+publication files are byte-identical, and all sixty triplets were inspected;
+`temporal-interval-label/inspection/review.json` records hashes and findings.
+The same modules also pass 7,680 temporal selection records and 2,720 numeric
+interval-label records, with all 198 and 108 publication files unchanged from
+previously inspected outputs. The full helper log is
+`/tmp/ggplot-temporal-interval-label-hosts.log`; the primary runner now includes the
+new mode of the existing host scripts. Interval, colorbar and numeric guide
+presentation remain GG-05. No blanket interval DST or arbitrary callback-composition
+claim follows from this UTC matrix. Next: reconcile remaining GG-04 constructor
+and argument boundaries against the coverage index.
+GG-04 and GG-05–19 remain open.
+
+## GG-04 temporal interval selection — 14 September 2026
+
+The isolated draft in `/private/tmp/finstack-chart-continuous-guide-work` extends
+FIX-GG04 temporal guide selection to `TemporalBins` and `TemporalSteps` using the
+existing interval and calendar owners. Definition version 60 rejects downgrades.
+All 648 captured selections pass across four timestamp units: 2,544 successful
+comparisons and 48 expected rejections (`/tmp/ggplot-temporal-interval-native.log`).
+Typed Date/POSIX break vectors mask endpoints even for explicit empty selection;
+constant inferred bins reject when no cuts survive. Palette evaluation converts
+relative timestamp keys into absolute Date/POSIX units, and calendar pretty labels
+are retained for interior cuts with separately formatted endpoint labels.
+
+The changes are now integrated at `6e74ae6` plus owned changes. Twelve files were
+transferred only after checking the baseline hashes and unchanged reference captures;
+`/private/tmp/finstack-chart-proof-20260914/temporal-interval/integration.json` records
+their identities. The native proof additionally compares retained interval key paints
+and numbers (`/tmp/ggplot-temporal-interval-native-final.log`). The macOS workspace
+passes 843 tests across 194 targets, with zero failed or ignored tests
+(`/tmp/ggplot-temporal-interval-workspace.log`). Strict core Clippy, formatting and
+repository checks pass (`/tmp/ggplot-temporal-interval-{clippy,fmt,repository}.log`).
+
+Fresh Python and WASM modules pass 7,680 exactly equal records: 636 successful draws
+in four timestamp units and three replay/edit states, plus 48 expected error records.
+All 198 publication files are byte-identical across hosts. Logs:
+`/tmp/ggplot-temporal-interval-{python,wasm,compare}.log`. An initial stronger key
+comparison expected hex strings where the wire retains typed RGB values; the adapter
+now verifies exact RGB channels, and both host proofs were rerun. No fixture changed.
+All 36 new PNG/SVG/PDF triplets were inspected; hashes and findings are recorded in
+`temporal-interval/inspection/review.json`. The 90 earlier temporal files are unchanged.
+The same fresh modules pass the 2,720-state interval-label regression with all 108
+files unchanged from prior inspected output. The primary runner includes expanded
+counts. Guide presentation still uses ordinary swatches, including the final missing
+bin swatch, and numeric guides remain unpainted; those are GG-05 requirements.
+This matrix does not certify interval callback/format or DST combinations.
+Next: reconcile the remaining temporal argument combinations and GG-04 coverage.
+GG-04 and GG-05–19 remain open.
+
+## GG-04 temporal guide selection — 14 September 2026
+
+At `6e74ae6` plus owned changes, source-constructor reconciliation found that Date
+and datetime color defaults select colorbars, but the temporal descriptor retained
+only point keys. The new `temporal-guide-selection` capture records 648 draws:
+two timestamp classes, color/size/alpha, inferred/fixed limits, ordinary/constant/
+empty populations, six guide selections and automatic/NULL/empty breaks. It records
+636 successful draws and 12 interval-guide rejections. The initial palette-call
+instrumentation was corrected to wrap only materialized palettes; null numeric
+palettes must keep their original deferred theme fallback. No reference behavior
+was changed to accommodate the implementation.
+
+The isolated draft in `/private/tmp/finstack-chart-continuous-guide-work` adds
+version-59 `TemporalColorbar` to the existing calendar and colorbar owners.
+The native counterexample retained zero samples versus the expected 300
+(`/tmp/ggplot-temporal-guide-selection-counterexample.log`). The repaired native
+proof now passes 432 legend/colorbar/hidden draws in all four timestamp units,
+1,728 comparisons including source-backed marks, exact labels, sample colors and
+bounded numeric sample comparisons (`/tmp/ggplot-temporal-guide-selection-native.log`).
+The 216 interval selections remain outside this draft. Reference command:
+`R_LIBS_USER=/private/tmp/finstack-chart-tools/r-library /usr/local/bin/Rscript
+tools/reference/r/temporal-guide-selection.R`; log
+`/tmp/ggplot-temporal-guide-selection-reference.log`.
+
+The temporal colorbar changes are now integrated. Eight existing source baselines
+and both shared capture hashes were verified before transferring eleven files;
+`/private/tmp/finstack-chart-proof-20260914/temporal-colorbar/integration.json`
+records their identities. Fresh Python/WASM modules pass 5,184 original/replay,
+layer-edit and theme-edit states, with exact host records and 90 byte-identical
+publications (`/tmp/ggplot-temporal-colorbar-hosts.log`). All thirty PNG/SVG/PDF
+triplets were inspected; `temporal-colorbar/inspection/review.json` records hashes
+and findings. The same modules pass the 2,720-state interval-label supplement;
+all 108 of those files are unchanged from the earlier inspected outputs.
+
+The macOS workspace passes 843 tests across 194 targets, with no failed or ignored
+tests (`/tmp/ggplot-temporal-colorbar-workspace.log`). Strict core Clippy, formatting
+and repository checks pass (`/tmp/ggplot-temporal-colorbar-{clippy,fmt,repository}.log`).
+The primary runner schedules the new native and both actual-host proofs. Temporal
+point keys retain source-unit offsets; ramp values retain the normalizer's absolute
+Date days/POSIX seconds. This is scale-side qualification: rendered colorbars still
+use ordinary swatches, and numeric guides remain unpainted. The older cumulative
+host run is separate evidence and continues on its originally built modules.
+Next: temporal interval selection and remaining GG-04 reconciliation.
+GG-04 and GG-05–19 remain open.
+
+## GG-04 continuous guide selection — 14 September 2026
+
+At `6e74ae6` plus owned working-tree changes, the new pinned
+`continuous-guide-selection` capture records 162 primary draws across colour,
+size and alpha, ordinary/missing/empty populations, six guide selections and
+three break policies. The existing engine passes the 81 default/legend/hidden
+cases in `ggplot_palette_selection`: palette callback batches, visible values and
+labels match exactly after JSON integer/float normalization. The typed adaptation
+lowers `breaks=NULL` or `guide="none"` to `Hidden`, and an empty vector to explicit
+empty continuous candidates. This is source-backed adaptation, not R syntax support.
+
+Commands: `R_LIBS_USER=/private/tmp/finstack-chart-tools/r-library /usr/local/bin/Rscript
+tools/reference/r/continuous-guide-selection.R` and `mise exec -- cargo test -p
+chart-core --test ggplot_palette_selection continuous_legend_and_suppression --locked`.
+Logs are `/tmp/ggplot-continuous-guide-{reference,native}.log`. The Python/CJS
+`ggplot_continuous_guide_selection` scripts run against the actual cumulative
+modules under `/private/tmp/finstack-chart-proof-20260914/cumulative-vectors`:
+243 original/layer-edit/theme-edit states match exactly, and all 27 publications
+are byte-identical. No core or host implementation changed for this proof, so the
+existing freshly built cumulative modules were reused. Comparison and all nine
+inspected PNG/SVG/PDF triplets are under
+`/private/tmp/finstack-chart-proof-20260914/continuous-guide-selection`; the inspection
+`review.json` retains hashes. Color default swatches appear and NULL/empty suppress
+them. Alpha/size guide metadata passes, but their missing painted guides remain
+GG-05. This is not complete guide presentation parity.
+
+The remaining 81 captured cases expose separate colourbar/bins/coloursteps
+selection contracts. Reference colorbars invoke the palette on a separate 300-value
+batch; continuous bins/steps use interval samples. Those selections are not yet
+qualified by the existing continuous candidate descriptor. Next: implement their
+scale-side computation/selection, reconcile generic discrete/binned suppression,
+and finish the still-running cumulative validation. The primary runner now includes
+this supplement, but its already-running process did not schedule the new calls.
+The complete four-test palette-selection target, formatting, repository and
+whitespace checks pass (`/tmp/ggplot-continuous-guide-{target,fmt,repository,diffcheck}.log`).
+GG-04 and GG-05–19 remain open.
+
+The subsequent colorbar draft is isolated in
+`/private/tmp/finstack-chart-continuous-guide-work`; it has not changed main core.
+The capture now adds nine all-outside colorbar cases (171 total), plus retained raw
+scale breaks and decoration samples. Four native target tests pass, including 117
+supported selection draws (`/tmp/ggplot-colorbar-qualified-target.log`). The draft
+adds explicit v57 colorbar selection and 300 retained mapping samples, with
+non-color and no-visible-key suppression. Fresh Python/WASM modules pass 351 exact
+original/layer-edit/theme-edit states and 63 byte-identical publications
+(`/tmp/ggplot-colorbar-hosts-final.log`). All 21 PNG/SVG/PDF triplets were inspected;
+`/private/tmp/finstack-chart-proof-20260914/colorbar/inspection/review.json` records
+hashes and limitations. Marks and suppression agree across formats, while default
+colorbar selection still paints five ordinary swatches. The isolated primary runner
+now includes the 351-state supplement. The isolated macOS workspace run passed
+838 tests with no failures or ignored tests (`/tmp/ggplot-colorbar-workspace.log`);
+strict chart-core Clippy, formatting and repository checks also passed
+(`/tmp/ggplot-colorbar-{clippy-final,fmt-check,repository}.log`). These results precede
+the following generic-suppression repair and do not qualify that later source.
+Actual bar painting and key positioning remain GG-05; retaining decoration samples
+does not complete that presentation contract.
+
+The subsequent `generic-guide-suppression` capture records 324 discrete/binned
+primary draws across three aesthetics and populations, automatic/fixed limits,
+default/none/legend selection, and default/NULL/empty breaks. Command:
+`R_LIBS_USER=/private/tmp/finstack-chart-tools/r-library /usr/local/bin/Rscript
+tools/reference/r/generic-guide-suppression.R`;
+`/tmp/ggplot-generic-guide-suppression-reference.log` records success. Reference empty
+breaks preserve discrete mapping but collapse binned mapping to one interval.
+
+The isolated native proof reproduced redundant palette calls for an empty population
+with fixed limits and explicit empty breaks, on both discrete and binned scales.
+Repairs in the existing training/mapping owners skip those calls when no marks or
+eligible guide keys demand them. All five palette-selection tests pass, including
+324 exact callback-batch/suppression cases
+(`/tmp/ggplot-generic-guide-suppression-target.log`). This test checks callback batches,
+wire round trips and suppressed guide metadata; full default-guide keys and reference
+mark outputs remain outside this proof. Fresh Python/WASM modules now pass 972
+original/layer-edit/theme-edit states with exactly equal retained keys/styles and
+108 byte-identical publications (`/tmp/ggplot-generic-hosts.log`, artifacts under
+`/private/tmp/finstack-chart-proof-20260914/generic-guide`). The colorbar supplement
+also passes again on these modules: 351 equal states and 63 identical publications.
+All 36 generic PNG/SVG/PDF triplets were inspected; `inspection/review.json` records
+hashes, consistent suppression and the still-missing numeric guide presentation.
+The example extension adds an endpoint-inclusive palette mode to reproduce this
+reference's count palette without changing the existing example modes. Strict
+Clippy passes for chart-core and the example extension
+(`/tmp/ggplot-generic-clippy.log`). The refreshed macOS workspace passes all 839
+tests across 192 targets with no failures or ignored tests
+(`/tmp/ggplot-generic-workspace.log`); formatting and repository checks pass too
+(`/tmp/ggplot-generic-{fmt-check,repository}.log`). The qualified colorbar and
+suppression changes are now integrated after verifying unchanged source baselines;
+`generic-guide/integration.json` records the 18 integrated file hashes. The integrated
+checkout also passes all five palette-selection tests
+(`/tmp/ggplot-generic-integrated.log`). The existing
+cumulative host run continues against its previously built modules; its outcome
+will not be attributed to the newer integrated source. Next: complete that run's
+evidence and address the remaining continuous interval-guide selections.
+GG-04 remains open.
+
+The continuous interval selections are now integrated over `6e74ae6` plus owned
+changes. Definition version 58 retains `ContinuousBins`/`ContinuousSteps`, reusing
+the existing interval parser, midpoint mapping and label machinery. The primary
+selection capture now has 189 draws, including uneven breaks. All six native
+palette-selection tests pass; the additional built-in-palette regression checks
+that interval keys are sampled and continuous mark styles remain unchanged.
+
+A separate pinned `continuous-interval-transforms` capture contains 108 draws over
+log10, cardinality and center transforms, including index palettes that expose
+missing-class pooling in actual marks. This reproduced incorrect interval endpoints
+from scalar transformation and the merging of source NA with generated NaN.
+The shared mapping now uses trained transformed bounds and samples guide values
+without another forward transform. An internal missing marker preserves NA/NaN
+pool identity; it does not add an R-specific NA token to numeric wire transport or
+arbitrary callback parameters. The external example target passes all 108 callback,
+key, label and mapped-key comparisons, plus index-palette mark comparisons
+(`/tmp/ggplot-continuous-interval-transform-target.log`).
+
+Reference commands use `R_LIBS_USER=/private/tmp/finstack-chart-tools/r-library
+/usr/local/bin/Rscript` with `tools/reference/r/continuous-guide-selection.R` and
+`continuous-interval-transforms.R`; logs are
+`/tmp/ggplot-continuous-interval-{reference,transform-reference}.log`.
+Fresh Python/WASM modules pass 216 linear interval states and 72 identical files;
+they also requalify 351 colorbar states and 63 identical files
+(`/tmp/ggplot-continuous-interval-complete-hosts.log`). The expanded transform host
+proof passes 324 original/layer-edit/theme-edit states and 216 byte-identical files,
+including independent reference mark checks for index palettes
+(`/tmp/ggplot-continuous-interval-index-{python,wasm,compare}.log`). All 24 linear
+and 72 transform PNG/SVG/PDF triplets were inspected. Hashes and findings are under
+`/private/tmp/finstack-chart-proof-20260914/continuous-interval/{inspection,transforms-inspection}/review.json`.
+Linear renders remain identical after the transform repairs. Color guides still
+use ordinary swatches and numeric guides remain unpainted: GG-05 presentation,
+positioning, decoration and composition are not qualified by these results.
+
+The repaired macOS workspace passes 841 tests across 193 targets with no failures
+or ignored tests (`/tmp/ggplot-continuous-interval-complete-workspace.log`); that run
+used the initial 72 transform cases, followed by the successful 108-case focused
+expansion. Strict core/example Clippy, formatting and repository checks pass
+(`/tmp/ggplot-continuous-interval-complete-clippy.log`,
+`/tmp/ggplot-continuous-interval-{fmt,repository}.log`). Integration verified fourteen
+file baselines and four shared capture files; `continuous-interval/integration.json`
+records their hashes. The integrated checkout passes all six palette-selection tests
+and the 108-case external example target, plus formatting, repository and whitespace
+checks (`/tmp/ggplot-continuous-interval-integrated-{core,example,fmt,repository,diffcheck}.log`).
+All 63 colorbar publications also match the previously inspected files byte for byte,
+after accounting for the renamed suffix. The primary runner includes both interval supplements.
+Next: finish the earlier cumulative run's evidence, reconcile remaining GG-04
+constructor arguments and registered guide-label combinations, then continue the
+assigned GG-05–19 packages. GG-04 remains open.
+
+The interval-label changes were qualified in
+`/private/tmp/finstack-chart-continuous-guide-work` before integration. Their pinned
+`continuous-interval-label-functions` capture records 1,080 combinations of color,
+size and alpha; bins/steps; identity/log transforms; ordinary/constant/empty
+populations; automatic/fixed limits; automatic/duplicate-nonfinite/empty breaks;
+and five label-function modes. The shared native label runner now matches all 820
+successful builds, 260 reference rejections and their callback vectors
+(`/tmp/ggplot-continuous-interval-label-{reference,native}.log`).
+
+This reproduced an outside break incorrectly retained in interval boundaries after
+label censoring, and a continuous constant interval incorrectly emitting keys.
+The draft excludes censored boundaries and removes the undefined-position constant
+key only after evaluating the reference label callbacks. The original counterexamples
+are retained in `/tmp/ggplot-continuous-interval-label-counterexample.log` and
+`/tmp/ggplot-continuous-interval-label-constant-counterexample.log`. Captured parsed
+boundaries remain distinct from visible key vectors: the proof uses the visible
+prefix after ordinal key censoring. Existing discrete/continuous/binned label tests
+also pass. The repairs are now integrated after verifying all five existing source
+baselines; `continuous-interval-label/integration.json` records six transferred
+files and two matching reference captures. The primary runner now schedules both
+actual-host label proofs and their comparison.
+
+Fresh Python/WASM modules each pass 2,720 states: 820 successful cases through
+original/replay, layer edit and theme edit, plus 260 expected validation rejections.
+The version-58 descriptor rejects downgrade to version 57. All state records match
+exactly, as do 108 publication files (`/tmp/ggplot-interval-label-{python,wasm}.log`,
+`continuous-interval-label/labels-comparison.json`). All 36 PNG/SVG/PDF triplets were
+inspected; `continuous-interval-label/inspection/review.json` retains findings and
+hashes. Constant bins suppress the undefined key; steps retain their reference key.
+Ordinary color swatches and the missing numeric guide painting remain GG-05 scope.
+Artifacts are under `/private/tmp/finstack-chart-proof-20260914`.
+
+The same repaired modules requalify 216 interval states/72 files, 351 colorbar
+states/63 files and 324 transformed interval states/216 files, with exact host
+comparisons (`/tmp/ggplot-continuous-interval-label-hosts-regression.log`). The macOS
+workspace passes 842 tests across 193 targets, with no failed or ignored tests
+(`/tmp/ggplot-continuous-interval-label-workspace.log`). Strict chart-core Clippy,
+formatting, repository and whitespace checks pass
+(`/tmp/ggplot-interval-label-{clippy,fmt,repository,diffcheck}.log`). These scoped fresh
+host proofs do not replace the earlier still-running cumulative host validation.
+Next: reconcile remaining constructor arguments against the coverage index and
+complete cumulative evidence before GG-04 closure. GG-04 and GG-05–19 remain open.
+
+## GG-04 dependency transform reconciliation — 13 September 2026
+
+The `transform` argument audit identifies an unresolved computational boundary:
+the current numeric/positional enums do not represent the full pinned `scales`
+transform family (for example, asinh, logit, Box–Cox and composed transforms).
+`scale-transform-contracts.json` now captures all 24 dependency transform source
+contracts, 29 forward/inverse configurations and 116 actual positional/paint plots
+from scales 1.4.0. This is reference
+evidence only; it does not certify the working-tree engine. An isolated draft at
+`/private/tmp/finstack-chart-transform-work` now passes three Rust tests covering
+the 29 scalar configurations and all 116 positional/paint outcomes, including
+point coordinates, tick positions, labels, colors and population errors
+(`/tmp/ggplot-transform-plots.log`). Strict core all-target Clippy also passes
+(`/tmp/ggplot-transform-clippy.log`). The draft reuses the existing reference
+projection adapter for ranges with nonfinite inverse endpoints. It is not yet
+transferred into this checkout. The fresh draft core aggregate passes 672 tests
+and doctests across 142 targets (`/tmp/ggplot-transform-core-all.log`), including
+capability-version-53 serialization round trips. Fresh Python/WASM builds each
+pass 342 states and produce 171 byte-identical publication files
+(`/tmp/ggplot-transform-{python,wasm,compare}.log`). All 57 successful ordinary
+plots were inspected in SVG/PDF/PNG on nineteen contact sheets under
+`/private/tmp/finstack-chart-proof-20260913/builtin-transforms-draft/inspection`.
+Finite inverse capability tests now pass for valid built-in branches and reject
+nonfinite, degenerate and discontinuous branches (`/tmp/ggplot-transform-inverse.log`).
+Strict Python and TypeScript declarations pass with the generated host declarations.
+An additional 116-case R guide capture (`transform-guide-controls.json`) qualifies
+58 default-label count cases in the draft, including base-0.5 logarithmic count-3
+success and count-7 rejection (`/tmp/ggplot-transform-guide-test.log`, four tests).
+The count extension passes 174 exact Python/WASM states and 171 byte-identical
+SVG/PDF/PNG files; all 57 plots were inspected across the formats. Deliberate
+`Preserve` labels can overlap, so this is scale semantics evidence, not GG-05 layout
+acceptance. The refreshed original 342-state/171-file proof passes with every
+previously inspected file unchanged. Draft core aggregate: 674 tests/doctests,
+142 targets (`/tmp/ggplot-transform-core-all.log`); strict core Clippy passes.
+The subsequent registered-label correction passes all 116 guide cases with a
+fixed-two-decimal example callback, preserving existing formatter contracts
+(`/tmp/ggplot-transform-guide-labels-test.log`). The callback extension passes 348 exact host states and 342 byte-identical files.
+Its 171 default-label files match the inspected count proof; the 171 new files
+were inspected on nineteen contact sheets. This does not certify the complete
+`label_number` constructor argument surface. The subsequent finite-secondary
+extension passes 29 R cases and existing secondary regressions (ten Rust tests),
+plus 87 exact host states and 81 byte-identical files. All 27 secondary plots
+were inspected across SVG/PDF/PNG on nine contact sheets under
+`/private/tmp/finstack-chart-proof-20260913/builtin-transform-secondary/inspection`.
+The refreshed original and registered-label matrices pass 342/348 states and
+171/342 files. Thirty-five changed SVG/PDF files have zero rendered pixel
+differences from their previously inspected versions; all PNGs remain unchanged
+(`builtin-transform-secondary-refresh/render-comparison/comparison.json`).
+Direct numeric envelopes additionally require version 2 for the new family and
+reject version 1; legacy numeric envelopes retain version 1 (seven focused tests
+in `/tmp/ggplot-transform-wire-final.log`). Standalone version-8 envelopes pass actual Python/WASM checks for five
+containers, 35 rejected downgrades, copy/map preservation and a legacy version-1
+control (`/tmp/ggplot-transform-wire-{python,wasm}.log`); parsed envelopes match
+exactly. Fresh draft core aggregate: **676 tests/doctests across 142 targets**.
+Final strict core/example-extension all-target Clippy passes
+(`/tmp/ggplot-transform-final-clippy.log`). Full macOS draft qualification passes **805 tests/doctests across 174 nonzero
+targets** (182 total targets), including native and example-extension targets;
+Python/WASM crates are excluded from that Rust command and have the separate
+actual-host proofs above (`/tmp/ggplot-transform-macos-final.log`). Composed and registered
+transforms remain unresolved. GG-04 stays open. Next: transfer the qualified draft
+after the ongoing cumulative host run, then reconcile remaining transform contracts. A new reference-only capture records
+13 compositions and 195 actual positional/continuous/binned paint plots in
+`transform-compositions.json`; an isolated ownership draft at
+`/private/tmp/finstack-chart-compose-work` passes all 195 captured plots, including
+ignored composed-transform counts, inherited logarithmic breaks, population rejection,
+transformed-domain trimming and default labels without finite viewport inversion.
+The draft borrows evaluation inputs while owning composition vectors. Ten focused
+tests cover those cases and plot/standalone/direct-numeric envelopes v54/v9/v3,
+empty/deep/wide rejection and nested composition; all 680 core tests/doctests and
+strict all-target core Clippy pass. Actual Python/WASM standalone proofs each pass
+five containers and 40 downgrade rejections with identical envelopes. The chart
+matrix is 543 states (21 build errors and six errors in each of three prepared
+states) and 177 publications; all states compare exactly and all files are byte-identical. All 59 plots were inspected across PNG/SVG/PDF on twenty contact sheets. Reciprocal/square-root labels crowd under the existing `Preserve` policy; this is not GG-05 layout acceptance. The refreshed original, label and secondary proofs pass 342/348/87 exact states and 171/342/81 files, with all 594 files unchanged from the previously inspected built-in outputs (`composed-refresh/publication-changes.json`). Strict Python/TypeScript declaration consumers pass, using the existing generic descriptor boundary. The full workspace rerun exposed two test ownership uses of the formerly Copy descriptors; explicit clones preserve their independent expectations. The corrected macOS workspace aggregate passes **808 tests/doctests across 174 nonzero targets** (182 total), excluding the separately qualified Python/WASM crates (`/tmp/ggplot-compose-macos-final2.log`). Strict all-target core/export/example-extension Clippy and workspace formatting checks pass (`/tmp/ggplot-compose-final-clippy.log`, `/tmp/ggplot-compose-fmt.log`). No
+composition change has been transferred. Registered transforms and the remaining
+GG-04 contracts stay open.
+
+## GG-04 joint paint aesthetics — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, one scale shared by colour/fill matches
+15 actual R builds/draws across continuous, binned, discrete, manual and identity
+families, including missing and empty populations. The existing engine passes the
+new focused Rust target; Python/WASM each pass 45 immutable lifecycle states and
+15 byte-identical SVG/PDF/PNG files, inspected on three contact pages at
+`/private/tmp/finstack-chart-proof-20260913/shared-paint/inspection`. The primary
+runner now includes this route; the already-running cumulative process predates
+the runner addition. No engine changes were needed. The 739-test aggregate below
+predates this added test. GG-04 and GG-05–19 remain open; next: complete cumulative
+host qualification and reconcile the remaining constructor/rejection contracts.
+
+## GG-04 retained empty glyphs — 13 September 2026
+
+The numeric constructor matrix now covers **180 outcomes** including
+`scale_size_binned_area`, with **484 exact host states and 108 byte-identical
+publications** before the following final layout correction. Inspection of all
+eighteen contact pages exposed an incorrect “No data” label when negative binned
+area sizes retained rows but painted no glyphs. Reference-profile layout now
+recognizes retained populations with no projection omissions; actual empty
+populations keep their `NoData` state. The new implicit/explicit-symbol regression,
+all seventeen aesthetic tests, the 180-constructor target and all twenty layout
+tests pass (`/tmp/ggplot-empty-glyph-status-native.log`). Rebuilt hosts now pass
+484 states and 108 byte-identical publications. Only the three reversed-binned-area
+files changed; their reinspection confirms removal of the incorrect label. Strict
+Clippy and repository checks pass. The fresh macOS aggregate passes **739 tests/doctests
+across 161 targets** at `/tmp/ggplot-empty-glyph-macos-aggregate.log`; the new cumulative run is at
+`/tmp/ggplot-empty-glyph-cumulative.log` (output `cumulative-empty-glyph`). GG-04, cumulative qualification and GG-05–19 remain open.
+
+## GG-04 numeric constructors and implicit circles — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, numeric constructor ranges and `max_size`
+match **160 actual R outcomes** across eight constructors and five populations.
+The publication check exposed implicit circles using raw size as radius; they now
+share the existing reference size/stroke conversion with explicitly selected symbols.
+Empty glyphs retain their prepared rows without emitting invalid scene primitives.
+Native device-radius checks in points/pixels and sixteen related aesthetic tests pass.
+Fresh Python/WASM match **432 states and 96 byte-identical SVG/PDF/PNG files** under
+`/private/tmp/finstack-chart-proof-20260913/numeric-constructors`; all sixteen contact
+pages inspected. Zero line-width hairlines retain device-dependent raster visibility.
+Default-palette host regressions pass 168 states each. Strict all-target Clippy,
+`/tmp/ggplot-numeric-radius-clippy.log`, passes. The fresh macOS aggregate **PASS 738 tests/doctests**,
+`/tmp/ggplot-numeric-radius-macos-aggregate.log`. The cumulative run uses
+`cumulative-numeric` under the proof root; it continues in
+`/tmp/ggplot-numeric-cumulative-resume.log` after updating the stage assertion to
+R's size/stroke/fontsize radius formula. Both stage host routes pass. Earlier cumulative attempts are partial: temporal wire assertions were updated
+to their actual automatic-paint v42/numeric-theme v45 contracts, then execution was
+stopped before the renderer correction. No cumulative acceptance is claimed.
+Remaining formal-argument reconciliation and GG-04/GG-05–19 remain open.
+
+## GG-04 gradient rejection timing — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, reference palette recipes now defer invalid
+position errors until evaluation. Empty continuous/binned plots succeed; singleton,
+ordinary, partially missing and all-missing populations still reject. Color-type
+validation skips its fabricated sample only for empty fixed-output reference
+palettes. Binned fallback preparation similarly skips gradient/registered evaluation,
+while retaining named count-palette validation. The initial aggregate exposed the
+latter distinction and its unchanged reference test now passes after narrowing the
+bypass. Native **PASS 200 reference outcomes**, with finite/nonfinite constructor,
+count-function and named count-palette regressions. Python/WASM match **240 states
+and six byte-identical, inspected empty publications** under
+`/private/tmp/finstack-chart-proof-20260913/gradient-invalid`; that host build precedes
+the final deferred-sampling refinement. The aggregate additionally exposed later
+standalone sampling after empty training; the fix now reuses the existing deferred
+binned vector/cache owner. All **736 macOS core/export tests/doctests pass**, log
+`/tmp/ggplot-gradient-values-macos-aggregate.log`. Strict all-target Clippy and
+repository checks pass. The cumulative runner is rebuilding and executing under
+`/private/tmp/finstack-chart-proof-20260913/cumulative`. Cumulative host requalification,
+remaining formal-argument reconciliation and GG-04/GG-05–19 remain open.
+
+## GG-04 nonfinite gradient remapping — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, the shared gradient now retains reference
+NaN/infinite remapping positions using the existing portable `Number` type.
+NaN pairs are removed after assigning coordinates; infinite endpoints and duplicate
+positions follow the reference interpolation. A missing remapped value remains
+missing for a single-color ramp. Native **PASS 156 pinned draws**, with finite
+remapping/palette regressions and standalone descriptor identity/downgrade tests.
+Special values require plot v52, interpolation v5 and standalone scale v7; finite
+recipes retain previous envelopes. Strict all-target core/export/example Clippy
+passes. Fresh Python/WASM match 468 lifecycle states and 156 byte-identical
+publications; all twenty-six contact pages were visually inspected. Evidence is under
+`/private/tmp/finstack-chart-proof-20260913/gradient-nonfinite`.
+Empty-input rejection timing and the cumulative run remain open, as do GG-04/GG-05–19.
+
+## GG-04 gradient remapping vector lengths — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, the shared reference Lab gradient now
+normalizes explicit `values` by their own cardinality, independently of the number
+of color anchors. The previous implementation incorrectly rejected shorter and
+longer vectors. A new immutable 96-draw R capture reproduces that failure and now
+passes for gradientn, stepsn, distiller and viridis_c through both paint channels,
+including duplicate and descending positions. The original 200 constructor cases
+and palette regressions pass. Fresh Python/WASM match 288 lifecycle states and all 96 publications byte for
+byte; all sixteen PNG/SVG/PDF contact pages were inspected. Strict all-target
+core/export/example Clippy and formatting pass. Evidence is under `/private/tmp/finstack-chart-proof-20260913/gradient-remap`.
+The cumulative runner was stopped before this engine correction; its earlier
+passed steps do not certify the changed engine. Nonfinite remapping positions and
+empty-input rejection timing still need reconciliation. GG-04 and GG-05–19 remain open.
+
+## GG-04 continuous/binned paint constructors — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, `CountGradient` composes the existing
+count-palette and Lab owners for six-anchor viridis_c and seven-anchor distiller
+recipes (plot wire v51, standalone interpolation v4, standalone scale v6).
+The constructor capture found a gradient alpha midpoint mismatch: 156.5 encoded
+as 157 instead of reference 156. Gradients now share the verified farver ties-to-even
+alpha conversion with numeric aesthetic mappings. Two hundred pinned R draws
+pass, including 40 binned rejection outcomes; palette/ordinal/named regressions
+and all 765 alpha byte-boundary cases pass. Fresh Python/WASM match 480 lifecycle
+states and 120 byte-identical publications, with all twenty contact pages inspected
+under `/private/tmp/finstack-chart-proof-20260913/continuous-constructors`.
+Strict all-target core/export/example Clippy and all 732 macOS core/export
+tests/doctests pass. The cumulative primary host runner exposed an older GG-02
+host assertion that compared reference aesthetic millimeters directly with scene
+publication points. Both host assertions now apply the explicit 72/25.4 conversion;
+the pinned reference is unchanged, and both 13-figure stage proofs pass. The
+cumulative primary host runner has restarted under
+`/private/tmp/finstack-chart-proof-20260913/cumulative`; completion and remaining
+argument/rejection reconciliation remain open, as do GG-04 and GG-05–19.
+
+## GG-04 discrete paint constructor forwarding — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, eighty pinned R draws now qualify default
+and explicit hue, grey, Brewer and viridis discrete paint settings across both
+channels and five populations. The existing palette and missing-paint adapters
+match the different defaults (grey: red; hue: grey50; Brewer/viridis: NA).
+Native proof and scoped strict Clippy pass. Actual v50 Python/WASM modules match
+208 lifecycle states and 48 byte-identical, inspected publications under
+`/private/tmp/finstack-chart-proof-20260913/discrete-constructors`. This adds recipe
+and runtime evidence, with no new scale engine or wire capability. The primary
+runner includes the route. Continuous/binned paint constructor reconciliation,
+cumulative qualification and GG-04/GG-05–19 remain open.
+
+## GG-04 qualitative type-list palettes — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, wire v50 retains qualitative `type`
+color-vector lists with optional names and supplied hue fallback arguments. Core
+selects the first shortest sufficient vector and reuses existing manual matching
+without manual-limit filtering; insufficient vectors delegate to the hue owner.
+Eighty pinned R draws pass, covering selection, ties, named/duplicate lookup,
+missing/empty populations and lazy invalid names. Fresh Python/WASM match 206
+edit/replacement states and 48 byte-identical SVG/PDF/PNG files; all eight contact
+pages were inspected under `/private/tmp/finstack-chart-proof-20260913/qualitative-types`.
+All five focused tests, strict core/export/example Clippy and repository checks pass.
+The preceding v49 macOS core/export aggregate completed with 728 tests/doctests
+passing (`/tmp/ggplot-ordinal-types-macos-aggregate.log`); it predates this policy.
+The primary runner includes this route but has not run cumulatively. Fresh Linux,
+remaining constructor forwarding and GG-04/GG-05–19 acceptance remain open.
+
+## GG-04 ordinal type-vector palettes — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, v49 retains ordinal `type` color vectors.
+The count adapter reuses existing Lab interpolation; named gradient palettes use
+the same sampling helper. Seventy pinned R draws pass natively, including single
+and empty vectors, alpha/transparent colors and lazy invalid-name errors. The
+1,260-case named palette regression and all three default-constructor tests pass.
+Fresh Python/WASM match 154 edit/replacement states and 30 byte-identical, inspected
+SVG/PDF/PNG files under `/private/tmp/finstack-chart-proof-20260913/ordinal-types`.
+Strict all-target core/export/example Clippy passes. The primary runner includes
+the route; cumulative execution and fresh Linux remain open. Next: finish the
+source-backed constructor/formal reconciliation. GG-04 and GG-05–19 remain open.
+
+## GG-04 ordinal paint constructor defaults — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, the explicit `ggplot_color_ordinal` factory
+selects the existing viridis count palette, bypasses theme lookup and preserves
+reference NA paint instead of grey50. It applies to either color or fill without
+adding an ordered-data representation or wire version. Twenty pinned R draws cover
+ordinary, singleton, missing, all-missing and empty populations with/without a theme
+palette. All three native default-palette tests pass (136 reference draws, including
+240 temporal unit configurations). Current actual Python/WASM modules match 60 ordinal
+states and 30 byte-identical, inspected publication files; the factory itself is tested in Rust.
+Strict all-target core/export/example Clippy passes before the test-only shape-21
+alignment. Artifacts: `/private/tmp/finstack-chart-proof-20260913/ordinal`.
+The 726-test aggregate predates this additive factory. The cumulative host runner
+remains unexecuted and Linux unavailable. Next: qualify ordinal constructor type
+vectors and remaining forwarding; GG-04 and GG-05–19 remain open.
+
+## GG-04 explicit binned constructor palettes — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, 108 new reference draws distinguish explicit
+public binned paint palettes from generic normalized-vector palettes. The v48
+`GgplotBinnedPalette::Discrete` adapter reuses the existing discrete count owner.
+The new native proof reproduced a hue error at 16 colors (`#0CB702` versus reference
+`#0BB702`): farver installs a D65 white point derived from chromaticities, while the
+core polar-Luv conversion used rounded XYZ constants. That white point is corrected;
+140 additional reference hue palettes cover counts, offsets, reversal and dark colors.
+Five native regressions pass; fresh Python/WASM match 288 states and 30 inspected,
+byte-identical publication files. Retained named palettes match 4,183 host states
+and 54 files. Strict all-target core/export/example Clippy passes. The macOS
+core/export aggregate passes 725 tests before the subsequent callback NULL fix.
+The next 108-draw function capture reproduces NULL palette results incorrectly
+using the grey50 fallback. The shared batch path now preserves NULL separately from
+empty/short vectors. Six focused native tests pass, and fresh Python/WASM match
+324 states and 36 byte-identical SVG/PDF/PNG files, all visually inspected. The final
+macOS core/export aggregate passes 726 tests with zero failures
+(`/tmp/ggplot-binned-functions-macos-aggregate.log`). Current artifacts are retained
+in `/private/tmp/finstack-chart-proof-20260913/functions`; earlier `target` proof
+artifacts and tools disappeared during execution and their old paths are historical.
+The pinned R library and host tools were rebuilt outside `target`; regenerating the
+108 function draws reproduces the committed fixture exactly.
+Next: remaining constructor forwarding. GG-04 and GG-05–19 remain open.
+
+## GG-04 style defaults and temporal exception — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, shape and linetype defaults request theme
+lookup; explicit solid/hollow shape palettes bypass it. All 36 reference draws pass
+natively; fresh hosts match 144 edit/replacement states and 36 inspected files under
+`target/ggplot-default-style`. A separate 60-draw temporal capture reproduced that
+Date/datetime paint constructors must ignore theme palettes while numeric defaults
+use them. Automatic timestamp paint now clears lookup. All 26 focused native tests and strict
+all-target core/export/example Clippy pass. Fresh macOS Python and WASM match all
+180 temporal states and 30 byte-identical, inspected SVG/PDF/PNG files under
+`target/ggplot-default-temporal-theme`; both new routes are in the primary runner.
+
+The prior Linux aggregate passed 718 tests and failed three stale default-version
+assertions; their numeric/color expectations are unchanged and their version checks
+are corrected. The subsequent macOS core/export aggregate passed 723 tests with zero failures
+(`/tmp/ggplot-default-temporal-theme-macos-aggregate.log`); the cumulative primary
+runner has not run. Next:
+finish retained host regressions and constructor argument reconciliation.
+Docker stopped before the fresh Python build (HTTP 500, then no daemon socket);
+macOS cannot launch its installed app (`kLSNoExecutableErr`). Local Python qualification
+succeeded; fresh Linux aggregate execution remains blocked by that environment.
+GG-04 and GG-05–19 remain open. Geometry follow-up: point-mapped linewidth has different
+missing-row behavior from ggplot2's ignored point aesthetic; the temporal linewidth
+proof uses segments, where the aesthetic is operative, and preserves all 60 original
+mapped values. Point geometry behavior remains a GG-07 follow-up.
+
+A scratch R theme-name probe inadvertently rewrote the already modified root
+`Rplots.pdf`. Its prior uncommitted bytes were not captured, so it has not been
+restored from HEAD. Subsequent reference generators use temporary PDF devices.
+
+## GG-04 named theme palette registry — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, wire v47/theme v5 retain named palette strings
+and equivalent singleton vectors. The entire pinned 138-name registry shares existing
+palette/gradient owners; deterministic data adds the missing 79 HCL and 14 manual
+tables. All 1,260 actual reference draws pass in both native wire forms. Fresh
+Python/WASM match 4,183 states per form and 54 identical, inspected SVG/PDF/PNG files.
+Strict all-target Clippy and consumer types pass. Earlier host routes also pass.
+
+The previous Linux aggregate identified a test stripping the reference policy without
+clearing its new palette lookup metadata; that setup is corrected. The v47 Linux
+aggregate now runs all targets without stopping at the first failure. All 13 focused native regressions pass, including the vector test after its
+loader startup delay; no aggregate or cumulative-runner pass is claimed. Next: remaining style defaults and constructor-argument reconciliation.
+GG-04 and GG-05–19 remain open.
+
+## GG-04 automatic/default theme palettes — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, automatic color/fill and continuous/ordinal
+size, alpha and linewidth defaults now request the correct theme aesthetic. The
+56-draw reference matrix reproduced the ignored automatic color palette and qualifies
+its correction. Explicit numeric ranges, area and radius retain their reference
+bypass behavior. Rust has 52 passing focused regressions and all-target core/export/
+example strict Clippy. Fresh Python/WASM match 168 round-trip/layer-edit/theme-edit
+states and 30 inspected publication files. Earlier registered/vector routes retain
+979/438 equal states and 54 files each matching inspected output.
+
+The earlier Linux run passed 719 tests but failed its final export doctest with
+E0460 after a concurrent Python build replaced an artifact. A stable-source rerun
+is running without overlapping builds. Next: named palette coercion and per-constructor
+argument reconciliation; GG-04 and GG-05–19 remain open. No cumulative runner claim.
+
+## GG-04 theme color vectors — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, wire v46/theme v4 retain color vectors,
+using existing Lab gradients for continuous/binned scales and a count palette with
+missing overflow for discrete scales. The 180-draw native test matches 110 successes
+and 70 reference errors, including palette-NA versus input-NA with explicit missing
+replacement. An additional counterexample reproduced theme selection being redirected
+by an earlier constant-overridden paint mapping; mutable and read-only walks now
+select the same active channels.
+
+All 44 focused native regressions and all-target core/export strict Clippy pass.
+Fresh Python/WASM match 438 vector states and 54 inspected SVG/PDF/PNG files; retained
+registered palettes match 979 states and 54 files. Strict consumer typing passes.
+The Linux run passed 719 tests before the export-doctest artifact conflict described above;
+a stable-source rerun is running.
+Next: named palette coercion and automatic/default constructor palette lookup.
+GG-04 and GG-05–19 remain open; the cumulative primary proof runner has not run.
+
+## GG-04 ordered theme palette lookup — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, 108 additional reference draws qualify
+size/alpha aesthetic ordering, an absent first aesthetic, alias-only palettes,
+`color` overriding `colour`, and the authored `color` aesthetic alias. All prior
+216 records remain unchanged. The 324-draw native test passes; current hosts match
+979 states and 54 files exactly matching inspected output. Explicit palette setter
+replacement is also exercised natively. No production change beyond adding the
+new field's empty default to three remaining export-test/benchmark initializers.
+The first Linux build identified those initializers; the corrected aggregate is
+running. Next: built-in theme palette values/coercions and remaining constructor
+contracts. GG-04 and GG-05–19 remain open.
+
+## GG-04 registered theme palette selection — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, wire v45/theme v3 preserve explicit versus
+fallback palette selection. The shared compiler consults registered theme palettes
+before training and retains the authored fallback. All 216 pinned reference draws
+match callback order and marks across continuous/discrete/binned color, size and
+alpha. The capture exposed and fixed two shared defects: continuous built-in NA
+paint handling suppressed valid marks, and area-size square roots retained negative
+infinity instead of missing. All 42 focused regressions, strict core-test Clippy,
+repository checks and strict Python/TypeScript consumer checks pass. Fresh hosts
+match 619 states, including theme edits, replacements, held snapshots and seven
+rejections. All 54 publication files match across hosts and are inspected.
+Next: ordered multi-aesthetic/alias lookup and remaining palette coercion and
+constructor argument contracts. Built-in theme values, full inheritance and guide
+presentation remain unqualified; GG-04 and GG-05–19 remain open. The prior 716-test
+Linux result predates v45.
+
+## GG-04 numeric constructor ranges — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, 72 additional reference builds cover
+ascending, reversed and constant numeric ranges and area `max_size` values 9, 2
+and 0. All prior 216 reference records are unchanged. The expanded native test
+passes 276 applicable standalone and primary cases; strict Clippy passes. Current
+Python/WASM match 502 states for constructor bins and 502 for the retained legacy
+route, with 24 publication files matching inspected output. The primary proof
+runner retains the expanded corpus. No production or wire change was required.
+The completed Linux aggregate passed 716 tests before these latest assertion
+extensions; `/tmp/ggplot-constructor-breaks-linux.log`. Theme-selected palette
+fallback and remaining constructor forwarding are next. GG-04/GG-05–19 remain open.
+
+## GG-04 named numeric constructor guide keys — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, all 204 applicable named size, area,
+alpha and linewidth constructor cases now compare primary guide keys as well as
+standalone values. The reference capture retains default bins keys, midpoint
+palette outputs, endpoint labels and NULL-break suppression. The existing native
+numeric test passes the expanded assertions; focused strict Clippy passes. Both
+hosts reproduce 370 identical original/restored/edited/error records and 12
+publication files matching inspected output. No production or wire change.
+The 12 unsupported named-wrapper `right` calls remain reference-only rejection
+cases. Theme-selected palettes, customized ranges and other constructor forwarding
+still need qualification. GG-04 and GG-05–19 remain open.
+
+## GG-04 omitted binned guide default — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, 108 actual reference draws with the generic
+binned constructor's guide omitted exactly reproduce explicit bins, including
+21 errors. This applies to color, size and alpha; the default is not inferred from
+the aesthetic. All 12 native pipeline tests pass. The expanded 540-draw fixture
+produces 1,068 identical Python/WASM records and 168 identical publication files,
+all matching inspected output. No production or wire change was needed: host
+lowering selects the retained `BinnedBins` descriptor. Named constructor palette
+fallbacks, argument forwarding and full guide presentation remain open; this does
+not close GG-04 or qualify GG-05–19. Next: named numeric constructor defaults and
+fallback palettes, then the remaining argument contracts.
+
+## GG-04 registered breaks with constructor guides — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, explicit bins preserve named, parsed break
+candidates while deferring registered labels until after midpoint mapping. Previously,
+the deferral discarded names and retained missing cuts. The existing 2,880 registered
+and 80 default-label reference builds now also pass with explicit bins/colorsteps:
+1,836 successes and 1,124 reference errors. All 30 focused native tests, strict Clippy and repository checks pass. Fresh
+Python/WASM reproduce 4,802 identical original/restored/edited/replacement/error
+records. This uses retained v44 descriptors and does not change constructor defaults.
+Publication was not rerun for this metadata correction. Full guide presentation,
+constructor defaults/fallbacks/forwarding and GG-04/GG-05–19 remain open.
+
+## GG-04 binned label callback order — captured slice qualified, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, bins and stepped color map before invoking
+registered labels, preserving reference palette/OOB/rescaler/label order. The new
+108-draw capture includes indexed, short and missing labels across color/size/alpha,
+ordinary/missing/empty inputs and default/indexed rescaling. All 84 successes and
+24 errors reproduce; all 23 focused native tests and strict Clippy pass. Fresh
+Python/WASM match 268 original/restored/edited/replacement/rejection states and
+54 publication files, each exactly matching inspected output. No wire bump beyond
+v44. Full guide painting, default-guide adaptation, and other constructor
+composition remain unqualified. Next: constructor default selection and registered
+break composition, then defaults/fallbacks/forwarding. GG-04 and GG-05–19 remain open.
+
+## GG-04 explicit bins and colorsteps — captured selection qualified, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, wire v44 retains explicit bins/stepped
+scale guide selection. Bins map interval midpoints; colorsteps map cuts and
+midpoints and retain missing endpoint keys. Non-color stepped selection suppresses
+the guide before training, preserving the reference's automatic-limit timing.
+All 432 captured selections pass natively (383 successes and 49 reference errors),
+including complete successful OOB/rescaler/palette sequences. The 21 focused native
+pipeline/binned tests, strict focused Clippy and repository checks pass. Fresh
+Python/WASM agree on 873 states and 168 publication files; 18 new renders are
+inspected and 150 files exactly match previously inspected output. The painter
+still shows existing interval swatches, so this does not qualify GG-05 guide
+presentation. Registered break/label composition and constructor default selection
+need reconciliation next. The 710-test Linux aggregate predates this change;
+no new aggregate result is claimed. GG-04 and GG-05–19 remain unfinished.
+
+## GG-04 hidden and legend binned constructors — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, 216 pinned actual-draw cases qualify hidden
+and explicit legend selection across color, size and alpha; authored, automatic
+and identity-callback limits; ordinary/missing/empty populations; and four vector
+operations. The native test matches successful callback sequences, mark colors,
+size values and guide keys, and reproduces the 21 reference errors. The shared
+pipeline test helper preserves the original 288-case regression. Eight native
+pipeline tests and focused strict Clippy pass. Existing current Python/WASM builds
+match 433 states, including 18 callback-limit replacements and four rejection
+checks, and all 108 publication files. Thirty-six new renders are inspected;
+72 files exactly match inspected baseline/duplicate renders. No production scale
+code changed in this qualification. Next: explicit bins/colorsteps scale-side
+selection, then remaining constructor defaults/fallbacks/forwarding. Full guide
+presentation remains GG-05. GG-04 and GG-05–19 remain unfinished.
+
+## GG-04 constructor coverage reconciliation — 13 September 2026
+
+At `6e74ae6` plus working-tree changes, the coverage index now explicitly enumerates
+276 inherited method signatures and the captured fields of all 11 scale classes,
+alongside the 141 function signatures. Exact source comparison passes for all 152
+exports and 960 function formal occurrences; every linked test target exists.
+The coverage narrative now records the qualified helper and positional-population
+slices and identifies stale historical gaps as superseded. This documentation
+reconciliation does not qualify full constructors or class protocols. Next:
+source-backed default/fallback/forwarding acceptance and scale-side guide selection;
+full presentation stays in GG-05. GG-04 and GG-05–19 remain unfinished.
+
+## GG-04 mixed identity-source routes — focused qualification, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, source populations combine ancestor filters,
+intersect panel targets and retain matched filtering through identity chains.
+Matched source order is preserved at later callback stages even when the consuming
+layer broadcasts. The earlier identical-target restriction is removed. All 28
+focused native vector/facet tests pass, including 240 mixed-route configurations.
+Fresh Python/WASM agree on 520 states and 108 publication files; all distinct
+renders have been inspected, with exact equality to inspected files for duplicates.
+Strict Clippy, rustdoc and repository graph checks pass. The Linux core/export
+aggregate passes 710 tests, zero failures/ignored, across 146 executables and three
+doctest targets (`/tmp/ggplot-mixed-source-linux-tests.log`). This aggregate predates
+the new guide-selection test below. Next: constructor/formal reconciliation and any remaining
+scale composition boundaries. GG-04 and GG-05–19 remain unfinished.
+
+## GG-04 identity source chains — focused qualification, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, positional source callbacks resolve through
+identity-transform ancestors and preserve every source filter. Matching facet
+and chart-scope declarations retain the existing population adapter. All 27 focused
+native vector/facet tests pass; the added 96 identity-chain configurations include
+independent index expectations and filter-excluded sentinel observations. Fresh
+Python/WASM agree on 208 states and 48 publication files, also byte-identical to
+the inspected panel/scope publications. Strict focused Clippy, rustdoc and repository
+checks pass. Statistics over generated statistical rows retain their existing
+schema boundary; mixed facet/chart scope inside a source identity chain remains
+explicitly unsupported by this adapter. Next: constructor/formal reconciliation
+and remaining composition boundaries. GG-04 and GG-05–19 remain unfinished.
+
+## GG-04 panel-target and chart-scope vectors — focused qualification, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, explicit panel targets expand callback
+inputs only into their named panels, in facet order. Chart-wide source scope uses
+the full filtered population per destination panel. Shared source statistics reuse
+that adapter; their aggregate presentation still requires explicit targeting.
+All 17 native vector tests pass, including 96 panel/scope composition configurations.
+Fresh Python/WASM agree on 208 original/restored/replacement states and all 48
+publications; all 16 charts have been inspected. Focused strict Clippy passes.
+The 706-test Linux aggregate below predates this extension. Next: source-preserving
+transform chains, distinguish existing generated-statistic rejection from GG-04
+scale requirements, then complete constructor reconciliation. GG-04 remains open.
+
+## GG-04 broadcast positional vectors — captured slice qualified, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, execution-local caches retain separate
+source-row results per broadcast panel. Fixed populations preserve panel-block
+order; matched populations retain source insertion order. The common registry
+still owns callback invocation, recycling and bin classification. All 216 numeric
+and 432 binned reference cases pass; their shared-statistic variants and all 15
+native vector tests pass. Fresh Python/WASM agree on 384, 188, 752 and 364 states,
+including replacements; all 108 publications match exactly and have been inspected.
+Matched-facet host regressions pass 425/186/704/346 states; all 108 publications
+match both hosts and their previously inspected baselines. Focused Clippy and
+strict rustdoc pass. The Linux core/export aggregate passes 706 tests across 149
+executables; this predates the subsequent panel/scope extension. Next:
+remaining explicit panel,
+chart-wide/generated-input boundaries and constructor reconciliation. GG-04 is open.
+
+## GG-04 typed limit helpers — captured slice qualified, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, exact temporal endpoints retain their units
+and refill missing limits after data changes through the existing population owner.
+Wire v43 carries these endpoints. Typed `xlim`/`ylim` constructors select numeric
+reversal, category order or Date/UTC behavior without duplicating a scale engine.
+All 48 pinned cases are covered by native checks and 181 exactly equal Python/WASM
+states; all 48 matching publications have been inspected. Fresh host regressions
+also pass 180 temporal-color states and 96 blank states, with exact manifests and
+all 54 blank publications matching. The nine final focused native tests, strict
+focused Clippy, rustdoc and repository graph checks pass. The 630-pass/one-failure
+macOS aggregate predates the constructor wrappers; its outdated automatic-paint
+version assertion is fixed and all five tests in that suite pass. This is focused
+qualification, not a rerun of the entire aggregate or GG-04 acceptance.
+Next: broadcast source callback populations and constructor reconciliation.
+A new 216-case broadcast reference capture is available; implementation is running.
+GG-04 and GG-05–19 remain unfinished.
+
+## GG-04 blank training layers — focused qualification, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, blank layers preserve optional positional
+training without marks or missing-row diagnostics. All 30 reference expansion
+cases pass, including shared color training and blank-only guide exclusion.
+Automatic ggplot paint scales share ownership by aesthetic; explicit metadata
+selects wire v42 and retains identity, palette and title through edits. Blank
+layers without automatic paint scales use v41. All 30 focused authoring/aesthetic/
+helper tests pass, plus the new palette-edit/append regression. Fresh Python and
+WASM each pass 96 states; all manifests and 54 publications agree exactly and
+all publications have been inspected. The primary proof runner includes this slice.
+Strict focused Clippy and core/export rustdoc pass. The later macOS aggregate result is recorded above; earlier aggregates predate
+these changes. Temporal regressions also
+pass eight native tests and fresh host proofs of 1,328, 457 and 1,727 states.
+All 102 temporal publications agree exactly between hosts; changed singleton
+vectors remove censored off-viewport circles and retain identical PNG pixels.
+Their SVG/PDF renders have now been inspected. Next: typed limit helpers,
+broadcast/chart-wide callback sources and constructor reconciliation.
+GG-04 and GG-05–19 remain unfinished.
+
+## GG-04 joint positional-bin callbacks — Linux aggregate passed, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, source OOB ranges retain limit-vector
+arity; scalar classification uses callback output. Break input distinguishes NULL
+limits from empty numeric vectors, and bin reset preserves NULL break results.
+All 1,728 joint reference cases and 14 final focused native tests pass. Fresh
+Python/WASM pass 2,692 joint, 2,744 coordinate-stage and 1,164 unfaceted states;
+all manifests and 84 export files agree exactly. New joint and dimension
+publications have been inspected. A separate dimension reference capture exposed
+eight build-only false acceptances, now rejected without changing the original
+fixture. The shared inverse-log owner uses portable math after an observed one-ULP
+host difference. All 689 Linux core/export tests pass across 144 executables;
+strict Clippy passes. These runs predate the blank-layer changes above. The macOS
+aggregate also passed 618 tests across 124 executables; strict rustdoc passed.
+The temporal extension failures found afterward are corrected above.
+All 152 constructor source contracts now match the formal inventory; 48 typed-limit
+and 30 expansion-helper cases are captured but not implementation-qualified.
+Next: finish aggregate checks, implement train-only blank layers and typed helper
+dispatch, and reconcile the remaining constructor contracts. GG-04 remains open.
+
+## GG-04 positional-bin facet vectors — qualified captured slice, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, bin classification rejects an empty vector
+immediately, preserving callback ordering across free panels. A wholly empty layer
+skips callbacks. Free-panel training defers callback-driven empty classification to
+that stage. All 432 direct and 216 shared mean-facet reference cases and 40 focused native
+tests pass. Fresh Python/WASM pass 704 direct, 346 shared and 1,164 unfaceted
+regression states. All 54 facet exports agree exactly and have been inspected.
+Strict Clippy and rustdoc pass. The empty-vector error now occurs at bin
+classification rather than generic recycling. Next: joint callbacks and the
+constructor inventory. GG-04 remains open.
+
+## GG-04 positional-bin vectors — qualified captured slice, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, positional bins evaluate registered OOB
+vectors before source classification through the common population adapter.
+Post-statistic interval mapping reuses the existing bins without another callback.
+All 648 pinned cases and 29 focused native tests pass. Fresh Linux Python and
+WASM each pass 1,164 exactly equal states, including 12 retained replacements;
+all 36 byte-identical publications have been inspected. Strict Clippy and rustdoc
+pass. The 685-test Linux aggregate from before this slice remains historical;
+the whole aggregate has not been rerun after these bin changes. Next: qualify
+faceted/joint positional-bin callback populations and reconcile the constructor
+inventory. GG-04 and GG-05–19 remain unfinished.
+
+## GG-04 temporal positional vector functions — qualified temporal slice, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, the common vector adapter converts numeric
+callback values and limits at the temporal unit boundary. A new 324-case pinned
+reference capture covers duration/date/datetime points and means. All 972 native
+unit configurations pass values, limits, guides and callback arguments. All 26
+focused temporal/vector/stage regression tests and a represented-offset precision
+regression pass. Untrained temporal limits and empty duration guide errors now
+retain reference behavior. Checked represented-number conversions support distant
+callback offsets while the source timestamp span restriction remains unchanged.
+Fresh Python and WASM each pass 1,727 states, with 36 byte-identical, inspected
+publications. Six export tests pass after a fix skips fully clipped circles before
+backend precision conversion. Strict Clippy, rustdoc and repository checks pass.
+The complete Linux core/export regression run passes all 685 tests across 144
+executables. Next: implement positional-bin callbacks against the new 648-case
+reference capture, then reconcile constructor contracts. GG-04 is open.
+
+## GG-04 shared positional facet vectors — qualified matched slice, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, shared source nodes use the common fixed/free
+population adapter and reuse callback samples across panels. One prepared-table
+helper retains non-identity population provenance for mapping, empty-summary rejection
+and panel retention. All 108 shared mean-facet reference cases and all 25 focused
+native tests pass. Rebuilt Python/WASM pass 186 exactly equal states and 18 byte-identical,
+inspected publications; 102 unfaceted and 425 unshared host regression states also
+pass. Strict Clippy, rustdoc and repository checks pass. The clean Linux core
+run passes all 612 unit/integration tests.
+The preceding broad Linux attempt compiled the unfaceted implementation before a
+new shared-facet test was added, so it is not aggregate acceptance evidence.
+Next: primary temporal/duration/binned positional callbacks and reconcile constructor contracts. GG-04 remains in progress.
+
+## GG-04 shared positional vector transforms — qualified unfaceted slice, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, unfaceted shared source statistics bind
+positional callbacks once per node, after consumer scale-context checks. Identity
+consumers preserve the summary empty-population rule. All 54 pinned summary cases
+now also pass with two shared consumers; a separate regression verifies filtered
+node input, reversed declaration order and callback-free conflict rejection.
+All 24 focused native tests pass. Rebuilt Python/WASM pass 102 exactly equal
+states and 27 byte-identical, inspected publications. Strict Clippy, rustdoc and
+repository checks pass. The initial broader Linux run was superseded during the next facet slice;
+see the current entry. Faceted shared vectors remain explicitly unsupported;
+GG-04 remains in progress. Next: continue shared facet
+populations and constructor contracts before GG-05–19.
+
+## GG-04 positional facet populations — qualified matched numeric slice, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, all 246 matched numeric facet reference
+cases pass callback, coordinate and guide comparisons. A shared population adapter
+preserves fixed/free ordering and applies return-length recycling across the layer.
+All 33 focused native/Linux tests pass. Rebuilt Python and WASM pass 425 exactly
+equal states, including eight replacement comparisons; all 36 byte-identical
+publications have been inspected. Final strict Clippy, rustdoc and repository
+checks pass after an equivalent empty-row predicate cleanup. Broadcast,
+chart-wide and shared transform sources remain unsupported by this adapter;
+temporal/binned routes and overall GG-04 are still unqualified.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records exact boundaries.
+Next: broaden positional populations and reconcile remaining
+constructors before GG-05–19.
+
+## GG-04 positional OOB vector functions — qualified numeric slice, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, a new positional adapter uses the existing
+pure vector registry before statistics and after generated mapping. Authored axis
+selection requires wire v40; source results retain row identity in execution-local
+mapping state. Shared post-statistic limit training owns the second mapping pass.
+All 324 point mapping/guide cases and 54 selected mean-summary cases pass in Linux.
+Both actual hosts pass 732 exactly equal states, eight replacement comparisons and
+36 byte-identical, inspected publications. All 23 focused native tests, strict
+Clippy, rustdoc and repository checks pass. Both new proofs are registered in the
+primary proof runner. Facets/shared transforms
+were unsupported at this earlier cutoff; temporal/binned routes and further compositions
+remain unqualified. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records the precise comparison scope. Next: broaden the
+positional adapter and reconcile remaining GG-04 constructors before GG-05–19.
+
+## GG-04 transformed limit/vector compositions — qualified slice, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, a new focused test reproduced 72 failures
+in 144 callback-limit compositions. The shared pipeline now retains arbitrary
+limit-vector arity through transformation and defers default rescaler validation.
+Nonlinear/reverse transformations reject NULL callback limit results. Native
+verification passes all 1,728 primary plot/guide compositions and 144 callback-input
+cases. Both actual hosts pass 3,012 exactly equal states and 36 byte-identical,
+inspected publications, including 12 update-versus-fresh/immutable-output states.
+Focused native/Linux regressions pass. Final native and strict all-target Clippy
+checks pass after allocation cleanup; rustdoc, formatting and repository checks pass.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records the boundaries.
+Next: positional OOB and remaining GG-04 constructor
+contracts before GG-05–19.
+
+## GG-04 scalar and empty binned sampling — qualified slice, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, scalar vector sampling respects the
+selected bin and empty binned preparations defer sampling until it is needed.
+Tests cover 96 reference singleton cases, 504 actual numeric-limit/rescaler builds
+and retained guide key values/labels. Explicit binned legends require wire v39.
+Both actual hosts pass 1,348 corrected numeric-limit states and 283 states per
+pipeline family; all 105 publications match each other and prior inspected bytes.
+Strict Clippy, rustdoc, formatting and repository checks pass. All 604 native
+unit/integration tests pass at this slice boundary. Two doctests could not compile
+because an overlapping build replaced their library artifact. All six doctests pass
+on a sequential Linux rerun with the later positional draft; the failed native
+command is not recorded as a full pass. The earlier 609-test Linux run predates this
+follow-up.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records the correction
+to older standalone-derived primary proof claims. Next: remaining GG-04
+callback/constructor work before GG-05–19.
+
+## GG-04 binned vector pipeline — qualified slice, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, all 19 focused native/Linux tests pass,
+including 288 continuous/binned reference build/draw cases and 765 alpha-byte
+boundary cases. Both actual hosts pass 283 binned and 283 continuous regression
+states, with exact JSON and 36 byte-identical publications per family. The 36
+binned files were inspected. Strict Clippy, rustdoc, formatting and repository
+checks pass; all 609 Linux core tests pass on the final rebuild. The initial full
+attempt used a pre-fix cache build and is not counted as passing. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records an additional open constructor issue: default binned-guide behavior on
+empty function limits differs from a generic legend. The older numeric-limit
+primary proof is being reconciled against 378 actual source builds. Next: preserve empty binned preparations without invoking sampling, reconcile
+guide selection and remaining callback/constructor contracts, then
+cumulative GG-04 acceptance and GG-05–19.
+
+## GG-04 continuous vector pipeline — qualified slice, 13 September 2026
+
+At `6e74ae6` plus working-tree changes, 144 pinned continuous OOB/rescaler cases
+match raw values, guide outcomes and complete callback sequences. Actual primary
+plots preserve all 144 draw outcomes. Both actual hosts pass 283 exactly equal
+states and 36 byte-identical, inspected publications. Wire v38 retains pure vector
+operation identities. Infinite point sizes remain inspectable and produce empty
+glyphs, consistent with 78 additional reference raster cases. Expanded focused tests,
+strict Clippy, rustdoc, formatting and repository checks pass. All 607 native core
+tests pass. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records scope and limitations. Next: binned/positional vector pipelines, remaining
+constructor reconciliation and cumulative GG-04 acceptance, then GG-05–19.
+
+## GG-04 continuous vector palettes — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, four native/Linux tests cover 675 pinned
+continuous palette cases, including actual two-layer primary plots. Both actual
+hosts pass 1,240 exactly equal states and 27 byte-identical, inspected publications.
+The shared batch mapper retains ordered unique inputs and guide outputs, and NULL
+palettes use geometry defaults. All 13 focused palette regressions and all 603 core
+tests pass, along with strict Clippy, rustdoc, formatting and repository checks; [scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records the boundaries. GG-04 remains in progress. Next: complete constructor
+reconciliation and cumulative acceptance, then GG-05–19.
+
+## GG-04 binned vector palette callbacks — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, four native/Linux tests cover 675 pinned
+binned cases: 540 mapping/build cases, 54 missing-color draws and 81 vector-sensitive
+two-layer cases over a shared prepared scale. Actual Python/WASM each pass 1,057
+states with 24 updated/fresh comparisons and four rejection cases. All 27 publication
+files are byte-identical and inspected. All 599 core tests passed on retry; final
+focused regressions, strict Clippy, rustdoc, formatting and repository checks pass.
+The existing palette registry now accepts
+typed count or normalized-vector input; binned callbacks use the shared midpoint
+and threshold owners. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records the scope. GG-04 remains in progress: continuous vector callbacks and complete
+constructor reconciliation precede GG-05–19. Full guide composition remains GG-05.
+
+## GG-04 discrete palette callbacks — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, 594 pinned discrete cases match count inputs,
+named/short/empty/NULL results, restricted/hidden guides and missing-color behavior.
+Both actual hosts pass 1,063 exactly equal states with 24 updated/fresh comparisons
+and four rejection cases. All 27 publication files are byte-identical and inspected.
+Five focused native/Linux tests, all 595 core tests, strict Clippy, rustdoc, formatting
+and repository checks pass. Wire v37 retains callback identity and fallback roles;
+[scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records the boundaries.
+GG-04 remains in progress. Next: continuous/binned vector palettes, constructor
+reconciliation, then GG-05–19. Non-color legend composition and the known nonlinear
+endpoint-label omission remain GG-05 work.
+
+## GG-04 temporal minor callbacks — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, 4,800 pinned cases and 60 width overrides
+match native outcomes, typed metadata, major labels and drawable minors in all four
+timestamp units. Actual Python/WASM each pass 31,025 matching states, including 25
+updated/fresh layouts. All 24 publication files are byte-identical and inspected.
+All 590 core tests, focused Linux tests, strict Clippy, rustdoc and repository checks
+pass. [GG-04 evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records precision
+and JSON-number comparison boundaries. GG-04 remains in progress. Next: custom palette
+functions (540 source cases captured), then complete constructor reconciliation and
+GG-05–19. The known nonlinear endpoint-label omission remains assigned to GG-05.
+
+## GG-04 discrete minor callbacks — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, 300 source cases pass through both band and
+point axes; 300 binned constructor calls retain their unsupported-argument outcome.
+Both actual hosts pass 1,520 exactly equal states, including 20 updated/fresh layouts.
+Twelve publication files are byte-identical and inspected. Focused native/Linux,
+strict Clippy, rustdoc and repository checks pass; full core passes 588 tests.
+The [GG-04 evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) owns the boundaries.
+GG-04 remains in progress. Next: typed temporal minor callbacks; the captured 4,800
+main cases and 60 width overrides require retaining automatic major-break names.
+
+## GG-04 joint major/minor callbacks — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, guide resolution retains the selected major
+vector before projection and supplies it to minor callbacks without reevaluation.
+All 1,600 source cases pass native checks; actual Python/WASM each pass 2,898 states
+including 40 updated/fresh layouts. Labels and positions match exactly; 14 major and
+18 minor inverse-log values differ by one ULP. The original 5,756-state host corpus
+also still passes. All 12 publications are byte-identical and inspected. Full core
+passes 587 tests; Linux regressions, Clippy, rustdoc and repository checks pass.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records the boundaries.
+Inspection found omitted nonlinear endpoint labels in publication despite correct
+guide snapshots; GG-05 must resolve this rendering defect before guide acceptance.
+GG-04 remains in progress. Next: discrete minor callbacks (300 captured source
+builds), the unsupported binned constructor argument, temporal minors, remaining
+callbacks and constructor reconciliation; GG-05–19 follow. Discrete implementation
+and its focused checks are currently in progress.
+
+## GG-04 numeric minor-break callbacks — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, v36 registered minor policies share the
+break registry and capture one/two-argument behavior. All 3,200 source cases match
+native outcomes, major labels, minor values and positions. Actual Python/WASM each
+pass 5,756 states with 40 updated/fresh layouts; only 34 inverse-log raw minor values
+differ by at most one ULP. All 12 publication files are byte-identical and inspected.
+Full core passes 586 tests; focused Linux, strict Clippy, rustdoc and repository checks
+pass. The [GG-04 evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) owns exact
+commands and limitations. GG-04 remains in progress. Next: qualify joint registered
+major/minor selection, including semantic major values on unbounded axes.
+
+## GG-04 temporal positional break functions — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, 4,730 pinned source cases match 18,920
+native comparisons in four timestamp units. Actual Python/WASM each pass 28,705
+exactly matching states, plus 25 updated/fresh layout checks including expected
+errors. All 12 publication files are byte-identical and inspected. Final full core
+passes 584 tests; focused Linux tests, strict Clippy, rustdoc and repository checks
+pass. See the [GG-04 evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) for
+commands, precision boundaries and retained scope. GG-04 remains in progress.
+Next: implement the captured numeric minor-break callback contract, then finish
+remaining callbacks and constructor reconciliation before closing GG-04.
+
+## GG-04 joint positional binned functions — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, registered positional limits and bin cuts
+compose across initial classification and post-statistic reset. All 1,120 source
+builds match 1,680 native routes; actual Python/WASM each pass 2,752 states and 38
+supported replacements. NULL/empty limits, missing infinite endpoints and empty
+panel extents retain their distinct behavior. Eleven publications are byte-identical;
+one SVG differs only in inverse-log numeric metadata. All 12 renders were inspected.
+All 581 core tests, Linux regressions, strict Clippy and rustdoc pass.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records callback/error
+boundaries and commands. GG-04 remains IN PROGRESS. Next: temporal positional/minor
+break functions, palette callbacks and constructor reconciliation, then GG-05–19.
+Cumulative gates remain open.
+
+## GG-04 default labels from named breaks — qualified follow-up, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, continuous, binned, numeric positional and
+temporal break functions retain returned names for default labels. The focused
+330 source builds match 720 native comparisons; actual Python/WASM each pass 1,396
+states with exactly equal records, including temporal width/format precedence.
+Twelve positional publications are byte-identical and inspected. All 579 core tests
+pass, plus the final override test separately; Linux regressions, strict Clippy and
+rustdoc pass. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records
+commands and boundaries. GG-04 remains IN PROGRESS. Next: joint positional limit/break
+functions, temporal positional/minor-break functions, palettes and constructor
+reconciliation, then GG-05–19. Cumulative gates remain open.
+
+## GG-04 binned positional break functions — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, wire v35 positional bins share registered
+cuts between classification, post-statistic mapping and guides, preserving names,
+blank added-limit labels and callback count semantics. All 5,760 pinned builds match
+8,640 native routes. Actual Python/WASM each pass 14,620 states and 40 replacements;
+labels/positions match exactly, with at most `8.9e-16` inverse-log tick-value rounding.
+Eleven publications are byte-identical; one SVG differs only in numeric tick metadata.
+All 12 destination renders were inspected. All 575 core tests, Linux regressions,
+strict Clippy and rustdoc pass. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records commands and boundaries. GG-04 remains IN PROGRESS. Next: fix reproduced
+named-default-label gaps in earlier break routes, joint limit/break functions,
+temporal positional/minor-break functions, palettes and constructor reconciliation;
+then GG-05–19. Cumulative gates remain open.
+
+## GG-04 discrete positional break functions — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, automatic/band/point axes use registered break
+functions over the trained discrete domain, preserving names, missing levels and
+positional empty-selection label behavior. All 400 pinned builds pass in 1,800 native
+route comparisons. Actual Python/WASM each pass 3,660 states including 60 layout
+replacements, with exactly equal records, unchanged v34 round-trips and 12 byte-equal
+publications. Four PNGs and four PDF renders were inspected. All 573 core tests,
+focused Linux tests, strict Clippy and rustdoc pass. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records commands and boundaries. GG-04 remains IN PROGRESS. Next: binned/temporal
+positional break functions, minor-break functions, palette callbacks and constructor
+reconciliation, then GG-05–19. Cumulative gates remain open.
+
+## GG-04 numeric positional break functions — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, primary numeric guides select registered
+breaks from expanded panel limits and retain names through positional censoring.
+All 1,440 pinned panels match native callback inputs and guide results. Actual
+Python/WASM each pass 2,128 states including 40 layout replacements with exactly
+equal records, stable v34 round-trips and 12 byte-identical publications. Four PNGs
+and four PDF renders were inspected. All 571 core tests, focused Linux tests,
+strict Clippy and rustdoc pass; the later registration/version test also passes
+native/Linux. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records
+commands and callback-count boundaries. GG-04 remains IN PROGRESS. Next: discrete,
+binned and temporal positional break functions, minor-break functions, palette
+callbacks and constructor reconciliation, then GG-05–19. Cumulative gates remain open.
+
+## GG-04 temporal break functions — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, Date/datetime color and size break functions
+retain typed limits/results, names, timezone context and count capability through the
+shared guide engine. Native comparisons pass 4,500 pinned builds in four timestamp
+units, plus 30 width/format override builds in all four units. Actual Python/WASM each
+pass 30,280 function states including 40 replacements, plus 240 override states, with
+exactly equal records and stable v33 round-trips. All 569 core tests, focused Linux
+tests, strict Clippy and rustdoc pass; the subsequently added override test also
+passes on native/Linux. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records commands and boundaries. GG-04 remains IN PROGRESS. Next: positional and
+minor-break functions, palette callbacks and constructor/argument reconciliation,
+then GG-05–19. Cumulative gates remain open.
+
+## GG-04 binned break functions — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, numeric binned break functions execute once
+in shared training and supply both mapping cuts and guide candidates. Sorted callback
+limits, `n.breaks`/`n` count selection, names, constant populations and NULL behavior
+match 2,880 pinned reference builds, including mapped color/size values and callback
+counts. Actual Python/WASM each pass 4,686 states with exactly equal records, including
+six replacement-versus-batch checks and stable v33 round-trips. The 567-test core suite,
+10 final focused native/Linux tests, an additional count-precedence/caching test,
+strict core/example Clippy and core rustdoc pass. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records commands and boundaries. GG-04 remains IN PROGRESS. Next: temporal and positional
+break functions, minor-break functions, palette callbacks and constructor
+reconciliation, followed by GG-05–19. Aggregate gates remain open.
+
+## GG-04 discrete break functions — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, registered discrete break functions use the
+trained domain, preserve returned names and first-duplicate selection, and skip label
+callbacks when selection is empty. All 600 pinned reference builds match native
+callback and guide semantics across color, size, alpha, linewidth, shape and linetype.
+Actual Python/WASM each pass 1,230 states with exactly equal records, including 30
+replacement-versus-batch checks and stable v33 round-trips. All 566 core tests and
+12 focused Linux tests, strict core/example Clippy and core rustdoc pass. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records commands and boundaries. GG-04 remains IN PROGRESS. Next: qualify the binned
+break-function corpus, then temporal/positional/minor break functions, palette callbacks
+and constructor reconciliation, followed by GG-05–19. Aggregate gates remain open.
+
+## GG-04 numeric continuous break functions — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, registered continuous break functions execute
+in core after training and preserve count capability, names, duplicate/missing values,
+constant/empty bypass and NULL transformation errors. Portable definitions use v33.
+All 2,880 pinned reference builds match native callback and guide semantics; actual
+Python/WASM each pass 5,336 states, including eight replacement-versus-batch checks,
+with exactly equal host records. All 565 core tests, 14 focused Linux tests, four
+export regression tests and strict Clippy/rustdoc checks pass. Format/repository
+checks pass. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records
+commands, artifacts and constructor boundaries. GG-04 remains IN PROGRESS. Next:
+discrete/binned/temporal/positional break functions, minor-break functions, palette
+callbacks and constructor/argument reconciliation, then GG-05–19. The full aggregate
+proof and cumulative gates remain open; no new guide painting is claimed.
+
+## GG-04 non-color temporal labels — qualified semantics, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, Date/datetime size/alpha/linewidth retain
+temporal guide metadata. Guide evaluation now invokes label callbacks once, removing
+an extra temporal color call during scale construction. All 1,200 non-color reference
+cases pass in four timestamp units; the original color corpus now also requires exact
+callback counts. Python/WASM pass 8,400 non-color and 2,800 color states per host,
+with 60 replacement checks and 12 unchanged, previously inspected publications.
+All 563 core tests, nine focused Linux tests, strict Clippy/rustdoc and repository/
+format checks pass. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records source contracts and boundaries. GG-04 stays IN PROGRESS. Next: break/minor-break
+functions, palette callbacks and constructor/argument reconciliation, then GG-05–19.
+Guide painting and cumulative gates remain open.
+
+## GG-04 non-color binned labels — qualified semantics, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, binned non-color guides retain selected
+boundaries and independently labelled limits through shared scale preparation.
+Guide callbacks precede mark geometry validation, matching reference error ordering.
+All 1,800 pinned binned cases match natively (939 successes, 861 expected errors);
+Python/WASM each pass 2,748 exactly matching states. Existing numeric/count-palette
+proofs pass 370/392 states; the numeric proof now includes two previously deferred
+primary guide failures while standalone raw mapping remains valid. All 24 regression
+publications match previously inspected artifacts byte for byte. All 562 core tests,
+eight focused Linux tests, strict Clippy/rustdoc and repository/format checks pass.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records boundaries and commands.
+GG-04 stays IN PROGRESS. Next: temporal non-color metadata/callback-count reconciliation,
+break/minor-break functions, palette callbacks and constructor reconciliation, then
+GG-05–19. Guide painting and cumulative gates remain open.
+
+## GG-04 non-color continuous labels — qualified semantics, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, size/alpha/linewidth now retain numeric guide
+candidates and labels through the existing vector resolver. All 1,440 continuous
+reference cases match (1,044 successes, 396 expected errors). Actual Python/WASM
+pass 2,496 exactly matching states per host, including 12 replacement-versus-fresh
+checks. All 561 core tests including doctests, 16 focused Linux tests and strict
+Clippy/rustdoc/repository/format checks pass.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records the boundaries.
+Guide painting remains GG-05. GG-04 stays IN PROGRESS. Next: binned non-color guide
+labels (1,440 source cases generated), remaining temporal compositions,
+break/minor-break functions, palette callbacks and constructor reconciliation,
+then GG-05–19. No cumulative gate closes.
+
+## GG-04 non-color discrete labels — qualified semantics, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, size/alpha/linewidth/shape/linetype prepare
+selected discrete guide keys and labels through the same resolver as color scales.
+The semantic DTO retains results for inspection; hidden/disabled guides and empty
+breaks suppress callbacks. All 800 pinned actual reference builds match in native
+Rust (695 successes, 105 expected errors); actual Python/WASM pass 1,515 exactly
+matching states per host, including 20 replacement-versus-fresh checks. All 560
+core tests including doctests, 12 focused Linux tests, strict Clippy/rustdoc and
+repository/format checks pass. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records commands and limitations. Guide painting remains GG-05. GG-04 stays IN
+PROGRESS. Next: continuous/binned non-color labels (source oracle in progress),
+break/minor-break functions, palette callbacks and constructor reconciliation,
+then GG-05–19. No cumulative gate closes.
+
+## GG-04 positional policy-label routes — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, registered labels authored inside discrete and
+binned positional policies reach the same final-candidate resolver as axis formatters.
+Training defers those callbacks; registration/portability validation includes the policy
+routes, which require definition version 32. The expanded Rust corpora pass alongside
+registry, downgrade, native-only and explicit-override checks (13 scoped macOS tests;
+three Linux targets). Python/WASM pass 4,700 discrete and 4,944 binned states per host.
+Axis/policy routes match exactly within each host; cross-host binned numeric differences
+remain within the previously qualified tolerances. All 30 policy publications are
+byte-identical to the earlier inspected axis publications. Strict Clippy/rustdoc and
+repository/format checks pass. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records commands and boundaries. GG-04 stays IN PROGRESS. Next: remaining non-color
+label behavior, break/minor-break functions, palette callbacks and constructor
+reconciliation, then GG-05–19.
+
+## GG-04 binned positional labels — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, binned axes retain censored callback candidates,
+train finite reset ranges independently from infinite cut sentinels, recompute shown
+limits after reset, and select untrained-axis breaks against the expanded panel.
+Equal-break arithmetic now follows R's step-first sequence. All 1,600 pinned cases
+pass, including default labels and callbacks (872 successful layouts, 728 expected
+rejections); finite ranges and tick positions are independently checked. Full macOS
+core tests pass (558 including doctests); three relevant Linux targets pass 9 tests.
+Strict Clippy/rustdoc and repository/format checks pass. Rebuilt Python/WASM pass 2,472
+states with exact labels/errors and source-backed numeric tolerances; all 18 selected
+publications are byte-identical and inspected. Closely spaced explicit labels overlap
+under the authored Preserve policy; collision avoidance is not claimed.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records numeric differences
+and commands. GG-04 stays IN PROGRESS. Next: reconcile registered positional policy
+labels and other non-color label routes, break/minor-break functions, palette callbacks
+and remaining constructors, then GG-05–19.
+
+## GG-04 discrete positional labels — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, band/point axis label callbacks use the shared
+discrete selection/recycling owner. All 640 pinned cases pass through both families,
+including named breaks, duplicates, factor levels, missing-category translation,
+empty/all-missing populations and recyclable callback results. The seven related Rust
+targets pass 17 tests on macOS and offline Linux; Clippy, strict rustdoc and repository/
+format checks pass. Rebuilt Python/WASM match exactly on 2,350 original/edited states
+and 12 byte-identical, inspected publications.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records commands and limits.
+GG-04 stays IN PROGRESS. Next: binned positional and remaining non-color labels,
+break/minor-break functions, palette callbacks and constructor reconciliation,
+including direct discrete-position policy label registrations, then GG-05–19.
+
+## GG-04 temporal positional labels — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, primary-axis label functions receive temporal
+class/unit/timezone metadata, complete censored candidate vectors and automatic names.
+Empty calendar-axis domains infer population endpoints through the shared time engine;
+explicit knots and standalone time-scale validation retain their contracts. All 400
+pinned cases pass across four integer resolutions (740 successful layouts and 860
+expected rejections). Full macOS core tests pass (556 tests including doctests); the
+numeric/temporal label targets also pass on offline Linux. Clippy, rustdoc, formatting
+and repository checks pass. Rebuilt Python/WASM match exactly on 2,365 states, including
+25 replacement/batch checks, and 12 byte-identical, inspected publications.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records commands and limits.
+GG-04 stays IN PROGRESS. Next: discrete/binned positional labels, remaining non-color
+label contracts, break/minor-break functions, palette callbacks and constructor
+reconciliation, then GG-05–19. No full host aggregate or fresh native GPUI capture ran.
+
+## GG-04 numeric positional labels — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, numeric axis callbacks retain the complete
+candidate vector and censor out-of-panel breaks to missing values before formatting.
+All 480 pinned cases pass (188 successful layouts, 292 expected rejections), including
+identity/sqrt/log10/reverse and empty/all-missing populations. The three focused Rust
+targets pass 16 tests on macOS and offline Linux. Clippy, strict rustdoc and repository/
+format/diff checks pass. Rebuilt Python/WASM agree exactly on 708 states and 15
+byte-identical, inspected publications. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records the commands and boundaries. GG-04 stays IN PROGRESS. Next: temporal, discrete
+and binned positional labels, other non-color label contracts, break/minor-break
+functions, palette callbacks and constructor reconciliation, then GG-05–19.
+
+## GG-04 binned color-label callbacks — qualified semantics, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, the default binned color-guide callback path
+matches 640 pinned builds (378 successful, 262 expected rejections), including missing
+and repeated cuts, censoring, transforms, and label-result lengths. It retains raw
+scale candidates separately from color-step callback inputs. Four focused Rust targets
+pass 14 tests on macOS and offline Linux; Clippy, strict rustdoc and repository/format/
+diff checks pass. Rebuilt Python/WASM pass 1,042 states; 28 inverse-transform numeric
+fields differ within the existing 3e-12 tolerance, with all other fields exact.
+Twelve publications match byte-for-byte and were inspected. Their interval-swatch
+rendering does not yet display the color-step callback key labels; GG-05 owns that
+composition. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records this
+boundary. All 640 standalone direct-label cases also pass in Rust (260 successes,
+380 expected rejections), including callback invocation on empty vectors.
+GG-04 stays IN PROGRESS. Next: remaining positional and non-color label contracts,
+break/minor-break functions, palette callbacks and constructor reconciliation, then
+GG-05–19. No cumulative gate closes.
+
+## GG-04 temporal color-label callbacks — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, temporal label callbacks preserve exact
+origin/unit, Date/POSIXct semantics, immutable timezone rules and generated break
+names. The 400 pinned Date/UTC/New York reference cases pass in four timestamp units
+(1,180 builds, 420 expected rejections). Explicit date formats override callbacks.
+The four focused Rust targets pass 13 tests on macOS and offline Linux; Clippy,
+strict rustdoc and format/repository/diff checks pass. Rebuilt Python/WASM agree on
+2,800 states and 12 byte-identical, inspected publications, including DST fold labels.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records the scoped checks
+and remaining boundaries. GG-04 remains IN PROGRESS. Next: binned/non-color and
+positional label contracts, break/minor-break functions, palette callbacks and
+constructor reconciliation, then GG-05–19. No cumulative gate closes.
+
+## GG-04 color-scale label callbacks — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, registered continuous/discrete color-scale
+label vectors pass 180 reference cases: 146 primary builds and 34 expected rejections.
+They share the existing guide registry, preserve selected break names and source-space
+candidates, and use wire 32. The macOS and Linux full regressions each pass 606 tests/
+doctests; the final two-test registry target also passes on both platforms.
+Clippy, strict rustdoc, format/repository/diff checks pass. Rebuilt Python/WASM match
+on 338 states and 15 byte-identical, inspected publications. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records commands and limits. GG-04 remains IN PROGRESS. Next: remaining temporal/
+binned/non-color and positional label contracts (400 temporal oracle builds captured,
+not yet implemented/qualified), break/minor-break functions, palette
+callbacks and constructor reconciliation, then GG-05–19. No cumulative gate closes.
+
+## GG-04 Calendar callbacks — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, Calendar positional callbacks preserve explicit
+timezone resources and validate source units. The 216 pinned UTC/New York DST cases
+pass across three timestamp units; separate unit/resource rejection controls pass.
+macOS and offline Linux each pass 603 Rust tests/doctests, with Clippy, strict rustdoc,
+repository/format/diff checks passing. Rebuilt Python/WASM match on 444 states and
+12 inspected publication files. Spring/fall labels retain the skipped/repeated hour.
+[Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records scope and limitations.
+GG-04 stays IN PROGRESS. Next: remaining break/label/palette callback and constructor
+contracts in the coverage reconciliation, followed by GG-05–19. No cumulative gate closes.
+
+## GG-04 inferred timestamp callbacks — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, automatic timestamp axes retain exact origin/
+unit metadata for positional callbacks, with mixed-source rejection in either layer
+order. Ordinary/fractional/facet reference cases pass across three timestamp units.
+macOS and offline Linux each pass 601 Rust tests/doctests; Clippy, strict rustdoc and
+repository/format/diff checks pass. Actual Python/WASM match on 1,122 states and 30
+publication files, all unchanged from inspected explicit-datetime output. The
+[scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records commands and
+boundaries. GG-04 stays IN PROGRESS. Next: Calendar callbacks with explicit timezone
+resources (216 pinned DST/control builds captured), remaining callback/constructor
+contracts, then GG-05–19. No cumulative gate closes.
+
+## GG-04 authored limits through facets — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, 720 pinned point/mean-summary builds qualify
+complete/partial/reversed limits on fixed/free facets: 714 successes and six expected
+rejections. Retaining transformed guide bounds fixes an all-missing square-root panel
+failure. macOS and offline Linux each pass 598 Rust tests/doctests; Clippy, strict
+rustdoc, format/repository/diff checks pass. Rebuilt Python/WASM each pass 1,482 exact
+states, including 48 retained-semantics replacements; 36 identical SVG/PDF/PNG files
+are inspected. Existing No data text and edge-label clipping remain presentation
+work. [Scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) records commands,
+artifacts and limitations. GG-04 stays IN PROGRESS. Next: timestamp inference and
+unresolved callback/constructor contracts, then GG-05–19. No cumulative gate closes.
+
+## GG-04 inventory reconciliation — 12 September 2026
+
+At `6e74ae6` plus working-tree changes, the [coverage reconciliation](evidence/ggplot-scales-coverage.md)
+indexes all 152 owned reference exports and 960 formal argument occurrences, with
+related family tests and explicit unqualified contracts. Exact inventory identity,
+formal-argument keys and evidence-path checks pass. This is documentation evidence;
+no runtime or feature gate closes. GG-04 stays IN PROGRESS. Next: authored limits
+through statistics/facets, timestamp inference, then the identified callback and
+constructor contracts before GG-05–19.
+
+## GG-04 authored numeric limits — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, authored numeric limits pass 1,728 exact-view
+cases and 648 new partial-limit reference builds, plus wire-version/profile rejection
+checks. The callback regression remains passing. Final macOS validation passes all
+597 core/extension tests/doctests; Linux passes the preceding 596-test full suite and
+the four final authored-limit tests. Clippy, strict rustdoc, mypy/TypeScript and
+format/repository/diff checks pass. Rebuilt Python/WASM each pass 4,428 identical
+states and two rejection checks; all 54 identical publications are inspected or retain
+previously inspected hashes. [The scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+records commands, artifacts and remaining boundaries.
+GG-04 stays IN PROGRESS. Next: reconcile all 152 owned exports/arguments, including
+new authored limits with statistics/facets and remaining timestamp controls, before
+GG-05–19. No gate closes.
+
+## GG-04 unbounded coordinate views — qualified slice, 12 September 2026
+
+At `6e74ae6` plus working-tree changes, primary Rust passes 1,350 exact-view reference
+cases (1,044 successes, 306 rejections). The kernel also passes 735 finite reference
+views and 643 infinite positions. All 594 core/extension tests and doctests pass on
+macOS and Linux; all-target Clippy, strict rustdoc, formatting/repository/diff checks pass.
+Rebuilt Python/WASM each pass 2,426 identical states and 36 identical publications.
+Callback regressions retain 1,584 identical states and 48 unchanged publications;
+missing-value regressions pass 2,540 states within their existing tolerance. All 39
+new/changed SVG/PDF/PNG files have been inspected. Exact viewports and R's default
+coordinate expansion retain distinct scope. Commands, artifacts and limits are in
+[the scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md).
+GG-04 remains IN PROGRESS; next are the 378 excluded authored-vector cases, remaining
+timestamp controls and argument/inventory reconciliation before GG-05–19. No gate closes.
 
 ## Optional Kit crate withdrawal — 11 September 2026
 
@@ -50,6 +2705,140 @@ exhaustive API-level residual or closing GG-04/GG-19. This review read the live 
 ledger, inventory and selected scale/guide source; it ran no feature/runtime tests.
 Next: positional pre/post-statistic limit integration and remaining argument audit,
 then the package-specific work and acceptance in the existing plan.
+
+## Free-facet positional bins — 12 September 2026
+
+The 1,152-build binned supplement passes 626 reference successes and 526 rejections.
+All 591 core/extension tests and doctests, all-target Clippy, strict rustdoc and
+format/repository/diff checks pass. Rebuilt Python/WASM each pass 5,504 identical facet
+states, including 144 replacements against fresh batches. All 93 byte-identical
+SVG/PDF/PNG files are inspected; the previous 57 hashes are unchanged. GG-04 remains
+IN PROGRESS. Next: finite viewports over unbounded position populations (1,728 reference
+builds captured, implementation pending), remaining timestamp controls and scale
+inventory reconciliation before the requested GG-05–19 continuation.
+
+## Faceted positional callbacks — 12 September 2026
+
+Shared/free numeric callbacks pass 1,008 reference builds. Date/datetime/duration
+callbacks pass another 1,260 builds at three source resolutions. Final core/extension
+validation passes 590 tests/doctests; Clippy, strict rustdoc, formatting, repository
+and diff checks pass. Rebuilt Python/WASM each pass 3,678 identical states, including
+96 source replacements versus fresh batches. All 57 byte-identical publications are
+inspected. The scale evidence records exact scope, logs and remaining presentation
+limits. GG-04 remains IN PROGRESS. Next: free-facet positional bins, remaining scale
+inventory and subsequent GG-05–19 acceptance work.
+
+## Fractional timestamp statistic projection — 12 September 2026
+
+The 72-build thirds/sevenths supplement now passes at three timestamp resolutions.
+Absolute Date/POSIXct projection rounding matches the reference while retaining exact
+source metadata. Full core/extension validation passes 587 tests/doctests; all-target
+Clippy, strict rustdoc, formatting and repository checks pass. Rebuilt Python/WASM
+each pass 1,328 identical states and produce 48 byte-identical, inspected publications;
+the previous 36 publication hashes are unchanged. See the linked scale evidence for
+commands and artifacts. GG-04 remains IN PROGRESS. Next: shared/free facet callback
+training and inventory reconciliation, followed by GG-05–19.
+
+## Duration positional callback qualification — 12 September 2026
+
+The duration supplement passes 252 pinned reference builds. Full core/extension
+validation passes 586 tests/doctests; Clippy and strict rustdoc pass. Fresh Python/WASM
+each pass 1,184 matching states and produce 36 byte-identical, inspected publications.
+The scale evidence records the preserved NULL-input and infinite hms guide rules.
+GG-04 remains IN PROGRESS. Next: fractional timestamp statistic precision probes,
+shared/free faceted callbacks, then inventory reconciliation and GG-05–19. Captured
+72-case precision and 1,008-case facet fixtures are not acceptance evidence yet.
+
+## Date/datetime positional callback qualification — 12 September 2026
+
+Date/UTC callbacks now preserve exact origin/unit metadata and fractional limits across
+source/statistic/position stages and reference axis projection. The 504 pinned builds
+pass at three source resolutions: 726 successes and 786 expected rejections. Full
+core/extension validation passes 584 tests/doctests; the expanded primary matrix and
+additional precision guard pass subsequently. Clippy, rustdoc and repository checks
+pass. Fresh Python/WASM each pass 770 matching states and produce 24 byte-identical,
+inspected SVG/PDF/PNG publications. See the [scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+for exact commands, tolerances and qualification boundaries.
+GG-04 remains IN PROGRESS. Next: duration and faceted positional callbacks, then
+remaining inventory reconciliation before GG-05–19; cumulative gates remain open.
+
+## Duration missing-value qualification — 12 September 2026
+
+The 192-case duration supplement passes all 144 reference successes and 48 errors.
+It preserves ggplot2 4.0.3's ignored `na.value` argument on time scales and its empty
+automatic guide rejections. Full core/extension validation passes **583 tests and
+doctests**; Clippy passes. Fresh Python/WASM each pass **2,540 states**, including
+source replacement and immutable captures. All thirty publication samples are
+inspected; 28 are byte-identical, and two logarithmic SVGs retain only the previously
+recorded numeric differences. See the [scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md).
+GG-04 remains IN PROGRESS. Next: Date/datetime positional callbacks (504 pinned R
+builds captured, implementation pending), then faceted callbacks and remaining
+inventory reconciliation before GG-05–19.
+
+## Positional missing-value qualification — 12 September 2026
+
+Numeric positional `missing_value` now applies replacement in transformed units after
+OOB handling, before statistics and at the generated-position map. Version 30 retains
+the control in Rust/Python/WASM. Reference cases also fixed empty-summary marks,
+empty automatic guides, all-missing automatic ranges, and negative square-root
+replacement layouts. Callback training now consumes transformed observations directly;
+a residual mean correction avoids a one-ULP error that changed singleton censoring.
+
+All **1,152** pinned R builds (1,032 successes and 120 rejections), two nullable-endpoint
+cases, and structural guards pass. Full core/extension validation passes **582 tests
+and doctests**; Clippy, rustdoc, formatting, repository checks and strict host consumers
+pass. Fresh Python/WASM each pass **2,196 states**, including twelve source replacements
+versus fresh batches and immutable captures. Twenty-two of 24 publications are byte
+identical; two SVGs differ only in numeric attributes, at most `2.56e-13`, within the
+explicit tolerance. All 24 SVG/PDF/PNG samples were inspected at full canvas size.
+See the [scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md) for commands,
+artifacts and remaining scope. GG-04 remains IN PROGRESS. Next: duration missing-value
+qualification, temporal/faceted positional callbacks and the remaining argument
+inventory, then GG-05–19; cumulative gates remain open.
+
+## Positional callback log/OOB qualification — 12 September 2026
+
+The 756-case logarithmic/explicit OOB supplement passes primary/core tests without
+production changes. Together with the original 252 cases, both rebuilt hosts pass
+1,584 matching states and 48 identical publication files. All six new logarithmic
+SVG/PDF/PNG files were inspected; prior samples retain their hashes. The original
+oracle remains unchanged. See the [scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md)
+for commands, comparisons and limitations. GG-04 is IN PROGRESS; next: positional
+missing-value controls, then temporal/faceted callbacks and the remaining inventory.
+GG-05–19 and cumulative gates remain open.
+
+## Binned positional callback qualification — 12 September 2026
+
+GG2-03/FIX-GG04 at `6e74ae6` plus working-tree changes: binned positional callbacks
+retain initial cuts across scale reset and map statistic indices without retraining
+those cuts. All 126 binned oracle cases match (74 renderable, 49 build failures,
+three projection failures); all 48 continuous/binned summary/shared-layer cases pass.
+571 unit/integration tests pass; an isolated rerun passes six doctests after an
+artifact race in the first run. Final Clippy, strict host consumers and repository
+checks pass. Rebuilt Python/WASM pass 432 matching states and 42 identical publication
+files; all new SVG/PDF/PNG samples were inspected. Details and commands are in the
+[scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md).
+
+GG-04 stays IN PROGRESS. Faceted/timestamp callbacks, unbounded viewport handling,
+remaining scale arguments and cumulative acceptance are open. Next: logarithmic/OOB
+callback qualification, remaining GG-04 scope, then GG-05–19.
+
+## Continuous positional callback qualification — 12 September 2026
+
+GG2-03/FIX-GG04 at `6e74ae6` plus working-tree changes: numeric positional limit
+functions now run before statistics and after positions across shared layers.
+Wire 29 retains the operation; scene wire 16 preserves infinite guide identities
+without introducing nonfinite destination geometry. All 126 continuous R cases and
+24 summary/shared-layer cases pass. The macOS core/external suite passes 576
+tests/doctests, rebuilt Python/WASM pass 222 matching states each, and 24 identical
+SVG/PDF/PNG files were inspected. Strict host consumers pass. Commands, artifacts
+and limitations are in the [scale evidence](evidence/phase-2-ggplot-scales-2026-09-10.md).
+
+GG-04 stays IN PROGRESS. Binned/faceted/timestamp positional callbacks, finite
+viewports over unbounded limits, remaining argument reconciliation and cumulative
+acceptance remain open. No native window/transition or full cumulative binding-runner
+pass is claimed. Next: binned callback reset and retained-cut training, followed by
+remaining GG-04 scope and GG-05–19.
 
 ## Active ggplot2 assignment — 10 September 2026
 
@@ -1064,8 +3853,8 @@ work and FIX-GG cases are defined once in the plan.
 | GG-01 — Reconcile shared legend acceptance | COMPLETE | GG2-04, GRA-07, SCL-05, LAY-03, THM-03 | FIX-GG01: 24 cases, exact actual Python/WASM scenes, 216 exports and inspected PNG/PDF sheets; empty-guide and untitled defects repaired. Evidence: phase-2-entry-and-legends-2026-09-08.md. Full guides remain GG-05. |
 | GG-02 — Compatibility profile, stages and inferred grouping | COMPLETE | GG2-01/02 | [Stage acceptance](evidence/phase-2-stages-2026-09-08.md); primary/binding proofs pass. Later ggplot2 families remain separate. |
 | GG-03 — Independent aesthetic encodings | COMPLETE | GG2-03 | [Accepted](evidence/phase-2-aesthetics-2026-09-10.md): 104 R glyph records, 12 core regressions, actual hosts/update/publication/native, 487 macOS / 468 Linux tests and full check. |
-| GG-04 — ggplot2 scale and palette policies | IN PROGRESS | GG2-03 | [In progress](evidence/phase-2-ggplot-scales-2026-09-10.md): 766 palette / 93 scale / 284 break / 120 expansion / 499 label / 32 numeric panel / 36 discrete range records and 54 categorical configurations pass; 18 style palette cases plus primary point/rule integration pass; 16 reverse-axis and 20 square-root panels, inverse-domain boundaries and left-closed histogram edge ordering pass; 30 fixed-time/DST-label and 16 calendar-width panels plus source-precision/budget/edit regressions pass; 36 affine and 16 custom secondary-axis cases pass, including reference guide rounding; 19 datetime-expansion and 16 paired numeric cases pass; 534 automatic datetime panels pass; 81 Date records in two source units and 12 Date-width panels pass; 445 full core tests/doctests and core Clippy pass. Duration selection/labels pass 45 break configurations and 75 primary/secondary panels. Identity mappings pass 122 R records, primary colour/linewidth charts and 192 alpha/after-scale grob paints; 464 full core tests/doctests and Clippy pass. Guide arguments pass 60 R discrete selection/label cases, 30 manual break/palette cases and 160 continuous candidate/label cases. Primary guide colors, labels, hidden guides and unchanged marks pass; all 471 core tests/doctests, Clippy and repository checks pass. Zero-row continuous and identity guide training additionally pass eighteen R records, JSON/retraining and primary empty-color checks; all 473 core tests/doctests and Clippy pass. All-nonfinite guide training additionally passes 192 reference cases, primary missing-color mark preservation, budgets and JSON/retraining checks; all 475 core tests/doctests, Clippy and repository checks pass. Binned candidates/labels additionally pass 288 R records and primary metadata/JSON/color checks; full core validation passes 477 tests/doctests, plus a subsequently added independent boundary-color test. Final Clippy and export-test compilation pass. Binned empty/nonfinite populations additionally pass 192 R records, JSON/retraining, budgets and primary empty/partial-limit checks; all 480 core tests/doctests, Clippy and repository checks pass. Time-width strings additionally pass 135 actual R Date/datetime/duration panels, wire round-trips, exact nanosecond and budget/override checks; all 482 core tests/doctests, Clippy, repository checks and export-test compilation pass. Explicit R date/time patterns additionally pass 220 reference labels, primary timestamp/label/JSON checks, supplied locale/offsets and retained D3 behavior; 40 primary R duration-format panels also pass, preserving original binary64 seconds; all 487 core tests/doctests, Clippy and repository checks pass, and export tests compile. Fresh Python/WASM formatter proofs each pass 246 publication cases and 14 explicit tab-glyph rejections; records and three PNGs match, and SVG/PDF/PNG samples are inspected. Multiline labels pass four axis sides; subsecond timezone windows retain resource coverage. Final full-core qualification passes all 487 tests/doctests and all-target core Clippy. Binned integer-count and finite-population transformed missing-limit boundaries additionally pass 228 R records and eight focused tests, including primary JSON/retraining checks. Final full-core qualification passes all 489 tests/doctests and all-target core Clippy. Transformed missing-limit population handling additionally passes 320 scale records and 24 actual R chart cases; 23 related tests, all 491 core tests/doctests and all-target core Clippy pass. Degenerate-domain handling additionally passes 256 R guide/mapping records and 192 primary chart cases, including zero logarithmic endpoints and reference missing-color defaults; 13 related tests, all 494 core tests/doctests and all-target core Clippy pass. The newer authored-limit extension passes 2,688 focused R cases, 120 related tests, all 495 core tests/doctests and all-target core Clippy; the hidden-guide/fractional extension passes all 499 core tests/doctests. Fresh Python/WASM each pass 2,304 matching records with three identical PNGs and inspected SVG/PDF/PNG samples. The final structural-validation fix passes 16 focused tests, all 500 core tests/doctests and all-target Clippy. Remaining arguments, other host paths and full acceptance are open. |
-| GG-05 — Complete guides and legend composition | NOT STARTED | GG2-04 | Requires GG-01, GG-04, WP-AX04. |
+| GG-04 — ggplot2 scale and palette policies | COMPLETE | GG2-03 | [Qualified owned scale contracts](evidence/phase-2-ggplot-scales-2026-09-14.json): 862 macOS tests/doctests, full check and 672 cumulative runner commands with inline assertions pass against verified source. [Coverage](evidence/ggplot-scales-coverage.md) maps all 152 exports, 960 formal occurrences, 276 methods and 160 fields. Named guide/extension and full export certification remain GG-05/GG-16/GG-19. |
+| GG-05 — Complete guides and legend composition | IN PROGRESS | GG2-04 | [Default colourbar slice qualified](evidence/phase-2-ggplot-colorbar-2026-09-14.json): 25 verified paths integrated, source-equivalent 866-test isolated suite, main full check and 24 focused tests; fresh hosts match 108 colourbar and 351 selection states, with inspected dedicated exports and native output. Authored controls, complete component metadata and remaining guide composition stay open. |
 | GG-06 — Bin/count/summary and position semantics | NOT STARTED | GG2-02/05 | Requires GG-02, SP-03, WP-S06. |
 | GG-07 — Primitive and interval recipe completion | NOT STARTED | GG2-06 | Requires GG-03, GG-06, WP-S02/03/05. |
 | GG-08 — Data-driven text, labels and annotations | NOT STARTED | GG2-06/09 | Requires GG-03, WP-P04. |

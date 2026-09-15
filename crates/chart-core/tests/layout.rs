@@ -1116,6 +1116,7 @@ fn wp11_mapped_color_changes_styles_and_metadata_without_numeric_domain_changes(
         alpha: 255,
     };
     d.layers[0].color = Some(ColorEncoding {
+        automatic: false,
         title: None,
         id: ScaleId::new(20),
         input: ColorInput::Numeric(Numeric::Field(Y)),

@@ -1,0 +1,330 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "family": "continuous",
+      "population": "ordinary",
+      "colour": [
+        0,
+        1,
+        2
+      ],
+      "fill": [
+        8,
+        10,
+        4
+      ],
+      "result": {
+        "colour": [
+          "#132B43",
+          "#193753",
+          "#1F4364"
+        ],
+        "fill": [
+          "#4894D0",
+          "#56B1F7",
+          "#2C5D86"
+        ],
+        "mark_count": 3
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "missing",
+      "colour": [
+        0,
+        null,
+        2
+      ],
+      "fill": [
+        8,
+        10,
+        null
+      ],
+      "result": {
+        "colour": [
+          "#132B43",
+          "grey50",
+          "#1F4364"
+        ],
+        "fill": [
+          "#4894D0",
+          "#56B1F7",
+          "grey50"
+        ],
+        "mark_count": 3
+      }
+    },
+    {
+      "family": "continuous",
+      "population": "empty",
+      "colour": [],
+      "fill": [],
+      "result": {
+        "colour": [],
+        "fill": [],
+        "mark_count": 0
+      }
+    },
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "colour": [
+        0,
+        1,
+        2
+      ],
+      "fill": [
+        8,
+        10,
+        4
+      ],
+      "result": {
+        "colour": [
+          "#1B3A57",
+          "#1B3A57",
+          "#1B3A57"
+        ],
+        "fill": [
+          "#4D9FDE",
+          "#4D9FDE",
+          "#2A5A82"
+        ],
+        "mark_count": 3
+      }
+    },
+    {
+      "family": "binned",
+      "population": "missing",
+      "colour": [
+        0,
+        null,
+        2
+      ],
+      "fill": [
+        8,
+        10,
+        null
+      ],
+      "result": {
+        "colour": [
+          "#1B3A57",
+          "grey50",
+          "#1B3A57"
+        ],
+        "fill": [
+          "#4D9FDE",
+          "#4D9FDE",
+          "grey50"
+        ],
+        "mark_count": 3
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "colour": [],
+      "fill": [],
+      "result": {
+        "colour": [],
+        "fill": [],
+        "mark_count": 0
+      }
+    },
+    {
+      "family": "discrete",
+      "population": "ordinary",
+      "colour": [
+        "a",
+        "a",
+        "b"
+      ],
+      "fill": [
+        "c",
+        "b",
+        "c"
+      ],
+      "result": {
+        "colour": [
+          "#F8766D",
+          "#F8766D",
+          "#00BA38"
+        ],
+        "fill": [
+          "#619CFF",
+          "#00BA38",
+          "#619CFF"
+        ],
+        "mark_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "population": "missing",
+      "colour": [
+        "a",
+        null,
+        "b"
+      ],
+      "fill": [
+        "c",
+        "b",
+        null
+      ],
+      "result": {
+        "colour": [
+          "#F8766D",
+          "grey50",
+          "#00BA38"
+        ],
+        "fill": [
+          "#619CFF",
+          "#00BA38",
+          "grey50"
+        ],
+        "mark_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "population": "empty",
+      "colour": [],
+      "fill": [],
+      "result": {
+        "colour": [],
+        "fill": [],
+        "mark_count": 0
+      }
+    },
+    {
+      "family": "manual",
+      "population": "ordinary",
+      "colour": [
+        "a",
+        "a",
+        "b"
+      ],
+      "fill": [
+        "c",
+        "b",
+        "c"
+      ],
+      "result": {
+        "colour": [
+          "#FF0000",
+          "#FF0000",
+          "#008000"
+        ],
+        "fill": [
+          "#0000FF",
+          "#008000",
+          "#0000FF"
+        ],
+        "mark_count": 3
+      }
+    },
+    {
+      "family": "manual",
+      "population": "missing",
+      "colour": [
+        "a",
+        null,
+        "b"
+      ],
+      "fill": [
+        "c",
+        "b",
+        null
+      ],
+      "result": {
+        "colour": [
+          "#FF0000",
+          "grey50",
+          "#008000"
+        ],
+        "fill": [
+          "#0000FF",
+          "#008000",
+          "grey50"
+        ],
+        "mark_count": 3
+      }
+    },
+    {
+      "family": "manual",
+      "population": "empty",
+      "colour": [],
+      "fill": [],
+      "result": {
+        "colour": [],
+        "fill": [],
+        "mark_count": 0
+      }
+    },
+    {
+      "family": "identity",
+      "population": "ordinary",
+      "colour": [
+        "#FF0000",
+        "#008000",
+        "#0000FF"
+      ],
+      "fill": [
+        "#FFFF00",
+        "#00FFFF",
+        "#FF00FF"
+      ],
+      "result": {
+        "colour": [
+          "#FF0000",
+          "#008000",
+          "#0000FF"
+        ],
+        "fill": [
+          "#FFFF00",
+          "#00FFFF",
+          "#FF00FF"
+        ],
+        "mark_count": 3
+      }
+    },
+    {
+      "family": "identity",
+      "population": "missing",
+      "colour": [
+        "#FF0000",
+        null,
+        "#0000FF"
+      ],
+      "fill": [
+        "#FFFF00",
+        "#00FFFF",
+        null
+      ],
+      "result": {
+        "colour": [
+          "#FF0000",
+          null,
+          "#0000FF"
+        ],
+        "fill": [
+          "#FFFF00",
+          "#00FFFF",
+          null
+        ],
+        "mark_count": 2
+      }
+    },
+    {
+      "family": "identity",
+      "population": "empty",
+      "colour": [],
+      "fill": [],
+      "result": {
+        "colour": [],
+        "fill": [],
+        "mark_count": 0
+      }
+    }
+  ]
+}

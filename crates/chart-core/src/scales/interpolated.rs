@@ -61,7 +61,12 @@ fn is_false(value: &bool) -> bool {
     !*value
 }
 impl GgplotTimestampNormalization {
-    pub(super) fn absolute(self, offset: f64) -> f64 {
+    pub(crate) fn relative(self, absolute: f64) -> f64 {
+        let factor =
+            super::utc::ticks_per_second(self.unit) as f64 * if self.date { 86400. } else { 1. };
+        (absolute - self.origin as f64 / factor) * factor
+    }
+    pub(crate) fn absolute(self, offset: f64) -> f64 {
         let factor =
             super::utc::ticks_per_second(self.unit) as f64 * if self.date { 86400. } else { 1. };
         self.origin as f64 / factor + offset / factor
@@ -111,10 +116,26 @@ pub enum NormalizationSpec {
     },
 }
 impl NormalizationSpec {
+    pub(crate) fn ggplot_transform_mut(&mut self) -> Option<&mut super::GgplotTransform> {
+        match self {
+            Self::Sequential { family, .. }
+            | Self::Diverging { family, .. }
+            | Self::Ggplot { family, .. } => family.ggplot_transform_mut(),
+            _ => None,
+        }
+    }
+    pub(crate) fn ggplot_transform(&self) -> Option<&super::GgplotTransform> {
+        match self {
+            Self::Sequential { family, .. }
+            | Self::Diverging { family, .. }
+            | Self::Ggplot { family, .. } => family.ggplot_transform(),
+            Self::Quantile { .. } => None,
+        }
+    }
     /// D3-compatible sequential defaults, including the logarithmic domain.
     pub fn sequential(family: NumericFamily) -> Self {
         Self::Sequential {
-            family,
+            family: family.clone(),
             domain: if matches!(family, NumericFamily::Log { .. }) {
                 [Number(1.), Number(10.)]
             } else {
@@ -126,7 +147,7 @@ impl NormalizationSpec {
     /// D3-compatible diverging defaults with an explicit center.
     pub fn diverging(family: NumericFamily) -> Self {
         Self::Diverging {
-            family,
+            family: family.clone(),
             domain: if matches!(family, NumericFamily::Log { .. }) {
                 [Number(0.1), Number(1.), Number(10.)]
             } else {
@@ -156,8 +177,8 @@ impl ScaleNormalizer {
             ));
         }
 
-        if matches!(spec, NormalizationSpec::Ggplot { timestamp: Some(_), family, reverse, rescaler, .. }
-            if family != NumericFamily::Linear || reverse || rescaler != GgplotRescaler::Range)
+        if matches!(spec, NormalizationSpec::Ggplot { timestamp: Some(_), ref family, reverse, rescaler, .. }
+            if *family != NumericFamily::Linear || reverse || rescaler != GgplotRescaler::Range)
         {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,
@@ -167,10 +188,10 @@ impl ScaleNormalizer {
         let (domain, family, diverging) = match &spec {
             NormalizationSpec::Sequential { family, domain, .. }
             | NormalizationSpec::Ggplot { family, domain, .. } => {
-                (domain.to_vec(), Some(*family), false)
+                (domain.to_vec(), Some(family), false)
             }
             NormalizationSpec::Diverging { family, domain, .. } => {
-                (domain.to_vec(), Some(*family), true)
+                (domain.to_vec(), Some(family), true)
             }
             NormalizationSpec::Quantile { samples } => {
                 if samples.len() > MAX_VALUES {
@@ -183,8 +204,12 @@ impl ScaleNormalizer {
             }
         };
         if let Some(family) = family {
-            let parameter = match family {
+            let parameter = match *family {
                 NumericFamily::Linear => 1.,
+                NumericFamily::Ggplot { ref transform } => {
+                    transform.validate()?;
+                    1.
+                }
                 NumericFamily::Pow { exponent } => exponent,
                 NumericFamily::Log { base } => base,
                 NumericFamily::Symlog { constant } => constant,
@@ -203,25 +228,25 @@ impl ScaleNormalizer {
             }
         }
         let negative = domain.first().is_some_and(|v| v.0 < 0.);
-        let transformed: Vec<_> = domain
-            .iter()
-            .map(|v| {
-                if let NormalizationSpec::Ggplot {
-                    family,
-                    reverse,
-                    timestamp,
-                    ..
-                } = spec
-                {
-                    timestamp.map_or_else(
-                        || super::ggplot_continuous_guide::forward(family, reverse, v.0),
-                        |context| context.absolute(v.0),
-                    )
-                } else {
-                    family.map_or(v.0, |f| transform(f, negative, v.0, false))
-                }
-            })
-            .collect();
+        let transformed: Vec<_> = if let NormalizationSpec::Ggplot {
+            ref family,
+            reverse,
+            timestamp,
+            ..
+        } = spec
+        {
+            let values = domain.iter().map(|v| v.0).collect::<Vec<_>>();
+            if let Some(context) = timestamp {
+                values.iter().map(|v| context.absolute(*v)).collect()
+            } else {
+                super::ggplot_continuous_guide::forward_values(family, reverse, &values)?
+            }
+        } else {
+            domain
+                .iter()
+                .map(|v| family.map_or(v.0, |f| transform(f, negative, v.0, false)))
+                .collect()
+        };
         let mut factors = [0.; 2];
         if family.is_some() {
             factors[0] = reciprocal(
@@ -249,8 +274,8 @@ impl ScaleNormalizer {
     pub fn domain(&self) -> &[Number] {
         &self.domain
     }
-    fn tick_family(&self) -> ChartResult<NumericFamily> {
-        match self.spec {
+    fn tick_family(&self) -> ChartResult<&NumericFamily> {
+        match &self.spec {
             NormalizationSpec::Sequential { family, .. }
             | NormalizationSpec::Ggplot { family, .. }
             | NormalizationSpec::Diverging { family, .. } => Ok(family),
@@ -262,9 +287,9 @@ impl ScaleNormalizer {
     }
     /// Unthinned data-space ticks; empirical rank scales expose `quantiles` instead.
     pub fn ticks(&self, count: f64, budget: usize) -> ChartResult<Vec<f64>> {
-        if let NormalizationSpec::Ggplot { family, domain, .. } = self.spec {
+        if let NormalizationSpec::Ggplot { family, domain, .. } = &self.spec {
             return if let NumericFamily::Log { base } = family {
-                super::ggplot_breaks_log(domain.map(|v| v.0), count, base, budget)
+                super::ggplot_breaks_log(domain.map(|v| v.0), count, *base, budget)
             } else {
                 super::ggplot_breaks_extended(domain.map(|v| v.0), count, budget)
             };
@@ -287,7 +312,7 @@ impl ScaleNormalizer {
         let start = self.domain[0].0;
         let stop = self.domain.last().expect("normalized endpoints").0;
         let (a, b) = if let NumericFamily::Log { base } = family {
-            super::ticks::nice_log(start, stop, base)
+            super::ticks::nice_log(start, stop, *base)
         } else {
             super::ticks::nice(start, stop, count)
         };
@@ -308,7 +333,7 @@ impl ScaleNormalizer {
         let x = input.filter(|x| !x.is_nan())?;
         let (t, clamp) = match self.spec {
             NormalizationSpec::Ggplot {
-                family,
+                ref family,
                 rescaler,
                 reverse,
                 timestamp,
@@ -324,7 +349,9 @@ impl ScaleNormalizer {
                 ),
                 false,
             ),
-            NormalizationSpec::Sequential { family, clamp, .. } => {
+            NormalizationSpec::Sequential {
+                ref family, clamp, ..
+            } => {
                 let t = if self.factors[0] == 0. {
                     0.5
                 } else {
@@ -333,7 +360,9 @@ impl ScaleNormalizer {
                 };
                 (t, clamp)
             }
-            NormalizationSpec::Diverging { family, clamp, .. } => {
+            NormalizationSpec::Diverging {
+                ref family, clamp, ..
+            } => {
                 let x = transform(family, self.negative, x, false);
                 let s = if self.transformed[1] < self.transformed[0] {
                     -1.
@@ -351,6 +380,29 @@ impl ScaleNormalizer {
             }
         };
         Some(if clamp { t.clamp(0., 1.) } else { t })
+    }
+    pub(super) fn reference_limits(&self) -> Vec<Number> {
+        self.transformed.iter().copied().map(Number).collect()
+    }
+    pub(super) fn reference_inputs(&self, values: &[f64]) -> ChartResult<Vec<Number>> {
+        let NormalizationSpec::Ggplot {
+            ref family,
+            reverse,
+            timestamp,
+            ..
+        } = self.spec
+        else {
+            unreachable!("reference vector requires reference normalization")
+        };
+        let transformed = if let Some(context) = timestamp {
+            values
+                .iter()
+                .map(|value| context.absolute(*value))
+                .collect()
+        } else {
+            super::ggplot_continuous_guide::forward_values(family, reverse, values)?
+        };
+        Ok(transformed.into_iter().map(Number).collect())
     }
     pub(super) fn reference_parameter(&self, value: f64) -> f64 {
         let NormalizationSpec::Ggplot { rescaler, .. } = self.spec else {
@@ -612,7 +664,7 @@ pub struct ContinuousScaleSpec {
 impl ContinuousScaleSpec {
     /// Reference continuous defaults with target-kind interpolation and a numeric unit range.
     pub fn d3(family: NumericFamily) -> Self {
-        let numeric = super::NumericScaleSpec::d3(family);
+        let numeric = super::NumericScaleSpec::d3(family.clone());
         Self {
             family,
             domain: numeric.domain,
@@ -661,7 +713,7 @@ impl ContinuousScale {
         spec.unknown.validate()?;
         let first = spec.domain.first().copied().unwrap_or(Number(f64::NAN));
         ScaleNormalizer::new(NormalizationSpec::Sequential {
-            family: spec.family,
+            family: spec.family.clone(),
             domain: [first, first],
             clamp: false,
         })?;
@@ -688,7 +740,7 @@ impl ContinuousScale {
         let domain = spec
             .domain
             .iter()
-            .map(|d| transform(spec.family, negative, d.0, false))
+            .map(|d| transform(&spec.family, negative, d.0, false))
             .collect();
         let (knots, reversed) = super::numeric::KnotMapping::new(domain, spec.range.len());
         let mut range = spec.range.clone();
@@ -753,7 +805,7 @@ impl ContinuousScale {
     }
     /// Copy with niced outer endpoints; interpolation and interior knots remain unchanged.
     pub fn nice(&self, count: f64) -> ChartResult<Self> {
-        let mut numeric = super::NumericScaleSpec::d3(self.spec.family);
+        let mut numeric = super::NumericScaleSpec::d3(self.spec.family.clone());
         numeric.domain = self.spec.domain.clone();
         let domain = super::NumericScale::new(numeric)?
             .nice(count)?
@@ -771,7 +823,7 @@ impl ContinuousScale {
         }
         let (i, t) = self
             .knots
-            .parameter(transform(self.spec.family, self.negative, x, false));
+            .parameter(transform(&self.spec.family, self.negative, x, false));
         Some((&self.segments[i], t))
     }
     /// Typed result through the shared interpolation engine.

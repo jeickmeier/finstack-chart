@@ -124,6 +124,16 @@ pub(crate) fn scoped_stat(stat: &Statistic, scope: StatScope) -> Statistic {
     stat
 }
 
+pub(crate) fn row_matches(row: crate::data::RowView<'_>, scope: &PanelScope) -> bool {
+    scope
+        .fields
+        .iter()
+        .zip(&scope.key.values)
+        .all(|(field, value)| {
+            stats::group_value(row, &Grouping::Field(*field)).as_ref() == Some(value)
+        })
+}
+
 pub(crate) fn filter_panel(
     table: Arc<PreparedTable>,
     data: &DatasetSnapshot,
@@ -143,17 +153,7 @@ pub(crate) fn filter_panel(
     }
     let rows = rows
         .iter()
-        .filter(|row| {
-            data.row(row.key).is_some_and(|row| {
-                scope
-                    .fields
-                    .iter()
-                    .zip(&scope.key.values)
-                    .all(|(field, value)| {
-                        stats::group_value(row, &Grouping::Field(*field)).as_ref() == Some(value)
-                    })
-            })
-        })
+        .filter(|row| data.row(row.key).is_some_and(|row| row_matches(row, scope)))
         .cloned()
         .collect();
     Ok(Arc::new(PreparedTable {
@@ -269,13 +269,71 @@ pub(crate) fn prepare_facets(
     let mut remaining = limits.max_prepared_rows;
     let mut vertices = limits.max_vertices;
     let mut populations = vec![];
+    let mut definitions = vec![];
     for key in &spec.order {
         let scope = PanelScope {
             fields: spec.fields.clone(),
             key: key.clone(),
         };
+        let mut panel_definition = if super::semantics::needs_panel_training(definition) {
+            super::semantics::resolve_scoped(
+                definition,
+                source.get()?,
+                limits,
+                &compiler.extensions,
+                Some(&scope),
+                false,
+            )?
+            .into_owned()
+        } else {
+            child.clone()
+        };
+        panel_definition.facets = None;
+        definitions.push(panel_definition);
+    }
+    if definition
+        .axes
+        .iter()
+        .any(super::positional_vectors::selected)
+    {
+        let panel_axes = definitions
+            .iter()
+            .map(|d| d.axes.clone())
+            .collect::<Vec<_>>();
+        let mut cache = super::positional_vectors::SourceCache::default();
+        let mut transform_caches = std::collections::BTreeMap::new();
+        for (panel_index, panel) in definitions.iter_mut().enumerate() {
+            let mut context = definition.clone();
+            context.axes = panel.axes.clone();
+            super::positional_vectors::source_transforms(
+                panel,
+                &context,
+                source.get()?,
+                &compiler.extensions,
+                limits,
+                Some((panel_index, &panel_axes)),
+                &mut transform_caches,
+            )?;
+            for layer in &mut panel.layers {
+                super::positional_vectors::source_layer(
+                    layer,
+                    &context,
+                    source.get()?,
+                    &compiler.extensions,
+                    limits,
+                    Some((panel_index, &panel_axes)),
+                    &mut cache,
+                )?;
+            }
+        }
+    }
+    for (key, panel_definition) in spec.order.iter().zip(&definitions) {
+        let scope = PanelScope {
+            fields: spec.fields.clone(),
+            key: key.clone(),
+        };
         let population = compiler.prepare_scope(
-            &child,
+            panel_definition,
             source,
             CompileLimits {
                 max_prepared_rows: remaining,
@@ -293,15 +351,72 @@ pub(crate) fn prepare_facets(
             })?;
         populations.push((key, population));
     }
+    if definition.profile() == Profile::Ggplot2_4_0_3 {
+        let mut summaries = std::collections::BTreeMap::new();
+        for (_, population) in &populations {
+            for (layer, table) in population.layer_tables() {
+                if table
+                    .population_operation()
+                    .is_some_and(|op| matches!(op.parameters, StatParameters::Summary(_)))
+                {
+                    let populated = matches!(table.rows(), PreparedRows::Statistical(rows) if rows.iter().any(|row| row.count > 0));
+                    *summaries.entry(layer.id).or_insert(false) |= populated
+                        || source
+                            .get()?
+                            .dataset(table.input().dataset)?
+                            .rows()
+                            .next()
+                            .is_none();
+                }
+            }
+        }
+        if summaries.values().any(|populated| !populated) {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "A faceted summary has no usable observations in any panel.",
+            ));
+        }
+    }
     let samples = super::colors::shared_samples(
         &child,
         source.get()?,
         populations.iter().flat_map(|(_, p)| p.layer_tables()),
         limits,
     )?;
-    for (key, population) in populations {
-        let chart = compiler.finish_scope(
-            &child,
+    for ((_, population), panel_definition) in populations.iter_mut().zip(&definitions) {
+        compiler.encode_scope(panel_definition, source, limits, population)?;
+    }
+    super::compiler::transform_generated_scopes(
+        &mut populations
+            .iter_mut()
+            .zip(&definitions)
+            .map(|((_, population), definition)| (definition, population))
+            .collect::<Vec<_>>(),
+    )?;
+    let mut positioned = Vec::new();
+    let mut keys = Vec::new();
+    for ((key, population), panel_definition) in populations.into_iter().zip(&definitions) {
+        keys.push(key);
+        positioned.push(compiler.position_scope(
+            panel_definition,
+            source,
+            state,
+            limits,
+            population,
+            &samples,
+        )?);
+    }
+    super::compiler::train_facet_positioned_scopes(
+        definition,
+        &definitions,
+        &mut positioned,
+        &compiler.extensions,
+        limits,
+    )?;
+    for ((key, population), panel_definition) in keys.into_iter().zip(positioned).zip(&definitions)
+    {
+        let chart = compiler.finish_positioned_scope(
+            panel_definition,
             source,
             state,
             CompileLimits {
@@ -320,7 +435,7 @@ pub(crate) fn prepare_facets(
             .iter()
             .flat_map(|l| l.marks.iter())
             .map(|m| match &m.geometry {
-                PreparedGeometry::Point(_) => 1,
+                PreparedGeometry::Point(_) | PreparedGeometry::UnboundedPoint(_) => 1,
                 PreparedGeometry::ShapePath { geometry, .. } => {
                     geometry.commands().len().saturating_add(1)
                 }
@@ -349,15 +464,9 @@ pub(crate) fn prepare_facets(
             matched
                 && match layer.table.rows() {
                     PreparedRows::Source(rows) => !rows.is_empty(),
-                    _ => layer
-                        .table
-                        .operations()
-                        .iter()
-                        .rev()
-                        .find(|op| !matches!(op.parameters, StatParameters::Identity))
-                        .is_some_and(|op| {
-                            op.counts.input > op.counts.filtered + op.counts.invalid_filter
-                        }),
+                    _ => layer.table.population_operation().is_some_and(|op| {
+                        op.counts.input > op.counts.filtered + op.counts.invalid_filter
+                    }),
                 }
         });
         if spec.empty == EmptyPanels::Drop && !populated {
@@ -382,7 +491,11 @@ pub(crate) fn prepare_facets(
         });
     }
     let mut result = PreparedChart {
+        positional_limits: Default::default(),
+        positional_empty: Default::default(),
         scale_registrations: compiler.extensions.scales.clone(),
+        palette_registrations: compiler.extensions.palette_function.clone(),
+        break_registrations: compiler.extensions.breaks_function.clone(),
         guide_registrations: compiler.extensions.guides.clone(),
         definition: Arc::new(definition.clone()),
         source: source.clone(),
@@ -570,13 +683,5 @@ pub(crate) fn source_table(
     for field in &scope.fields {
         stats::validate_group(data, &Grouping::Field(*field))?;
     }
-    stats::source_table_where(data, max_rows, |row| {
-        scope
-            .fields
-            .iter()
-            .zip(&scope.key.values)
-            .all(|(field, value)| {
-                stats::group_value(row, &Grouping::Field(*field)).as_ref() == Some(value)
-            })
-    })
+    stats::source_table_where(data, max_rows, |row| row_matches(row, scope))
 }

@@ -1,0 +1,3199 @@
+{
+  "reference": "ggplot2 4.0.3",
+  "cases": [
+    {
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "default",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            7
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2
+        ],
+        "mapped": [
+          1,
+          7
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "reverse",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            12,
+            2.5,
+            -2
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2,
+          3
+        ],
+        "mapped": [
+          -2,
+          2.5,
+          12
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "index",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1.5,
+            3.5,
+            5
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2,
+          3
+        ],
+        "mapped": [
+          1,
+          2,
+          3
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "short",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            -2,
+            -2,
+            -2
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2,
+          3
+        ],
+        "mapped": [
+          -2,
+          -2,
+          -2
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "empty",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "null",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "missing",
+      "mode": "default",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            4
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2
+        ],
+        "mapped": [
+          1,
+          4
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "missing",
+      "mode": "reverse",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            4,
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2
+        ],
+        "mapped": [
+          1,
+          4
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "missing",
+      "mode": "index",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1.5,
+            3.5,
+            5
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2,
+          3
+        ],
+        "mapped": [
+          1,
+          2,
+          3
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "missing",
+      "mode": "short",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "missing",
+      "mode": "empty",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "missing",
+      "mode": "null",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "empty",
+      "mode": "default",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "empty",
+      "mode": "reverse",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "empty",
+      "mode": "index",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "empty",
+      "mode": "short",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "empty",
+      "mode": "empty",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "empty",
+      "mode": "null",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "default",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            -1,
+            -7
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2
+        ],
+        "mapped": [
+          -1,
+          -7
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "reverse",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            -12,
+            -2.5,
+            2
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2,
+          3
+        ],
+        "mapped": [
+          2,
+          -2.5,
+          -12
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "index",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1.5,
+            3.5,
+            5
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2,
+          3
+        ],
+        "mapped": [
+          1,
+          2,
+          3
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "short",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            2,
+            2,
+            2
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2,
+          3
+        ],
+        "mapped": [
+          2,
+          2,
+          2
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "empty",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "null",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "default",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            -1,
+            -4
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2
+        ],
+        "mapped": [
+          -1,
+          -4
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "reverse",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            -4,
+            -1
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2
+        ],
+        "mapped": [
+          -1,
+          -4
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "index",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1.5,
+            3.5,
+            5
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2,
+          3
+        ],
+        "mapped": [
+          1,
+          2,
+          3
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "short",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "empty",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "null",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "default",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "reverse",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "index",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "short",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "empty",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "null",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "default",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0,
+            0.8010299956639813
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2
+        ],
+        "mapped": [
+          0,
+          0.8010299956639813
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "reverse",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1.073064017839119,
+            0.3010299956639812
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2
+        ],
+        "mapped": [
+          0.3010299956639812,
+          1.073064017839119
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "index",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1.5,
+            3.5,
+            5
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2,
+          3
+        ],
+        "mapped": [
+          1,
+          2,
+          3
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "short",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "empty",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "null",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "missing",
+      "mode": "default",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0,
+            0.6020599913279624
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2
+        ],
+        "mapped": [
+          0,
+          0.6020599913279624
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "missing",
+      "mode": "reverse",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.6020599913279624,
+            0
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2
+        ],
+        "mapped": [
+          0,
+          0.6020599913279624
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "missing",
+      "mode": "index",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1.5,
+            3.5,
+            5
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [
+          1,
+          2,
+          3
+        ],
+        "mapped": [
+          1,
+          2,
+          3
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "missing",
+      "mode": "short",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "missing",
+      "mode": "empty",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "missing",
+      "mode": "null",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "groups": [
+        1,
+        1,
+        2,
+        2,
+        3
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while computing stat.\ni Error occurred in the 1st layer.\nCaused by error in `compute_layer()`:\n! `stat_summary()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "empty",
+      "mode": "default",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "empty",
+      "mode": "reverse",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "empty",
+      "mode": "index",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "empty",
+      "mode": "short",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "empty",
+      "mode": "empty",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "empty",
+      "mode": "null",
+      "inputs": [],
+      "groups": [],
+      "calls": [],
+      "result": {
+        "x": [],
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    }
+  ]
+}

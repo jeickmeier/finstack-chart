@@ -1,8 +1,16 @@
 use super::*;
+#[derive(Clone)]
+pub(super) struct AutomaticPaintScale {
+    pub id: ScaleId,
+    pub title: String,
+    pub scale: ColorScale<crate::color::Paint>,
+}
 pub(super) struct LayerContext<'a> {
     pub axes: &'a BTreeMap<String, ScaleId>,
     pub color_ids: &'a mut BTreeMap<String, ScaleId>,
     pub color_scales: &'a BTreeMap<String, ColorScale<crate::color::Paint>>,
+    pub ggplot_paint_scales:
+        &'a mut BTreeMap<Option<crate::grammar::PaintAesthetic>, AutomaticPaintScale>,
     pub ggplot_numeric_ids:
         &'a mut BTreeMap<(crate::grammar::NumericAesthetic, crate::FieldId), ScaleId>,
     pub ggplot_style_ids:
@@ -59,16 +67,23 @@ pub(super) fn default_value_scale(
         V::LineType => GgplotDiscretePalette::LineType,
         _ => unreachable!("reference discrete style"),
     };
-    MappedScaleSpec::authored(ScaleFunctionSpec::Ordinal(OrdinalSpec::default())).with_ggplot(
-        GgplotScalePolicy::Discrete {
+    MappedScaleSpec::authored(ScaleFunctionSpec::Ordinal(OrdinalSpec::default()))
+        .with_ggplot(GgplotScalePolicy::Discrete {
             empty_population: false,
             limits: None,
             levels: None,
             drop: true,
             na_translate: true,
             palette,
-        },
-    )
+        })?
+        .with_theme_palette(vec![
+            match target {
+                V::Shape => "shape",
+                V::LineType => "linetype",
+                _ => unreachable!("reference discrete style"),
+            }
+            .into(),
+        ])
 }
 impl LayerContext<'_> {
     pub fn apply(
@@ -297,6 +312,7 @@ impl LayerContext<'_> {
                 )
             })?;
             layer.color = Some(ColorEncoding {
+                automatic: false,
                 id: self.color_ids[name],
                 title: Some(name.clone()),
                 input: input.clone(),
@@ -352,23 +368,44 @@ impl LayerContext<'_> {
                     "Numeric color requires an explicit continuous color scale.",
                 ));
             }
-            let id = if let Some(id) = self.color_ids.get(scale_name) {
-                *id
+            let automatic = definition.profile() == Profile::Ggplot2_4_0_3
+                && named_scale.is_none()
+                && explicit.is_none();
+            let prior = self.ggplot_paint_scales.get(&channel).filter(|_| automatic);
+            let (id, title) = if let Some(prior) = prior {
+                (prior.id, prior.title.clone())
+            } else if automatic {
+                let id = ScaleId::new(fresh_id()?);
+                self.color_ids.insert(automatic_name.clone(), id);
+                (id, column.name.clone())
+            } else if let Some(id) = self.color_ids.get(scale_name) {
+                (*id, column.name.clone())
             } else {
                 let id = ScaleId::new(fresh_id()?);
                 self.color_ids.insert(scale_name.to_owned(), id);
-                id
+                (id, column.name.clone())
             };
-            let scale = if let Some(explicit) = explicit {
+            let scale = if let Some(prior) = prior {
+                prior.scale.clone()
+            } else if let Some(explicit) = explicit {
                 explicit.clone()
             } else if definition.profile() == Profile::Ggplot2_4_0_3 {
-                crate::scales::ggplot_color_default(matches!(
+                let mut scale = crate::scales::ggplot_color_default(matches!(
                     column.kind,
                     crate::data::FieldKind::Float64
                         | crate::data::FieldKind::Int64
                         | crate::data::FieldKind::UInt64
                         | crate::data::FieldKind::Timestamp(_)
-                ))?
+                ))?;
+                if let crate::scales::ColorScale::Mapped { scale, .. } = &mut scale {
+                    if matches!(column.kind, crate::data::FieldKind::Timestamp(_)) {
+                        // Date/datetime paint constructors have explicit gradients.
+                        scale.palette_theme_aesthetics.clear();
+                    } else if channel == Some(crate::grammar::PaintAesthetic::Fill) {
+                        scale.palette_theme_aesthetics = vec!["fill".into()];
+                    }
+                }
+                scale
             } else {
                 default_color_scale()
             };
@@ -398,11 +435,21 @@ impl LayerContext<'_> {
                 temporal_guide(scale, &input, data)?;
             }
             let encoding = ColorEncoding {
+                automatic,
                 id,
-                title: Some(column.name.clone()),
+                title: Some(title),
                 input,
                 scale,
             };
+            if automatic {
+                self.ggplot_paint_scales
+                    .entry(channel)
+                    .or_insert_with(|| AutomaticPaintScale {
+                        id,
+                        title: encoding.title.clone().unwrap_or_default(),
+                        scale: encoding.scale.clone(),
+                    });
+            }
             if let Some(channel) = channel {
                 layer.paint_scales.insert(channel, encoding);
             } else {

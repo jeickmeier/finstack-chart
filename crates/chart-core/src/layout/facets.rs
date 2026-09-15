@@ -23,6 +23,11 @@ struct Label {
     glyph: Option<LegendGlyph>,
 }
 
+enum LegendBlock {
+    Row(Label),
+    Colorbar(super::legend_colorbar::Colorbar),
+}
+
 #[derive(Clone, PartialEq)]
 enum Legend<'a> {
     Color(&'a ColorLegend),
@@ -67,7 +72,22 @@ fn legends(chart: &PreparedChart) -> Vec<Legend<'_>> {
     }
     let mut legends = vec![];
     for layer in chart.layers() {
+        if chart.definition().layers.iter().any(|definition| {
+            definition.id == layer.id() && definition.geom == crate::grammar::Geom::Blank
+        }) {
+            continue;
+        }
         if let Some(legend) = layer.color_legend().filter(|l| !l.entries.is_empty()) {
+            let legend = Legend::Color(legend);
+            if !legends.contains(&legend) {
+                legends.push(legend);
+            }
+        }
+        for legend in layer
+            .paint_legends()
+            .values()
+            .filter(|l| !l.entries.is_empty())
+        {
             let legend = Legend::Color(legend);
             if !legends.contains(&legend) {
                 legends.push(legend);
@@ -183,6 +203,62 @@ fn legend_values(
     Ok(result)
 }
 
+fn measure_legends(
+    legends: &[Legend<'_>],
+    request: &LayoutRequest,
+    measurer: &dyn TextMeasurer,
+    remaining: &mut usize,
+) -> ChartResult<Vec<LegendBlock>> {
+    let mut blocks = vec![];
+    for legend in legends {
+        if let Legend::Color(color) = legend
+            && color.colorsteps.is_empty()
+            && !color.numeric_breaks.is_empty()
+            && matches!(
+                color.mapping.as_ref().and_then(|m| m.guide.as_deref()),
+                Some(
+                    crate::scales::GgplotScaleGuide::BinnedSteps(_)
+                        | crate::scales::GgplotScaleGuide::ContinuousSteps(_)
+                        | crate::scales::GgplotScaleGuide::TemporalSteps(_)
+                )
+            )
+        {
+            return Err(crate::scales::error(
+                crate::DiagnosticCode::Validation,
+                "A stepped color guide requires at least one interval to draw.",
+            ));
+        }
+
+        if let Legend::Color(color) = legend
+            && (!color.colorbar.is_empty() || !color.colorsteps.is_empty())
+        {
+            let title = color.title.clone().unwrap_or_else(|| "Value".into());
+            if !title.is_empty() {
+                blocks.extend(
+                    measure_labels(vec![(title, None)], request, measurer, remaining)?
+                        .into_iter()
+                        .map(LegendBlock::Row),
+                );
+            }
+            blocks.push(LegendBlock::Colorbar(
+                super::legend_colorbar::Colorbar::measure(color, request, measurer, remaining)?,
+            ));
+        } else {
+            blocks.extend(
+                measure_labels(
+                    legend_values(std::slice::from_ref(legend), request)?,
+                    request,
+                    measurer,
+                    remaining,
+                )?
+                .into_iter()
+                .map(LegendBlock::Row),
+            );
+        }
+    }
+    Ok(blocks)
+}
+
 fn push_text(
     items: &mut Vec<SceneItem>,
     label: &Label,
@@ -213,14 +289,27 @@ fn push_text(
 
 fn paint_legend(
     items: &mut Vec<SceneItem>,
-    labels: &[Label],
+    labels: &[LegendBlock],
     bounds: Rect,
     r: &LayoutRequest,
     diagnostics: &mut Vec<Diagnostic>,
 ) -> ChartResult<()> {
     let mut y = bounds.origin().y() + r.padding;
     let mut constrained = false;
-    for label in labels {
+    for block in labels {
+        let label = match block {
+            LegendBlock::Row(label) => label,
+            LegendBlock::Colorbar(bar) => {
+                let height = bar.height(r);
+                if y + height > bounds.max_y() - r.padding {
+                    constrained = true;
+                    break;
+                }
+                constrained |= bar.paint(items, bounds, y, r)?;
+                y += height + r.label_gap;
+                continue;
+            }
+        };
         let height = label
             .metrics
             .height()
@@ -292,7 +381,7 @@ fn paint_legend(
         y += height + r.label_gap;
     }
     if constrained {
-        diagnostics.push(pressure("Legend pressure clipped long labels or omitted trailing swatches; complete legend metadata remains in preparation."));
+        diagnostics.push(pressure("Legend pressure clipped or overlapped labels, or omitted trailing guide content; complete legend metadata remains in preparation."));
     }
     Ok(())
 }
@@ -300,26 +389,40 @@ fn paint_legend(
 pub(super) struct SingleLegend {
     pub content: Rect,
     bounds: Rect,
-    labels: Vec<Label>,
+    labels: Vec<LegendBlock>,
 }
 
-fn legend_width(labels: &[Label], width: f64, request: &LayoutRequest) -> f64 {
+fn legend_width(labels: &[LegendBlock], width: f64, request: &LayoutRequest) -> f64 {
     if labels.is_empty() {
         0.
     } else {
+        // Horizontal bars need their measured span even in local facet guides.
+        // Preserve the legacy column cap for other legends and leave the common
+        // solver the requested minimum plot span plus its outer padding.
+        let cap = if labels
+            .iter()
+            .any(|block| matches!(block, LegendBlock::Colorbar(bar) if bar.horizontal()))
+        {
+            (width - request.minimum_plot.0 - 2. * request.padding).max(0.)
+        } else {
+            width * 0.3
+        };
         (labels
             .iter()
-            .map(|l| {
-                l.metrics.width()
-                    + l.glyph
-                        .as_ref()
-                        .map_or(request.font_size + request.label_gap, |g| {
-                            g.dimensions(request).0.max(request.font_size) + request.label_gap
-                        })
+            .map(|block| match block {
+                LegendBlock::Colorbar(bar) => bar.width(request),
+                LegendBlock::Row(l) => {
+                    l.metrics.width()
+                        + l.glyph
+                            .as_ref()
+                            .map_or(request.font_size + request.label_gap, |g| {
+                                g.dimensions(request).0.max(request.font_size) + request.label_gap
+                            })
+                }
             })
             .fold(0_f64, f64::max)
             + request.padding)
-            .min(width * 0.3)
+            .min(cap)
     }
 }
 
@@ -332,12 +435,7 @@ pub(super) fn prepare_single_legend(
         return Ok(None);
     }
     let mut remaining = request.limits.max_text_bytes;
-    let labels = measure_labels(
-        legend_values(&legends(prepared), request)?,
-        request,
-        measurer,
-        &mut remaining,
-    )?;
+    let labels = measure_legends(&legends(prepared), request, measurer, &mut remaining)?;
     if labels.is_empty() {
         return Ok(None);
     }
@@ -432,23 +530,13 @@ pub(super) fn layout_facets(
     } else {
         vec![]
     };
-    let shared_labels = measure_labels(
-        legend_values(&shared_legends, request)?,
-        request,
-        measurer,
-        &mut remaining,
-    )?;
+    let shared_labels = measure_legends(&shared_legends, request, measurer, &mut remaining)?;
     let mut local_labels = vec![];
     for panel in prepared.panels() {
         local_labels.push(if spec.collect_guides {
             vec![]
         } else {
-            measure_labels(
-                legend_values(&legends(&panel.chart), request)?,
-                request,
-                measurer,
-                &mut remaining,
-            )?
+            measure_legends(&legends(&panel.chart), request, measurer, &mut remaining)?
         });
     }
     let shared_width = legend_width(&shared_labels, request.bounds.width(), request);

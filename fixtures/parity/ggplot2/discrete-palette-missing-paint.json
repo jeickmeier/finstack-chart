@@ -1,0 +1,1967 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "full",
+      "na_mode": "NA",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "a",
+              "b",
+              "c"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "full",
+      "na_mode": "transparent",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "a",
+              "b",
+              "c"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "full",
+      "na_mode": "green",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "a",
+              "b",
+              "c"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "short",
+      "na_mode": "NA",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Location 3 doesn't exist.\ni There are only 2 elements."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "short",
+      "na_mode": "transparent",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Location 3 doesn't exist.\ni There are only 2 elements."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "short",
+      "na_mode": "green",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Location 3 doesn't exist.\ni There are only 2 elements."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "empty",
+      "na_mode": "NA",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Locations 2 and 3 don't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "empty",
+      "na_mode": "transparent",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Locations 2 and 3 don't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "empty",
+      "na_mode": "green",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Locations 2 and 3 don't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "null",
+      "na_mode": "NA",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Locations 2 and 3 don't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "null",
+      "na_mode": "transparent",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Locations 2 and 3 don't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "null",
+      "na_mode": "green",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Locations 2 and 3 don't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "named",
+      "na_mode": "NA",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff",
+          "#0000ff",
+          "#ff0000"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "a",
+              "b",
+              "c"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#ff0000"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "named",
+      "na_mode": "transparent",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff",
+          "#0000ff",
+          "#ff0000"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "a",
+              "b",
+              "c"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#ff0000"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "named",
+      "na_mode": "green",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff",
+          "#0000ff",
+          "#ff0000"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "a",
+              "b",
+              "c"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#ff0000"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          null,
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "a",
+              "b",
+              "c"
+            ],
+            "mapped": [
+              "#ff0000",
+              null,
+              "#0000ff"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "missing",
+      "na_mode": "transparent",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          null,
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "a",
+              "b",
+              "c"
+            ],
+            "mapped": [
+              "#ff0000",
+              null,
+              "#0000ff"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "ordinary",
+      "limits": "none",
+      "mode": "missing",
+      "na_mode": "green",
+      "inputs": [
+        "a",
+        "b",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            3
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          null,
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labels": [
+              "a",
+              "b",
+              "c"
+            ],
+            "mapped": [
+              "#ff0000",
+              null,
+              "#0000ff"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "full",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#0000ff",
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              null
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "full",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#00000000",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#00000000"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "full",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#00ff00",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#00ff00"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "short",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#0000ff",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              "#0000ff",
+              null,
+              null
+            ]
+          }
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "short",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#00000000",
+          "#0000ff",
+          "#00000000"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              "#0000ff",
+              "#00000000",
+              "#00000000"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "short",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#00ff00",
+          "#0000ff",
+          "#00ff00"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              "#0000ff",
+              "#00ff00",
+              "#00ff00"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "empty",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Location 2 doesn't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "empty",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Location 2 doesn't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "empty",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Location 2 doesn't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "null",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Location 2 doesn't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "null",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Location 2 doesn't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "null",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Can't subset elements past the end.\ni Location 2 doesn't exist.\ni There is only 1 element."
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "named",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              null,
+              "#0000ff",
+              null
+            ]
+          }
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "named",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#00000000",
+          "#00000000",
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              "#00000000",
+              "#0000ff",
+              "#00000000"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "named",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#00ff00",
+          "#00ff00",
+          "#0000ff"
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              "#00ff00",
+              "#0000ff",
+              "#00ff00"
+            ]
+          }
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#0000ff",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              "#0000ff",
+              null,
+              null
+            ]
+          }
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "missing",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#00000000",
+          "#0000ff",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              "#0000ff",
+              null,
+              "#00000000"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "missing",
+      "limits": "none",
+      "mode": "missing",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        "a",
+        "c"
+      ],
+      "calls": [
+        {
+          "values": [
+            2
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#00ff00",
+          "#0000ff",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              "a",
+              "c",
+              null
+            ],
+            "labels": [
+              "a",
+              "c",
+              null
+            ],
+            "mapped": [
+              "#0000ff",
+              null,
+              "#00ff00"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "full",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              null
+            ]
+          }
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "full",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00000000",
+          "#00000000"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00000000"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "full",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00ff00",
+          "#00ff00"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00ff00"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "short",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              null
+            ]
+          }
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "short",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00000000",
+          "#00000000"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00000000"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "short",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00ff00",
+          "#00ff00"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00ff00"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "empty",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              null
+            ]
+          }
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "empty",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00000000",
+          "#00000000"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00000000"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "empty",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00ff00",
+          "#00ff00"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00ff00"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "null",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              null
+            ]
+          }
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "null",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00000000",
+          "#00000000"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00000000"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "null",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00ff00",
+          "#00ff00"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00ff00"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "named",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              null
+            ]
+          }
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "named",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00000000",
+          "#00000000"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00000000"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "named",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00ff00",
+          "#00ff00"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00ff00"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              null
+            ]
+          }
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "missing",
+      "na_mode": "transparent",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00000000",
+          "#00000000"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00000000"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    },
+    {
+      "family": "discrete",
+      "channel": "colour",
+      "population": "all_missing",
+      "limits": "none",
+      "mode": "missing",
+      "na_mode": "green",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "#00ff00",
+          "#00ff00"
+        ],
+        "keys": [
+          {
+            "values": [
+              null
+            ],
+            "labels": [
+              null
+            ],
+            "mapped": [
+              "#00ff00"
+            ]
+          }
+        ],
+        "point_count": 2
+      }
+    }
+  ]
+}

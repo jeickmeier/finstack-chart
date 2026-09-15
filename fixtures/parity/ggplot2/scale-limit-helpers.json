@@ -1,0 +1,4144 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "contracts": [
+    {
+      "name": "limits",
+      "formals": {
+        "lims": "",
+        "var": "",
+        "call": "caller_env()"
+      },
+      "body": "UseMethod(\"limits\")"
+    },
+    {
+      "name": "limits.numeric",
+      "formals": {
+        "lims": "",
+        "var": "",
+        "call": "caller_env()"
+      },
+      "body": "{\n    check_length(lims, 2L, arg = var, call = call)\n    if (!anyNA(lims) && lims[1] > lims[2]) {\n        trans <- \"reverse\"\n    }\n    else {\n        trans <- \"identity\"\n    }\n    make_scale(\"continuous\", var, limits = lims, transform = trans, call = call)\n}"
+    },
+    {
+      "name": "limits.character",
+      "formals": {
+        "lims": "",
+        "var": "",
+        "call": "caller_env()"
+      },
+      "body": "{\n    make_scale(\"discrete\", var, limits = lims, call = call)\n}"
+    },
+    {
+      "name": "limits.factor",
+      "formals": {
+        "lims": "",
+        "var": "",
+        "call": "caller_env()"
+      },
+      "body": "{\n    make_scale(\"discrete\", var, limits = as.character(lims), call = call)\n}"
+    },
+    {
+      "name": "limits.Date",
+      "formals": {
+        "lims": "",
+        "var": "",
+        "call": "caller_env()"
+      },
+      "body": "{\n    check_length(lims, 2L, arg = var, call = call)\n    make_scale(\"date\", var, limits = lims, call = call)\n}"
+    },
+    {
+      "name": "limits.POSIXct",
+      "formals": {
+        "lims": "",
+        "var": "",
+        "call": "caller_env()"
+      },
+      "body": "{\n    check_length(lims, 2L, arg = var, call = call)\n    make_scale(\"datetime\", var, limits = lims, call = call)\n}"
+    },
+    {
+      "name": "make_scale",
+      "formals": {
+        "type": "",
+        "var": "",
+        "...": "",
+        "call": "NULL"
+      },
+      "body": "{\n    name <- paste(\"scale_\", var, \"_\", type, sep = \"\")\n    scale <- match.fun(name)\n    sc <- scale(...)\n    sc$call <- call %||% parse_expr(paste0(name, \"()\"))\n    sc\n}"
+    }
+  ],
+  "cases": [
+    {
+      "axis": "x",
+      "family": "numeric",
+      "mode": "ascending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        1,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousPosition",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "identity",
+        "mapped": [
+          null,
+          1,
+          2,
+          4,
+          null
+        ],
+        "limits": [
+          1,
+          4
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "point_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.9545454545454545,
+          null
+        ],
+        "break_positions": [
+          0.04545454545454546,
+          0.3484848484848485,
+          0.6515151515151514,
+          0.9545454545454545
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "numeric",
+      "mode": "descending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        4,
+        1
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousPosition",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "reverse",
+        "mapped": [
+          null,
+          -1,
+          -2,
+          -4,
+          null
+        ],
+        "limits": [
+          -4,
+          -1
+        ],
+        "breaks": [
+          -1,
+          -2,
+          -3,
+          -4
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "point_positions": [
+          null,
+          0.9545454545454546,
+          0.6515151515151516,
+          0.04545454545454556,
+          null
+        ],
+        "break_positions": [
+          0.9545454545454546,
+          0.6515151515151516,
+          0.3484848484848486,
+          0.04545454545454556
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "numeric",
+      "mode": "lower_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousPosition",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "identity",
+        "mapped": [
+          0,
+          1,
+          2,
+          4,
+          null
+        ],
+        "limits": [
+          0,
+          4
+        ],
+        "breaks": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.9545454545454545,
+          null
+        ],
+        "break_positions": [
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.7272727272727273,
+          0.9545454545454545
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "numeric",
+      "mode": "both_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        null
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousPosition",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "identity",
+        "mapped": [
+          0,
+          1,
+          2,
+          4,
+          5
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "breaks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2272727272727273,
+          0.4090909090909091,
+          0.7727272727272727,
+          0.9545454545454546
+        ],
+        "break_positions": [
+          0.04545454545454546,
+          0.2272727272727273,
+          0.4090909090909091,
+          0.5909090909090909,
+          0.7727272727272727,
+          0.9545454545454546
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "numeric",
+      "mode": "single",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        2
+      ],
+      "result": {
+        "error": "`x` must be a vector of length 2, not length 1."
+      }
+    },
+    {
+      "axis": "x",
+      "family": "numeric",
+      "mode": "empty",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [],
+      "result": {
+        "error": "`x` must be a vector of length 2, not length 0."
+      }
+    },
+    {
+      "axis": "x",
+      "family": "character",
+      "mode": "ascending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        1,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          1,
+          null,
+          2,
+          null
+        ],
+        "limits": [
+          "1",
+          "4"
+        ],
+        "breaks": [
+          "1",
+          "4"
+        ],
+        "labels": [
+          "1",
+          "4"
+        ],
+        "point_positions": [
+          null,
+          0.2727272727272727,
+          null,
+          0.7272727272727273,
+          null
+        ],
+        "break_positions": [
+          0.2727272727272727,
+          0.7272727272727273
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "character",
+      "mode": "descending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        4,
+        1
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          2,
+          null,
+          1,
+          null
+        ],
+        "limits": [
+          "4",
+          "1"
+        ],
+        "breaks": [
+          "4",
+          "1"
+        ],
+        "labels": [
+          "4",
+          "1"
+        ],
+        "point_positions": [
+          null,
+          0.7272727272727273,
+          null,
+          0.2727272727272727,
+          null
+        ],
+        "break_positions": [
+          0.2727272727272727,
+          0.7272727272727273
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "character",
+      "mode": "lower_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          null,
+          null,
+          2,
+          null
+        ],
+        "limits": [
+          null,
+          "4"
+        ],
+        "breaks": [
+          null,
+          "4"
+        ],
+        "labels": [
+          null,
+          "4"
+        ],
+        "point_positions": [
+          null,
+          null,
+          null,
+          0.7272727272727273,
+          null
+        ],
+        "break_positions": [
+          0.2727272727272727,
+          0.7272727272727273
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "character",
+      "mode": "both_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        null
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          null,
+          null
+        ],
+        "breaks": [
+          null
+        ],
+        "labels": [
+          null
+        ],
+        "point_positions": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "break_positions": [
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "character",
+      "mode": "single",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        2
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          null,
+          1,
+          null,
+          null
+        ],
+        "limits": [
+          "2"
+        ],
+        "breaks": [
+          "2"
+        ],
+        "labels": [
+          "2"
+        ],
+        "point_positions": [
+          null,
+          null,
+          0.4999999999999999,
+          null,
+          null
+        ],
+        "break_positions": [
+          0.4999999999999999
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "character",
+      "mode": "empty",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [],
+        "breaks": [],
+        "labels": [],
+        "point_positions": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "break_positions": []
+      }
+    },
+    {
+      "axis": "x",
+      "family": "date",
+      "mode": "ascending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        1,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDate",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "date",
+        "mapped": [
+          null,
+          1,
+          2,
+          4,
+          null
+        ],
+        "limits": [
+          1,
+          4
+        ],
+        "breaks": [
+          null,
+          null,
+          1,
+          2,
+          3,
+          4,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.9545454545454545,
+          null
+        ],
+        "break_positions": [
+          null,
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.6515151515151514,
+          0.9545454545454545,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "date",
+      "mode": "descending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        4,
+        1
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDate",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "date",
+        "mapped": [
+          null,
+          1,
+          2,
+          4,
+          null
+        ],
+        "limits": [
+          1,
+          4
+        ],
+        "breaks": [
+          null,
+          null,
+          1,
+          2,
+          3,
+          4,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.9545454545454545,
+          null
+        ],
+        "break_positions": [
+          null,
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.6515151515151514,
+          0.9545454545454545,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "date",
+      "mode": "lower_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDate",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "date",
+        "mapped": [
+          0,
+          1,
+          2,
+          4,
+          null
+        ],
+        "limits": [
+          0,
+          4
+        ],
+        "breaks": [
+          null,
+          0,
+          1,
+          2,
+          3,
+          4,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.9545454545454545,
+          null
+        ],
+        "break_positions": [
+          null,
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.7272727272727273,
+          0.9545454545454545,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "date",
+      "mode": "both_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        null
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDate",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "date",
+        "mapped": [
+          0,
+          1,
+          2,
+          4,
+          5
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "breaks": [
+          null,
+          1,
+          3,
+          5,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 02",
+          "Jan 04",
+          "Jan 06",
+          "Jan 08"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2272727272727273,
+          0.4090909090909091,
+          0.7727272727272727,
+          0.9545454545454546
+        ],
+        "break_positions": [
+          null,
+          0.2272727272727273,
+          0.5909090909090909,
+          0.9545454545454546,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "date",
+      "mode": "single",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        2
+      ],
+      "result": {
+        "error": "`x` must be a vector of length 2, not length 1."
+      }
+    },
+    {
+      "axis": "x",
+      "family": "date",
+      "mode": "empty",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [],
+      "result": {
+        "error": "`x` must be a vector of length 2, not length 0."
+      }
+    },
+    {
+      "axis": "x",
+      "family": "datetime",
+      "mode": "ascending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        1,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDatetime",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "time",
+        "mapped": [
+          null,
+          86400,
+          172800,
+          345600,
+          null
+        ],
+        "limits": [
+          86400,
+          345600
+        ],
+        "breaks": [
+          null,
+          86400,
+          172800,
+          259200,
+          345600,
+          null
+        ],
+        "labels": [
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.9545454545454546,
+          null
+        ],
+        "break_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.6515151515151515,
+          0.9545454545454546,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "datetime",
+      "mode": "descending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        4,
+        1
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDatetime",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "time",
+        "mapped": [
+          null,
+          86400,
+          172800,
+          345600,
+          null
+        ],
+        "limits": [
+          86400,
+          345600
+        ],
+        "breaks": [
+          null,
+          86400,
+          172800,
+          259200,
+          345600,
+          null
+        ],
+        "labels": [
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.9545454545454546,
+          null
+        ],
+        "break_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.6515151515151515,
+          0.9545454545454546,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "datetime",
+      "mode": "lower_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDatetime",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "time",
+        "mapped": [
+          0,
+          86400,
+          172800,
+          345600,
+          null
+        ],
+        "limits": [
+          0,
+          345600
+        ],
+        "breaks": [
+          null,
+          0,
+          86400,
+          172800,
+          259200,
+          345600,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.9545454545454546,
+          null
+        ],
+        "break_positions": [
+          null,
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.7272727272727273,
+          0.9545454545454546,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "datetime",
+      "mode": "both_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        null
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDatetime",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "time",
+        "mapped": [
+          0,
+          86400,
+          172800,
+          345600,
+          432000
+        ],
+        "limits": [
+          0,
+          432000
+        ],
+        "breaks": [
+          null,
+          86400,
+          259200,
+          432000,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 02",
+          "Jan 04",
+          "Jan 06",
+          "Jan 08"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2272727272727273,
+          0.4090909090909091,
+          0.7727272727272727,
+          0.9545454545454546
+        ],
+        "break_positions": [
+          null,
+          0.2272727272727273,
+          0.5909090909090909,
+          0.9545454545454546,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "family": "datetime",
+      "mode": "single",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        2
+      ],
+      "result": {
+        "error": "`x` must be a vector of length 2, not length 1."
+      }
+    },
+    {
+      "axis": "x",
+      "family": "datetime",
+      "mode": "empty",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [],
+      "result": {
+        "error": "`x` must be a vector of length 2, not length 0."
+      }
+    },
+    {
+      "axis": "y",
+      "family": "numeric",
+      "mode": "ascending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        1,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousPosition",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "identity",
+        "mapped": [
+          null,
+          1,
+          2,
+          4,
+          null
+        ],
+        "limits": [
+          1,
+          4
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "point_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.9545454545454545,
+          null
+        ],
+        "break_positions": [
+          0.04545454545454546,
+          0.3484848484848485,
+          0.6515151515151514,
+          0.9545454545454545
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "numeric",
+      "mode": "descending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        4,
+        1
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousPosition",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "reverse",
+        "mapped": [
+          null,
+          -1,
+          -2,
+          -4,
+          null
+        ],
+        "limits": [
+          -4,
+          -1
+        ],
+        "breaks": [
+          -1,
+          -2,
+          -3,
+          -4
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "point_positions": [
+          null,
+          0.9545454545454546,
+          0.6515151515151516,
+          0.04545454545454556,
+          null
+        ],
+        "break_positions": [
+          0.9545454545454546,
+          0.6515151515151516,
+          0.3484848484848486,
+          0.04545454545454556
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "numeric",
+      "mode": "lower_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousPosition",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "identity",
+        "mapped": [
+          0,
+          1,
+          2,
+          4,
+          null
+        ],
+        "limits": [
+          0,
+          4
+        ],
+        "breaks": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.9545454545454545,
+          null
+        ],
+        "break_positions": [
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.7272727272727273,
+          0.9545454545454545
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "numeric",
+      "mode": "both_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        null
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousPosition",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "identity",
+        "mapped": [
+          0,
+          1,
+          2,
+          4,
+          5
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "breaks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "labels": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2272727272727273,
+          0.4090909090909091,
+          0.7727272727272727,
+          0.9545454545454546
+        ],
+        "break_positions": [
+          0.04545454545454546,
+          0.2272727272727273,
+          0.4090909090909091,
+          0.5909090909090909,
+          0.7727272727272727,
+          0.9545454545454546
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "numeric",
+      "mode": "single",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        2
+      ],
+      "result": {
+        "error": "`y` must be a vector of length 2, not length 1."
+      }
+    },
+    {
+      "axis": "y",
+      "family": "numeric",
+      "mode": "empty",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [],
+      "result": {
+        "error": "`y` must be a vector of length 2, not length 0."
+      }
+    },
+    {
+      "axis": "y",
+      "family": "character",
+      "mode": "ascending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        1,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          1,
+          null,
+          2,
+          null
+        ],
+        "limits": [
+          "1",
+          "4"
+        ],
+        "breaks": [
+          "1",
+          "4"
+        ],
+        "labels": [
+          "1",
+          "4"
+        ],
+        "point_positions": [
+          null,
+          0.2727272727272727,
+          null,
+          0.7272727272727273,
+          null
+        ],
+        "break_positions": [
+          0.2727272727272727,
+          0.7272727272727273
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "character",
+      "mode": "descending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        4,
+        1
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          2,
+          null,
+          1,
+          null
+        ],
+        "limits": [
+          "4",
+          "1"
+        ],
+        "breaks": [
+          "4",
+          "1"
+        ],
+        "labels": [
+          "4",
+          "1"
+        ],
+        "point_positions": [
+          null,
+          0.7272727272727273,
+          null,
+          0.2727272727272727,
+          null
+        ],
+        "break_positions": [
+          0.2727272727272727,
+          0.7272727272727273
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "character",
+      "mode": "lower_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          null,
+          null,
+          2,
+          null
+        ],
+        "limits": [
+          null,
+          "4"
+        ],
+        "breaks": [
+          null,
+          "4"
+        ],
+        "labels": [
+          null,
+          "4"
+        ],
+        "point_positions": [
+          null,
+          null,
+          null,
+          0.7272727272727273,
+          null
+        ],
+        "break_positions": [
+          0.2727272727272727,
+          0.7272727272727273
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "character",
+      "mode": "both_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        null
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          null,
+          null
+        ],
+        "breaks": [
+          null
+        ],
+        "labels": [
+          null
+        ],
+        "point_positions": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "break_positions": [
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "character",
+      "mode": "single",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        2
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          null,
+          1,
+          null,
+          null
+        ],
+        "limits": [
+          "2"
+        ],
+        "breaks": [
+          "2"
+        ],
+        "labels": [
+          "2"
+        ],
+        "point_positions": [
+          null,
+          null,
+          0.4999999999999999,
+          null,
+          null
+        ],
+        "break_positions": [
+          0.4999999999999999
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "character",
+      "mode": "empty",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [],
+      "result": {
+        "scale_class": [
+          "ScaleDiscretePosition",
+          "ScaleDiscrete",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": null,
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [],
+        "breaks": [],
+        "labels": [],
+        "point_positions": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "break_positions": []
+      }
+    },
+    {
+      "axis": "y",
+      "family": "date",
+      "mode": "ascending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        1,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDate",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "date",
+        "mapped": [
+          null,
+          1,
+          2,
+          4,
+          null
+        ],
+        "limits": [
+          1,
+          4
+        ],
+        "breaks": [
+          null,
+          null,
+          1,
+          2,
+          3,
+          4,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.9545454545454545,
+          null
+        ],
+        "break_positions": [
+          null,
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.6515151515151514,
+          0.9545454545454545,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "date",
+      "mode": "descending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        4,
+        1
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDate",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "date",
+        "mapped": [
+          null,
+          1,
+          2,
+          4,
+          null
+        ],
+        "limits": [
+          1,
+          4
+        ],
+        "breaks": [
+          null,
+          null,
+          1,
+          2,
+          3,
+          4,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.9545454545454545,
+          null
+        ],
+        "break_positions": [
+          null,
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.6515151515151514,
+          0.9545454545454545,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "date",
+      "mode": "lower_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDate",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "date",
+        "mapped": [
+          0,
+          1,
+          2,
+          4,
+          null
+        ],
+        "limits": [
+          0,
+          4
+        ],
+        "breaks": [
+          null,
+          0,
+          1,
+          2,
+          3,
+          4,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.9545454545454545,
+          null
+        ],
+        "break_positions": [
+          null,
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.7272727272727273,
+          0.9545454545454545,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "date",
+      "mode": "both_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        null
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDate",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "date",
+        "mapped": [
+          0,
+          1,
+          2,
+          4,
+          5
+        ],
+        "limits": [
+          0,
+          5
+        ],
+        "breaks": [
+          null,
+          1,
+          3,
+          5,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 02",
+          "Jan 04",
+          "Jan 06",
+          "Jan 08"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2272727272727273,
+          0.4090909090909091,
+          0.7727272727272727,
+          0.9545454545454546
+        ],
+        "break_positions": [
+          null,
+          0.2272727272727273,
+          0.5909090909090909,
+          0.9545454545454546,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "date",
+      "mode": "single",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        2
+      ],
+      "result": {
+        "error": "`y` must be a vector of length 2, not length 1."
+      }
+    },
+    {
+      "axis": "y",
+      "family": "date",
+      "mode": "empty",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [],
+      "result": {
+        "error": "`y` must be a vector of length 2, not length 0."
+      }
+    },
+    {
+      "axis": "y",
+      "family": "datetime",
+      "mode": "ascending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        1,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDatetime",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "time",
+        "mapped": [
+          null,
+          86400,
+          172800,
+          345600,
+          null
+        ],
+        "limits": [
+          86400,
+          345600
+        ],
+        "breaks": [
+          null,
+          86400,
+          172800,
+          259200,
+          345600,
+          null
+        ],
+        "labels": [
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.9545454545454546,
+          null
+        ],
+        "break_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.6515151515151515,
+          0.9545454545454546,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "datetime",
+      "mode": "descending",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        4,
+        1
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDatetime",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "time",
+        "mapped": [
+          null,
+          86400,
+          172800,
+          345600,
+          null
+        ],
+        "limits": [
+          86400,
+          345600
+        ],
+        "breaks": [
+          null,
+          86400,
+          172800,
+          259200,
+          345600,
+          null
+        ],
+        "labels": [
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.9545454545454546,
+          null
+        ],
+        "break_positions": [
+          null,
+          0.04545454545454546,
+          0.3484848484848485,
+          0.6515151515151515,
+          0.9545454545454546,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "datetime",
+      "mode": "lower_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        4
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDatetime",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "time",
+        "mapped": [
+          0,
+          86400,
+          172800,
+          345600,
+          null
+        ],
+        "limits": [
+          0,
+          345600
+        ],
+        "breaks": [
+          null,
+          0,
+          86400,
+          172800,
+          259200,
+          345600,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 01",
+          "Jan 02",
+          "Jan 03",
+          "Jan 04",
+          "Jan 05",
+          "Jan 06"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.9545454545454546,
+          null
+        ],
+        "break_positions": [
+          null,
+          0.04545454545454546,
+          0.2727272727272727,
+          0.5,
+          0.7272727272727273,
+          0.9545454545454546,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "datetime",
+      "mode": "both_missing",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        null,
+        null
+      ],
+      "result": {
+        "scale_class": [
+          "ScaleContinuousDatetime",
+          "ScaleContinuous",
+          "Scale",
+          "ggproto",
+          "gg"
+        ],
+        "transform": "time",
+        "mapped": [
+          0,
+          86400,
+          172800,
+          345600,
+          432000
+        ],
+        "limits": [
+          0,
+          432000
+        ],
+        "breaks": [
+          null,
+          86400,
+          259200,
+          432000,
+          null
+        ],
+        "labels": [
+          "Dec 31",
+          "Jan 02",
+          "Jan 04",
+          "Jan 06",
+          "Jan 08"
+        ],
+        "point_positions": [
+          0.04545454545454546,
+          0.2272727272727273,
+          0.4090909090909091,
+          0.7727272727272727,
+          0.9545454545454546
+        ],
+        "break_positions": [
+          null,
+          0.2272727272727273,
+          0.5909090909090909,
+          0.9545454545454546,
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "family": "datetime",
+      "mode": "single",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [
+        2
+      ],
+      "result": {
+        "error": "`y` must be a vector of length 2, not length 1."
+      }
+    },
+    {
+      "axis": "y",
+      "family": "datetime",
+      "mode": "empty",
+      "inputs": [
+        0,
+        1,
+        2,
+        4,
+        5
+      ],
+      "authored": [],
+      "result": {
+        "error": "`y` must be a vector of length 2, not length 0."
+      }
+    }
+  ],
+  "expansions": [
+    {
+      "family": "numeric",
+      "axes": "x",
+      "facet": "none",
+      "arguments": {
+        "x": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 2,
+        "panels": [
+          {
+            "x": [
+              -2,
+              10
+            ],
+            "y": [
+              2,
+              8
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "x",
+      "facet": "fixed",
+      "arguments": {
+        "x": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              -2,
+              10
+            ],
+            "y": [
+              2,
+              8
+            ]
+          },
+          {
+            "x": [
+              -2,
+              10
+            ],
+            "y": [
+              2,
+              8
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "x",
+      "facet": "free",
+      "arguments": {
+        "x": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              -2,
+              10
+            ],
+            "y": [
+              2,
+              4
+            ]
+          },
+          {
+            "x": [
+              -2,
+              10
+            ],
+            "y": [
+              6,
+              8
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "y",
+      "facet": "none",
+      "arguments": {
+        "y": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 2,
+        "panels": [
+          {
+            "x": [
+              1,
+              4
+            ],
+            "y": [
+              -2,
+              10
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "y",
+      "facet": "fixed",
+      "arguments": {
+        "y": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              1,
+              4
+            ],
+            "y": [
+              -2,
+              10
+            ]
+          },
+          {
+            "x": [
+              1,
+              4
+            ],
+            "y": [
+              -2,
+              10
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "y",
+      "facet": "free",
+      "arguments": {
+        "y": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              1,
+              2
+            ],
+            "y": [
+              -2,
+              10
+            ]
+          },
+          {
+            "x": [
+              3,
+              4
+            ],
+            "y": [
+              -2,
+              10
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "xy",
+      "facet": "none",
+      "arguments": {
+        "x": [
+          -2,
+          10
+        ],
+        "y": [
+          0
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 2,
+        "panels": [
+          {
+            "x": [
+              -2,
+              10
+            ],
+            "y": [
+              0,
+              8
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "xy",
+      "facet": "fixed",
+      "arguments": {
+        "x": [
+          -2,
+          10
+        ],
+        "y": [
+          0
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              -2,
+              10
+            ],
+            "y": [
+              0,
+              8
+            ]
+          },
+          {
+            "x": [
+              -2,
+              10
+            ],
+            "y": [
+              0,
+              8
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "xy",
+      "facet": "free",
+      "arguments": {
+        "x": [
+          -2,
+          10
+        ],
+        "y": [
+          0
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              -2,
+              10
+            ],
+            "y": [
+              0,
+              4
+            ]
+          },
+          {
+            "x": [
+              -2,
+              10
+            ],
+            "y": [
+              0,
+              8
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "colour",
+      "facet": "none",
+      "arguments": {
+        "colour": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [
+          -2.5,
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "colour_labels": [
+          "-2.5",
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 2,
+        "panels": [
+          {
+            "x": [
+              1,
+              4
+            ],
+            "y": [
+              2,
+              8
+            ]
+          }
+        ],
+        "trained_colour": [
+          -2,
+          10
+        ]
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "colour",
+      "facet": "fixed",
+      "arguments": {
+        "colour": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [
+          -2.5,
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "colour_labels": [
+          "-2.5",
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              1,
+              4
+            ],
+            "y": [
+              2,
+              8
+            ]
+          },
+          {
+            "x": [
+              1,
+              4
+            ],
+            "y": [
+              2,
+              8
+            ]
+          }
+        ],
+        "trained_colour": [
+          -2,
+          10
+        ]
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "colour",
+      "facet": "free",
+      "arguments": {
+        "colour": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [
+          -2.5,
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "colour_labels": [
+          "-2.5",
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              1,
+              2
+            ],
+            "y": [
+              2,
+              4
+            ]
+          },
+          {
+            "x": [
+              3,
+              4
+            ],
+            "y": [
+              6,
+              8
+            ]
+          }
+        ],
+        "trained_colour": [
+          -2,
+          10
+        ]
+      }
+    },
+    {
+      "family": "category",
+      "axes": "x",
+      "facet": "none",
+      "arguments": {
+        "x": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 2,
+        "panels": [
+          {
+            "x": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "category",
+      "axes": "x",
+      "facet": "fixed",
+      "arguments": {
+        "x": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          },
+          {
+            "x": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "category",
+      "axes": "x",
+      "facet": "free",
+      "arguments": {
+        "x": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          },
+          {
+            "x": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "category",
+      "axes": "y",
+      "facet": "none",
+      "arguments": {
+        "y": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 2,
+        "panels": [
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "category",
+      "axes": "y",
+      "facet": "fixed",
+      "arguments": {
+        "y": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ]
+          },
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "category",
+      "axes": "y",
+      "facet": "free",
+      "arguments": {
+        "y": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ]
+          },
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "category",
+      "axes": "xy",
+      "facet": "none",
+      "arguments": {
+        "x": [
+          "a",
+          "d"
+        ],
+        "y": [
+          "a"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 2,
+        "panels": [
+          {
+            "x": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "y": [
+              "a",
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "category",
+      "axes": "xy",
+      "facet": "fixed",
+      "arguments": {
+        "x": [
+          "a",
+          "d"
+        ],
+        "y": [
+          "a"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "y": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "x": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "y": [
+              "a",
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "category",
+      "axes": "xy",
+      "facet": "free",
+      "arguments": {
+        "x": [
+          "a",
+          "d"
+        ],
+        "y": [
+          "a"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [],
+        "colour_labels": [],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "y": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "x": [
+              "a",
+              "b",
+              "c",
+              "d"
+            ],
+            "y": [
+              "a",
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": []
+      }
+    },
+    {
+      "family": "category",
+      "axes": "colour",
+      "facet": "none",
+      "arguments": {
+        "colour": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [
+          "a",
+          "d"
+        ],
+        "colour_labels": [
+          "a",
+          "d"
+        ],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 2,
+        "panels": [
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": [
+          "a",
+          "d"
+        ]
+      }
+    },
+    {
+      "family": "category",
+      "axes": "colour",
+      "facet": "fixed",
+      "arguments": {
+        "colour": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [
+          "a",
+          "d"
+        ],
+        "colour_labels": [
+          "a",
+          "d"
+        ],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          },
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": [
+          "a",
+          "d"
+        ]
+      }
+    },
+    {
+      "family": "category",
+      "axes": "colour",
+      "facet": "free",
+      "arguments": {
+        "colour": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 0,
+        "colour_breaks": [
+          "a",
+          "d"
+        ],
+        "colour_labels": [
+          "a",
+          "d"
+        ],
+        "point_colours": [
+          "black",
+          "black",
+          "black",
+          "black"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          },
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": [
+          "a",
+          "d"
+        ]
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "colour_shared",
+      "facet": "none",
+      "arguments": {
+        "colour": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 1,
+        "colour_breaks": [
+          -2.5,
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "colour_labels": [
+          "-2.5",
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "point_colours": [
+          "#28547A",
+          "#336A98",
+          "#3E81B7",
+          "#4A99D6"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 2,
+        "panels": [
+          {
+            "x": [
+              1,
+              4
+            ],
+            "y": [
+              2,
+              8
+            ]
+          }
+        ],
+        "trained_colour": [
+          -2,
+          10
+        ]
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "colour_shared",
+      "facet": "fixed",
+      "arguments": {
+        "colour": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 1,
+        "colour_breaks": [
+          -2.5,
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "colour_labels": [
+          "-2.5",
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "point_colours": [
+          "#28547A",
+          "#336A98",
+          "#3E81B7",
+          "#4A99D6"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              1,
+              4
+            ],
+            "y": [
+              2,
+              8
+            ]
+          },
+          {
+            "x": [
+              1,
+              4
+            ],
+            "y": [
+              2,
+              8
+            ]
+          }
+        ],
+        "trained_colour": [
+          -2,
+          10
+        ]
+      }
+    },
+    {
+      "family": "numeric",
+      "axes": "colour_shared",
+      "facet": "free",
+      "arguments": {
+        "colour": [
+          -2,
+          10
+        ]
+      },
+      "result": {
+        "guide_boxes": 1,
+        "colour_breaks": [
+          -2.5,
+          0,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "colour_labels": [
+          "-2.5",
+          "0.0",
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ],
+        "point_colours": [
+          "#28547A",
+          "#336A98",
+          "#3E81B7",
+          "#4A99D6"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              1,
+              2
+            ],
+            "y": [
+              2,
+              4
+            ]
+          },
+          {
+            "x": [
+              3,
+              4
+            ],
+            "y": [
+              6,
+              8
+            ]
+          }
+        ],
+        "trained_colour": [
+          -2,
+          10
+        ]
+      }
+    },
+    {
+      "family": "category",
+      "axes": "colour_shared",
+      "facet": "none",
+      "arguments": {
+        "colour": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 1,
+        "colour_breaks": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "colour_labels": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "point_colours": [
+          "#7CAE00",
+          "#00BFC4",
+          "#7CAE00",
+          "#00BFC4"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 2,
+        "panels": [
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ]
+      }
+    },
+    {
+      "family": "category",
+      "axes": "colour_shared",
+      "facet": "fixed",
+      "arguments": {
+        "colour": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 1,
+        "colour_breaks": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "colour_labels": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "point_colours": [
+          "#7CAE00",
+          "#00BFC4",
+          "#7CAE00",
+          "#00BFC4"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          },
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ]
+      }
+    },
+    {
+      "family": "category",
+      "axes": "colour_shared",
+      "facet": "free",
+      "arguments": {
+        "colour": [
+          "a",
+          "d"
+        ]
+      },
+      "result": {
+        "guide_boxes": 1,
+        "colour_breaks": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "colour_labels": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "point_colours": [
+          "#7CAE00",
+          "#00BFC4",
+          "#7CAE00",
+          "#00BFC4"
+        ],
+        "blank": true,
+        "inherit": false,
+        "helper_rows": 2,
+        "painted_rows": 4,
+        "blank_rows": 4,
+        "panels": [
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          },
+          {
+            "x": [
+              "b",
+              "c"
+            ],
+            "y": [
+              "b",
+              "c"
+            ]
+          }
+        ],
+        "trained_colour": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ]
+      }
+    }
+  ]
+}

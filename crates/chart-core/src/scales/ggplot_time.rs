@@ -336,7 +336,7 @@ fn rounded_multiple(value: i128, alignment: i128) -> i128 {
 
 /// Uncropped fullseq boundaries for reference aesthetic guides. Calendar progression
 /// and integer lattices remain shared with positional width selection.
-pub(super) fn aesthetic_width(
+pub(crate) fn aesthetic_width(
     bounds: TimeBounds,
     unit: TimeUnit,
     calendar: &super::Calendar,
@@ -409,8 +409,14 @@ pub(super) fn aesthetic_width(
         ));
     }
     let base = CalendarInterval::new(kind);
-    let first = calendar.floor(exact(low)?, unit, base)?;
-    let last = calendar.floor(exact(upper)?, unit, base)?;
+    // R cuts to a wall-time label and parses it again. Repeated hours therefore
+    // resolve to the earlier instant, unlike elapsed-hour calendar flooring.
+    let floor = |value| {
+        let value = calendar.floor(value, unit, base)?;
+        calendar.from_components(calendar.components(value, unit)?, unit)
+    };
+    let first = floor(exact(low)?)?;
+    let last = floor(exact(upper)?)?;
     breaks_width_from(
         TimeBounds {
             start: first,

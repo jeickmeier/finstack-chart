@@ -21,6 +21,26 @@ pub(super) fn timestamp(value: f64, origin: i64) -> ChartResult<i64> {
     })
 }
 impl ResolvedAxis {
+    fn map_reference_coordinate(&self, value: f64, space: &ValueSpace) -> ChartResult<Option<f64>> {
+        if value.is_infinite() && space == &self.space {
+            let pair = match &self.scale {
+                ResolvedScale::Linear(s) => Some((s.viewport(), s.range())),
+                ResolvedScale::Nonlinear(s) => Some((s.transformed_viewport(), s.range())),
+                _ => None,
+            };
+            if let Some((viewport, range)) = pair {
+                return crate::scales::ggplot_coordinate_position(
+                    [
+                        crate::interpolate::Number(viewport.start()),
+                        crate::interpolate::Number(viewport.end()),
+                    ],
+                    range,
+                    value,
+                );
+            }
+        }
+        self.map(value, space)
+    }
     /// Map a prepared layer coordinate using that layer's exact value-space metadata.
     /// Category ordinals never become identities; UTC adds the checked integer origin first.
     pub fn map(&self, value: f64, layer_space: &ValueSpace) -> ChartResult<Option<f64>> {
@@ -85,7 +105,15 @@ impl ResolvedAxis {
                     representation,
                     origin,
                 },
-            ) if representation.unit == scale.unit() => scale.map(timestamp(value, *origin)?),
+            ) if representation.unit == scale.unit() => {
+                if let Some(time) = self.spec.resolved_temporal.as_deref()
+                    && *origin == scale.origin()
+                {
+                    scale.map_reference_relative(value, time.date)
+                } else {
+                    scale.map(timestamp(value, *origin)?)
+                }
+            }
             (ResolvedScale::Band(_) | ResolvedScale::Point(_), space) if space.is_categorical() => {
                 let category = space.category_value(value).ok_or_else(|| {
                     error(
@@ -176,77 +204,85 @@ pub(super) fn project(
         });
         for (mark_index, mark) in layer.marks().iter().enumerate() {
             let output_index = out.items.len();
-            let point = |p: Point, target: &Target, edge: f64| -> ChartResult<Option<Point>> {
-                let (Some(mut a), Some(mut b)) = (x.map(p.x(), xspace)?, y.map(p.y(), yspace)?)
-                else {
-                    return Ok(None);
-                };
-                match layer.position() {
-                    Position::Jitter(spec) if spec.units == JitterUnits::Display => {
-                        let (dx, dy) = crate::grammar::positions::jitter(
-                            spec,
-                            target,
-                            &Some(mark.group.clone()),
-                        );
-                        a += dx;
-                        b += dy;
-                    }
-                    Position::Dodge(spec) => {
-                        let horizontal =
-                            layer.orientation() == crate::grammar::Orientation::Horizontal;
-                        let (axis, space, value) = if horizontal {
-                            (&y.scale, yspace, p.y())
-                        } else {
-                            (&x.scale, xspace, p.x())
-                        };
-                        let category = space.category_value(value).ok_or_else(|| {
-                            error(
-                                DiagnosticCode::SchemaConflict,
-                                "Dodge requires checked categorical bands.",
-                            )
-                        })?;
-                        let bounds = match axis {
-                            ResolvedScale::Band(scale) => {
-                                if let crate::composition::ScaleValue::Category(label) = &category {
-                                    scale.extent(label)?
-                                } else {
-                                    None
-                                }
-                            }
-                            ResolvedScale::Provider(scale) => scale.band_extent(&category)?,
-                            _ => {
-                                return Err(error(
-                                    DiagnosticCode::SchemaConflict,
-                                    "Dodge requires resolved categorical bands.",
-                                ));
-                            }
-                        };
-                        let Some(bounds) = bounds else {
-                            return Ok(None);
-                        };
-                        let slot = spec
-                            .order
-                            .iter()
-                            .position(|g| g == &mark.group)
-                            .ok_or_else(|| {
+            let coordinates =
+                |px: f64, py: f64, target: &Target, edge: f64| -> ChartResult<Option<Point>> {
+                    let (Some(mut a), Some(mut b)) = (
+                        x.map_reference_coordinate(px, xspace)?,
+                        y.map_reference_coordinate(py, yspace)?,
+                    ) else {
+                        return Ok(None);
+                    };
+                    match layer.position() {
+                        Position::Jitter(spec) if spec.units == JitterUnits::Display => {
+                            let (dx, dy) = crate::grammar::positions::jitter(
+                                spec,
+                                target,
+                                &Some(mark.group.clone()),
+                            );
+                            a += dx;
+                            b += dy;
+                        }
+                        Position::Dodge(spec) => {
+                            let horizontal =
+                                layer.orientation() == crate::grammar::Orientation::Horizontal;
+                            let (axis, space, value) = if horizontal {
+                                (&y.scale, yspace, py)
+                            } else {
+                                (&x.scale, xspace, px)
+                            };
+                            let category = space.category_value(value).ok_or_else(|| {
                                 error(
-                                    DiagnosticCode::Validation,
-                                    "Dodge group is absent from its fixed order.",
+                                    DiagnosticCode::SchemaConflict,
+                                    "Dodge requires checked categorical bands.",
                                 )
                             })?;
-                        let width = (bounds.end() - bounds.start()) * spec.width;
-                        let offset =
-                            width * ((slot as f64 + 0.5 + edge) / spec.order.len() as f64 - 0.5);
-                        if horizontal {
-                            b += offset;
-                        } else {
-                            a += offset;
+                            let bounds = match axis {
+                                ResolvedScale::Band(scale) => {
+                                    if let crate::composition::ScaleValue::Category(label) =
+                                        &category
+                                    {
+                                        scale.extent(label)?
+                                    } else {
+                                        None
+                                    }
+                                }
+                                ResolvedScale::Provider(scale) => scale.band_extent(&category)?,
+                                _ => {
+                                    return Err(error(
+                                        DiagnosticCode::SchemaConflict,
+                                        "Dodge requires resolved categorical bands.",
+                                    ));
+                                }
+                            };
+                            let Some(bounds) = bounds else {
+                                return Ok(None);
+                            };
+                            let slot = spec
+                                .order
+                                .iter()
+                                .position(|g| g == &mark.group)
+                                .ok_or_else(|| {
+                                    error(
+                                        DiagnosticCode::Validation,
+                                        "Dodge group is absent from its fixed order.",
+                                    )
+                                })?;
+                            let width = (bounds.end() - bounds.start()) * spec.width;
+                            let offset = width
+                                * ((slot as f64 + 0.5 + edge) / spec.order.len() as f64 - 0.5);
+                            if horizontal {
+                                b += offset;
+                            } else {
+                                a += offset;
+                            }
                         }
+                        _ => {}
                     }
-                    _ => {}
-                }
-                Ok(Some(Point::new(a, b)?))
-            };
+                    Ok(Some(Point::new(a, b)?))
+                };
+
+            let point =
+                |p: Point, target: &Target, edge: f64| coordinates(p.x(), p.y(), target, edge);
 
             let mut style = mark.style;
             if let PreparedGeometry::ShapePath { paint, .. }
@@ -281,6 +317,13 @@ pub(super) fn project(
                             .is_some_and(|g| g.default_radius == Some(false))
                 })
             {
+                if matches!(
+                    mark.geometry,
+                    PreparedGeometry::Point(_) | PreparedGeometry::UnboundedPoint(_)
+                ) {
+                    style.radius =
+                        crate::grammar::reference_point_radius(style.radius, style.stroke_width);
+                }
                 // R's point stroke parameter is twice its physical outline width.
                 style.stroke_width *= 0.5;
                 if style.stroke_width == 0. {
@@ -679,17 +722,26 @@ pub(super) fn project(
                         out.omitted += 1;
                     }
                 }
-                PreparedGeometry::Point(p) => {
-                    if let Some(center) = point(*p, &mark.targets[0], 0.)? {
-                        out.push(
-                            item(Primitive::Point {
-                                center,
-                                radius: style.radius,
-                                fill: style.color,
-                            })?,
-                            mark.targets.clone(),
-                            request,
-                        )?;
+                PreparedGeometry::Point(_) | PreparedGeometry::UnboundedPoint(_) => {
+                    let [px, py] = match &mark.geometry {
+                        PreparedGeometry::Point(p) => [p.x(), p.y()],
+                        PreparedGeometry::UnboundedPoint(p) => [p[0].0, p[1].0],
+                        _ => unreachable!(),
+                    };
+                    if let Some(center) = coordinates(px, py, &mark.targets[0], 0.)? {
+                        // Empty reference glyphs retain their prepared row, just as
+                        // empty explicitly selected symbol paths do above.
+                        if style.radius > 0. {
+                            out.push(
+                                item(Primitive::Point {
+                                    center,
+                                    radius: style.radius,
+                                    fill: style.color,
+                                })?,
+                                mark.targets.clone(),
+                                request,
+                            )?;
+                        }
                     } else {
                         out.omitted += 1;
                     }

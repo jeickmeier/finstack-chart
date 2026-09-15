@@ -1,0 +1,10454 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#0000ff",
+            "#ff0000",
+            "#0000ff"
+          ],
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#0000ff",
+            "#ff0000",
+            "#0000ff"
+          ],
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#0000ff",
+            "#ff0000",
+            "#0000ff"
+          ],
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#0000ff",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#0000ff",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#0000ff",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#ff0000",
+            "#0000ff"
+          ],
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#ff0000",
+            "#0000ff"
+          ],
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#ff0000",
+            "#0000ff"
+          ],
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#0000ff",
+            "#0000ff",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#0000ff",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#0000ff",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#0000ff",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2.33333333333333,
+            3.66666666666667,
+            2.33333333333333,
+            5
+          ],
+          [
+            2.33333333333333,
+            3.66666666666667,
+            5,
+            2.33333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2.33333333333333,
+            3.66666666666667,
+            2.33333333333333,
+            5
+          ],
+          [
+            2.33333333333333,
+            3.66666666666667,
+            5,
+            2.33333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              2.6,
+              3.4,
+              4.2,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2.33333333333333,
+            3.66666666666667,
+            2.33333333333333,
+            5
+          ],
+          [
+            2.33333333333333,
+            3.66666666666667,
+            5,
+            2.33333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              2.33333333333333,
+              3.66666666666667,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2.2,
+            2.2,
+            2.2,
+            2.2
+          ],
+          [
+            2.2,
+            2.2,
+            2.2,
+            2.2
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2.2,
+            2.2,
+            2.2,
+            2.2
+          ],
+          [
+            2.2,
+            2.2,
+            2.2,
+            2.2
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              3,
+              3,
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2.2,
+            2.2,
+            2.2,
+            2.2
+          ],
+          [
+            2.2,
+            2.2,
+            2.2,
+            2.2
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              2.2,
+              2.2,
+              2.2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            5,
+            5,
+            5,
+            5
+          ],
+          [
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            5,
+            5,
+            5,
+            5
+          ],
+          [
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            5,
+            5,
+            5,
+            5
+          ],
+          [
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              5,
+              5,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2,
+            3,
+            4,
+            2,
+            5
+          ],
+          [
+            2,
+            3,
+            4,
+            5
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2,
+            3,
+            4,
+            2,
+            5
+          ],
+          [
+            2,
+            3,
+            4,
+            5
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              2.6,
+              3.4,
+              4.2,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2,
+            3,
+            4,
+            2,
+            5
+          ],
+          [
+            2,
+            3,
+            4,
+            5
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              2.33333333333333,
+              3.66666666666667,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ],
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ],
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              3,
+              3,
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ],
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              2.2,
+              2.2,
+              2.2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333,
+            2.33333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              5,
+              5,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            2.33333333333333,
+            3.66666666666667,
+            5,
+            2.33333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            2.33333333333333,
+            3.66666666666667,
+            5,
+            2.33333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              2.6,
+              3.4,
+              4.2,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            2.33333333333333,
+            3.66666666666667,
+            5,
+            2.33333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              2.33333333333333,
+              3.66666666666667,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            2.2,
+            2.2,
+            2.2,
+            2.2
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            2.2,
+            2.2,
+            2.2,
+            2.2
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              3,
+              3,
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            2.2,
+            2.2,
+            2.2,
+            2.2
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              2.2,
+              2.2,
+              2.2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            5,
+            5,
+            5,
+            5
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            5,
+            5,
+            5,
+            5
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            5,
+            5,
+            5,
+            5
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              5,
+              5,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.333333333333333,
+            0.666666666666667,
+            0.333333333333333,
+            1
+          ],
+          [
+            0.333333333333333,
+            0.666666666666667,
+            1,
+            0.333333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.333333333333333,
+            0.666666666666667,
+            0.333333333333333,
+            1
+          ],
+          [
+            0.333333333333333,
+            0.666666666666667,
+            1,
+            0.333333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.4,
+              0.6,
+              0.8,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.333333333333333,
+            0.666666666666667,
+            0.333333333333333,
+            1
+          ],
+          [
+            0.333333333333333,
+            0.666666666666667,
+            1,
+            0.333333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.3,
+            0.3,
+            0.3,
+            0.3
+          ],
+          [
+            0.3,
+            0.3,
+            0.3,
+            0.3
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.3,
+            0.3,
+            0.3,
+            0.3
+          ],
+          [
+            0.3,
+            0.3,
+            0.3,
+            0.3
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.3,
+            0.3,
+            0.3,
+            0.3
+          ],
+          [
+            0.3,
+            0.3,
+            0.3,
+            0.3
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.3,
+              0.3,
+              0.3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            1,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.25,
+            0.5,
+            0.75,
+            0.25,
+            1
+          ],
+          [
+            0.25,
+            0.5,
+            0.75,
+            1
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.25,
+            0.5,
+            0.75,
+            0.25,
+            1
+          ],
+          [
+            0.25,
+            0.5,
+            0.75,
+            1
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.4,
+              0.6,
+              0.8,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.25,
+            0.5,
+            0.75,
+            0.25,
+            1
+          ],
+          [
+            0.25,
+            0.5,
+            0.75,
+            1
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ],
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ],
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ],
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.3,
+              0.3,
+              0.3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            0.333333333333333,
+            null,
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          [
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333,
+            0.333333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.333333333333333,
+            0.666666666666667,
+            1,
+            0.333333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.333333333333333,
+            0.666666666666667,
+            1,
+            0.333333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.4,
+              0.6,
+              0.8,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.333333333333333,
+            0.666666666666667,
+            1,
+            0.333333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.333333333333333,
+              0.666666666666667,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.3,
+            0.3,
+            0.3,
+            0.3
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.3,
+            0.3,
+            0.3,
+            0.3
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.5,
+              0.5,
+              0.5,
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.3,
+            0.3,
+            0.3,
+            0.3
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.3,
+              0.3,
+              0.3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            1,
+            1,
+            1,
+            1
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0.166666666666667,
+            0.444444444444444,
+            0.722222222222222,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            1,
+            1,
+            1,
+            1
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            1,
+            0,
+            0.333333333333333
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            0.333333333333333,
+            0
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            1,
+            1,
+            1,
+            1
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1,
+              1,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#0000ff",
+            "#ff0000",
+            "#0000ff",
+            "#0000ff"
+          ],
+          [
+            "#0000ff",
+            "#0000ff",
+            "#ff0000",
+            "#0000ff"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#0000ff",
+            "#ff0000",
+            "#0000ff",
+            "#0000ff"
+          ],
+          [
+            "#0000ff",
+            "#0000ff",
+            "#ff0000",
+            "#0000ff"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#0000ff",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ],
+          [
+            "#0000ff",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            "#0000ff",
+            "#ff0000",
+            null,
+            "#0000ff"
+          ],
+          [
+            "#0000ff",
+            null,
+            "#ff0000",
+            "#0000ff"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            "#0000ff",
+            "#ff0000",
+            null,
+            "#0000ff"
+          ],
+          [
+            "#0000ff",
+            null,
+            "#ff0000",
+            "#0000ff"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            "#0000ff",
+            "#0000ff",
+            null,
+            "#0000ff"
+          ],
+          [
+            "#0000ff",
+            null,
+            "#0000ff",
+            "#0000ff"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            "#ff0000",
+            "#ff0000",
+            null,
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            null,
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            "#ff0000",
+            "#ff0000",
+            null,
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            null,
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            "#ff0000",
+            "#ff0000",
+            null,
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            null,
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            "#ff0000",
+            "#ff0000",
+            null,
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            null,
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            "#ff0000",
+            "#ff0000",
+            null,
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            null,
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            "#ff0000",
+            "#ff0000",
+            null,
+            "#ff0000"
+          ],
+          [
+            "#ff0000",
+            null,
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#0000ff",
+            "#0000ff",
+            "#ff0000",
+            "#0000ff"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#0000ff",
+            "#0000ff",
+            "#ff0000",
+            "#0000ff"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#0000ff",
+            "#0000ff",
+            "#0000ff",
+            "#0000ff"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            "#ff0000",
+            "#ff0000",
+            "#ff0000",
+            "#ff0000"
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            5,
+            2,
+            5,
+            3
+          ],
+          [
+            3,
+            5,
+            2,
+            3
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            5,
+            2,
+            5,
+            3
+          ],
+          [
+            3,
+            5,
+            2,
+            3
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            5,
+            3,
+            5,
+            3
+          ],
+          [
+            3,
+            5,
+            3,
+            3
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              5,
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ],
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ],
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              2.6,
+              2.6,
+              2.6,
+              2.6
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            1.8,
+            1.8,
+            1.8,
+            1.8
+          ],
+          [
+            1.8,
+            1.8,
+            1.8,
+            1.8
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1.8,
+              1.8,
+              1.8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333
+          ],
+          [
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333
+          ],
+          [
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              1.33333333333333,
+              1.33333333333333,
+              1.33333333333333,
+              1.33333333333333
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            1.66666666666667,
+            1.66666666666667,
+            1.66666666666667,
+            1.66666666666667
+          ],
+          [
+            1.66666666666667,
+            1.66666666666667,
+            1.66666666666667,
+            1.66666666666667
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1.66666666666667,
+              1.66666666666667,
+              1.66666666666667
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            5,
+            2,
+            null,
+            3
+          ],
+          [
+            3,
+            null,
+            2,
+            5
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            5,
+            2,
+            null,
+            3
+          ],
+          [
+            3,
+            null,
+            2,
+            5
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            5,
+            3,
+            null,
+            3
+          ],
+          [
+            3,
+            null,
+            3,
+            5
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              5,
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            2.6,
+            2.6,
+            null,
+            2.6
+          ],
+          [
+            2.6,
+            null,
+            2.6,
+            2.6
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            2.6,
+            2.6,
+            null,
+            2.6
+          ],
+          [
+            2.6,
+            null,
+            2.6,
+            2.6
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              2.6,
+              2.6,
+              2.6,
+              2.6
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            1.8,
+            1.8,
+            null,
+            1.8
+          ],
+          [
+            1.8,
+            null,
+            1.8,
+            1.8
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1.8,
+              1.8,
+              1.8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            1.33333333333333,
+            1.33333333333333,
+            null,
+            1.33333333333333
+          ],
+          [
+            1.33333333333333,
+            null,
+            1.33333333333333,
+            1.33333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            1.33333333333333,
+            1.33333333333333,
+            null,
+            1.33333333333333
+          ],
+          [
+            1.33333333333333,
+            null,
+            1.33333333333333,
+            1.33333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              1.33333333333333,
+              1.33333333333333,
+              1.33333333333333,
+              1.33333333333333
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            1.66666666666667,
+            1.66666666666667,
+            null,
+            1.66666666666667
+          ],
+          [
+            1.66666666666667,
+            null,
+            1.66666666666667,
+            1.66666666666667
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1.66666666666667,
+              1.66666666666667,
+              1.66666666666667
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            5,
+            3,
+            2,
+            5
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            5,
+            3,
+            2,
+            5
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              2,
+              3,
+              4,
+              5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            5,
+            3,
+            3,
+            5
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              5,
+              3,
+              3
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            2.6,
+            2.6,
+            2.6,
+            2.6
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              2.6,
+              2.6,
+              2.6,
+              2.6
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            1.8,
+            1.8,
+            1.8,
+            1.8
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1.8,
+              1.8,
+              1.8
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333,
+            1.33333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              1.33333333333333,
+              1.33333333333333,
+              1.33333333333333,
+              1.33333333333333
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            1.66666666666667,
+            1.66666666666667,
+            1.66666666666667,
+            1.66666666666667
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1.66666666666667,
+              1.66666666666667,
+              1.66666666666667
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            1,
+            0.25,
+            1,
+            0.5
+          ],
+          [
+            0.5,
+            1,
+            0.25,
+            0.5
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            1,
+            0.25,
+            1,
+            0.5
+          ],
+          [
+            0.5,
+            1,
+            0.25,
+            0.5
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.25,
+              0.5,
+              0.75,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            1,
+            0.5,
+            1,
+            0.5
+          ],
+          [
+            0.5,
+            1,
+            0.5,
+            0.5
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1,
+              0.5,
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ],
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ],
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.4,
+              0.4,
+              0.4,
+              0.4
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333
+          ],
+          [
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333
+          ],
+          [
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.0833333333333333,
+              0.0833333333333333,
+              0.0833333333333333,
+              0.0833333333333333
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "repeated",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          10,
+          1,
+          10,
+          4
+        ],
+        [
+          4,
+          10,
+          1,
+          4
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            0.166666666666667,
+            0.166666666666667,
+            0.166666666666667,
+            0.166666666666667
+          ],
+          [
+            0.166666666666667,
+            0.166666666666667,
+            0.166666666666667,
+            0.166666666666667
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.166666666666667,
+              0.166666666666667,
+              0.166666666666667
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            1,
+            0.25,
+            null,
+            0.5
+          ],
+          [
+            0.5,
+            null,
+            0.25,
+            1
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            1,
+            0.25,
+            null,
+            0.5
+          ],
+          [
+            0.5,
+            null,
+            0.25,
+            1
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.25,
+              0.5,
+              0.75,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            1,
+            0.5,
+            null,
+            0.5
+          ],
+          [
+            0.5,
+            null,
+            0.5,
+            1
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1,
+              0.5,
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            0.4,
+            0.4,
+            null,
+            0.4
+          ],
+          [
+            0.4,
+            null,
+            0.4,
+            0.4
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            0.4,
+            0.4,
+            null,
+            0.4
+          ],
+          [
+            0.4,
+            null,
+            0.4,
+            0.4
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.4,
+              0.4,
+              0.4,
+              0.4
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            0.2,
+            0.2,
+            null,
+            0.2
+          ],
+          [
+            0.2,
+            null,
+            0.2,
+            0.2
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            0.0833333333333333,
+            0.0833333333333333,
+            null,
+            0.0833333333333333
+          ],
+          [
+            0.0833333333333333,
+            null,
+            0.0833333333333333,
+            0.0833333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            0.0833333333333333,
+            0.0833333333333333,
+            null,
+            0.0833333333333333
+          ],
+          [
+            0.0833333333333333,
+            null,
+            0.0833333333333333,
+            0.0833333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.0833333333333333,
+              0.0833333333333333,
+              0.0833333333333333,
+              0.0833333333333333
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [
+          null,
+          10,
+          1,
+          null,
+          4
+        ],
+        [
+          4,
+          null,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [
+            null,
+            0.166666666666667,
+            0.166666666666667,
+            null,
+            0.166666666666667
+          ],
+          [
+            0.166666666666667,
+            null,
+            0.166666666666667,
+            0.166666666666667
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.166666666666667,
+              0.166666666666667,
+              0.166666666666667
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            1,
+            0.5,
+            0.25,
+            1
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            1,
+            0.5,
+            0.25,
+            1
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.25,
+              0.5,
+              0.75,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "index",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            1,
+            0.5,
+            0.5,
+            1
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              1,
+              0.5,
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.4,
+            0.4,
+            0.4,
+            0.4
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.4,
+              0.4,
+              0.4,
+              0.4
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "length",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.2,
+              0.2,
+              0.2
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "hidden",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333
+          ]
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "automatic",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.0833333333333333,
+            0.305555555555556,
+            0.583333333333333,
+            0.861111111111111
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333,
+            0.0833333333333333
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.0833333333333333,
+              0.0833333333333333,
+              0.0833333333333333,
+              0.0833333333333333
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "empty_first",
+      "mode": "first",
+      "guide_mode": "restricted",
+      "inputs": [
+        [],
+        [
+          10,
+          4,
+          1,
+          10
+        ]
+      ],
+      "calls": [
+        {
+          "values": [
+            0.166666666666667,
+            0.666666666666667
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          [],
+          [
+            0.166666666666667,
+            0.166666666666667,
+            0.166666666666667,
+            0.166666666666667
+          ]
+        ],
+        "keys": [
+          {
+            "values": [
+              10,
+              1,
+              4
+            ],
+            "labels": [
+              "10",
+              "1",
+              "4"
+            ],
+            "mapped": [
+              0.166666666666667,
+              0.166666666666667,
+              0.166666666666667
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,2037 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFB299",
+          "#FFD9CB",
+          "#E3D0FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFAC93",
+          "#FFBAA4",
+          "#FFD6C8",
+          "#BF9BFF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#BF9BFF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFFFFF",
+          "#ECDDFF",
+          "#BF9BFF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#E0CBFF",
+          "#F0E5FF",
+          "#FFEAE2",
+          "#FF0000"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "grey50",
+          "#FF0000"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF5B3A",
+          "#FFB299",
+          "#FFB299",
+          "#FFFFFF",
+          "#7145FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF6846",
+          "grey50",
+          "#7E52FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF704F",
+          "#FFAC93",
+          "#FFAC93",
+          "#FFC8B6",
+          "#ECDDFF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF7857",
+          "grey50",
+          "#F1E6FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF7B5A",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#D7BCFF",
+          "#5F37FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF8D6D",
+          "grey50",
+          "#6B40FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#9265FF",
+          "#E0CBFF",
+          "#E0CBFF",
+          "#FFFFFF",
+          "#FF7B5A"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#A378FF",
+          "grey50",
+          "#FF8D6D"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#3C8BC3",
+          "#549DCC",
+          "#8BBFDD",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#3A88C1",
+          "#4090C5",
+          "#529CCC",
+          "#AACFE5"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#AACFE5"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#6BAED6",
+          "#82BADB",
+          "#AACFE5",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#EFF3FF",
+          "#8EC1DD",
+          "#7DB7DA",
+          "#5EA5D1",
+          "#084594"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#EFF3FF",
+          "grey50",
+          "#084594"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#3B5E8B",
+          "#2A788E",
+          "#22A884",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#3C5B8A",
+          "#38648B",
+          "#2C768E",
+          "#5FBF69"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#5FBF69"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#2B9089",
+          "#26A186",
+          "#5FBF69",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725",
+          "#2CAA82",
+          "#289D87",
+          "#2B828C",
+          "#440154"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725",
+          "grey50",
+          "#440154"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFB299",
+          "#FFD9CB",
+          "#E3D0FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFAC93",
+          "#FFBAA4",
+          "#FFD6C8",
+          "#BF9BFF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#BF9BFF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFFFFF",
+          "#ECDDFF",
+          "#BF9BFF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#E0CBFF",
+          "#F0E5FF",
+          "#FFEAE2",
+          "#FF0000"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "grey50",
+          "#FF0000"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF5B3A",
+          "#FFB299",
+          "#FFB299",
+          "#FFFFFF",
+          "#7145FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF6846",
+          "grey50",
+          "#7E52FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF704F",
+          "#FFAC93",
+          "#FFAC93",
+          "#FFC8B6",
+          "#ECDDFF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF7857",
+          "grey50",
+          "#F1E6FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF7B5A",
+          "#FFFFFF",
+          "#FFFFFF",
+          "#D7BCFF",
+          "#5F37FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF8D6D",
+          "grey50",
+          "#6B40FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#9265FF",
+          "#E0CBFF",
+          "#E0CBFF",
+          "#FFFFFF",
+          "#FF7B5A"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#A378FF",
+          "grey50",
+          "#FF8D6D"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#3C8BC3",
+          "#549DCC",
+          "#8BBFDD",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#3A88C1",
+          "#4090C5",
+          "#529CCC",
+          "#AACFE5"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#AACFE5"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#6BAED6",
+          "#82BADB",
+          "#AACFE5",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#EFF3FF",
+          "#8EC1DD",
+          "#7DB7DA",
+          "#5EA5D1",
+          "#084594"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#EFF3FF",
+          "grey50",
+          "#084594"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#3B5E8B",
+          "#2A788E",
+          "#22A884",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "short",
+      "args": {
+        "values": [0, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#3C5B8A",
+          "#38648B",
+          "#2C768E",
+          "#5FBF69"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#5FBF69"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "long",
+      "args": {
+        "values": [0, 0.10000000000000001, 0.29999999999999999, 0.69999999999999996, 0.90000000000000002, 1, 1.2, 1.3999999999999999]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#2B9089",
+          "#26A186",
+          "#5FBF69",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "duplicate",
+      "args": {
+        "values": [0, 0.29999999999999999, 0.29999999999999999, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725",
+          "#2CAA82",
+          "#289D87",
+          "#2B828C",
+          "#440154"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725",
+          "grey50",
+          "#440154"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "descending",
+      "args": {
+        "values": [1, 0.80000000000000004, 0.20000000000000001, 0]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    }
+  ]
+}

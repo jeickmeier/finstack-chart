@@ -17,7 +17,7 @@ pub enum ScaleCompatibility {
     D3,
 }
 /// Numeric domain or radius transformation. Sqrt is power with exponent 0.5.
-#[derive(Clone, Copy, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub enum NumericFamily {
     /// Affine or piecewise numeric interpolation.
@@ -37,10 +37,29 @@ pub enum NumericFamily {
         /// Finite transition constant; singular operations diagnose individually.
         constant: f64,
     },
+    /// Built-in reference transform shared with positional scales.
+    Ggplot {
+        /// Owned transformation and parameters.
+        transform: super::GgplotTransform,
+    },
     /// Identity mapping; domain and range are the same metadata.
     Identity,
     /// Interpolate signed squared radii and take the signed square root afterwards.
     Radial,
+}
+impl NumericFamily {
+    pub(crate) fn ggplot_transform_mut(&mut self) -> Option<&mut super::GgplotTransform> {
+        match self {
+            Self::Ggplot { transform } => Some(transform),
+            _ => None,
+        }
+    }
+    pub(crate) fn ggplot_transform(&self) -> Option<&super::GgplotTransform> {
+        match self {
+            Self::Ggplot { transform } => Some(transform),
+            _ => None,
+        }
+    }
 }
 /// Immutable portable numeric scale configuration. No destination or host objects.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -66,7 +85,7 @@ impl NumericScaleSpec {
     pub fn d3(family: NumericFamily) -> Self {
         Self {
             compatibility: ScaleCompatibility::D3,
-            family,
+            family: family.clone(),
             domain: if matches!(family, NumericFamily::Log { .. }) {
                 vec![1.0.into(), 10.0.into()]
             } else {
@@ -180,6 +199,9 @@ impl NumericScale {
             ));
         }
         spec.unknown.validate()?;
+        if let NumericFamily::Ggplot { ref transform } = spec.family {
+            transform.validate()?;
+        }
         let parameter = match spec.family {
             NumericFamily::Pow { exponent } => exponent,
             NumericFamily::Log { base } => base,
@@ -226,7 +248,7 @@ impl NumericScale {
         let negative_log = domain.first().is_some_and(|x| *x < 0.);
         let transformed: Vec<_> = domain
             .iter()
-            .map(|x| transform(spec.family, negative_log, *x, false))
+            .map(|x| transform(&spec.family, negative_log, *x, false))
             .collect();
         let range: Vec<_> = spec
             .range
@@ -386,7 +408,7 @@ impl NumericScale {
         }
         let mut value =
             self.forward
-                .sample(transform(self.spec.family, self.negative_log, x, false))?;
+                .sample(transform(&self.spec.family, self.negative_log, x, false))?;
         if matches!(self.spec.family, NumericFamily::Radial) {
             value = unsquare(value);
             if value.is_nan() {
@@ -431,6 +453,17 @@ impl NumericScale {
         self.inverse_value(value, false)
     }
     fn inverse_value(&self, value: f64, clamp: bool) -> ChartResult<f64> {
+        if let Some(transform) = self.spec.family.ggplot_transform()
+            && transform.has_registered()
+            && !self
+                .effective_domain
+                .is_some_and(|(a, b)| transform.monotone_on(&[a, b]))
+        {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Registered transform has no declared finite one-to-one inverse on this domain.",
+            ));
+        }
         if matches!(self.spec.family, NumericFamily::Identity) {
             return Ok(value);
         }
@@ -445,7 +478,7 @@ impl NumericScale {
             value
         };
         let value = transform(
-            self.spec.family,
+            &self.spec.family,
             self.negative_log,
             self.inverse.sample(value)?,
             true,
@@ -462,30 +495,54 @@ impl NumericScale {
     }
     /// Strict standalone version-one descriptor.
     pub fn to_json(&self) -> ChartResult<String> {
+        if let Some(transform) = self.spec.family.ggplot_transform() {
+            transform.validate_portable()?;
+        }
         serde_json::to_string(&WireRef {
-            version: 1,
+            version: numeric_wire_version(&self.spec),
             spec: &self.spec,
         })
         .map_err(|e| error(DiagnosticCode::Validation, e.to_string()))
     }
     /// Decode and prepare a bounded descriptor before exposing any usable scale.
     pub fn from_json(text: &str) -> ChartResult<Self> {
+        Self::from_json_with_registry(text, &crate::grammar::ExtensionRegistry::new())
+    }
+    /// Decode with explicitly installed portable transform versions.
+    pub fn from_json_with_registry(
+        text: &str,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Self> {
         if text.len() > crate::interpolate::MAX_VALUE_BYTES {
             return Err(error(
                 DiagnosticCode::ResourceLimit,
                 "Scale descriptor exceeds its byte budget.",
             ));
         }
-        let wire: Wire = serde_json::from_str(text)
+        let mut wire: Wire = serde_json::from_str(text)
             .map_err(|e| error(DiagnosticCode::Validation, e.to_string()))?;
-        if wire.version != 1 {
+        if wire.version != numeric_wire_version(&wire.spec) {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,
                 "Unsupported numeric scale descriptor version.",
             ));
         }
+        if let NumericFamily::Ggplot { transform } = &mut wire.spec.family {
+            transform.resolve_registrations(&registry.transforms_function, true)?;
+        }
         Self::new(wire.spec)
     }
+}
+fn numeric_wire_version(spec: &NumericScaleSpec) -> u32 {
+    spec.family.ggplot_transform().map_or(1, |t| {
+        if t.has_registered() {
+            4
+        } else if matches!(t, super::GgplotTransform::Compose { .. }) {
+            3
+        } else {
+            2
+        }
+    })
 }
 #[derive(Serialize)]
 struct WireRef<'a> {
@@ -519,8 +576,15 @@ fn power(x: f64, p: f64) -> f64 {
         crate::number::ecma_pow(x, p)
     }
 }
-pub(super) fn transform(family: NumericFamily, negative: bool, x: f64, inverse: bool) -> f64 {
-    match family {
+pub(super) fn transform(family: &NumericFamily, negative: bool, x: f64, inverse: bool) -> f64 {
+    match *family {
+        NumericFamily::Ggplot { ref transform } => {
+            if inverse {
+                transform.inverse(x)
+            } else {
+                transform.forward(x)
+            }
+        }
         NumericFamily::Pow { exponent } => {
             if inverse && exponent == 0.5 {
                 if x < 0. { -x * x } else { x * x }
@@ -622,7 +686,7 @@ impl NumericAxisScale {
     }
     /// Family used for data-space tick generation and formatting.
     pub fn family(&self) -> NumericFamily {
-        self.mapping.spec.family
+        self.mapping.spec.family.clone()
     }
     /// Visible data endpoints; original interior knots remain in the mapping.
     pub fn viewport(&self) -> Bounds {
@@ -695,7 +759,7 @@ impl NumericAxisScale {
     pub fn ticks(&self, target: usize, max_ticks: usize) -> ChartResult<Vec<super::NumericTick>> {
         if self.mapping.spec.compatibility == ScaleCompatibility::D3 {
             let domain = [Number(self.view.start()), Number(self.view.end())];
-            let family = self.mapping.spec.family;
+            let family = &self.mapping.spec.family;
             let format = family.tick_format(&domain, target as f64, None, Default::default())?;
             return family
                 .ticks(&domain, target as f64, max_ticks)

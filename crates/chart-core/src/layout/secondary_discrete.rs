@@ -4,7 +4,15 @@ use crate::scales::error;
 use crate::{ChartResult, DiagnosticCode, composition::ScaleValue, grammar::PreparedChart};
 
 pub(super) fn viewport(primary: &ResolvedAxis) -> ChartResult<crate::scales::Bounds> {
-    let view = match &primary.scale {
+    let view = reference_viewport(primary)?;
+    crate::scales::Bounds::new(view[0].0, view[1].0)?.distinct()
+}
+
+/// Shared primary category bounds; constant ranges remain valid for minor callbacks.
+pub(super) fn reference_viewport(
+    primary: &ResolvedAxis,
+) -> ChartResult<[crate::interpolate::Number; 2]> {
+    match &primary.scale {
         ResolvedScale::Band(s) => s.reference_viewport(),
         ResolvedScale::Point(s) => s.reference_viewport(),
         ResolvedScale::Provider(s) => s.category_viewport(),
@@ -15,11 +23,10 @@ pub(super) fn viewport(primary: &ResolvedAxis) -> ChartResult<crate::scales::Bou
             DiagnosticCode::UnsupportedCapability,
             "Discrete secondary axes require reference category spacing.",
         )
-    })?;
-    crate::scales::Bounds::new(view[0].0, view[1].0)?.distinct()
+    })
 }
 
-fn coordinate(primary: &ResolvedAxis, value: &ScaleValue) -> ChartResult<Option<f64>> {
+pub(super) fn coordinate(primary: &ResolvedAxis, value: &ScaleValue) -> ChartResult<Option<f64>> {
     let domain = match &primary.scale {
         ResolvedScale::Band(s) => s.domain(),
         ResolvedScale::Point(s) => s.domain(),

@@ -1,0 +1,39 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'../..'),c=require(path.resolve(process.argv[2],'authoring.cjs')),out=path.resolve(process.argv[3]);fs.mkdirSync(out,{recursive:true});
+const shared=process.argv.includes('--shared');
+const registry=c.ExtensionRegistry.example(),records=[],output=new c.Output(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))),options=c.export_options(640,360).dpi(96).basis('current'),cases=[];
+for(const [file,summary] of [['positional-pipeline-functions',false],['positional-pipeline-domains',false],['positional-pipeline-statistics',true]])for(const t of JSON.parse(fs.readFileSync(path.join(root,`fixtures/parity/ggplot2/${file}.json`))).cases)cases.push({...t,summary,axis:t.axis??'y',limit_mode:t.limit_mode??'full'});
+if(shared)cases.splice(0,cases.length,...cases.filter(t=>t.summary));
+function dataFor(t){return c.Data.columns({v:c.column(t.inputs.map(v=>v==='Infinity'?Infinity:v==='-Infinity'?-Infinity:v),{kind:'float64'}).nullable(true),i:c.column((t.groups??t.inputs.map((_,i)=>i+1)).map(BigInt),{kind:'int64'})});}
+function layer(t){const p=c.points().name('marks');if(shared)return p.from_transform('mean').after_stat(c.stat_aes().x(1).y('Mean'));return t.summary?p.stat(c.summary().x('v').group('i')).after_stat(c.stat_aes().x(1).y('Mean')):p;}
+function build(t,d){let scale={identity:c.scale_linear,reverse:c.scale_reverse,log10:()=>c.scale_log(10)}[t.transform]();if(t.limit_mode!=='automatic')scale=t.limit_mode==='constant'?scale.domain(4,4):scale.domain(1,10);const axis=(t.axis==='x'?c.x_axis():c.y_axis()).scale(scale).guide_geometry({labels:'Preserve'}).oob_function({operation:{id:t.operation??'example.scale_vector',version:'1'},parameters:{mode:t.mode==='default'?'default':'oob_'+t.mode}});let draft=c.plot(d).with_registry(registry).profile('Ggplot2_4_0_3').layer(layer(t)).aes(c.aes().x(t.axis==='x'?'v':'i').y(t.axis==='x'?'i':'v'));if(shared)draft=draft.transform(c.transform('mean',c.summary().x('v').group('i'))).transform(c.transform('copy',c.identity_stat()).from_transform('mean')).layer(c.points().name('copy').from_transform('copy').after_stat(c.stat_aes().x(2).y('Mean')));return (t.axis==='x'?draft.x_axis(axis):draft.y_axis(axis)).build();}
+const scalar=v=>v&&typeof v==='object'?v.number:v;
+function compare(a,b){if(typeof a==='number'&&typeof b==='number')assert.ok(Math.abs(a-b)<5e-14,`${a} != ${b}`);else if(Array.isArray(a)&&Array.isArray(b)){assert.equal(a.length,b.length);a.forEach((v,i)=>compare(v,b[i]));}else assert.deepEqual(a,b);}
+function check(t,chart,frame){const state=chart.semantics().layers[0],positions=state.point_positions,dim=t.axis==='x'?0:1;compare(positions.map(p=>scalar(p[dim])),t.result.mapped.filter(v=>v!==null));if(!t.summary)compare(positions.map(p=>scalar(p[1-dim])),t.result.mapped.flatMap((v,i)=>v===null?[]:[i+1]));const ticks=frame.guides().guides.find(g=>g.spec.side===(dim===0?'Bottom':'Left')).ticks,expected=t.result.breaks.flatMap((v,i)=>typeof v==='number'?[[v,t.result.labels[i]]]:[]);compare(ticks.map(t=>t.label),expected.map(([,label])=>label??''));compare(ticks.map(t=>t.value.Number).map(v=>t.transform==='reverse'?-v:t.transform==='log10'?Math.log10(v):v),expected.map(([v])=>v));const result={positions,ticks,domains:state.domains};if(shared){const layers=chart.semantics().layers;assert.equal(layers.length,2);layers.forEach((other,i)=>{compare(other.point_positions.map(p=>scalar(p[1])),t.result.mapped.filter(v=>v!==null));compare(other.point_positions.map(p=>scalar(p[0])),positions.map(()=>i+1));});result.layers=layers.map(other=>({positions:other.point_positions,domains:other.domains,operations:other.operations.map(op=>({operation:op.operation,counts:op.counts}))}));}return result;}
+for(const [index,t] of cases.entries()){
+ const owned=[];
+ try{
+  const d=dataFor(t);owned.push(d);const p=build(t,d);owned.push(p);const wire=p.to_json();assert.equal(JSON.parse(wire).version,40);const restored=c.Plot.from_json(wire,registry);owned.push(restored);assert.equal(restored.to_json(),wire);
+  for(const state of ['original','edited']){const current=state==='original'?restored:restored.edit().layer('marks',layer(t)).build();if(current!==restored)owned.push(current);const chart=current.chart();owned.push(chart);const request=output.request(current,options);owned.push(request);const frame=request.prepare();owned.push(frame);assert.ok(!t.result.error,JSON.stringify(t));records.push({index,state,...check(t,chart,frame)});
+   const sample=t.population==='ordinary'&&((!t.summary&&t.axis==='x'&&((['automatic','full'].includes(t.limit_mode)&&t.mode==='index')||(t.limit_mode==='constant'&&t.mode==='default')))||(t.summary&&(shared||t.transform==='identity')&&['default','reverse','index'].includes(t.mode)));
+   if(state==='original'&&sample)for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`${t.summary?'summary':'point'}-${t.transform}-${t.limit_mode}-${t.mode}.${fmt}`),frame.export(fmt));
+  }
+ }catch(error){assert.ok(error instanceof c.ChartError&&t.result.error,`${index}: ${error.stack}`);assert.equal(error.code,'CHART_SCHEMA_CONFLICT');records.push({index,error:error.code});}
+ finally{for(const obj of owned.reverse())obj.dispose();}
+}
+assert.equal(records.length,shared?96:720);
+for(const axis of (shared?['y']:['x','y']))for(const limit_mode of (shared?['full']:['automatic','full'])){
+ const selected=Object.fromEntries(cases.filter(t=>t.summary===shared&&t.axis===axis&&t.limit_mode===limit_mode&&t.transform==='identity'&&t.mode==='index').map(t=>[t.population,t])),owned=[];
+ try{
+  const original=dataFor(selected.ordinary);owned.push(original);const p=build(selected.ordinary,original);owned.push(p);const chart=p.chart();owned.push(chart);const wire=p.to_json(),request=output.request(p,options);owned.push(request);const held=request.prepare();owned.push(held);const scene=held.scene();
+  for(const population of ['missing','empty']){const t=selected[population],replacement=dataFor(t);owned.push(replacement);const tx=chart.transaction();owned.push(tx);const builder=tx.replace(original,replacement);owned.push(builder);const update=builder.build();owned.push(update);assert.ok('Applied' in chart.commit(update));const fresh=build(t,replacement);owned.push(fresh);const batch=fresh.chart();owned.push(batch);const ar=output.request(chart,options);owned.push(ar);const af=ar.prepare();owned.push(af);const br=output.request(batch,options);owned.push(br);const bf=br.prepare();owned.push(bf);const actual=check(t,chart,af);assert.deepEqual(actual,check(t,batch,bf));assert.equal(p.to_json(),wire);assert.deepEqual(held.scene(),scene);records.push({axis,limit_mode,replacement:population,...actual});}
+ }finally{for(const obj of owned.reverse())obj.dispose();}
+}
+for(const variant of ['missing_registration','native_only','invalid_parameters','downgrade']){
+ const t=structuredClone(cases[0]),owned=[];if(variant==='missing_registration')t.operation='example.missing_vector';if(variant==='native_only')t.operation='example.native_scale_vector';if(variant==='invalid_parameters')t.mode='invalid';
+ try{const d=dataFor(t);owned.push(d);const p=build(t,d);owned.push(p);let wire=p.to_json();if(variant==='downgrade'){wire=JSON.parse(wire);wire.version=39;const restored=c.Plot.from_json(JSON.stringify(wire),registry);owned.push(restored);}assert.fail('expected rejection: '+variant);}
+ catch(error){assert.ok(error instanceof c.ChartError,error.stack);records.push({rejection:variant,code:error.code});}
+ finally{for(const obj of owned.reverse())obj.dispose();}
+}
+assert.equal(records.length,shared?102:732);fs.writeFileSync(path.join(out,'records.json'),JSON.stringify(records));output.dispose();options.dispose();registry.dispose();console.log('PASS',records.length,'positional vector host states');

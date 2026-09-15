@@ -69,6 +69,8 @@ pub struct GuideSnapshot {
 /// major labels and does not change scale training or mark coordinates.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub enum MinorBreaks {
+    /// Select minor values with an installed pure reference break operation.
+    Registered(crate::grammar::ScaleBreaksOperation),
     /// Subdivide the reference major intervals in transformed coordinates.
     Automatic,
     /// Select no minor breaks.

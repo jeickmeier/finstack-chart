@@ -1,0 +1,3899 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          1,
+          3.2360679774997898,
+          3.7386127875258302,
+          4.872983346207417,
+          6
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          4.5355339059327378
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          1,
+          null,
+          6
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.20000000000000001,
+          0.46832815729997479,
+          0.52863353450309969,
+          0.66475800154489018,
+          0.80000000000000004
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.62426406871192863
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.20000000000000001,
+          null,
+          0.80000000000000004
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.80000000000000004,
+          0.53167184270002532,
+          0.47136646549690037,
+          0.33524199845510994,
+          0.19999999999999996
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.37573593128807142
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.80000000000000004,
+          null,
+          0.19999999999999996
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0,
+          null,
+          0
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          3,
+          0,
+          2.1213203435596428,
+          4.2426406871192857,
+          6
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          6
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          3,
+          null,
+          6
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "custom",
+      "args": {
+        "max_size": 10
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          5,
+          0,
+          3.5355339059327378,
+          7.0710678118654755,
+          10
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "custom",
+      "args": {
+        "max_size": 10
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          10
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "custom",
+      "args": {
+        "max_size": 10
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          5,
+          null,
+          10
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "custom",
+      "args": {
+        "max_size": 10
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "custom",
+      "args": {
+        "max_size": 10
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "reversed",
+      "args": {
+        "max_size": -2
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          -1,
+          0,
+          -0.70710678118654757,
+          -1.4142135623730951,
+          -2
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "reversed",
+      "args": {
+        "max_size": -2
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          -2
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "reversed",
+      "args": {
+        "max_size": -2
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          -1,
+          null,
+          -2
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "reversed",
+      "args": {
+        "max_size": -2
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "reversed",
+      "args": {
+        "max_size": -2
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "zero",
+      "args": {
+        "max_size": 0
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "zero",
+      "args": {
+        "max_size": 0
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "zero",
+      "args": {
+        "max_size": 0
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0,
+          null,
+          0
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "zero",
+      "args": {
+        "max_size": 0
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_area",
+      "configuration": "zero",
+      "args": {
+        "max_size": 0
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          2.5,
+          4,
+          6
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          3.5
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          1,
+          null,
+          6
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.20000000000000001,
+          0.32000000000000006,
+          0.38,
+          0.56000000000000005,
+          0.80000000000000004
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.20000000000000001,
+          null,
+          0.80000000000000004
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.80000000000000004,
+          0.68000000000000005,
+          0.62,
+          0.44,
+          0.19999999999999996
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.80000000000000004,
+          null,
+          0.19999999999999996
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0,
+          null,
+          0
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "radius",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.10000000000000001,
+          0.28000000000000003,
+          0.37,
+          0.64000000000000001,
+          1
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#0000001A",
+          "#00000047",
+          "#0000005E",
+          "#000000A3",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.55000000000000004
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#0000008C"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.10000000000000001,
+          null,
+          1
+        ],
+        "mark_count": 3,
+        "mark_colours": [
+          "#0000001A",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.20000000000000001,
+          0.32000000000000006,
+          0.38,
+          0.56000000000000005,
+          0.80000000000000004
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#00000033",
+          "#00000052",
+          "#00000061",
+          "#0000008F",
+          "#000000CC"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#00000080"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.20000000000000001,
+          null,
+          0.80000000000000004
+        ],
+        "mark_count": 3,
+        "mark_colours": [
+          "#00000033",
+          "#000000",
+          "#000000CC"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.80000000000000004,
+          0.68000000000000005,
+          0.62,
+          0.44,
+          0.19999999999999996
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000CC",
+          "#000000AD",
+          "#0000009E",
+          "#00000070",
+          "#00000033"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#00000080"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.80000000000000004,
+          null,
+          0.19999999999999996
+        ],
+        "mark_count": 3,
+        "mark_colours": [
+          "#000000CC",
+          "#000000",
+          "#00000033"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#00000000",
+          "#00000000",
+          "#00000000",
+          "#00000000",
+          "#00000000"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#00000000"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0,
+          null,
+          0
+        ],
+        "mark_count": 3,
+        "mark_colours": [
+          "#00000000",
+          "#000000",
+          "#00000000"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          2.5,
+          4,
+          6
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          3.5
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          1,
+          null,
+          6
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.20000000000000001,
+          0.32000000000000006,
+          0.38,
+          0.56000000000000005,
+          0.80000000000000004
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.20000000000000001,
+          null,
+          0.80000000000000004
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.80000000000000004,
+          0.68000000000000005,
+          0.62,
+          0.44,
+          0.19999999999999996
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.80000000000000004,
+          null,
+          0.19999999999999996
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0,
+          null,
+          0
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          2.58113883008419,
+          2.58113883008419,
+          3.738612787525831,
+          4.5355339059327378,
+          5.7434164902525691
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          3.0412414523193152,
+          null,
+          5.5643546458763842
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.38973665961010284,
+          0.38973665961010284,
+          0.52863353450309969,
+          0.62426406871192863,
+          0.76920997883030839
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.44494897427831787,
+          null,
+          0.74772255750516625
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.61026334038989727,
+          0.61026334038989727,
+          0.47136646549690031,
+          0.37573593128807142,
+          0.23079002116969172
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.55505102572168219,
+          null,
+          0.25227744249483386
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0,
+          null,
+          0
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.19,
+          0.19,
+          0.37000000000000011,
+          0.55000000000000004,
+          0.91000000000000003
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#00000030",
+          "#00000030",
+          "#0000005E",
+          "#0000008C",
+          "#000000E8"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.25,
+          null,
+          0.84999999999999998
+        ],
+        "mark_count": 3,
+        "mark_colours": [
+          "#00000040",
+          "#000000",
+          "#000000D9"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.26000000000000001,
+          0.26000000000000001,
+          0.38000000000000006,
+          0.5,
+          0.74000000000000021
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#00000042",
+          "#00000042",
+          "#00000061",
+          "#00000080",
+          "#000000BD"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.30000000000000004,
+          null,
+          0.69999999999999996
+        ],
+        "mark_count": 3,
+        "mark_colours": [
+          "#0000004D",
+          "#000000",
+          "#000000B2"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.73999999999999999,
+          0.73999999999999999,
+          0.62,
+          0.5,
+          0.2599999999999999
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000BD",
+          "#000000BD",
+          "#0000009E",
+          "#00000080",
+          "#00000042"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.70000000000000007,
+          null,
+          0.30000000000000004
+        ],
+        "mark_count": 3,
+        "mark_colours": [
+          "#000000B3",
+          "#000000",
+          "#0000004D"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#00000000",
+          "#00000000",
+          "#00000000",
+          "#00000000",
+          "#00000000"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0,
+          null,
+          0
+        ],
+        "mark_count": 3,
+        "mark_colours": [
+          "#00000000",
+          "#000000",
+          "#00000000"
+        ]
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "alpha",
+      "constructor": "alpha_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          1.5,
+          1.5,
+          2.5,
+          3.5,
+          5.5
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          1.8333333333333333,
+          null,
+          5.1666666666666661
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.26000000000000001,
+          0.26000000000000001,
+          0.38000000000000006,
+          0.5,
+          0.74000000000000021
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.30000000000000004,
+          null,
+          0.69999999999999996
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "custom",
+      "args": {
+        "range": [0.20000000000000001, 0.80000000000000004]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0.73999999999999999,
+          0.73999999999999999,
+          0.62,
+          0.5,
+          0.2599999999999999
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.70000000000000007,
+          null,
+          0.30000000000000004
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "reversed",
+      "args": {
+        "range": [0.80000000000000004, 0.20000000000000001]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0,
+          null,
+          0
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "linewidth",
+      "constructor": "linewidth_binned",
+      "configuration": "zero",
+      "args": {
+        "range": [0, 0]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          2.1213203435596428,
+          2.1213203435596428,
+          2.1213203435596428,
+          3.6742346141747668,
+          5.6124860801609122
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          5.9623820743055376
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          3.6742346141747668,
+          null,
+          5.6124860801609122
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "custom",
+      "args": {
+        "max_size": 10
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          3.5355339059327378,
+          3.5355339059327378,
+          3.5355339059327378,
+          6.1237243569579451,
+          9.354143466934854
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "custom",
+      "args": {
+        "max_size": 10
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          9.9373034571758954
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "custom",
+      "args": {
+        "max_size": 10
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          6.1237243569579451,
+          null,
+          9.354143466934854
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "custom",
+      "args": {
+        "max_size": 10
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "custom",
+      "args": {
+        "max_size": 10
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "reversed",
+      "args": {
+        "max_size": -2
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          -0.70710678118654757,
+          -0.70710678118654757,
+          -0.70710678118654757,
+          -1.2247448713915889,
+          -1.8708286933869707
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "reversed",
+      "args": {
+        "max_size": -2
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          -1.9874606914351791
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "reversed",
+      "args": {
+        "max_size": -2
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          -1.2247448713915889,
+          null,
+          -1.8708286933869707
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "reversed",
+      "args": {
+        "max_size": -2
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "reversed",
+      "args": {
+        "max_size": -2
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "zero",
+      "args": {
+        "max_size": 0
+      },
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        0,
+        1,
+        4,
+        8
+      ],
+      "result": {
+        "mapped": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "mark_count": 5,
+        "mark_colours": [
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "zero",
+      "args": {
+        "max_size": 0
+      },
+      "population": "singleton",
+      "inputs": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          0
+        ],
+        "mark_count": 1,
+        "mark_colours": [
+          "#000000FF"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "zero",
+      "args": {
+        "max_size": 0
+      },
+      "population": "missing",
+      "inputs": [
+        1,
+        null,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0,
+          null,
+          0
+        ],
+        "mark_count": 2,
+        "mark_colours": [
+          "#000000",
+          "#000000"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "zero",
+      "args": {
+        "max_size": 0
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "size_binned_area",
+      "configuration": "zero",
+      "args": {
+        "max_size": 0
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "mark_count": 0,
+        "mark_colours": []
+      }
+    }
+  ]
+}

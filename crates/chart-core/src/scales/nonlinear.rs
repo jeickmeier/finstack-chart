@@ -2,9 +2,14 @@ use super::*;
 use crate::grammar::Extent;
 
 /// Explicit invertible nonlinear numeric coordinate transform.
-#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum ScaleTransform {
+    /// Reference built-in arithmetic shared with aesthetic scales.
+    Ggplot {
+        /// Owned transformation and parameters.
+        transform: GgplotTransform,
+    },
     /// Negate values before statistics and reverse the trained positional direction.
     Reverse,
     /// Nonnegative square root; negative source values are ineligible.
@@ -21,9 +26,22 @@ pub enum ScaleTransform {
     },
 }
 impl ScaleTransform {
+    pub(crate) fn ggplot_transform_mut(&mut self) -> Option<&mut GgplotTransform> {
+        match self {
+            Self::Ggplot { transform } => Some(transform),
+            _ => None,
+        }
+    }
+    pub(crate) fn ggplot_transform(&self) -> Option<&GgplotTransform> {
+        match self {
+            Self::Ggplot { transform } => Some(transform),
+            _ => None,
+        }
+    }
     /// Validate authored parameters before reading data.
-    pub fn validate(self) -> ChartResult<()> {
-        let valid = match self {
+    pub fn validate(&self) -> ChartResult<()> {
+        let valid = match *self {
+            Self::Ggplot { ref transform } => return transform.validate(),
             Self::Reverse | Self::Sqrt => true,
             Self::Log { base } => base.is_finite() && base > 1.,
             Self::Symlog { threshold } => threshold.is_finite() && threshold > 0.,
@@ -39,8 +57,9 @@ impl ScaleTransform {
     }
     // Shared arithmetic for validated transforms. Identity aesthetic mapping
     // retains IEEE exceptional results; positional forward applies its checks.
-    pub(super) fn forward_raw(self, x: f64) -> f64 {
-        match self {
+    pub(crate) fn forward_raw(&self, x: f64) -> f64 {
+        match *self {
+            Self::Ggplot { ref transform } => transform.forward(x),
             Self::Reverse => -x,
             Self::Sqrt => {
                 if x < 0. {
@@ -71,15 +90,15 @@ impl ScaleTransform {
             }
         }
     }
-    pub(crate) fn viewport_inverse(self, value: f64) -> ChartResult<f64> {
-        self.inverse(if self == Self::Sqrt {
+    pub(crate) fn viewport_inverse(&self, value: f64) -> ChartResult<f64> {
+        self.inverse(if *self == Self::Sqrt {
             value.max(0.)
         } else {
             value
         })
     }
     /// Transform one finite value. Nonpositive logarithmic values are ineligible.
-    pub fn forward(self, x: f64) -> ChartResult<Option<f64>> {
+    pub fn forward(&self, x: f64) -> ChartResult<Option<f64>> {
         self.validate()?;
         if !x.is_finite() {
             return Err(error(
@@ -87,11 +106,14 @@ impl ScaleTransform {
                 "Nonlinear scale input must be finite.",
             ));
         }
-        if matches!(self, Self::Sqrt) && x < 0. || matches!(self, Self::Log { .. }) && x <= 0. {
+        if matches!(&self, Self::Sqrt) && x < 0. || matches!(&self, Self::Log { .. }) && x <= 0. {
             return Ok(None);
         }
         let v = self.forward_raw(x);
-        if v.is_finite() && (x == 0. || v != 0. || matches!(self, Self::Log { .. })) {
+        if matches!(&self, Self::Ggplot { .. }) {
+            return Ok(v.is_finite().then_some(v));
+        }
+        if v.is_finite() && (x == 0. || v != 0. || matches!(&self, Self::Log { .. })) {
             Ok(Some(v))
         } else {
             Err(error(
@@ -100,8 +122,9 @@ impl ScaleTransform {
             ))
         }
     }
-    pub(super) fn inverse_raw(self, v: f64) -> f64 {
-        match self {
+    pub(crate) fn inverse_raw(&self, v: f64) -> f64 {
+        match *self {
+            Self::Ggplot { ref transform } => transform.inverse(v),
             Self::Reverse => -v,
             Self::Sqrt => {
                 if v < 0. {
@@ -110,7 +133,7 @@ impl ScaleTransform {
                     v * v
                 }
             }
-            Self::Log { base } => base.powf(v),
+            Self::Log { base } => libm::pow(base, v),
             Self::Symlog { threshold } => {
                 let exp = v.abs().exp_m1();
                 v.signum()
@@ -123,7 +146,7 @@ impl ScaleTransform {
         }
     }
     /// Invert a finite transformed value, checking the representable output.
-    pub fn inverse(self, v: f64) -> ChartResult<f64> {
+    pub fn inverse(&self, v: f64) -> ChartResult<f64> {
         self.validate()?;
         if !v.is_finite() {
             return Err(error(
@@ -131,7 +154,7 @@ impl ScaleTransform {
                 "Nonlinear inverse input must be finite.",
             ));
         }
-        if self == Self::Sqrt && v < 0. {
+        if *self == Self::Sqrt && v < 0. {
             return Err(error(
                 DiagnosticCode::NumericalDomain,
                 "Square-root inverse requires a nonnegative coordinate.",
@@ -139,8 +162,8 @@ impl ScaleTransform {
         }
         let x = self.inverse_raw(v);
         if x.is_finite()
-            && (!matches!(self, Self::Log { .. }) || x > 0.)
-            && (self != Self::Sqrt || v == 0. || x > 0.)
+            && (!matches!(&self, Self::Log { .. }) || x > 0.)
+            && (*self != Self::Sqrt || v == 0. || x > 0.)
         {
             Ok(x)
         } else {
@@ -245,6 +268,37 @@ impl NonlinearScale {
             inner,
         })
     }
+    /// Resolve a reference domain already in transformed units, including an
+    /// authored missing replacement outside the inverse transform's domain.
+    pub(crate) fn from_reference_transformed(
+        domain: Bounds,
+        viewport: Bounds,
+        transform: ScaleTransform,
+        range: Bounds,
+        outside: OutsidePolicy,
+    ) -> ChartResult<Self> {
+        transform.validate()?;
+        let inner = LinearScale::resolve(
+            None,
+            ContinuousDomain::explicit(domain),
+            range,
+            None,
+            outside,
+        )?
+        .with_reference_viewport(viewport);
+        Ok(Self {
+            transform: transform.clone(),
+            domain: Bounds::new(
+                transform.viewport_inverse(domain.start())?,
+                transform.viewport_inverse(domain.end())?,
+            )?,
+            viewport: Bounds::new(
+                transform.viewport_inverse(viewport.start())?,
+                transform.viewport_inverse(viewport.end())?,
+            )?,
+            inner,
+        })
+    }
     pub(crate) fn with_reference_transformed_viewport(
         mut self,
         viewport: Bounds,
@@ -274,7 +328,7 @@ impl NonlinearScale {
     }
     /// Transformation identity, used by compatibility and inspection.
     pub fn transform(&self) -> ScaleTransform {
-        self.transform
+        self.transform.clone()
     }
     /// Map an eligible value; transform-invalid and explicitly omitted inputs return missing.
     pub fn map(&self, x: f64) -> ChartResult<Option<f64>> {

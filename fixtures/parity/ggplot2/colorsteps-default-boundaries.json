@@ -1,0 +1,1965 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "mode": "automatic",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [
+        -2,
+        0,
+        3,
+        8
+      ],
+      "breaks": "automatic",
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFB7A0",
+          "#FF4628"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFE7DE",
+            "#FFB7A0",
+            "#FF8464",
+            "#FF4628"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "max": [
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFE7DE",
+            "#FFB7A0",
+            "#FF8464",
+            null
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "2",
+            "4",
+            "6",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.20000000000000001,
+            0.19999999999999996,
+            0.20000000000000007,
+            0.19999999999999996
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFE7DE",
+            "#FFB7A0",
+            "#FF8464",
+            "#FF4628"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "mode": "null",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [
+        -2,
+        0,
+        3,
+        8
+      ],
+      "breaks": null,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#FFB7A0",
+          "#FFB7A0",
+          "#FFB7A0",
+          "#FFB7A0"
+        ],
+        "decor": null,
+        "key": null,
+        "bar": null
+      }
+    },
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "mode": "empty",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [
+        -2,
+        0,
+        3,
+        8
+      ],
+      "breaks": [],
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#FFB7A0",
+          "#FFB7A0",
+          "#FFB7A0",
+          "#FFB7A0"
+        ],
+        "decor": null,
+        "key": null,
+        "bar": null
+      }
+    },
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "mode": "one",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [
+        -2,
+        0,
+        3,
+        8
+      ],
+      "breaks": [
+        0
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FF9E81",
+          "#FF9E81"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FF9E81"
+          ],
+          "min": [
+            0,
+            0.5
+          ],
+          "max": [
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF"
+          ],
+          ".value": [
+            0.5
+          ],
+          ".label": [
+            "0"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.5,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FF9E81"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "mode": "duplicates",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [
+        -2,
+        0,
+        3,
+        8
+      ],
+      "breaks": [
+        0,
+        0,
+        3
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "0",
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "mode": "outside",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [
+        -2,
+        0,
+        3,
+        8
+      ],
+      "breaks": [
+        -4,
+        0,
+        3,
+        10
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "mode": "nonfinite",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [
+        -2,
+        0,
+        3,
+        8
+      ],
+      "breaks": [
+        null,
+        "Infinity",
+        "-Infinity",
+        0,
+        3
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#7F7F7F",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655",
+            "#7F7F7F"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "max": [
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "grey50",
+            "grey50",
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          ".label": [
+            "Inf",
+            "-Inf",
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.20000000000000001,
+            0.19999999999999996,
+            0.20000000000000007,
+            0.19999999999999996
+          ],
+          "colors": [
+            "#7F7F7F",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655",
+            "#7F7F7F"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "mode": "unsorted",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [
+        -2,
+        0,
+        3,
+        8
+      ],
+      "breaks": [
+        8,
+        3,
+        0,
+        -2
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFDBCF",
+            "#B38BFF",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "8",
+            "3",
+            "0",
+            "-2"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "mode": "limits",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [
+        -2,
+        0,
+        3,
+        8
+      ],
+      "breaks": [
+        -2,
+        8
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#FFB7A0",
+          "#FFB7A0",
+          "#FFB7A0",
+          "#FFB7A0"
+        ],
+        "decor": {
+          "colour": [
+            "#FFB7A0FF"
+          ],
+          "min": [
+            0
+          ],
+          "max": [
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            null
+          ],
+          ".value": [
+            0,
+            1
+          ],
+          ".label": [
+            "-2",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#FFB7A0FF"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "mode": "endpoint_first",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [
+        -2,
+        0,
+        3,
+        8
+      ],
+      "breaks": [
+        8,
+        0,
+        3
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          ".label": [
+            "8",
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "ordinary",
+      "mode": "mixed_edges",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [
+        -2,
+        0,
+        3,
+        8
+      ],
+      "breaks": [
+        "-Infinity",
+        -4,
+        0,
+        3,
+        10,
+        "Infinity"
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#7F7F7F",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655",
+            "#7F7F7F"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "max": [
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "grey50",
+            "#B38BFF",
+            "#FFDBCF",
+            "grey50"
+          ],
+          ".value": [
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          ".label": [
+            "-Inf",
+            "0",
+            "3",
+            "Inf"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.20000000000000001,
+            0.19999999999999996,
+            0.20000000000000007,
+            0.19999999999999996
+          ],
+          "colors": [
+            "#7F7F7F",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655",
+            "#7F7F7F"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "constant",
+      "mode": "automatic",
+      "limits": [
+        2,
+        2
+      ],
+      "inputs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "breaks": "automatic",
+      "warnings": [],
+      "result": {
+        "error": "replacement has 5 rows, data has 1"
+      }
+    },
+    {
+      "family": "binned",
+      "population": "constant",
+      "mode": "null",
+      "limits": [
+        2,
+        2
+      ],
+      "inputs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "breaks": null,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#FFB7A0",
+          "#FFB7A0",
+          "#FFB7A0",
+          "#FFB7A0"
+        ],
+        "decor": null,
+        "key": null,
+        "bar": null
+      }
+    },
+    {
+      "family": "binned",
+      "population": "constant",
+      "mode": "empty",
+      "limits": [
+        2,
+        2
+      ],
+      "inputs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "breaks": [],
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#FFB7A0",
+          "#FFB7A0",
+          "#FFB7A0",
+          "#FFB7A0"
+        ],
+        "decor": null,
+        "key": null,
+        "bar": null
+      }
+    },
+    {
+      "family": "binned",
+      "population": "constant",
+      "mode": "one",
+      "limits": [
+        2,
+        2
+      ],
+      "inputs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "breaks": [
+        2
+      ],
+      "warnings": [],
+      "result": {
+        "error": "'x' and 'units' must have length > 0"
+      }
+    },
+    {
+      "family": "binned",
+      "population": "constant",
+      "mode": "duplicates",
+      "limits": [
+        2,
+        2
+      ],
+      "inputs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "breaks": [
+        0,
+        0,
+        3
+      ],
+      "warnings": [],
+      "result": {
+        "error": "'x' must be numeric"
+      }
+    },
+    {
+      "family": "binned",
+      "population": "constant",
+      "mode": "outside",
+      "limits": [
+        2,
+        2
+      ],
+      "inputs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "breaks": [
+        -4,
+        0,
+        3,
+        10
+      ],
+      "warnings": [],
+      "result": {
+        "error": "'x' must be numeric"
+      }
+    },
+    {
+      "family": "binned",
+      "population": "constant",
+      "mode": "nonfinite",
+      "limits": [
+        2,
+        2
+      ],
+      "inputs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "breaks": [
+        null,
+        "Infinity",
+        "-Infinity",
+        0,
+        3
+      ],
+      "warnings": [],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "family": "binned",
+      "population": "constant",
+      "mode": "unsorted",
+      "limits": [
+        2,
+        2
+      ],
+      "inputs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "breaks": [
+        8,
+        3,
+        0,
+        -2
+      ],
+      "warnings": [],
+      "result": {
+        "error": "'x' must be numeric"
+      }
+    },
+    {
+      "family": "binned",
+      "population": "constant",
+      "mode": "limits",
+      "limits": [
+        2,
+        2
+      ],
+      "inputs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "breaks": [
+        -2,
+        8
+      ],
+      "warnings": [],
+      "result": {
+        "error": "'x' must be numeric"
+      }
+    },
+    {
+      "family": "binned",
+      "population": "constant",
+      "mode": "endpoint_first",
+      "limits": [
+        2,
+        2
+      ],
+      "inputs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "breaks": [
+        8,
+        0,
+        3
+      ],
+      "warnings": [],
+      "result": {
+        "error": "'x' must be numeric"
+      }
+    },
+    {
+      "family": "binned",
+      "population": "constant",
+      "mode": "mixed_edges",
+      "limits": [
+        2,
+        2
+      ],
+      "inputs": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "breaks": [
+        "-Infinity",
+        -4,
+        0,
+        3,
+        10,
+        "Infinity"
+      ],
+      "warnings": [],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "mode": "automatic",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [],
+      "breaks": "automatic",
+      "warnings": [],
+      "result": {
+        "mapped": [],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFE7DE",
+            "#FFB7A0",
+            "#FF8464",
+            "#FF4628"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "max": [
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFE7DE",
+            "#FFB7A0",
+            "#FF8464",
+            null
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "2",
+            "4",
+            "6",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.20000000000000001,
+            0.19999999999999996,
+            0.20000000000000007,
+            0.19999999999999996
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFE7DE",
+            "#FFB7A0",
+            "#FF8464",
+            "#FF4628"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "mode": "null",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [],
+      "breaks": null,
+      "warnings": [],
+      "result": {
+        "mapped": [],
+        "decor": null,
+        "key": null,
+        "bar": null
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "mode": "empty",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [],
+      "breaks": [],
+      "warnings": [],
+      "result": {
+        "mapped": [],
+        "decor": null,
+        "key": null,
+        "bar": null
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "mode": "one",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [],
+      "breaks": [
+        0
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FF9E81"
+          ],
+          "min": [
+            0,
+            0.5
+          ],
+          "max": [
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF"
+          ],
+          ".value": [
+            0.5
+          ],
+          ".label": [
+            "0"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.5,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FF9E81"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "mode": "duplicates",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [],
+      "breaks": [
+        0,
+        0,
+        3
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "0",
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "mode": "outside",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [],
+      "breaks": [
+        -4,
+        0,
+        3,
+        10
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "mode": "nonfinite",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [],
+      "breaks": [
+        null,
+        "Infinity",
+        "-Infinity",
+        0,
+        3
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [],
+        "decor": {
+          "colour": [
+            "#7F7F7F",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655",
+            "#7F7F7F"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "max": [
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "grey50",
+            "grey50",
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          ".label": [
+            "Inf",
+            "-Inf",
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.20000000000000001,
+            0.19999999999999996,
+            0.20000000000000007,
+            0.19999999999999996
+          ],
+          "colors": [
+            "#7F7F7F",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655",
+            "#7F7F7F"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "mode": "unsorted",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [],
+      "breaks": [
+        8,
+        3,
+        0,
+        -2
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFDBCF",
+            "#B38BFF",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "8",
+            "3",
+            "0",
+            "-2"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "mode": "limits",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [],
+      "breaks": [
+        -2,
+        8
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [],
+        "decor": {
+          "colour": [
+            "#FFB7A0FF"
+          ],
+          "min": [
+            0
+          ],
+          "max": [
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            null
+          ],
+          ".value": [
+            0,
+            1
+          ],
+          ".label": [
+            "-2",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#FFB7A0FF"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "mode": "endpoint_first",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [],
+      "breaks": [
+        8,
+        0,
+        3
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          ".label": [
+            "8",
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "population": "empty",
+      "mode": "mixed_edges",
+      "limits": [
+        -2,
+        8
+      ],
+      "inputs": [],
+      "breaks": [
+        "-Infinity",
+        -4,
+        0,
+        3,
+        10,
+        "Infinity"
+      ],
+      "warnings": [],
+      "result": {
+        "mapped": [],
+        "decor": {
+          "colour": [
+            "#7F7F7F",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655",
+            "#7F7F7F"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "max": [
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "grey50",
+            "#B38BFF",
+            "#FFDBCF",
+            "grey50"
+          ],
+          ".value": [
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          ".label": [
+            "-Inf",
+            "0",
+            "3",
+            "Inf"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.40000000000000002,
+            0.59999999999999998,
+            0.80000000000000004
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.20000000000000001,
+            0.19999999999999996,
+            0.20000000000000007,
+            0.19999999999999996
+          ],
+          "colors": [
+            "#7F7F7F",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655",
+            "#7F7F7F"
+          ]
+        }
+      }
+    }
+  ]
+}

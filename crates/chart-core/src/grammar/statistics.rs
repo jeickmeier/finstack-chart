@@ -244,7 +244,20 @@ where
     }
     let values = values.into_iter();
     if let Ok(total) = sum(values.clone()) {
-        return Ok(total / count as f64);
+        let initial = total / count as f64;
+        // A residual pass corrects rounding in the accumulated sum and division.
+        // If subtraction overflows for extreme finite inputs, retain the stable
+        // first estimate instead of rejecting a representable mean.
+        let residuals = values.clone().map(|v| v - initial);
+        if residuals.clone().all(f64::is_finite)
+            && let Ok(residual) = sum(residuals)
+        {
+            return finite(
+                initial + residual / count as f64,
+                "Statistic mean is not representable.",
+            );
+        }
+        return Ok(initial);
     }
     let scale = values.clone().map(f64::abs).fold(0_f64, f64::max);
     finite(

@@ -4,7 +4,7 @@ library(ggplot2)
 encode<-function(v)lapply(unname(v),function(x)if(is.na(x))NULL else if(is.infinite(x))if(x>0)'Infinity'else'-Infinity'else x)
 sets<-list(spaced=c(0,1,4,9),constant=c(4,4,4),missing=c(NA,0,4,NA,9),all_missing=c(NA_real_,NA_real_),empty=numeric(),many=0:20)
 cases<-list()
-for(palette in c('size','area','alpha','linewidth'))for(population in names(sets))for(control in c('default','explicit','empty_breaks','null_breaks','count_eight','count_sixteen','left','limits','partial_limits')){
+for(palette in c('size','area','alpha','linewidth'))for(population in names(sets))for(control in c('default','explicit','empty_breaks','null_breaks','count_eight','count_sixteen','left','limits','partial_limits','custom_range','reverse_range','constant_range')){
  value<-sets[[population]];channel<-if(palette=='area')'size'else palette
  args<-list()
  if(control=='explicit')args$breaks<-c(1,3,5,7,9)
@@ -12,6 +12,10 @@ for(palette in c('size','area','alpha','linewidth'))for(population in names(sets
  if(control=='null_breaks')args['breaks']<-list(NULL)
  if(control%in%c('count_eight','count_sixteen')){args$n.breaks<-if(control=='count_eight')8 else 16;args$nice.breaks<-FALSE}
  if(control=='left')args$right<-FALSE
+ if(control%in%c('custom_range','reverse_range','constant_range')){
+  if(palette=='area')args$max_size<-switch(control,custom_range=9,reverse_range=2,constant_range=0)
+  else args$range<-switch(control,custom_range=c(2,9),reverse_range=c(9,2),constant_range=c(3.5,3.5))
+ }
  if(control=='limits')args$limits<-c(-1,5)
  if(control=='partial_limits')args$limits<-c(NA,5)
  raw_result<-tryCatch(suppressWarnings({
@@ -27,7 +31,7 @@ for(palette in c('size','area','alpha','linewidth'))for(population in names(sets
   b<-ggplot_build(ggplot(data.frame(value=value),mapping)+layer+scale);s<-b$plot$scales$get_scales(channel)
   guide<-tryCatch(list(breaks=encode(s$get_breaks()),labels=as.list(unname(s$get_labels()))),error=function(e)list(error=conditionMessage(e)))
   draw_error<-tryCatch({ggplot_gtable(b);NULL},error=function(e)conditionMessage(e))
-  list(values=encode(b$data[[1]][[channel]]),limits=encode(s$get_limits()),palette=encode(s$palette.cache),guide=guide,draw_error=draw_error)
+  list(values=encode(b$data[[1]][[channel]]),limits=encode(s$get_limits()),palette=encode(s$palette.cache),guide=guide,draw_error=draw_error,guide_keys=unname(lapply(b$plot$guides$params,function(g)list(values=encode(g$key$.value),labels=encode(g$key$.label),mapped=encode(g$key[[channel]])))))
  }),error=function(e)list(error=conditionMessage(e)))
  cases[[length(cases)+1]]<-list(palette=palette,population=population,control=control,inputs=encode(value),raw_result=raw_result,result=result)
 }

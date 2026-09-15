@@ -1,0 +1,2137 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "transform": "identity",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          10.45,
+          5.5,
+          0.55,
+          0.55,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.55,
+          10.45
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          10.45,
+          5.5,
+          0.55,
+          0.55,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.55,
+          10.45
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            3.95,
+            4.05
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            3.95,
+            4.05
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          4.05,
+          4,
+          3.95,
+          3.95,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          3.95,
+          4.05
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          10.45,
+          5.5,
+          0.55,
+          0.55,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.55,
+          10.45
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          10.45,
+          5.5,
+          0.55,
+          0.55,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.55,
+          10.45
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          10.45,
+          5.5,
+          0.55,
+          0.55,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.55,
+          10.45
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "-Infinity",
+            "Infinity"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            "-Infinity",
+            "Infinity"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          "Infinity",
+          null,
+          "-Infinity",
+          "-Infinity",
+          null,
+          "Infinity",
+          "-Infinity"
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          10.45,
+          5.5,
+          0.55,
+          0.55,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.55,
+          10.45
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "range": [
+          -0.05,
+          1.05
+        ]
+      }
+    },
+    {
+      "transform": "identity",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.55,
+            10.45
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          10.45,
+          5.5,
+          0.55,
+          0.55,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.55,
+          10.45
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          3.2703915431768,
+          2.39696909568779,
+          0.891886116991581,
+          0.891886116991581,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.891886116991581,
+          3.2703915431768
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          3.2703915431768,
+          2.39696909568779,
+          0.891886116991581,
+          0.891886116991581,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.891886116991581,
+          3.2703915431768
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            3.8025,
+            4.2025
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            3.8025,
+            4.2025
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          2.05,
+          2.00062490237426,
+          1.95,
+          1.95,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          1.95,
+          2.05
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          3.2703915431768,
+          2.39696909568779,
+          0.891886116991581,
+          0.891886116991581,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.891886116991581,
+          3.2703915431768
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          3.2703915431768,
+          2.39696909568779,
+          0.891886116991581,
+          0.891886116991581,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.891886116991581,
+          3.2703915431768
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          3.2703915431768,
+          2.39696909568779,
+          0.891886116991581,
+          0.891886116991581,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.891886116991581,
+          3.2703915431768
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            null,
+            "Infinity"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            null,
+            "Infinity"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          "Infinity",
+          null,
+          null,
+          null,
+          null,
+          "Infinity",
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          3.2703915431768,
+          2.39696909568779,
+          0.891886116991581,
+          0.891886116991581,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.891886116991581,
+          3.2703915431768
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "range": [
+          -0.05,
+          1.05
+        ]
+      }
+    },
+    {
+      "transform": "sqrt",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.79546084568232,
+            10.6954608456823
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          3.2703915431768,
+          2.39696909568779,
+          0.891886116991581,
+          0.891886116991581,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.891886116991581,
+          3.2703915431768
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          1.05,
+          0.782165624324447,
+          -0.05,
+          -0.05,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -0.05,
+          1.05
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          1.05,
+          0.782165624324447,
+          -0.05,
+          -0.05,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -0.05,
+          1.05
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            3.56500375253498,
+            4.48807381720785
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            3.56500375253498,
+            4.48807381720785
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          0.652059991327962,
+          0.604931886707848,
+          0.552059991327962,
+          0.552059991327962,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          0.552059991327962,
+          0.652059991327962
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          1.05,
+          0.782165624324447,
+          -0.05,
+          -0.05,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -0.05,
+          1.05
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          1.05,
+          0.782165624324447,
+          -0.05,
+          -0.05,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -0.05,
+          1.05
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          1.05,
+          0.782165624324447,
+          -0.05,
+          -0.05,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -0.05,
+          1.05
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            0,
+            "Infinity"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0,
+            "Infinity"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          "Infinity",
+          "Infinity",
+          "-Infinity",
+          "-Infinity",
+          null,
+          "Infinity",
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          1.05,
+          0.782165624324447,
+          -0.05,
+          -0.05,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -0.05,
+          1.05
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "range": [
+          -0.05,
+          1.05
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            0.891250938133746,
+            11.2201845430196
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          1.05,
+          0.782165624324447,
+          -0.05,
+          -0.05,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -0.05,
+          1.05
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          -0.55,
+          -5.5,
+          -10.45,
+          -10.45,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -10.45,
+          -0.55
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          -0.55,
+          -5.5,
+          -10.45,
+          -10.45,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -10.45,
+          -0.55
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            4.05,
+            3.95
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            4.05,
+            3.95
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          -3.95,
+          -4,
+          -4.05,
+          -4.05,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -4.05,
+          -3.95
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          -0.55,
+          -5.5,
+          -10.45,
+          -10.45,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -10.45,
+          -0.55
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          -0.55,
+          -5.5,
+          -10.45,
+          -10.45,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -10.45,
+          -0.55
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          -0.55,
+          -5.5,
+          -10.45,
+          -10.45,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -10.45,
+          -0.55
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "Infinity",
+            "-Infinity"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            "Infinity",
+            "-Infinity"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          "Infinity",
+          null,
+          "-Infinity",
+          "-Infinity",
+          null,
+          "-Infinity",
+          "Infinity"
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          "-Infinity",
+          "Infinity"
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          -0.55,
+          -5.5,
+          -10.45,
+          -10.45,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -10.45,
+          -0.55
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "breaks": [],
+        "labels": [],
+        "range": [
+          -0.05,
+          1.05
+        ]
+      }
+    },
+    {
+      "transform": "reverse",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        },
+        {
+          "limits": [
+            10.45,
+            0.55
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "breaks": [
+          -0.55,
+          -5.5,
+          -10.45,
+          -10.45,
+          null,
+          null,
+          null
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "range": [
+          -10.45,
+          -0.55
+        ]
+      }
+    }
+  ]
+}

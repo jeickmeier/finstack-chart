@@ -98,7 +98,17 @@ impl ScalarInterpolator {
                 b,
                 exponent,
                 absolute,
-            } => a + (b - a) * pxfm::f_pow(if *absolute { t.abs() } else { t }, *exponent),
+            } => {
+                let t = if *absolute { t.abs() } else { t };
+                // Reference area palettes use sqrt, whose negative-infinity
+                // result differs from the generic IEEE power operation.
+                let powered = if *exponent == 0.5 {
+                    t.sqrt()
+                } else {
+                    pxfm::f_pow(t, *exponent)
+                };
+                a + (b - a) * powered
+            }
             Kernel::Number { a, b, round } => {
                 let v = number(*a, *b, t);
                 if *round { js_round(v) } else { v }

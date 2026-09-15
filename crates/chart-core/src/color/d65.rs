@@ -61,8 +61,11 @@ pub(crate) fn from_hcl(h: f64, c: f64, l: f64) -> Rgb {
     let angle = h.to_radians();
     let u = c * super::trig::cos(angle);
     let v = c * super::trig::sin(angle);
-    let white_sum = 0.95047 + 15. + 3. * 1.08883;
-    let up = u / (13. * l) + 4. * 0.95047 / white_sum;
+    // farver installs its D65 chromaticity reference before polar-Luv conversion.
+    let white_x = 0.31271 / 0.32902;
+    let white_z = (1. - 0.31271 - 0.32902) / 0.32902;
+    let white_sum = white_x + 15. + 3. * white_z;
+    let up = u / (13. * l) + 4. * white_x / white_sum;
     let vp = v / (13. * l) + 9. / white_sum;
     let y = if l > 8. {
         ((l + 16.) / 116.).powi(3)
@@ -116,4 +119,13 @@ pub(crate) fn from_device_lab([l, a, b]: [f64; 3]) -> Rgb {
         device_encode(-0.971982546201232 * x + 1.8812686516084873 * y + 0.04167248459958932 * z),
         device_encode(0.05583833859309792 * x - 0.204740574841359 * y + 1.060928433268859 * z),
     )
+}
+
+/// Reference farver alpha encoding: ties to even, saturation, and infinite coverage zero.
+pub(crate) fn alpha_byte(alpha: f64) -> u8 {
+    if alpha.is_infinite() {
+        0
+    } else {
+        (alpha * 255.).round_ties_even() as u8
+    }
 }

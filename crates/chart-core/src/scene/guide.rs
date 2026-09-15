@@ -69,10 +69,10 @@ impl GuideComponent {
         if let Some(tick) = &self.tick {
             match &tick.value {
                 ScaleValue::Category(s) => bytes = bytes.saturating_add(s.len()),
-                ScaleValue::Number(n) if !n.is_finite() => {
+                ScaleValue::Number(n) if n.is_nan() => {
                     return Err(crate::scales::error(
                         DiagnosticCode::Validation,
-                        "Guide component value must be finite.",
+                        "Guide component value must be comparable.",
                     ));
                 }
                 _ => {}

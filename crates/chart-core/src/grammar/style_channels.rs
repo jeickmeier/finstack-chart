@@ -8,6 +8,11 @@ use crate::{
 };
 use std::collections::BTreeMap;
 
+/// R's filled-circle radius from ggplot size and stroke, in matching units.
+pub(crate) fn reference_point_radius(size: f64, stroke: f64) -> f64 {
+    (size * 0.37640625 + stroke * 0.25).max(0.)
+}
+
 /// Units for explicitly authored aesthetic dimensions, independent of positional coordinates.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum AestheticUnits {
@@ -213,15 +218,66 @@ pub(super) fn line_type(value: &Value) -> ChartResult<LineType> {
         )),
     }
 }
+#[derive(Clone, Debug, Default)]
+pub(crate) struct ValueGuides {
+    pub discrete: BTreeMap<crate::ScaleId, Vec<crate::scales::GgplotDiscreteGuideEntry>>,
+    pub numeric: BTreeMap<crate::ScaleId, Vec<crate::scales::GgplotContinuousGuideEntry>>,
+}
+impl ValueGuides {
+    pub(super) fn insert(
+        &mut self,
+        id: crate::ScaleId,
+        scale: &MappedScale,
+        limits: CompileLimits,
+    ) -> ChartResult<()> {
+        if matches!(
+            scale.spec().guide.as_deref(),
+            Some(
+                crate::scales::GgplotScaleGuide::Colorbar(_)
+                    | crate::scales::GgplotScaleGuide::TemporalColorbar(_)
+                    | crate::scales::GgplotScaleGuide::ContinuousSteps(_)
+                    | crate::scales::GgplotScaleGuide::TemporalSteps(_)
+            )
+        ) {
+            return Ok(());
+        }
+        if self.discrete.contains_key(&id) || self.numeric.contains_key(&id) {
+            return Ok(());
+        }
+        if let Some(entries) = scale.discrete_guide_entries()? {
+            if entries.len() > limits.max_groups {
+                return Err(error(
+                    DiagnosticCode::ResourceLimit,
+                    "Discrete aesthetic guide exceeds the category budget.",
+                ));
+            }
+            self.discrete.insert(id, entries);
+        } else if let Some(entries) =
+            scale.binned_value_guide_entries(limits.max_groups, 1_048_576)?
+        {
+            self.numeric.insert(id, entries);
+        } else if let Some(entries) =
+            scale.continuous_guide_entries(limits.max_groups, 1_048_576)?
+        {
+            self.numeric.insert(id, entries);
+        }
+        Ok(())
+    }
+}
 pub(super) fn apply(
     layer: &Layer,
     data: &DatasetSnapshot,
     table: &PreparedTable,
     rows: &mut [EncodedRow],
-    limits: CompileLimits,
-    samples: &BTreeMap<crate::ScaleId, crate::scales::ScalePopulation>,
-    registry: &ExtensionRegistry,
+    context: super::numeric_aesthetics::NumericContext<'_>,
 ) -> ChartResult<BTreeMap<ValueAesthetic, NumericEncoding>> {
+    let super::numeric_aesthetics::NumericContext {
+        limits,
+        samples,
+        registry,
+        guides,
+        ..
+    } = context;
     if (layer.value_scales.contains_key(&ValueAesthetic::Shape)
         || layer.aesthetic_values.contains_key(&ValueAesthetic::Shape))
         && layer.geom != Geom::Point
@@ -250,10 +306,11 @@ pub(super) fn apply(
         let scale = MappedScale::new_with_registry(
             encoding
                 .scale
-                .trained_population(samples.get(&encoding.id), registry)?,
+                .trained_value_population(samples.get(&encoding.id), registry)?,
             registry,
         )?;
         scale.validate_prepared_sampling()?;
+        guides.insert(encoding.id, &scale, limits)?;
         trained.insert(
             *channel,
             NumericEncoding {
@@ -262,8 +319,23 @@ pub(super) fn apply(
                 scale: scale.spec().clone(),
             },
         );
+        let source = super::colors::layer_batch(
+            scale.spec(),
+            samples.get(&encoding.id),
+            layer.id,
+            &encoding.input,
+        );
+        let batch =
+            super::colors::sample_layer_batch(source, table, rows, &input.values, |values| {
+                scale.row_palette_batch(values)
+            })?;
+        if batch.as_ref().is_some_and(|batch| batch.values.is_none()) {
+            continue;
+        }
         for (i, row) in rows.iter_mut().enumerate() {
-            let value = if encoding.scale.categorical() {
+            let value = if let Some(batch) = &batch {
+                batch.values.as_ref().unwrap()[batch.indices[i]].clone()
+            } else if encoding.scale.categorical() {
                 let key = input.keys[i].clone().or_else(|| {
                     input.categories[i]
                         .as_ref()

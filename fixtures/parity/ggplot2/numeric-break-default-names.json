@@ -1,0 +1,3081 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "identity",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "identity",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "identity",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "identity",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "identity",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "identity",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "identity",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "Infinity",
+            "-Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "identity",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "identity",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "identity",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "sqrt",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.621718327164763,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "sqrt",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.621718327164763,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "sqrt",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "sqrt",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.621718327164763,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "sqrt",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.621718327164763,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "sqrt",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.621718327164763,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "sqrt",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "Infinity",
+            null
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "sqrt",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.621718327164763,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "sqrt",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "sqrt",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.621718327164763,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "log10",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.739561480529263,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "log10",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.739561480529263,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "log10",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "log10",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.739561480529263,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "log10",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.739561480529263,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "log10",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.739561480529263,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "log10",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "Infinity",
+            0
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "log10",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.739561480529263,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "log10",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "log10",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.739561480529263,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "reverse",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "reverse",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "reverse",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.5
+            ],
+            "labels": [
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "reverse",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "reverse",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "reverse",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "reverse",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "-Infinity",
+            "Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "reverse",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "reverse",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "scale_colour_continuous",
+      "transform": "reverse",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "identity",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              10,
+              5.5,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "identity",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              10,
+              5.5,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "identity",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              4
+            ],
+            "labels": [
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "identity",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              10,
+              5.5,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "identity",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              10,
+              5.5,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "identity",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              10,
+              5.5,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "identity",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "Infinity",
+            "-Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "identity",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              10,
+              5.5,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "identity",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "identity",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              10,
+              5.5,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "sqrt",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              3.16227766016838,
+              2.34520787991171,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "sqrt",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              3.16227766016838,
+              2.34520787991171,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "sqrt",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              2
+            ],
+            "labels": [
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "sqrt",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              3.16227766016838,
+              2.34520787991171,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "sqrt",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              3.16227766016838,
+              2.34520787991171,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "sqrt",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              3.16227766016838,
+              2.34520787991171,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "sqrt",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "Infinity",
+            null
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "sqrt",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              3.16227766016838,
+              2.34520787991171,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "sqrt",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "sqrt",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              3.16227766016838,
+              2.34520787991171,
+              1,
+              1
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "log10",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1,
+              0.740362689494244,
+              0,
+              0
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "log10",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1,
+              0.740362689494244,
+              0,
+              0
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "log10",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.602059991327962
+            ],
+            "labels": [
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "log10",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1,
+              0.740362689494244,
+              0,
+              0
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "log10",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1,
+              0.740362689494244,
+              0,
+              0
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "log10",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1,
+              0.740362689494244,
+              0,
+              0
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "log10",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "Infinity",
+            0
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "log10",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1,
+              0.740362689494244,
+              0,
+              0
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "log10",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "log10",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            1,
+            10
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1,
+              0.740362689494244,
+              0,
+              0
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "reverse",
+      "population": "ordinary",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              -1,
+              -5.5,
+              -10,
+              -10
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "reverse",
+      "population": "ordinary",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1,
+        4,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              -1,
+              -5.5,
+              -10,
+              -10
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "reverse",
+      "population": "constant",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              -4
+            ],
+            "labels": [
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "reverse",
+      "population": "constant",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        4,
+        4
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              -1,
+              -5.5,
+              -10,
+              -10
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "reverse",
+      "population": "missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              -1,
+              -5.5,
+              -10,
+              -10
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "reverse",
+      "population": "missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        1,
+        10
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              -1,
+              -5.5,
+              -10,
+              -10
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "reverse",
+      "population": "all_missing",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            "-Infinity",
+            "Infinity"
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [],
+            "labels": []
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "reverse",
+      "population": "all_missing",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              -1,
+              -5.5,
+              -10,
+              -10
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "reverse",
+      "population": "empty",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": []
+      }
+    },
+    {
+      "channel": "size",
+      "constructor": "continuous_scale",
+      "transform": "reverse",
+      "population": "empty",
+      "limits": "full",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [],
+      "calls": [
+        {
+          "limits": [
+            10,
+            1
+          ],
+          "count": 3,
+          "effective": 3,
+          "names": []
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              -1,
+              -5.5,
+              -10,
+              -10
+            ],
+            "labels": [
+              "last",
+              "middle",
+              "first",
+              "again"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

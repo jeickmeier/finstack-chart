@@ -281,6 +281,7 @@ fn primary_reference_missing_color_matches_r_and_keeps_explicit_overrides() {
     );
     let mut palette_only = reference.clone();
     palette_only.ggplot = None;
+    palette_only.palette_theme_aesthetics.clear();
     palette_only.training = ScaleTraining::Authored;
     let ScaleFunctionSpec::Interpolated(s) = &mut palette_only.function else {
         unreachable!()

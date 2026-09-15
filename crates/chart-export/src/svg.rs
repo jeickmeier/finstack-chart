@@ -190,6 +190,9 @@ fn build_with_outlines(
         }
         let mut active: Option<&GuideComponent> = None;
         for (index, item) in scene.items().iter().enumerate() {
+            if crate::snapshot::point_is_clipped(item, scene.bounds()) {
+                continue;
+            }
             guide_groups(&mut out, &mut active, item.guide.as_ref(), index)?;
             let attrs = component_attributes(item.guide.as_ref());
             let clip = item.clip.unwrap_or(scene.bounds());
@@ -293,6 +296,38 @@ fn build_with_outlines(
                         write_command(&mut out, c)?;
                     }
                     out.write_str("\"/></g>")?;
+                }
+                Primitive::SampledGradientRectangle {
+                    bounds,
+                    direction,
+                    colors,
+                    mode,
+                } => {
+                    let (x2, y2) = match direction {
+                        chart_core::scene::GradientDirection::Horizontal => (1, 0),
+                        chart_core::scene::GradientDirection::Vertical => (0, 1),
+                    };
+                    write!(
+                        out,
+                        "<defs><linearGradient id=\"gradient-{index}\" x1=\"0\" y1=\"0\" x2=\"{x2}\" y2=\"{y2}\" color-interpolation=\"sRGB\" spreadMethod=\"pad\">"
+                    )?;
+                    for (offset, sample) in mode.stops(colors) {
+                        write!(
+                            out,
+                            "<stop offset=\"{}\" stop-color=\"{}\" stop-opacity=\"{}\"/>",
+                            offset,
+                            color(sample),
+                            alpha(sample)
+                        )?;
+                    }
+                    write!(
+                        out,
+                        "</linearGradient></defs><rect id=\"item-{index}\"{attrs} x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" fill=\"url(#gradient-{index})\"/>",
+                        bounds.origin().x(),
+                        bounds.origin().y(),
+                        bounds.width(),
+                        bounds.height()
+                    )?;
                 }
                 Primitive::GradientRectangle { bounds, gradient } => {
                     let (x2, y2) = match gradient.direction {

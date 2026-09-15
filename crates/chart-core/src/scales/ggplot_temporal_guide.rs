@@ -80,11 +80,80 @@ impl GgplotTemporalGuide {
         }
         Ok(())
     }
-    pub(super) fn resolve(
+    pub(super) fn resolve_using(
         &self,
         bounds: [f64; 2],
         budget: usize,
         label_budget: usize,
+        registry: &crate::grammar::guide_extensions::GuideRegistrations,
+    ) -> ChartResult<Vec<GgplotContinuousGuideEntry>> {
+        self.resolve_selected(bounds, budget, label_budget, registry, None)
+    }
+    pub(super) fn resolve_breaks_using(
+        &self,
+        bounds: [f64; 2],
+        budget: usize,
+        label_budget: usize,
+        registry: &crate::grammar::guide_extensions::GuideRegistrations,
+        breaks: &crate::grammar::scale_break_extensions::ScaleBreakRegistrations,
+        call: &crate::grammar::ScaleBreaksOperation,
+    ) -> ChartResult<Vec<GgplotContinuousGuideEntry>> {
+        self.validate()?;
+        let normalization = GgplotTimestampNormalization {
+            origin: self.origin,
+            unit: self.unit,
+            date: self.arguments.date,
+        };
+        // Explicit date_breaks overrides the function; constant scales skip it.
+        if !matches!(self.arguments.breaks, GgplotTemporalBreaks::Automatic)
+            || (bounds[0].is_finite()
+                && super::ggplot::zero_range(
+                    normalization.absolute(bounds[0]),
+                    normalization.absolute(bounds[1]),
+                ))
+        {
+            return self.resolve_using(bounds, budget, label_budget, registry);
+        }
+        let domain = bounds.map(|v| ScaleKey::Number(Number(v)));
+        let output = breaks.evaluate_temporal(
+            call,
+            &domain,
+            self.arguments.count,
+            crate::grammar::GuideTemporalContext {
+                normalization,
+                zone: &self.zone,
+            },
+        )?;
+        if output.values.is_none() || output.temporal != Some(normalization) {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "Temporal break functions must return typed values in the supplied timestamp representation.",
+            ));
+        }
+        let values = output
+            .values
+            .unwrap()
+            .into_iter()
+            .map(|v| match v {
+                ScaleKey::Number(v) => Ok(v),
+                ScaleKey::Null => Ok(Number(f64::NAN)),
+                _ => Err(error(
+                    DiagnosticCode::Validation,
+                    "Temporal breaks must be numeric timestamp offsets.",
+                )),
+            })
+            .collect::<ChartResult<Vec<_>>>()?;
+        let mut selected = self.clone();
+        selected.arguments.breaks = GgplotTemporalBreaks::Explicit(values);
+        selected.resolve_selected(bounds, budget, label_budget, registry, output.names)
+    }
+    fn resolve_selected(
+        &self,
+        bounds: [f64; 2],
+        budget: usize,
+        label_budget: usize,
+        registry: &crate::grammar::guide_extensions::GuideRegistrations,
+        break_names: Option<Vec<String>>,
     ) -> ChartResult<Vec<GgplotContinuousGuideEntry>> {
         self.validate()?;
         if matches!(self.arguments.breaks, GgplotTemporalBreaks::None) {
@@ -118,8 +187,8 @@ impl GgplotTemporalGuide {
                 GgplotTemporalBreaks::Width(text) => GgplotTimeBreaks {
                     values: super::ggplot_time::aesthetic_width(
                         TimeBounds {
-                            start: utc::absolute(view.minimum(), self.origin)?,
-                            end: utc::absolute(view.maximum(), self.origin)?,
+                            start: utc::absolute_number(view.minimum(), self.origin)?,
+                            end: utc::absolute_number(view.maximum(), self.origin)?,
                         },
                         self.unit,
                         &calendar,
@@ -160,47 +229,110 @@ impl GgplotTemporalGuide {
                 .collect()
         };
         crate::limits::require_within(values.len() <= budget, "temporal guide candidate")?;
+        let retained_names = break_names.clone().or_else(|| {
+            automatic_labels
+                .as_ref()
+                .map(|labels: &Vec<Option<String>>| {
+                    labels
+                        .iter()
+                        .map(|label| label.clone().unwrap_or_default())
+                        .collect::<Vec<_>>()
+                })
+        });
         let labels = if let Some(format) = &self.arguments.format {
             GgplotGuideLabels::Explicit(self.format_values(&values, format, &calendar)?)
         } else if matches!(self.arguments.labels, GgplotGuideLabels::Automatic) {
-            let labels = match automatic_labels {
+            let labels = match break_names
+                .map(|names| names.into_iter().map(Some).collect())
+                .or(automatic_labels)
+            {
                 Some(labels) => labels,
-                None => {
-                    let mut midnight = true;
-                    for value in values.iter().filter(|v| v.is_finite()) {
-                        let date =
-                            calendar.components(utc::absolute(*value, self.origin)?, self.unit)?;
-                        midnight &= date.hour == 0
-                            && date.minute == 0
-                            && date.second == 0
-                            && date.nanosecond == 0;
-                    }
-                    self.format_values(
-                        &values,
-                        &GgplotTimeFormat {
-                            pattern: if self.arguments.date || midnight {
-                                "%Y-%m-%d"
-                            } else {
-                                "%Y-%m-%d %H:%M:%S"
-                            }
-                            .into(),
-                            locale: None,
-                        },
-                        &calendar,
-                    )?
-                }
+                None => self.default_labels(&values)?,
             };
             GgplotGuideLabels::Explicit(labels)
+        } else if matches!(self.arguments.labels, GgplotGuideLabels::Registered { .. }) {
+            if values.is_empty() {
+                return Ok(vec![]);
+            }
+            let names = break_names.or_else(|| {
+                automatic_labels.map(|labels: Vec<Option<String>>| {
+                    labels
+                        .into_iter()
+                        .map(Option::unwrap_or_default)
+                        .collect::<Vec<_>>()
+                })
+            });
+            let inputs = values
+                .iter()
+                .copied()
+                .map(crate::composition::ScaleValue::Number)
+                .collect::<Vec<_>>();
+            GgplotGuideLabels::Explicit(self.arguments.labels.registered_values(
+                &inputs,
+                names.as_deref(),
+                Some(crate::grammar::GuideTemporalContext {
+                    normalization,
+                    zone: &self.zone,
+                }),
+                registry,
+                label_budget,
+            )?)
         } else {
             self.arguments.labels.clone()
         };
-        super::ggplot_continuous_guide::numeric_guide_entries(
+        let mut entries = super::ggplot_continuous_guide::numeric_guide_entries(
             values,
             bounds,
             NumericFamily::Linear,
             false,
             &labels,
             label_budget,
+        )?;
+        if let Some(names) = retained_names {
+            for (entry, name) in entries.iter_mut().zip(names) {
+                entry.name = Some(name);
+            }
+        }
+        Ok(entries)
+    }
+    pub(crate) fn interval_labels(&self) -> &GgplotGuideLabels {
+        if self.arguments.format.is_some() {
+            &GgplotGuideLabels::Automatic
+        } else {
+            &self.arguments.labels
+        }
+    }
+    pub(crate) fn interval_endpoint_labels(
+        &self,
+        values: &[f64],
+    ) -> ChartResult<Vec<Option<String>>> {
+        if let Some(format) = &self.arguments.format {
+            self.format_values(values, format, &Calendar::new(self.zone.clone())?)
+        } else {
+            self.default_labels(values)
+        }
+    }
+    pub(crate) fn default_labels(&self, values: &[f64]) -> ChartResult<Vec<Option<String>>> {
+        let calendar = Calendar::new(self.zone.clone())?;
+        let mut midnight = true;
+        for value in values.iter().filter(|v| v.is_finite()) {
+            let date =
+                calendar.components(utc::absolute_number(*value, self.origin)?, self.unit)?;
+            midnight &=
+                date.hour == 0 && date.minute == 0 && date.second == 0 && date.nanosecond == 0;
+        }
+        self.format_values(
+            values,
+            &GgplotTimeFormat {
+                pattern: if self.arguments.date || midnight {
+                    "%Y-%m-%d"
+                } else {
+                    "%Y-%m-%d %H:%M:%S"
+                }
+                .into(),
+                locale: None,
+            },
+            &calendar,
         )
     }
     fn format_values(
@@ -215,7 +347,7 @@ impl GgplotTemporalGuide {
             .map(|value| {
                 if value.is_finite() {
                     formatter
-                        .format(utc::absolute(*value, self.origin)?, self.unit)
+                        .format(utc::absolute_number(*value, self.origin)?, self.unit)
                         .map(Some)
                 } else {
                     Ok(None)

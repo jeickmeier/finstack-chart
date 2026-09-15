@@ -16,3 +16,6 @@ interval: CalendarInterval = {"unit": "SourceTick", "step": 10}
 assert_type(time.offset(1700000000000000001, interval), int)
 time.ticks(interval=interval)
 time.format(1700000000000000001, pattern="%H:%M:%S.%f")
+
+from finstack_chart import scale_transform, x_axis
+x_axis().scale(scale_transform({"Ggplot": {"transform": {"BoxCox": {"p": 0.5, "offset": 2.0}}}}))

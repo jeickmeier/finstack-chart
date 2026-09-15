@@ -29,11 +29,23 @@ pub fn ggplot_breaks_log(
     base: f64,
     max_ticks: usize,
 ) -> ChartResult<Vec<f64>> {
+    builtin_breaks_log(domain, count, base, max_ticks, false)
+}
+/// Built-in transform bases may decrease; retain the reference exponent direction.
+pub(crate) fn builtin_breaks_log(
+    domain: [f64; 2],
+    count: f64,
+    base: f64,
+    max_ticks: usize,
+    decreasing: bool,
+) -> ChartResult<Vec<f64>> {
     if !count.is_finite()
         || count <= 0.
         || count > max_ticks as f64
         || !base.is_finite()
-        || base <= 1.
+        || base <= 0.
+        || base == 1.
+        || (base < 1. && !decreasing)
     {
         return Err(error(
             DiagnosticCode::NumericalDomain,
@@ -87,6 +99,12 @@ pub fn ggplot_breaks_log(
         ));
     }
     let mut by = ((max - min) / count).floor() + 1.;
+    if by == 0. || (max - min) / by < 0. {
+        return Err(error(
+            DiagnosticCode::NumericalDomain,
+            "Log break exponent step has an invalid direction.",
+        ));
+    }
     let mut iterations = 0;
     loop {
         iterations += 1;
@@ -106,7 +124,7 @@ pub fn ggplot_breaks_log(
         by -= 1.;
     }
     if base <= 2. {
-        return finish(series(min, max, 1., base)?);
+        return finish(series(min, max, if max < min { -1. } else { 1. }, base)?);
     }
     if base > 10_000. {
         return Err(error(

@@ -101,6 +101,7 @@ impl Mapping {
         }
         if let Self::Scaled { input, scale } = self {
             return Ok(Numeric::Scaled {
+                samples: None,
                 input: Box::new(input.resolve(data)?),
                 scale: Box::new(scale.clone()),
             });

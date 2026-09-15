@@ -76,6 +76,7 @@ fn point(p: Point) -> ChartResult<Point> {
 }
 fn geometry(geometry: &mut PreparedGeometry) -> ChartResult<()> {
     match geometry {
+        PreparedGeometry::UnboundedPoint(p) => p.swap(0, 1),
         PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {}
         PreparedGeometry::Point(p)
         | PreparedGeometry::ShapePath { center: p, .. }

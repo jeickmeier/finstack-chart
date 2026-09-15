@@ -318,13 +318,13 @@ fn distribution_nice_preserves_midpoints_and_rebuilds_thresholds() {
             } else {
                 let spec = if name.contains("Diverging") {
                     NormalizationSpec::Diverging {
-                        family,
+                        family: family.clone(),
                         domain: d.clone().try_into().unwrap(),
                         clamp: false,
                     }
                 } else {
                     NormalizationSpec::Sequential {
-                        family,
+                        family: family.clone(),
                         domain: d.clone().try_into().unwrap(),
                         clamp: false,
                     }

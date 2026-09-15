@@ -30,7 +30,172 @@ pub(crate) struct PreparedScope {
     tables: BTreeMap<TransformId, Arc<PreparedTable>>,
     diagnostics: Vec<Diagnostic>,
     metrics: PreparationMetrics,
+    encoded: BTreeMap<LayerId, EncodedLayer>,
 }
+/// Positioned rows retained until all panels sharing an axis can train together.
+pub(crate) struct PositionedScope {
+    population: PreparedScope,
+    layers: Vec<(Layer, PositionedLayer)>,
+    color_domains: BTreeMap<crate::ScaleId, Vec<String>>,
+    vertices: usize,
+    positional_limits: BTreeMap<crate::ScaleId, Vec<crate::interpolate::Number>>,
+    positional_empty: std::collections::BTreeSet<crate::ScaleId>,
+}
+
+pub(crate) fn transform_generated_scopes(
+    scopes: &mut [(&ChartDefinition, &mut PreparedScope)],
+) -> ChartResult<()> {
+    let ids = scopes
+        .iter()
+        .flat_map(|(_, s)| s.encoded.keys().copied())
+        .collect::<BTreeSet<_>>();
+    for id in ids {
+        let mut groups = scopes
+            .iter_mut()
+            .filter_map(|(definition, scope)| {
+                let layer = definition.layers.iter().find(|l| l.id == id)?;
+                let encoded = scope.encoded.get_mut(&id)?;
+                Some((
+                    layer,
+                    population_axes(definition),
+                    &mut encoded.domains,
+                    &mut encoded.encoded,
+                ))
+            })
+            .collect::<Vec<_>>();
+        super::scale_stage::transform_generated_populations(&mut groups)?;
+    }
+    Ok(())
+}
+
+pub(crate) fn train_facet_positioned_scopes(
+    definition: &ChartDefinition,
+    panel_definitions: &[ChartDefinition],
+    scopes: &mut [PositionedScope],
+    registry: &ExtensionRegistry,
+    limits: CompileLimits,
+) -> ChartResult<()> {
+    let facets = definition.facets.as_ref().expect("facet training");
+    let Some(first) = panel_definitions.first() else {
+        return Ok(());
+    };
+    let mut shared = first.clone();
+    shared.axes.retain(|a| {
+        if a.side.horizontal() {
+            !facets.scales.free_x
+        } else {
+            !facets.scales.free_y
+        }
+    });
+    let mut empty = std::collections::BTreeSet::new();
+    let resolved = train_positioned_limits(
+        &shared,
+        &mut scopes
+            .iter_mut()
+            .flat_map(|s| s.layers.iter_mut().map(|(l, p)| (&*l, p)))
+            .collect::<Vec<_>>(),
+        registry,
+        limits,
+        &mut empty,
+        false,
+    )?;
+    for (scope, panel_definition) in scopes.iter_mut().zip(panel_definitions) {
+        let mut free = panel_definition.clone();
+        free.axes.retain(|a| {
+            if a.side.horizontal() {
+                facets.scales.free_x
+            } else {
+                facets.scales.free_y
+            }
+        });
+        scope.positional_limits = resolved.clone();
+        scope.positional_empty = empty.clone();
+        scope.positional_limits.extend(train_positioned_limits(
+            &free,
+            &mut scope
+                .layers
+                .iter_mut()
+                .map(|(l, p)| (&*l, p))
+                .collect::<Vec<_>>(),
+            registry,
+            limits,
+            &mut scope.positional_empty,
+            false,
+        )?);
+    }
+    for axis in definition.axes.iter().filter(|a| {
+        a.oob_function.is_some() && !matches!(a.scale, crate::layout::AxisScale::Binned { .. })
+    }) {
+        let free = if axis.side.horizontal() {
+            facets.scales.free_x
+        } else {
+            facets.scales.free_y
+        };
+        let axes = scopes
+            .iter()
+            .zip(panel_definitions)
+            .map(|(scope, panel)| {
+                let mut axis = panel
+                    .axes
+                    .iter()
+                    .find(|a| a.id == axis.id)
+                    .expect("panel axis")
+                    .clone();
+                axis.resolved_limits = scope.positional_limits.get(&axis.id).cloned().map(Box::new);
+                axis
+            })
+            .collect::<Vec<_>>();
+        let ids = scopes
+            .iter()
+            .flat_map(|s| &s.layers)
+            .map(|(l, _)| l.id)
+            .collect::<BTreeSet<_>>();
+        for id in ids {
+            let layer = scopes
+                .iter()
+                .flat_map(|s| &s.layers)
+                .find(|(l, _)| l.id == id)
+                .expect("layer")
+                .0
+                .clone();
+            let mut groups = if free {
+                scopes
+                    .iter_mut()
+                    .zip(&axes)
+                    .map(|(scope, axis)| {
+                        (
+                            axis,
+                            scope
+                                .layers
+                                .iter_mut()
+                                .filter(|(l, _)| l.id == id)
+                                .flat_map(|(_, p)| p.encoded.iter_mut())
+                                .collect(),
+                        )
+                    })
+                    .collect::<Vec<_>>()
+            } else {
+                vec![(
+                    &axes[0],
+                    scopes
+                        .iter_mut()
+                        .flat_map(|s| s.layers.iter_mut())
+                        .filter(|(l, _)| l.id == id)
+                        .flat_map(|(_, p)| p.encoded.iter_mut())
+                        .collect(),
+                )]
+            };
+            super::positional_vectors::generated_populations(
+                definition,
+                &layer,
+                &mut groups,
+                registry,
+            )?;
+        }
+    }
+    Ok(())
+}
+
 impl PreparedScope {
     pub(crate) fn work_units(&self) -> usize {
         self.tables
@@ -87,8 +252,15 @@ impl Compiler {
         source: &SnapshotHandle<StoreSnapshot>,
         limits: CompileLimits,
     ) -> ChartResult<()> {
-        let oriented = super::orientation::resolve(definition)?;
-        let resolved = semantics::resolve(oriented.as_ref(), source.get()?, limits)?;
+        let captured = super::transform_resolution::resolve(definition, &self.extensions, false)?;
+        let oriented = super::orientation::resolve(captured.as_ref())?;
+        let resolved = semantics::resolve(
+            oriented.as_ref(),
+            source.get()?,
+            limits,
+            &self.extensions,
+            false,
+        )?;
         let definition = resolved.as_ref();
         if let Some(semantics) = &definition.semantics {
             semantics.validate()?;
@@ -123,6 +295,8 @@ impl Compiler {
         state: &ChartState,
         limits: CompileLimits,
     ) -> ChartResult<PreparedChart> {
+        let captured = super::transform_resolution::resolve(definition, &self.extensions, false)?;
+        let definition = captured.as_ref();
         let staged = if super::expression_stage::has_expressions(definition) {
             self.validate(definition, source, limits)?;
             super::expression_stage::specialize(definition, source.get()?)?
@@ -130,8 +304,15 @@ impl Compiler {
             std::borrow::Cow::Borrowed(definition)
         };
         let oriented = super::orientation::resolve(staged.as_ref())?;
-        let resolved = semantics::resolve(oriented.as_ref(), source.get()?, limits)?;
-        let mut result = self.prepare_resolved(resolved.as_ref(), source, state, limits)?;
+        let resolved = semantics::resolve(
+            oriented.as_ref(),
+            source.get()?,
+            limits,
+            &self.extensions,
+            true,
+        )?;
+        let palettes = super::palette_theme::resolve(resolved.as_ref())?;
+        let mut result = self.prepare_resolved(palettes.as_ref(), source, state, limits)?;
         result.definition = Arc::new(definition.clone());
         Ok(result)
     }
@@ -149,7 +330,8 @@ impl Compiler {
         self.bin_cache.begin(limits.max_prepared_rows);
         if let Some((previous, old_limits)) = &self.presentation {
             let old = previous.definition();
-            if *old_limits == limits
+            if !semantics::needs_panel_training(definition)
+                && *old_limits == limits
                 && previous
                     .source
                     .get()
@@ -394,6 +576,7 @@ impl Compiler {
             tables,
             diagnostics,
             metrics,
+            encoded: BTreeMap::new(),
         })
     }
     pub(crate) fn finish_scope(
@@ -402,14 +585,64 @@ impl Compiler {
         source: &SnapshotHandle<StoreSnapshot>,
         state: &ChartState,
         limits: CompileLimits,
-        population: PreparedScope,
+        mut population: PreparedScope,
         samples: &BTreeMap<crate::ScaleId, crate::scales::ScalePopulation>,
     ) -> ChartResult<PreparedChart> {
+        self.encode_scope(definition, source, limits, &mut population)?;
+        transform_generated_scopes(&mut [(definition, &mut population)])?;
+        let mut positioned =
+            self.position_scope(definition, source, state, limits, population, samples)?;
+        positioned.positional_limits = train_positioned_limits(
+            definition,
+            &mut positioned
+                .layers
+                .iter_mut()
+                .map(|(l, p)| (&*l, p))
+                .collect::<Vec<_>>(),
+            &self.extensions,
+            limits,
+            &mut positioned.positional_empty,
+            true,
+        )?;
+        self.finish_positioned_scope(definition, source, state, limits, positioned, samples)
+    }
+    pub(crate) fn encode_scope(
+        &self,
+        definition: &ChartDefinition,
+        source: &SnapshotHandle<StoreSnapshot>,
+        limits: CompileLimits,
+        population: &mut PreparedScope,
+    ) -> ChartResult<()> {
         let snapshot = source.get()?;
-        let mut diagnostics = population.diagnostics;
-        let mut layers = vec![];
-        let mut colors = BTreeMap::new();
-        let mut scale_domains = BTreeMap::new();
+        for layer in &definition.layers {
+            let Some((_, output)) = population.graph.layers.get(&layer.id) else {
+                continue;
+            };
+            let data = snapshot.dataset(output.table.input.dataset)?;
+            let encoded = encode_layer(
+                layer,
+                &output.table,
+                data,
+                &definition.mappings,
+                definition.profile(),
+                &self.extensions,
+                limits,
+            )
+            .map_err(|e| context(e, data, Some(layer.id)))?;
+            population.encoded.insert(layer.id, encoded);
+        }
+        Ok(())
+    }
+    pub(crate) fn position_scope(
+        &mut self,
+        definition: &ChartDefinition,
+        source: &SnapshotHandle<StoreSnapshot>,
+        state: &ChartState,
+        limits: CompileLimits,
+        mut population: PreparedScope,
+        samples: &BTreeMap<crate::ScaleId, crate::scales::ScalePopulation>,
+    ) -> ChartResult<PositionedScope> {
+        let snapshot = source.get()?;
         let mut budget = GeometryBudget {
             profile: definition.profile(),
             geometry_theme: definition.theme.as_ref().and_then(|t| t.geometry.as_ref()),
@@ -431,23 +664,70 @@ impl Compiler {
                 .collect(),
             limits,
         )?;
+        let mut positioned = Vec::new();
         for layer in &definition.layers {
             let Some((_, output)) = population.graph.layers.get(&layer.id) else {
                 continue;
             };
             let table = output.table.clone();
             let data = snapshot.dataset(table.input.dataset)?;
-            let start = diagnostics.len();
-            let prepared = prepare_layer(
+            let prepared = position_layer(
                 layer,
                 table,
                 data,
-                &definition.mappings,
+                population.encoded.remove(&layer.id).expect("encoded layer"),
                 state,
                 &mut budget,
-                &mut diagnostics,
             )
             .map_err(|e| context(e, data, Some(layer.id)))?;
+            positioned.push((layer.clone(), prepared));
+        }
+        Ok(PositionedScope {
+            population,
+            layers: positioned,
+            color_domains: budget.color_domains,
+            vertices: budget.vertices,
+            positional_limits: BTreeMap::new(),
+            positional_empty: Default::default(),
+        })
+    }
+    pub(crate) fn finish_positioned_scope(
+        &mut self,
+        definition: &ChartDefinition,
+        source: &SnapshotHandle<StoreSnapshot>,
+        state: &ChartState,
+        limits: CompileLimits,
+        positioned: PositionedScope,
+        samples: &BTreeMap<crate::ScaleId, crate::scales::ScalePopulation>,
+    ) -> ChartResult<PreparedChart> {
+        let snapshot = source.get()?;
+        let PositionedScope {
+            population,
+            layers: positioned,
+            color_domains,
+            vertices,
+            positional_limits,
+            positional_empty,
+        } = positioned;
+        let mut diagnostics = population.diagnostics;
+        let mut layers = vec![];
+        let mut colors = BTreeMap::new();
+        let mut scale_domains = BTreeMap::new();
+        let mut budget = GeometryBudget {
+            profile: definition.profile(),
+            geometry_theme: definition.theme.as_ref().and_then(|t| t.geometry.as_ref()),
+            population_axes: population_axes(definition),
+            extensions: &self.extensions,
+            limits,
+            vertices: vertices.min(limits.max_vertices),
+            color_domains,
+            color_samples: samples,
+        };
+        for (layer, positioned) in positioned {
+            let data = snapshot.dataset(positioned.prepared.table.input.dataset)?;
+            let start = diagnostics.len();
+            let prepared = finish_layer(&layer, positioned, &mut budget, &mut diagnostics)
+                .map_err(|e| context(e, data, Some(layer.id)))?;
             for e in &mut diagnostics[start..] {
                 *e = context(e.clone(), data, Some(layer.id));
             }
@@ -480,7 +760,11 @@ impl Compiler {
             domains.y_space = d.y_space.clone();
         }
         let result = PreparedChart {
+            positional_limits,
+            positional_empty,
             scale_registrations: self.extensions.scales.clone(),
+            palette_registrations: self.extensions.palette_function.clone(),
+            break_registrations: self.extensions.breaks_function.clone(),
             guide_registrations: self.extensions.guides.clone(),
             panels: vec![],
             shared_training: None,
@@ -865,33 +1149,39 @@ pub(super) fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
                 .map_or_else(BTreeSet::new, |categories| {
                     categories[usize::from(!horizontal)].clone()
                 });
-            let mut include = |p: Point| {
-                used.insert(if horizontal { p.x() } else { p.y() } as usize);
+            let mut include = |x: f64, y: f64| {
+                let value = if horizontal { x } else { y };
+                if value.is_finite() {
+                    used.insert(value as usize);
+                }
             };
             for mark in layer.marks.iter() {
                 match &mark.geometry {
+                    PreparedGeometry::UnboundedPoint(p) => {
+                        include(p[0].0, p[1].0);
+                    }
                     PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {
                     }
                     PreparedGeometry::Point(p)
                     | PreparedGeometry::ShapePath { center: p, .. }
-                    | PreparedGeometry::ShapePathRun { center: p, .. } => include(*p),
+                    | PreparedGeometry::ShapePathRun { center: p, .. } => include(p.x(), p.y()),
                     PreparedGeometry::BandRun { lower, upper }
                     | PreparedGeometry::StackBandRun { lower, upper, .. } => {
                         for p in lower.iter().chain(upper) {
-                            include(*p);
+                            include(p.x(), p.y());
                         }
                     }
                     PreparedGeometry::LineRun(points) | PreparedGeometry::Polygon(points) => {
                         for p in points {
-                            include(*p);
+                            include(p.x(), p.y());
                         }
                     }
                     PreparedGeometry::Rule { from, to }
                     | PreparedGeometry::Rectangle { from, to }
                     | PreparedGeometry::Bar { from, to, .. }
                     | PreparedGeometry::NativePaint { from, to, .. } => {
-                        include(*from);
-                        include(*to);
+                        include(from.x(), from.y());
+                        include(to.x(), to.y());
                     }
                 }
             }
@@ -934,6 +1224,15 @@ pub(super) fn merge_axis(
     horizontal: bool,
     d: &DomainContributions,
 ) -> ChartResult<()> {
+    // A train-only layer may omit either positional aesthetic. Absence contributes
+    // no space; inventing a numeric space here conflicts with categorical peers.
+    if if horizontal {
+        d.x_space.is_none() && d.x.is_none()
+    } else {
+        d.y_space.is_none() && d.y.is_none()
+    } {
+        return Ok(());
+    }
     let a = all.entry(id).or_default();
     if (horizontal && a.y_space.is_some()) || (!horizontal && a.x_space.is_some()) {
         return Err(error(
@@ -1045,12 +1344,12 @@ fn source_binding(
         }
         return Ok((aes, DomainContributions::default()));
     }
-    let (Some(x), Some(y)) = (&aes.x, &aes.y) else {
+    if layer.geom != Geom::Blank && (aes.x.is_none() || aes.y.is_none()) {
         return Err(error(
             DiagnosticCode::SchemaConflict,
             "Geometry requires x and y source mappings.",
         ));
-    };
+    }
     if endpoints && (aes.x2.is_none() || aes.y2.is_none()) {
         return Err(error(
             DiagnosticCode::SchemaConflict,
@@ -1084,9 +1383,19 @@ fn source_binding(
         .clone()
         .unwrap_or_else(|| aes.group.map_or(Grouping::All, Grouping::Field));
     validate_group(data, &grouping)?;
-    domains.x_space = source_space(data, x, profile)?;
-    domains.y_space = source_space(data, y, profile)?;
-    if endpoints {
+    domains.x_space = aes
+        .x
+        .as_ref()
+        .map(|v| source_space(data, v, profile))
+        .transpose()?
+        .flatten();
+    domains.y_space = aes
+        .y
+        .as_ref()
+        .map(|v| source_space(data, v, profile))
+        .transpose()?
+        .flatten();
+    if endpoints || layer.geom == Geom::Blank {
         if let Some(value) = &aes.x2 {
             merge_space(&mut domains.x_space, &source_space(data, value, profile)?)?;
         }
@@ -1195,39 +1504,43 @@ struct GeometryBudget<'a> {
     color_domains: BTreeMap<crate::ScaleId, Vec<String>>,
     color_samples: &'a BTreeMap<crate::ScaleId, crate::scales::ScalePopulation>,
 }
-fn prepare_layer(
+/// Encoded rows after statistics and positions, before final scale mapping and
+/// geometry. Retaining this stage lets shared scales train across all layers once.
+struct PositionedLayer {
+    prepared: PreparedLayer,
+    encoded: Vec<EncodedRow>,
+    mapped_size: bool,
+    area_size: bool,
+    stack: Option<super::stack_position::StackLayout>,
+}
+struct EncodedLayer {
+    domains: DomainContributions,
+    encoded: Vec<EncodedRow>,
+    hierarchy: Option<Arc<super::PreparedHierarchy>>,
+    mapped_size: bool,
+}
+fn encode_layer(
     layer: &Layer,
-    table: Arc<PreparedTable>,
+    table: &PreparedTable,
     data: &DatasetSnapshot,
     inherited: &SourceAes,
-    state: &ChartState,
-    budget: &mut GeometryBudget<'_>,
-    diagnostics: &mut Vec<Diagnostic>,
-) -> ChartResult<PreparedLayer> {
-    let extensions = budget.extensions;
-    let shape_protocols = super::shape_extensions::resolve_layer(layer, extensions)?;
-    let limits = budget.limits;
-    let vertices = &mut budget.vertices;
-    let mut domains;
+    profile: Profile,
+    extensions: &Arc<ExtensionRegistry>,
+    limits: CompileLimits,
+) -> ChartResult<EncodedLayer> {
+    let domains;
     let mut hierarchy = None;
     let (mut encoded, mapped_size): (Vec<EncodedRow>, bool) = match (&table.rows, &layer.mappings) {
         (PreparedRows::Source(_), Mappings::Source(_)) if layer.geom == Geom::Hierarchy => {
             let (prepared_hierarchy, rows) =
-                super::hierarchy::prepare(layer, &table, data, inherited, extensions, limits)?;
+                super::hierarchy::prepare(layer, table, data, inherited, extensions, limits)?;
             hierarchy = prepared_hierarchy;
             domains = DomainContributions::default();
             (rows, false)
         }
         (PreparedRows::Source(rows), Mappings::Source(authored)) => {
-            let (aes, bound_domains) =
-                source_binding(layer, authored, inherited, data, budget.profile)?;
+            let (aes, bound_domains) = source_binding(layer, authored, inherited, data, profile)?;
             domains = bound_domains;
-            let (Some(x), Some(y)) = (&aes.x, &aes.y) else {
-                return Err(error(
-                    DiagnosticCode::SchemaConflict,
-                    "Missing checked source mappings.",
-                ));
-            };
             let grouping = aes
                 .grouping
                 .clone()
@@ -1256,11 +1569,15 @@ fn prepare_layer(
                 if let Numeric::Category(id) = value {
                     if let Some(crate::data::ValueRef::Category(label)) = row.value(*id) {
                         catalogs.get(id)?.get(label).copied()
-                    } else if budget.profile == Profile::Ggplot2_4_0_3 && row.value(*id).is_none() {
+                    } else if profile == Profile::Ggplot2_4_0_3 && row.value(*id).is_none() {
                         Some(catalogs.get(id)?.len() as f64)
                     } else {
                         None
                     }
+                } else if matches!(value, Numeric::Scaled { scale, .. }
+                    if scale.missing.is_some() || profile == Profile::Ggplot2_4_0_3)
+                {
+                    super::stats::raw_number(row, value)
                 } else {
                     number(row, value)
                 }
@@ -1272,8 +1589,8 @@ fn prepare_layer(
                     EncodedRow {
                         missing_aesthetics: 0,
                         values: BTreeMap::new(),
-                        x: coordinate(row, x),
-                        y: coordinate(row, y),
+                        x: aes.x.as_ref().and_then(|v| coordinate(row, v)),
+                        y: aes.y.as_ref().and_then(|v| coordinate(row, v)),
                         x2: aes.x2.as_ref().and_then(|v| coordinate(row, v)),
                         y2: aes.y2.as_ref().and_then(|v| coordinate(row, v)),
                         color: None,
@@ -1491,6 +1808,41 @@ fn prepare_layer(
             }
         }
     }
+    if profile == Profile::Ggplot2_4_0_3
+        && table
+            .population_operation()
+            .is_some_and(|op| matches!(op.parameters, StatParameters::Summary(_)))
+        && let PreparedRows::Statistical(rows) = &table.rows
+    {
+        // The inspection table retains empty aggregates; ggplot has no generated
+        // positional observation for a summary without any usable input.
+        encoded.retain(|row| rows.get(row.ordinal as usize).is_none_or(|r| r.count != 0));
+    }
+    Ok(EncodedLayer {
+        domains,
+        encoded,
+        hierarchy,
+        mapped_size,
+    })
+}
+fn position_layer(
+    layer: &Layer,
+    table: Arc<PreparedTable>,
+    data: &DatasetSnapshot,
+    encoding: EncodedLayer,
+    state: &ChartState,
+    budget: &mut GeometryBudget<'_>,
+) -> ChartResult<PositionedLayer> {
+    let EncodedLayer {
+        mut domains,
+        mut encoded,
+        hierarchy,
+        mapped_size,
+    } = encoding;
+    let extensions = budget.extensions;
+    let shape_protocols = super::shape_extensions::resolve_layer(layer, extensions)?;
+    let limits = budget.limits;
+    let vertices = &mut budget.vertices;
     super::scale_stage::generated_rows(layer, budget.population_axes, &mut domains, &mut encoded)?;
     let catalog = layer
         .color
@@ -1503,6 +1855,7 @@ fn prepare_layer(
         &table,
         &mut encoded,
         super::colors::ColorContext {
+            layer: layer.id,
             limits,
             registry: extensions,
             shared: catalog.map(Vec::as_slice),
@@ -1527,6 +1880,7 @@ fn prepare_layer(
             &table,
             &mut encoded,
             super::colors::ColorContext {
+                layer: layer.id,
                 limits,
                 registry: extensions,
                 shared: budget.color_domains.get(&encoding.id).map(Vec::as_slice),
@@ -1536,6 +1890,7 @@ fn prepare_layer(
             paint_legends.insert(*channel, legend);
         }
     }
+    let mut value_guides = super::style_channels::ValueGuides::default();
     let numeric_scales = super::numeric_aesthetics::apply(
         layer,
         data,
@@ -1546,6 +1901,7 @@ fn prepare_layer(
             samples: budget.color_samples,
             registry: extensions,
             profile: budget.profile,
+            guides: &mut value_guides,
         },
     )?;
     let value_scales = super::style_channels::apply(
@@ -1553,9 +1909,13 @@ fn prepare_layer(
         data,
         &table,
         &mut encoded,
-        limits,
-        budget.color_samples,
-        extensions,
+        super::numeric_aesthetics::NumericContext {
+            limits,
+            samples: budget.color_samples,
+            registry: extensions,
+            profile: budget.profile,
+            guides: &mut value_guides,
+        },
     )?;
     let mut symbol_legends = super::symbols::apply(
         layer,
@@ -1577,6 +1937,52 @@ fn prepare_layer(
         mapped_size || area_size || layer.numeric_scales.contains_key(&NumericAesthetic::Size);
     let stack = super::positions::apply(layer, &domains, &mut encoded, limits, &shape_protocols)?;
     super::positions::output_space(layer, &mut domains);
+    let prepared = PreparedLayer {
+        hierarchy,
+        shape_protocols,
+        orientation: layer.orientation,
+        interactions: BTreeMap::new(),
+        color_legend,
+        paint_legends,
+        numeric_scales,
+        value_scales,
+        value_guides,
+        symbol_legends,
+        position: layer.position.clone(),
+        id: layer.id,
+        scales: layer.scales,
+        clip: layer.clip,
+        table,
+        marks: Arc::new(vec![]),
+        domains,
+        unpainted_categories: None,
+        invalid_geometry: 0,
+        visible: state.is_visible(layer.id),
+    };
+    Ok(PositionedLayer {
+        prepared,
+        encoded,
+        mapped_size,
+        area_size,
+        stack,
+    })
+}
+fn finish_layer(
+    layer: &Layer,
+    positioned: PositionedLayer,
+    budget: &mut GeometryBudget<'_>,
+    diagnostics: &mut Vec<Diagnostic>,
+) -> ChartResult<PreparedLayer> {
+    let PositionedLayer {
+        mut prepared,
+        mut encoded,
+        mapped_size,
+        area_size,
+        stack,
+    } = positioned;
+    let limits = budget.limits;
+    let vertices = &mut budget.vertices;
+    let extensions = budget.extensions;
     super::after_scale::apply(
         layer,
         budget.geometry_theme,
@@ -1584,26 +1990,46 @@ fn prepare_layer(
         &mut encoded,
         budget.profile,
     )?;
+    // Retain IEEE coordinates through population training. Ordinary reference
+    // points defer infinities to coordinate projection; finite geometry families
+    // still exclude them before constructing checked Points.
+    for row in &mut encoded {
+        let retain_infinite_point = budget.profile == Profile::Ggplot2_4_0_3
+            && layer.geom == Geom::Point
+            && !row.values.contains_key(&ValueAesthetic::Shape);
+        for value in [
+            &mut row.x,
+            &mut row.y,
+            &mut row.x2,
+            &mut row.y2,
+            &mut row.low,
+            &mut row.high,
+        ] {
+            *value = value.filter(|v| v.is_finite() || (retain_infinite_point && v.is_infinite()));
+        }
+    }
     let mut unpainted_categories: Option<Box<[BTreeSet<usize>; 2]>> = None;
-    if budget.profile == Profile::Ggplot2_4_0_3
-        && matches!(
-            layer.geom,
-            Geom::Point
-                | Geom::ShapeSymbol { .. }
-                | Geom::Line { .. }
-                | Geom::ShapeLine { .. }
-                | Geom::Rule
-        )
+    if layer.geom == Geom::Blank
+        || (budget.profile == Profile::Ggplot2_4_0_3
+            && matches!(
+                layer.geom,
+                Geom::Point
+                    | Geom::ShapeSymbol { .. }
+                    | Geom::Line { .. }
+                    | Geom::ShapeLine { .. }
+                    | Geom::Rule
+            ))
     {
         for row in &mut encoded {
-            if [
-                AfterScaleAesthetic::Color,
-                AfterScaleAesthetic::Stroke,
-                AfterScaleAesthetic::Size,
-                AfterScaleAesthetic::LineWidth,
-            ]
-            .iter()
-            .any(|a| row.is_missing(*a))
+            if layer.geom == Geom::Blank
+                || [
+                    AfterScaleAesthetic::Color,
+                    AfterScaleAesthetic::Stroke,
+                    AfterScaleAesthetic::Size,
+                    AfterScaleAesthetic::LineWidth,
+                ]
+                .iter()
+                .any(|a| row.is_missing(*a))
             {
                 // ggplot2 trains position scales before removing missing paint.
                 // Retain each finite contribution without emitting an invisible
@@ -1613,19 +2039,27 @@ fn prepare_layer(
                         0,
                         [
                             row.x,
-                            (layer.geom == Geom::Rule).then_some(row.x2).flatten(),
+                            matches!(layer.geom, Geom::Rule | Geom::Blank)
+                                .then_some(row.x2)
+                                .flatten(),
+                            None,
+                            None,
                         ],
-                        &mut domains.x,
-                        &domains.x_space,
+                        &mut prepared.domains.x,
+                        &prepared.domains.x_space,
                     ),
                     (
                         1,
                         [
                             row.y,
-                            (layer.geom == Geom::Rule).then_some(row.y2).flatten(),
+                            matches!(layer.geom, Geom::Rule | Geom::Blank)
+                                .then_some(row.y2)
+                                .flatten(),
+                            (layer.geom == Geom::Blank).then_some(row.low).flatten(),
+                            (layer.geom == Geom::Blank).then_some(row.high).flatten(),
                         ],
-                        &mut domains.y,
-                        &domains.y_space,
+                        &mut prepared.domains.y,
+                        &prepared.domains.y_space,
                     ),
                 ] {
                     for value in values.into_iter().flatten().filter(|v| v.is_finite()) {
@@ -1647,7 +2081,7 @@ fn prepare_layer(
         }
     }
     let mapped_size = mapped_size || layer.after_scale.contains_key(&AfterScaleAesthetic::Size);
-    super::shape_encoding::allocate(layer, &mut encoded, limits, &shape_protocols)?;
+    super::shape_encoding::allocate(layer, &mut encoded, limits, &prepared.shape_protocols)?;
     if matches!(layer.geom, Geom::ShapeArea { .. }) {
         for row in &mut encoded {
             if row.x2.is_none() || row.y2.is_none() {
@@ -1656,27 +2090,10 @@ fn prepare_layer(
             }
         }
     }
-    let mut prepared = PreparedLayer {
-        hierarchy,
-        shape_protocols,
-        orientation: layer.orientation,
-        interactions: BTreeMap::new(),
-        color_legend,
-        paint_legends,
-        numeric_scales,
-        value_scales,
-        symbol_legends,
-        position: layer.position.clone(),
-        id: layer.id,
-        scales: layer.scales,
-        clip: layer.clip,
-        table,
-        marks: Arc::new(vec![]),
-        domains,
-        unpainted_categories,
-        invalid_geometry: 0,
-        visible: state.is_visible(layer.id),
-    };
+    prepared.unpainted_categories = unpainted_categories;
+    if layer.geom == Geom::Blank {
+        return Ok(prepared);
+    }
     let mut samples = vec![];
     if layer.geom == Geom::Hierarchy {
         super::hierarchy::emit(&mut prepared, layer, encoded, vertices)?;
@@ -1792,9 +2209,8 @@ fn prepare_layer(
                 row.size
                     .filter(|v| {
                         *v > 0.
-                            || (v.is_finite()
-                                && budget.profile == Profile::Ggplot2_4_0_3
-                                && (layer.geom == Geom::Point
+                            || (budget.profile == Profile::Ggplot2_4_0_3
+                                && ((!v.is_nan() && layer.geom == Geom::Point)
                                     || (layer.geom.reference_linewidth() && *v == 0.)))
                     })
                     .map(|size| Style {
@@ -1907,13 +2323,20 @@ fn prepare_layer(
                                                 }) {
                                                 // gg_par fontsize = size * .pt + stroke * .stroke / 2;
                                                 // R's circle glyph radius is 3/8 of that device fontsize.
-                                                (style.radius * 0.37640625
-                                                    + style.stroke_width * 0.25)
-                                                    .max(0.)
+                                                super::reference_point_radius(
+                                                    style.radius,
+                                                    style.stroke_width,
+                                                )
                                             } else {
                                                 style.radius
                                             };
-                                            std::f64::consts::PI * radius * radius
+                                            // Grid retains nonfinite point sizes in the built
+                                            // data/grob but paints no glyph for either infinity.
+                                            if radius.is_finite() {
+                                                std::f64::consts::PI * radius * radius
+                                            } else {
+                                                0.
+                                            }
                                         },
                                         paint: crate::shape::SymbolPaint::Auto,
                                     },
@@ -1924,6 +2347,27 @@ fn prepare_layer(
                                 )
                             })
                             .transpose()?,
+                        None if budget.profile == Profile::Ggplot2_4_0_3
+                            && style.is_some_and(|s| s.radius.is_infinite()) =>
+                        {
+                            Some(super::shape_encoding::geometry(
+                                Geom::ShapeSymbol {
+                                    kind: crate::shape::SymbolKind::Ggplot(19),
+                                    size: 0.,
+                                    paint: crate::shape::SymbolPaint::Auto,
+                                },
+                                &row,
+                                Point::new(x, y)?,
+                                limits,
+                                None,
+                            )?)
+                        }
+                        None if x.is_infinite() || y.is_infinite() => {
+                            Some(PreparedGeometry::UnboundedPoint([
+                                crate::interpolate::Number(x),
+                                crate::interpolate::Number(y),
+                            ]))
+                        }
                         None => Some(PreparedGeometry::Point(Point::new(x, y)?)),
                         _ => unreachable!("validated point shape"),
                     },
@@ -1952,7 +2396,8 @@ fn prepare_layer(
                         }),
                         _ => None,
                     },
-                    Geom::Hierarchy
+                    Geom::Blank
+                    | Geom::Hierarchy
                     | Geom::Line { .. }
                     | Geom::ShapeLineRadial { .. }
                     | Geom::ShapeAreaRadial { .. }
@@ -1976,7 +2421,7 @@ fn prepare_layer(
                     PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {
                         0
                     }
-                    PreparedGeometry::Point(_) => 1,
+                    PreparedGeometry::Point(_) | PreparedGeometry::UnboundedPoint(_) => 1,
                     PreparedGeometry::Rule { .. } => 2,
                     PreparedGeometry::Rectangle { .. } | PreparedGeometry::Bar { .. } => 4,
                     PreparedGeometry::LineRun(_)
@@ -2238,6 +2683,14 @@ pub(super) fn include_geometry(domains: &mut DomainContributions, geometry: &Pre
         Extent::include(&mut domains.y, p.y());
     };
     match geometry {
+        PreparedGeometry::UnboundedPoint(p) => {
+            if p[0].0.is_finite() {
+                Extent::include(&mut domains.x, p[0].0);
+            }
+            if p[1].0.is_finite() {
+                Extent::include(&mut domains.y, p[1].0);
+            }
+        }
         PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {}
         PreparedGeometry::Point(p)
         | PreparedGeometry::ShapePath { center: p, .. }
@@ -2684,8 +3137,262 @@ fn backtransform(value: f64, space: &ValueSpace) -> Option<f64> {
     match space {
         ValueSpace::Scaled { scale, .. } => scale
             .transform
+            .as_ref()
             .map_or(Some(value), |t| t.inverse(value).ok()),
         _ => Some(value),
     }
     .filter(|v| v.is_finite())
+}
+
+fn train_positioned_limits(
+    definition: &ChartDefinition,
+    layers: &mut [(&Layer, &mut PositionedLayer)],
+    registry: &ExtensionRegistry,
+    limits: CompileLimits,
+    empty: &mut std::collections::BTreeSet<crate::ScaleId>,
+    map_vectors: bool,
+) -> ChartResult<BTreeMap<crate::ScaleId, Vec<crate::interpolate::Number>>> {
+    use crate::interpolate::Number;
+    let mut result = BTreeMap::new();
+    let mut remaining = limits.max_prepared_rows;
+    for axis in &definition.axes {
+        if axis.limits_function.is_none()
+            && axis.numeric_limits.is_none()
+            && axis.temporal_limits.is_none()
+            && axis.oob_function.is_none()
+        {
+            let automatic = match &axis.scale {
+                crate::layout::AxisScale::Auto => true,
+                crate::layout::AxisScale::Date { domain }
+                | crate::layout::AxisScale::Utc { domain, .. } => domain.is_none(),
+                crate::layout::AxisScale::Linear(domain)
+                | crate::layout::AxisScale::Duration(domain)
+                | crate::layout::AxisScale::Nonlinear { domain, .. } => {
+                    *domain == crate::scales::ContinuousDomain::default()
+                }
+                crate::layout::AxisScale::Calendar { spec, .. } => spec.domain.is_empty(),
+                _ => false,
+            };
+            if definition.profile() == Profile::Ggplot2_4_0_3 && automatic {
+                let mut observed = false;
+                let mut finite = false;
+                for (layer, positioned) in layers.iter() {
+                    let horizontal = layer.scales.x == axis.id;
+                    if !horizontal && layer.scales.y != axis.id {
+                        continue;
+                    }
+                    for row in &positioned.encoded {
+                        observed = true;
+                        let values = if horizontal {
+                            [row.x, row.x2, None, None]
+                        } else {
+                            [row.y, row.y2, row.low, row.high]
+                        };
+                        finite |= values.into_iter().flatten().any(f64::is_finite);
+                    }
+                }
+                if !observed
+                    && matches!(
+                        axis.scale,
+                        crate::layout::AxisScale::Date { .. }
+                            | crate::layout::AxisScale::Utc { .. }
+                            | crate::layout::AxisScale::Calendar { .. }
+                    )
+                {
+                    empty.insert(axis.id);
+                }
+                if observed && !finite {
+                    result.insert(
+                        axis.id,
+                        vec![Number(f64::INFINITY), Number(f64::NEG_INFINITY)],
+                    );
+                }
+            }
+            continue;
+        }
+        if let crate::layout::AxisScale::Binned {
+            prepared: Some(bins),
+            ..
+        } = &axis.scale
+        {
+            if let Some(limits) = bins.function_limits() {
+                result.insert(axis.id, limits.to_vec());
+            }
+            continue;
+        }
+        let mut values = vec![];
+        let mut projection =
+            super::scale_stage::projection(axis).expect("validated numeric function axis");
+        for (layer, positioned) in layers.iter() {
+            let dimension = if layer.scales.x == axis.id {
+                0
+            } else if layer.scales.y == axis.id {
+                1
+            } else {
+                continue;
+            };
+            for row in &positioned.encoded {
+                // A built-in summary with no usable observations has no reference
+                // population at the post-stat stage, even though the library keeps
+                // its typed empty aggregate for inspection.
+                if positioned
+                    .prepared
+                    .table
+                    .population_operation()
+                    .is_some_and(|op| matches!(op.parameters, StatParameters::Summary(_)))
+                    && let PreparedRows::Statistical(rows) = &positioned.prepared.table.rows
+                    && rows.get(row.ordinal as usize).is_some_and(|r| r.count == 0)
+                {
+                    continue;
+                }
+                let inputs = if dimension == 0 {
+                    [row.x, row.x2, None, None]
+                } else {
+                    [row.y, row.y2, row.low, row.high]
+                };
+                for (_, input) in inputs
+                    .into_iter()
+                    .enumerate()
+                    .filter(|(i, v)| *i == 0 || v.is_some())
+                {
+                    charge(&mut remaining, 1, "positioned limit population")?;
+                    values.push(input.map(Number));
+                }
+            }
+        }
+        let (family, reverse) = crate::scales::ggplot_numeric_limits::positional_coordinates(
+            projection.transform.clone(),
+        );
+        let resolved: Vec<_> = if let Some(limits) = axis.authored_population_limits()? {
+            if values.is_empty()
+                && limits.iter().any(|v| {
+                    v.is_none_or(|v| {
+                        !projection
+                            .transform
+                            .as_ref()
+                            .map_or(v.0, |t| t.forward_raw(v.0))
+                            .is_finite()
+                    })
+                })
+            {
+                empty.insert(axis.id);
+            }
+
+            crate::scales::ggplot_numeric_limits::authored_transformed(
+                limits,
+                projection.transform.clone(),
+                values.iter().flatten().map(|v| v.0),
+                !values.is_empty(),
+            )?
+            .to_vec()
+        } else if axis.limits_function.is_none() && axis.oob_function.is_some() {
+            let authored = super::positional_vectors::authored_limits(axis)?;
+            if values.is_empty() && authored.iter().all(Option::is_none) {
+                empty.insert(axis.id);
+            }
+            super::positional_vectors::train_limits(
+                axis,
+                projection.transform.clone(),
+                values.iter().flatten().map(|v| v.0),
+                !values.is_empty(),
+            )?
+        } else {
+            crate::scales::ggplot_numeric_limits::evaluate_transformed(
+                axis.limits_function.as_ref().expect("selected function"),
+                values.iter().flatten().map(|v| v.0),
+                family,
+                reverse,
+                axis.resolved_temporal.as_deref().copied(),
+                !values.is_empty(),
+                registry,
+            )?
+            .into_iter()
+            .map(|v| {
+                Number(
+                    projection
+                        .transform
+                        .as_ref()
+                        .map_or(v.0, |t| t.forward_raw(v.0)),
+                )
+            })
+            .collect()
+        };
+        projection.function_limits = Some(Box::new(resolved.clone()));
+        if axis.oob_function.is_some() {
+            // Reference panel break preparation precedes the second positional
+            // map. Default temporal break generation rejects unbounded extents.
+            if (axis.resolved_temporal.is_some()
+                || matches!(axis.scale, crate::layout::AxisScale::Duration(_)))
+                && axis.tick_values.is_none()
+                && axis.guide_ticks.is_none()
+                && axis.breaks_function.is_none()
+                && resolved.iter().any(|v| !v.0.is_finite())
+            {
+                return Err(error(
+                    DiagnosticCode::NumericalDomain,
+                    "Default temporal breaks require a finite trained range.",
+                ));
+            }
+            if !map_vectors {
+                result.insert(axis.id, resolved);
+                continue;
+            }
+            let mut prepared_axis = axis.clone();
+            prepared_axis.resolved_limits = Some(Box::new(resolved.clone()));
+            let ids = layers.iter().map(|(l, _)| l.id).collect::<BTreeSet<_>>();
+            for id in ids {
+                let layer = layers
+                    .iter()
+                    .find(|(l, _)| l.id == id)
+                    .expect("selected layer")
+                    .0;
+                let mut rows = layers
+                    .iter_mut()
+                    .filter(|(l, _)| l.id == id)
+                    .flat_map(|(_, p)| p.encoded.iter_mut())
+                    .collect::<Vec<_>>();
+                // Identity rows retain original insertion order across interleaved
+                // panels. Statistical outputs retain panel and group order.
+                if super::positional_vectors::matched_source(definition, layer)
+                    && matches!(layer.statistic.parameters, StatParameters::Identity)
+                {
+                    rows.sort_by_key(|r| r.ordinal);
+                }
+                super::positional_vectors::generated_rows(
+                    definition,
+                    layer,
+                    std::slice::from_ref(&prepared_axis),
+                    &mut rows,
+                    registry,
+                )?;
+            }
+            result.insert(axis.id, resolved);
+            continue;
+        }
+        for (layer, positioned) in layers.iter_mut() {
+            let [x2, y2, low, high] = super::scale_stage::mapped_endpoints(layer);
+            for row in &mut positioned.encoded {
+                if layer.scales.x == axis.id {
+                    row.x = projection.project_transformed_optional(row.x);
+                    if x2 || row.x2.is_some() {
+                        row.x2 = projection.project_transformed_optional(row.x2);
+                    }
+                }
+                if layer.scales.y == axis.id {
+                    row.y = projection.project_transformed_optional(row.y);
+                    if y2 || row.y2.is_some() {
+                        row.y2 = projection.project_transformed_optional(row.y2);
+                    }
+                    if low || row.low.is_some() {
+                        row.low = projection.project_transformed_optional(row.low);
+                    }
+                    if high || row.high.is_some() {
+                        row.high = projection.project_transformed_optional(row.high);
+                    }
+                }
+            }
+        }
+        result.insert(axis.id, resolved);
+    }
+    Ok(result)
 }

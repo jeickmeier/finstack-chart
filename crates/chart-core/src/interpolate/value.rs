@@ -200,7 +200,7 @@ impl Value {
         let mut bytes = 0;
         self.budget(0, &mut nodes, &mut bytes)
     }
-    pub(super) fn budget(
+    pub(crate) fn budget(
         &self,
         depth: usize,
         nodes: &mut usize,

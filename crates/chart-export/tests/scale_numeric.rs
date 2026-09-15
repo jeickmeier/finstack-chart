@@ -70,7 +70,7 @@ fn each_numeric_family_executes_through_named_axes_and_retained_publication() {
         ),
     ];
     for (family, domain, range, x, expected) in cases {
-        let mut spec = NumericScaleSpec::d3(family);
+        let mut spec = NumericScaleSpec::d3(family.clone());
         spec.domain = domain.into_iter().map(Into::into).collect();
         spec.range = range.into_iter().map(Into::into).collect();
         let axis = x_axis()

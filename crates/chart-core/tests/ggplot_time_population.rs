@@ -200,6 +200,8 @@ fn timestamp_projection_wire_shape_and_units_are_checked_independently_of_profil
         }),
         transform: None,
         limits: None,
+        function_limits: None,
+        missing: None,
         outside: ScaleOob::Squish,
     };
     let p = plot(

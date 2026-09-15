@@ -1,0 +1,4369 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFB299",
+          "#FFD9CB",
+          "#E3D0FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FF7352",
+          "#FF8969",
+          "#FFB299",
+          "#FFFFFF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#FFFFFF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF",
+          "#D4B9FF",
+          "#C4A2FF",
+          "#A074FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FFBFAA",
+          "#FFE6DC",
+          "#FFF2EE",
+          "#F6EFFF",
+          "#CFB1FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FFBFAA",
+          "grey50",
+          "#CFB1FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF",
+          "#D4B9FF",
+          "#C4A2FF",
+          "#A074FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#FF0000"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#FF0000"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "red",
+          "red"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "red"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF5B3A",
+          "#FFB299",
+          "#FFB299",
+          "#FFFFFF",
+          "#7145FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF6846",
+          "grey50",
+          "#7E52FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF3E22",
+          "#FF7352",
+          "#FF7352",
+          "#FF9E81",
+          "#FFECE5"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF4628",
+          "grey50",
+          "#FFE7DE"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#F2E7FF",
+          "#D4B9FF",
+          "#D4B9FF",
+          "#B38BFF",
+          "#502BFF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#EEE2FF",
+          "grey50",
+          "#5932FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FFCCBB",
+          "#FFE6DC",
+          "#FFE6DC",
+          "#FFFFFF",
+          "#D9C1FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FFCFBF",
+          "grey50",
+          "#DCC4FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#F2E7FF",
+          "#D4B9FF",
+          "#D4B9FF",
+          "#B38BFF",
+          "#502BFF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#EEE2FF",
+          "grey50",
+          "#5932FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#FF0000"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#FF0000"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "red",
+          "red"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "red"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#3C8BC3",
+          "#549DCC",
+          "#8BBFDD",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#1F6CB2",
+          "#2977B8",
+          "#3C8BC3",
+          "#6BAED6"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#6BAED6"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#6BAED6",
+          "#99C7E0",
+          "#A6CDE4",
+          "#BED8EC",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#6BAED6",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#4292C6",
+          "#5CA3D0",
+          "#63A8D3",
+          "#76B4D8",
+          "#9ECAE1"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#4292C6",
+          "grey50",
+          "#9ECAE1"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#6BAED6",
+          "#99C7E0",
+          "#A6CDE4",
+          "#BED8EC",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#6BAED6",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#084594",
+          "#084594",
+          "#084594",
+          "#084594"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#084594"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#3B5E8B",
+          "#2A788E",
+          "#22A884",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#44367A",
+          "#414487",
+          "#3B5E8B",
+          "#2B9089"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#2B9089"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#2B9089",
+          "#44B279",
+          "#5ABC6D",
+          "#7AD151",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#2B9089",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#37678C",
+          "#2B808D",
+          "#2C888B",
+          "#299888",
+          "#4CB575"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#37678C",
+          "grey50",
+          "#4CB575"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#2B9089",
+          "#44B279",
+          "#5ABC6D",
+          "#7AD151",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#2B9089",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#440154",
+          "#440154",
+          "#440154",
+          "#440154"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#440154"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFB299",
+          "#FFD9CB",
+          "#E3D0FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FF7352",
+          "#FF8969",
+          "#FFB299",
+          "#FFFFFF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#FFFFFF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF",
+          "#D4B9FF",
+          "#C4A2FF",
+          "#A074FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FFBFAA",
+          "#FFE6DC",
+          "#FFF2EE",
+          "#F6EFFF",
+          "#CFB1FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FFBFAA",
+          "grey50",
+          "#CFB1FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF",
+          "#D4B9FF",
+          "#C4A2FF",
+          "#A074FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#FF0000"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#FF0000"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "red",
+          "red"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "red"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF5B3A",
+          "#FFB299",
+          "#FFB299",
+          "#FFFFFF",
+          "#7145FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF6846",
+          "grey50",
+          "#7E52FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF3E22",
+          "#FF7352",
+          "#FF7352",
+          "#FF9E81",
+          "#FFECE5"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF4628",
+          "grey50",
+          "#FFE7DE"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#F2E7FF",
+          "#D4B9FF",
+          "#D4B9FF",
+          "#B38BFF",
+          "#502BFF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#EEE2FF",
+          "grey50",
+          "#5932FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FFCCBB",
+          "#FFE6DC",
+          "#FFE6DC",
+          "#FFFFFF",
+          "#D9C1FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FFCFBF",
+          "grey50",
+          "#DCC4FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#F2E7FF",
+          "#D4B9FF",
+          "#D4B9FF",
+          "#B38BFF",
+          "#502BFF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#EEE2FF",
+          "grey50",
+          "#5932FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#FF0000"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#FF0000"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "red",
+          "red"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "red"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "single_negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0.5,
+          1
+        ],
+        "colours": "red"
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#3C8BC3",
+          "#549DCC",
+          "#8BBFDD",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#1F6CB2",
+          "#2977B8",
+          "#3C8BC3",
+          "#6BAED6"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#6BAED6"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#6BAED6",
+          "#99C7E0",
+          "#A6CDE4",
+          "#BED8EC",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#6BAED6",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#4292C6",
+          "#5CA3D0",
+          "#63A8D3",
+          "#76B4D8",
+          "#9ECAE1"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#4292C6",
+          "grey50",
+          "#9ECAE1"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#6BAED6",
+          "#99C7E0",
+          "#A6CDE4",
+          "#BED8EC",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#6BAED6",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#084594",
+          "#084594",
+          "#084594",
+          "#084594"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#084594"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#3B5E8B",
+          "#2A788E",
+          "#22A884",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "nan_middle",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "NaN"
+          },
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#44367A",
+          "#414487",
+          "#3B5E8B",
+          "#2B9089"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#2B9089"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "positive_infinity",
+      "args": {
+        "values": [
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#2B9089",
+          "#44B279",
+          "#5ABC6D",
+          "#7AD151",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#2B9089",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "negative_infinity",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#37678C",
+          "#2B808D",
+          "#2C888B",
+          "#299888",
+          "#4CB575"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#37678C",
+          "grey50",
+          "#4CB575"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "both_infinities",
+      "args": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          0,
+          1,
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#2B9089",
+          "#44B279",
+          "#5ABC6D",
+          "#7AD151",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#2B9089",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "nan_leading",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          1
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#440154",
+          "#440154",
+          "#440154",
+          "#440154"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#440154"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "infinite_duplicate",
+      "args": {
+        "values": [
+          0,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    }
+  ]
+}

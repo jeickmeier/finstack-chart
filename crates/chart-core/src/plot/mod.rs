@@ -635,6 +635,7 @@ impl PlotBuilder {
         }
         let mut names = BTreeMap::new();
         let mut color_ids = BTreeMap::<String, ScaleId>::new();
+        let mut ggplot_paint_scales = BTreeMap::new();
         let mut ggplot_numeric_ids = BTreeMap::new();
         let mut ggplot_style_ids = BTreeMap::new();
         let mut color_scales = BTreeMap::new();
@@ -705,6 +706,7 @@ impl PlotBuilder {
                 axes: &axes,
                 color_ids: &mut color_ids,
                 color_scales: &color_scales,
+                ggplot_paint_scales: &mut ggplot_paint_scales,
                 ggplot_numeric_ids: &mut ggplot_numeric_ids,
                 ggplot_style_ids: &mut ggplot_style_ids,
             }

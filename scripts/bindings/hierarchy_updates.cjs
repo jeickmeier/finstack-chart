@@ -2,7 +2,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'../..'),c=require(path.resolve(process.argv[2],'authoring.cjs')),out=path.resolve(process.argv[3]);fs.mkdirSync(path.dirname(out),{recursive:true});
 const output=new c.Output(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))),records=[];
-function data(values,parents){return c.Data.columns({id:['root','a','b','c','d','e','f'],parent:parents,value:values},{keys:Array.from({length:7},(_,i)=>9007199254741001n+BigInt(i)),name:'live'});}
+function data(values,parents){return c.Data.columns({id:['root','a','b','c','d','e','f'],parent:parents,value:Float64Array.from(values)},{keys:Array.from({length:7},(_,i)=>9007199254741001n+BigInt(i)),name:'live'});}
 const parents=[null,'root','root','a','a','b','b'],layouts=[{Tree:{options:{}}},{Cluster:{options:{}}},{Partition:{}},{Pack:{options:{}}},{Treemap:{options:{},history:false}},{Treemap:{options:{tile:{Resquarify:1.6}},history:true}}];
 for(const [index,layout]of layouts.entries()){
  const recipe={identity:'991',source:{Table:{id:'id',parent:'parent'}},aggregation:{Sum:'value'},label:null,layout};

@@ -1,0 +1,4191 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "cases": [
+    {
+      "family": "continuous",
+      "palette": "pair",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#EE0041",
+          "#DA006C",
+          "#9A00C3",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#EE0041",
+          "#DA006C",
+          "#9A00C3",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "pair",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#EE0041",
+          "#DA006C",
+          "#9A00C3",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#EE0041",
+          "#DA006C",
+          "#9A00C3",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "pair",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#FF0000",
+          null,
+          "#0000FF",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "pair",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#FF0000",
+          "grey50",
+          "#0000FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "pair",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "pair",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "three",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#DA9200",
+          "#98D700",
+          "#7D93A6",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#DA9200",
+          "#98D700",
+          "#7D93A6",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "three",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#DA9200",
+          "#98D700",
+          "#7D93A6",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#DA9200",
+          "#98D700",
+          "#7D93A6",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "three",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#FF0000",
+          null,
+          "#0000FF",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "three",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#FF0000",
+          "grey50",
+          "#0000FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "three",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "three",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "missing",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FF84649F",
+          "#FFCFBF40",
+          "#B38BFF80",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#FF84649F",
+          "#FFCFBF40",
+          "#B38BFF80",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "missing",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FF84649F",
+          "#FFCFBF40",
+          "#B38BFF80",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#FF84649F",
+          "#FFCFBF40",
+          "#B38BFF80",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "missing",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#FF0000",
+          null,
+          "#0000FF",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "missing",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#FF0000",
+          "grey50",
+          "#0000FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "missing",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "missing",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "transparent",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FF84649F",
+          "#FFCFBF40",
+          "#B38BFF80",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#FF84649F",
+          "#FFCFBF40",
+          "#B38BFF80",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "transparent",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FF84649F",
+          "#FFCFBF40",
+          "#B38BFF80",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#FF84649F",
+          "#FFCFBF40",
+          "#B38BFF80",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "transparent",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#FF0000",
+          null,
+          "#0000FF",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "transparent",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#FF0000",
+          "grey50",
+          "#0000FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "transparent",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "transparent",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "alpha",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          "#FF000040",
+          "#DA920058",
+          "#98D70070",
+          "#7D93A6C0",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF000040",
+          "#DA920058",
+          "#98D70070",
+          "#7D93A6C0",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "alpha",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          "#FF000040",
+          "#DA920058",
+          "#98D70070",
+          "#7D93A6C0",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF000040",
+          "#DA920058",
+          "#98D70070",
+          "#7D93A6C0",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "alpha",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#FF000040",
+          null,
+          "#0000FF",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF000040",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "alpha",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#FF000040",
+          "grey50",
+          "#0000FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF000040",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "alpha",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "alpha",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "named",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#EE0041",
+          "#DA006C",
+          "#9A00C3",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#EE0041",
+          "#DA006C",
+          "#9A00C3",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "named",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#EE0041",
+          "#DA006C",
+          "#9A00C3",
+          "#0000FF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#EE0041",
+          "#DA006C",
+          "#9A00C3",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "named",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#FF0000",
+          null,
+          "#0000FF",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "named",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#FF0000",
+          "grey50",
+          "#0000FF",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "named",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "named",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "empty",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "empty",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "empty",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "empty",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "empty",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "empty",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "singleton",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "singleton",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "singleton",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "singleton",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "singleton",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "singleton",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "numeric",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "numeric",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "numeric",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "numeric",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "numeric",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "numeric",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "invalid",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "invalid",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "invalid",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "invalid",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "invalid",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "invalid",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "pair",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FA001F",
+          "#E50057",
+          "#E50057",
+          "#BB009E",
+          "#7300E0"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FA001F",
+          "#E50057",
+          "#E50057",
+          "#BB009E",
+          "#7300E0"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "pair",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FA001F",
+          "#E50057",
+          "#E50057",
+          "#BB009E",
+          "#7300E0"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FA001F",
+          "#E50057",
+          "#E50057",
+          "#BB009E",
+          "#7300E0"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "pair",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#F0003C",
+          null,
+          "#8200D6",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#F0003C",
+          "#8200D6"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "pair",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#F0003C",
+          "grey50",
+          "#8200D6",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#F0003C",
+          "#7F7F7F",
+          "#8200D6",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "pair",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "pair",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "three",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#F45300",
+          "#BEB600",
+          "#BEB600",
+          "#65D762",
+          "#6C5BD3"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#F45300",
+          "#BEB600",
+          "#BEB600",
+          "#65D762",
+          "#6C5BD3"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "three",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#F45300",
+          "#BEB600",
+          "#BEB600",
+          "#65D762",
+          "#6C5BD3"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#F45300",
+          "#BEB600",
+          "#BEB600",
+          "#65D762",
+          "#6C5BD3"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "three",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#DF8A00",
+          null,
+          "#766EC5",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#DF8A00",
+          "#766EC5"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "three",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#DF8A00",
+          "grey50",
+          "#766EC5",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#DF8A00",
+          "#7F7F7F",
+          "#766EC5",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "three",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "three",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "missing",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF4628DF",
+          "#FFAA9070",
+          "#FFAA9070",
+          "#E5D3FF30",
+          "#7E52FFBF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF4628DF",
+          "#FFAA9070",
+          "#FFAA9070",
+          "#E5D3FF30",
+          "#7E52FFBF"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "missing",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF4628DF",
+          "#FFAA9070",
+          "#FFAA9070",
+          "#E5D3FF30",
+          "#7E52FFBF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF4628DF",
+          "#FFAA9070",
+          "#FFAA9070",
+          "#E5D3FF30",
+          "#7E52FFBF"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "missing",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#FF7B5AAA",
+          null,
+          "#9265FFAA",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF7B5AAA",
+          "#9265FFAA"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "missing",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#FF7B5AAA",
+          "grey50",
+          "#9265FFAA",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF7B5AAA",
+          "#7F7F7F",
+          "#9265FFAA",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "missing",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "missing",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "transparent",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF4628DF",
+          "#FFAA9070",
+          "#FFAA9070",
+          "#E5D3FF30",
+          "#7E52FFBF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF4628DF",
+          "#FFAA9070",
+          "#FFAA9070",
+          "#E5D3FF30",
+          "#7E52FFBF"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "transparent",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FF4628DF",
+          "#FFAA9070",
+          "#FFAA9070",
+          "#E5D3FF30",
+          "#7E52FFBF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF4628DF",
+          "#FFAA9070",
+          "#FFAA9070",
+          "#E5D3FF30",
+          "#7E52FFBF"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "transparent",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#FF7B5AAA",
+          null,
+          "#9265FFAA",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF7B5AAA",
+          "#9265FFAA"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "transparent",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#FF7B5AAA",
+          "grey50",
+          "#9265FFAA",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF7B5AAA",
+          "#7F7F7F",
+          "#9265FFAA",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "transparent",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "transparent",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "alpha",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          "#F4530048",
+          "#BEB60064",
+          "#BEB60064",
+          "#65D76298",
+          "#6C5BD3DF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#F4530048",
+          "#BEB60064",
+          "#BEB60064",
+          "#65D76298",
+          "#6C5BD3DF"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "alpha",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          "#F4530048",
+          "#BEB60064",
+          "#BEB60064",
+          "#65D76298",
+          "#6C5BD3DF"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#F4530048",
+          "#BEB60064",
+          "#BEB60064",
+          "#65D76298",
+          "#6C5BD3DF"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "alpha",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#DF8A0055",
+          null,
+          "#766EC5D5",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#DF8A0055",
+          "#766EC5D5"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "alpha",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#DF8A0055",
+          "grey50",
+          "#766EC5D5",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#DF8A0055",
+          "#7F7F7F",
+          "#766EC5D5",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "alpha",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "alpha",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "named",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FA001F",
+          "#E50057",
+          "#E50057",
+          "#BB009E",
+          "#7300E0"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FA001F",
+          "#E50057",
+          "#E50057",
+          "#BB009E",
+          "#7300E0"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "named",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "#FA001F",
+          "#E50057",
+          "#E50057",
+          "#BB009E",
+          "#7300E0"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FA001F",
+          "#E50057",
+          "#E50057",
+          "#BB009E",
+          "#7300E0"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "named",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#F0003C",
+          null,
+          "#8200D6",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#F0003C",
+          "#8200D6"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "named",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#F0003C",
+          "grey50",
+          "#8200D6",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#F0003C",
+          "#7F7F7F",
+          "#8200D6",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "named",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "named",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "empty",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "empty",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "empty",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "empty",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "empty",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "empty",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "singleton",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "singleton",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "singleton",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "singleton",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "singleton",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "singleton",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "numeric",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "numeric",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "numeric",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "numeric",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "numeric",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "numeric",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.continuous` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "invalid",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "invalid",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "invalid",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "invalid",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "invalid",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "invalid",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "pair",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "red",
+          null,
+          "blue"
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "pair",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "red",
+          null,
+          "blue"
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "pair",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "blue",
+          "red",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#0000FF",
+          "#FF0000"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "pair",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "blue",
+          "red",
+          "grey50"
+        ],
+        "point_count": 4,
+        "point_colours": [
+          "#7F7F7F",
+          "#0000FF",
+          "#FF0000",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "pair",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "pair",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "three",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "blue",
+          "red",
+          null,
+          "green"
+        ],
+        "point_count": 3,
+        "point_colours": [
+          "#0000FF",
+          "#FF0000",
+          "#00FF00"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "three",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "blue",
+          "red",
+          null,
+          "green"
+        ],
+        "point_count": 3,
+        "point_colours": [
+          "#0000FF",
+          "#FF0000",
+          "#00FF00"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "three",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "green",
+          "red",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#00FF00",
+          "#FF0000"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "three",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "green",
+          "red",
+          "grey50"
+        ],
+        "point_count": 4,
+        "point_colours": [
+          "#7F7F7F",
+          "#00FF00",
+          "#FF0000",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "three",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "three",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "green",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "missing",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "blue",
+          "red",
+          null,
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#0000FF",
+          "#FF0000"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "missing",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "blue",
+          "red",
+          null,
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#0000FF",
+          "#FF0000"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "missing",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          "red",
+          null
+        ],
+        "point_count": 1,
+        "point_colours": [
+          "#FF0000FF"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "missing",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          null,
+          "red",
+          "grey50"
+        ],
+        "point_count": 3,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "missing",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "missing",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        null,
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "transparent",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "blue",
+          "red",
+          null,
+          "transparent"
+        ],
+        "point_count": 3,
+        "point_colours": [
+          "#0000FF",
+          "#FF0000",
+          "#FFFFFF00"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "transparent",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "blue",
+          "red",
+          null,
+          "transparent"
+        ],
+        "point_count": 3,
+        "point_colours": [
+          "#0000FF",
+          "#FF0000",
+          "#FFFFFF00"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "transparent",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "transparent",
+          "red",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FFFFFF00",
+          "#FF0000"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "transparent",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "transparent",
+          "red",
+          "grey50"
+        ],
+        "point_count": 4,
+        "point_colours": [
+          "#7F7F7F",
+          "#FFFFFF00",
+          "#FF0000",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "transparent",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "transparent",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "transparent",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "alpha",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          "#0000FFFF",
+          "#FF000040",
+          null,
+          "#00FF0080"
+        ],
+        "point_count": 3,
+        "point_colours": [
+          "#0000FF",
+          "#FF000040",
+          "#00FF0080"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "alpha",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          "#0000FFFF",
+          "#FF000040",
+          null,
+          "#00FF0080"
+        ],
+        "point_count": 3,
+        "point_colours": [
+          "#0000FF",
+          "#FF000040",
+          "#00FF0080"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "alpha",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "#00FF0080",
+          "#FF000040",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#00FF0080",
+          "#FF000040"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "alpha",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#00FF0080",
+          "#FF000040",
+          "grey50"
+        ],
+        "point_count": 4,
+        "point_colours": [
+          "#7F7F7F",
+          "#00FF0080",
+          "#FF000040",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "alpha",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "alpha",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "#FF000040",
+        "#00FF0080",
+        "#0000FFFF"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "named",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "red",
+          null,
+          "blue"
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "named",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "red",
+          null,
+          "blue"
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "named",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "blue",
+          "red",
+          null
+        ],
+        "point_count": 2,
+        "point_colours": [
+          "#0000FF",
+          "#FF0000"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "named",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "blue",
+          "red",
+          "grey50"
+        ],
+        "point_count": 4,
+        "point_colours": [
+          "#7F7F7F",
+          "#0000FF",
+          "#FF0000",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "named",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "named",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "blue"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "empty",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "empty",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "empty",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "empty",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "empty",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "empty",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [],
+      "result": {
+        "error": "invalid first argument"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "singleton",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "singleton",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "singleton",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "singleton",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "singleton",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "singleton",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red"
+      ],
+      "result": {
+        "error": "Unknown palette: red"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "numeric",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.discrete` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "numeric",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.discrete` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "numeric",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.discrete` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "numeric",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.discrete` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "numeric",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.discrete` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "numeric",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        0.10000000000000001,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "error": "The `palette.colour.discrete` theme element must be a\n<character/function> object."
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "invalid",
+      "population": "ordinary",
+      "na_mode": "NA",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Problem while converting geom to grob.\ni Error occurred in the 1st layer.\nCaused by error:\n! Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "invalid",
+      "population": "ordinary",
+      "na_mode": "grey50",
+      "inputs": [
+        "c",
+        "a",
+        "d",
+        "b"
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Problem while converting geom to grob.\ni Error occurred in the 1st layer.\nCaused by error:\n! Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "invalid",
+      "population": "missing",
+      "na_mode": "NA",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Problem while converting geom to grob.\ni Error occurred in the 1st layer.\nCaused by error:\n! Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "invalid",
+      "population": "missing",
+      "na_mode": "grey50",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "error": "Problem while converting geom to grob.\ni Error occurred in the 1st layer.\nCaused by error:\n! Unknown colour name: not-a-color"
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "invalid",
+      "population": "empty",
+      "na_mode": "NA",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "family": "discrete",
+      "palette": "invalid",
+      "population": "empty",
+      "na_mode": "grey50",
+      "inputs": [],
+      "palette_values": [
+        "red",
+        "not-a-color"
+      ],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    }
+  ]
+}

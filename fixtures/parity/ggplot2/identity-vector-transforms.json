@@ -1,0 +1,3127 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "configurations": [
+    {
+      "family": "cardinality",
+      "composed": false
+    },
+    {
+      "family": "cardinality",
+      "composed": true
+    },
+    {
+      "family": "center",
+      "composed": false
+    },
+    {
+      "family": "center",
+      "composed": true
+    }
+  ],
+  "cases": [
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "limits": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [
+              6,
+              7
+            ],
+            "mapped": [
+              6,
+              7
+            ],
+            "labels": [
+              "2",
+              "3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "limits": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              7,
+              9,
+              11
+            ],
+            "mapped": [
+              7,
+              9,
+              11
+            ],
+            "labels": [
+              "2",
+              "4",
+              "6"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              5,
+              7.5,
+              10
+            ],
+            "mapped": [
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              5,
+              7.5,
+              10
+            ],
+            "mapped": [
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ]
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            5,
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "limits": [
+          4,
+          7
+        ],
+        "keys": [
+          {
+            "values": [
+              6,
+              7
+            ],
+            "mapped": [
+              6,
+              7
+            ],
+            "labels": [
+              "2",
+              "3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "limits": [
+          4,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              7,
+              9,
+              11
+            ],
+            "mapped": [
+              7,
+              9,
+              11
+            ],
+            "labels": [
+              "2",
+              "4",
+              "6"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              5,
+              7.5,
+              10
+            ],
+            "mapped": [
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              5,
+              7.5,
+              10
+            ],
+            "mapped": [
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ]
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            4,
+            {
+              "number": "NA"
+            },
+            7
+          ],
+          [
+            4,
+            12
+          ]
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              5,
+              7.5,
+              10
+            ],
+            "mapped": [
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": [
+          {
+            "values": [
+              5,
+              7.5,
+              10
+            ],
+            "mapped": [
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          2,
+          12
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "limits": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -6,
+              -7
+            ],
+            "mapped": [
+              -6,
+              -7
+            ],
+            "labels": [
+              "2",
+              "3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "limits": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -7,
+              -9,
+              -11
+            ],
+            "mapped": [
+              -7,
+              -9,
+              -11
+            ],
+            "labels": [
+              "2",
+              "4",
+              "6"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "mapped": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "mapped": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ]
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            -5,
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "limits": [
+          -7,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -6,
+              -7
+            ],
+            "mapped": [
+              -6,
+              -7
+            ],
+            "labels": [
+              "2",
+              "3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "limits": [
+          -12,
+          -4
+        ],
+        "keys": [
+          {
+            "values": [
+              -7,
+              -9,
+              -11
+            ],
+            "mapped": [
+              -7,
+              -9,
+              -11
+            ],
+            "labels": [
+              "2",
+              "4",
+              "6"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "mapped": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "mapped": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ]
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -4,
+            {
+              "number": "NA"
+            },
+            -7
+          ],
+          [
+            -4,
+            -12
+          ]
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "mapped": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "mapped": [
+              -5,
+              -7.5,
+              -10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          -12,
+          -2
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "limits": [
+          -1.3333333333333335,
+          1.6666666666666665
+        ],
+        "keys": [
+          {
+            "values": [
+              -0.5,
+              0.5,
+              1.5
+            ],
+            "mapped": [
+              -0.5,
+              0.5,
+              1.5
+            ],
+            "labels": [
+              "-0.5",
+              "0.5",
+              "1.5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "limits": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [
+              -4,
+              -2,
+              0,
+              2,
+              4
+            ],
+            "mapped": [
+              -4,
+              -2,
+              0,
+              2,
+              4
+            ],
+            "labels": [
+              "-4",
+              "-2",
+              "0",
+              "2",
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "mapped": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "labels": [
+              "-5.0",
+              "-2.5",
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "mapped": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "labels": [
+              "-5.0",
+              "-2.5",
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ]
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.3333333333333335,
+            -0.33333333333333348,
+            1.6666666666666665
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "limits": [
+          -1.5,
+          1.5
+        ],
+        "keys": [
+          {
+            "values": [
+              -1.5,
+              -1,
+              -0.5,
+              0,
+              0.5,
+              1,
+              1.5
+            ],
+            "mapped": [
+              -1.5,
+              -1,
+              -0.5,
+              0,
+              0.5,
+              1,
+              1.5
+            ],
+            "labels": [
+              "-1.5",
+              "-1.0",
+              "-0.5",
+              "0.0",
+              "0.5",
+              "1.0",
+              "1.5"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "limits": [
+          -4,
+          4
+        ],
+        "keys": [
+          {
+            "values": [
+              -4,
+              -2,
+              0,
+              2,
+              4
+            ],
+            "mapped": [
+              -4,
+              -2,
+              0,
+              2,
+              4
+            ],
+            "labels": [
+              "-4",
+              "-2",
+              "0",
+              "2",
+              "4"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "mapped": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "labels": [
+              "-5.0",
+              "-2.5",
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "mapped": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "labels": [
+              "-5.0",
+              "-2.5",
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ]
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "mapped": [
+          [
+            -1.5,
+            {
+              "number": "NA"
+            },
+            1.5
+          ],
+          [
+            -4,
+            4
+          ]
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "mapped": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "labels": [
+              "-5.0",
+              "-2.5",
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": [
+          {
+            "values": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "mapped": [
+              -5,
+              -2.5,
+              0,
+              2.5,
+              5
+            ],
+            "labels": [
+              "-5.0",
+              "-2.5",
+              "0.0",
+              "2.5",
+              "5.0"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          []
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "mapped": [
+          [],
+          []
+        ],
+        "limits": [
+          -5,
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nullable",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "legend",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "limits": "none",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "limits": "none",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "one",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "guide": "none",
+      "limits": "fixed",
+      "layers": "two",
+      "inputs": [],
+      "second": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    }
+  ]
+}

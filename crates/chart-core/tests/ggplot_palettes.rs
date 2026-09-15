@@ -115,7 +115,7 @@ fn ggplot_palette_uses_shared_interpolator_and_missing_color_policy() {
             colors: ["red", "white", "blue"]
                 .map(|s| color::Paint::from_css(s).unwrap())
                 .to_vec(),
-            values: Some(vec![0., 0.2, 1.]),
+            values: Some(vec![0.0.into(), 0.2.into(), 1.0.into()]),
         },
     };
     let operation = Interpolator::new(spec.clone()).unwrap();

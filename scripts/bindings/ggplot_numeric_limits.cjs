@@ -1,4 +1,5 @@
 'use strict';
+const { alphaByte } = require('./ggplot_reference_alpha.cjs');
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'../..'),c=require(path.resolve(process.argv[2],'authoring.cjs')),out=path.resolve(process.argv[3]);fs.mkdirSync(out,{recursive:true});
 const registry=c.ExtensionRegistry.example(),records=[],output=new c.Output(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))),options=c.export_options(640,360).dpi(96).basis('current');
@@ -23,13 +24,13 @@ function check(t,actual){
  let wanted=t.result.values;if(wanted.length===1)wanted=t.inputs.map(()=>wanted[0]);
  if(t.kind==='identity'){
   const rows=actual.styles??[];assert.equal(rows.length,wanted.length,JSON.stringify(t));
-  rows.forEach((row,i)=>{const want=wanted[i],expectedSize=2+.1*(want??0);assert.ok(Math.abs(row.radius-expectedSize)<3e-12,JSON.stringify({t,row,want}));assert.equal(row.color.alpha,want===null?255:Math.floor(Math.min(1,Math.max(0,want))*255+.5),JSON.stringify({t,row,want}));});
+  rows.forEach((row,i)=>{const want=wanted[i],expectedSize=2+.1*(want??0);assert.ok(Math.abs(row.radius-expectedSize)<3e-12,JSON.stringify({t,row,want}));assert.equal(row.color.alpha,want===null?255:alphaByte(want),JSON.stringify({t,row,want}));});
  }else{
   wanted=wanted.filter(v=>v!==null);const rows=actual.styles??[];assert.equal(rows.length,wanted.length,JSON.stringify({t,rows,wanted}));rows.forEach((row,i)=>assert.ok(Math.abs(row.radius-wanted[i])<3e-12*Math.max(Math.abs(wanted[i]),1),JSON.stringify({t,row,want:wanted[i]})));
  }return {styles:actual.styles??[],aesthetics:actual.aesthetics??[]};
 }
-const cases=JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/limit-functions.json'))).cases.filter(t=>'transform'in t);
-cases.push(...JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/limit-rescalers.json'))).cases.map(t=>({...t,transform:'identity'})));
+const cases=JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/limit-function-builds.json'))).cases.filter(t=>'transform'in t);
+cases.push(...JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/limit-rescaler-builds.json'))).cases.map(t=>({...t,transform:'identity'})));
 cases.push(...JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/temporal-limit-functions.json'))).cases.flatMap(t=>[['s','Seconds',1],['ms','Milliseconds',1000],['us','Microseconds',1000000],['ns','Nanoseconds',1000000000]].filter(([, ,units])=>!(t.kind==='datetime'&&t.population==='fractional'&&units===1)).map(([unit,variant,units])=>({...t,transform:'identity',unit,variant,units}))));
 for(const [index,t] of cases.entries()){
  const owned=[],failure=t.result.error??('units'in t?t.result.guide?.error:undefined);
@@ -39,10 +40,10 @@ for(const [index,t] of cases.entries()){
    const current=state==='original'?restored:restored.edit().layer('marks',layer(t)).build();if(current!==restored)owned.push(current);const chart=current.chart();owned.push(chart);const actual=chart.semantics().layers[0];assert.ok(!failure,`${index}: ${failure}`);records.push({index,state,...check(t,actual)});
    if((!('units'in t)||t.units===1000000)&&!('rescaler'in t)&&t.kind!=='identity'&&t.population==='spaced'&&t.transform==='identity'&&['reverse','fixed','single'].includes(t.control)&&state==='original'){const request=output.request(current,options);owned.push(request);const frame=request.prepare();owned.push(frame);for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`${t.kind}-${t.control}.${fmt}`),frame.export(fmt));}
   }
- }catch(error){assert.ok(error instanceof c.ChartError&&failure,`${index}: ${error.stack}`);assert.equal(error.code,'CHART_NUMERICAL_DOMAIN');records.push({index,error:error.code});}
+ }catch(error){assert.ok(error instanceof c.ChartError&&failure,`${index}: ${error.stack}`);assert.ok(['CHART_NUMERICAL_DOMAIN','CHART_VALIDATION'].includes(error.code));records.push({index,error:error.code});}
  finally{for(const obj of owned.reverse())obj.dispose();}
 }
-assert.equal(records.length,1362);
+assert.equal(records.length,1302);
 for(const kind of ['continuous','binned','identity','date','datetime'])for(const control of ['fixed','single']){
  const owned=[];
  try{
@@ -54,4 +55,4 @@ for(const kind of ['continuous','binned','identity','date','datetime'])for(const
   }
  }finally{for(const obj of owned.reverse())obj.dispose();}
 }
-assert.equal(records.length,1408);fs.writeFileSync(path.join(out,'numeric-limit-records.json'),JSON.stringify(records,null,2));options.dispose();output.dispose();registry.dispose();console.log('PASS WASM:',records.length,'numeric limit states.');
+assert.equal(records.length,1348);fs.writeFileSync(path.join(out,'numeric-limit-records.json'),JSON.stringify(records,null,2));options.dispose();output.dispose();registry.dispose();console.log('PASS WASM:',records.length,'numeric limit states.');

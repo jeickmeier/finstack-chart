@@ -114,6 +114,9 @@ pub enum AxisScale {
 /// Presentation shared by default and independently identified positional guides.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 pub struct GuideStyle {
+    /// Registered reference major-break selector over retained panel limits (wire v34).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub breaks_function: Option<Box<crate::grammar::ScaleBreaksOperation>>,
     /// Independent reference minor candidates (wire v19); no minor tick paint is implied.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub minor_breaks: Option<super::MinorBreaks>,
@@ -165,12 +168,14 @@ impl GuideStyle {
         self.profile != GuideProfile::LibraryV1
             || self.tick_arguments.is_some()
             || self.tick_values.is_some()
+            || self.breaks_function.is_some()
             || self.tick_format.is_some()
     }
 }
 impl Default for GuideStyle {
     fn default() -> Self {
         Self {
+            breaks_function: None,
             minor_breaks: None,
             components: None,
             geometry: None,
@@ -244,6 +249,23 @@ impl std::ops::DerefMut for AxisSpec {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct AxisSpec {
+    /// Authored numeric source endpoints; missing endpoints use the trained range.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub numeric_limits: Option<[Option<crate::interpolate::Number>; 2]>,
+    /// Exact timestamp endpoints; missing endpoints retrain from the current population.
+    /// Values must be timestamps with explicit units. Date/UTC/calendar scales retain
+    /// their own guide family; descending endpoints do not reverse time.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub temporal_limits: Option<[Option<crate::composition::ScaleValue>; 2]>,
+    /// Registered source-unit limits evaluated before statistics and after positions.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub limits_function: Option<Box<crate::grammar::ScaleLimitsOperation>>,
+    /// Execution-local function result; never accepted from a portable definition.
+    #[serde(skip)]
+    pub resolved_limits: Option<Box<Vec<crate::interpolate::Number>>>,
+    /// Execution-local origin and units for temporal limit callbacks.
+    #[serde(skip)]
+    pub resolved_temporal: Option<Box<crate::scales::GgplotTimestampNormalization>>,
     /// Reference continuous limits for category-index expansion. Numeric vectors
     /// use their range; vectors with missing endpoints require exactly two values.
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -259,9 +281,15 @@ pub struct AxisSpec {
     /// Explicit coordinate-only transform override; absence follows the canonical profile.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub scale_stage: Option<crate::grammar::ScaleStage>,
+    /// Replacement for missing positional values, in transformed units after OOB handling.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub population_missing: Option<crate::interpolate::Number>,
     /// Population handling under pre-stat scale semantics, separate from viewport clipping.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub population_oob: Option<crate::grammar::ScaleOob>,
+    /// Pure positional OOB vector function, selected by immutable identity.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub oob_function: Option<Box<crate::grammar::ScaleVectorOperation>>,
     /// Presentation of the default guide; the scale has independent ownership.
     #[serde(flatten)]
     pub guide: GuideStyle,
@@ -280,6 +308,43 @@ pub struct AxisSpec {
     pub outside: OutsidePolicy,
 }
 impl AxisSpec {
+    pub(crate) fn authored_population_limits(
+        &self,
+    ) -> crate::ChartResult<Option<[Option<crate::interpolate::Number>; 2]>> {
+        let Some(limits) = &self.temporal_limits else {
+            return Ok(self.numeric_limits);
+        };
+        let time = self.resolved_temporal.as_deref().ok_or_else(|| {
+            crate::Diagnostic::error(
+                crate::DiagnosticCode::SchemaConflict,
+                "Temporal limits require a prepared timestamp population.",
+                "Map timestamp values to the temporal axis.",
+            )
+        })?;
+        let mut values = [None, None];
+        for (destination, source) in values.iter_mut().zip(limits) {
+            let Some(crate::composition::ScaleValue::Timestamp { value, unit }) = source else {
+                continue;
+            };
+            let source_factor = crate::scales::ticks_per_second(time.unit);
+            let limit_factor = crate::scales::ticks_per_second(*unit);
+            // Subtract before floating conversion, preserving nanosecond origins.
+            let numerator =
+                i128::from(*value) * source_factor - i128::from(time.origin) * limit_factor;
+            let offset = (numerator / limit_factor) as f64
+                + (numerator % limit_factor) as f64 / limit_factor as f64;
+            if numerator.unsigned_abs() > (1_u128 << 53) * limit_factor as u128 {
+                return Err(crate::Diagnostic::error(
+                    crate::DiagnosticCode::PrecisionLoss,
+                    "Temporal limits exceed exact origin-relative precision.",
+                    "Use a closer timestamp origin or a coarser source unit.",
+                ));
+            }
+            *destination = Some(crate::interpolate::Number(offset));
+        }
+        Ok(Some(values))
+    }
+
     /// Default guide identity and presentation, preserving historical scale identity values.
     pub fn default_guide(&self) -> GuideSpec {
         GuideSpec {
@@ -294,10 +359,17 @@ impl AxisSpec {
     pub fn new(id: ScaleId, side: AxisSide) -> Self {
         Self {
             id,
+            numeric_limits: None,
+            temporal_limits: None,
+            limits_function: None,
+            resolved_limits: None,
+            resolved_temporal: None,
             expansion: None,
             continuous_limits: None,
             discrete: None,
             population_oob: None,
+            oob_function: None,
+            population_missing: None,
             scale_stage: None,
             side,
             guide: GuideStyle::default(),

@@ -1,0 +1,7989 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "guide_contracts": {
+    "GuideLegend": {
+      "extract_key": "function (scale, aesthetic, ...) \n{\n    breaks <- scale$get_breaks()\n    if (length(breaks) == 0) {\n        return(NULL)\n    }\n    mapped <- scale$map(breaks)\n    labels <- scale$get_labels(breaks)\n    key <- data_frame(`:=`(!!aesthetic, mapped))\n    key$.value <- breaks\n    key$.label <- labels\n    if (is.numeric(breaks)) {\n        range <- scale$continuous_range %||% scale$get_limits()\n        key <- key[is.finite(oob_censor_any(breaks, range)), , drop = FALSE]\n    }\n    else {\n        key\n    }\n}",
+      "extract_decor": "function (scale, aesthetic, ...) \n{\n    return(invisible())\n}"
+    },
+    "GuideColourbar": {
+      "extract_key": "function (scale, aesthetic, ...) \n{\n    if (scale$is_discrete()) {\n        cli::cli_warn(\"{.fn guide_colourbar} needs continuous scales.\")\n        return(NULL)\n    }\n    key <- Guide$extract_key(scale, aesthetic, ...)\n    if (NROW(key) == 0) {\n        return(NULL)\n    }\n    key\n}",
+      "extract_decor": "function (scale, aesthetic, nbin = 300, reverse = FALSE, alpha = NA, ...) \n{\n    limits <- scale$get_limits()\n    bar <- seq(limits[1], limits[2], length.out = nbin)\n    if (length(bar) == 0) {\n        bar <- unique0(limits)\n    }\n    bar <- data_frame0(colour = alpha(scale$map(bar), alpha), value = bar, .size = length(bar))\n    if (reverse) {\n        bar <- bar[nrow(bar):1, , drop = FALSE]\n    }\n    return(bar)\n}"
+    },
+    "GuideBins": {
+      "extract_key": "function (scale, aesthetic, show.limits = FALSE, reverse = FALSE, ...) \n{\n    breaks <- scale$get_breaks()\n    parsed <- parse_binned_breaks(scale, breaks)\n    if (is.null(parsed)) {\n        return(parsed)\n    }\n    limits <- parsed$limits\n    breaks <- parsed$breaks\n    key <- data_frame(c(scale$map(parsed$bin_at), NA), .name_repair = ~aesthetic)\n    key$.value <- (seq_along(key[[1]]) - 1)/(nrow(key) - 1)\n    key$.show <- NA\n    labels <- scale$get_labels(breaks)\n    labels <- labels[!is.na(breaks)]\n    breaks <- breaks[!is.na(breaks)]\n    if (is.character(scale$labels) || is.numeric(scale$labels) || is.expression(scale$labels)) {\n        limit_lab <- c(NA, NA)\n    }\n    else {\n        limit_lab <- scale$get_labels(limits)\n    }\n    if (!breaks[1] %in% limits) {\n        labels <- c(limit_lab[1], labels)\n    }\n    else {\n        key$.show[1] <- TRUE\n    }\n    if (!breaks[length(breaks)] %in% limits) {\n        labels <- c(labels, limit_lab[2])\n    }\n    else {\n        key$.show[nrow(key)] <- TRUE\n    }\n    key$.label <- labels\n    key <- key[!is.na(oob_censor_any(key$.value)), , drop = FALSE]\n    return(key)\n}",
+      "extract_decor": "function (scale, aesthetic, ...) \n{\n    return(invisible())\n}"
+    },
+    "GuideColoursteps": {
+      "extract_key": "function (scale, aesthetic, even.steps, ...) \n{\n    breaks <- scale$get_breaks()\n    if (!(even.steps || !is.numeric(breaks))) {\n        return(Guide$extract_key(scale, aesthetic))\n    }\n    parsed <- parse_binned_breaks(scale, breaks)\n    if (is.null(parsed)) {\n        return(parsed)\n    }\n    limits <- parsed$limits\n    breaks <- parsed$breaks\n    key <- data_frame0(`:=`(!!aesthetic, scale$map(breaks)))\n    if (even.steps) {\n        key$.value <- NA_integer_\n        key$.value[!is.na(breaks)] <- seq_along(breaks[!is.na(breaks)])\n    }\n    else {\n        key$.value <- breaks\n    }\n    key$.label <- scale$get_labels(breaks)\n    key <- vec_slice(key, !is.na(breaks))\n    if (breaks[1] %in% limits) {\n        key$.value <- key$.value - 1L\n        key[[1]][1] <- NA\n    }\n    if (breaks[length(breaks)] %in% limits) {\n        key[[1]][nrow(key)] <- NA\n    }\n    attr(key, \"parsed\") <- parsed\n    key\n}",
+      "extract_decor": "function (scale, aesthetic, key, reverse = FALSE, even.steps = TRUE, nbin = 100, alpha = NA, ...) \n{\n    parsed <- attr(key, \"parsed\")\n    breaks <- parsed$breaks %||% scale$get_breaks()\n    limits <- parsed$limits %||% scale$get_limits()\n    breaks <- sort(unique0(c(limits, breaks)))\n    n <- length(breaks)\n    bin_at <- parsed$bin_at %||% ((breaks[-1] + breaks[-n])/2)\n    if (even.steps) {\n        breaks <- seq_len(n) - 1L\n    }\n    data_frame0(colour = alpha(scale$map(bin_at), alpha), min = breaks[-n], max = breaks[-1], .size = length(bin_at))\n}"
+    }
+  },
+  "parse_binned_breaks": "function (scale, breaks = scale$get_breaks()) \n{\n    if (is_waiver(scale$labels) || is.function(scale$labels)) {\n        breaks <- breaks[!is.na(breaks)]\n    }\n    if (length(breaks) == 0) {\n        return(NULL)\n    }\n    if (is.numeric(breaks)) {\n        limits <- scale$get_limits()\n        if (!is.numeric(scale$breaks)) {\n            breaks[breaks %in% limits] <- NA\n        }\n        breaks <- oob_censor(breaks, limits)\n        all_breaks <- unique0(c(limits[1], breaks, limits[2]))\n        all_breaks <- sort(all_breaks, na.last = NA)\n        bin_at <- all_breaks[-1] - diff(all_breaks)/2\n    }\n    else {\n        bin_at <- breaks\n        nums <- as.character(breaks)\n        nums <- strsplit(gsub(\"\\\\(|\\\\)|\\\\[|\\\\]\", \"\", nums), \",\\\\s?\")\n        nums <- as.numeric(unlist(nums, FALSE, FALSE))\n        if (anyNA(nums)) {\n            cli::cli_abort(c(\"Breaks are not formatted correctly for a bin legend.\", i = \"Use {.code (<lower>, <upper>]} format to indicate bins.\"))\n        }\n        all_breaks <- nums[c(1, seq_along(breaks) * 2)]\n        limits <- all_breaks[c(1, length(all_breaks))]\n        breaks <- all_breaks[-c(1, length(all_breaks))]\n    }\n    list(breaks = breaks, limits = limits, bin_at = bin_at)\n}",
+  "cases": [
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "3",
+              "10",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.47712125471966244,
+              1,
+              1.2041199826559248
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          null,
+          0.39624062518028902,
+          0.83048202372184055
+        ],
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0.33333333333333331,
+              0.66666666666666663
+            ],
+            "labels": [
+              "3",
+              "10"
+            ],
+            "scale_values": [
+              0.47712125471966244,
+              1
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0,
+          0.25,
+          0.75,
+          1
+        ],
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              null,
+              "#ff0000",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "Removed 2 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "3",
+              "10",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.47712125471966244,
+              1,
+              1.2041199826559248
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "Removed 2 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.39624062518028902,
+          0.83048202372184055
+        ],
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "Removed 2 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0.33333333333333331,
+              0.66666666666666663
+            ],
+            "labels": [
+              "3",
+              "10"
+            ],
+            "scale_values": [
+              0.47712125471966244,
+              1
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0,
+          0.25,
+          0.75,
+          1
+        ],
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "Removed 2 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              null,
+              "#ff0000",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced"
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "3",
+              "10",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.47712125471966244,
+              1,
+              1.2041199826559248
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced"
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.39624062518028902,
+          0.83048202372184055
+        ],
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced"
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0.33333333333333331,
+              0.66666666666666663
+            ],
+            "labels": [
+              "3",
+              "10"
+            ],
+            "scale_values": [
+              0.47712125471966244,
+              1
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0,
+          0.25,
+          0.75,
+          1
+        ],
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced"
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              null,
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "3",
+              "10",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.47712125471966244,
+              1,
+              1.2041199826559248
+            ],
+            "mapped": [
+              1.792481250360578,
+              3.4534452978042594,
+              4.6609640474436809,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              1.5,
+              3,
+              4.5,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "Removed 2 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          2,
+          "Infinity",
+          4,
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "3",
+              "10",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.47712125471966244,
+              1,
+              1.2041199826559248
+            ],
+            "mapped": [
+              1.792481250360578,
+              3.4534452978042594,
+              4.6609640474436809,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "Removed 2 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          2,
+          "Infinity",
+          4,
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              1.5,
+              3,
+              4.5,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead.",
+        "Removed 2 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          2,
+          "Infinity",
+          4,
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead.",
+        "Removed 2 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          2,
+          "Infinity",
+          4,
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced"
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          1.8,
+          2.6000000000000001,
+          3.3999999999999999,
+          4.2000000000000002,
+          5
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "3",
+              "10",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.47712125471966244,
+              1,
+              1.2041199826559248
+            ],
+            "mapped": [
+              2.333333333333333,
+              3.6666666666666665,
+              5,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced"
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          1.8,
+          2.6000000000000001,
+          3.3999999999999999,
+          4.2000000000000002,
+          5
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              2.333333333333333,
+              3.6666666666666665,
+              5,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          1.8,
+          2.6000000000000001,
+          3.3999999999999999,
+          4.2000000000000002,
+          5
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          1.8,
+          2.6000000000000001,
+          3.3999999999999999,
+          4.2000000000000002,
+          5
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "3",
+              "10",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.47712125471966244,
+              1,
+              1.2041199826559248
+            ],
+            "mapped": [
+              0.19812031259014451,
+              0.61336132445106484,
+              0.91524101186092033,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              0.125,
+              0.5,
+              0.875,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          0,
+          0.25,
+          0.5,
+          0.75,
+          1
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced"
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "3",
+              "10",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.47712125471966244,
+              1,
+              1.2041199826559248
+            ],
+            "mapped": [
+              0.19812031259014451,
+              0.61336132445106484,
+              0.91524101186092033,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced"
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              0.125,
+              0.5,
+              0.875,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.19812031259014451,
+          0.61336132445106484,
+          0.91524101186092033
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced"
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.40000000000000002,
+          0.59999999999999998,
+          0.80000000000000004,
+          1
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "3",
+              "10",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.47712125471966244,
+              1,
+              1.2041199826559248
+            ],
+            "mapped": [
+              0.33333333333333331,
+              0.66666666666666663,
+              1,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.125,
+          0.5,
+          0.875
+        ],
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced"
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.40000000000000002,
+          0.59999999999999998,
+          0.80000000000000004,
+          1
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.33333333333333331,
+              0.66666666666666663,
+              1
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              0,
+              0.3010299956639812,
+              0.90308998699194354,
+              1.2041199826559248
+            ],
+            "mapped": [
+              0.33333333333333331,
+              0.66666666666666663,
+              1,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.40000000000000002,
+          0.59999999999999998,
+          0.80000000000000004,
+          1
+        ],
+        "raw_breaks": [
+          0,
+          0.47712125471966244,
+          1,
+          1.4771212547196624
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "log10",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.25,
+          "Infinity",
+          0.75,
+          null
+        ]
+      ],
+      "warnings": [
+        "NaNs produced",
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          0,
+          1.2041199826559248
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.40000000000000002,
+          0.59999999999999998,
+          0.80000000000000004,
+          1
+        ],
+        "raw_breaks": [
+          0,
+          0.3010299956639812,
+          0.90308998699194354,
+          1.2041199826559248
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004,
+              1
+            ],
+            "labels": [
+              "1",
+              "0",
+              "4",
+              "8",
+              "12",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              9,
+              13,
+              17,
+              18
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              6,
+              12,
+              18
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.13333333333333333,
+          0.40000000000000002,
+          0.66666666666666663,
+          0.93333333333333335,
+          null
+        ],
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004
+            ],
+            "labels": [
+              "0",
+              "4",
+              "8",
+              "12"
+            ],
+            "scale_values": [
+              5,
+              9,
+              13,
+              17
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#FF0000",
+              "#0000FF",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.13333333333333333,
+          0.20000000000000001,
+          0.59999999999999998,
+          null
+        ],
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0.25,
+              0.5,
+              0.75
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8"
+            ],
+            "scale_values": [
+              5,
+              6,
+              12
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#FF0000",
+              "#FF0000",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#ff0000"
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004,
+              1
+            ],
+            "labels": [
+              "1",
+              "0",
+              "4",
+              "8",
+              "12",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              9,
+              13,
+              17,
+              18
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#ff0000"
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              6,
+              12,
+              18
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.13333333333333333,
+          0.40000000000000002,
+          0.66666666666666663,
+          0.93333333333333335,
+          null
+        ],
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#ff0000"
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004
+            ],
+            "labels": [
+              "0",
+              "4",
+              "8",
+              "12"
+            ],
+            "scale_values": [
+              5,
+              9,
+              13,
+              17
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#FF0000",
+              "#0000FF",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.13333333333333333,
+          0.20000000000000001,
+          0.59999999999999998,
+          null
+        ],
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#ff0000"
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0.25,
+              0.5,
+              0.75
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8"
+            ],
+            "scale_values": [
+              5,
+              6,
+              12
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#FF0000",
+              "#FF0000",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004,
+              1
+            ],
+            "labels": [
+              "1",
+              "0",
+              "4",
+              "8",
+              "12",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              9,
+              13,
+              17,
+              18
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              6,
+              12,
+              18
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.13333333333333333,
+          0.40000000000000002,
+          0.66666666666666663,
+          0.93333333333333335,
+          null
+        ],
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004
+            ],
+            "labels": [
+              "0",
+              "4",
+              "8",
+              "12"
+            ],
+            "scale_values": [
+              5,
+              9,
+              13,
+              17
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#FF0000",
+              "#0000FF",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.13333333333333333,
+          0.20000000000000001,
+          0.59999999999999998,
+          null
+        ],
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0.25,
+              0.5,
+              0.75
+            ],
+            "labels": [
+              "1",
+              "2",
+              "8"
+            ],
+            "scale_values": [
+              5,
+              6,
+              12
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#0000FF",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          1.8,
+          2.0666666666666664,
+          2.6000000000000001,
+          3.6666666666666665,
+          null
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004,
+              1
+            ],
+            "labels": [
+              "1",
+              "0",
+              "4",
+              "8",
+              "12",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              9,
+              13,
+              17,
+              18
+            ],
+            "mapped": [
+              1.2666666666666666,
+              2.0666666666666664,
+              3.1333333333333333,
+              4.2000000000000002,
+              4.8666666666666671,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          1.8,
+          2.0666666666666664,
+          2.6000000000000001,
+          3.6666666666666665,
+          null
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              6,
+              12,
+              18
+            ],
+            "mapped": [
+              1.2666666666666666,
+              1.6666666666666665,
+              2.6000000000000001,
+              4.2000000000000002,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead.",
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          1.8,
+          2.0666666666666664,
+          2.6000000000000001,
+          3.6666666666666665,
+          null
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead.",
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          1.8,
+          2.0666666666666664,
+          2.6000000000000001,
+          3.6666666666666665,
+          null
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          2.0666666666666664,
+          "Infinity",
+          3.6666666666666665,
+          "-Infinity"
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004,
+              1
+            ],
+            "labels": [
+              "1",
+              "0",
+              "4",
+              "8",
+              "12",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              9,
+              13,
+              17,
+              18
+            ],
+            "mapped": [
+              1.2666666666666666,
+              2.0666666666666664,
+              3.1333333333333333,
+              4.2000000000000002,
+              4.8666666666666671,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          2.0666666666666664,
+          "Infinity",
+          3.6666666666666665,
+          "-Infinity"
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              6,
+              12,
+              18
+            ],
+            "mapped": [
+              1.2666666666666666,
+              1.6666666666666665,
+              2.6000000000000001,
+              4.2000000000000002,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead.",
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          2.0666666666666664,
+          "Infinity",
+          3.6666666666666665,
+          "-Infinity"
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead.",
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          2.0666666666666664,
+          "Infinity",
+          3.6666666666666665,
+          "-Infinity"
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          1.8,
+          2.6000000000000001,
+          3.3999999999999999,
+          4.2000000000000002,
+          5
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004,
+              1
+            ],
+            "labels": [
+              "1",
+              "0",
+              "4",
+              "8",
+              "12",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              9,
+              13,
+              17,
+              18
+            ],
+            "mapped": [
+              1.8,
+              2.6000000000000001,
+              3.3999999999999999,
+              4.2000000000000002,
+              5,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          1.8,
+          2.6000000000000001,
+          3.3999999999999999,
+          4.2000000000000002,
+          5
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              6,
+              12,
+              18
+            ],
+            "mapped": [
+              2,
+              3,
+              4,
+              5,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          1.8,
+          2.6000000000000001,
+          3.3999999999999999,
+          4.2000000000000002,
+          5
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          1.8,
+          2.6000000000000001,
+          3.3999999999999999,
+          4.2000000000000002,
+          5
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004,
+              1
+            ],
+            "labels": [
+              "1",
+              "0",
+              "4",
+              "8",
+              "12",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              9,
+              13,
+              17,
+              18
+            ],
+            "mapped": [
+              0.066666666666666666,
+              0.26666666666666666,
+              0.53333333333333333,
+              0.80000000000000004,
+              0.96666666666666667,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              6,
+              12,
+              18
+            ],
+            "mapped": [
+              0.066666666666666666,
+              0.16666666666666666,
+              0.40000000000000002,
+              0.80000000000000004,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.26666666666666666,
+          0.40000000000000002,
+          0.66666666666666663,
+          null
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004,
+              1
+            ],
+            "labels": [
+              "1",
+              "0",
+              "4",
+              "8",
+              "12",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              9,
+              13,
+              17,
+              18
+            ],
+            "mapped": [
+              0.066666666666666666,
+              0.26666666666666666,
+              0.53333333333333333,
+              0.80000000000000004,
+              0.96666666666666667,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              6,
+              12,
+              18
+            ],
+            "mapped": [
+              0.066666666666666666,
+              0.16666666666666666,
+              0.40000000000000002,
+              0.80000000000000004,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.26666666666666666,
+          0.53333333333333333,
+          0.80000000000000004,
+          0.96666666666666667
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.40000000000000002,
+          0.59999999999999998,
+          0.80000000000000004,
+          1
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004,
+              1
+            ],
+            "labels": [
+              "1",
+              "0",
+              "4",
+              "8",
+              "12",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              9,
+              13,
+              17,
+              18
+            ],
+            "mapped": [
+              0.20000000000000001,
+              0.40000000000000002,
+              0.59999999999999998,
+              0.80000000000000004,
+              1,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.066666666666666666,
+          0.16666666666666666,
+          0.40000000000000002,
+          0.80000000000000004
+        ],
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.40000000000000002,
+          0.59999999999999998,
+          0.80000000000000004,
+          1
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "1",
+              "2",
+              "8",
+              "16"
+            ],
+            "scale_values": [
+              3,
+              5,
+              6,
+              12,
+              18
+            ],
+            "mapped": [
+              0.25,
+              0.5,
+              0.75,
+              1,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.40000000000000002,
+          0.59999999999999998,
+          0.80000000000000004,
+          1
+        ],
+        "raw_breaks": [
+          5,
+          9,
+          13,
+          17,
+          21
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "cardinality",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.26666666666666666,
+          "Infinity",
+          0.66666666666666663,
+          "-Infinity"
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          3,
+          18
+        ],
+        "mapped": [
+          0.20000000000000001,
+          0.40000000000000002,
+          0.59999999999999998,
+          0.80000000000000004,
+          1
+        ],
+        "raw_breaks": [
+          5,
+          6,
+          12,
+          20
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-4",
+              "0",
+              "4",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -4,
+              0,
+              4,
+              7.5
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-5.75",
+              "-4.75",
+              "1.25",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -5.75,
+              -4.75,
+              1.25,
+              7.5
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          null,
+          0.23333333333333334,
+          0.5,
+          0.76666666666666672
+        ],
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0.25,
+              0.5,
+              0.75
+            ],
+            "labels": [
+              "-4",
+              "0",
+              "4"
+            ],
+            "scale_values": [
+              -4,
+              0,
+              4
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#FF0000",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.18333333333333332,
+          0.58333333333333337,
+          null
+        ],
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0.25,
+              0.5,
+              0.75
+            ],
+            "labels": [
+              "-5.75",
+              "-4.75",
+              "1.25"
+            ],
+            "scale_values": [
+              -5.75,
+              -4.75,
+              1.25
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#FF0000",
+              "#FF0000",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "Removed 5 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-4",
+              "0",
+              "4",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -4,
+              0,
+              4,
+              7.5
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "Removed 5 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-5.75",
+              "-4.75",
+              "1.25",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -5.75,
+              -4.75,
+              1.25,
+              7.5
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#ff0000",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.23333333333333334,
+          0.5,
+          0.76666666666666672
+        ],
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "Removed 5 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0.25,
+              0.5,
+              0.75
+            ],
+            "labels": [
+              "-4",
+              "0",
+              "4"
+            ],
+            "scale_values": [
+              -4,
+              0,
+              4
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#FF0000",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.18333333333333332,
+          0.58333333333333337,
+          null
+        ],
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "Removed 5 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0.25,
+              0.5,
+              0.75
+            ],
+            "labels": [
+              "-5.75",
+              "-4.75",
+              "1.25"
+            ],
+            "scale_values": [
+              -5.75,
+              -4.75,
+              1.25
+            ],
+            "mapped": [
+              "#ff0000",
+              "#ff0000",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#FF0000",
+              "#FF0000",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-4",
+              "0",
+              "4",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -4,
+              0,
+              4,
+              7.5
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-5.75",
+              "-4.75",
+              "1.25",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -5.75,
+              -4.75,
+              1.25,
+              7.5
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff",
+              "#0000ff",
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          0.23333333333333334,
+          0.5,
+          0.76666666666666672
+        ],
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0.25,
+              0.5,
+              0.75
+            ],
+            "labels": [
+              "-4",
+              "0",
+              "4"
+            ],
+            "scale_values": [
+              -4,
+              0,
+              4
+            ],
+            "mapped": [
+              "#0000ff",
+              "#0000ff",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#0000FF",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "colour",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.18333333333333332,
+          0.58333333333333337,
+          null
+        ],
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0.25,
+              0.5,
+              0.75
+            ],
+            "labels": [
+              "-5.75",
+              "-4.75",
+              "1.25"
+            ],
+            "scale_values": [
+              -5.75,
+              -4.75,
+              1.25
+            ],
+            "mapped": [
+              "#ff0000",
+              "#0000ff",
+              "#0000ff"
+            ],
+            "decor_values": [],
+            "decor_colors": [
+              "#FF0000",
+              "#0000FF",
+              "#0000FF",
+              "#0000FF"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          1.6133333333333333,
+          1.8799999999999999,
+          2.4133333333333331,
+          3.48,
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-4",
+              "0",
+              "4",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -4,
+              0,
+              4,
+              7.5
+            ],
+            "mapped": [
+              1.4666666666666668,
+              2.4666666666666668,
+              3.5333333333333332,
+              4.5333333333333332,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          1.6133333333333333,
+          1.8799999999999999,
+          2.4133333333333331,
+          3.48,
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-5.75",
+              "-4.75",
+              "1.25",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -5.75,
+              -4.75,
+              1.25,
+              7.5
+            ],
+            "mapped": [
+              1.2333333333333334,
+              1.6000000000000001,
+              2.5333333333333332,
+              4.1666666666666661,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead.",
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          1.6133333333333333,
+          1.8799999999999999,
+          2.4133333333333331,
+          3.48,
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead.",
+        "Removed 1 row containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          1.6133333333333333,
+          1.8799999999999999,
+          2.4133333333333331,
+          3.48,
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "Removed 5 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-4",
+              "0",
+              "4",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -4,
+              0,
+              4,
+              7.5
+            ],
+            "mapped": [
+              1.4666666666666668,
+              2.4666666666666668,
+              3.5333333333333332,
+              4.5333333333333332,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "Removed 5 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-5.75",
+              "-4.75",
+              "1.25",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -5.75,
+              -4.75,
+              1.25,
+              7.5
+            ],
+            "mapped": [
+              1.2333333333333334,
+              1.6000000000000001,
+              2.5333333333333332,
+              4.1666666666666661,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead.",
+        "Removed 5 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead.",
+        "Removed 5 rows containing missing values or values outside the scale range\n(`geom_point()`)."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          3,
+          5,
+          5,
+          5,
+          5
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-4",
+              "0",
+              "4",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -4,
+              0,
+              4,
+              7.5
+            ],
+            "mapped": [
+              2,
+              3,
+              4,
+              5,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          3,
+          5,
+          5,
+          5,
+          5
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-5.75",
+              "-4.75",
+              "1.25",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -5.75,
+              -4.75,
+              1.25,
+              7.5
+            ],
+            "mapped": [
+              2,
+              3,
+              4,
+              5,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          3,
+          5,
+          5,
+          5,
+          5
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "size",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "`guide_coloursteps()` cannot be used for size.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          3,
+          5,
+          5,
+          5,
+          5
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-4",
+              "0",
+              "4",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -4,
+              0,
+              4,
+              7.5
+            ],
+            "mapped": [
+              0.11666666666666667,
+              0.36666666666666664,
+              0.6333333333333333,
+              0.8833333333333333,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-5.75",
+              "-4.75",
+              "1.25",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -5.75,
+              -4.75,
+              1.25,
+              7.5
+            ],
+            "mapped": [
+              0.058333333333333334,
+              0.14999999999999999,
+              0.38333333333333336,
+              0.79166666666666663,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "ordinary",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "calls": [
+        [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ]
+      ],
+      "warnings": [
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          0.15333333333333332,
+          0.22,
+          0.35333333333333333,
+          0.62,
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-4",
+              "0",
+              "4",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -4,
+              0,
+              4,
+              7.5
+            ],
+            "mapped": [
+              0.11666666666666667,
+              0.36666666666666664,
+              0.6333333333333333,
+              0.8833333333333333,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-5.75",
+              "-4.75",
+              "1.25",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -5.75,
+              -4.75,
+              1.25,
+              7.5
+            ],
+            "mapped": [
+              0.058333333333333334,
+              0.14999999999999999,
+              0.38333333333333336,
+              0.79166666666666663,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "full",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "default",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.11666666666666667,
+          0.36666666666666664,
+          0.6333333333333333,
+          0.8833333333333333
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          0.5,
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-4",
+              "0",
+              "4",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -4,
+              0,
+              4,
+              7.5
+            ],
+            "mapped": [
+              0.25,
+              0.5,
+              0.75,
+              1,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "bins",
+      "breaks": "uneven",
+      "selected": "bins",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          0.058333333333333334,
+          0.14999999999999999,
+          0.38333333333333336,
+          0.79166666666666663
+        ],
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          0.5,
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "-7.5",
+              "-5.75",
+              "-4.75",
+              "1.25",
+              "7.5"
+            ],
+            "scale_values": [
+              -7.5,
+              -5.75,
+              -4.75,
+              1.25,
+              7.5
+            ],
+            "mapped": [
+              0.25,
+              0.5,
+              0.75,
+              1,
+              null
+            ],
+            "decor_values": [],
+            "decor_colors": []
+          }
+        ]
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "default",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          0.5,
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_breaks": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "guides": []
+      }
+    },
+    {
+      "transform": "center",
+      "palette_mode": "index",
+      "channel": "alpha",
+      "population": "missing",
+      "guide": "coloursteps",
+      "breaks": "uneven",
+      "selected": "coloursteps",
+      "inputs": [
+        null,
+        2,
+        "Infinity",
+        8,
+        "-Infinity"
+      ],
+      "calls": [
+        [
+          null,
+          null
+        ]
+      ],
+      "warnings": [
+        "center transformation introduced infinite values.",
+        "`guide_coloursteps()` cannot be used for alpha.\nℹ Use one of colour, color, or fill instead."
+      ],
+      "result": {
+        "scale_limits": [
+          -7.5,
+          7.5
+        ],
+        "mapped": [
+          0.5,
+          1,
+          1,
+          1,
+          1
+        ],
+        "raw_breaks": [
+          -5.75,
+          -4.75,
+          1.25,
+          9.25
+        ],
+        "guides": []
+      }
+    }
+  ]
+}

@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 #[serde(deny_unknown_fields)]
 pub enum ScaleValue {
     /// Numeric calculation units, including explicitly transformed statistical units.
-    Number(f64),
+    Number(#[serde(with = "crate::number::finite_or_special")] f64),
     /// Category label identity, never a transient ordinal.
     Category(String),
     /// Missing category identity, distinct from any display label.

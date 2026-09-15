@@ -241,13 +241,21 @@ impl ScaleConstructor {
             }
             _ => StandaloneScaleSpec::Numeric(NumericScaleSpec::d3(family)),
         };
-        options.apply_spec(spec, registry.interpolations.clone())
+        options.apply_spec(
+            spec,
+            registry.interpolations.clone(),
+            registry.transforms_function.clone(),
+        )
     }
 }
 impl ScaleOptions {
     /// Atomically apply only explicitly supplied fields, preserving family and other settings.
     pub fn apply(self, scale: &StandaloneScale) -> ChartResult<StandaloneScale> {
-        self.apply_spec(scale.spec().clone(), scale.registrations.clone())
+        self.apply_spec(
+            scale.spec().clone(),
+            scale.registrations.clone(),
+            scale.transforms.clone(),
+        )
     }
     fn apply_spec(
         mut self,
@@ -255,6 +263,7 @@ impl ScaleOptions {
         registrations: std::sync::Arc<
             crate::grammar::interpolation_extensions::InterpolationRegistrations,
         >,
+        transforms: std::sync::Arc<crate::grammar::transform_extensions::TransformRegistrations>,
     ) -> ChartResult<StandaloneScale> {
         use StandaloneScaleSpec as S;
         if self.interpolator.is_some()
@@ -281,7 +290,7 @@ impl ScaleOptions {
                     return Err(invalid("Identity and radial ranges are numeric."));
                 }
                 spec = S::Continuous(ContinuousScaleSpec {
-                    family: s.family,
+                    family: s.family.clone(),
                     domain: s.domain.clone(),
                     range: s.range.iter().copied().map(Value::Number).collect(),
                     factory: InterpolationFactory::new(if s.round {
@@ -534,6 +543,6 @@ impl ScaleOptions {
         if self != Self::default() {
             return Err(invalid("An option is not supported by this scale family."));
         }
-        StandaloneScale::new_with_registrations(spec, registrations)
+        StandaloneScale::new_with_all_registrations(spec, registrations, transforms, false)
     }
 }

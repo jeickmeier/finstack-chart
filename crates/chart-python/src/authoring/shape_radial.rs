@@ -157,7 +157,7 @@ impl ShapeLinkRadialHandle {
     }
 }
 #[pyfunction]
-fn _point_radial(angle: f64, radius: f64) -> PyResult<(f64, f64)> {
+pub(super) fn _point_radial(angle: f64, radius: f64) -> PyResult<(f64, f64)> {
     let p = chart_core::shape::point_radial(angle, radius).map_err(failure)?;
     Ok((p[0], p[1]))
 }

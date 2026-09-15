@@ -76,7 +76,9 @@ chart=plot.chart();d=chart.semantics()['layers'][0]['domains'];assert d['x']=={'
 request,frame=retain('source_expression',plot);frame.dispose();request.dispose();chart.dispose();plot.dispose()
 plot=figure(data).layer(c.points().after_scale(c.scale_aes().size(c.after_scale_expr('Size')*2.))).build()
 request,frame=retain('after_scale_expression',plot)
-assert [p['radius'] for p in marks(frame)]==reference['after_scale_expression']['size']
+# R gg_par fontsize combines size (.pt) and stroke (.stroke/2); circle radius is 3/8 fontsize.
+assert all(math.isclose(p['radius'], (size * 72.27 + stroke * 48.) / 25.4 * .375, rel_tol=1e-12)
+           for p, size, stroke in zip(marks(frame), reference['after_scale_expression']['size'], reference['after_scale_expression']['stroke'], strict=True))
 frame.dispose();request.dispose();plot.dispose()
 plot=figure(data).theme(c.theme().geometry(accent='#1256ab')).layer(c.points().after_scale(c.scale_aes().color(c.from_theme('Accent')))).build()
 request,frame=retain('theme_expression',plot)

@@ -408,6 +408,7 @@ impl Component {
             "scale_aes" => empty!(ScaleAes, scale_aes),
             "aes" => empty!(Aes, aes),
             "points" => empty!(Layer, points),
+            "blank" => empty!(Layer, blank),
             "line" => empty!(Layer, line),
             "hierarchy" => Kind::Layer(hierarchy(
                 a.one::<crate::grammar::HierarchyRecipe<String>>()?
@@ -485,6 +486,7 @@ impl Component {
             "scale_reverse" => empty!(Scale, scale_reverse),
             "scale_sqrt" => empty!(Scale, scale_sqrt),
             "scale_log" => Kind::Scale(scale_log(a.one()?)),
+            "scale_transform" => Kind::Scale(scale_transform(a.one()?)),
             "scale_symlog" => Kind::Scale(scale_symlog(a.one()?)),
             "scale_band" => empty!(Scale, scale_band),
             "scale_point" => empty!(Scale, scale_point),
@@ -509,6 +511,8 @@ impl Component {
                 let (name, source) = a.pair::<String, String>()?;
                 Kind::Guide(axis_guide(name, source))
             }
+            "xlim" => Kind::Axis(xlim(a.one()?)),
+            "ylim" => Kind::Axis(ylim(a.one()?)),
             "x_axis" => empty!(Axis, x_axis),
             "y_axis" => empty!(Axis, y_axis),
             "color_discrete" => Kind::Color(color_discrete(a.string()?)),

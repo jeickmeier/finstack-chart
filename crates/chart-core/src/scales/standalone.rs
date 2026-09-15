@@ -83,6 +83,8 @@ enum Prepared {
 pub struct StandaloneScale {
     pub(crate) registrations:
         std::sync::Arc<crate::grammar::interpolation_extensions::InterpolationRegistrations>,
+    pub(crate) transforms:
+        std::sync::Arc<crate::grammar::transform_extensions::TransformRegistrations>,
     spec: StandaloneScaleSpec,
     prepared: Box<Prepared>,
 }
@@ -109,7 +111,12 @@ impl StandaloneScale {
         spec: StandaloneScaleSpec,
         registry: &crate::grammar::ExtensionRegistry,
     ) -> ChartResult<Self> {
-        Self::new_with_registrations(spec, registry.interpolations.clone())
+        Self::new_with_all_registrations(
+            spec,
+            registry.interpolations.clone(),
+            registry.transforms_function.clone(),
+            false,
+        )
     }
     pub(crate) fn new_with_registrations(
         spec: StandaloneScaleSpec,
@@ -117,10 +124,23 @@ impl StandaloneScale {
             crate::grammar::interpolation_extensions::InterpolationRegistrations,
         >,
     ) -> ChartResult<Self> {
+        Self::new_with_all_registrations(spec, registrations, Default::default(), false)
+    }
+    pub(crate) fn new_with_all_registrations(
+        mut spec: StandaloneScaleSpec,
+        registrations: std::sync::Arc<
+            crate::grammar::interpolation_extensions::InterpolationRegistrations,
+        >,
+        transforms: std::sync::Arc<crate::grammar::transform_extensions::TransformRegistrations>,
+        portable: bool,
+    ) -> ChartResult<Self> {
         use StandaloneScaleSpec as S;
         // Check the same aggregate wire budget for native and transported descriptors.
         let encoded = portable::encode(&spec)?;
         let _: StandaloneScaleSpec = portable::decode(&encoded)?;
+        if let Some(transform) = spec.ggplot_transform_mut() {
+            transform.resolve_registrations(&transforms, portable)?;
+        }
         let prepared = match &spec {
             S::Numeric(s) => Prepared::Numeric(NumericScale::new(s.clone())?),
             S::Continuous(s) => {
@@ -138,7 +158,7 @@ impl StandaloneScale {
                     .map(|range| {
                         NumericScale::new(NumericScaleSpec {
                             compatibility: ScaleCompatibility::D3,
-                            family: s.family,
+                            family: s.family.clone(),
                             domain: s.domain.clone(),
                             range,
                             clamp: s.clamp,
@@ -196,6 +216,7 @@ impl StandaloneScale {
             spec,
             prepared: Box::new(prepared),
             registrations,
+            transforms,
         };
         // Preserve authored family while exposing normalized catalogs and parameters.
         match (&mut result.spec, &*result.prepared) {
@@ -218,12 +239,20 @@ impl StandaloneScale {
     }
     /// Prepare a replacement without mutating this scale.
     pub fn reconfigure(&self, spec: StandaloneScaleSpec) -> ChartResult<Self> {
-        Self::new_with_registrations(spec, self.registrations.clone())
+        Self::new_with_all_registrations(
+            spec,
+            self.registrations.clone(),
+            self.transforms.clone(),
+            false,
+        )
     }
     /// Strict bounded version-one transport.
     pub fn to_json(&self) -> ChartResult<String> {
         self.spec
             .validate_registrations(&self.registrations, true)?;
+        if let Some(transform) = self.spec.ggplot_transform() {
+            transform.validate_portable()?;
+        }
         portable::encode(&Wire {
             version: self.spec.wire_version(),
             spec: self.spec.clone(),
@@ -244,7 +273,12 @@ impl StandaloneScale {
         }
         wire.spec
             .validate_registrations(&registry.interpolations, true)?;
-        Self::new_with_registry(wire.spec, registry)
+        Self::new_with_all_registrations(
+            wire.spec,
+            registry.interpolations.clone(),
+            registry.transforms_function.clone(),
+            true,
+        )
     }
     /// Pure lookup; implicit ordinal growth occurs only through explicit `train`.
     pub fn map(&self, input: ScaleInput) -> ChartResult<Value> {
@@ -348,7 +382,12 @@ impl StandaloneScale {
             }
             _ => return Err(capability("numeric nice")),
         };
-        Self::new_with_registrations(spec, self.registrations.clone())
+        Self::new_with_all_registrations(
+            spec,
+            self.registrations.clone(),
+            self.transforms.clone(),
+            false,
+        )
     }
     /// Explicit immutable ordinal training, preserving first-seen order.
     pub fn train(&self, keys: Vec<ScaleKey>) -> ChartResult<Self> {
@@ -361,9 +400,11 @@ impl StandaloneScale {
                 "Ordinal training exceeds its input budget.",
             ));
         }
-        Self::new_with_registrations(
+        Self::new_with_all_registrations(
             StandaloneScaleSpec::Ordinal(s.train(keys).spec().clone()),
             self.registrations.clone(),
+            self.transforms.clone(),
+            false,
         )
     }
     /// Prepared numeric classifier cuts.
@@ -469,7 +510,7 @@ impl StandaloneScale {
                 if !matches!(s.family, NumericFamily::Identity | NumericFamily::Radial) =>
             {
                 ScaleFunctionSpec::Continuous(ContinuousScaleSpec {
-                    family: s.family,
+                    family: s.family.clone(),
                     domain: s.domain.clone(),
                     range: s.range.iter().copied().map(Value::Number).collect(),
                     factory: crate::interpolate::InterpolationFactory::new(if s.round {
@@ -489,8 +530,18 @@ impl StandaloneScale {
             _ => return Err(capability("a mapped aesthetic descriptor")),
         };
         let spec = MappedScaleSpec {
+            colorbar_options: None,
+            palette_theme_aesthetics: vec![],
+            oob_function: None,
+            rescaler_function: None,
+            palette_fallback_indices: vec![],
+            missing_paint_is_na: false,
+            palette_function: None,
             resolved_numeric_limits: None,
+            resolved_discrete_limits_null: false,
+            trained_transformed_bounds: None,
             limits_function: None,
+            breaks_function: None,
             guide: None,
             ggplot: None,
             catalog: None,
@@ -503,8 +554,56 @@ impl StandaloneScale {
 }
 
 impl StandaloneScaleSpec {
+    fn ggplot_transform(&self) -> Option<&GgplotTransform> {
+        match self {
+            Self::Numeric(s) => s.family.ggplot_transform(),
+            Self::Continuous(s) => s.family.ggplot_transform(),
+            Self::Interpolated(s) => s.normalization.ggplot_transform(),
+            _ => None,
+        }
+    }
+    fn ggplot_transform_mut(&mut self) -> Option<&mut GgplotTransform> {
+        let family = match self {
+            Self::Numeric(s) => &mut s.family,
+            Self::Continuous(s) => &mut s.family,
+            Self::Interpolated(s) => match &mut s.normalization {
+                NormalizationSpec::Ggplot { family, .. }
+                | NormalizationSpec::Sequential { family, .. }
+                | NormalizationSpec::Diverging { family, .. } => family,
+                _ => return None,
+            },
+            _ => return None,
+        };
+        match family {
+            NumericFamily::Ggplot { transform } => Some(transform),
+            _ => None,
+        }
+    }
     /// Minimum standalone scale envelope version, preserving builtin version one.
     pub fn wire_version(&self) -> u32 {
+        let transform = match self {
+            Self::Numeric(s) => s.family.ggplot_transform(),
+            Self::Continuous(s) => s.family.ggplot_transform(),
+            Self::Interpolated(s) => s.normalization.ggplot_transform(),
+            _ => None,
+        };
+        if let Some(transform) = transform {
+            return if transform.has_registered() {
+                10
+            } else if matches!(transform, super::GgplotTransform::Compose { .. }) {
+                9
+            } else {
+                8
+            };
+        }
+        if matches!(self,Self::Interpolated(s) if matches!(&s.output,ScaleRangeFunction::Interpolate(i) if i.wire_version()==5))
+        {
+            return 7;
+        }
+        if matches!(self,Self::Interpolated(s) if matches!(&s.output,ScaleRangeFunction::Interpolate(i) if i.wire_version()==4))
+        {
+            return 6;
+        }
         if matches!(self, Self::Interpolated(s) if matches!(s.normalization, NormalizationSpec::Ggplot { timestamp: Some(GgplotTimestampNormalization { date: true, .. }), .. }))
         {
             return 5;

@@ -177,7 +177,7 @@ impl Search<'_> {
         (i128::from(value) - i128::from(self.origin)) as f64
     }
     fn candidates(&mut self, view: Bounds, step: Step) -> ChartResult<Vec<i64>> {
-        let low = utc::absolute(view.minimum().floor(), self.origin)?;
+        let low = utc::absolute_number(view.minimum().floor(), self.origin)?;
         let anchor = self.calendar.floor(low, self.unit, step.anchor)?;
         let mut values = Vec::new();
         let mut previous = None;
@@ -216,7 +216,7 @@ pub fn ggplot_breaks_pretty_time(
     pretty_time(origin, view, unit, calendar, count, budget, true)
 }
 
-pub(super) fn pretty_time(
+pub(crate) fn pretty_time(
     origin: i64,
     view: Bounds,
     unit: TimeUnit,
@@ -243,7 +243,7 @@ pub(super) fn pretty_time(
     let constant =
         super::ggplot::zero_range(epoch + view.start() / factor, epoch + view.end() / factor);
     let (values, pattern) = if constant {
-        let value = utc::absolute(view.start(), origin)?;
+        let value = utc::absolute_number(view.start(), origin)?;
         let date = calendar.components(value, unit)?;
         let pattern =
             if date.hour == 0 && date.minute == 0 && date.second == 0 && date.nanosecond == 0 {
@@ -372,7 +372,7 @@ pub fn ggplot_breaks_pretty_date(
     pretty_date(origin, view, unit, count, budget, true)
 }
 
-pub(super) fn pretty_date(
+pub(crate) fn pretty_date(
     origin: i64,
     view: Bounds,
     unit: TimeUnit,
@@ -400,10 +400,10 @@ pub(super) fn pretty_date(
         return pretty_time(origin, view, unit, &calendar, count, budget, crop);
     }
     let values = if constant {
-        vec![utc::absolute(view.start(), origin)?]
+        vec![utc::absolute_number(view.start(), origin)?]
     } else {
-        let low = utc::absolute(view.start().floor(), origin)?;
-        let high = utc::absolute(view.end().floor(), origin)?;
+        let low = utc::absolute_number(view.start().floor(), origin)?;
+        let high = utc::absolute_number(view.end().floor(), origin)?;
         let padding = (count - span).round_ties_even() as i128;
         let left = (padding.div_euclid(2)).max(0);
         let right = left + padding.rem_euclid(2);

@@ -32,6 +32,12 @@ pub trait CustomScaleLimits: Send + Sync {
     fn descriptor(&self) -> ExtensionDescriptor;
     /// Validate parameters without inspecting data or running the function.
     fn validate(&self, parameters: &serde_json::Value) -> ChartResult<()>;
+    /// Whether evaluation reads the trained domain. A constant function may
+    /// return false to avoid forcing an unavailable inverse-transformed domain.
+    /// The default preserves eager domain validation for existing functions.
+    fn requires_domain(&self, _parameters: &serde_json::Value) -> bool {
+        true
+    }
     /// Replace the trained domain. None preserves a reference NULL result;
     /// Some(empty) deliberately selects no levels.
     fn evaluate(&self, input: ScaleLimitsInput<'_>) -> ChartResult<Option<Vec<ScaleKey>>>;
@@ -51,6 +57,13 @@ pub(crate) struct ScaleLimitRegistrations {
     entries: BTreeMap<(String, u64), Registration>,
 }
 impl ScaleLimitRegistrations {
+    pub(crate) fn requires_domain(&self, call: &ScaleLimitsOperation) -> ChartResult<bool> {
+        self.validate(call, false)?;
+        Ok(self
+            .registration(&call.operation)?
+            .implementation
+            .requires_domain(&call.parameters))
+    }
     fn registration(&self, operation: &OperationRef) -> ChartResult<&Registration> {
         self.entries
             .get(&(operation.id.clone(), operation.version.get()))

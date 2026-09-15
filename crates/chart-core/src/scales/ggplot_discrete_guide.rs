@@ -16,6 +16,13 @@ pub enum GgplotGuideLabels {
     /// Replace matching discrete labels; unmatched categories retain their text.
     /// Continuous scales use the label vector positionally and ignore the names.
     Named(Vec<(ScaleKey, Option<String>)>),
+    /// Registered vector function, evaluated after reference break selection.
+    Registered {
+        /// Exact installed implementation identity.
+        operation: crate::grammar::OperationRef,
+        /// Bounded declarative configuration.
+        parameters: serde_json::Value,
+    },
 }
 /// Portable discrete break and label arguments for ggplot2 aesthetic scales.
 #[derive(Clone, Debug, Default, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -47,7 +54,44 @@ fn text(key: &ScaleKey) -> Option<String> {
     }
 }
 impl GgplotGuideLabels {
+    pub(super) fn registered_values(
+        &self,
+        values: &[crate::composition::ScaleValue],
+        names: Option<&[String]>,
+        temporal: Option<crate::grammar::GuideTemporalContext<'_>>,
+        registry: &crate::grammar::guide_extensions::GuideRegistrations,
+        label_budget: usize,
+    ) -> ChartResult<Vec<Option<String>>> {
+        let Self::Registered {
+            operation,
+            parameters,
+        } = self
+        else {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "A registered label policy is required.",
+            ));
+        };
+        registry.label_vector(
+            operation,
+            crate::grammar::GuideLabelsInput {
+                values,
+                names,
+                temporal,
+                parameters,
+                limits: crate::Limits {
+                    max_items: crate::interpolate::MAX_VALUES,
+                    max_text_bytes: label_budget,
+                    ..Default::default()
+                },
+            },
+            false,
+        )
+    }
     pub(super) fn validate(&self, breaks: Option<usize>) -> ChartResult<()> {
+        if let Self::Registered { parameters, .. } = self {
+            crate::grammar::guide_extensions::validate_parameters(parameters)?;
+        }
         let count = match self {
             Self::Explicit(v) => Some(v.len()),
             Self::Named(v) => Some(v.len()),
@@ -110,6 +154,67 @@ impl GgplotDiscreteGuide {
     /// Intersect in authored order, retaining the first position of duplicates.
     /// The supplied domain must come from the prepared scale's shared training.
     pub fn resolve(&self, domain: &[ScaleKey]) -> ChartResult<Vec<GgplotDiscreteGuideEntry>> {
+        self.resolve_with_registry(domain, &crate::grammar::ExtensionRegistry::new())
+    }
+    /// Resolve with an explicit vector-label registry. Guide keys use the reference
+    /// data-frame recycling rule; the raw callback result is not a named replacement.
+    pub fn resolve_with_registry(
+        &self,
+        domain: &[ScaleKey],
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<Vec<GgplotDiscreteGuideEntry>> {
+        self.resolve_using(domain, &registry.guides)
+    }
+    pub(crate) fn resolve_using(
+        &self,
+        domain: &[ScaleKey],
+        registry: &crate::grammar::guide_extensions::GuideRegistrations,
+    ) -> ChartResult<Vec<GgplotDiscreteGuideEntry>> {
+        self.resolve_using_context(
+            domain,
+            registry,
+            !domain.is_empty(),
+            crate::Limits {
+                max_items: crate::interpolate::MAX_VALUES,
+                max_text_bytes: 1_048_576,
+                ..Default::default()
+            },
+        )
+    }
+    pub(crate) fn resolve_using_context(
+        &self,
+        domain: &[ScaleKey],
+        registry: &crate::grammar::guide_extensions::GuideRegistrations,
+        trained: bool,
+        limits: crate::Limits,
+    ) -> ChartResult<Vec<GgplotDiscreteGuideEntry>> {
+        self.resolve_context(domain, registry, trained, limits, false)
+    }
+    pub(crate) fn resolve_break_function_using(
+        &self,
+        domain: &[ScaleKey],
+        registry: &crate::grammar::guide_extensions::GuideRegistrations,
+    ) -> ChartResult<Vec<GgplotDiscreteGuideEntry>> {
+        self.resolve_context(
+            domain,
+            registry,
+            !domain.is_empty(),
+            crate::Limits {
+                max_items: crate::interpolate::MAX_VALUES,
+                max_text_bytes: 1_048_576,
+                ..Default::default()
+            },
+            true,
+        )
+    }
+    fn resolve_context(
+        &self,
+        domain: &[ScaleKey],
+        registry: &crate::grammar::guide_extensions::GuideRegistrations,
+        trained: bool,
+        limits: crate::Limits,
+        skip_empty: bool,
+    ) -> ChartResult<Vec<GgplotDiscreteGuideEntry>> {
         self.validate()?;
         if domain.len() > crate::interpolate::MAX_VALUES {
             return Err(error(
@@ -119,6 +224,70 @@ impl GgplotDiscreteGuide {
         }
         let lookup: std::collections::BTreeMap<_, _> =
             domain.iter().rev().map(|k| (text(k), k)).collect();
+        if matches!(self.labels, GgplotGuideLabels::Registered { .. }) {
+            if !trained {
+                return Ok(vec![]);
+            }
+            let mut selection = self.clone();
+            selection.labels = GgplotGuideLabels::Hidden;
+            let source = self.breaks.as_deref().unwrap_or(domain);
+            let mut entries = selection.select(source, &lookup)?;
+            if skip_empty && entries.is_empty() {
+                return Ok(entries);
+            }
+            let values = entries
+                .iter()
+                .map(|e| {
+                    text(&e.key).map_or(
+                        crate::composition::ScaleValue::MissingCategory,
+                        crate::composition::ScaleValue::Category,
+                    )
+                })
+                .collect::<Vec<_>>();
+            let names = self.break_names.as_ref().map(|names| {
+                entries
+                    .iter()
+                    .map(|e| {
+                        let index = source
+                            .iter()
+                            .position(|k| text(k) == text(&e.key))
+                            .expect("selected break");
+                        names[index].clone()
+                    })
+                    .collect::<Vec<_>>()
+            });
+            let GgplotGuideLabels::Registered {
+                operation,
+                parameters,
+            } = &self.labels
+            else {
+                unreachable!()
+            };
+            let labels = registry.label_vector(
+                operation,
+                crate::grammar::GuideLabelsInput {
+                    values: &values,
+                    names: names.as_deref(),
+                    temporal: None,
+                    parameters,
+                    limits,
+                },
+                false,
+            )?;
+            if entries.is_empty() {
+                return Ok(entries);
+            }
+            if labels.is_empty() || !entries.len().is_multiple_of(labels.len()) {
+                return Err(error(
+                    DiagnosticCode::Validation,
+                    "Label function output cannot be recycled to the selected guide keys.",
+                ));
+            }
+            for (i, entry) in entries.iter_mut().enumerate() {
+                entry.label = labels[i % labels.len()].clone();
+            }
+            return Ok(entries);
+        }
         self.select(self.breaks.as_deref().unwrap_or(domain), &lookup)
     }
 
@@ -153,6 +322,12 @@ impl GgplotDiscreteGuide {
                     .get(&category)
                     .map(|v| (*v).clone())
                     .unwrap_or_else(|| category.clone()),
+                GgplotGuideLabels::Registered { .. } => {
+                    return Err(error(
+                        DiagnosticCode::UnsupportedCapability,
+                        "Registered scale labels require an explicit guide registry.",
+                    ));
+                }
             };
             out.push(GgplotDiscreteGuideEntry {
                 key: (*original).clone(),

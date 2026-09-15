@@ -1,0 +1,5177 @@
+{
+  "reference": "ggplot2 4.0.3",
+  "cases": [
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "default",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            4,
+            10,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          1,
+          4,
+          10,
+          null
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "reverse",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            14,
+            10,
+            4,
+            1,
+            -2
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          -2,
+          1,
+          4,
+          10,
+          14
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "index",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "short",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            -2,
+            -2,
+            -2,
+            -2,
+            -2
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          -2,
+          -2,
+          -2,
+          -2,
+          -2
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "empty",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "null",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "default",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          1,
+          "Infinity",
+          4,
+          "-Infinity"
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "reverse",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            "-Infinity",
+            4,
+            "Infinity",
+            1,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          1,
+          "Infinity",
+          4,
+          "-Infinity"
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "index",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "short",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "empty",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "null",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "default",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "reverse",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "index",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "short",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "null",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "default",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            -1,
+            -4,
+            -10,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          -1,
+          -4,
+          -10,
+          null
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "reverse",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            -14,
+            -10,
+            -4,
+            -1,
+            2
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          2,
+          -1,
+          -4,
+          -10,
+          -14
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "index",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "short",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "empty",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "null",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "default",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          -1,
+          "-Infinity",
+          -4,
+          "Infinity"
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "reverse",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            "Infinity",
+            -4,
+            "-Infinity",
+            -1,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          -1,
+          "-Infinity",
+          -4,
+          "Infinity"
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "index",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "short",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "empty",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "null",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "default",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "reverse",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "index",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "short",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "null",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "default",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          0,
+          0.6020599913279624,
+          1,
+          null
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "reverse",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1.146128035678238,
+            1,
+            0.6020599913279624,
+            0,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          0,
+          0.6020599913279624,
+          1,
+          1.146128035678238
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "index",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "short",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "empty",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "null",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "default",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          0,
+          "Infinity",
+          0.6020599913279624,
+          null
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "reverse",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            0.6020599913279624,
+            "Infinity",
+            0,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          0,
+          "Infinity",
+          0.6020599913279624,
+          null
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "index",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "short",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "empty",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "null",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: x."
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "default",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "reverse",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "index",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "short",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "x",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "null",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "default",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            4,
+            10,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          1,
+          4,
+          10,
+          null
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "reverse",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            14,
+            10,
+            4,
+            1,
+            -2
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          -2,
+          1,
+          4,
+          10,
+          14
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "index",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "short",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            -2,
+            -2,
+            -2,
+            -2,
+            -2
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          -2,
+          -2,
+          -2,
+          -2,
+          -2
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "empty",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "ordinary",
+      "mode": "null",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            -2,
+            1,
+            4,
+            10,
+            14
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "default",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          1,
+          "Infinity",
+          4,
+          "-Infinity"
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "reverse",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            "-Infinity",
+            4,
+            "Infinity",
+            1,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          1,
+          "Infinity",
+          4,
+          "-Infinity"
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "index",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "short",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "empty",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "missing",
+      "mode": "null",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            1,
+            "Infinity",
+            4,
+            "-Infinity"
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "default",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "reverse",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "index",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "short",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "identity",
+      "population": "empty",
+      "mode": "null",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          1,
+          10
+        ],
+        "breaks": [
+          null,
+          2.5,
+          5,
+          7.5,
+          10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "default",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            -1,
+            -4,
+            -10,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          -1,
+          -4,
+          -10,
+          null
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "reverse",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            -14,
+            -10,
+            -4,
+            -1,
+            2
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          2,
+          -1,
+          -4,
+          -10,
+          -14
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "index",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "short",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "empty",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "ordinary",
+      "mode": "null",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            2,
+            -1,
+            -4,
+            -10,
+            -14
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "default",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          -1,
+          "-Infinity",
+          -4,
+          "Infinity"
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "reverse",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            "Infinity",
+            -4,
+            "-Infinity",
+            -1,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          -1,
+          "-Infinity",
+          -4,
+          "Infinity"
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "index",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "short",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "empty",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "missing",
+      "mode": "null",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            -1,
+            "-Infinity",
+            -4,
+            "Infinity"
+          ],
+          "range": [
+            -10,
+            -1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "default",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "reverse",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "index",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "short",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "reverse",
+      "population": "empty",
+      "mode": "null",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          -10,
+          -1
+        ],
+        "breaks": [
+          null,
+          -2.5,
+          -5,
+          -7.5,
+          -10
+        ],
+        "labels": [
+          null,
+          "2.5",
+          "5.0",
+          "7.5",
+          "10.0"
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "default",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          0,
+          0.6020599913279624,
+          1,
+          null
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "reverse",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1.146128035678238,
+            1,
+            0.6020599913279624,
+            0,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          0,
+          0.6020599913279624,
+          1,
+          1.146128035678238
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "index",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "short",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "empty",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "ordinary",
+      "mode": "null",
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            0.6020599913279624,
+            1,
+            1.146128035678238
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "default",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          0,
+          "Infinity",
+          0.6020599913279624,
+          null
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "reverse",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            0.6020599913279624,
+            "Infinity",
+            0,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          0,
+          "Infinity",
+          0.6020599913279624,
+          null
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "index",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "short",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        },
+        {
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "empty",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "missing",
+      "mode": "null",
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        {
+          "values": [
+            null,
+            0,
+            "Infinity",
+            0.6020599913279624,
+            null
+          ],
+          "range": [
+            0,
+            1
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "Problem while setting up geom.\ni Error occurred in the 1st layer.\nCaused by error in `compute_geom_1()`:\n! `geom_point()` requires the following missing aesthetics: y."
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "default",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "reverse",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "index",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "short",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    },
+    {
+      "axis": "y",
+      "transform": "log10",
+      "population": "empty",
+      "mode": "null",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "limits": [
+          0,
+          1
+        ],
+        "breaks": [
+          null,
+          0,
+          0.4771212547196624,
+          1,
+          null
+        ],
+        "labels": [
+          null,
+          "1",
+          "3",
+          "10",
+          null
+        ]
+      }
+    }
+  ]
+}

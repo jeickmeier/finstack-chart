@@ -1,0 +1,4176 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "contracts": [
+    {
+      "name": "Scale",
+      "kind": "ggproto",
+      "classes": [
+        "Scale",
+        "ggproto",
+        "gg"
+      ],
+      "methods": {
+        "get_breaks_minor": {
+          "formals": {
+            "self": "",
+            "n": "2",
+            "b": "self$break_positions()",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    cli::cli_abort(\"Not implemented.\", call = self$call)\n}"
+        },
+        "break_positions": {
+          "formals": {
+            "self": "",
+            "range": "self$get_limits()"
+          },
+          "body": "{\n    self$map(self$get_breaks(range))\n}"
+        },
+        "get_breaks": {
+          "formals": {
+            "self": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    cli::cli_abort(\"Not implemented.\", call = self$call)\n}"
+        },
+        "get_transformation": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$trans\n}"
+        },
+        "train_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) \n        return()\n    aesthetics <- intersect(self$aesthetics, names(df))\n    for (aesthetic in aesthetics) {\n        self$train(df[[aesthetic]])\n    }\n    invisible()\n}"
+        },
+        "get_limits": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(c(0, 1))\n    }\n    if (is.null(self$limits)) {\n        self$range$range\n    }\n    else if (is.function(self$limits)) {\n        self$limits(self$range$range)\n    }\n    else {\n        self$limits\n    }\n}"
+        },
+        "get_labels": {
+          "formals": {
+            "self": "",
+            "breaks": "self$get_breaks()"
+          },
+          "body": "{\n    cli::cli_abort(\"Not implemented.\", call = self$call)\n}"
+        },
+        "make_title": {
+          "formals": {
+            "self": "",
+            "guide_title": "waiver()",
+            "scale_title": "waiver()",
+            "label_title": "waiver()"
+          },
+          "body": "{\n    title <- label_title\n    scale_title <- allow_lambda(scale_title)\n    if (is.function(scale_title)) {\n        title <- scale_title(title)\n    }\n    else {\n        title <- scale_title %|W|% title\n    }\n    guide_title <- allow_lambda(guide_title)\n    if (is.function(guide_title)) {\n        title <- guide_title(title)\n    }\n    else {\n        title <- guide_title %|W|% title\n    }\n    title\n}"
+        },
+        "axis_order": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ord <- c(\"primary\", \"secondary\")\n    if (self$position %in% c(\"right\", \"bottom\")) {\n        ord <- rev(ord)\n    }\n    ord\n}"
+        },
+        "map_df": {
+          "formals": {
+            "self": "",
+            "df": "",
+            "i": "NULL"
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    self$palette <- self$palette %||% fetch_ggproto(self, \"fallback_palette\")\n    aesthetics <- intersect(self$aesthetics, names(df))\n    names(aesthetics) <- aesthetics\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    if (is.null(i)) {\n        lapply(aesthetics, function(j) self$map(df[[j]]))\n    }\n    else {\n        lapply(aesthetics, function(j) self$map(df[[j]][i]))\n    }\n}"
+        },
+        "rescale": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()",
+            "range": "self$dimension()"
+          },
+          "body": "{\n    cli::cli_abort(\"Not implemented.\", call = self$call)\n}"
+        },
+        "clone": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    cli::cli_abort(\"Not implemented.\", call = self$call)\n}"
+        },
+        "is_discrete": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "palette": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "break_info": {
+          "formals": {
+            "self": "",
+            "range": "NULL"
+          },
+          "body": "{\n    cli::cli_abort(\"Not implemented.\", call = self$call)\n}"
+        },
+        "make_sec_title": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    self$make_title(...)\n}"
+        },
+        "reset": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$range$reset()\n}"
+        },
+        "transform": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    cli::cli_abort(\"Not implemented.\", call = self$call)\n}"
+        },
+        "is_empty": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    is.null(self$range$range) && is.null(self$limits)\n}"
+        },
+        "transform_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    aesthetics <- intersect(self$aesthetics, names(df))\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    lapply(df[aesthetics], self$transform)\n}"
+        },
+        "map": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    cli::cli_abort(\"Not implemented.\", call = self$call)\n}"
+        },
+        "dimension": {
+          "formals": {
+            "self": "",
+            "expand": "expansion(0, 0)",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    cli::cli_abort(\"Not implemented.\", call = self$call)\n}"
+        },
+        "train": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    cli::cli_abort(\"Not implemented.\", call = self$call)\n}"
+        }
+      },
+      "fields": [
+        "guide",
+        "name",
+        "limits",
+        "range",
+        "expand",
+        "breaks",
+        "labels",
+        "na.value",
+        "aesthetics",
+        "position",
+        "call"
+      ]
+    },
+    {
+      "name": "ScaleBinned",
+      "kind": "ggproto",
+      "classes": [
+        "ScaleBinned",
+        "Scale",
+        "ggproto",
+        "gg"
+      ],
+      "methods": {
+        "get_breaks_minor": {
+          "formals": {
+            "...": ""
+          },
+          "body": "{\n    NULL\n}"
+        },
+        "break_positions": {
+          "formals": {
+            "self": "",
+            "range": "self$get_limits()"
+          },
+          "body": "{\n    self$map(self$get_breaks(range))\n}"
+        },
+        "get_breaks": {
+          "formals": {
+            "self": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (self$is_empty()) \n        return(numeric())\n    transformation <- self$get_transformation()\n    limits <- transformation$inverse(limits)\n    is_rev <- limits[2] < limits[1]\n    limits <- sort(limits)\n    if (is.null(self$breaks)) {\n        return(NULL)\n    }\n    else if (is_waiver(self$breaks)) {\n        if (self$nice.breaks) {\n            if (!is.null(self$n.breaks) && support_nbreaks(transformation$breaks)) {\n                breaks <- transformation$breaks(limits, n = self$n.breaks)\n            }\n            else {\n                if (!is.null(self$n.breaks)) {\n                  cli::cli_warn(\"Ignoring {.arg n.breaks}. Use a {.cls trans} object that supports setting number of breaks.\", call = self$call)\n                }\n                breaks <- transformation$breaks(limits)\n            }\n        }\n        else {\n            n.breaks <- self$n.breaks %||% 5\n            breaks <- seq(limits[1], limits[2], length.out = n.breaks + 2)\n            breaks <- breaks[-c(1, length(breaks))]\n        }\n        breaks <- oob_discard(breaks, limits)\n        if (is.null(self$limits)) {\n            breaks <- breaks[!breaks %in% limits]\n            nbreaks <- length(breaks)\n            if (nbreaks >= 2) {\n                new_limits <- c(breaks[1] + (breaks[1] - breaks[2]), breaks[nbreaks] + (breaks[nbreaks] - breaks[nbreaks - 1]))\n                if (breaks[nbreaks] > limits[2]) {\n                  new_limits[2] <- breaks[nbreaks]\n                  breaks <- breaks[-nbreaks]\n                }\n                if (breaks[1] < limits[1]) {\n                  new_limits[1] <- breaks[1]\n                  breaks <- breaks[-1]\n                }\n            }\n            else if (nbreaks == 1) {\n                bin_size <- max(breaks[1] - limits[1], limits[2] - breaks[1])\n                new_limits <- c(breaks[1] - bin_size, breaks[1] + bin_size)\n            }\n            else {\n                new_limits <- limits\n                if (zero_range(new_limits)) {\n                  new_limits <- new_limits + c(-0.05, 0.05)\n                }\n                breaks <- new_limits\n            }\n            new_limits_trans <- suppressWarnings(transformation$transform(new_limits))\n            limits[is.finite(new_limits_trans)] <- new_limits[is.finite(new_limits_trans)]\n            if (is_rev) {\n                self$limits <- rev(transformation$transform(limits))\n            }\n            else {\n                self$limits <- transformation$transform(limits)\n            }\n        }\n    }\n    else if (is.function(self$breaks)) {\n        fmls <- names(formals(environment(self$breaks)$f))\n        if (any(c(\"n\", \"n.breaks\") %in% fmls)) {\n            n.breaks <- self$n.breaks %||% 5\n            if (\"n.breaks\" %in% fmls) {\n                breaks <- self$breaks(limits, n.breaks = n.breaks)\n            }\n            else {\n                breaks <- self$breaks(limits, n = n.breaks)\n            }\n        }\n        else {\n            if (!is.null(self$n.breaks)) {\n                cli::cli_warn(\"Ignoring {.arg n.breaks}. Use a breaks function that supports setting number of breaks.\", call = self$call)\n            }\n            breaks <- self$breaks(limits)\n        }\n    }\n    else {\n        breaks <- self$breaks\n    }\n    self$breaks <- breaks\n    transformation$transform(breaks)\n}"
+        },
+        "get_transformation": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$trans\n}"
+        },
+        "train_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) \n        return()\n    aesthetics <- intersect(self$aesthetics, names(df))\n    for (aesthetic in aesthetics) {\n        self$train(df[[aesthetic]])\n    }\n    invisible()\n}"
+        },
+        "get_limits": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ggproto_parent(ScaleContinuous, self)$get_limits()\n}"
+        },
+        "get_labels": {
+          "formals": {
+            "self": "",
+            "breaks": "self$get_breaks()"
+          },
+          "body": "{\n    if (is.null(breaks)) \n        return(NULL)\n    transformation <- self$get_transformation()\n    breaks <- transformation$inverse(breaks)\n    if (is.null(self$labels)) {\n        return(NULL)\n    }\n    else if (identical(self$labels, NA)) {\n        cli::cli_abort(\"Invalid {.arg labels} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    else if (is_waiver(self$labels)) {\n        labels <- transformation$format(breaks)\n    }\n    else if (is.function(self$labels)) {\n        labels <- self$labels(breaks)\n    }\n    else {\n        labels <- self$labels\n    }\n    if (length(labels) != length(breaks)) {\n        cli::cli_abort(\"{.arg breaks} and {.arg labels} have different lengths.\", call = self$call)\n    }\n    normalise_label(labels)\n}"
+        },
+        "make_title": {
+          "formals": {
+            "self": "",
+            "guide_title": "waiver()",
+            "scale_title": "waiver()",
+            "label_title": "waiver()"
+          },
+          "body": "{\n    title <- label_title\n    scale_title <- allow_lambda(scale_title)\n    if (is.function(scale_title)) {\n        title <- scale_title(title)\n    }\n    else {\n        title <- scale_title %|W|% title\n    }\n    guide_title <- allow_lambda(guide_title)\n    if (is.function(guide_title)) {\n        title <- guide_title(title)\n    }\n    else {\n        title <- guide_title %|W|% title\n    }\n    title\n}"
+        },
+        "axis_order": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ord <- c(\"primary\", \"secondary\")\n    if (self$position %in% c(\"right\", \"bottom\")) {\n        ord <- rev(ord)\n    }\n    ord\n}"
+        },
+        "map_df": {
+          "formals": {
+            "self": "",
+            "df": "",
+            "i": "NULL"
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    self$palette <- self$palette %||% fetch_ggproto(self, \"fallback_palette\")\n    aesthetics <- intersect(self$aesthetics, names(df))\n    names(aesthetics) <- aesthetics\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    if (is.null(i)) {\n        lapply(aesthetics, function(j) self$map(df[[j]]))\n    }\n    else {\n        lapply(aesthetics, function(j) self$map(df[[j]][i]))\n    }\n}"
+        },
+        "rescale": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()",
+            "range": "limits"
+          },
+          "body": "{\n    self$rescaler(x, from = range)\n}"
+        },
+        "clone": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    new <- ggproto(NULL, self)\n    new$range <- ContinuousRange$new()\n    new\n}"
+        },
+        "is_discrete": {
+          "formals": [],
+          "body": "{\n    FALSE\n}"
+        },
+        "palette": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "break_info": {
+          "formals": {
+            "self": "",
+            "range": "NULL"
+          },
+          "body": "{\n    if (is.null(range)) \n        range <- self$dimension()\n    major <- self$get_breaks(range)\n    if (!is.null(self$palette.cache)) {\n        pal <- self$palette.cache\n    }\n    else {\n        pal <- self$palette(length(major) + 1)\n    }\n    if (self$show.limits) {\n        limits <- self$get_limits()\n        major <- sort(unique0(c(limits, major)))\n    }\n    labels <- self$get_labels(major)\n    list(range = range, labels = labels, major = pal, minor = NULL, major_source = major, minor_source = NULL)\n}"
+        },
+        "make_sec_title": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    self$make_title(...)\n}"
+        },
+        "reset": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$range$reset()\n}"
+        },
+        "transform": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    transformation <- self$get_transformation()\n    new_x <- transformation$transform(x)\n    check_transformation(x, new_x, transformation$name, call = self$call)\n    new_x\n}"
+        },
+        "is_empty": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    is.null(self$range$range) && is.null(self$limits)\n}"
+        },
+        "transform_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    aesthetics <- intersect(self$aesthetics, names(df))\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    lapply(df[aesthetics], self$transform)\n}"
+        },
+        "map": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (self$after.stat) {\n        x\n    }\n    else {\n        breaks <- self$get_breaks(limits)\n        breaks <- sort(unique0(c(limits[1], breaks, limits[2])))\n        x <- self$rescale(self$oob(x, range = limits), limits)\n        breaks <- self$rescale(breaks, limits)\n        if (length(breaks) > 1) {\n            x_binned <- cut(x, breaks, labels = FALSE, include.lowest = TRUE, right = self$right)\n            midpoints <- breaks[-1] - diff(breaks)/2\n        }\n        else {\n            x_binned <- 1L\n            midpoints <- 0.5\n        }\n        if (!is.null(self$palette.cache)) {\n            pal <- self$palette.cache\n        }\n        else {\n            pal <- self$palette(midpoints)\n            self$palette.cache <- pal\n        }\n        scaled <- pal[x_binned]\n        ifelse(!is.na(scaled), scaled, self$na.value)\n    }\n}"
+        },
+        "dimension": {
+          "formals": {
+            "self": "",
+            "expand": "c(0, 0, 0, 0)"
+          },
+          "body": "{\n    expand_range4(self$get_limits(), expand)\n}"
+        },
+        "train": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    if (length(x) == 0) {\n        return()\n    }\n    if (!is.numeric(x)) {\n        cli::cli_abort(\"Binned scales only support continuous data.\", call = self$call)\n    }\n    self$range$train(x, call = self$call)\n}"
+        },
+        "oob": {
+          "formals": {
+            "x": "",
+            "range": "c(0, 1)",
+            "only.finite": "TRUE"
+          },
+          "body": "{\n    force(range)\n    finite <- if (only.finite) \n        is.finite(x)\n    else TRUE\n    x[finite & x < range[1]] <- range[1]\n    x[finite & x > range[2]] <- range[2]\n    x\n}"
+        },
+        "rescaler": {
+          "formals": {
+            "x": "",
+            "to": "",
+            "from": "",
+            "...": ""
+          },
+          "body": "{\n    UseMethod(\"rescale\")\n}"
+        }
+      },
+      "fields": [
+        "guide",
+        "name",
+        "limits",
+        "range",
+        "expand",
+        "breaks",
+        "labels",
+        "na.value",
+        "aesthetics",
+        "position",
+        "call",
+        "after.stat",
+        "n.breaks",
+        "show.limits",
+        "nice.breaks",
+        "right"
+      ]
+    },
+    {
+      "name": "ScaleBinnedPosition",
+      "kind": "ggproto",
+      "classes": [
+        "ScaleBinnedPosition",
+        "ScaleBinned",
+        "Scale",
+        "ggproto",
+        "gg"
+      ],
+      "methods": {
+        "get_breaks_minor": {
+          "formals": {
+            "...": ""
+          },
+          "body": "{\n    NULL\n}"
+        },
+        "break_positions": {
+          "formals": {
+            "self": "",
+            "range": "self$get_limits()"
+          },
+          "body": "{\n    self$map(self$get_breaks(range))\n}"
+        },
+        "get_breaks": {
+          "formals": {
+            "self": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    breaks <- ggproto_parent(ScaleBinned, self)$get_breaks(limits)\n    if (self$show.limits) {\n        breaks <- sort(unique0(c(self$get_limits(), breaks)))\n    }\n    breaks\n}"
+        },
+        "get_transformation": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$trans\n}"
+        },
+        "train_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) \n        return()\n    aesthetics <- intersect(self$aesthetics, names(df))\n    for (aesthetic in aesthetics) {\n        self$train(df[[aesthetic]])\n    }\n    invisible()\n}"
+        },
+        "get_limits": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ggproto_parent(ScaleContinuous, self)$get_limits()\n}"
+        },
+        "get_labels": {
+          "formals": {
+            "self": "",
+            "breaks": "self$get_breaks()"
+          },
+          "body": "{\n    if (is.null(breaks)) \n        return(NULL)\n    transformation <- self$get_transformation()\n    breaks <- transformation$inverse(breaks)\n    if (is.null(self$labels)) {\n        return(NULL)\n    }\n    else if (identical(self$labels, NA)) {\n        cli::cli_abort(\"Invalid {.arg labels} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    else if (is_waiver(self$labels)) {\n        labels <- transformation$format(breaks)\n    }\n    else if (is.function(self$labels)) {\n        labels <- self$labels(breaks)\n    }\n    else {\n        labels <- self$labels\n    }\n    if (length(labels) != length(breaks)) {\n        cli::cli_abort(\"{.arg breaks} and {.arg labels} have different lengths.\", call = self$call)\n    }\n    normalise_label(labels)\n}"
+        },
+        "make_title": {
+          "formals": {
+            "self": "",
+            "guide_title": "waiver()",
+            "scale_title": "waiver()",
+            "label_title": "waiver()"
+          },
+          "body": "{\n    title <- label_title\n    scale_title <- allow_lambda(scale_title)\n    if (is.function(scale_title)) {\n        title <- scale_title(title)\n    }\n    else {\n        title <- scale_title %|W|% title\n    }\n    guide_title <- allow_lambda(guide_title)\n    if (is.function(guide_title)) {\n        title <- guide_title(title)\n    }\n    else {\n        title <- guide_title %|W|% title\n    }\n    title\n}"
+        },
+        "axis_order": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ord <- c(\"primary\", \"secondary\")\n    if (self$position %in% c(\"right\", \"bottom\")) {\n        ord <- rev(ord)\n    }\n    ord\n}"
+        },
+        "map_df": {
+          "formals": {
+            "self": "",
+            "df": "",
+            "i": "NULL"
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    self$palette <- self$palette %||% fetch_ggproto(self, \"fallback_palette\")\n    aesthetics <- intersect(self$aesthetics, names(df))\n    names(aesthetics) <- aesthetics\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    if (is.null(i)) {\n        lapply(aesthetics, function(j) self$map(df[[j]]))\n    }\n    else {\n        lapply(aesthetics, function(j) self$map(df[[j]][i]))\n    }\n}"
+        },
+        "rescale": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()",
+            "range": "limits"
+          },
+          "body": "{\n    self$rescaler(x, from = range)\n}"
+        },
+        "clone": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    new <- ggproto(NULL, self)\n    new$range <- ContinuousRange$new()\n    new\n}"
+        },
+        "is_discrete": {
+          "formals": [],
+          "body": "{\n    FALSE\n}"
+        },
+        "palette": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "break_info": {
+          "formals": {
+            "self": "",
+            "range": "NULL"
+          },
+          "body": "{\n    if (is.null(range)) \n        range <- self$dimension()\n    major <- self$get_breaks(range)\n    if (!is.null(self$palette.cache)) {\n        pal <- self$palette.cache\n    }\n    else {\n        pal <- self$palette(length(major) + 1)\n    }\n    if (self$show.limits) {\n        limits <- self$get_limits()\n        major <- sort(unique0(c(limits, major)))\n    }\n    labels <- self$get_labels(major)\n    list(range = range, labels = labels, major = pal, minor = NULL, major_source = major, minor_source = NULL)\n}"
+        },
+        "make_sec_title": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    self$make_title(...)\n}"
+        },
+        "reset": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$after.stat <- TRUE\n    limits <- self$get_limits()\n    breaks <- self$get_breaks(limits)\n    self$range$reset()\n    self$range$train(c(limits, breaks))\n}"
+        },
+        "transform": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    transformation <- self$get_transformation()\n    new_x <- transformation$transform(x)\n    check_transformation(x, new_x, transformation$name, call = self$call)\n    new_x\n}"
+        },
+        "is_empty": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    is.null(self$range$range) && is.null(self$limits)\n}"
+        },
+        "transform_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    aesthetics <- intersect(self$aesthetics, names(df))\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    lapply(df[aesthetics], self$transform)\n}"
+        },
+        "map": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    breaks <- self$get_breaks(limits)\n    limits <- self$get_limits()\n    all_breaks <- unique0(sort(c(limits[1], breaks, limits[2])))\n    if (self$after.stat) {\n        x_binned <- cut(x, seq_len(length(all_breaks) + 1) - 0.5, labels = FALSE, include.lowest = TRUE, right = self$right)\n        (x - x_binned + 0.5) * diff(all_breaks)[x_binned] + all_breaks[x_binned]\n    }\n    else {\n        x <- as.numeric(self$oob(x, limits))\n        x <- ifelse(!is.na(x), x, self$na.value)\n        x_binned <- cut(x, all_breaks, labels = FALSE, include.lowest = TRUE, right = self$right)\n        x_binned\n    }\n}"
+        },
+        "dimension": {
+          "formals": {
+            "self": "",
+            "expand": "c(0, 0, 0, 0)"
+          },
+          "body": "{\n    expand_range4(self$get_limits(), expand)\n}"
+        },
+        "train": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    if (!is.numeric(x)) {\n        cli::cli_abort(\"Binned scales only support continuous data.\", call = self$call)\n    }\n    if (length(x) == 0 || self$after.stat) \n        return()\n    self$range$train(x)\n}"
+        },
+        "oob": {
+          "formals": {
+            "x": "",
+            "range": "c(0, 1)",
+            "only.finite": "TRUE"
+          },
+          "body": "{\n    force(range)\n    finite <- if (only.finite) \n        is.finite(x)\n    else TRUE\n    x[finite & x < range[1]] <- range[1]\n    x[finite & x > range[2]] <- range[2]\n    x\n}"
+        },
+        "rescaler": {
+          "formals": {
+            "x": "",
+            "to": "",
+            "from": "",
+            "...": ""
+          },
+          "body": "{\n    UseMethod(\"rescale\")\n}"
+        }
+      },
+      "fields": [
+        "guide",
+        "name",
+        "limits",
+        "range",
+        "expand",
+        "breaks",
+        "labels",
+        "na.value",
+        "aesthetics",
+        "position",
+        "call",
+        "after.stat",
+        "n.breaks",
+        "show.limits",
+        "nice.breaks",
+        "right"
+      ]
+    },
+    {
+      "name": "ScaleContinuous",
+      "kind": "ggproto",
+      "classes": [
+        "ScaleContinuous",
+        "Scale",
+        "ggproto",
+        "gg"
+      ],
+      "methods": {
+        "get_breaks_minor": {
+          "formals": {
+            "self": "",
+            "n": "2",
+            "b": "self$break_positions()",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (zero_range(as.numeric(limits))) {\n        return()\n    }\n    if (is.null(self$minor_breaks)) {\n        return(NULL)\n    }\n    if (identical(self$minor_breaks, NA)) {\n        cli::cli_abort(\"Invalid {.arg minor_breaks} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    b <- b[is.finite(b)]\n    transformation <- self$get_transformation()\n    if (is_waiver(self$minor_breaks)) {\n        if (is.null(b)) {\n            breaks <- NULL\n        }\n        else {\n            breaks <- transformation$minor_breaks(b, limits, n)\n        }\n    }\n    else if (is.function(self$minor_breaks)) {\n        break_fun <- fetch_ggproto(self, \"minor_breaks\")\n        arg_names <- fn_fmls_names(break_fun)\n        if (length(arg_names) == 1L) {\n            breaks <- break_fun(transformation$inverse(limits))\n        }\n        else {\n            breaks <- break_fun(transformation$inverse(limits), transformation$inverse(b))\n        }\n        breaks <- transformation$transform(breaks)\n    }\n    else {\n        breaks <- transformation$transform(self$minor_breaks)\n    }\n    discard(breaks, limits)\n}"
+        },
+        "break_positions": {
+          "formals": {
+            "self": "",
+            "range": "self$get_limits()"
+          },
+          "body": "{\n    self$map(self$get_breaks(range))\n}"
+        },
+        "get_breaks": {
+          "formals": {
+            "self": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(numeric())\n    }\n    transformation <- self$get_transformation()\n    breaks <- self$breaks %|W|% transformation$breaks\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    domain <- suppressWarnings(transformation$transform(transformation$domain))\n    domain <- sort(domain)\n    if (length(domain) == 2 && !zero_range(domain)) {\n        limits <- oob_squish(limits, domain)\n    }\n    if (zero_range(as.numeric(limits))) {\n        return(limits[1])\n    }\n    if (is.function(breaks)) {\n        limits <- transformation$inverse(limits)\n        if (!is.null(self$n.breaks) && support_nbreaks(breaks)) {\n            breaks <- breaks(limits, n = self$n.breaks)\n        }\n        else {\n            breaks <- breaks(limits)\n            if (!is.null(self$n.breaks)) {\n                cli::cli_warn(\"Ignoring {.arg n.breaks}. Use a {.cls transform} object or \\\\\\n            {.arg breaks} function that supports setting number of breaks\", call = self$call)\n            }\n        }\n    }\n    transformation$transform(breaks)\n}"
+        },
+        "get_transformation": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$trans\n}"
+        },
+        "train_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) \n        return()\n    aesthetics <- intersect(self$aesthetics, names(df))\n    for (aesthetic in aesthetics) {\n        self$train(df[[aesthetic]])\n    }\n    invisible()\n}"
+        },
+        "get_limits": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(c(0, 1))\n    }\n    if (is.null(self$limits)) {\n        self$range$range\n    }\n    else if (is.function(self$limits)) {\n        transformation <- self$get_transformation()\n        transformation$transform(self$limits(transformation$inverse(self$range$range)))\n    }\n    else {\n        ifelse(is.na(self$limits), self$range$range, self$limits)\n    }\n}"
+        },
+        "get_labels": {
+          "formals": {
+            "self": "",
+            "breaks": "self$get_breaks()"
+          },
+          "body": "{\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    transformation <- self$get_transformation()\n    breaks <- transformation$inverse(breaks)\n    if (is.null(self$labels)) {\n        return(NULL)\n    }\n    if (identical(self$labels, NA)) {\n        cli::cli_abort(\"Invalid {.arg labels} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    if (is_waiver(self$labels)) {\n        labels <- transformation$format(breaks)\n    }\n    else if (is.function(self$labels)) {\n        labels <- self$labels(breaks)\n    }\n    else {\n        labels <- self$labels\n    }\n    if (!identical(size0(labels), size0(breaks))) {\n        cli::cli_abort(\"{.arg breaks} and {.arg labels} have different lengths.\", call = self$call)\n    }\n    normalise_label(labels)\n}"
+        },
+        "make_title": {
+          "formals": {
+            "self": "",
+            "guide_title": "waiver()",
+            "scale_title": "waiver()",
+            "label_title": "waiver()"
+          },
+          "body": "{\n    title <- label_title\n    scale_title <- allow_lambda(scale_title)\n    if (is.function(scale_title)) {\n        title <- scale_title(title)\n    }\n    else {\n        title <- scale_title %|W|% title\n    }\n    guide_title <- allow_lambda(guide_title)\n    if (is.function(guide_title)) {\n        title <- guide_title(title)\n    }\n    else {\n        title <- guide_title %|W|% title\n    }\n    title\n}"
+        },
+        "axis_order": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ord <- c(\"primary\", \"secondary\")\n    if (self$position %in% c(\"right\", \"bottom\")) {\n        ord <- rev(ord)\n    }\n    ord\n}"
+        },
+        "map_df": {
+          "formals": {
+            "self": "",
+            "df": "",
+            "i": "NULL"
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    self$palette <- self$palette %||% fetch_ggproto(self, \"fallback_palette\")\n    aesthetics <- intersect(self$aesthetics, names(df))\n    names(aesthetics) <- aesthetics\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    if (is.null(i)) {\n        lapply(aesthetics, function(j) self$map(df[[j]]))\n    }\n    else {\n        lapply(aesthetics, function(j) self$map(df[[j]][i]))\n    }\n}"
+        },
+        "rescale": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()",
+            "range": "limits"
+          },
+          "body": "{\n    self$rescaler(x, from = range)\n}"
+        },
+        "clone": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    new <- ggproto(NULL, self)\n    new$range <- ContinuousRange$new()\n    new\n}"
+        },
+        "is_discrete": {
+          "formals": [],
+          "body": "{\n    FALSE\n}"
+        },
+        "palette": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "break_info": {
+          "formals": {
+            "self": "",
+            "range": "NULL"
+          },
+          "body": "{\n    if (is.null(range)) \n        range <- self$dimension()\n    major <- self$get_breaks(range)\n    labels <- self$get_labels(major)\n    minor <- self$get_breaks_minor(b = major, limits = range)\n    if (!is.null(minor)) \n        minor <- minor[!is.na(minor)]\n    major <- oob_censor_any(major, range)\n    if (!is.null(labels)) \n        labels <- labels[!is.na(major)]\n    if (!is.null(major)) \n        major <- major[!is.na(major)]\n    major_n <- rescale(major, from = range)\n    minor_n <- rescale(minor, from = range)\n    list(range = range, labels = labels, major = major_n, minor = minor_n, major_source = major, minor_source = minor)\n}"
+        },
+        "make_sec_title": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    self$make_title(...)\n}"
+        },
+        "reset": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$range$reset()\n}"
+        },
+        "transform": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    transformation <- self$get_transformation()\n    new_x <- transformation$transform(x)\n    check_transformation(x, new_x, transformation$name, call = self$call)\n    new_x\n}"
+        },
+        "is_empty": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    has_data <- !is.null(self$range$range)\n    has_limits <- is.function(self$limits) || (!is.null(self$limits) && all(is.finite(self$limits)))\n    !has_data && !has_limits\n}"
+        },
+        "transform_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    aesthetics <- intersect(self$aesthetics, names(df))\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    lapply(df[aesthetics], self$transform)\n}"
+        },
+        "map": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    x <- self$rescale(self$oob(x, range = limits), limits)\n    uniq <- unique0(x)\n    pal <- self$palette(uniq)\n    scaled <- pal[match(x, uniq)]\n    if (!anyNA(scaled)) {\n        return(scaled)\n    }\n    vec_assign(scaled, is.na(scaled), self$na.value)\n}"
+        },
+        "dimension": {
+          "formals": {
+            "self": "",
+            "expand": "expansion(0, 0)",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    expand_limits_scale(self, expand, limits)\n}"
+        },
+        "train": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    if (length(x) == 0) {\n        return()\n    }\n    self$range$train(x, call = self$call)\n}"
+        },
+        "oob": {
+          "formals": {
+            "x": "",
+            "range": "c(0, 1)",
+            "only.finite": "TRUE"
+          },
+          "body": "{\n    force(range)\n    finite <- if (only.finite) \n        is.finite(x)\n    else TRUE\n    x[finite & x < range[1]] <- NA_real_\n    x[finite & x > range[2]] <- NA_real_\n    x\n}"
+        },
+        "rescaler": {
+          "formals": {
+            "x": "",
+            "to": "",
+            "from": "",
+            "...": ""
+          },
+          "body": "{\n    UseMethod(\"rescale\")\n}"
+        },
+        "print": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    show_range <- function(x) paste0(formatC(x, digits = 3), collapse = \" -- \")\n    cat(\"<\", class(self)[[1]], \">\\n\", sep = \"\")\n    cat(\" Range:  \", show_range(self$range$range), \"\\n\", sep = \"\")\n    if (is.function(self$limits)) {\n        cat(\" Limits: function()\\n\")\n    }\n    else {\n        cat(\" Limits: \", show_range(self$dimension()), \"\\n\", sep = \"\")\n    }\n}"
+        }
+      },
+      "fields": [
+        "guide",
+        "name",
+        "limits",
+        "range",
+        "expand",
+        "breaks",
+        "labels",
+        "na.value",
+        "aesthetics",
+        "position",
+        "call",
+        "n.breaks",
+        "minor_breaks",
+        "trans"
+      ]
+    },
+    {
+      "name": "ScaleContinuousDate",
+      "kind": "ggproto",
+      "classes": [
+        "ScaleContinuousDate",
+        "ScaleContinuous",
+        "Scale",
+        "ggproto",
+        "gg"
+      ],
+      "methods": {
+        "get_breaks_minor": {
+          "formals": {
+            "self": "",
+            "n": "2",
+            "b": "self$break_positions()",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (zero_range(as.numeric(limits))) {\n        return()\n    }\n    if (is.null(self$minor_breaks)) {\n        return(NULL)\n    }\n    if (identical(self$minor_breaks, NA)) {\n        cli::cli_abort(\"Invalid {.arg minor_breaks} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    b <- b[is.finite(b)]\n    transformation <- self$get_transformation()\n    if (is_waiver(self$minor_breaks)) {\n        if (is.null(b)) {\n            breaks <- NULL\n        }\n        else {\n            breaks <- transformation$minor_breaks(b, limits, n)\n        }\n    }\n    else if (is.function(self$minor_breaks)) {\n        break_fun <- fetch_ggproto(self, \"minor_breaks\")\n        arg_names <- fn_fmls_names(break_fun)\n        if (length(arg_names) == 1L) {\n            breaks <- break_fun(transformation$inverse(limits))\n        }\n        else {\n            breaks <- break_fun(transformation$inverse(limits), transformation$inverse(b))\n        }\n        breaks <- transformation$transform(breaks)\n    }\n    else {\n        breaks <- transformation$transform(self$minor_breaks)\n    }\n    discard(breaks, limits)\n}"
+        },
+        "break_positions": {
+          "formals": {
+            "self": "",
+            "range": "self$get_limits()"
+          },
+          "body": "{\n    self$map(self$get_breaks(range))\n}"
+        },
+        "get_breaks": {
+          "formals": {
+            "self": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    breaks <- ggproto_parent(ScaleContinuous, self)$get_breaks(limits)\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    breaks <- floor(breaks)\n}"
+        },
+        "get_transformation": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$trans\n}"
+        },
+        "train_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) \n        return()\n    aesthetics <- intersect(self$aesthetics, names(df))\n    for (aesthetic in aesthetics) {\n        self$train(df[[aesthetic]])\n    }\n    invisible()\n}"
+        },
+        "get_limits": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(c(0, 1))\n    }\n    if (is.null(self$limits)) {\n        self$range$range\n    }\n    else if (is.function(self$limits)) {\n        transformation <- self$get_transformation()\n        transformation$transform(self$limits(transformation$inverse(self$range$range)))\n    }\n    else {\n        ifelse(is.na(self$limits), self$range$range, self$limits)\n    }\n}"
+        },
+        "get_labels": {
+          "formals": {
+            "self": "",
+            "breaks": "self$get_breaks()"
+          },
+          "body": "{\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    transformation <- self$get_transformation()\n    breaks <- transformation$inverse(breaks)\n    if (is.null(self$labels)) {\n        return(NULL)\n    }\n    if (identical(self$labels, NA)) {\n        cli::cli_abort(\"Invalid {.arg labels} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    if (is_waiver(self$labels)) {\n        labels <- transformation$format(breaks)\n    }\n    else if (is.function(self$labels)) {\n        labels <- self$labels(breaks)\n    }\n    else {\n        labels <- self$labels\n    }\n    if (!identical(size0(labels), size0(breaks))) {\n        cli::cli_abort(\"{.arg breaks} and {.arg labels} have different lengths.\", call = self$call)\n    }\n    normalise_label(labels)\n}"
+        },
+        "make_title": {
+          "formals": {
+            "self": "",
+            "guide_title": "waiver()",
+            "scale_title": "waiver()",
+            "label_title": "waiver()"
+          },
+          "body": "{\n    title <- label_title\n    scale_title <- allow_lambda(scale_title)\n    if (is.function(scale_title)) {\n        title <- scale_title(title)\n    }\n    else {\n        title <- scale_title %|W|% title\n    }\n    guide_title <- allow_lambda(guide_title)\n    if (is.function(guide_title)) {\n        title <- guide_title(title)\n    }\n    else {\n        title <- guide_title %|W|% title\n    }\n    title\n}"
+        },
+        "axis_order": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ord <- c(\"primary\", \"secondary\")\n    if (self$position %in% c(\"right\", \"bottom\")) {\n        ord <- rev(ord)\n    }\n    ord\n}"
+        },
+        "map_df": {
+          "formals": {
+            "self": "",
+            "df": "",
+            "i": "NULL"
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    self$palette <- self$palette %||% fetch_ggproto(self, \"fallback_palette\")\n    aesthetics <- intersect(self$aesthetics, names(df))\n    names(aesthetics) <- aesthetics\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    if (is.null(i)) {\n        lapply(aesthetics, function(j) self$map(df[[j]]))\n    }\n    else {\n        lapply(aesthetics, function(j) self$map(df[[j]][i]))\n    }\n}"
+        },
+        "rescale": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()",
+            "range": "limits"
+          },
+          "body": "{\n    self$rescaler(x, from = range)\n}"
+        },
+        "clone": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    new <- ggproto(NULL, self)\n    new$range <- ContinuousRange$new()\n    new\n}"
+        },
+        "is_discrete": {
+          "formals": [],
+          "body": "{\n    FALSE\n}"
+        },
+        "palette": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "break_info": {
+          "formals": {
+            "self": "",
+            "range": "NULL"
+          },
+          "body": "{\n    breaks <- ggproto_parent(ScaleContinuous, self)$break_info(range)\n    if (!(is_waiver(self$secondary.axis) || self$secondary.axis$empty())) {\n        self$secondary.axis$init(self)\n        breaks <- c(breaks, self$secondary.axis$break_info(breaks$range, self))\n    }\n    breaks\n}"
+        },
+        "make_sec_title": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    if (!is_waiver(self$secondary.axis)) {\n        self$secondary.axis$make_title(...)\n    }\n    else {\n        ggproto_parent(ScaleContinuous, self)$make_sec_title(...)\n    }\n}"
+        },
+        "reset": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$range$reset()\n}"
+        },
+        "transform": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    if (is_bare_numeric(x)) {\n        x <- self$trans$inverse(x)\n        cli::cli_warn(c(\"A {.cls numeric} value was passed to a {.field Date} scale.\", i = \"The value was converted to {obj_type_friendly(x)}.\"), call = self$call)\n    }\n    if (inherits(x, \"POSIXct\")) {\n        x <- as.Date(x)\n    }\n    ggproto_parent(ScaleContinuous, self)$transform(x)\n}"
+        },
+        "is_empty": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    has_data <- !is.null(self$range$range)\n    has_limits <- is.function(self$limits) || (!is.null(self$limits) && all(is.finite(self$limits)))\n    !has_data && !has_limits\n}"
+        },
+        "transform_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    aesthetics <- intersect(self$aesthetics, names(df))\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    lapply(df[aesthetics], self$transform)\n}"
+        },
+        "map": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    self$oob(x, limits)\n}"
+        },
+        "dimension": {
+          "formals": {
+            "self": "",
+            "expand": "expansion(0, 0)",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    expand_limits_scale(self, expand, limits)\n}"
+        },
+        "train": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    if (length(x) == 0) {\n        return()\n    }\n    self$range$train(x, call = self$call)\n}"
+        },
+        "oob": {
+          "formals": {
+            "x": "",
+            "range": "c(0, 1)",
+            "only.finite": "TRUE"
+          },
+          "body": "{\n    force(range)\n    finite <- if (only.finite) \n        is.finite(x)\n    else TRUE\n    x[finite & x < range[1]] <- NA_real_\n    x[finite & x > range[2]] <- NA_real_\n    x\n}"
+        },
+        "rescaler": {
+          "formals": {
+            "x": "",
+            "to": "",
+            "from": "",
+            "...": ""
+          },
+          "body": "{\n    UseMethod(\"rescale\")\n}"
+        },
+        "print": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    show_range <- function(x) paste0(formatC(x, digits = 3), collapse = \" -- \")\n    cat(\"<\", class(self)[[1]], \">\\n\", sep = \"\")\n    cat(\" Range:  \", show_range(self$range$range), \"\\n\", sep = \"\")\n    if (is.function(self$limits)) {\n        cat(\" Limits: function()\\n\")\n    }\n    else {\n        cat(\" Limits: \", show_range(self$dimension()), \"\\n\", sep = \"\")\n    }\n}"
+        },
+        "sec_name": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (is_waiver(self$secondary.axis)) {\n        waiver()\n    }\n    else {\n        self$secondary.axis$name\n    }\n}"
+        }
+      },
+      "fields": [
+        "guide",
+        "name",
+        "limits",
+        "range",
+        "expand",
+        "breaks",
+        "labels",
+        "na.value",
+        "aesthetics",
+        "position",
+        "call",
+        "n.breaks",
+        "minor_breaks",
+        "trans",
+        "secondary.axis"
+      ]
+    },
+    {
+      "name": "ScaleContinuousDatetime",
+      "kind": "ggproto",
+      "classes": [
+        "ScaleContinuousDatetime",
+        "ScaleContinuous",
+        "Scale",
+        "ggproto",
+        "gg"
+      ],
+      "methods": {
+        "get_breaks_minor": {
+          "formals": {
+            "self": "",
+            "n": "2",
+            "b": "self$break_positions()",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (zero_range(as.numeric(limits))) {\n        return()\n    }\n    if (is.null(self$minor_breaks)) {\n        return(NULL)\n    }\n    if (identical(self$minor_breaks, NA)) {\n        cli::cli_abort(\"Invalid {.arg minor_breaks} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    b <- b[is.finite(b)]\n    transformation <- self$get_transformation()\n    if (is_waiver(self$minor_breaks)) {\n        if (is.null(b)) {\n            breaks <- NULL\n        }\n        else {\n            breaks <- transformation$minor_breaks(b, limits, n)\n        }\n    }\n    else if (is.function(self$minor_breaks)) {\n        break_fun <- fetch_ggproto(self, \"minor_breaks\")\n        arg_names <- fn_fmls_names(break_fun)\n        if (length(arg_names) == 1L) {\n            breaks <- break_fun(transformation$inverse(limits))\n        }\n        else {\n            breaks <- break_fun(transformation$inverse(limits), transformation$inverse(b))\n        }\n        breaks <- transformation$transform(breaks)\n    }\n    else {\n        breaks <- transformation$transform(self$minor_breaks)\n    }\n    discard(breaks, limits)\n}"
+        },
+        "break_positions": {
+          "formals": {
+            "self": "",
+            "range": "self$get_limits()"
+          },
+          "body": "{\n    self$map(self$get_breaks(range))\n}"
+        },
+        "get_breaks": {
+          "formals": {
+            "self": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(numeric())\n    }\n    transformation <- self$get_transformation()\n    breaks <- self$breaks %|W|% transformation$breaks\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    domain <- suppressWarnings(transformation$transform(transformation$domain))\n    domain <- sort(domain)\n    if (length(domain) == 2 && !zero_range(domain)) {\n        limits <- oob_squish(limits, domain)\n    }\n    if (zero_range(as.numeric(limits))) {\n        return(limits[1])\n    }\n    if (is.function(breaks)) {\n        limits <- transformation$inverse(limits)\n        if (!is.null(self$n.breaks) && support_nbreaks(breaks)) {\n            breaks <- breaks(limits, n = self$n.breaks)\n        }\n        else {\n            breaks <- breaks(limits)\n            if (!is.null(self$n.breaks)) {\n                cli::cli_warn(\"Ignoring {.arg n.breaks}. Use a {.cls transform} object or \\\\\\n            {.arg breaks} function that supports setting number of breaks\", call = self$call)\n            }\n        }\n    }\n    transformation$transform(breaks)\n}"
+        },
+        "get_transformation": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$trans\n}"
+        },
+        "train_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) \n        return()\n    aesthetics <- intersect(self$aesthetics, names(df))\n    for (aesthetic in aesthetics) {\n        self$train(df[[aesthetic]])\n    }\n    invisible()\n}"
+        },
+        "get_limits": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(c(0, 1))\n    }\n    if (is.null(self$limits)) {\n        self$range$range\n    }\n    else if (is.function(self$limits)) {\n        transformation <- self$get_transformation()\n        transformation$transform(self$limits(transformation$inverse(self$range$range)))\n    }\n    else {\n        ifelse(is.na(self$limits), self$range$range, self$limits)\n    }\n}"
+        },
+        "get_labels": {
+          "formals": {
+            "self": "",
+            "breaks": "self$get_breaks()"
+          },
+          "body": "{\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    transformation <- self$get_transformation()\n    breaks <- transformation$inverse(breaks)\n    if (is.null(self$labels)) {\n        return(NULL)\n    }\n    if (identical(self$labels, NA)) {\n        cli::cli_abort(\"Invalid {.arg labels} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    if (is_waiver(self$labels)) {\n        labels <- transformation$format(breaks)\n    }\n    else if (is.function(self$labels)) {\n        labels <- self$labels(breaks)\n    }\n    else {\n        labels <- self$labels\n    }\n    if (!identical(size0(labels), size0(breaks))) {\n        cli::cli_abort(\"{.arg breaks} and {.arg labels} have different lengths.\", call = self$call)\n    }\n    normalise_label(labels)\n}"
+        },
+        "make_title": {
+          "formals": {
+            "self": "",
+            "guide_title": "waiver()",
+            "scale_title": "waiver()",
+            "label_title": "waiver()"
+          },
+          "body": "{\n    title <- label_title\n    scale_title <- allow_lambda(scale_title)\n    if (is.function(scale_title)) {\n        title <- scale_title(title)\n    }\n    else {\n        title <- scale_title %|W|% title\n    }\n    guide_title <- allow_lambda(guide_title)\n    if (is.function(guide_title)) {\n        title <- guide_title(title)\n    }\n    else {\n        title <- guide_title %|W|% title\n    }\n    title\n}"
+        },
+        "axis_order": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ord <- c(\"primary\", \"secondary\")\n    if (self$position %in% c(\"right\", \"bottom\")) {\n        ord <- rev(ord)\n    }\n    ord\n}"
+        },
+        "map_df": {
+          "formals": {
+            "self": "",
+            "df": "",
+            "i": "NULL"
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    self$palette <- self$palette %||% fetch_ggproto(self, \"fallback_palette\")\n    aesthetics <- intersect(self$aesthetics, names(df))\n    names(aesthetics) <- aesthetics\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    if (is.null(i)) {\n        lapply(aesthetics, function(j) self$map(df[[j]]))\n    }\n    else {\n        lapply(aesthetics, function(j) self$map(df[[j]][i]))\n    }\n}"
+        },
+        "rescale": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()",
+            "range": "limits"
+          },
+          "body": "{\n    self$rescaler(x, from = range)\n}"
+        },
+        "clone": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    new <- ggproto(NULL, self)\n    new$range <- ContinuousRange$new()\n    new\n}"
+        },
+        "is_discrete": {
+          "formals": [],
+          "body": "{\n    FALSE\n}"
+        },
+        "palette": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "break_info": {
+          "formals": {
+            "self": "",
+            "range": "NULL"
+          },
+          "body": "{\n    breaks <- ggproto_parent(ScaleContinuous, self)$break_info(range)\n    if (!(is_waiver(self$secondary.axis) || self$secondary.axis$empty())) {\n        self$secondary.axis$init(self)\n        breaks <- c(breaks, self$secondary.axis$break_info(breaks$range, self))\n    }\n    breaks\n}"
+        },
+        "make_sec_title": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    if (!is_waiver(self$secondary.axis)) {\n        self$secondary.axis$make_title(...)\n    }\n    else {\n        ggproto_parent(ScaleContinuous, self)$make_sec_title(...)\n    }\n}"
+        },
+        "reset": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$range$reset()\n}"
+        },
+        "transform": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    tz <- attr(x, \"tzone\")\n    if (is.null(self$timezone) && !is.null(tz)) {\n        self$timezone <- tz\n        self$trans <- transform_time(self$timezone)\n    }\n    if (is_bare_numeric(x)) {\n        x <- self$trans$inverse(x)\n        cli::cli_warn(c(\"A {.cls numeric} value was passed to a {.field Datetime} scale.\", i = \"The value was converted to {obj_type_friendly(x)}.\"), call = self$call)\n    }\n    if (inherits(x, \"Date\")) {\n        x <- as.POSIXct(x)\n    }\n    ggproto_parent(ScaleContinuous, self)$transform(x)\n}"
+        },
+        "is_empty": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    has_data <- !is.null(self$range$range)\n    has_limits <- is.function(self$limits) || (!is.null(self$limits) && all(is.finite(self$limits)))\n    !has_data && !has_limits\n}"
+        },
+        "transform_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    aesthetics <- intersect(self$aesthetics, names(df))\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    lapply(df[aesthetics], self$transform)\n}"
+        },
+        "map": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    self$oob(x, limits)\n}"
+        },
+        "dimension": {
+          "formals": {
+            "self": "",
+            "expand": "expansion(0, 0)",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    expand_limits_scale(self, expand, limits)\n}"
+        },
+        "train": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    if (length(x) == 0) {\n        return()\n    }\n    self$range$train(x, call = self$call)\n}"
+        },
+        "oob": {
+          "formals": {
+            "x": "",
+            "range": "c(0, 1)",
+            "only.finite": "TRUE"
+          },
+          "body": "{\n    force(range)\n    finite <- if (only.finite) \n        is.finite(x)\n    else TRUE\n    x[finite & x < range[1]] <- NA_real_\n    x[finite & x > range[2]] <- NA_real_\n    x\n}"
+        },
+        "rescaler": {
+          "formals": {
+            "x": "",
+            "to": "",
+            "from": "",
+            "...": ""
+          },
+          "body": "{\n    UseMethod(\"rescale\")\n}"
+        },
+        "print": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    show_range <- function(x) paste0(formatC(x, digits = 3), collapse = \" -- \")\n    cat(\"<\", class(self)[[1]], \">\\n\", sep = \"\")\n    cat(\" Range:  \", show_range(self$range$range), \"\\n\", sep = \"\")\n    if (is.function(self$limits)) {\n        cat(\" Limits: function()\\n\")\n    }\n    else {\n        cat(\" Limits: \", show_range(self$dimension()), \"\\n\", sep = \"\")\n    }\n}"
+        },
+        "sec_name": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (is_waiver(self$secondary.axis)) {\n        waiver()\n    }\n    else {\n        self$secondary.axis$name\n    }\n}"
+        }
+      },
+      "fields": [
+        "guide",
+        "name",
+        "limits",
+        "range",
+        "expand",
+        "breaks",
+        "labels",
+        "na.value",
+        "aesthetics",
+        "position",
+        "call",
+        "n.breaks",
+        "minor_breaks",
+        "trans",
+        "secondary.axis",
+        "timezone"
+      ]
+    },
+    {
+      "name": "ScaleContinuousIdentity",
+      "kind": "ggproto",
+      "classes": [
+        "ScaleContinuousIdentity",
+        "ScaleContinuous",
+        "Scale",
+        "ggproto",
+        "gg"
+      ],
+      "methods": {
+        "get_breaks_minor": {
+          "formals": {
+            "self": "",
+            "n": "2",
+            "b": "self$break_positions()",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (zero_range(as.numeric(limits))) {\n        return()\n    }\n    if (is.null(self$minor_breaks)) {\n        return(NULL)\n    }\n    if (identical(self$minor_breaks, NA)) {\n        cli::cli_abort(\"Invalid {.arg minor_breaks} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    b <- b[is.finite(b)]\n    transformation <- self$get_transformation()\n    if (is_waiver(self$minor_breaks)) {\n        if (is.null(b)) {\n            breaks <- NULL\n        }\n        else {\n            breaks <- transformation$minor_breaks(b, limits, n)\n        }\n    }\n    else if (is.function(self$minor_breaks)) {\n        break_fun <- fetch_ggproto(self, \"minor_breaks\")\n        arg_names <- fn_fmls_names(break_fun)\n        if (length(arg_names) == 1L) {\n            breaks <- break_fun(transformation$inverse(limits))\n        }\n        else {\n            breaks <- break_fun(transformation$inverse(limits), transformation$inverse(b))\n        }\n        breaks <- transformation$transform(breaks)\n    }\n    else {\n        breaks <- transformation$transform(self$minor_breaks)\n    }\n    discard(breaks, limits)\n}"
+        },
+        "break_positions": {
+          "formals": {
+            "self": "",
+            "range": "self$get_limits()"
+          },
+          "body": "{\n    self$map(self$get_breaks(range))\n}"
+        },
+        "get_breaks": {
+          "formals": {
+            "self": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(numeric())\n    }\n    transformation <- self$get_transformation()\n    breaks <- self$breaks %|W|% transformation$breaks\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    domain <- suppressWarnings(transformation$transform(transformation$domain))\n    domain <- sort(domain)\n    if (length(domain) == 2 && !zero_range(domain)) {\n        limits <- oob_squish(limits, domain)\n    }\n    if (zero_range(as.numeric(limits))) {\n        return(limits[1])\n    }\n    if (is.function(breaks)) {\n        limits <- transformation$inverse(limits)\n        if (!is.null(self$n.breaks) && support_nbreaks(breaks)) {\n            breaks <- breaks(limits, n = self$n.breaks)\n        }\n        else {\n            breaks <- breaks(limits)\n            if (!is.null(self$n.breaks)) {\n                cli::cli_warn(\"Ignoring {.arg n.breaks}. Use a {.cls transform} object or \\\\\\n            {.arg breaks} function that supports setting number of breaks\", call = self$call)\n            }\n        }\n    }\n    transformation$transform(breaks)\n}"
+        },
+        "get_transformation": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$trans\n}"
+        },
+        "train_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) \n        return()\n    aesthetics <- intersect(self$aesthetics, names(df))\n    for (aesthetic in aesthetics) {\n        self$train(df[[aesthetic]])\n    }\n    invisible()\n}"
+        },
+        "get_limits": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(c(0, 1))\n    }\n    if (is.null(self$limits)) {\n        self$range$range\n    }\n    else if (is.function(self$limits)) {\n        transformation <- self$get_transformation()\n        transformation$transform(self$limits(transformation$inverse(self$range$range)))\n    }\n    else {\n        ifelse(is.na(self$limits), self$range$range, self$limits)\n    }\n}"
+        },
+        "get_labels": {
+          "formals": {
+            "self": "",
+            "breaks": "self$get_breaks()"
+          },
+          "body": "{\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    transformation <- self$get_transformation()\n    breaks <- transformation$inverse(breaks)\n    if (is.null(self$labels)) {\n        return(NULL)\n    }\n    if (identical(self$labels, NA)) {\n        cli::cli_abort(\"Invalid {.arg labels} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    if (is_waiver(self$labels)) {\n        labels <- transformation$format(breaks)\n    }\n    else if (is.function(self$labels)) {\n        labels <- self$labels(breaks)\n    }\n    else {\n        labels <- self$labels\n    }\n    if (!identical(size0(labels), size0(breaks))) {\n        cli::cli_abort(\"{.arg breaks} and {.arg labels} have different lengths.\", call = self$call)\n    }\n    normalise_label(labels)\n}"
+        },
+        "make_title": {
+          "formals": {
+            "self": "",
+            "guide_title": "waiver()",
+            "scale_title": "waiver()",
+            "label_title": "waiver()"
+          },
+          "body": "{\n    title <- label_title\n    scale_title <- allow_lambda(scale_title)\n    if (is.function(scale_title)) {\n        title <- scale_title(title)\n    }\n    else {\n        title <- scale_title %|W|% title\n    }\n    guide_title <- allow_lambda(guide_title)\n    if (is.function(guide_title)) {\n        title <- guide_title(title)\n    }\n    else {\n        title <- guide_title %|W|% title\n    }\n    title\n}"
+        },
+        "axis_order": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ord <- c(\"primary\", \"secondary\")\n    if (self$position %in% c(\"right\", \"bottom\")) {\n        ord <- rev(ord)\n    }\n    ord\n}"
+        },
+        "map_df": {
+          "formals": {
+            "self": "",
+            "df": "",
+            "i": "NULL"
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    self$palette <- self$palette %||% fetch_ggproto(self, \"fallback_palette\")\n    aesthetics <- intersect(self$aesthetics, names(df))\n    names(aesthetics) <- aesthetics\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    if (is.null(i)) {\n        lapply(aesthetics, function(j) self$map(df[[j]]))\n    }\n    else {\n        lapply(aesthetics, function(j) self$map(df[[j]][i]))\n    }\n}"
+        },
+        "rescale": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()",
+            "range": "limits"
+          },
+          "body": "{\n    self$rescaler(x, from = range)\n}"
+        },
+        "clone": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    new <- ggproto(NULL, self)\n    new$range <- ContinuousRange$new()\n    new\n}"
+        },
+        "is_discrete": {
+          "formals": [],
+          "body": "{\n    FALSE\n}"
+        },
+        "palette": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "break_info": {
+          "formals": {
+            "self": "",
+            "range": "NULL"
+          },
+          "body": "{\n    if (is.null(range)) \n        range <- self$dimension()\n    major <- self$get_breaks(range)\n    labels <- self$get_labels(major)\n    minor <- self$get_breaks_minor(b = major, limits = range)\n    if (!is.null(minor)) \n        minor <- minor[!is.na(minor)]\n    major <- oob_censor_any(major, range)\n    if (!is.null(labels)) \n        labels <- labels[!is.na(major)]\n    if (!is.null(major)) \n        major <- major[!is.na(major)]\n    major_n <- rescale(major, from = range)\n    minor_n <- rescale(minor, from = range)\n    list(range = range, labels = labels, major = major_n, minor = minor_n, major_source = major, minor_source = minor)\n}"
+        },
+        "make_sec_title": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    self$make_title(...)\n}"
+        },
+        "reset": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$range$reset()\n}"
+        },
+        "transform": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    transformation <- self$get_transformation()\n    new_x <- transformation$transform(x)\n    check_transformation(x, new_x, transformation$name, call = self$call)\n    new_x\n}"
+        },
+        "is_empty": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    has_data <- !is.null(self$range$range)\n    has_limits <- is.function(self$limits) || (!is.null(self$limits) && all(is.finite(self$limits)))\n    !has_data && !has_limits\n}"
+        },
+        "transform_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    aesthetics <- intersect(self$aesthetics, names(df))\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    lapply(df[aesthetics], self$transform)\n}"
+        },
+        "map": {
+          "formals": {
+            "x": ""
+          },
+          "body": "{\n    if (is.factor(x)) {\n        as.character(x)\n    }\n    else {\n        x\n    }\n}"
+        },
+        "dimension": {
+          "formals": {
+            "self": "",
+            "expand": "expansion(0, 0)",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    expand_limits_scale(self, expand, limits)\n}"
+        },
+        "train": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    if (identical(self$guide, \"none\")) \n        return()\n    ggproto_parent(ScaleContinuous, self)$train(x)\n}"
+        },
+        "oob": {
+          "formals": {
+            "x": "",
+            "range": "c(0, 1)",
+            "only.finite": "TRUE"
+          },
+          "body": "{\n    force(range)\n    finite <- if (only.finite) \n        is.finite(x)\n    else TRUE\n    x[finite & x < range[1]] <- NA_real_\n    x[finite & x > range[2]] <- NA_real_\n    x\n}"
+        },
+        "rescaler": {
+          "formals": {
+            "x": "",
+            "to": "",
+            "from": "",
+            "...": ""
+          },
+          "body": "{\n    UseMethod(\"rescale\")\n}"
+        },
+        "print": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    show_range <- function(x) paste0(formatC(x, digits = 3), collapse = \" -- \")\n    cat(\"<\", class(self)[[1]], \">\\n\", sep = \"\")\n    cat(\" Range:  \", show_range(self$range$range), \"\\n\", sep = \"\")\n    if (is.function(self$limits)) {\n        cat(\" Limits: function()\\n\")\n    }\n    else {\n        cat(\" Limits: \", show_range(self$dimension()), \"\\n\", sep = \"\")\n    }\n}"
+        }
+      },
+      "fields": [
+        "guide",
+        "name",
+        "limits",
+        "range",
+        "expand",
+        "breaks",
+        "labels",
+        "na.value",
+        "aesthetics",
+        "position",
+        "call",
+        "n.breaks",
+        "minor_breaks",
+        "trans"
+      ]
+    },
+    {
+      "name": "ScaleContinuousPosition",
+      "kind": "ggproto",
+      "classes": [
+        "ScaleContinuousPosition",
+        "ScaleContinuous",
+        "Scale",
+        "ggproto",
+        "gg"
+      ],
+      "methods": {
+        "get_breaks_minor": {
+          "formals": {
+            "self": "",
+            "n": "2",
+            "b": "self$break_positions()",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (zero_range(as.numeric(limits))) {\n        return()\n    }\n    if (is.null(self$minor_breaks)) {\n        return(NULL)\n    }\n    if (identical(self$minor_breaks, NA)) {\n        cli::cli_abort(\"Invalid {.arg minor_breaks} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    b <- b[is.finite(b)]\n    transformation <- self$get_transformation()\n    if (is_waiver(self$minor_breaks)) {\n        if (is.null(b)) {\n            breaks <- NULL\n        }\n        else {\n            breaks <- transformation$minor_breaks(b, limits, n)\n        }\n    }\n    else if (is.function(self$minor_breaks)) {\n        break_fun <- fetch_ggproto(self, \"minor_breaks\")\n        arg_names <- fn_fmls_names(break_fun)\n        if (length(arg_names) == 1L) {\n            breaks <- break_fun(transformation$inverse(limits))\n        }\n        else {\n            breaks <- break_fun(transformation$inverse(limits), transformation$inverse(b))\n        }\n        breaks <- transformation$transform(breaks)\n    }\n    else {\n        breaks <- transformation$transform(self$minor_breaks)\n    }\n    discard(breaks, limits)\n}"
+        },
+        "break_positions": {
+          "formals": {
+            "self": "",
+            "range": "self$get_limits()"
+          },
+          "body": "{\n    self$map(self$get_breaks(range))\n}"
+        },
+        "get_breaks": {
+          "formals": {
+            "self": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(numeric())\n    }\n    transformation <- self$get_transformation()\n    breaks <- self$breaks %|W|% transformation$breaks\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    domain <- suppressWarnings(transformation$transform(transformation$domain))\n    domain <- sort(domain)\n    if (length(domain) == 2 && !zero_range(domain)) {\n        limits <- oob_squish(limits, domain)\n    }\n    if (zero_range(as.numeric(limits))) {\n        return(limits[1])\n    }\n    if (is.function(breaks)) {\n        limits <- transformation$inverse(limits)\n        if (!is.null(self$n.breaks) && support_nbreaks(breaks)) {\n            breaks <- breaks(limits, n = self$n.breaks)\n        }\n        else {\n            breaks <- breaks(limits)\n            if (!is.null(self$n.breaks)) {\n                cli::cli_warn(\"Ignoring {.arg n.breaks}. Use a {.cls transform} object or \\\\\\n            {.arg breaks} function that supports setting number of breaks\", call = self$call)\n            }\n        }\n    }\n    transformation$transform(breaks)\n}"
+        },
+        "get_transformation": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$trans\n}"
+        },
+        "train_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) \n        return()\n    aesthetics <- intersect(self$aesthetics, names(df))\n    for (aesthetic in aesthetics) {\n        self$train(df[[aesthetic]])\n    }\n    invisible()\n}"
+        },
+        "get_limits": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(c(0, 1))\n    }\n    if (is.null(self$limits)) {\n        self$range$range\n    }\n    else if (is.function(self$limits)) {\n        transformation <- self$get_transformation()\n        transformation$transform(self$limits(transformation$inverse(self$range$range)))\n    }\n    else {\n        ifelse(is.na(self$limits), self$range$range, self$limits)\n    }\n}"
+        },
+        "get_labels": {
+          "formals": {
+            "self": "",
+            "breaks": "self$get_breaks()"
+          },
+          "body": "{\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    transformation <- self$get_transformation()\n    breaks <- transformation$inverse(breaks)\n    if (is.null(self$labels)) {\n        return(NULL)\n    }\n    if (identical(self$labels, NA)) {\n        cli::cli_abort(\"Invalid {.arg labels} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    if (is_waiver(self$labels)) {\n        labels <- transformation$format(breaks)\n    }\n    else if (is.function(self$labels)) {\n        labels <- self$labels(breaks)\n    }\n    else {\n        labels <- self$labels\n    }\n    if (!identical(size0(labels), size0(breaks))) {\n        cli::cli_abort(\"{.arg breaks} and {.arg labels} have different lengths.\", call = self$call)\n    }\n    normalise_label(labels)\n}"
+        },
+        "make_title": {
+          "formals": {
+            "self": "",
+            "guide_title": "waiver()",
+            "scale_title": "waiver()",
+            "label_title": "waiver()"
+          },
+          "body": "{\n    title <- label_title\n    scale_title <- allow_lambda(scale_title)\n    if (is.function(scale_title)) {\n        title <- scale_title(title)\n    }\n    else {\n        title <- scale_title %|W|% title\n    }\n    guide_title <- allow_lambda(guide_title)\n    if (is.function(guide_title)) {\n        title <- guide_title(title)\n    }\n    else {\n        title <- guide_title %|W|% title\n    }\n    title\n}"
+        },
+        "axis_order": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ord <- c(\"primary\", \"secondary\")\n    if (self$position %in% c(\"right\", \"bottom\")) {\n        ord <- rev(ord)\n    }\n    ord\n}"
+        },
+        "map_df": {
+          "formals": {
+            "self": "",
+            "df": "",
+            "i": "NULL"
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    self$palette <- self$palette %||% fetch_ggproto(self, \"fallback_palette\")\n    aesthetics <- intersect(self$aesthetics, names(df))\n    names(aesthetics) <- aesthetics\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    if (is.null(i)) {\n        lapply(aesthetics, function(j) self$map(df[[j]]))\n    }\n    else {\n        lapply(aesthetics, function(j) self$map(df[[j]][i]))\n    }\n}"
+        },
+        "rescale": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()",
+            "range": "limits"
+          },
+          "body": "{\n    self$rescaler(x, from = range)\n}"
+        },
+        "clone": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    new <- ggproto(NULL, self)\n    new$range <- ContinuousRange$new()\n    new\n}"
+        },
+        "is_discrete": {
+          "formals": [],
+          "body": "{\n    FALSE\n}"
+        },
+        "palette": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "break_info": {
+          "formals": {
+            "self": "",
+            "range": "NULL"
+          },
+          "body": "{\n    breaks <- ggproto_parent(ScaleContinuous, self)$break_info(range)\n    if (!(is_waiver(self$secondary.axis) || self$secondary.axis$empty())) {\n        self$secondary.axis$init(self)\n        breaks <- c(breaks, self$secondary.axis$break_info(breaks$range, self))\n    }\n    breaks\n}"
+        },
+        "make_sec_title": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    if (!is_waiver(self$secondary.axis)) {\n        self$secondary.axis$make_title(...)\n    }\n    else {\n        ggproto_parent(ScaleContinuous, self)$make_sec_title(...)\n    }\n}"
+        },
+        "reset": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$range$reset()\n}"
+        },
+        "transform": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    transformation <- self$get_transformation()\n    new_x <- transformation$transform(x)\n    check_transformation(x, new_x, transformation$name, call = self$call)\n    new_x\n}"
+        },
+        "is_empty": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    has_data <- !is.null(self$range$range)\n    has_limits <- is.function(self$limits) || (!is.null(self$limits) && all(is.finite(self$limits)))\n    !has_data && !has_limits\n}"
+        },
+        "transform_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    aesthetics <- intersect(self$aesthetics, names(df))\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    lapply(df[aesthetics], self$transform)\n}"
+        },
+        "map": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    scaled <- as.numeric(self$oob(x, limits))\n    if (!anyNA(scaled)) {\n        return(scaled)\n    }\n    vec_assign(scaled, is.na(scaled), self$na.value)\n}"
+        },
+        "dimension": {
+          "formals": {
+            "self": "",
+            "expand": "expansion(0, 0)",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    expand_limits_scale(self, expand, limits)\n}"
+        },
+        "train": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    if (length(x) == 0) {\n        return()\n    }\n    self$range$train(x, call = self$call)\n}"
+        },
+        "oob": {
+          "formals": {
+            "x": "",
+            "range": "c(0, 1)",
+            "only.finite": "TRUE"
+          },
+          "body": "{\n    force(range)\n    finite <- if (only.finite) \n        is.finite(x)\n    else TRUE\n    x[finite & x < range[1]] <- NA_real_\n    x[finite & x > range[2]] <- NA_real_\n    x\n}"
+        },
+        "rescaler": {
+          "formals": {
+            "x": "",
+            "to": "",
+            "from": "",
+            "...": ""
+          },
+          "body": "{\n    UseMethod(\"rescale\")\n}"
+        },
+        "print": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    show_range <- function(x) paste0(formatC(x, digits = 3), collapse = \" -- \")\n    cat(\"<\", class(self)[[1]], \">\\n\", sep = \"\")\n    cat(\" Range:  \", show_range(self$range$range), \"\\n\", sep = \"\")\n    if (is.function(self$limits)) {\n        cat(\" Limits: function()\\n\")\n    }\n    else {\n        cat(\" Limits: \", show_range(self$dimension()), \"\\n\", sep = \"\")\n    }\n}"
+        },
+        "sec_name": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (is_waiver(self$secondary.axis)) {\n        waiver()\n    }\n    else {\n        self$secondary.axis$name\n    }\n}"
+        }
+      },
+      "fields": [
+        "guide",
+        "name",
+        "limits",
+        "range",
+        "expand",
+        "breaks",
+        "labels",
+        "na.value",
+        "aesthetics",
+        "position",
+        "call",
+        "n.breaks",
+        "minor_breaks",
+        "trans",
+        "secondary.axis"
+      ]
+    },
+    {
+      "name": "ScaleDiscrete",
+      "kind": "ggproto",
+      "classes": [
+        "ScaleDiscrete",
+        "Scale",
+        "ggproto",
+        "gg"
+      ],
+      "methods": {
+        "get_breaks_minor": {
+          "formals": {
+            "self": "",
+            "n": "2",
+            "b": "self$break_positions()",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    breaks <- self$minor_breaks\n    if (is.null(breaks %|W|% NULL)) {\n        return(NULL)\n    }\n    if (is.function(breaks)) {\n        if (!is.numeric(b)) {\n            b <- self$map(b)\n        }\n        if (!is.numeric(limits)) {\n            limits <- self$map(limits)\n            limits <- self$dimension(self$expand, limits)\n        }\n        break_fun <- fetch_ggproto(self, \"minor_breaks\")\n        arg_names <- fn_fmls_names(break_fun)\n        if (length(arg_names) == 1L) {\n            breaks <- break_fun(limits)\n        }\n        else {\n            breaks <- break_fun(limits, b)\n        }\n    }\n    breaks\n}"
+        },
+        "break_positions": {
+          "formals": {
+            "self": "",
+            "range": "self$get_limits()"
+          },
+          "body": "{\n    self$map(self$get_breaks(range))\n}"
+        },
+        "get_breaks": {
+          "formals": {
+            "self": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(numeric())\n    }\n    if (is.null(self$breaks)) {\n        return(NULL)\n    }\n    if (is_waiver(self$breaks)) {\n        breaks <- limits\n    }\n    else if (is.function(self$breaks)) {\n        breaks <- self$breaks(limits)\n    }\n    else {\n        breaks <- self$breaks\n    }\n    breaks <- setNames(as.character(breaks), names(breaks))\n    in_domain <- vec_set_intersect(breaks, as.character(limits))\n    structure(in_domain, pos = match(in_domain, breaks))\n}"
+        },
+        "get_transformation": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$trans\n}"
+        },
+        "train_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) \n        return()\n    aesthetics <- intersect(self$aesthetics, names(df))\n    for (aesthetic in aesthetics) {\n        self$train(df[[aesthetic]])\n    }\n    invisible()\n}"
+        },
+        "get_limits": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(c(0, 1))\n    }\n    if (is.null(self$limits)) {\n        self$range$range\n    }\n    else if (is.function(self$limits)) {\n        self$limits(self$range$range)\n    }\n    else {\n        self$limits\n    }\n}"
+        },
+        "get_labels": {
+          "formals": {
+            "self": "",
+            "breaks": "self$get_breaks()"
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(character())\n    }\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    labels <- self$labels\n    if (is.null(labels)) {\n        return(NULL)\n    }\n    if (identical(labels, NA)) {\n        cli::cli_abort(\"Invalid {.arg labels} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    if (is_waiver(labels)) {\n        if (!is.null(names(breaks))) {\n            labels <- names(breaks)\n        }\n        else if (is.numeric(breaks)) {\n            labels <- format(breaks, justify = \"none\")\n        }\n        else {\n            labels <- as.character(breaks)\n        }\n    }\n    else if (is.function(labels)) {\n        labels <- labels(breaks)\n    }\n    else if (!is.null(names(labels))) {\n        map <- match(names(self$labels), breaks, nomatch = 0)\n        labels <- replace(breaks, map, labels[map != 0])\n    }\n    else if (!is.null(attr(breaks, \"pos\"))) {\n        labels <- labels[attr(breaks, \"pos\")]\n    }\n    normalise_label(labels)\n}"
+        },
+        "make_title": {
+          "formals": {
+            "self": "",
+            "guide_title": "waiver()",
+            "scale_title": "waiver()",
+            "label_title": "waiver()"
+          },
+          "body": "{\n    title <- label_title\n    scale_title <- allow_lambda(scale_title)\n    if (is.function(scale_title)) {\n        title <- scale_title(title)\n    }\n    else {\n        title <- scale_title %|W|% title\n    }\n    guide_title <- allow_lambda(guide_title)\n    if (is.function(guide_title)) {\n        title <- guide_title(title)\n    }\n    else {\n        title <- guide_title %|W|% title\n    }\n    title\n}"
+        },
+        "axis_order": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ord <- c(\"primary\", \"secondary\")\n    if (self$position %in% c(\"right\", \"bottom\")) {\n        ord <- rev(ord)\n    }\n    ord\n}"
+        },
+        "map_df": {
+          "formals": {
+            "self": "",
+            "df": "",
+            "i": "NULL"
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    self$palette <- self$palette %||% fetch_ggproto(self, \"fallback_palette\")\n    aesthetics <- intersect(self$aesthetics, names(df))\n    names(aesthetics) <- aesthetics\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    if (is.null(i)) {\n        lapply(aesthetics, function(j) self$map(df[[j]]))\n    }\n    else {\n        lapply(aesthetics, function(j) self$map(df[[j]][i]))\n    }\n}"
+        },
+        "rescale": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()",
+            "range": "c(1, length(limits))"
+          },
+          "body": "{\n    rescale(x, match(as.character(x), limits), from = range)\n}"
+        },
+        "clone": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    new <- ggproto(NULL, self)\n    new$range <- DiscreteRange$new()\n    new\n}"
+        },
+        "is_discrete": {
+          "formals": [],
+          "body": "{\n    TRUE\n}"
+        },
+        "palette": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "break_info": {
+          "formals": {
+            "self": "",
+            "range": "NULL"
+          },
+          "body": "{\n    limits <- self$get_limits()\n    major <- self$get_breaks(limits)\n    if (is.null(major)) {\n        labels <- major_n <- NULL\n    }\n    else {\n        labels <- self$get_labels(major)\n        major <- self$map(major)\n        major <- major[!is.na(major)]\n        major_n <- rescale(major, from = range)\n    }\n    list(range = range, labels = labels, major = major_n, minor = NULL, major_source = major, minor_source = NULL)\n}"
+        },
+        "make_sec_title": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    self$make_title(...)\n}"
+        },
+        "reset": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$range$reset()\n}"
+        },
+        "transform": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    x\n}"
+        },
+        "is_empty": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    is.null(self$range$range) && is.null(self$limits)\n}"
+        },
+        "transform_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    aesthetics <- intersect(self$aesthetics, names(df))\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    lapply(df[aesthetics], self$transform)\n}"
+        },
+        "map": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    limits <- vec_slice(limits, !is.na(limits))\n    n <- vec_size(limits)\n    if (n < 1) {\n        return(vec_rep(self$na.value, vec_size(x)))\n    }\n    if (!is.null(self$n.breaks.cache) && self$n.breaks.cache == n) {\n        pal <- self$palette.cache\n    }\n    else {\n        if (!is.null(self$n.breaks.cache)) {\n            cli::cli_warn(\"Cached palette does not match requested.\", call = self$call)\n        }\n        pal <- self$palette(n)\n        self$palette.cache <- pal\n        self$n.breaks.cache <- n\n    }\n    na_value <- NA\n    if (self$na.translate) {\n        na_value <- self$na.value\n        if (obj_is_list(pal) && !obj_is_list(na_value)) {\n            na_value <- list(na_value)\n        }\n    }\n    pal_names <- vec_names(pal)\n    if (!is_null(pal_names)) {\n        if (is_null(dim(pal))) {\n            pal[is.na(match(pal_names, limits))] <- na_value\n        }\n        else {\n            vec_slice(pal, is.na(match(pal_names, limits))) <- na_value\n        }\n        pal <- vec_set_names(pal, NULL)\n        limits <- pal_names\n    }\n    pal <- if (is.null(dim(pal))) \n        c(pal, na_value)\n    else vec_c(pal, na_value)\n    pal_match <- vec_slice(pal, match(as.character(x), limits, nomatch = vec_size(pal)))\n    if (!is.na(na_value)) {\n        vec_slice(pal_match, vec_detect_missing(x)) <- na_value\n    }\n    pal_match\n}"
+        },
+        "dimension": {
+          "formals": {
+            "self": "",
+            "expand": "expansion(0, 0)",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    expand_limits_discrete(limits, expand = expand)\n}"
+        },
+        "train": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    if (length(x) == 0) {\n        return()\n    }\n    self$range$train(x, drop = self$drop, na.rm = !self$na.translate, call = self$call)\n}"
+        }
+      },
+      "fields": [
+        "guide",
+        "name",
+        "limits",
+        "range",
+        "expand",
+        "breaks",
+        "labels",
+        "na.value",
+        "aesthetics",
+        "position",
+        "call",
+        "n.breaks.cache",
+        "palette.cache",
+        "drop"
+      ]
+    },
+    {
+      "name": "ScaleDiscreteIdentity",
+      "kind": "ggproto",
+      "classes": [
+        "ScaleDiscreteIdentity",
+        "ScaleDiscrete",
+        "Scale",
+        "ggproto",
+        "gg"
+      ],
+      "methods": {
+        "get_breaks_minor": {
+          "formals": {
+            "self": "",
+            "n": "2",
+            "b": "self$break_positions()",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    breaks <- self$minor_breaks\n    if (is.null(breaks %|W|% NULL)) {\n        return(NULL)\n    }\n    if (is.function(breaks)) {\n        if (!is.numeric(b)) {\n            b <- self$map(b)\n        }\n        if (!is.numeric(limits)) {\n            limits <- self$map(limits)\n            limits <- self$dimension(self$expand, limits)\n        }\n        break_fun <- fetch_ggproto(self, \"minor_breaks\")\n        arg_names <- fn_fmls_names(break_fun)\n        if (length(arg_names) == 1L) {\n            breaks <- break_fun(limits)\n        }\n        else {\n            breaks <- break_fun(limits, b)\n        }\n    }\n    breaks\n}"
+        },
+        "break_positions": {
+          "formals": {
+            "self": "",
+            "range": "self$get_limits()"
+          },
+          "body": "{\n    self$map(self$get_breaks(range))\n}"
+        },
+        "get_breaks": {
+          "formals": {
+            "self": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(numeric())\n    }\n    if (is.null(self$breaks)) {\n        return(NULL)\n    }\n    if (is_waiver(self$breaks)) {\n        breaks <- limits\n    }\n    else if (is.function(self$breaks)) {\n        breaks <- self$breaks(limits)\n    }\n    else {\n        breaks <- self$breaks\n    }\n    breaks <- setNames(as.character(breaks), names(breaks))\n    in_domain <- vec_set_intersect(breaks, as.character(limits))\n    structure(in_domain, pos = match(in_domain, breaks))\n}"
+        },
+        "get_transformation": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$trans\n}"
+        },
+        "train_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) \n        return()\n    aesthetics <- intersect(self$aesthetics, names(df))\n    for (aesthetic in aesthetics) {\n        self$train(df[[aesthetic]])\n    }\n    invisible()\n}"
+        },
+        "get_limits": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(c(0, 1))\n    }\n    if (is.null(self$limits)) {\n        self$range$range\n    }\n    else if (is.function(self$limits)) {\n        self$limits(self$range$range)\n    }\n    else {\n        self$limits\n    }\n}"
+        },
+        "get_labels": {
+          "formals": {
+            "self": "",
+            "breaks": "self$get_breaks()"
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(character())\n    }\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    labels <- self$labels\n    if (is.null(labels)) {\n        return(NULL)\n    }\n    if (identical(labels, NA)) {\n        cli::cli_abort(\"Invalid {.arg labels} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    if (is_waiver(labels)) {\n        if (!is.null(names(breaks))) {\n            labels <- names(breaks)\n        }\n        else if (is.numeric(breaks)) {\n            labels <- format(breaks, justify = \"none\")\n        }\n        else {\n            labels <- as.character(breaks)\n        }\n    }\n    else if (is.function(labels)) {\n        labels <- labels(breaks)\n    }\n    else if (!is.null(names(labels))) {\n        map <- match(names(self$labels), breaks, nomatch = 0)\n        labels <- replace(breaks, map, labels[map != 0])\n    }\n    else if (!is.null(attr(breaks, \"pos\"))) {\n        labels <- labels[attr(breaks, \"pos\")]\n    }\n    normalise_label(labels)\n}"
+        },
+        "make_title": {
+          "formals": {
+            "self": "",
+            "guide_title": "waiver()",
+            "scale_title": "waiver()",
+            "label_title": "waiver()"
+          },
+          "body": "{\n    title <- label_title\n    scale_title <- allow_lambda(scale_title)\n    if (is.function(scale_title)) {\n        title <- scale_title(title)\n    }\n    else {\n        title <- scale_title %|W|% title\n    }\n    guide_title <- allow_lambda(guide_title)\n    if (is.function(guide_title)) {\n        title <- guide_title(title)\n    }\n    else {\n        title <- guide_title %|W|% title\n    }\n    title\n}"
+        },
+        "axis_order": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ord <- c(\"primary\", \"secondary\")\n    if (self$position %in% c(\"right\", \"bottom\")) {\n        ord <- rev(ord)\n    }\n    ord\n}"
+        },
+        "map_df": {
+          "formals": {
+            "self": "",
+            "df": "",
+            "i": "NULL"
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    self$palette <- self$palette %||% fetch_ggproto(self, \"fallback_palette\")\n    aesthetics <- intersect(self$aesthetics, names(df))\n    names(aesthetics) <- aesthetics\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    if (is.null(i)) {\n        lapply(aesthetics, function(j) self$map(df[[j]]))\n    }\n    else {\n        lapply(aesthetics, function(j) self$map(df[[j]][i]))\n    }\n}"
+        },
+        "rescale": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()",
+            "range": "c(1, length(limits))"
+          },
+          "body": "{\n    rescale(x, match(as.character(x), limits), from = range)\n}"
+        },
+        "clone": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    new <- ggproto(NULL, self)\n    new$range <- DiscreteRange$new()\n    new\n}"
+        },
+        "is_discrete": {
+          "formals": [],
+          "body": "{\n    TRUE\n}"
+        },
+        "palette": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "break_info": {
+          "formals": {
+            "self": "",
+            "range": "NULL"
+          },
+          "body": "{\n    limits <- self$get_limits()\n    major <- self$get_breaks(limits)\n    if (is.null(major)) {\n        labels <- major_n <- NULL\n    }\n    else {\n        labels <- self$get_labels(major)\n        major <- self$map(major)\n        major <- major[!is.na(major)]\n        major_n <- rescale(major, from = range)\n    }\n    list(range = range, labels = labels, major = major_n, minor = NULL, major_source = major, minor_source = NULL)\n}"
+        },
+        "make_sec_title": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    self$make_title(...)\n}"
+        },
+        "reset": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$range$reset()\n}"
+        },
+        "transform": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    x\n}"
+        },
+        "is_empty": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    is.null(self$range$range) && is.null(self$limits)\n}"
+        },
+        "transform_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    aesthetics <- intersect(self$aesthetics, names(df))\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    lapply(df[aesthetics], self$transform)\n}"
+        },
+        "map": {
+          "formals": {
+            "x": ""
+          },
+          "body": "{\n    if (is.factor(x)) {\n        as.character(x)\n    }\n    else {\n        x\n    }\n}"
+        },
+        "dimension": {
+          "formals": {
+            "self": "",
+            "expand": "expansion(0, 0)",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    expand_limits_discrete(limits, expand = expand)\n}"
+        },
+        "train": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    if (identical(self$guide, \"none\")) \n        return()\n    ggproto_parent(ScaleDiscrete, self)$train(x)\n}"
+        }
+      },
+      "fields": [
+        "guide",
+        "name",
+        "limits",
+        "range",
+        "expand",
+        "breaks",
+        "labels",
+        "na.value",
+        "aesthetics",
+        "position",
+        "call",
+        "n.breaks.cache",
+        "palette.cache",
+        "drop"
+      ]
+    },
+    {
+      "name": "ScaleDiscretePosition",
+      "kind": "ggproto",
+      "classes": [
+        "ScaleDiscretePosition",
+        "ScaleDiscrete",
+        "Scale",
+        "ggproto",
+        "gg"
+      ],
+      "methods": {
+        "get_breaks_minor": {
+          "formals": {
+            "self": "",
+            "n": "2",
+            "b": "self$break_positions()",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    breaks <- self$minor_breaks\n    if (is.null(breaks %|W|% NULL)) {\n        return(NULL)\n    }\n    if (is.function(breaks)) {\n        if (!is.numeric(b)) {\n            b <- self$map(b)\n        }\n        if (!is.numeric(limits)) {\n            limits <- self$map(limits)\n            limits <- self$dimension(self$expand, limits)\n        }\n        break_fun <- fetch_ggproto(self, \"minor_breaks\")\n        arg_names <- fn_fmls_names(break_fun)\n        if (length(arg_names) == 1L) {\n            breaks <- break_fun(limits)\n        }\n        else {\n            breaks <- break_fun(limits, b)\n        }\n    }\n    breaks\n}"
+        },
+        "break_positions": {
+          "formals": {
+            "self": "",
+            "range": "self$get_limits()"
+          },
+          "body": "{\n    self$map(self$get_breaks(range))\n}"
+        },
+        "get_breaks": {
+          "formals": {
+            "self": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(numeric())\n    }\n    if (is.null(self$breaks)) {\n        return(NULL)\n    }\n    if (is_waiver(self$breaks)) {\n        breaks <- limits\n    }\n    else if (is.function(self$breaks)) {\n        breaks <- self$breaks(limits)\n    }\n    else {\n        breaks <- self$breaks\n    }\n    breaks <- setNames(as.character(breaks), names(breaks))\n    in_domain <- vec_set_intersect(breaks, as.character(limits))\n    structure(in_domain, pos = match(in_domain, breaks))\n}"
+        },
+        "get_transformation": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$trans\n}"
+        },
+        "train_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) \n        return()\n    aesthetics <- intersect(self$aesthetics, names(df))\n    for (aesthetic in aesthetics) {\n        self$train(df[[aesthetic]])\n    }\n    invisible()\n}"
+        },
+        "get_limits": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(c(0, 1))\n    }\n    if (is.function(self$limits)) {\n        return(self$limits(self$range$range))\n    }\n    self$limits %||% self$range$range %||% integer()\n}"
+        },
+        "get_labels": {
+          "formals": {
+            "self": "",
+            "breaks": "self$get_breaks()"
+          },
+          "body": "{\n    if (self$is_empty()) {\n        return(character())\n    }\n    if (is.null(breaks)) {\n        return(NULL)\n    }\n    labels <- self$labels\n    if (is.null(labels)) {\n        return(NULL)\n    }\n    if (identical(labels, NA)) {\n        cli::cli_abort(\"Invalid {.arg labels} specification. Use {.code NULL}, not {.code NA}.\", call = self$call)\n    }\n    if (is_waiver(labels)) {\n        if (!is.null(names(breaks))) {\n            labels <- names(breaks)\n        }\n        else if (is.numeric(breaks)) {\n            labels <- format(breaks, justify = \"none\")\n        }\n        else {\n            labels <- as.character(breaks)\n        }\n    }\n    else if (is.function(labels)) {\n        labels <- labels(breaks)\n    }\n    else if (!is.null(names(labels))) {\n        map <- match(names(self$labels), breaks, nomatch = 0)\n        labels <- replace(breaks, map, labels[map != 0])\n    }\n    else if (!is.null(attr(breaks, \"pos\"))) {\n        labels <- labels[attr(breaks, \"pos\")]\n    }\n    normalise_label(labels)\n}"
+        },
+        "make_title": {
+          "formals": {
+            "self": "",
+            "guide_title": "waiver()",
+            "scale_title": "waiver()",
+            "label_title": "waiver()"
+          },
+          "body": "{\n    title <- label_title\n    scale_title <- allow_lambda(scale_title)\n    if (is.function(scale_title)) {\n        title <- scale_title(title)\n    }\n    else {\n        title <- scale_title %|W|% title\n    }\n    guide_title <- allow_lambda(guide_title)\n    if (is.function(guide_title)) {\n        title <- guide_title(title)\n    }\n    else {\n        title <- guide_title %|W|% title\n    }\n    title\n}"
+        },
+        "axis_order": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    ord <- c(\"primary\", \"secondary\")\n    if (self$position %in% c(\"right\", \"bottom\")) {\n        ord <- rev(ord)\n    }\n    ord\n}"
+        },
+        "map_df": {
+          "formals": {
+            "self": "",
+            "df": "",
+            "i": "NULL"
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    self$palette <- self$palette %||% fetch_ggproto(self, \"fallback_palette\")\n    aesthetics <- intersect(self$aesthetics, names(df))\n    names(aesthetics) <- aesthetics\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    if (is.null(i)) {\n        lapply(aesthetics, function(j) self$map(df[[j]]))\n    }\n    else {\n        lapply(aesthetics, function(j) self$map(df[[j]][i]))\n    }\n}"
+        },
+        "rescale": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()",
+            "range": "self$dimension(limits = limits)"
+          },
+          "body": "{\n    rescale(self$map(x, limits = limits), from = range)\n}"
+        },
+        "clone": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    new <- ggproto(NULL, self)\n    new$range <- DiscreteRange$new()\n    new$range_c <- ContinuousRange$new()\n    new\n}"
+        },
+        "is_discrete": {
+          "formals": [],
+          "body": "{\n    TRUE\n}"
+        },
+        "palette": {
+          "formals": [],
+          "body": "{\n    cli::cli_abort(\"Not implemented.\")\n}"
+        },
+        "break_info": {
+          "formals": {
+            "self": "",
+            "range": "NULL"
+          },
+          "body": "{\n    limits <- self$get_limits()\n    major <- self$get_breaks(limits)\n    if (is.null(major)) {\n        labels <- major_n <- NULL\n    }\n    else {\n        labels <- self$get_labels(major)\n        major <- self$map(major)\n        major <- major[!is.na(major)]\n        major_n <- rescale(major, from = range)\n    }\n    list(range = range, labels = labels, major = major_n, minor = NULL, major_source = major, minor_source = NULL)\n}"
+        },
+        "make_sec_title": {
+          "formals": {
+            "self": "",
+            "...": ""
+          },
+          "body": "{\n    self$make_title(...)\n}"
+        },
+        "reset": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    self$range_c$reset()\n}"
+        },
+        "transform": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    x\n}"
+        },
+        "is_empty": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    is.null(self$range$range) && (is.null(self$limits) || is.function(self$limits)) && is.null(self$range_c$range)\n}"
+        },
+        "transform_df": {
+          "formals": {
+            "self": "",
+            "df": ""
+          },
+          "body": "{\n    if (empty(df)) {\n        return()\n    }\n    aesthetics <- intersect(self$aesthetics, names(df))\n    if (length(aesthetics) == 0) {\n        return()\n    }\n    lapply(df[aesthetics], self$transform)\n}"
+        },
+        "map": {
+          "formals": {
+            "self": "",
+            "x": "",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    if (inherits(x, \"AsIs\")) {\n        return(x)\n    }\n    if (is_discrete(x)) {\n        values <- self$palette(length(limits))\n        if (!is.numeric(values)) {\n            cli::cli_abort(\"The {.arg palette} function must return a {.cls numeric} vector.\", call = self$call)\n        }\n        if (length(values) < length(limits)) {\n            cli::cli_abort(\"The {.arg palette} function must return at least \\\\\\n            {length(limits)} values.\", call = self$call)\n        }\n        x <- values[match(as.character(x), limits)]\n    }\n    mapped_discrete(x)\n}"
+        },
+        "dimension": {
+          "formals": {
+            "self": "",
+            "expand": "expansion(0, 0)",
+            "limits": "self$get_limits()"
+          },
+          "body": "{\n    expand_limits_scale(self, expand, limits)\n}"
+        },
+        "train": {
+          "formals": {
+            "self": "",
+            "x": ""
+          },
+          "body": "{\n    if (is_discrete(x)) {\n        self$range$train(x, drop = self$drop, na.rm = !self$na.translate)\n    }\n    else {\n        self$range_c$train(x)\n    }\n}"
+        },
+        "sec_name": {
+          "formals": {
+            "self": ""
+          },
+          "body": "{\n    if (is_waiver(self$secondary.axis)) {\n        waiver()\n    }\n    else {\n        self$secondary.axis$name\n    }\n}"
+        }
+      },
+      "fields": [
+        "guide",
+        "name",
+        "limits",
+        "range",
+        "expand",
+        "breaks",
+        "labels",
+        "na.value",
+        "aesthetics",
+        "position",
+        "call",
+        "n.breaks.cache",
+        "palette.cache",
+        "drop",
+        "continuous_limits"
+      ]
+    },
+    {
+      "name": "binned_scale",
+      "kind": "function",
+      "formals": {
+        "aesthetics": "",
+        "scale_name": "deprecated()",
+        "palette": "",
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "rescaler": "rescale",
+        "oob": "squish",
+        "expand": "waiver()",
+        "na.value": "NA_real_",
+        "n.breaks": "NULL",
+        "nice.breaks": "TRUE",
+        "right": "TRUE",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "show.limits": "FALSE",
+        "guide": "\"bins\"",
+        "position": "\"left\"",
+        "fallback.palette": "NULL",
+        "call": "caller_call()",
+        "super": "ScaleBinned"
+      },
+      "body": "{\n    if (lifecycle::is_present(scale_name)) {\n        deprecate_soft0(\"3.5.0\", \"binned_scale(scale_name)\")\n    }\n    if (lifecycle::is_present(trans)) {\n        deprecate_soft0(\"3.5.0\", \"binned_scale(trans)\", \"binned_scale(transform)\")\n        transform <- trans\n    }\n    call <- call %||% current_call()\n    aesthetics <- standardise_aes_names(aesthetics)\n    check_breaks_labels(breaks, labels, call = call)\n    fallback.palette <- validate_fallback_palette(palette, fallback.palette, aesthetics, discrete = FALSE, call = call)\n    position <- arg_match0(position, c(\"left\", \"right\", \"top\", \"bottom\"))\n    if (is.null(breaks) && !is_position_aes(aesthetics) && guide != \"none\") {\n        guide <- \"none\"\n    }\n    transform <- as.transform(transform)\n    limits <- allow_lambda(limits)\n    breaks <- allow_lambda(breaks)\n    labels <- allow_lambda(labels)\n    rescaler <- allow_lambda(rescaler)\n    oob <- allow_lambda(oob)\n    if (!is.null(limits) && !is.function(limits)) {\n        limits <- transform$transform(limits)\n        if (!anyNA(limits)) {\n            limits <- sort(limits)\n        }\n    }\n    ggproto(NULL, super, call = call, aesthetics = aesthetics, palette = palette, fallback_palette = fallback.palette, range = ContinuousRange$new(), limits = limits, trans = transform, na.value = na.value, expand = expand, rescaler = rescaler, oob = oob, n.breaks = n.breaks, nice.breaks = nice.breaks, right = right, show.limits = show.limits, name = name, breaks = breaks, labels = labels, guide = guide, position = position)\n}"
+    },
+    {
+      "name": "continuous_scale",
+      "kind": "function",
+      "formals": {
+        "aesthetics": "",
+        "scale_name": "deprecated()",
+        "palette": "",
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "minor_breaks": "waiver()",
+        "n.breaks": "NULL",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "rescaler": "rescale",
+        "oob": "censor",
+        "expand": "waiver()",
+        "na.value": "NA",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "\"legend\"",
+        "position": "\"left\"",
+        "fallback.palette": "NULL",
+        "call": "caller_call()",
+        "super": "ScaleContinuous"
+      },
+      "body": "{\n    call <- call %||% current_call()\n    if (lifecycle::is_present(scale_name)) {\n        deprecate_soft0(\"3.5.0\", \"continuous_scale(scale_name)\")\n    }\n    if (lifecycle::is_present(trans)) {\n        deprecate_soft0(\"3.5.0\", \"continuous_scale(trans)\", \"continuous_scale(transform)\")\n        transform <- trans\n    }\n    aesthetics <- standardise_aes_names(aesthetics)\n    check_breaks_labels(breaks, labels, call = call)\n    fallback.palette <- validate_fallback_palette(palette, fallback.palette, aesthetics, discrete = FALSE, call = call)\n    position <- arg_match0(position, c(\"left\", \"right\", \"top\", \"bottom\"))\n    if (is.null(breaks) && !any(is_position_aes(aesthetics))) {\n        guide <- \"none\"\n    }\n    transform <- as.transform(transform)\n    limits <- allow_lambda(limits)\n    breaks <- allow_lambda(breaks)\n    labels <- allow_lambda(labels)\n    rescaler <- allow_lambda(rescaler)\n    oob <- allow_lambda(oob)\n    minor_breaks <- allow_lambda(minor_breaks)\n    if (!is.null(limits) && !is.function(limits)) {\n        limits <- transform$transform(limits)\n        if (!anyNA(limits)) {\n            limits <- sort(limits)\n        }\n    }\n    check_continuous_limits(limits, call = call)\n    ggproto(NULL, super, call = call, aesthetics = aesthetics, palette = palette, fallback_palette = fallback.palette, range = ContinuousRange$new(), limits = limits, trans = transform, na.value = na.value, expand = expand, rescaler = rescaler, oob = oob, name = name, breaks = breaks, minor_breaks = minor_breaks, n.breaks = n.breaks, labels = labels, guide = guide, position = position)\n}"
+    },
+    {
+      "name": "discrete_scale",
+      "kind": "function",
+      "formals": {
+        "aesthetics": "",
+        "scale_name": "deprecated()",
+        "palette": "",
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "minor_breaks": "waiver()",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "expand": "waiver()",
+        "na.translate": "TRUE",
+        "na.value": "NA",
+        "drop": "TRUE",
+        "guide": "\"legend\"",
+        "position": "\"left\"",
+        "fallback.palette": "NULL",
+        "call": "caller_call()",
+        "super": "ScaleDiscrete"
+      },
+      "body": "{\n    call <- call %||% current_call()\n    if (lifecycle::is_present(scale_name)) {\n        deprecate_soft0(\"3.5.0\", \"discrete_scale(scale_name)\")\n    }\n    aesthetics <- standardise_aes_names(aesthetics)\n    check_breaks_labels(breaks, labels, call = call)\n    fallback.palette <- validate_fallback_palette(palette, fallback.palette, aesthetics, discrete = TRUE, call = call)\n    limits <- allow_lambda(limits)\n    breaks <- allow_lambda(breaks)\n    labels <- allow_lambda(labels)\n    minor_breaks <- allow_lambda(minor_breaks)\n    if (!is.function(limits) && (length(limits) > 0) && !is_discrete(limits)) {\n        cli::cli_warn(c(\"Continuous limits supplied to discrete scale.\", i = \"Did you mean {.code limits = factor(...)} or {.fn scale_*_continuous}?\"), call = call)\n    }\n    position <- arg_match0(position, c(\"left\", \"right\", \"top\", \"bottom\"))\n    is_position <- any(is_position_aes(aesthetics))\n    if (is.null(breaks) && !is_position) {\n        guide <- \"none\"\n    }\n    if (is_position && identical(palette, identity)) {\n        palette <- seq_len\n    }\n    ggproto(NULL, super, call = call, aesthetics = aesthetics, palette = palette, fallback_palette = fallback.palette, range = DiscreteRange$new(), limits = limits, na.value = na.value, na.translate = na.translate, expand = expand, name = name, breaks = breaks, minor_breaks = minor_breaks, labels = labels, drop = drop, guide = guide, position = position)\n}"
+    },
+    {
+      "name": "dup_axis",
+      "kind": "function",
+      "formals": {
+        "transform": "identity",
+        "name": "derive()",
+        "breaks": "derive()",
+        "labels": "derive()",
+        "guide": "derive()",
+        "trans": "deprecated()"
+      },
+      "body": "{\n    sec_axis(transform, trans = trans, name, breaks, labels, guide)\n}"
+    },
+    {
+      "name": "expand_limits",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    data <- list2(...)\n    lifecycle::signal_stage(\"superseded\", \"expand_limits()\")\n    data_dfs <- vapply(data, is.data.frame, logical(1))\n    data <- unlist(c(list(data[!data_dfs]), data[data_dfs]), recursive = FALSE)\n    n_rows <- max(lengths(data))\n    data <- lapply(data, rep, length.out = n_rows)\n    data <- data_frame0(!!!data)\n    geom_blank(aes_all(names(data)), data, inherit.aes = FALSE)\n}"
+    },
+    {
+      "name": "expansion",
+      "kind": "function",
+      "formals": {
+        "mult": "0",
+        "add": "0"
+      },
+      "body": "{\n    if (!(is.numeric(mult) && (length(mult) %in% 1:2) && is.numeric(add) && (length(add) %in% 1:2))) {\n        cli::cli_abort(\"{.arg mult} and {.arg add} must be numeric vectors with 1 or 2 elements.\")\n    }\n    mult <- rep(mult, length.out = 2)\n    add <- rep(add, length.out = 2)\n    c(mult[1], add[1], mult[2], add[2])\n}"
+    },
+    {
+      "name": "lims",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    args <- list2(...)\n    if (!is_named2(args)) {\n        cli::cli_abort(\"All arguments must be named.\")\n    }\n    env <- current_env()\n    Map(limits, args, names(args), rep(list(env), length(args)))\n}"
+    },
+    {
+      "name": "scale_alpha",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"alpha\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_rescale(range)\n    else NULL\n    continuous_scale(aesthetics, name = name, palette = palette, fallback.palette = pal_rescale(c(0.1, 1)), ...)\n}"
+    },
+    {
+      "name": "scale_alpha_binned",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"alpha\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_rescale(range)\n    else NULL\n    binned_scale(aesthetics, name = name, palette = palette, fallback.palette = pal_rescale(c(0.1, 1)), ...)\n}"
+    },
+    {
+      "name": "scale_alpha_continuous",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"alpha\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_rescale(range)\n    else NULL\n    continuous_scale(aesthetics, name = name, palette = palette, fallback.palette = pal_rescale(c(0.1, 1)), ...)\n}"
+    },
+    {
+      "name": "scale_alpha_date",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"alpha\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_rescale(range)\n    else NULL\n    datetime_scale(aesthetics = aesthetics, transform = \"date\", name = name, palette = palette, fallback.palette = pal_rescale(c(0.1, 1)), ...)\n}"
+    },
+    {
+      "name": "scale_alpha_datetime",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"alpha\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_rescale(range)\n    else NULL\n    datetime_scale(aesthetics = aesthetics, transform = \"time\", name = name, palette = palette, fallback.palette = pal_rescale(c(0.1, 1)), ...)\n}"
+    },
+    {
+      "name": "scale_alpha_discrete",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    cli::cli_warn(\"Using alpha for a discrete variable is not advised.\")\n    args <- list2(...)\n    args$call <- args$call %||% current_call()\n    exec(scale_alpha_ordinal, !!!args)\n}"
+    },
+    {
+      "name": "scale_alpha_identity",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "guide": "\"none\"",
+        "aesthetics": "\"alpha\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = pal_identity(), ..., guide = guide, super = ScaleContinuousIdentity)\n}"
+    },
+    {
+      "name": "scale_alpha_manual",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "values": "",
+        "breaks": "waiver()",
+        "na.value": "NA",
+        "aesthetics": "\"alpha\""
+      },
+      "body": "{\n    manual_scale(aesthetics, values, breaks, ..., na.value = na.value)\n}"
+    },
+    {
+      "name": "scale_alpha_ordinal",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"alpha\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) {\n        function(n) seq(range[1], range[2], length.out = n)\n    }\n    else {\n        NULL\n    }\n    discrete_scale(aesthetics, name = name, palette = palette, fallback.palette = function(n) seq(0.1, 1, length.out = n), ...)\n}"
+    },
+    {
+      "name": "scale_color_binned",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "palette": "NULL",
+        "aesthetics": "\"colour\"",
+        "guide": "\"coloursteps\"",
+        "na.value": "\"grey50\"",
+        "type": "getOption(\"ggplot2.binned.colour\")"
+      },
+      "body": "{\n    has_old_args <- any(names(enexprs(...)) %in% c(\"low\", \"high\"))\n    if (has_old_args || (!is.null(type) && is.null(palette))) {\n        scale <- scale_backward_compatibility(..., guide = guide, na.value = na.value, scale = type, aesthetic = \"colour\", type = \"binned\")\n        return(scale)\n    }\n    palette <- if (!is.null(palette)) \n        pal_binned(as_discrete_pal(palette))\n    binned_scale(aesthetics = aesthetics, palette = palette, guide = guide, na.value = na.value, scale_name = deprecated(), fallback.palette = pal_seq_gradient(\"#132B43\", \"#56B1F7\"), ...)\n}"
+    },
+    {
+      "name": "scale_color_brewer",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "type": "\"seq\"",
+        "palette": "1",
+        "direction": "1",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_brewer(type, palette, direction), ...)\n}"
+    },
+    {
+      "name": "scale_color_continuous",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "palette": "NULL",
+        "aesthetics": "\"colour\"",
+        "guide": "\"colourbar\"",
+        "na.value": "\"grey50\"",
+        "type": "getOption(\"ggplot2.continuous.colour\")"
+      },
+      "body": "{\n    has_old_args <- any(names(enexprs(...)) %in% c(\"low\", \"high\"))\n    if (has_old_args || (!is.null(type) && is.null(palette))) {\n        scale <- scale_backward_compatibility(..., guide = guide, na.value = na.value, scale = type, aesthetic = \"colour\", type = \"continuous\")\n        return(scale)\n    }\n    palette <- if (!is.null(palette)) \n        as_continuous_pal(palette)\n    continuous_scale(aesthetics = aesthetics, palette = palette, guide = guide, na.value = na.value, scale_name = deprecated(), fallback.palette = pal_seq_gradient(\"#132B43\", \"#56B1F7\"), ...)\n}"
+    },
+    {
+      "name": "scale_color_date",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    datetime_scale(aesthetics = aesthetics, transform = \"date\", name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_color_datetime",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    datetime_scale(aesthetics = aesthetics, transform = \"time\", name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_color_discrete",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "palette": "NULL",
+        "aesthetics": "\"colour\"",
+        "na.value": "\"grey50\"",
+        "type": "getOption(\"ggplot2.discrete.colour\")"
+      },
+      "body": "{\n    has_old_args <- any(names(enexprs(...)) %in% c(\"h\", \"c\", \"l\", \"h.start\", \"direction\"))\n    if (has_old_args || (!is.null(type) && is.null(palette))) {\n        scale <- scale_backward_compatibility(..., na.value = na.value, scale = type, aesthetic = \"colour\", type = \"discrete\")\n        return(scale)\n    }\n    palette <- if (!is.null(palette)) \n        as_discrete_pal(palette)\n    discrete_scale(aesthetics = aesthetics, palette = palette, na.value = na.value, scale_name = deprecated(), fallback.palette = pal_hue(), ...)\n}"
+    },
+    {
+      "name": "scale_color_distiller",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "type": "\"seq\"",
+        "palette": "1",
+        "direction": "-1",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    type <- arg_match0(type, c(\"seq\", \"div\", \"qual\"))\n    if (type == \"qual\") {\n        cli::cli_warn(c(\"Using a discrete colour palette in a continuous scale\", i = \"Consider using {.code type = \\\"seq\\\"} or {.code type = \\\"div\\\"} instead\"))\n    }\n    continuous_scale(aesthetics, name = name, palette = pal_gradient_n(pal_brewer(type, palette, direction)(7), values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_color_fermenter",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "type": "\"seq\"",
+        "palette": "1",
+        "direction": "-1",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    type <- arg_match0(type, c(\"seq\", \"div\", \"qual\"))\n    if (type == \"qual\") {\n        cli::cli_warn(c(\"Using a discrete colour palette in a binned scale\", i = \"Consider using {.code type = \\\"seq\\\"} or {.code type = \\\"div\\\"} instead\"))\n    }\n    binned_scale(aesthetics, name = name, palette = pal_binned(pal_brewer(type, palette, direction)), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_color_gradient",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_color_gradient2",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "muted(\"red\")",
+        "mid": "\"white\"",
+        "high": "muted(\"blue\")",
+        "midpoint": "0",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "transform": "\"identity\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = div_gradient_pal(low, mid, high, space), na.value = na.value, transform = transform, guide = guide, ..., rescaler = mid_rescaler(mid = midpoint, transform = transform))\n}"
+    },
+    {
+      "name": "scale_color_gradientn",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "colours": "",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\"",
+        "colors": ""
+      },
+      "body": "{\n    colours <- if (missing(colours)) \n        colors\n    else colours\n    continuous_scale(aesthetics, name = name, palette = pal_gradient_n(colours, values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_color_grey",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "start": "0.2",
+        "end": "0.8",
+        "na.value": "\"red\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_grey(start, end), na.value = na.value, ...)\n}"
+    },
+    {
+      "name": "scale_color_hue",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "h": "c(0, 360) + 15",
+        "c": "100",
+        "l": "65",
+        "h.start": "0",
+        "direction": "1",
+        "na.value": "\"grey50\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_hue(h, c, l, h.start, direction), na.value = na.value, ...)\n}"
+    },
+    {
+      "name": "scale_color_identity",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "guide": "\"none\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_identity(), ..., guide = guide, super = ScaleDiscreteIdentity)\n}"
+    },
+    {
+      "name": "scale_color_manual",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "values": "",
+        "aesthetics": "\"colour\"",
+        "breaks": "waiver()",
+        "na.value": "\"grey50\""
+      },
+      "body": "{\n    manual_scale(aesthetics, values, breaks, ..., na.value = na.value)\n}"
+    },
+    {
+      "name": "scale_color_ordinal",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "type": "getOption(\"ggplot2.ordinal.colour\", getOption(\"ggplot2.ordinal.fill\"))"
+      },
+      "body": "{\n    type <- type %||% scale_colour_viridis_d\n    args <- list2(...)\n    args$call <- args$call %||% current_call()\n    if (is.function(type)) {\n        if (any(c(\"...\", \"call\") %in% fn_fmls_names(type))) {\n            args$call <- args$call %||% current_call()\n        }\n        exec(type, !!!args)\n    }\n    else {\n        exec(discrete_scale, aesthetics = \"colour\", palette = pal_ordinal(type), !!!args)\n    }\n}"
+    },
+    {
+      "name": "scale_color_steps",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    binned_scale(aesthetics, name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_color_steps2",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "muted(\"red\")",
+        "mid": "\"white\"",
+        "high": "muted(\"blue\")",
+        "midpoint": "0",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "transform": "\"identity\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    binned_scale(aesthetics, name = name, palette = div_gradient_pal(low, mid, high, space), na.value = na.value, transform = transform, guide = guide, rescaler = mid_rescaler(mid = midpoint, transform = transform), ...)\n}"
+    },
+    {
+      "name": "scale_color_stepsn",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "colours": "",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"colour\"",
+        "colors": ""
+      },
+      "body": "{\n    colours <- if (missing(colours)) \n        colors\n    else colours\n    binned_scale(aesthetics, name = name, palette = pal_gradient_n(colours, values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_color_viridis_b",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "alpha": "1",
+        "begin": "0",
+        "end": "1",
+        "direction": "1",
+        "option": "\"D\"",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    pal <- pal_binned(pal_viridis(alpha, begin, end, direction, option))\n    binned_scale(aesthetics, name = name, palette = pal, na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_color_viridis_c",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "alpha": "1",
+        "begin": "0",
+        "end": "1",
+        "direction": "1",
+        "option": "\"D\"",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = pal_gradient_n(pal_viridis(alpha, begin, end, direction, option)(6), values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_color_viridis_d",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "alpha": "1",
+        "begin": "0",
+        "end": "1",
+        "direction": "1",
+        "option": "\"D\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_viridis(alpha, begin, end, direction, option), ...)\n}"
+    },
+    {
+      "name": "scale_colour_binned",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "palette": "NULL",
+        "aesthetics": "\"colour\"",
+        "guide": "\"coloursteps\"",
+        "na.value": "\"grey50\"",
+        "type": "getOption(\"ggplot2.binned.colour\")"
+      },
+      "body": "{\n    has_old_args <- any(names(enexprs(...)) %in% c(\"low\", \"high\"))\n    if (has_old_args || (!is.null(type) && is.null(palette))) {\n        scale <- scale_backward_compatibility(..., guide = guide, na.value = na.value, scale = type, aesthetic = \"colour\", type = \"binned\")\n        return(scale)\n    }\n    palette <- if (!is.null(palette)) \n        pal_binned(as_discrete_pal(palette))\n    binned_scale(aesthetics = aesthetics, palette = palette, guide = guide, na.value = na.value, scale_name = deprecated(), fallback.palette = pal_seq_gradient(\"#132B43\", \"#56B1F7\"), ...)\n}"
+    },
+    {
+      "name": "scale_colour_brewer",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "type": "\"seq\"",
+        "palette": "1",
+        "direction": "1",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_brewer(type, palette, direction), ...)\n}"
+    },
+    {
+      "name": "scale_colour_continuous",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "palette": "NULL",
+        "aesthetics": "\"colour\"",
+        "guide": "\"colourbar\"",
+        "na.value": "\"grey50\"",
+        "type": "getOption(\"ggplot2.continuous.colour\")"
+      },
+      "body": "{\n    has_old_args <- any(names(enexprs(...)) %in% c(\"low\", \"high\"))\n    if (has_old_args || (!is.null(type) && is.null(palette))) {\n        scale <- scale_backward_compatibility(..., guide = guide, na.value = na.value, scale = type, aesthetic = \"colour\", type = \"continuous\")\n        return(scale)\n    }\n    palette <- if (!is.null(palette)) \n        as_continuous_pal(palette)\n    continuous_scale(aesthetics = aesthetics, palette = palette, guide = guide, na.value = na.value, scale_name = deprecated(), fallback.palette = pal_seq_gradient(\"#132B43\", \"#56B1F7\"), ...)\n}"
+    },
+    {
+      "name": "scale_colour_date",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    datetime_scale(aesthetics = aesthetics, transform = \"date\", name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_colour_datetime",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    datetime_scale(aesthetics = aesthetics, transform = \"time\", name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_colour_discrete",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "palette": "NULL",
+        "aesthetics": "\"colour\"",
+        "na.value": "\"grey50\"",
+        "type": "getOption(\"ggplot2.discrete.colour\")"
+      },
+      "body": "{\n    has_old_args <- any(names(enexprs(...)) %in% c(\"h\", \"c\", \"l\", \"h.start\", \"direction\"))\n    if (has_old_args || (!is.null(type) && is.null(palette))) {\n        scale <- scale_backward_compatibility(..., na.value = na.value, scale = type, aesthetic = \"colour\", type = \"discrete\")\n        return(scale)\n    }\n    palette <- if (!is.null(palette)) \n        as_discrete_pal(palette)\n    discrete_scale(aesthetics = aesthetics, palette = palette, na.value = na.value, scale_name = deprecated(), fallback.palette = pal_hue(), ...)\n}"
+    },
+    {
+      "name": "scale_colour_distiller",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "type": "\"seq\"",
+        "palette": "1",
+        "direction": "-1",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    type <- arg_match0(type, c(\"seq\", \"div\", \"qual\"))\n    if (type == \"qual\") {\n        cli::cli_warn(c(\"Using a discrete colour palette in a continuous scale\", i = \"Consider using {.code type = \\\"seq\\\"} or {.code type = \\\"div\\\"} instead\"))\n    }\n    continuous_scale(aesthetics, name = name, palette = pal_gradient_n(pal_brewer(type, palette, direction)(7), values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_colour_fermenter",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "type": "\"seq\"",
+        "palette": "1",
+        "direction": "-1",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    type <- arg_match0(type, c(\"seq\", \"div\", \"qual\"))\n    if (type == \"qual\") {\n        cli::cli_warn(c(\"Using a discrete colour palette in a binned scale\", i = \"Consider using {.code type = \\\"seq\\\"} or {.code type = \\\"div\\\"} instead\"))\n    }\n    binned_scale(aesthetics, name = name, palette = pal_binned(pal_brewer(type, palette, direction)), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_colour_gradient",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_colour_gradient2",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "muted(\"red\")",
+        "mid": "\"white\"",
+        "high": "muted(\"blue\")",
+        "midpoint": "0",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "transform": "\"identity\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = div_gradient_pal(low, mid, high, space), na.value = na.value, transform = transform, guide = guide, ..., rescaler = mid_rescaler(mid = midpoint, transform = transform))\n}"
+    },
+    {
+      "name": "scale_colour_gradientn",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "colours": "",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\"",
+        "colors": ""
+      },
+      "body": "{\n    colours <- if (missing(colours)) \n        colors\n    else colours\n    continuous_scale(aesthetics, name = name, palette = pal_gradient_n(colours, values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_colour_grey",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "start": "0.2",
+        "end": "0.8",
+        "na.value": "\"red\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_grey(start, end), na.value = na.value, ...)\n}"
+    },
+    {
+      "name": "scale_colour_hue",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "h": "c(0, 360) + 15",
+        "c": "100",
+        "l": "65",
+        "h.start": "0",
+        "direction": "1",
+        "na.value": "\"grey50\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_hue(h, c, l, h.start, direction), na.value = na.value, ...)\n}"
+    },
+    {
+      "name": "scale_colour_identity",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "guide": "\"none\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_identity(), ..., guide = guide, super = ScaleDiscreteIdentity)\n}"
+    },
+    {
+      "name": "scale_colour_manual",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "values": "",
+        "aesthetics": "\"colour\"",
+        "breaks": "waiver()",
+        "na.value": "\"grey50\""
+      },
+      "body": "{\n    manual_scale(aesthetics, values, breaks, ..., na.value = na.value)\n}"
+    },
+    {
+      "name": "scale_colour_ordinal",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "type": "getOption(\"ggplot2.ordinal.colour\", getOption(\"ggplot2.ordinal.fill\"))"
+      },
+      "body": "{\n    type <- type %||% scale_colour_viridis_d\n    args <- list2(...)\n    args$call <- args$call %||% current_call()\n    if (is.function(type)) {\n        if (any(c(\"...\", \"call\") %in% fn_fmls_names(type))) {\n            args$call <- args$call %||% current_call()\n        }\n        exec(type, !!!args)\n    }\n    else {\n        exec(discrete_scale, aesthetics = \"colour\", palette = pal_ordinal(type), !!!args)\n    }\n}"
+    },
+    {
+      "name": "scale_colour_steps",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    binned_scale(aesthetics, name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_colour_steps2",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "muted(\"red\")",
+        "mid": "\"white\"",
+        "high": "muted(\"blue\")",
+        "midpoint": "0",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "transform": "\"identity\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    binned_scale(aesthetics, name = name, palette = div_gradient_pal(low, mid, high, space), na.value = na.value, transform = transform, guide = guide, rescaler = mid_rescaler(mid = midpoint, transform = transform), ...)\n}"
+    },
+    {
+      "name": "scale_colour_stepsn",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "colours": "",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"colour\"",
+        "colors": ""
+      },
+      "body": "{\n    colours <- if (missing(colours)) \n        colors\n    else colours\n    binned_scale(aesthetics, name = name, palette = pal_gradient_n(colours, values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_colour_viridis_b",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "alpha": "1",
+        "begin": "0",
+        "end": "1",
+        "direction": "1",
+        "option": "\"D\"",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    pal <- pal_binned(pal_viridis(alpha, begin, end, direction, option))\n    binned_scale(aesthetics, name = name, palette = pal, na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_colour_viridis_c",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "alpha": "1",
+        "begin": "0",
+        "end": "1",
+        "direction": "1",
+        "option": "\"D\"",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = pal_gradient_n(pal_viridis(alpha, begin, end, direction, option)(6), values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_colour_viridis_d",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "alpha": "1",
+        "begin": "0",
+        "end": "1",
+        "direction": "1",
+        "option": "\"D\"",
+        "aesthetics": "\"colour\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_viridis(alpha, begin, end, direction, option), ...)\n}"
+    },
+    {
+      "name": "scale_continuous_identity",
+      "kind": "function",
+      "formals": {
+        "aesthetics": "",
+        "name": "waiver()",
+        "...": "",
+        "guide": "\"none\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = pal_identity(), ..., guide = guide, super = ScaleContinuousIdentity)\n}"
+    },
+    {
+      "name": "scale_discrete_identity",
+      "kind": "function",
+      "formals": {
+        "aesthetics": "",
+        "name": "waiver()",
+        "...": "",
+        "guide": "\"none\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_identity(), ..., guide = guide, super = ScaleDiscreteIdentity)\n}"
+    },
+    {
+      "name": "scale_discrete_manual",
+      "kind": "function",
+      "formals": {
+        "aesthetics": "",
+        "...": "",
+        "values": "",
+        "breaks": "waiver()"
+      },
+      "body": "{\n    manual_scale(aesthetics, values, breaks, ...)\n}"
+    },
+    {
+      "name": "scale_fill_binned",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "palette": "NULL",
+        "aesthetics": "\"fill\"",
+        "guide": "\"coloursteps\"",
+        "na.value": "\"grey50\"",
+        "type": "getOption(\"ggplot2.binned.fill\")"
+      },
+      "body": "{\n    has_old_args <- any(names(enexprs(...)) %in% c(\"low\", \"high\"))\n    if (has_old_args || (!is.null(type) && is.null(palette))) {\n        scale <- scale_backward_compatibility(..., guide = guide, na.value = na.value, scale = type, aesthetic = \"fill\", type = \"binned\")\n        return(scale)\n    }\n    palette <- if (!is.null(palette)) \n        pal_binned(as_discrete_pal(palette))\n    binned_scale(aesthetics = aesthetics, palette = palette, guide = guide, na.value = na.value, scale_name = deprecated(), fallback.palette = pal_seq_gradient(\"#132B43\", \"#56B1F7\"), ...)\n}"
+    },
+    {
+      "name": "scale_fill_brewer",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "type": "\"seq\"",
+        "palette": "1",
+        "direction": "1",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_brewer(type, palette, direction), ...)\n}"
+    },
+    {
+      "name": "scale_fill_continuous",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "palette": "NULL",
+        "aesthetics": "\"fill\"",
+        "guide": "\"colourbar\"",
+        "na.value": "\"grey50\"",
+        "type": "getOption(\"ggplot2.continuous.fill\")"
+      },
+      "body": "{\n    has_old_args <- any(names(enexprs(...)) %in% c(\"low\", \"high\"))\n    if (has_old_args || (!is.null(type) && is.null(palette))) {\n        scale <- scale_backward_compatibility(..., guide = guide, na.value = na.value, scale = type, aesthetic = \"fill\", type = \"continuous\")\n        return(scale)\n    }\n    palette <- if (!is.null(palette)) \n        as_continuous_pal(palette)\n    continuous_scale(aesthetics = aesthetics, palette = palette, guide = guide, na.value = na.value, scale_name = deprecated(), fallback.palette = pal_seq_gradient(\"#132B43\", \"#56B1F7\"), ...)\n}"
+    },
+    {
+      "name": "scale_fill_date",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    datetime_scale(aesthetics = aesthetics, transform = \"date\", name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_fill_datetime",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    datetime_scale(aesthetics = aesthetics, transform = \"time\", name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_fill_discrete",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "palette": "NULL",
+        "aesthetics": "\"fill\"",
+        "na.value": "\"grey50\"",
+        "type": "getOption(\"ggplot2.discrete.fill\")"
+      },
+      "body": "{\n    has_old_args <- any(names(enexprs(...)) %in% c(\"h\", \"c\", \"l\", \"h.start\", \"direction\"))\n    if (has_old_args || (!is.null(type) && is.null(palette))) {\n        scale <- scale_backward_compatibility(..., na.value = na.value, scale = type, aesthetic = \"fill\", type = \"discrete\")\n        return(scale)\n    }\n    palette <- if (!is.null(palette)) \n        as_discrete_pal(palette)\n    discrete_scale(aesthetics = aesthetics, palette = palette, na.value = na.value, scale_name = deprecated(), fallback.palette = pal_hue(), ...)\n}"
+    },
+    {
+      "name": "scale_fill_distiller",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "type": "\"seq\"",
+        "palette": "1",
+        "direction": "-1",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    type <- arg_match0(type, c(\"seq\", \"div\", \"qual\"))\n    if (type == \"qual\") {\n        cli::cli_warn(c(\"Using a discrete colour palette in a continuous scale\", i = \"Consider using {.code type = \\\"seq\\\"} or {.code type = \\\"div\\\"} instead\"))\n    }\n    continuous_scale(aesthetics, name = name, palette = pal_gradient_n(pal_brewer(type, palette, direction)(7), values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_fill_fermenter",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "type": "\"seq\"",
+        "palette": "1",
+        "direction": "-1",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    type <- arg_match0(type, c(\"seq\", \"div\", \"qual\"))\n    if (type == \"qual\") {\n        cli::cli_warn(c(\"Using a discrete colour palette in a binned scale\", i = \"Consider using {.code type = \\\"seq\\\"} or {.code type = \\\"div\\\"} instead\"))\n    }\n    binned_scale(aesthetics, name = name, palette = pal_binned(pal_brewer(type, palette, direction)), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_fill_gradient",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_fill_gradient2",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "muted(\"red\")",
+        "mid": "\"white\"",
+        "high": "muted(\"blue\")",
+        "midpoint": "0",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "transform": "\"identity\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = div_gradient_pal(low, mid, high, space), na.value = na.value, transform = transform, guide = guide, ..., rescaler = mid_rescaler(mid = midpoint, transform = transform))\n}"
+    },
+    {
+      "name": "scale_fill_gradientn",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "colours": "",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"fill\"",
+        "colors": ""
+      },
+      "body": "{\n    colours <- if (missing(colours)) \n        colors\n    else colours\n    continuous_scale(aesthetics, name = name, palette = pal_gradient_n(colours, values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_fill_grey",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "start": "0.2",
+        "end": "0.8",
+        "na.value": "\"red\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_grey(start, end), na.value = na.value, ...)\n}"
+    },
+    {
+      "name": "scale_fill_hue",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "h": "c(0, 360) + 15",
+        "c": "100",
+        "l": "65",
+        "h.start": "0",
+        "direction": "1",
+        "na.value": "\"grey50\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_hue(h, c, l, h.start, direction), na.value = na.value, ...)\n}"
+    },
+    {
+      "name": "scale_fill_identity",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "guide": "\"none\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_identity(), ..., guide = guide, super = ScaleDiscreteIdentity)\n}"
+    },
+    {
+      "name": "scale_fill_manual",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "values": "",
+        "aesthetics": "\"fill\"",
+        "breaks": "waiver()",
+        "na.value": "\"grey50\""
+      },
+      "body": "{\n    manual_scale(aesthetics, values, breaks, ..., na.value = na.value)\n}"
+    },
+    {
+      "name": "scale_fill_ordinal",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "type": "getOption(\"ggplot2.ordinal.fill\", getOption(\"ggplot2.ordinal.colour\"))"
+      },
+      "body": "{\n    type <- type %||% scale_fill_viridis_d\n    args <- list2(...)\n    args$call <- args$call %||% current_call()\n    if (is.function(type)) {\n        if (any(c(\"...\", \"call\") %in% fn_fmls_names(type))) {\n            args$call <- args$call %||% current_call()\n        }\n        exec(type, !!!args)\n    }\n    else {\n        exec(discrete_scale, aesthetics = \"fill\", palette = pal_ordinal(type), !!!args)\n    }\n}"
+    },
+    {
+      "name": "scale_fill_steps",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "\"#132B43\"",
+        "high": "\"#56B1F7\"",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    binned_scale(aesthetics, name = name, palette = pal_seq_gradient(low, high, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_fill_steps2",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "low": "muted(\"red\")",
+        "mid": "\"white\"",
+        "high": "muted(\"blue\")",
+        "midpoint": "0",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "transform": "\"identity\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    binned_scale(aesthetics, name = name, palette = div_gradient_pal(low, mid, high, space), na.value = na.value, transform = transform, guide = guide, rescaler = mid_rescaler(mid = midpoint, transform = transform), ...)\n}"
+    },
+    {
+      "name": "scale_fill_stepsn",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "colours": "",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"fill\"",
+        "colors": ""
+      },
+      "body": "{\n    colours <- if (missing(colours)) \n        colors\n    else colours\n    binned_scale(aesthetics, name = name, palette = pal_gradient_n(colours, values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_fill_viridis_b",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "alpha": "1",
+        "begin": "0",
+        "end": "1",
+        "direction": "1",
+        "option": "\"D\"",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"coloursteps\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    pal <- pal_binned(pal_viridis(alpha, begin, end, direction, option))\n    binned_scale(aesthetics, name = name, palette = pal, na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_fill_viridis_c",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "alpha": "1",
+        "begin": "0",
+        "end": "1",
+        "direction": "1",
+        "option": "\"D\"",
+        "values": "NULL",
+        "space": "\"Lab\"",
+        "na.value": "\"grey50\"",
+        "guide": "\"colourbar\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = pal_gradient_n(pal_viridis(alpha, begin, end, direction, option)(6), values, space), na.value = na.value, guide = guide, ...)\n}"
+    },
+    {
+      "name": "scale_fill_viridis_d",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "alpha": "1",
+        "begin": "0",
+        "end": "1",
+        "direction": "1",
+        "option": "\"D\"",
+        "aesthetics": "\"fill\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_viridis(alpha, begin, end, direction, option), ...)\n}"
+    },
+    {
+      "name": "scale_linetype",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "aesthetics": "\"linetype\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = NULL, fallback.palette = pal_linetype(), ...)\n}"
+    },
+    {
+      "name": "scale_linetype_binned",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "aesthetics": "\"linetype\""
+      },
+      "body": "{\n    binned_scale(aesthetics, name = name, palette = NULL, fallback.palette = pal_binned(pal_linetype()), ...)\n}"
+    },
+    {
+      "name": "scale_linetype_continuous",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    cli::cli_abort(c(\"A continuous variable cannot be mapped to the {.field linetype} aesthetic.\", i = \"Choose a different aesthetic or use {.fn scale_linetype_binned}.\"))\n}"
+    },
+    {
+      "name": "scale_linetype_discrete",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "aesthetics": "\"linetype\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = NULL, fallback.palette = pal_linetype(), ...)\n}"
+    },
+    {
+      "name": "scale_linetype_identity",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "guide": "\"none\"",
+        "aesthetics": "\"linetype\""
+      },
+      "body": "{\n    discrete_scale(aesthetics, name = name, palette = pal_identity(), ..., guide = guide, super = ScaleDiscreteIdentity)\n}"
+    },
+    {
+      "name": "scale_linetype_manual",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "values": "",
+        "breaks": "waiver()",
+        "na.value": "NA",
+        "aesthetics": "\"linetype\""
+      },
+      "body": "{\n    manual_scale(aesthetics, values, breaks, ..., na.value = na.value)\n}"
+    },
+    {
+      "name": "scale_linewidth",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "range": "NULL",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "\"legend\"",
+        "aesthetics": "\"linewidth\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_rescale(range)\n    else NULL\n    continuous_scale(aesthetics, palette = palette, name = name, breaks = breaks, labels = labels, limits = limits, transform = transform, trans = trans, guide = guide, fallback.palette = pal_rescale(c(1, 6)))\n}"
+    },
+    {
+      "name": "scale_linewidth_binned",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "range": "NULL",
+        "n.breaks": "NULL",
+        "nice.breaks": "TRUE",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "\"bins\"",
+        "aesthetics": "\"linewidth\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_rescale(range)\n    else NULL\n    binned_scale(aesthetics, palette = palette, name = name, breaks = breaks, labels = labels, limits = limits, transform = transform, trans = trans, n.breaks = n.breaks, nice.breaks = nice.breaks, guide = guide, fallback.palette = pal_rescale(c(1, 6)))\n}"
+    },
+    {
+      "name": "scale_linewidth_continuous",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "range": "NULL",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "\"legend\"",
+        "aesthetics": "\"linewidth\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_rescale(range)\n    else NULL\n    continuous_scale(aesthetics, palette = palette, name = name, breaks = breaks, labels = labels, limits = limits, transform = transform, trans = trans, guide = guide, fallback.palette = pal_rescale(c(1, 6)))\n}"
+    },
+    {
+      "name": "scale_linewidth_date",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"linewidth\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_rescale(range)\n    else NULL\n    datetime_scale(aesthetics, transform = \"date\", name = name, palette = palette, fallback.palette = pal_rescale(c(1, 6)), ...)\n}"
+    },
+    {
+      "name": "scale_linewidth_datetime",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"linewidth\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_rescale(range)\n    else NULL\n    datetime_scale(aesthetics, transform = \"time\", name = name, palette = palette, fallback.palette = pal_rescale(c(1, 6)), ...)\n}"
+    },
+    {
+      "name": "scale_linewidth_discrete",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    cli::cli_warn(\"Using {.field linewidth} for a discrete variable is not advised.\")\n    args <- list2(...)\n    args$call <- args$call %||% current_call()\n    exec(scale_linewidth_ordinal, !!!args)\n}"
+    },
+    {
+      "name": "scale_linewidth_identity",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "guide": "\"none\"",
+        "aesthetics": "\"linewidth\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = pal_identity(), ..., guide = guide, super = ScaleContinuousIdentity)\n}"
+    },
+    {
+      "name": "scale_linewidth_manual",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "values": "",
+        "breaks": "waiver()",
+        "na.value": "NA",
+        "aesthetics": "\"linewidth\""
+      },
+      "body": "{\n    manual_scale(aesthetics, values, breaks, ..., na.value = na.value)\n}"
+    },
+    {
+      "name": "scale_linewidth_ordinal",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"linewidth\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) {\n        function(n) seq(range[1], range[2], length.out = n)\n    }\n    else {\n        NULL\n    }\n    discrete_scale(aesthetics, name = name, palette = palette, fallback.palette = function(n) seq(2, 6, length.out = n), ...)\n}"
+    },
+    {
+      "name": "scale_radius",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "range": "c(1, 6)",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "\"legend\"",
+        "aesthetics": "\"size\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, palette = pal_rescale(range), name = name, breaks = breaks, labels = labels, limits = limits, transform = transform, trans = trans, guide = guide)\n}"
+    },
+    {
+      "name": "scale_shape",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "solid": "NULL",
+        "aesthetics": "\"shape\""
+      },
+      "body": "{\n    palette <- if (!is.null(solid)) \n        pal_shape(solid)\n    else NULL\n    discrete_scale(aesthetics, name = name, palette = palette, fallback.palette = pal_shape(), ...)\n}"
+    },
+    {
+      "name": "scale_shape_binned",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "solid": "TRUE",
+        "aesthetics": "\"shape\""
+      },
+      "body": "{\n    palette <- if (!is.null(solid)) \n        pal_binned(pal_shape(solid))\n    else NULL\n    binned_scale(aesthetics, name = name, palette = palette, fallback.palette = pal_binned(pal_shape(solid)), ...)\n}"
+    },
+    {
+      "name": "scale_shape_continuous",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    cli::cli_abort(c(\"A continuous variable cannot be mapped to the {.field shape} aesthetic.\", i = \"Choose a different aesthetic or use {.fn scale_shape_binned}.\"))\n}"
+    },
+    {
+      "name": "scale_shape_discrete",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "solid": "NULL",
+        "aesthetics": "\"shape\""
+      },
+      "body": "{\n    palette <- if (!is.null(solid)) \n        pal_shape(solid)\n    else NULL\n    discrete_scale(aesthetics, name = name, palette = palette, fallback.palette = pal_shape(), ...)\n}"
+    },
+    {
+      "name": "scale_shape_identity",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "guide": "\"none\"",
+        "aesthetics": "\"shape\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = pal_identity(), ..., guide = guide, super = ScaleContinuousIdentity)\n}"
+    },
+    {
+      "name": "scale_shape_manual",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "values": "",
+        "breaks": "waiver()",
+        "na.value": "NA",
+        "aesthetics": "\"shape\""
+      },
+      "body": "{\n    manual_scale(aesthetics, values, breaks, ..., na.value = na.value)\n}"
+    },
+    {
+      "name": "scale_shape_ordinal",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    cli::cli_warn(\"Using shapes for an ordinal variable is not advised\")\n    args <- list2(...)\n    args$call <- args$call %||% current_call()\n    exec(scale_shape, !!!args)\n}"
+    },
+    {
+      "name": "scale_size",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "range": "NULL",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "\"legend\"",
+        "aesthetics": "\"size\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_area(range)\n    else NULL\n    continuous_scale(aesthetics, palette = palette, name = name, breaks = breaks, labels = labels, limits = limits, transform = transform, trans = trans, guide = guide, fallback.palette = pal_area())\n}"
+    },
+    {
+      "name": "scale_size_area",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "max_size": "6",
+        "aesthetics": "\"size\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = abs_area(max_size), rescaler = rescale_max, ...)\n}"
+    },
+    {
+      "name": "scale_size_binned",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "range": "NULL",
+        "n.breaks": "NULL",
+        "nice.breaks": "TRUE",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "\"bins\"",
+        "aesthetics": "\"size\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_area(range)\n    else NULL\n    binned_scale(aesthetics, palette = palette, name = name, breaks = breaks, labels = labels, limits = limits, transform = transform, trans = trans, n.breaks = n.breaks, nice.breaks = nice.breaks, guide = guide, fallback.palette = pal_area())\n}"
+    },
+    {
+      "name": "scale_size_binned_area",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "max_size": "6",
+        "aesthetics": "\"size\""
+      },
+      "body": "{\n    binned_scale(aesthetics, name = name, palette = abs_area(max_size), rescaler = rescale_max, ...)\n}"
+    },
+    {
+      "name": "scale_size_continuous",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "range": "NULL",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "\"legend\"",
+        "aesthetics": "\"size\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_area(range)\n    else NULL\n    continuous_scale(aesthetics, palette = palette, name = name, breaks = breaks, labels = labels, limits = limits, transform = transform, trans = trans, guide = guide, fallback.palette = pal_area())\n}"
+    },
+    {
+      "name": "scale_size_date",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"size\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_area(range)\n    else NULL\n    datetime_scale(aesthetics, \"date\", name = name, palette = palette, fallback.palette = pal_area(), ...)\n}"
+    },
+    {
+      "name": "scale_size_datetime",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"size\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) \n        pal_area(range)\n    else NULL\n    datetime_scale(aesthetics, \"time\", name = name, palette = palette, fallback.palette = pal_area(), ...)\n}"
+    },
+    {
+      "name": "scale_size_discrete",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    cli::cli_warn(\"Using {.field size} for a discrete variable is not advised.\")\n    args <- list2(...)\n    args$call <- args$call %||% current_call()\n    exec(scale_size_ordinal, !!!args)\n}"
+    },
+    {
+      "name": "scale_size_identity",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "guide": "\"none\"",
+        "aesthetics": "\"size\""
+      },
+      "body": "{\n    continuous_scale(aesthetics, name = name, palette = pal_identity(), ..., guide = guide, super = ScaleContinuousIdentity)\n}"
+    },
+    {
+      "name": "scale_size_manual",
+      "kind": "function",
+      "formals": {
+        "...": "",
+        "values": "",
+        "breaks": "waiver()",
+        "na.value": "NA",
+        "aesthetics": "\"size\""
+      },
+      "body": "{\n    manual_scale(aesthetics, values, breaks, ..., na.value = na.value)\n}"
+    },
+    {
+      "name": "scale_size_ordinal",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "range": "NULL",
+        "aesthetics": "\"size\""
+      },
+      "body": "{\n    palette <- if (!is.null(range)) {\n        function(n) sqrt(seq(range[1]^2, range[2]^2, length.out = n))\n    }\n    else {\n        NULL\n    }\n    discrete_scale(aesthetics, name = name, palette = palette, fallback.palette = function(n) sqrt(seq(4, 36, length.out = n)), ...)\n}"
+    },
+    {
+      "name": "scale_type",
+      "kind": "function",
+      "formals": {
+        "x": ""
+      },
+      "body": "UseMethod(\"scale_type\")"
+    },
+    {
+      "name": "scale_x_binned",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "n.breaks": "10",
+        "nice.breaks": "TRUE",
+        "breaks": "waiver()",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "expand": "waiver()",
+        "oob": "squish",
+        "na.value": "NA_real_",
+        "right": "TRUE",
+        "show.limits": "FALSE",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "waiver()",
+        "position": "\"bottom\""
+      },
+      "body": "{\n    binned_scale(ggplot_global$x_aes, palette = identity, name = name, breaks = breaks, labels = labels, limits = limits, expand = expand, oob = oob, na.value = na.value, n.breaks = n.breaks, nice.breaks = nice.breaks, right = right, transform = transform, trans = trans, show.limits = show.limits, guide = guide, position = position, super = ScaleBinnedPosition)\n}"
+    },
+    {
+      "name": "scale_x_continuous",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "minor_breaks": "waiver()",
+        "n.breaks": "NULL",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "expand": "waiver()",
+        "oob": "censor",
+        "na.value": "NA_real_",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "waiver()",
+        "position": "\"bottom\"",
+        "sec.axis": "waiver()"
+      },
+      "body": "{\n    call <- caller_call()\n    if (scale_override_call(call)) {\n        call <- current_call()\n    }\n    sc <- continuous_scale(ggplot_global$x_aes, palette = identity, name = name, breaks = breaks, n.breaks = n.breaks, minor_breaks = minor_breaks, labels = labels, limits = limits, expand = expand, oob = oob, na.value = na.value, transform = transform, trans = trans, guide = guide, position = position, call = call, super = ScaleContinuousPosition)\n    set_sec_axis(sec.axis, sc)\n}"
+    },
+    {
+      "name": "scale_x_date",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "date_breaks": "waiver()",
+        "labels": "waiver()",
+        "date_labels": "waiver()",
+        "minor_breaks": "waiver()",
+        "date_minor_breaks": "waiver()",
+        "limits": "NULL",
+        "expand": "waiver()",
+        "oob": "censor",
+        "guide": "waiver()",
+        "position": "\"bottom\"",
+        "sec.axis": "waiver()"
+      },
+      "body": "{\n    sc <- datetime_scale(ggplot_global$x_aes, \"date\", name = name, palette = identity, breaks = breaks, date_breaks = date_breaks, labels = labels, date_labels = date_labels, minor_breaks = minor_breaks, date_minor_breaks = date_minor_breaks, guide = guide, limits = limits, expand = expand, oob = oob, position = position)\n    set_sec_axis(sec.axis, sc)\n}"
+    },
+    {
+      "name": "scale_x_datetime",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "date_breaks": "waiver()",
+        "labels": "waiver()",
+        "date_labels": "waiver()",
+        "minor_breaks": "waiver()",
+        "date_minor_breaks": "waiver()",
+        "timezone": "NULL",
+        "limits": "NULL",
+        "expand": "waiver()",
+        "oob": "censor",
+        "guide": "waiver()",
+        "position": "\"bottom\"",
+        "sec.axis": "waiver()"
+      },
+      "body": "{\n    sc <- datetime_scale(ggplot_global$x_aes, \"time\", name = name, palette = identity, breaks = breaks, date_breaks = date_breaks, labels = labels, date_labels = date_labels, minor_breaks = minor_breaks, date_minor_breaks = date_minor_breaks, timezone = timezone, guide = guide, limits = limits, expand = expand, oob = oob, position = position)\n    set_sec_axis(sec.axis, sc)\n}"
+    },
+    {
+      "name": "scale_x_discrete",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "palette": "seq_len",
+        "expand": "waiver()",
+        "guide": "waiver()",
+        "position": "\"bottom\"",
+        "sec.axis": "waiver()",
+        "continuous.limits": "NULL"
+      },
+      "body": "{\n    sc <- discrete_scale(aesthetics = ggplot_global$x_aes, name = name, palette = palette, ..., expand = expand, guide = guide, position = position, super = ScaleDiscretePosition)\n    sc$range_c <- ContinuousRange$new()\n    sc$continuous_limits <- continuous.limits\n    set_sec_axis(sec.axis, sc)\n}"
+    },
+    {
+      "name": "scale_x_log10",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    scale_x_continuous(..., transform = transform_log10())\n}"
+    },
+    {
+      "name": "scale_x_reverse",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    scale_x_continuous(..., transform = transform_reverse())\n}"
+    },
+    {
+      "name": "scale_x_sqrt",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    scale_x_continuous(..., transform = transform_sqrt())\n}"
+    },
+    {
+      "name": "scale_x_time",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "date_breaks": "waiver()",
+        "minor_breaks": "waiver()",
+        "date_minor_breaks": "waiver()",
+        "labels": "waiver()",
+        "date_labels": "waiver()",
+        "limits": "NULL",
+        "expand": "waiver()",
+        "oob": "censor",
+        "na.value": "NA_real_",
+        "guide": "waiver()",
+        "position": "\"bottom\"",
+        "sec.axis": "waiver()"
+      },
+      "body": "{\n    sc <- datetime_scale(ggplot_global$x_aes, \"hms\", name = name, palette = identity, breaks = breaks, date_breaks = date_breaks, labels = labels, date_labels = date_labels, minor_breaks = minor_breaks, date_minor_breaks = date_minor_breaks, guide = guide, limits = limits, expand = expand, oob = oob, position = position)\n    set_sec_axis(sec.axis, sc)\n}"
+    },
+    {
+      "name": "scale_y_binned",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "n.breaks": "10",
+        "nice.breaks": "TRUE",
+        "breaks": "waiver()",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "expand": "waiver()",
+        "oob": "squish",
+        "na.value": "NA_real_",
+        "right": "TRUE",
+        "show.limits": "FALSE",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "waiver()",
+        "position": "\"left\""
+      },
+      "body": "{\n    binned_scale(ggplot_global$y_aes, palette = identity, name = name, breaks = breaks, labels = labels, limits = limits, expand = expand, oob = oob, na.value = na.value, n.breaks = n.breaks, nice.breaks = nice.breaks, right = right, transform = transform, trans = trans, show.limits = show.limits, guide = guide, position = position, super = ScaleBinnedPosition)\n}"
+    },
+    {
+      "name": "scale_y_continuous",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "minor_breaks": "waiver()",
+        "n.breaks": "NULL",
+        "labels": "waiver()",
+        "limits": "NULL",
+        "expand": "waiver()",
+        "oob": "censor",
+        "na.value": "NA_real_",
+        "transform": "\"identity\"",
+        "trans": "deprecated()",
+        "guide": "waiver()",
+        "position": "\"left\"",
+        "sec.axis": "waiver()"
+      },
+      "body": "{\n    call <- caller_call()\n    if (scale_override_call(call)) {\n        call <- current_call()\n    }\n    sc <- continuous_scale(ggplot_global$y_aes, palette = identity, name = name, breaks = breaks, n.breaks = n.breaks, minor_breaks = minor_breaks, labels = labels, limits = limits, expand = expand, oob = oob, na.value = na.value, transform = transform, trans = trans, guide = guide, position = position, call = call, super = ScaleContinuousPosition)\n    set_sec_axis(sec.axis, sc)\n}"
+    },
+    {
+      "name": "scale_y_date",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "date_breaks": "waiver()",
+        "labels": "waiver()",
+        "date_labels": "waiver()",
+        "minor_breaks": "waiver()",
+        "date_minor_breaks": "waiver()",
+        "limits": "NULL",
+        "expand": "waiver()",
+        "oob": "censor",
+        "guide": "waiver()",
+        "position": "\"left\"",
+        "sec.axis": "waiver()"
+      },
+      "body": "{\n    sc <- datetime_scale(ggplot_global$y_aes, \"date\", name = name, palette = identity, breaks = breaks, date_breaks = date_breaks, labels = labels, date_labels = date_labels, minor_breaks = minor_breaks, date_minor_breaks = date_minor_breaks, guide = guide, limits = limits, expand = expand, oob = oob, position = position)\n    set_sec_axis(sec.axis, sc)\n}"
+    },
+    {
+      "name": "scale_y_datetime",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "date_breaks": "waiver()",
+        "labels": "waiver()",
+        "date_labels": "waiver()",
+        "minor_breaks": "waiver()",
+        "date_minor_breaks": "waiver()",
+        "timezone": "NULL",
+        "limits": "NULL",
+        "expand": "waiver()",
+        "oob": "censor",
+        "guide": "waiver()",
+        "position": "\"left\"",
+        "sec.axis": "waiver()"
+      },
+      "body": "{\n    sc <- datetime_scale(ggplot_global$y_aes, \"time\", name = name, palette = identity, breaks = breaks, date_breaks = date_breaks, labels = labels, date_labels = date_labels, minor_breaks = minor_breaks, date_minor_breaks = date_minor_breaks, timezone = timezone, guide = guide, limits = limits, expand = expand, oob = oob, position = position)\n    set_sec_axis(sec.axis, sc)\n}"
+    },
+    {
+      "name": "scale_y_discrete",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "...": "",
+        "palette": "seq_len",
+        "expand": "waiver()",
+        "guide": "waiver()",
+        "position": "\"left\"",
+        "sec.axis": "waiver()",
+        "continuous.limits": "NULL"
+      },
+      "body": "{\n    sc <- discrete_scale(aesthetics = ggplot_global$y_aes, name = name, palette = palette, ..., expand = expand, guide = guide, position = position, super = ScaleDiscretePosition)\n    sc$range_c <- ContinuousRange$new()\n    sc$continuous_limits <- continuous.limits\n    set_sec_axis(sec.axis, sc)\n}"
+    },
+    {
+      "name": "scale_y_log10",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    scale_y_continuous(..., transform = transform_log10())\n}"
+    },
+    {
+      "name": "scale_y_reverse",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    scale_y_continuous(..., transform = transform_reverse())\n}"
+    },
+    {
+      "name": "scale_y_sqrt",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    scale_y_continuous(..., transform = transform_sqrt())\n}"
+    },
+    {
+      "name": "scale_y_time",
+      "kind": "function",
+      "formals": {
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "date_breaks": "waiver()",
+        "minor_breaks": "waiver()",
+        "date_minor_breaks": "waiver()",
+        "labels": "waiver()",
+        "date_labels": "waiver()",
+        "limits": "NULL",
+        "expand": "waiver()",
+        "oob": "censor",
+        "na.value": "NA_real_",
+        "guide": "waiver()",
+        "position": "\"left\"",
+        "sec.axis": "waiver()"
+      },
+      "body": "{\n    sc <- datetime_scale(ggplot_global$y_aes, \"hms\", name = name, palette = identity, breaks = breaks, date_breaks = date_breaks, labels = labels, date_labels = date_labels, minor_breaks = minor_breaks, date_minor_breaks = date_minor_breaks, guide = guide, limits = limits, expand = expand, oob = oob, position = position)\n    set_sec_axis(sec.axis, sc)\n}"
+    },
+    {
+      "name": "sec_axis",
+      "kind": "function",
+      "formals": {
+        "transform": "NULL",
+        "name": "waiver()",
+        "breaks": "waiver()",
+        "labels": "waiver()",
+        "guide": "waiver()",
+        "trans": "deprecated()"
+      },
+      "body": "{\n    if (lifecycle::is_present(trans)) {\n        deprecate_soft0(\"3.5.0\", \"sec_axis(trans)\", \"sec_axis(transform)\")\n        transform <- trans\n    }\n    if (length(transform) > 2) \n        transform <- transform[c(1, 3)]\n    transform <- as_function(transform)\n    ggproto(NULL, AxisSecondary, trans = transform, name = name, breaks = breaks, labels = labels, guide = guide)\n}"
+    },
+    {
+      "name": "xlim",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    limits(c(...), \"x\", call = current_call())\n}"
+    },
+    {
+      "name": "ylim",
+      "kind": "function",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    limits(c(...), \"y\", call = current_call())\n}"
+    }
+  ]
+}

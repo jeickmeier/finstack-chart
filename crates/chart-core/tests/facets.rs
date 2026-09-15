@@ -413,6 +413,7 @@ fn color_guides_collect_only_exact_compatible_id_domain_and_palette() {
         alpha: 255,
     };
     d.layers[0].color = Some(ColorEncoding {
+        automatic: false,
         title: Some("Groups".into()),
         id: ScaleId::new(7),
         input: ColorInput::Category(F),

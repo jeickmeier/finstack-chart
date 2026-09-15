@@ -1,0 +1,5399 @@
+{
+  "reference": "ggplot2 4.0.3",
+  "cases": [
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "size",
+      "population": "missing",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            1
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            null
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "continuous",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.8611111111111112,
+            0.5833333333333333,
+            0.3055555555555556,
+            0.08333333333333333
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.3,
+            0.5,
+            0.7,
+            0.9
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "ordinary",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.8611111111111112,
+            0.5833333333333333,
+            0.3055555555555556,
+            0.08333333333333333
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.3,
+            0.5,
+            0.7,
+            0.9
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "colour",
+      "population": "missing",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          4.444444444444445
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          4.444444444444445
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1.333333333333333
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.8611111111111112,
+            0.5833333333333333,
+            0.3055555555555556,
+            0.08333333333333333
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1.333333333333333
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.3,
+            0.5,
+            0.7,
+            0.9
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          4.6
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          3
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          3
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "ordinary",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          3
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          1.333333333333333
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.8611111111111112,
+            0.5833333333333333,
+            0.3055555555555556,
+            0.08333333333333333
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.3,
+            0.5,
+            0.7,
+            0.9
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          4.6
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          3
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          3
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "size",
+      "population": "missing",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          3
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.8611111111111112
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.8611111111111112
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.08333333333333333
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.8611111111111112,
+            0.5833333333333333,
+            0.3055555555555556,
+            0.08333333333333333
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.08333333333333333
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.3,
+            0.5,
+            0.7,
+            0.9
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.9
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "ordinary",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        10
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "default",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "oob_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "oob_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.08333333333333333,
+            0.3055555555555555,
+            0.5833333333333333,
+            0.8611111111111112
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.08333333333333333
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "rescale_reverse",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.8611111111111112,
+            0.5833333333333333,
+            0.3055555555555556,
+            0.08333333333333333
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "rescale_index",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.3,
+            0.5,
+            0.7,
+            0.9
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.9
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "rescale_short",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "rescale_empty",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "family": "binned",
+      "channel": "alpha",
+      "population": "missing",
+      "mode": "rescale_null",
+      "guide_mode": "hidden",
+      "inputs": [
+        null
+      ],
+      "calls": [
+        {
+          "operation": "oob",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            null
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "rescaler",
+          "values": [
+            1,
+            2.5,
+            5,
+            7.5,
+            10
+          ],
+          "range": [
+            1,
+            10
+          ],
+          "names": []
+        },
+        {
+          "operation": "palette",
+          "values": [
+            0.5
+          ],
+          "range": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.5
+        ],
+        "keys": []
+      }
+    }
+  ]
+}

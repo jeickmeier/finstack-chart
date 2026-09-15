@@ -1,0 +1,5644 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "source": "function (self, n = 2, b = self$break_positions(), limits = self$get_limits()) \n{\n    if (zero_range(as.numeric(limits))) {\n        return()\n    }\n    if (is.null(self$minor_breaks)) {\n        return(NULL)\n    }\n    if (identical(self$minor_breaks, NA)) {\n        cli::cli_abort(\"Invalid {.arg minor_breaks} specification. Use {.code NULL}, not {.code NA}.\", \n            call = self$call)\n    }\n    b <- b[is.finite(b)]\n    transformation <- self$get_transformation()\n    if (is_waiver(self$minor_breaks)) {\n        if (is.null(b)) {\n            breaks <- NULL\n        }\n        else {\n            breaks <- transformation$minor_breaks(b, limits, \n                n)\n        }\n    }\n    else if (is.function(self$minor_breaks)) {\n        break_fun <- fetch_ggproto(self, \"minor_breaks\")\n        arg_names <- fn_fmls_names(break_fun)\n        if (length(arg_names) == 1L) {\n            breaks <- break_fun(transformation$inverse(limits))\n        }\n        else {\n            breaks <- break_fun(transformation$inverse(limits), \n                transformation$inverse(b))\n        }\n        breaks <- transformation$transform(breaks)\n    }\n    else {\n        breaks <- transformation$transform(self$minor_breaks)\n    }\n    discard(breaks, limits)\n}",
+  "configurations": [
+    {
+      "family": "affine",
+      "mode": "default",
+      "composed": false
+    },
+    {
+      "family": "affine",
+      "mode": "default",
+      "composed": true
+    },
+    {
+      "family": "affine",
+      "mode": "fixed",
+      "composed": false
+    },
+    {
+      "family": "affine",
+      "mode": "fixed",
+      "composed": true
+    },
+    {
+      "family": "affine",
+      "mode": "limits",
+      "composed": false
+    },
+    {
+      "family": "affine",
+      "mode": "limits",
+      "composed": true
+    },
+    {
+      "family": "cubic",
+      "mode": "default",
+      "composed": false
+    },
+    {
+      "family": "cubic",
+      "mode": "default",
+      "composed": true
+    },
+    {
+      "family": "cubic",
+      "mode": "fixed",
+      "composed": false
+    },
+    {
+      "family": "cubic",
+      "mode": "fixed",
+      "composed": true
+    },
+    {
+      "family": "cubic",
+      "mode": "limits",
+      "composed": false
+    },
+    {
+      "family": "cubic",
+      "mode": "limits",
+      "composed": true
+    }
+  ],
+  "cases": [
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.27272727272727271,
+          0.3863636363636363,
+          0.5,
+          0.61363636363636365,
+          0.72727272727272729,
+          0.84090909090909083,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "count": null,
+      "override": "explicit",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          0,
+          4
+        ],
+        "minor_positions": [
+          0.15909090909090906,
+          0.61363636363636365
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "count": null,
+      "override": "hidden",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          3,
+          7
+        ],
+        "minor": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.27272727272727271,
+          0.3863636363636363,
+          0.5,
+          0.61363636363636365,
+          0.72727272727272729,
+          0.84090909090909083,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.27272727272727271,
+          0.3863636363636363,
+          0.5,
+          0.61363636363636365,
+          0.72727272727272729,
+          0.84090909090909083,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          3,
+          7
+        ],
+        "minor": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.27272727272727271,
+          0.3863636363636363,
+          0.5,
+          0.61363636363636365,
+          0.72727272727272729,
+          0.84090909090909083,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 0,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 1,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.27272727272727271
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "count": null,
+      "override": "explicit",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          0,
+          4
+        ],
+        "minor_positions": [
+          0.15909090909090906,
+          0.61363636363636365
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "count": null,
+      "override": "hidden",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          3,
+          7
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.27272727272727271
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              3,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              3,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.27272727272727271
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.27272727272727271
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          3,
+          7
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.27272727272727271
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              3,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              3,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545442,
+          0.15909090909090906,
+          0.27272727272727271
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545456,
+          0.95454545454545447
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545456,
+          0.95454545454545447
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545456,
+          0.95454545454545447
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 3,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 4,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1.3999999999999999,
+          3,
+          7.4000000000000004
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 4,
+      "population": "ordinary",
+      "count": null,
+      "override": "explicit",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          0,
+          4
+        ],
+        "minor_positions": [
+          0.15909090909090906,
+          0.61363636363636365
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 4,
+      "population": "ordinary",
+      "count": null,
+      "override": "hidden",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 4,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          3,
+          7
+        ],
+        "minor": [
+          -1.3999999999999999,
+          3,
+          7.4000000000000004
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              3,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              3,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 4,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1.3999999999999999,
+          3,
+          7.4000000000000004
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 4,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1.3999999999999999,
+          3,
+          7.4000000000000004
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 4,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          3,
+          7
+        ],
+        "minor": [
+          -1.3999999999999999,
+          3,
+          7.4000000000000004
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              3,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              3,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 4,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "major": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "minor": [
+          -1.3999999999999999,
+          3,
+          7.4000000000000004
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -1,
+              1,
+              3,
+              5,
+              7
+            ],
+            "limits": [
+              -1.3999999999999999,
+              7.4000000000000004
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 4,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          -0.050000000000000003,
+          0.5,
+          1.05
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 4,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          -0.050000000000000003,
+          0.5,
+          1.05
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 4,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          -0.050000000000000003,
+          0.5,
+          1.05
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 5,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 5,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 5,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 5,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 5,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 5,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -7.4000000000000004,
+          1.3999999999999999
+        ],
+        "major": [
+          1,
+          -1,
+          -3,
+          -5,
+          -7
+        ],
+        "minor": [
+          1,
+          0,
+          -1,
+          -2,
+          -3,
+          -4,
+          -5,
+          -6,
+          -7
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.84090909090909083,
+          0.72727272727272729,
+          0.61363636363636365,
+          0.5,
+          0.38636363636363635,
+          0.27272727272727276,
+          0.15909090909090912,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 5,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 5,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 5,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 6,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -8,
+          -4.5,
+          -1,
+          -0.5,
+          0,
+          0.5,
+          1,
+          4.5,
+          8
+        ],
+        "minor_positions": [
+          0.045454545454545491,
+          0.24431818181818185,
+          0.44318181818181818,
+          0.47159090909090912,
+          0.5,
+          0.52840909090909094,
+          0.55681818181818177,
+          0.75568181818181812,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 6,
+      "population": "ordinary",
+      "count": null,
+      "override": "explicit",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -3.375,
+          0.125
+        ],
+        "minor_positions": [
+          0.30823863636363635,
+          0.50710227272727271
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 6,
+      "population": "ordinary",
+      "count": null,
+      "override": "hidden",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 6,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          0,
+          8
+        ],
+        "minor": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "minor_positions": [
+          0.045454545454545491,
+          0.27272727272727276,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 6,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -8,
+          -4.5,
+          -1,
+          -0.5,
+          0,
+          0.5,
+          1,
+          4.5,
+          8
+        ],
+        "minor_positions": [
+          0.045454545454545491,
+          0.24431818181818185,
+          0.44318181818181818,
+          0.47159090909090912,
+          0.5,
+          0.52840909090909094,
+          0.55681818181818177,
+          0.75568181818181812,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 6,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -8,
+          -4.5,
+          -1,
+          -0.5,
+          0,
+          0.5,
+          1,
+          4.5,
+          8
+        ],
+        "minor_positions": [
+          0.045454545454545491,
+          0.24431818181818185,
+          0.44318181818181818,
+          0.47159090909090912,
+          0.5,
+          0.52840909090909094,
+          0.55681818181818177,
+          0.75568181818181812,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 6,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          0,
+          8
+        ],
+        "minor": [
+          -8,
+          -4,
+          0,
+          4,
+          8
+        ],
+        "minor_positions": [
+          0.045454545454545491,
+          0.27272727272727276,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 6,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -8,
+          -4.5,
+          -1,
+          -0.5,
+          0,
+          0.5,
+          1,
+          4.5,
+          8
+        ],
+        "minor_positions": [
+          0.045454545454545491,
+          0.24431818181818185,
+          0.44318181818181818,
+          0.47159090909090912,
+          0.5,
+          0.52840909090909094,
+          0.55681818181818177,
+          0.75568181818181812,
+          0.95454545454545447
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 6,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 6,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 6,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 7,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 7,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 7,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 7,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 7,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 7,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 7,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 7,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 7,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 8,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.44318181818181818,
+          0.5,
+          0.55681818181818177
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "population": "ordinary",
+      "count": null,
+      "override": "explicit",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -3.375,
+          0.125
+        ],
+        "minor_positions": [
+          0.30823863636363635,
+          0.50710227272727271
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 8,
+      "population": "ordinary",
+      "count": null,
+      "override": "hidden",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 8,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          0,
+          8
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.44318181818181818,
+          0.5,
+          0.55681818181818177
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              0,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              0,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.44318181818181818,
+          0.5,
+          0.55681818181818177
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.44318181818181818,
+          0.5,
+          0.55681818181818177
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          0,
+          8
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.44318181818181818,
+          0.5,
+          0.55681818181818177
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              0,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              0,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -1,
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.44318181818181818,
+          0.5,
+          0.55681818181818177
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545456,
+          0.95454545454545447
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545456,
+          0.95454545454545447
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          0,
+          1
+        ],
+        "minor_positions": [
+          0.045454545454545456,
+          0.95454545454545447
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 9,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 9,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 9,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 9,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 9,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 9,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 9,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 9,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 9,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 10,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -8.8000000000000007,
+          0,
+          8.8000000000000007
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 10,
+      "population": "ordinary",
+      "count": null,
+      "override": "explicit",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -3.375,
+          0.125
+        ],
+        "minor_positions": [
+          0.30823863636363635,
+          0.50710227272727271
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 10,
+      "population": "ordinary",
+      "count": null,
+      "override": "hidden",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 10,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          0,
+          8
+        ],
+        "minor": [
+          -8.8000000000000007,
+          0,
+          8.8000000000000007
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              0,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              0,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 10,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -8.8000000000000007,
+          0,
+          8.8000000000000007
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 10,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -8.8000000000000007,
+          0,
+          8.8000000000000007
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 10,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          0,
+          8
+        ],
+        "minor": [
+          -8.8000000000000007,
+          0,
+          8.8000000000000007
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              0,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              0,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 10,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "minor": [
+          -8.8000000000000007,
+          0,
+          8.8000000000000007
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [
+              -8,
+              -1,
+              0,
+              1,
+              8
+            ],
+            "limits": [
+              -8.8000000000000007,
+              8.8000000000000007
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 10,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          -0.050000000000000003,
+          0.5,
+          1.05
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 10,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          -0.050000000000000003,
+          0.5,
+          1.05
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 10,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [
+          -0.050000000000000003,
+          0.5,
+          1.05
+        ],
+        "minor_positions": [
+          0,
+          0.5,
+          1
+        ],
+        "build_calls": [
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          },
+          {
+            "major": [],
+            "limits": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "subdivisions": 2
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 11,
+      "population": "ordinary",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 11,
+      "population": "ordinary",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 11,
+      "population": "ordinary",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 11,
+      "population": "nonfinite",
+      "count": null,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 11,
+      "population": "nonfinite",
+      "count": 3,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 11,
+      "population": "nonfinite",
+      "count": 7,
+      "override": "default",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "major": [
+          8,
+          1,
+          -0,
+          -1,
+          -8
+        ],
+        "minor": [
+          8,
+          4.5,
+          1,
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -4.5,
+          -8
+        ],
+        "minor_positions": [
+          0.95454545454545447,
+          0.75568181818181812,
+          0.55681818181818177,
+          0.52840909090909094,
+          0.5,
+          0.47159090909090912,
+          0.44318181818181818,
+          0.24431818181818185,
+          0.045454545454545491
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 11,
+      "population": "empty",
+      "count": null,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 11,
+      "population": "empty",
+      "count": 3,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 11,
+      "population": "empty",
+      "count": 7,
+      "override": "default",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "major": [],
+        "minor": [],
+        "minor_positions": [],
+        "build_calls": []
+      }
+    }
+  ]
+}

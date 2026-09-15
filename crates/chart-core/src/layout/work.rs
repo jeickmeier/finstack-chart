@@ -5,7 +5,7 @@ use crate::{ChartResult, DiagnosticCode, LayerId};
 
 pub(super) fn vertices(geometry: &PreparedGeometry) -> usize {
     match geometry {
-        PreparedGeometry::Point(_) => 1,
+        PreparedGeometry::Point(_) | PreparedGeometry::UnboundedPoint(_) => 1,
         PreparedGeometry::LineRun(points) | PreparedGeometry::Polygon(points) => points.len(),
         PreparedGeometry::BandRun { lower, upper }
         | PreparedGeometry::StackBandRun { lower, upper, .. } => {

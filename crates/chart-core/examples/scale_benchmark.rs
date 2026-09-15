@@ -65,8 +65,18 @@ fn main() -> ChartResult<()> {
             .map(|i| Some(Number(((i * 65537) % samples) as f64)))
             .collect();
         let mapped = MappedScaleSpec {
+            colorbar_options: None,
+            palette_theme_aesthetics: vec![],
+            oob_function: None,
+            rescaler_function: None,
+            palette_fallback_indices: vec![],
+            missing_paint_is_na: false,
+            palette_function: None,
             resolved_numeric_limits: None,
+            resolved_discrete_limits_null: false,
+            trained_transformed_bounds: None,
             limits_function: None,
+            breaks_function: None,
             guide: None,
             ggplot: None,
             catalog: None,

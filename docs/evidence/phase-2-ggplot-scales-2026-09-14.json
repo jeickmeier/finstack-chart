@@ -1,0 +1,68 @@
+{
+  "status": "GG04_OWNED_SCALE_CONTRACTS_QUALIFIED",
+  "date": "2026-09-14T17:09:18.738702+00:00",
+  "revision": "6e74ae6 plus owned changes",
+  "working_tree": "Owned changes identified by the frozen source manifest; revision alone is not the tested source.",
+  "requirements": [
+    "GG2-03",
+    "FIX-GG04"
+  ],
+  "cumulative": {
+    "observed_exit_code": 0,
+    "declared_commands": 672,
+    "inline_assertions": "completed",
+    "comparison_scope": "Runner assertions, declared numeric tolerances, publication comparisons and explicitly recorded reference exclusions."
+  },
+  "macos": {
+    "tests_passed": 862,
+    "nonzero_targets": 185,
+    "total_targets": 197,
+    "observed_exit_code": 0
+  },
+  "repository_check": {
+    "command": "mise run check",
+    "observed_exit_code": 0
+  },
+  "source_verification": {
+    "status": "source_unchanged_except_approved_evidence_docs",
+    "baseline_paths": 6343,
+    "changed_documentation": [
+      "docs/implementation-status.md",
+      "docs/evidence/ggplot-scales-coverage.json",
+      "docs/evidence/ggplot-scales-coverage.md"
+    ],
+    "missing_paths": [],
+    "added_paths": []
+  },
+  "artifact_note": "An independent R gtable probe temporarily wrote Rplots.pdf. That unused device artifact was preserved in /private/tmp and restored byte-for-byte from the baseline before final verification; no executable source changed. See /private/tmp/gg05-guide-readiness.md.",
+  "reference_reconciliation": {
+    "exports": 152,
+    "formal_occurrences": 960,
+    "inherited_method_occurrences": 276,
+    "inherited_fields": 160,
+    "index": "docs/evidence/ggplot-scales-coverage.json",
+    "qualified_index_sha256": "f1e873c973133388890c78a68f4e607bfd44c377b8eab71bcb2f1ee619737d54"
+  },
+  "environment": {
+    "python": "3.14.6 (main, Jul 23 2026, 14:51:00) [Clang 22.1.3 ]",
+    "executable": "/Users/jeickmeier/.local/share/mise/installs/python/3.14.6/bin/python3",
+    "platform": "darwin",
+    "wasm_bindgen": "wasm-bindgen 0.2.128",
+    "node": "v24.14.0",
+    "rust": "rustc 1.97.1 (8bab26f4f 2026-07-14)\nbinary: rustc\ncommit-hash: 8bab26f4f68e0e26f0bb7960be334d5b520ea452\ncommit-date: 2026-07-14\nhost: aarch64-apple-darwin\nrelease: 1.97.1\nLLVM version: 22.1.6\n",
+    "revision": "6e74ae6453b20ab0ffca5b88bbfee5a69d63bd9e"
+  },
+  "evidence_sha256": {
+    "/tmp/ggplot-final-positional-cumulative.log": "da1e04c86f1ec56959ec7a1501de167ada59a1310bf9e2d509f6510420c80d8a",
+    "/tmp/ggplot-eleven-slices-main-macos.log": "a33d71789e555a202b6cbacacf83db684168136f5898f1f767a1830f3778506b",
+    "/tmp/ggplot-eleven-slices-main-check.log": "8cebc3fd88a0fb8276776f33271af8e1ef7a487b7b96f2698b36e8ef72d29f59",
+    "/private/tmp/finstack-chart-proof-20260914/cumulative-final-positional/source-baseline.json": "0e40c8f7e1e8f170e1bbfa27affaaf4abdfc05c67642661ae5edf084c5ae0352",
+    "/private/tmp/finstack-chart-proof-20260914/cumulative-final-positional/source-verification.json": "b8df51570a617eef75660506ebb8b7b5934d8d272894e390c8185fae73cb16bf",
+    "/private/tmp/finstack-chart-proof-20260914/cumulative-final-positional/environment.json": "7b2ebf2bb1b2a385e6f7f55c5f059739769249caa71aae50a54e7c97ec78e9d5"
+  },
+  "boundaries": [
+    "GG-05 owns guide drawing/composition controls beyond scale preparation.",
+    "GG-16 owns named extension/language-adaptation contracts; full reference export acceptance remains distinct from the owned scale computation.",
+    "GG-19 owns cumulative ggplot2 certification. This record does not claim fresh Linux or general device pixel certification."
+  ]
+}

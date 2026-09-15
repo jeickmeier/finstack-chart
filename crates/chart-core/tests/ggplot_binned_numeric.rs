@@ -10,7 +10,7 @@ fn binned_numeric_maps_match_reference() {
     ))
     .unwrap();
     let cases = fixture["cases"].as_array().unwrap();
-    assert_eq!(cases.len(), 216);
+    assert_eq!(cases.len(), 288);
     let mut compared = 0;
     for case in cases {
         // R size/linewidth wrappers have no `right` argument. Our explicit generic
@@ -51,8 +51,9 @@ fn binned_numeric_maps_match_reference() {
             .iter()
             .map(|v| v.as_f64().map(Number))
             .collect();
+        check_constructor(case, kind, policy.clone(), &inputs);
         let result = (|| -> chart_core::ChartResult<_> {
-            let spec = ggplot_numeric_default(kind)?
+            let spec = numeric_spec(case, kind)?
                 .with_ggplot(GgplotScalePolicy::Binned(Box::new(policy)))?
                 .with_guide(GgplotScaleGuide::Binned(GgplotGuideLabels::Automatic))?
                 .trained(&inputs)?;
@@ -110,5 +111,133 @@ fn binned_numeric_maps_match_reference() {
             "{case}"
         );
     }
-    assert_eq!(compared, 204);
+    assert_eq!(compared, 276);
+}
+
+fn check_constructor(
+    case: &serde_json::Value,
+    kind: GgplotNumericPalette,
+    policy: GgplotBinnedPolicy,
+    inputs: &[Option<Number>],
+) {
+    use chart_core::prelude::*;
+    let expected = &case["result"];
+    let result = (|| -> chart_core::ChartResult<_> {
+        let scale = numeric_spec(case, kind)?
+            .with_ggplot(GgplotScalePolicy::Binned(Box::new(policy)))?
+            .with_guide(if case["control"] == "null_breaks" {
+                GgplotScaleGuide::Hidden
+            } else {
+                GgplotScaleGuide::BinnedBins(GgplotGuideLabels::Automatic)
+            })?;
+        let data = Data::columns()
+            .column("x", (0..inputs.len()).map(|i| i as f64).collect::<Vec<_>>())
+            .column(
+                "v",
+                inputs.iter().map(|v| v.map(|v| v.0)).collect::<Vec<_>>(),
+            )
+            .build()?;
+        let channel = match kind {
+            GgplotNumericPalette::Alpha => NumericAesthetic::Alpha,
+            GgplotNumericPalette::Linewidth => NumericAesthetic::StrokeWidth,
+            _ => NumericAesthetic::Size,
+        };
+        let layer = if kind == GgplotNumericPalette::Linewidth {
+            rule()
+        } else {
+            points()
+        };
+        let plot = plot(data)
+            .profile(Profile::Ggplot2_4_0_3)
+            .aes(aes().x("x").y(1.).x2("x").y2(2.))
+            .layer(layer.numeric_scale(channel, "v", scale))
+            .build()?;
+        let wire = plot.to_json()?;
+        let restored = Plot::from_json(&wire)?;
+        assert_eq!(wire, restored.to_json()?);
+        restored.chart()?.prepare()
+    })();
+    if expected.get("error").is_some() || expected["draw_error"].is_string() {
+        assert!(result.is_err(), "{case}");
+        return;
+    }
+    let prepared = result.unwrap_or_else(|e| panic!("{e:?}: {case}"));
+    let entries = prepared.layers()[0]
+        .numeric_value_guides()
+        .values()
+        .flatten()
+        .filter(|e| e.visible)
+        .collect::<Vec<_>>();
+    let keys = expected["guide_keys"].as_array().unwrap();
+    if entries.is_empty() {
+        assert!(keys.is_empty(), "{case}");
+        return;
+    }
+    assert_eq!(keys.len(), 1, "{case}");
+    let keys = &keys[0];
+    assert_eq!(
+        entries.len(),
+        keys["values"].as_array().unwrap().len(),
+        "{case}"
+    );
+    for (index, entry) in entries.iter().enumerate() {
+        let position = index as f64 / (entries.len() - 1) as f64;
+        assert!(
+            (position - keys["values"][index].as_f64().unwrap()).abs() < 2e-12,
+            "{case}"
+        );
+        assert_eq!(
+            entry.label.as_deref(),
+            keys["labels"][index].as_str(),
+            "{case}"
+        );
+        let want = &keys["mapped"][index];
+        if want.is_null() {
+            assert_eq!(entry.mapped, Some(Value::Missing), "{case}");
+        } else {
+            let Some(Value::Number(got)) = entry.mapped else {
+                panic!("{case}")
+            };
+            assert!((got.0 - want.as_f64().unwrap()).abs() < 2e-12, "{case}");
+        }
+    }
+}
+
+fn numeric_spec(
+    case: &serde_json::Value,
+    kind: GgplotNumericPalette,
+) -> chart_core::ChartResult<MappedScaleSpec> {
+    let mut spec = ggplot_numeric_default(kind)?;
+    let control = case["control"].as_str().unwrap();
+    let range = if kind == GgplotNumericPalette::Area {
+        match control {
+            "custom_range" => Some([0., 9.]),
+            "reverse_range" => Some([0., 2.]),
+            "constant_range" => Some([0., 0.]),
+            _ => None,
+        }
+    } else {
+        match control {
+            "custom_range" => Some([2., 9.]),
+            "reverse_range" => Some([9., 2.]),
+            "constant_range" => Some([3.5, 3.5]),
+            _ => None,
+        }
+    };
+    if let Some(range) = range {
+        let ScaleFunctionSpec::Interpolated(ref mut interpolated) = spec.function else {
+            unreachable!()
+        };
+        let ScaleRangeFunction::Interpolate(
+            chart_core::interpolate::InterpolationSpec::PowerRange {
+                range: ref mut output_range,
+                ..
+            },
+        ) = interpolated.output
+        else {
+            unreachable!()
+        };
+        *output_range = range.map(Number);
+    }
+    Ok(spec)
 }

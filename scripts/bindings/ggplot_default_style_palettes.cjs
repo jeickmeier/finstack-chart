@@ -1,0 +1,22 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'../..'),c=require(path.resolve(process.argv[2],'authoring.cjs')),out=path.resolve(process.argv[3]);fs.mkdirSync(out,{recursive:true});
+const cases=JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/default-style-palettes.json'))).cases,records=[],registry=c.ExtensionRegistry.example();
+const output=new c.Output(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))),options=c.export_options(640,360).dpi(96).basis('current');
+const theme=t=>t.theme_mode==='supplied'?c.theme().scale_palettes({[`palette.${t.channel}.discrete`]:{operation:{id:'example.scale_palette',version:'1'},parameters:{mode:'constant',channel:t.channel==='shape'?'size':'linetype'}}}):c.theme();
+function layer(t){let p=(t.channel==='shape'?c.points():c.rule()).name('marks');if(t.route!=='automatic'){const s={function:{Ordinal:{domain:[],range:[],unknown:{Explicit:null}}},training:'Eligible',ggplot:{Discrete:{limits:null,levels:null,drop:true,na_translate:true,palette:t.channel==='shape'?{Shape:{solid:t.route!=='hollow'}}:'LineType'}}};if(t.route==='constructor')s.palette_theme_aesthetics=[t.channel];p=p.value_scale(t.channel==='shape'?'Shape':'LineType','v',s);}return p;}
+const dataFor=t=>c.Data.columns({x:c.column(t.inputs.map((_,i)=>i),{kind:'float64'}),end:c.column(t.inputs.map((_,i)=>i+.5),{kind:'float64'}),v:c.column(t.inputs,{kind:'string'}).nullable(true)},{name:'data'});
+function build(t,d){let m=c.aes().x('x').y(1);m=t.channel==='shape'?m.shape('v'):m.x2('end').y2(1).linetype('v');return c.plot(d).profile('Ggplot2_4_0_3').with_registry(registry).aes(m).layer(layer(t)).theme(theme(t)).build();}
+function check(t,chart){const actual=chart.semantics().layers[0],rows=actual.aesthetics??[],wanted=t.result.mapped.filter(v=>v!==null||t.channel==='linetype'),key=t.channel==='shape'?'Shape':'LineType';assert.equal(rows.length,wanted.length,JSON.stringify(t));rows.forEach((row,i)=>assert.deepEqual(row[key],wanted[i]===null?{kind:'Missing'}:{kind:key==='Shape'?'Number':'Text',value:wanted[i]},JSON.stringify(t)));return {aesthetics:rows,styles:actual.styles??[]};}
+const matching=(x,t)=>['channel','route','theme_mode'].every(k=>x[k]===t[k]);
+for(const [index,t] of cases.entries()){
+ const owned=[];try{
+  const d=dataFor(t);owned.push(d);const p=build(t,d);owned.push(p);const wire=p.to_json(),restored=c.Plot.from_json(wire,registry);owned.push(restored);assert.equal(restored.to_json(),wire);
+  for(const state of ['original','layer_edit','theme_edit']){let expected=t,current;if(state==='original')current=restored;else if(state==='layer_edit'){current=restored.edit().layer('marks',layer(t)).build();owned.push(current);}else{expected=cases.find(x=>x.channel===t.channel&&x.route===t.route&&x.population===t.population&&x.theme_mode!==t.theme_mode);current=restored.edit().theme(theme(expected)).build();owned.push(current);}const chart=current.chart();owned.push(chart);records.push({index,state,...check(expected,chart)});assert.equal(restored.to_json(),wire);}
+  if(t.population==='ordinary'){
+   const request=output.request(restored,options);owned.push(request);const frame=request.prepare();owned.push(frame);const scene=frame.scene();for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`${t.channel}-${t.route}-${t.theme_mode}.${fmt}`),frame.export(fmt));const chart=restored.chart();owned.push(chart);
+   for(const population of ['missing','empty','ordinary']){const expected=cases.find(x=>matching(x,t)&&x.population===population),replacement=dataFor(expected);owned.push(replacement);const tx=chart.transaction();owned.push(tx);const builder=tx.replace(d,replacement);owned.push(builder);const update=builder.build();owned.push(update);assert.ok(JSON.stringify(chart.commit(update)).includes('Applied'));const bp=build(expected,replacement);owned.push(bp);const batch=bp.chart();owned.push(batch);const actual=check(expected,chart);assert.deepEqual(actual,check(expected,batch));assert.equal(restored.to_json(),wire);assert.deepEqual(frame.scene(),scene);records.push({index,state:'replacement',population,...actual});}
+  }
+ }finally{for(const obj of owned.reverse())obj.dispose();}
+}
+assert.equal(records.length,144);fs.writeFileSync(path.join(out,'records.json'),JSON.stringify(records));options.dispose();output.dispose();registry.dispose();console.log('PASS 144 style palette states and 36 publication files');

@@ -16,6 +16,8 @@ use serde::{Deserialize, Serialize};
 #[serde(deny_unknown_fields)]
 pub struct TimeScaleSpec {
     /// Monotone timestamps in the declared source unit.
+    /// Calendar axes accept an empty vector to infer the domain from data;
+    /// standalone time scales still require explicit knots.
     #[serde(with = "crate::portable::signed_vec")]
     pub domain: Vec<i64>,
     /// Timestamp resolution; no implicit millisecond conversion.
@@ -331,8 +333,24 @@ pub struct TimeAxisScale {
     mapping: super::NumericAxisScale,
     date_inverse: Option<NumericScale>,
     outside: super::OutsidePolicy,
+    numeric_origin: bool,
 }
 impl TimeAxisScale {
+    /// Validate authored axis options before a possibly inferred domain is trained.
+    pub(crate) fn validate_axis_spec(spec: &TimeScaleSpec) -> ChartResult<()> {
+        let mut validation = spec.clone();
+        if validation.domain.is_empty() {
+            validation.domain = vec![0, 1];
+        }
+        Self::resolve(
+            validation,
+            super::Bounds::new(0., 1.)?,
+            None,
+            super::OutsidePolicy::Extend,
+        )
+        .map(|_| ())
+    }
+
     /// Numeric time outputs share the positional numeric engine and outside policies.
     pub fn resolve(
         spec: TimeScaleSpec,
@@ -457,7 +475,65 @@ impl TimeAxisScale {
                 prepared.date_inverse
             },
             outside,
+            numeric_origin: false,
         })
+    }
+    /// Resolve callback endpoints in source-unit offsets. The public integer domain
+    /// encloses fractional limits; the numeric mapping retains their full precision.
+    pub(crate) fn resolve_function(
+        time: super::GgplotTimestampNormalization,
+        zone: CalendarZone,
+        limits: super::Bounds,
+        range: super::Bounds,
+        viewport: Option<TimeBounds>,
+        outside: super::OutsidePolicy,
+        expansion: super::GgplotExpansion,
+    ) -> ChartResult<Self> {
+        let domain = vec![
+            utc::absolute_number(limits.minimum().floor(), time.origin)?,
+            utc::absolute_number(limits.maximum().ceil(), time.origin)?,
+        ];
+        let mut resolved = Self::resolve(
+            TimeScaleSpec {
+                domain,
+                unit: time.unit,
+                zone,
+                ..Default::default()
+            },
+            range,
+            None,
+            outside,
+        )?;
+        let factor = utc::ticks_per_second(time.unit) as f64 * if time.date { 86400. } else { 1. };
+        let view = if let Some(view) = viewport {
+            super::Bounds::new(
+                utc::relative_number(view.start, time.origin)?,
+                utc::relative_number(view.end, time.origin)?,
+            )?
+        } else {
+            let absolute =
+                super::Bounds::new(time.absolute(limits.start()), time.absolute(limits.end()))?;
+            let expanded = expansion.continuous_viewport(absolute)?;
+            let origin = time.origin as f64 / factor;
+            super::Bounds::new(
+                (expanded.start() - origin) * factor,
+                (expanded.end() - origin) * factor,
+            )?
+        };
+        let mut numeric = NumericScaleSpec::d3(NumericFamily::Linear);
+        numeric.domain = vec![Number(limits.start()), Number(limits.end())];
+        if limits.start() == limits.end() {
+            numeric.domain[1] = Number(limits.start() + factor);
+        }
+        resolved.mapping = super::NumericAxisScale::resolve(numeric, range, Some(view), outside)?;
+        resolved.origin = time.origin;
+        resolved.view = TimeBounds {
+            start: utc::absolute_number(view.start().floor(), time.origin)?,
+            end: utc::absolute_number(view.end().ceil(), time.origin)?,
+        };
+        resolved.date_inverse = None;
+        resolved.numeric_origin = true;
+        Ok(resolved)
     }
     pub(crate) fn shifted(&self, offset: i64) -> ChartResult<Self> {
         let mut shifted = self.clone();
@@ -508,8 +584,8 @@ impl TimeAxisScale {
             return Ok(None);
         }
         Ok(Some(TimeBounds {
-            start: utc::absolute(low, self.origin)?,
-            end: utc::absolute(high, self.origin)?,
+            start: self.absolute_number(low)?,
+            end: self.absolute_number(high)?,
         }))
     }
     /// Exact timestamp origin.
@@ -538,11 +614,22 @@ impl TimeAxisScale {
             let domain = self.domain();
             value = value.clamp(domain.start.min(domain.end), domain.start.max(domain.end));
         }
-        self.mapping.map(utc::relative(value, self.origin)?)
+        self.mapping.map(self.relative_guide(value)?)
     }
     /// Preserve an exact source timestamp as an origin-relative guide coordinate.
     pub(crate) fn relative_guide(&self, value: i64) -> ChartResult<f64> {
-        utc::relative(value, self.origin)
+        if self.numeric_origin {
+            utc::relative_number(value, self.origin)
+        } else {
+            utc::relative(value, self.origin)
+        }
+    }
+    fn absolute_number(&self, value: f64) -> ChartResult<i64> {
+        if self.numeric_origin {
+            utc::absolute_number(value, self.origin)
+        } else {
+            utc::absolute(value, self.origin)
+        }
     }
     /// Date guide candidates use whole UTC days, including before the epoch.
     pub(crate) fn floor_date_guide(&self, value: i64) -> ChartResult<i64> {
@@ -558,6 +645,26 @@ impl TimeAxisScale {
     /// positions between representable source timestamps.
     pub(crate) fn map_relative_guide(&self, value: f64) -> ChartResult<Option<f64>> {
         self.mapping.map(value)
+    }
+    /// Match reference Date/POSIXct projection of an origin-relative statistic.
+    /// The retained observation remains precise; only reference projection performs
+    /// the absolute-epoch rounding that also determined the expanded viewport.
+    pub(crate) fn map_reference_relative(
+        &self,
+        value: f64,
+        date: bool,
+    ) -> ChartResult<Option<f64>> {
+        self.mapping.map(self.reference_relative(value, date))
+    }
+    /// Apply the reference absolute epoch rounding to a relative coordinate.
+    pub(crate) fn reference_relative(&self, value: f64, date: bool) -> f64 {
+        let time = super::GgplotTimestampNormalization {
+            origin: self.origin,
+            unit: self.unit(),
+            date,
+        };
+        let factor = utc::ticks_per_second(self.unit()) as f64 * if date { 86400. } else { 1. };
+        (time.absolute(value) - time.absolute(0.)) * factor
     }
     /// Preserve a fractional guide timestamp by promoting its source resolution.
     /// Positions finer than nanoseconds or outside i64 have no raw timestamp.
@@ -576,7 +683,15 @@ impl TimeAxisScale {
             }
             let factor = numerator / denominator;
             let delta = relative * factor as f64;
-            if !delta.is_finite() || delta.fract() != 0. || delta.abs() > (1_u64 << 53) as f64 {
+            if !delta.is_finite()
+                || delta.fract() != 0.
+                || delta.abs()
+                    > if self.numeric_origin {
+                        u64::MAX as f64
+                    } else {
+                        (1_u64 << 53) as f64
+                    }
+            {
                 continue;
             }
             let absolute = i128::from(self.origin) * factor + delta as i128;
@@ -591,7 +706,12 @@ impl TimeAxisScale {
         if let Some(inverse) = &self.date_inverse {
             date_absolute(inverse.invert(self.mapping.inverse_coordinate(position)?)?)
         } else {
-            truncate_absolute(self.mapping.invert(position)?, self.origin)
+            let relative = self.mapping.invert(position)?;
+            if self.numeric_origin && relative.abs() > (1_u64 << 53) as f64 {
+                self.absolute_number(relative)
+            } else {
+                truncate_absolute(relative, self.origin)
+            }
         }
     }
     /// Full domain in the numeric output coordinate used by navigation.
@@ -599,9 +719,8 @@ impl TimeAxisScale {
         let domain = self.domain();
         super::Bounds::new(
             self.mapping
-                .coordinate(utc::relative(domain.start, self.origin)?)?,
-            self.mapping
-                .coordinate(utc::relative(domain.end, self.origin)?)?,
+                .coordinate(self.relative_guide(domain.start)?)?,
+            self.mapping.coordinate(self.relative_guide(domain.end)?)?,
         )
     }
     /// Visible output coordinates used by navigation.

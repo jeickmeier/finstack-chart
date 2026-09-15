@@ -1,0 +1,2813 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "colour",
+      "mode": "full",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "full",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "full",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "full",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#0000ff",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "full",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "full",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "full",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "full",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "full",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "short",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#0000FF",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "short",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "short",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "short",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#0000ff",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "short",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "short",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "short",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "short",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "short",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "empty",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "empty",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "empty",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "empty",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "empty",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "empty",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "empty",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "empty",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "empty",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "null",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "null",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "null",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "null",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "null",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "null",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "null",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "null",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "null",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "missing",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#0000FF",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "missing",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "missing",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "missing",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#0000ff",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "missing",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "missing",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "missing",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "missing",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "missing",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "named",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "named",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "named",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "named",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#0000ff",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "named",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "named",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "named",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "named",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "colour",
+      "mode": "named",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "full",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "full",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "full",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "full",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#0000ff",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "full",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "full",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "full",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "full",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "full",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "short",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#0000FF",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "short",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "short",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "short",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#0000ff",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "short",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "short",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "short",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "short",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "short",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "empty",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "empty",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "empty",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "empty",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "empty",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "empty",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "empty",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "empty",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "empty",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "null",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 5,
+        "point_colours": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "null",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 5,
+        "point_colours": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "null",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 5,
+        "point_colours": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "null",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 5,
+        "point_colours": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "null",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 5,
+        "point_colours": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "null",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "point_count": 5,
+        "point_colours": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "null",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "null",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "null",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "missing",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff",
+          "grey50",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#0000FF",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "missing",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "grey50",
+          "grey50",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#7F7F7F",
+          "#7F7F7F",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "missing",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "missing",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#0000ff",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "missing",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "missing",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "missing",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "missing",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "missing",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "named",
+      "population": "ordinary",
+      "count": 2,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "named",
+      "population": "ordinary",
+      "count": 5,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "named",
+      "population": "ordinary",
+      "count": 12,
+      "inputs": [
+        -2,
+        1,
+        4,
+        10,
+        14
+      ],
+      "calls": [
+        16
+      ],
+      "result": {
+        "mapped": [
+          "#ff0000",
+          "#ff0000",
+          "#ff0000",
+          "#0000ff",
+          "#0000ff"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#FF0000",
+          "#FF0000",
+          "#FF0000",
+          "#0000FF",
+          "#0000FF"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "named",
+      "population": "missing",
+      "count": 2,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#0000ff",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "named",
+      "population": "missing",
+      "count": 5,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "named",
+      "population": "missing",
+      "count": 12,
+      "inputs": [
+        null,
+        1,
+        "Infinity",
+        4,
+        "-Infinity"
+      ],
+      "calls": [
+        12
+      ],
+      "result": {
+        "mapped": [
+          "grey50",
+          "#ff0000",
+          "grey50",
+          "#0000ff",
+          "grey50"
+        ],
+        "point_count": 5,
+        "point_colours": [
+          "#7F7F7F",
+          "#FF0000",
+          "#7F7F7F",
+          "#0000FF",
+          "#7F7F7F"
+        ]
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "named",
+      "population": "empty",
+      "count": 2,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "named",
+      "population": "empty",
+      "count": 5,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    },
+    {
+      "channel": "fill",
+      "mode": "named",
+      "population": "empty",
+      "count": 12,
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0,
+        "point_colours": []
+      }
+    }
+  ]
+}

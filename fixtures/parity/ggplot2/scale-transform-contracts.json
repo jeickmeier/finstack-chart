@@ -1,0 +1,9178 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1 / scales 1.4.0",
+  "contracts": [
+    {
+      "name": "transform_asinh",
+      "formals": [],
+      "body": "{\n    new_transform(\"asinh\", transform = asinh, inverse = sinh, d_transform = function(x) 1/sqrt(x^2 + 1), d_inverse = cosh)\n}"
+    },
+    {
+      "name": "transform_asn",
+      "formals": [],
+      "body": "{\n    new_transform(\"asn\", function(x) 2 * asin(sqrt(x)), function(x) sin(x/2)^2, d_transform = function(x) 1/sqrt(x - x^2), d_inverse = function(x) sin(x)/2, domain = c(0, 1))\n}"
+    },
+    {
+      "name": "transform_atanh",
+      "formals": [],
+      "body": "{\n    new_transform(\"atanh\", \"atanh\", \"tanh\", d_transform = function(x) 1/(1 - x^2), d_inverse = function(x) 1/cosh(x)^2, domain = c(-1, 1))\n}"
+    },
+    {
+      "name": "transform_boxcox",
+      "formals": {
+        "p": "",
+        "offset": "0"
+      },
+      "body": "{\n    if (abs(p) < 1e-07) {\n        trans <- function(x) log(x + offset)\n        inv <- function(x) exp(x) - offset\n        d_trans <- function(x) 1/(x + offset)\n        d_inv <- \"exp\"\n    }\n    else {\n        trans <- function(x) ((x + offset)^p - 1)/p\n        inv <- function(x) (x * p + 1)^(1/p) - offset\n        d_trans <- function(x) (x + offset)^(p - 1)\n        d_inv <- function(x) (x * p + 1)^(1/p - 1)\n    }\n    trans_with_check <- function(x) {\n        if (any((x + offset) < 0, na.rm = TRUE)) {\n            cli::cli_abort(c(\"{.fun transform_boxcox} must be given only positive values\", i = \"Consider using {.fun transform_modulus} instead?\"))\n        }\n        trans(x)\n    }\n    new_transform(paste0(\"pow-\", format(p)), trans_with_check, inv, d_transform = d_trans, d_inverse = d_inv, domain = c(0, Inf))\n}"
+    },
+    {
+      "name": "transform_compose",
+      "formals": {
+        "...": ""
+      },
+      "body": "{\n    trans_list <- lapply(list2(...), as.transform)\n    if (length(trans_list) == 0) {\n        cli::cli_abort(\"{.fun transform_compose} must include at least 1 transformer to compose\")\n    }\n    range <- trans_list[[1]]$transform(trans_list[[1]]$domain)\n    for (trans in trans_list[-1]) {\n        lower <- max(min(trans$domain), min(range))\n        upper <- min(max(trans$domain), max(range))\n        if (isTRUE(lower <= upper)) {\n            range <- trans$transform(c(lower, upper))\n        }\n        else {\n            range <- c(NA_real_, NA_real_)\n            break\n        }\n    }\n    domain <- compose_rev(range, trans_list)\n    if (any(is.na(domain))) {\n        cli::cli_abort(\"Sequence of transformations yields invalid domain\")\n    }\n    domain <- range(domain)\n    names <- vapply(trans_list, \"[[\", \"name\", FUN.VALUE = character(1))\n    has_d_transform <- all(lengths(lapply(trans_list, \"[[\", \"d_transform\")) > 0)\n    has_d_inverse <- all(lengths(lapply(trans_list, \"[[\", \"d_inverse\")) > 0)\n    new_transform(paste0(\"composition(\", paste0(names, collapse = \",\"), \")\"), transform = function(x) compose_fwd(x, trans_list), inverse = function(x) compose_rev(x, trans_list), d_transform = if (has_d_transform) \n        function(x) compose_deriv_fwd(x, trans_list), d_inverse = if (has_d_inverse) \n        function(x) compose_deriv_rev(x, trans_list), breaks = function(x) trans_list[[1]]$breaks(x), domain = domain)\n}"
+    },
+    {
+      "name": "transform_date",
+      "formals": [],
+      "body": "{\n    new_transform(\"date\", transform = \"from_date\", inverse = \"to_date\", breaks = breaks_pretty(), domain = to_date(c(-Inf, Inf)))\n}"
+    },
+    {
+      "name": "transform_exp",
+      "formals": {
+        "base": "exp(1)"
+      },
+      "body": "{\n    force(base)\n    new_transform(paste0(\"power-\", format(base)), function(x) base^x, function(x) log(x, base = base), d_transform = function(x) base^x * log(base), d_inverse = function(x) 1/x/log(base))\n}"
+    },
+    {
+      "name": "transform_hms",
+      "formals": [],
+      "body": "{\n    check_installed(\"hms\", \"for the 'hms' transformation.\")\n    new_transform(\"hms\", transform = function(x) {\n        structure(as.numeric(x), names = names(x))\n    }, inverse = hms::as_hms, breaks = breaks_hms())\n}"
+    },
+    {
+      "name": "transform_identity",
+      "formals": [],
+      "body": "{\n    new_transform(\"identity\", \"force\", \"force\", d_transform = function(x) rep(1, length(x)), d_inverse = function(x) rep(1, length(x)))\n}"
+    },
+    {
+      "name": "transform_log",
+      "formals": {
+        "base": "exp(1)"
+      },
+      "body": "{\n    force(base)\n    new_transform(paste0(\"log-\", format(base)), function(x) log(x, base), function(x) base^x, d_transform = function(x) 1/x/log(base), d_inverse = function(x) base^x * log(base), breaks = log_breaks(base = base), domain = c(1e-100, Inf))\n}"
+    },
+    {
+      "name": "transform_log10",
+      "formals": [],
+      "body": "{\n    transform_log(10)\n}"
+    },
+    {
+      "name": "transform_log1p",
+      "formals": [],
+      "body": "{\n    new_transform(\"log1p\", \"log1p\", \"expm1\", d_transform = function(x) 1/(1 + x), d_inverse = \"exp\", domain = c(-1 + .Machine$double.eps, Inf))\n}"
+    },
+    {
+      "name": "transform_log2",
+      "formals": [],
+      "body": "{\n    transform_log(2)\n}"
+    },
+    {
+      "name": "transform_logit",
+      "formals": [],
+      "body": "transform_probability(\"logis\")"
+    },
+    {
+      "name": "transform_modulus",
+      "formals": {
+        "p": "",
+        "offset": "1"
+      },
+      "body": "{\n    if (abs(p) < 1e-07) {\n        trans <- function(x) sign(x) * log(abs(x) + offset)\n        inv <- function(x) sign(x) * (exp(abs(x)) - offset)\n        d_trans <- function(x) 1/(abs(x) + offset)\n        d_inv <- function(x) exp(abs(x))\n    }\n    else {\n        trans <- function(x) sign(x) * ((abs(x) + offset)^p - 1)/p\n        inv <- function(x) sign(x) * ((abs(x) * p + 1)^(1/p) - offset)\n        d_trans <- function(x) (abs(x) + offset)^(p - 1)\n        d_inv <- function(x) (abs(x) * p + 1)^(1/p - 1)\n    }\n    new_transform(paste0(\"mt-pow-\", format(p)), trans, inv, d_transform = d_trans, d_inverse = d_inv)\n}"
+    },
+    {
+      "name": "transform_probability",
+      "formals": {
+        "distribution": "",
+        "...": ""
+      },
+      "body": "{\n    qfun <- match.fun(paste0(\"q\", distribution))\n    pfun <- match.fun(paste0(\"p\", distribution))\n    dfun <- match.fun(paste0(\"d\", distribution))\n    new_transform(paste0(\"prob-\", distribution), function(x) qfun(x, ...), function(x) pfun(x, ...), d_transform = function(x) 1/dfun(qfun(x, ...), ...), d_inverse = function(x) dfun(x, ...), domain = c(0, 1))\n}"
+    },
+    {
+      "name": "transform_probit",
+      "formals": [],
+      "body": "transform_probability(\"norm\")"
+    },
+    {
+      "name": "transform_pseudo_log",
+      "formals": {
+        "sigma": "1",
+        "base": "exp(1)"
+      },
+      "body": "{\n    new_transform(\"pseudo_log\", function(x) asinh(x/(2 * sigma))/log(base), function(x) 2 * sigma * sinh(x * log(base)), d_transform = function(x) 1/(sqrt(4 + x^2/sigma^2) * sigma * log(base)), d_inverse = function(x) 2 * sigma * cosh(x * log(base)) * log(base))\n}"
+    },
+    {
+      "name": "transform_reciprocal",
+      "formals": [],
+      "body": "{\n    new_transform(\"reciprocal\", function(x) 1/x, function(x) 1/x, d_transform = function(x) -1/x^2, d_inverse = function(x) -1/x^2)\n}"
+    },
+    {
+      "name": "transform_reverse",
+      "formals": [],
+      "body": "{\n    new_transform(\"reverse\", function(x) -x, function(x) -x, d_transform = function(x) rep(-1, length(x)), d_inverse = function(x) rep(-1, length(x)), minor_breaks = regular_minor_breaks(reverse = TRUE))\n}"
+    },
+    {
+      "name": "transform_sqrt",
+      "formals": [],
+      "body": "{\n    new_transform(\"sqrt\", \"sqrt\", function(x) ifelse(x < 0, NA_real_, x^2), d_transform = function(x) 0.5/sqrt(x), d_inverse = function(x) 2 * x, domain = c(0, Inf))\n}"
+    },
+    {
+      "name": "transform_time",
+      "formals": {
+        "tz": "NULL"
+      },
+      "body": "{\n    force(tz)\n    to_time <- function(x) {\n        structure(x, class = c(\"POSIXct\", \"POSIXt\"), tzone = tz)\n    }\n    from_time <- function(x) {\n        if (!inherits(x, \"POSIXct\")) {\n            cli::cli_abort(\"{.fun transform_time} works with objects of class {.cls POSIXct} only\")\n        }\n        if (is.null(tz)) {\n            tz <<- attr(as.POSIXlt(x), \"tzone\")[[1]]\n        }\n        structure(as.numeric(x), names = names(x))\n    }\n    new_transform(\"time\", transform = \"from_time\", inverse = \"to_time\", breaks = breaks_pretty(), domain = to_time(c(-Inf, Inf)))\n}"
+    },
+    {
+      "name": "transform_timespan",
+      "formals": {
+        "unit": "c(\"secs\", \"mins\", \"hours\", \"days\", \"weeks\")"
+      },
+      "body": "{\n    unit <- arg_match(unit)\n    new_transform(\"timespan\", transform = function(x) {\n        structure(as.numeric(as.difftime(x, units = unit), units = \"secs\"), names = names(x))\n    }, inverse = function(x) {\n        x <- as.difftime(x, units = \"secs\")\n        units(x) <- unit\n        x\n    }, breaks = breaks_timespan(unit), format = label_timespan(unit))\n}"
+    },
+    {
+      "name": "transform_yj",
+      "formals": {
+        "p": ""
+      },
+      "body": "{\n    eps <- 1e-07\n    if (abs(p) < eps) {\n        trans_pos <- log1p\n        inv_pos <- expm1\n        d_trans_pos <- function(x) 1/(1 + x)\n        d_inv_pos <- exp\n    }\n    else {\n        trans_pos <- function(x) ((x + 1)^p - 1)/p\n        inv_pos <- function(x) (p * x + 1)^(1/p) - 1\n        d_trans_pos <- function(x) (x + 1)^(p - 1)\n        d_inv_pos <- function(x) (p * x + 1)^(1/p - 1)\n    }\n    if (abs(2 - p) < eps) {\n        trans_neg <- function(x) -log1p(-x)\n        inv_neg <- function(x) 1 - exp(-x)\n        d_trans_neg <- function(x) 1/(1 - x)\n        d_inv_new <- function(x) exp(-x)\n    }\n    else {\n        trans_neg <- function(x) -((-x + 1)^(2 - p) - 1)/(2 - p)\n        inv_neg <- function(x) 1 - (-(2 - p) * x + 1)^(1/(2 - p))\n        d_trans_neg <- function(x) (1 - x)^(1 - p)\n        d_inv_neg <- function(x) (-(2 - p) * x + 1)^(1/(2 - p) - 1)\n    }\n    new_transform(paste0(\"yeo-johnson-\", format(p)), function(x) trans_two_sided(x, trans_pos, trans_neg), function(x) trans_two_sided(x, inv_pos, inv_neg), d_transform = function(x) trans_two_sided(x, d_trans_pos, d_trans_neg, f_at_0 = 1), d_inverse = function(x) trans_two_sided(x, d_inv_pos, d_inv_neg, f_at_0 = 1))\n}"
+    }
+  ],
+  "cases": [
+    {
+      "constructor": "asinh",
+      "args": [],
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -1.4436354751788103,
+          -0.88137358701954305,
+          -0.48121182505960347,
+          0,
+          0.00099999983333340825,
+          0.24746646154726346,
+          0.48121182505960347,
+          0.69314718055994529,
+          0.88066630343220942,
+          0.88137358701954305,
+          1.4436354751788103,
+          2.9982229502979698,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -3.6268604078470186,
+          -1.1752011936438014,
+          -0.52109530549374738,
+          0,
+          0.0010000001666666751,
+          0.25261231680816831,
+          0.52109530549374738,
+          0.82231673193582999,
+          1.1736587003524519,
+          1.1752011936438014,
+          3.6268604078470186,
+          11013.232874703393,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "asn",
+      "args": [],
+      "domain": [
+        0,
+        1
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          0,
+          0.063256098875143357,
+          1.0471975511965976,
+          1.5707963267948968,
+          2.0943951023931953,
+          3.0783365547146526,
+          3.1415926535897931,
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0.70807341827357118,
+          0.22984884706593015,
+          0.061208719054813648,
+          0,
+          2.4999997916666736e-07,
+          0.015543789144677609,
+          0.061208719054813648,
+          0.13415556556308955,
+          0.229428246719214,
+          0.22984884706593015,
+          0.70807341827357118,
+          0.91953576453822616,
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "atanh",
+      "args": [],
+      "domain": [
+        -1,
+        1
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "-Infinity"
+          },
+          -0.54930614433405489,
+          0,
+          0.0010000003333335333,
+          0.25541281188299531,
+          0.54930614433405489,
+          0.97295507452765662,
+          3.8002011672501994,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          -1,
+          -0.9640275800758169,
+          -0.76159415595576485,
+          -0.46211715726000974,
+          0,
+          0.0009999996666668,
+          0.24491866240370913,
+          0.46211715726000974,
+          0.6351489523872873,
+          0.76117386166056999,
+          0.76159415595576485,
+          0.9640275800758169,
+          0.99999999587769273,
+          1,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "boxcox",
+      "args": {
+        "p": 0
+      },
+      "domain": [
+        0,
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "error": "`transform_boxcox()` must be given only positive values\nℹ Consider using `transform_modulus()` instead?"
+      },
+      "inverse": {
+        "values": [
+          0,
+          0.1353352832366127,
+          0.36787944117144233,
+          0.60653065971263342,
+          1,
+          1.0010005001667084,
+          1.2840254166877414,
+          1.6487212707001282,
+          2.1170000166126748,
+          2.7155649053185669,
+          2.7182818284590451,
+          7.3890560989306504,
+          22026.465794806718,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "boxcox",
+      "args": {
+        "p": 0.5
+      },
+      "domain": [
+        0,
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "error": "`transform_boxcox()` must be given only positive values\nℹ Consider using `transform_modulus()` instead?"
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "Infinity"
+          },
+          0,
+          0.25,
+          0.5625,
+          1,
+          1.0010002499999999,
+          1.265625,
+          1.5625,
+          1.890625,
+          2.2485002500000002,
+          2.25,
+          4,
+          36,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "boxcox",
+      "args": {
+        "p": -1,
+        "offset": 2
+      },
+      "domain": [
+        0,
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "error": "`transform_boxcox()` must be given only positive values\nℹ Consider using `transform_modulus()` instead?"
+      },
+      "inverse": {
+        "values": [
+          -2,
+          -1.6666666666666667,
+          -1.5,
+          -1.3333333333333335,
+          -1,
+          -0.99899899899899891,
+          -0.66666666666666674,
+          0,
+          2,
+          997.99999999999909,
+          {
+            "number": "Infinity"
+          },
+          -3,
+          -2.1111111111111112,
+          -2,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "exp",
+      "args": [],
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          0,
+          0.1353352832366127,
+          0.36787944117144233,
+          0.60653065971263342,
+          1,
+          1.0010005001667084,
+          1.2840254166877414,
+          1.6487212707001282,
+          2.1170000166126748,
+          2.7155649053185664,
+          2.7182818284590451,
+          7.3890560989306495,
+          22026.465794806703,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "-Infinity"
+          },
+          -6.9077552789821368,
+          -1.3862943611198906,
+          -0.69314718055994529,
+          -0.2876820724517809,
+          -0.0010005003335835344,
+          0,
+          0.69314718055994529,
+          2.3025850929940459,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "exp",
+      "args": {
+        "base": 2
+      },
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          0,
+          0.25,
+          0.5,
+          0.70710678118654757,
+          1,
+          1.0006933874625807,
+          1.189207115002721,
+          1.4142135623730951,
+          1.681792830507429,
+          1.998614185980905,
+          2,
+          4,
+          1024,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "-Infinity"
+          },
+          -9.965784284662087,
+          -2,
+          -1,
+          -0.41503749927884381,
+          -0.0014434168696687186,
+          0,
+          1,
+          3.3219280948873622,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "identity",
+      "args": [],
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -2,
+          -1,
+          -0.5,
+          0,
+          0.001,
+          0.25,
+          0.5,
+          0.75,
+          0.999,
+          1,
+          2,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -2,
+          -1,
+          -0.5,
+          0,
+          0.001,
+          0.25,
+          0.5,
+          0.75,
+          0.999,
+          1,
+          2,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "log",
+      "args": [],
+      "domain": [
+        9.9999999999999977e-101,
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "-Infinity"
+          },
+          -6.9077552789821368,
+          -1.3862943611198906,
+          -0.69314718055994529,
+          -0.2876820724517809,
+          -0.0010005003335835344,
+          0,
+          0.69314718055994529,
+          2.3025850929940459,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          0,
+          0.1353352832366127,
+          0.36787944117144233,
+          0.60653065971263342,
+          1,
+          1.0010005001667084,
+          1.2840254166877414,
+          1.6487212707001282,
+          2.1170000166126748,
+          2.7155649053185664,
+          2.7182818284590451,
+          7.3890560989306495,
+          22026.465794806703,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "log",
+      "args": {
+        "base": 0.5
+      },
+      "domain": [
+        9.9999999999999977e-101,
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "Infinity"
+          },
+          9.965784284662087,
+          2,
+          1,
+          0.41503749927884381,
+          0.0014434168696687186,
+          -0,
+          -1,
+          -3.3219280948873626,
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "Infinity"
+          },
+          4,
+          2,
+          1.4142135623730951,
+          1,
+          0.99930709299045251,
+          0.8408964152537145,
+          0.70710678118654757,
+          0.59460355750136051,
+          0.50034669373129037,
+          0.5,
+          0.25,
+          0.0009765625,
+          0,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "log10",
+      "args": [],
+      "domain": [
+        9.9999999999999977e-101,
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "-Infinity"
+          },
+          -3,
+          -0.6020599913279624,
+          -0.3010299956639812,
+          -0.12493873660829995,
+          -0.00043451177401769168,
+          0,
+          0.3010299956639812,
+          1,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          0,
+          0.01,
+          0.10000000000000001,
+          0.31622776601683794,
+          1,
+          1.0023052380778996,
+          1.7782794100389228,
+          3.1622776601683795,
+          5.6234132519034912,
+          9.9770006382255332,
+          10,
+          100,
+          10000000000,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "log2",
+      "args": [],
+      "domain": [
+        9.9999999999999977e-101,
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "-Infinity"
+          },
+          -9.965784284662087,
+          -2,
+          -1,
+          -0.41503749927884381,
+          -0.0014434168696687186,
+          0,
+          1,
+          3.3219280948873622,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          0,
+          0.25,
+          0.5,
+          0.70710678118654757,
+          1,
+          1.0006933874625807,
+          1.189207115002721,
+          1.4142135623730951,
+          1.681792830507429,
+          1.998614185980905,
+          2,
+          4,
+          1024,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "log1p",
+      "args": [],
+      "domain": [
+        -0.99999999999999978,
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "-Infinity"
+          },
+          -0.69314718055994529,
+          0,
+          0.00099950033308353315,
+          0.22314355131420976,
+          0.40546510810816438,
+          0.55961578793542266,
+          0.692647055518263,
+          0.69314718055994529,
+          1.0986122886681098,
+          2.3978952727983707,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          -1,
+          -0.8646647167633873,
+          -0.63212055882855767,
+          -0.39346934028736658,
+          0,
+          0.0010005001667083417,
+          0.28402541668774151,
+          0.64872127070012819,
+          1.1170000166126746,
+          1.7155649053185666,
+          1.7182818284590453,
+          6.3890560989306504,
+          22025.465794806718,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "logit",
+      "args": [],
+      "domain": [
+        0,
+        1
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "-Infinity"
+          },
+          -6.9067547786485539,
+          -1.0986122886681098,
+          0,
+          1.0986122886681098,
+          6.906754778648553,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          0,
+          0.11920292202211755,
+          0.2689414213699951,
+          0.37754066879814541,
+          0.5,
+          0.50024999997916664,
+          0.56217650088579807,
+          0.62245933120185459,
+          0.67917869917539297,
+          0.73086192127378236,
+          0.7310585786300049,
+          0.88079707797788231,
+          0.99995460213129761,
+          1,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "probit",
+      "args": [],
+      "domain": [
+        0,
+        1
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "-Infinity"
+          },
+          -3.0902323061678132,
+          -0.67448975019608171,
+          0,
+          0.67448975019608171,
+          3.0902323061678132,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          0,
+          0.022750131948179212,
+          0.15865525393145705,
+          0.30853753872598694,
+          0.5,
+          0.50039894221391101,
+          0.5987063256829237,
+          0.69146246127401301,
+          0.77337264762313174,
+          0.8411026543586817,
+          0.84134474606854293,
+          0.97724986805182079,
+          1,
+          1,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "modulus",
+      "args": {
+        "p": 0
+      },
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -1.0986122886681098,
+          -0.69314718055994529,
+          -0.40546510810816438,
+          0,
+          0.00099950033308342321,
+          0.22314355131420976,
+          0.40546510810816438,
+          0.55961578793542266,
+          0.69264705551826311,
+          0.69314718055994529,
+          1.0986122886681098,
+          2.3978952727983707,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -6.3890560989306504,
+          -1.7182818284590451,
+          -0.64872127070012819,
+          0,
+          0.0010005001667083846,
+          0.28402541668774139,
+          0.64872127070012819,
+          1.1170000166126748,
+          1.7155649053185669,
+          1.7182818284590451,
+          6.3890560989306504,
+          22025.465794806718,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "modulus",
+      "args": {
+        "p": 0.5
+      },
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -1.4641016151377544,
+          -0.82842712474619029,
+          -0.44948974278317788,
+          0,
+          0.00099975012492192761,
+          0.23606797749978981,
+          0.44948974278317788,
+          0.64575131106459072,
+          0.82771992955455209,
+          0.82842712474619029,
+          1.4641016151377544,
+          4.6332495807107996,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -3,
+          -1.25,
+          -0.5625,
+          0,
+          0.0010002499999999248,
+          0.265625,
+          0.5625,
+          0.890625,
+          1.2485002500000002,
+          1.25,
+          3,
+          35,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "modulus",
+      "args": {
+        "p": 2,
+        "offset": 2
+      },
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -7.5,
+          -4,
+          -2.625,
+          0,
+          1.5020004999999998,
+          2.03125,
+          2.625,
+          3.28125,
+          3.9970005000000004,
+          4,
+          7.5,
+          71.5,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -0.23606797749978981,
+          0.26794919243112281,
+          0.58578643762690485,
+          -0,
+          -0.99900049950062408,
+          -0.77525512860841106,
+          -0.58578643762690485,
+          -0.41886116991581024,
+          -0.26852663895744544,
+          -0.26794919243112281,
+          0.23606797749978981,
+          2.5825756949558398,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "pseudo_log",
+      "args": [],
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -0.88137358701954305,
+          -0.48121182505960347,
+          -0.24746646154726346,
+          0,
+          0.00049999997916666896,
+          0.12467674692144273,
+          0.24746646154726346,
+          0.36672460423013675,
+          0.48076456674871126,
+          0.48121182505960347,
+          0.88137358701954305,
+          2.3124383412727525,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -7.2537208156940371,
+          -2.3504023872876028,
+          -1.0421906109874948,
+          0,
+          0.0020000003333333501,
+          0.50522463361633663,
+          1.0421906109874948,
+          1.64463346387166,
+          2.3473174007049038,
+          2.3504023872876028,
+          7.2537208156940371,
+          22026.465749406787,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "pseudo_log",
+      "args": {
+        "sigma": 0.5,
+        "base": 10
+      },
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -0.62696292074993609,
+          -0.38277568533786305,
+          -0.20898764024997873,
+          0,
+          0.00043429440952087066,
+          0.10747331870609976,
+          0.20898764024997873,
+          0.30102999566398114,
+          0.38246851597874332,
+          0.38277568533786305,
+          0.62696292074993609,
+          1.3021116828300958,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -49.995000000000019,
+          -4.9500000000000011,
+          -1.423024947075771,
+          0,
+          0.0023025871276731776,
+          0.60796904242428695,
+          1.423024947075771,
+          2.7227926554497999,
+          4.9383850572088734,
+          4.9500000000000011,
+          49.995000000000019,
+          5000000000.00002,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "reciprocal",
+      "args": [],
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          -0,
+          -0.5,
+          -1,
+          -2,
+          {
+            "number": "Infinity"
+          },
+          1000,
+          4,
+          2,
+          1.3333333333333333,
+          1.0010010010010011,
+          1,
+          0.5,
+          0.10000000000000001,
+          0,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          -0,
+          -0.5,
+          -1,
+          -2,
+          {
+            "number": "Infinity"
+          },
+          1000,
+          4,
+          2,
+          1.3333333333333333,
+          1.0010010010010011,
+          1,
+          0.5,
+          0.10000000000000001,
+          0,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "reverse",
+      "args": [],
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "Infinity"
+          },
+          2,
+          1,
+          0.5,
+          -0,
+          -0.001,
+          -0.25,
+          -0.5,
+          -0.75,
+          -0.999,
+          -1,
+          -2,
+          -10,
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "Infinity"
+          },
+          2,
+          1,
+          0.5,
+          -0,
+          -0.001,
+          -0.25,
+          -0.5,
+          -0.75,
+          -0.999,
+          -1,
+          -2,
+          -10,
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "sqrt",
+      "args": [],
+      "domain": [
+        0,
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          0,
+          0.031622776601683791,
+          0.5,
+          0.70710678118654757,
+          0.8660254037844386,
+          0.99949987493746095,
+          1,
+          1.4142135623730951,
+          3.1622776601683795,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          0,
+          9.9999999999999995e-07,
+          0.0625,
+          0.25,
+          0.5625,
+          0.99800100000000003,
+          1,
+          4,
+          100,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "yj",
+      "args": {
+        "p": 0
+      },
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -4,
+          -1.5,
+          -0.625,
+          0,
+          0.00099950033308353315,
+          0.22314355131420976,
+          0.40546510810816438,
+          0.55961578793542266,
+          0.692647055518263,
+          0.69314718055994529,
+          1.0986122886681098,
+          2.3978952727983707,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -1.2360679774997898,
+          -0.73205080756887719,
+          -0.41421356237309515,
+          0,
+          0.0010005001667083417,
+          0.28402541668774151,
+          0.64872127070012819,
+          1.1170000166126746,
+          1.7155649053185666,
+          1.7182818284590453,
+          6.3890560989306504,
+          22025.465794806718,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "yj",
+      "args": {
+        "p": 1
+      },
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -2,
+          -1,
+          -0.5,
+          0,
+          0.00099999999999988987,
+          0.25,
+          0.5,
+          0.75,
+          0.99900000000000011,
+          1,
+          2,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -2,
+          -1,
+          -0.5,
+          0,
+          0.00099999999999988987,
+          0.25,
+          0.5,
+          0.75,
+          0.99900000000000011,
+          1,
+          2,
+          10,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "yj",
+      "args": {
+        "p": 2
+      },
+      "domain": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -1.0986122886681098,
+          -0.69314718055994529,
+          -0.40546510810816438,
+          0,
+          0.0010004999999998487,
+          0.28125,
+          0.625,
+          1.03125,
+          1.4980005000000003,
+          1.5,
+          4,
+          60,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          {
+            "number": "-Infinity"
+          },
+          -6.3890560989306504,
+          -1.7182818284590451,
+          -0.64872127070012819,
+          0,
+          0.00099950049937591601,
+          0.22474487139158894,
+          0.41421356237309515,
+          0.58113883008418976,
+          0.73147336104255456,
+          0.73205080756887719,
+          1.2360679774997898,
+          3.5825756949558398,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "probability",
+      "args": {
+        "distribution": "norm",
+        "mean": 2,
+        "sd": 3
+      },
+      "domain": [
+        0,
+        1
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "-Infinity"
+          },
+          -7.2706969185034396,
+          -0.023469250588245116,
+          2,
+          4.0234692505882448,
+          11.27069691850344,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          0,
+          0.091211219725867848,
+          0.15865525393145705,
+          0.20232838096364303,
+          0.25249253754692291,
+          0.25259903204574219,
+          0.27983446359970576,
+          0.30853753872598694,
+          0.33846111951068963,
+          0.36931555276318151,
+          0.36944134018176367,
+          0.5,
+          0.99616961943241022,
+          1,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    },
+    {
+      "constructor": "probability",
+      "args": {
+        "distribution": "logis",
+        "location": 2,
+        "scale": 3
+      },
+      "domain": [
+        0,
+        1
+      ],
+      "inputs": [
+        {
+          "number": "-Infinity"
+        },
+        -2,
+        -1,
+        -0.5,
+        0,
+        0.001,
+        0.25,
+        0.5,
+        0.75,
+        0.999,
+        1,
+        2,
+        10,
+        {
+          "number": "Infinity"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "forward": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "-Infinity"
+          },
+          -18.720264335945661,
+          -1.2958368660043293,
+          2,
+          5.2958368660043291,
+          22.720264335945657,
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "inverse": {
+        "values": [
+          0,
+          0.20860852732604496,
+          0.2689414213699951,
+          0.30294071603459272,
+          0.33924363123418283,
+          0.33931835436753122,
+          0.35816595491126901,
+          0.37754066879814541,
+          0.39731466202150834,
+          0.41734873504910636,
+          0.41742979353768528,
+          0.5,
+          0.93503083087133598,
+          1,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      }
+    }
+  ],
+  "plots": [
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          -0.48121182505960347,
+          0,
+          0.48121182505960347,
+          0.88137358701954305,
+          1.4436354751788103
+        ],
+        "range": [
+          -0.57745419007152421,
+          1.5398778401907309
+        ],
+        "breaks": [
+          -0.48121182505960347,
+          0,
+          0.48121182505960347,
+          0.88137358701954305,
+          1.1947632172871094,
+          1.4436354751788103
+        ],
+        "positions": [
+          0.045454545454545477,
+          0.27272727272727276,
+          0.5,
+          0.68899339179711716,
+          0.83700495814023312,
+          0.9545454545454547
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#22496C",
+          "#336A98",
+          "#4187BE",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -0.48121182505960347,
+          0,
+          0.48121182505960347,
+          0.88137358701954305,
+          1.4436354751788103,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.57745419007152421,
+          1.5398778401907309
+        ],
+        "breaks": [
+          -0.48121182505960347,
+          0,
+          0.48121182505960347,
+          0.88137358701954305,
+          1.1947632172871094,
+          1.4436354751788103
+        ],
+        "positions": [
+          0.045454545454545477,
+          0.27272727272727276,
+          0.5,
+          0.68899339179711716,
+          0.83700495814023312,
+          0.9545454545454547
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#22496C",
+          "#336A98",
+          "#4187BE",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999
+      ],
+      "result": {
+        "mapped": [
+          0.2003348423231196,
+          1.0471975511965976,
+          1.5707963267948968,
+          2.0943951023931953,
+          2.9412578112666736
+        ],
+        "range": [
+          0.063288693875941882,
+          3.0783039597138515
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          1.0471975511965976,
+          1.5707963267948968,
+          2.0943951023931953,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.3263362771223699,
+          0.50000000000000011,
+          0.67366372287762999,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "0.50",
+          "0.75",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#265176",
+          "#336A98",
+          "#4084BB",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.2003348423231196,
+          1.0471975511965976,
+          1.5707963267948968,
+          2.0943951023931953,
+          2.9412578112666736,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "range": [
+          0.063288693875941882,
+          3.0783039597138515
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          1.0471975511965976,
+          1.5707963267948968,
+          2.0943951023931953,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.3263362771223699,
+          0.50000000000000011,
+          0.67366372287762999,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "0.50",
+          "0.75",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#265176",
+          "#336A98",
+          "#4084BB",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.90000000000000002,
+        -0.5,
+        0,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "mapped": [
+          -1.4722194895832204,
+          -0.54930614433405489,
+          0,
+          0.54930614433405489,
+          1.4722194895832204
+        ],
+        "range": [
+          -1.6194414385415423,
+          1.6194414385415423
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -0.54930614433405489,
+          0,
+          0.54930614433405489,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.33040259089925589,
+          0.5,
+          0.66959740910074406,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "-0.5",
+          "0.0",
+          "0.5",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.90000000000000002,
+        -0.5,
+        0,
+        0.5,
+        0.90000000000000002
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#265277",
+          "#336A98",
+          "#4084BA",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.90000000000000002,
+        -0.5,
+        0,
+        0.5,
+        0.90000000000000002,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.4722194895832204,
+          -0.54930614433405489,
+          0,
+          0.54930614433405489,
+          1.4722194895832204,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "range": [
+          -1.6194414385415423,
+          1.6194414385415423
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -0.54930614433405489,
+          0,
+          0.54930614433405489,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.33040259089925589,
+          0.5,
+          0.66959740910074406,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "-0.5",
+          "0.0",
+          "0.5",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.90000000000000002,
+        -0.5,
+        0,
+        0.5,
+        0.90000000000000002,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#265277",
+          "#336A98",
+          "#4084BA",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          -2.3025850929940455,
+          -0.69314718055994529,
+          0,
+          0.69314718055994529,
+          1.3862943611198906
+        ],
+        "range": [
+          -2.4870290656997422,
+          1.5707383338255874
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          0,
+          0.69314718055994529,
+          1.0986122886681098,
+          1.3862943611198906,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.61290577325616802,
+          0.78372561390081141,
+          0.88364881505709136,
+          0.9545454545454547,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "1",
+          "2",
+          "3",
+          "4",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2F628C",
+          "#3B7BAF",
+          "#4896D2",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "error": "`transform_boxcox()` must be given only positive values\nℹ Consider using `transform_modulus()` instead?"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "error": "`transform_boxcox()` must be given only positive values\nℹ Consider using `transform_modulus()` instead?"
+      }
+    },
+    {
+      "configuration": 4,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          -1.367544467966324,
+          -0.58578643762690485,
+          0,
+          0.82842712474619029,
+          2
+        ],
+        "range": [
+          -1.5359216913646403,
+          2.1683772233983163
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          0,
+          0.82842712474619029,
+          1.4641016151377544,
+          2
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.41463222237369746,
+          0.63827160564393293,
+          0.80987614000215491,
+          0.95454545454545447
+        ],
+        "labels": [
+          null,
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      }
+    },
+    {
+      "configuration": 4,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#214769",
+          "#2D5E87",
+          "#3D7FB4",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 4,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "error": "`transform_boxcox()` must be given only positive values\nℹ Consider using `transform_modulus()` instead?"
+      }
+    },
+    {
+      "configuration": 4,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "error": "`transform_boxcox()` must be given only positive values\nℹ Consider using `transform_modulus()` instead?"
+      }
+    },
+    {
+      "configuration": 5,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.52380952380952384,
+          0.59999999999999998,
+          0.66666666666666674,
+          0.75,
+          0.83333333333333337
+        ],
+        "range": [
+          0.5083333333333333,
+          0.8488095238095239
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          0.66666666666666674,
+          0.75,
+          0.80000000000000004,
+          0.83333333333333337,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.46503496503496516,
+          0.70979020979020957,
+          0.85664335664335656,
+          0.95454545454545436,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "1",
+          "2",
+          "3",
+          "4",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 5,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#22496B",
+          "#306591",
+          "#438AC3",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 5,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "error": "`transform_boxcox()` must be given only positive values\nℹ Consider using `transform_modulus()` instead?"
+      }
+    },
+    {
+      "configuration": 5,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "error": "`transform_boxcox()` must be given only positive values\nℹ Consider using `transform_modulus()` instead?"
+      }
+    },
+    {
+      "configuration": 6,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.60653065971263342,
+          1,
+          1.6487212707001282,
+          2.7182818284590451,
+          7.3890560989306495
+        ],
+        "range": [
+          0.26740438775173259,
+          7.7281823708915507
+        ],
+        "breaks": [
+          0.36787944117144233,
+          1,
+          2.7182818284590451,
+          7.3890560989306495
+        ],
+        "positions": [
+          0.013467101372908769,
+          0.098192924907270801,
+          0.32850159142195484,
+          0.95454545454545447
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "configuration": 6,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#16324C",
+          "#1C3D5C",
+          "#265177",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 6,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.60653065971263342,
+          1,
+          1.6487212707001282,
+          2.7182818284590451,
+          7.3890560989306495,
+          {
+            "number": "NA"
+          },
+          0,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.36945280494653249,
+          7.758508903877182
+        ],
+        "breaks": [
+          7.7585089038771793,
+          7.7585089038771793,
+          7.7585089038771793,
+          7.7585089038771793,
+          7.7585089038771793
+        ],
+        "positions": [
+          0.99999999999999956,
+          0.99999999999999956,
+          0.99999999999999956,
+          0.99999999999999956,
+          0.99999999999999956
+        ],
+        "labels": [
+          "2.04879",
+          "2.04879",
+          "2.04879",
+          "2.04879",
+          "2.04879"
+        ]
+      }
+    },
+    {
+      "configuration": 6,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#183550",
+          "#1B3B59",
+          "#214667",
+          "#2A5980",
+          "#56B1F7",
+          "grey50",
+          "#132B43",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 7,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.70710678118654757,
+          1,
+          1.4142135623730951,
+          2,
+          4
+        ],
+        "range": [
+          0.54246212024587492,
+          4.1646446609406729
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          1,
+          2,
+          4
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.12631552237186847,
+          0.40239216642973047,
+          0.95454545454545447
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "configuration": 7,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#183651",
+          "#204566",
+          "#2C5C85",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 7,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.70710678118654757,
+          1,
+          1.4142135623730951,
+          2,
+          4,
+          {
+            "number": "NA"
+          },
+          0,
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.20000000000000001,
+          4.2000000000000002
+        ],
+        "breaks": [
+          4.2000000000000002,
+          4.2000000000000002,
+          4.2000000000000002,
+          4.2000000000000002,
+          4.2000000000000002
+        ],
+        "positions": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "labels": [
+          "2.070389",
+          "2.070389",
+          "2.070389",
+          "2.070389",
+          "2.070389"
+        ]
+      }
+    },
+    {
+      "configuration": 7,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#1E4060",
+          "#22496C",
+          "#29577E",
+          "#336A98",
+          "#56B1F7",
+          "grey50",
+          "#132B43",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          -0.5,
+          0,
+          0.5,
+          1,
+          2
+        ],
+        "range": [
+          -0.625,
+          2.125
+        ],
+        "breaks": [
+          -0.5,
+          0,
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "positions": [
+          0.045454545454545456,
+          0.22727272727272727,
+          0.40909090909090912,
+          0.59090909090909094,
+          0.77272727272727271,
+          0.95454545454545459
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#1F4364",
+          "#2C5D86",
+          "#3A78AA",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -0.5,
+          0,
+          0.5,
+          1,
+          2,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.625,
+          2.125
+        ],
+        "breaks": [
+          -0.5,
+          0,
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "positions": [
+          0.045454545454545456,
+          0.22727272727272727,
+          0.40909090909090912,
+          0.59090909090909094,
+          0.77272727272727271,
+          0.95454545454545459
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 8,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#1F4364",
+          "#2C5D86",
+          "#3A78AA",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 9,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          -2.3025850929940455,
+          -0.69314718055994529,
+          0,
+          0.69314718055994529,
+          1.3862943611198906
+        ],
+        "range": [
+          -2.4870290656997422,
+          1.5707383338255874
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -2,
+          -1,
+          0,
+          1,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.12002389928922837,
+          0.36646483627269821,
+          0.61290577325616802,
+          0.85934671023963793,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.1353353",
+          "0.3678794",
+          "1.0000000",
+          "2.7182818",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 9,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2F628C",
+          "#3B7BAF",
+          "#4896D2",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 9,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -2.3025850929940455,
+          -0.69314718055994529,
+          0,
+          0.69314718055994529,
+          1.3862943611198906,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -2.4870290656997422,
+          1.5707383338255874
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -2,
+          -1,
+          0,
+          1,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.12002389928922837,
+          0.36646483627269821,
+          0.61290577325616802,
+          0.85934671023963793,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.1353353",
+          "0.3678794",
+          "1.0000000",
+          "2.7182818",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 9,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2F628C",
+          "#3B7BAF",
+          "#4896D2",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 10,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "error": "invalid '(to - from)/by'"
+      }
+    },
+    {
+      "configuration": 10,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#56B1F7",
+          "#3773A4",
+          "#2B5A82",
+          "#1E4261",
+          "#132B43"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 10,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "error": "invalid '(to - from)/by'"
+      }
+    },
+    {
+      "configuration": 10,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#56B1F7",
+          "#3773A4",
+          "#2B5A82",
+          "#1E4261",
+          "#132B43",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 11,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          -1,
+          -0.3010299956639812,
+          0,
+          0.3010299956639812,
+          0.6020599913279624
+        ],
+        "range": [
+          -1.0801029995663982,
+          0.6821629908943605
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -1,
+          -0.52287874528033751,
+          0,
+          0.47712125471966244,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.045454545454545504,
+          0.3161975872554687,
+          0.61290577325616802,
+          0.88364881505709114,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.1",
+          "0.3",
+          "1.0",
+          "3.0",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 11,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2F628C",
+          "#3B7BAF",
+          "#4896D2",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 11,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1,
+          -0.3010299956639812,
+          0,
+          0.3010299956639812,
+          0.6020599913279624,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -1.0801029995663982,
+          0.6821629908943605
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -1,
+          -0.52287874528033751,
+          0,
+          0.47712125471966244,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.045454545454545504,
+          0.3161975872554687,
+          0.61290577325616802,
+          0.88364881505709114,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.1",
+          "0.3",
+          "1.0",
+          "3.0",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 11,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2F628C",
+          "#3B7BAF",
+          "#4896D2",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 12,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          -3.3219280948873622,
+          -1,
+          0,
+          1,
+          2
+        ],
+        "range": [
+          -3.5880244996317301,
+          2.2660964047443679
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -2,
+          0,
+          2
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.27126609196688151,
+          0.61290577325616813,
+          0.9545454545454547
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "1.00",
+          "4.00"
+        ]
+      }
+    },
+    {
+      "configuration": 12,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2F628C",
+          "#3B7BAF",
+          "#4896D2",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 12,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -3.3219280948873622,
+          -1,
+          0,
+          1,
+          2,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -3.5880244996317301,
+          2.2660964047443679
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -2,
+          0,
+          2
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.27126609196688151,
+          0.61290577325616813,
+          0.9545454545454547
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "1.00",
+          "4.00"
+        ]
+      }
+    },
+    {
+      "configuration": 12,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2F628C",
+          "#3B7BAF",
+          "#4896D2",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 13,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          -0.69314718055994529,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          1.0986122886681098
+        ],
+        "range": [
+          -0.78273515402134808,
+          1.1882002621295125
+        ],
+        "breaks": [
+          -0.69314718055994529,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          0.91629073187415511,
+          1.0986122886681098
+        ],
+        "positions": [
+          0.045454545454545477,
+          0.3971389156677651,
+          0.60286108433223495,
+          0.74882328588098468,
+          0.8620403651853884,
+          0.95454545454545459
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 13,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2B5B84",
+          "#3A7AAD",
+          "#4690CB",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 13,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -0.69314718055994529,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          1.0986122886681098,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.78273515402134808,
+          1.1882002621295125
+        ],
+        "breaks": [
+          -0.69314718055994529,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          0.91629073187415511,
+          1.0986122886681098
+        ],
+        "positions": [
+          0.045454545454545477,
+          0.3971389156677651,
+          0.60286108433223495,
+          0.74882328588098468,
+          0.8620403651853884,
+          0.95454545454545459
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 13,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2B5B84",
+          "#3A7AAD",
+          "#4690CB",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 14,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999
+      ],
+      "result": {
+        "mapped": [
+          -4.5951198501345898,
+          -1.0986122886681098,
+          0,
+          1.0986122886681098,
+          4.5951198501345889
+        ],
+        "range": [
+          -5.054631835148049,
+          5.0546318351480481
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -1.0986122886681098,
+          0,
+          1.0986122886681098,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.39132618116429724,
+          0.5,
+          0.60867381883570282,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "0.50",
+          "0.75",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 14,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2B5A83",
+          "#336A98",
+          "#3B7AAE",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 14,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4.5951198501345898,
+          -1.0986122886681098,
+          0,
+          1.0986122886681098,
+          4.5951198501345889,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "range": [
+          -5.054631835148049,
+          5.0546318351480481
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -1.0986122886681098,
+          0,
+          1.0986122886681098,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.39132618116429724,
+          0.5,
+          0.60867381883570282,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "0.50",
+          "0.75",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 14,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2B5A83",
+          "#336A98",
+          "#3B7AAE",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 15,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999
+      ],
+      "result": {
+        "mapped": [
+          -2.3263478740408408,
+          -0.67448975019608171,
+          0,
+          0.67448975019608171,
+          2.3263478740408408
+        ],
+        "range": [
+          -2.5589826614449249,
+          2.5589826614449249
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -0.67448975019608171,
+          0,
+          0.67448975019608171,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.36821134813488104,
+          0.5,
+          0.63178865186511901,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "0.50",
+          "0.75",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 15,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#29577E",
+          "#336A98",
+          "#3D7EB3",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 15,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -2.3263478740408408,
+          -0.67448975019608171,
+          0,
+          0.67448975019608171,
+          2.3263478740408408,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "range": [
+          -2.5589826614449249,
+          2.5589826614449249
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -0.67448975019608171,
+          0,
+          0.67448975019608171,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.36821134813488104,
+          0.5,
+          0.63178865186511901,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "0.50",
+          "0.75",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 15,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#29577E",
+          "#336A98",
+          "#3D7EB3",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 16,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          -0.40546510810816438,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          1.0986122886681098
+        ],
+        "range": [
+          -0.4806689779469781,
+          1.1738161585069236
+        ],
+        "breaks": [
+          -0.40546510810816438,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          0.91629073187415511,
+          1.0986122886681098
+        ],
+        "positions": [
+          0.045454545454545456,
+          0.29052480880983172,
+          0.53559507216511792,
+          0.70947519119016811,
+          0.84434708964220195,
+          0.95454545454545447
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 16,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#244C6F",
+          "#356F9F",
+          "#438AC3",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 16,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -0.40546510810816438,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          1.0986122886681098,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.4806689779469781,
+          1.1738161585069236
+        ],
+        "breaks": [
+          -0.40546510810816438,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          0.91629073187415511,
+          1.0986122886681098
+        ],
+        "positions": [
+          0.045454545454545456,
+          0.29052480880983172,
+          0.53559507216511792,
+          0.70947519119016811,
+          0.84434708964220195,
+          0.95454545454545447
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 16,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#244C6F",
+          "#356F9F",
+          "#438AC3",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 17,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          -0.44948974278317788,
+          0,
+          0.44948974278317788,
+          0.82842712474619029,
+          1.4641016151377544
+        ],
+        "range": [
+          -0.54516931067922447,
+          1.5597811830338011
+        ],
+        "breaks": [
+          -0.44948974278317788,
+          0,
+          0.44948974278317788,
+          0.82842712474619029,
+          1.1622776601683795,
+          1.4641016151377544
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.25899388717573757,
+          0.47253322889692972,
+          0.65255522138312172,
+          0.81115778064488087,
+          0.95454545454545447
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 17,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#214869",
+          "#316692",
+          "#3E81B7",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 17,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -0.44948974278317788,
+          0,
+          0.44948974278317788,
+          0.82842712474619029,
+          1.4641016151377544,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.54516931067922447,
+          1.5597811830338011
+        ],
+        "breaks": [
+          -0.44948974278317788,
+          0,
+          0.44948974278317788,
+          0.82842712474619029,
+          1.1622776601683795,
+          1.4641016151377544
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.25899388717573757,
+          0.47253322889692972,
+          0.65255522138312172,
+          0.81115778064488087,
+          0.95454545454545447
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 17,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#214869",
+          "#316692",
+          "#3E81B7",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 18,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          -2.625,
+          0,
+          2.625,
+          4,
+          7.5
+        ],
+        "range": [
+          -3.1312500000000001,
+          8.0062499999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          0,
+          4,
+          7.5
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.2811447811447812,
+          0.64029180695847365,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "configuration": 18,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#234B6E",
+          "#346D9B",
+          "#3D7FB4",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 18,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -2.625,
+          0,
+          2.625,
+          4,
+          7.5,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -3.1312500000000001,
+          8.0062499999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          0,
+          4,
+          7.5
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.2811447811447812,
+          0.64029180695847365,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "configuration": 18,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#234B6E",
+          "#346D9B",
+          "#3D7FB4",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 19,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          -0.24746646154726346,
+          0,
+          0.24746646154726346,
+          0.48121182505960347,
+          0.88137358701954305
+        ],
+        "range": [
+          -0.30390846397560378,
+          0.93781558944788335
+        ],
+        "breaks": [
+          -0.24746646154726346,
+          0,
+          0.24746646154726346,
+          0.48121182505960347,
+          0.69314718055994529,
+          0.88137358701954305
+        ],
+        "positions": [
+          0.045454545454545463,
+          0.24474718286862124,
+          0.44403982028269701,
+          0.63228241964919385,
+          0.80296072367014515,
+          0.95454545454545459
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 19,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#204667",
+          "#2F628D",
+          "#3D7EB3",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 19,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -0.24746646154726346,
+          0,
+          0.24746646154726346,
+          0.48121182505960347,
+          0.88137358701954305,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.30390846397560378,
+          0.93781558944788335
+        ],
+        "breaks": [
+          -0.24746646154726346,
+          0,
+          0.24746646154726346,
+          0.48121182505960347,
+          0.69314718055994529,
+          0.88137358701954305
+        ],
+        "positions": [
+          0.045454545454545463,
+          0.24474718286862124,
+          0.44403982028269701,
+          0.63228241964919385,
+          0.80296072367014515,
+          0.95454545454545459
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 19,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#204667",
+          "#2F628D",
+          "#3D7EB3",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 20,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          -0.20898764024997873,
+          0,
+          0.20898764024997873,
+          0.38277568533786305,
+          0.62696292074993609
+        ],
+        "range": [
+          -0.25078516829997449,
+          0.66876044879993179
+        ],
+        "breaks": [
+          -0.20898764024997873,
+          0,
+          0.20898764024997873,
+          0.38277568533786305,
+          0.51887907244876741,
+          0.62696292074993609
+        ],
+        "positions": [
+          0.04545454545454547,
+          0.27272727272727276,
+          0.50000000000000011,
+          0.68899339179711705,
+          0.83700495814023312,
+          0.95454545454545447
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 20,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#22496C",
+          "#336A98",
+          "#4187BE",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 20,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -0.20898764024997873,
+          0,
+          0.20898764024997873,
+          0.38277568533786305,
+          0.62696292074993609,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.25078516829997449,
+          0.66876044879993179
+        ],
+        "breaks": [
+          -0.20898764024997873,
+          0,
+          0.20898764024997873,
+          0.38277568533786305,
+          0.51887907244876741,
+          0.62696292074993609
+        ],
+        "positions": [
+          0.04545454545454547,
+          0.27272727272727276,
+          0.50000000000000011,
+          0.68899339179711705,
+          0.83700495814023312,
+          0.95454545454545447
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 20,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#22496C",
+          "#336A98",
+          "#4187BE",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 21,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          10,
+          2,
+          1,
+          0.5,
+          0.25
+        ],
+        "range": [
+          -0.23750000000000004,
+          10.487500000000001
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 21,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#56B1F7",
+          "#1E4160",
+          "#18344F",
+          "#152E47",
+          "#132B43"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 21,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          10,
+          2,
+          1,
+          0.5,
+          0.25,
+          {
+            "number": "NA"
+          },
+          -0,
+          0
+        ],
+        "range": [
+          -0.5,
+          10.5
+        ],
+        "breaks": [
+          -0.5,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          0,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "-2",
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 21,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#56B1F7",
+          "#1F4364",
+          "#193753",
+          "#16314B",
+          "#142E47",
+          "grey50",
+          "#132B43",
+          "#132B43"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 22,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -2
+        ],
+        "range": [
+          -2.125,
+          0.625
+        ],
+        "breaks": [
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -1.5,
+          -2
+        ],
+        "positions": [
+          0.95454545454545459,
+          0.77272727272727271,
+          0.59090909090909094,
+          0.40909090909090912,
+          0.22727272727272727,
+          0.045454545454545456
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 22,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#56B1F7",
+          "#4894D0",
+          "#3A78AA",
+          "#2C5D86",
+          "#132B43"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 22,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -2,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "Infinity"
+          },
+          {
+            "number": "-Infinity"
+          }
+        ],
+        "range": [
+          -2.125,
+          0.625
+        ],
+        "breaks": [
+          0.5,
+          -0,
+          -0.5,
+          -1,
+          -1.5,
+          -2
+        ],
+        "positions": [
+          0.95454545454545459,
+          0.77272727272727271,
+          0.59090909090909094,
+          0.40909090909090912,
+          0.22727272727272727,
+          0.045454545454545456
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 22,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#56B1F7",
+          "#4894D0",
+          "#3A78AA",
+          "#2C5D86",
+          "#132B43",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 23,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          0.31622776601683794,
+          0.70710678118654757,
+          1,
+          1.4142135623730951,
+          2
+        ],
+        "range": [
+          0.23203915431767985,
+          2.0841886116991581
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          1,
+          1.4142135623730951,
+          1.7320508075688772,
+          2
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.41463222237369746,
+          0.63827160564393293,
+          0.80987614000215491,
+          0.95454545454545447
+        ],
+        "labels": [
+          null,
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      }
+    },
+    {
+      "configuration": 23,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#214769",
+          "#2D5E87",
+          "#3D7FB4",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 23,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          0.31622776601683794,
+          0.70710678118654757,
+          1,
+          1.4142135623730951,
+          2,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          0.23203915431767985,
+          2.0841886116991581
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          1,
+          1.4142135623730951,
+          1.7320508075688772,
+          2
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.41463222237369746,
+          0.63827160564393293,
+          0.80987614000215491,
+          0.95454545454545447
+        ],
+        "labels": [
+          null,
+          "1",
+          "2",
+          "3",
+          "4"
+        ]
+      }
+    },
+    {
+      "configuration": 23,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.10000000000000001,
+        0.5,
+        1,
+        2,
+        4,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#214769",
+          "#2D5E87",
+          "#3D7FB4",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 24,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          -0.625,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          1.0986122886681098
+        ],
+        "range": [
+          -0.71118061443340552,
+          1.1847929031015152
+        ],
+        "breaks": [
+          -0.625,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          0.91629073187415511,
+          1.0986122886681098
+        ],
+        "positions": [
+          0.04545454545454547,
+          0.37510050001017836,
+          0.58895639217228835,
+          0.74068956238334449,
+          0.85838295274479504,
+          0.95454545454545447
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 24,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2A587F",
+          "#3977AA",
+          "#458FC9",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 24,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -0.625,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          1.0986122886681098,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.71118061443340552,
+          1.1847929031015152
+        ],
+        "breaks": [
+          -0.625,
+          0,
+          0.40546510810816438,
+          0.69314718055994529,
+          0.91629073187415511,
+          1.0986122886681098
+        ],
+        "positions": [
+          0.04545454545454547,
+          0.37510050001017836,
+          0.58895639217228835,
+          0.74068956238334449,
+          0.85838295274479504,
+          0.95454545454545447
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 24,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2A587F",
+          "#3977AA",
+          "#458FC9",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 25,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          -0.5,
+          0,
+          0.5,
+          1,
+          2
+        ],
+        "range": [
+          -0.625,
+          2.125
+        ],
+        "breaks": [
+          -0.5,
+          0,
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "positions": [
+          0.045454545454545456,
+          0.22727272727272727,
+          0.40909090909090912,
+          0.59090909090909094,
+          0.77272727272727271,
+          0.95454545454545459
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 25,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#1F4364",
+          "#2C5D86",
+          "#3A78AA",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 25,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -0.5,
+          0,
+          0.5,
+          1,
+          2,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.625,
+          2.125
+        ],
+        "breaks": [
+          -0.5,
+          0,
+          0.5,
+          1,
+          1.5,
+          2
+        ],
+        "positions": [
+          0.045454545454545456,
+          0.22727272727272727,
+          0.40909090909090912,
+          0.59090909090909094,
+          0.77272727272727271,
+          0.95454545454545459
+        ],
+        "labels": [
+          "-0.5",
+          "0.0",
+          "0.5",
+          "1.0",
+          "1.5",
+          "2.0"
+        ]
+      }
+    },
+    {
+      "configuration": 25,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#1F4364",
+          "#2C5D86",
+          "#3A78AA",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 26,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          -0.40546510810816438,
+          0,
+          0.625,
+          1.5,
+          4
+        ],
+        "range": [
+          -0.62573836351357259,
+          4.2202732554054085
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          0,
+          1.5,
+          4
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.12912440429789118,
+          0.43865729814072746,
+          0.95454545454545447
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "configuration": 26,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#193652",
+          "#214769",
+          "#2E618C",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 26,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -0.40546510810816438,
+          0,
+          0.625,
+          1.5,
+          4,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -0.62573836351357259,
+          4.2202732554054085
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          0,
+          1.5,
+          4
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.12912440429789118,
+          0.43865729814072746,
+          0.95454545454545447
+        ],
+        "labels": [
+          null,
+          "0",
+          "1",
+          "2"
+        ]
+      }
+    },
+    {
+      "configuration": 26,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -0.5,
+        0,
+        0.5,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#193652",
+          "#214769",
+          "#2E618C",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 27,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999
+      ],
+      "result": {
+        "mapped": [
+          -4.9790436221225223,
+          -0.023469250588245116,
+          2,
+          4.0234692505882448,
+          8.9790436221225214
+        ],
+        "range": [
+          -5.6769479843347748,
+          9.6769479843347739
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -0.023469250588245116,
+          2,
+          4.0234692505882448,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.3682113481348811,
+          0.50000000000000011,
+          0.63178865186511901,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "0.50",
+          "0.75",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 27,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#29577E",
+          "#336A98",
+          "#3D7EB3",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 27,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4.9790436221225223,
+          -0.023469250588245116,
+          2,
+          4.0234692505882448,
+          8.9790436221225214,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "range": [
+          -5.6769479843347748,
+          9.6769479843347739
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -0.023469250588245116,
+          2,
+          4.0234692505882448,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.3682113481348811,
+          0.50000000000000011,
+          0.63178865186511901,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "0.50",
+          "0.75",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 27,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#29577E",
+          "#336A98",
+          "#3D7EB3",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    },
+    {
+      "configuration": 28,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999
+      ],
+      "result": {
+        "mapped": [
+          -11.785359550403768,
+          -1.2958368660043293,
+          2,
+          5.2958368660043291,
+          15.785359550403767
+        ],
+        "range": [
+          -13.163895505444145,
+          17.163895505444145
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -1.2958368660043293,
+          2,
+          5.2958368660043291,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.39132618116429724,
+          0.5,
+          0.60867381883570282,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "0.50",
+          "0.75",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 28,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2B5A83",
+          "#336A98",
+          "#3B7AAE",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "breaks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ]
+      }
+    },
+    {
+      "configuration": 28,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          -11.785359550403768,
+          -1.2958368660043293,
+          2,
+          5.2958368660043291,
+          15.785359550403767,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "range": [
+          -13.163895505444145,
+          17.163895505444145
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          -1.2958368660043293,
+          2,
+          5.2958368660043291,
+          {
+            "number": "NA"
+          }
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.39132618116429724,
+          0.5,
+          0.60867381883570282,
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          null,
+          "0.25",
+          "0.50",
+          "0.75",
+          null
+        ]
+      }
+    },
+    {
+      "configuration": 28,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        0.01,
+        0.25,
+        0.5,
+        0.75,
+        0.98999999999999999,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#2B5A83",
+          "#336A98",
+          "#3B7AAE",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          2,
+          4,
+          6,
+          8
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ]
+      }
+    }
+  ]
+}

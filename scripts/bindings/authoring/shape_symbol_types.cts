@@ -10,8 +10,8 @@ new ShapeSymbol({size:'large'});
 shapeSymbol().symbolPaint('Closed');
 // @ts-expect-error exact category labels
 shapeSymbol().symbolTypes('type',[1],['Circle']);
-// @ts-expect-error radius is not the area-size channel
-shapeSymbol().shapeValue('Radius','area');
+// @ts-expect-error unknown channels are rejected
+shapeSymbol().shapeValue('UnknownChannel','area');
 // @ts-expect-error palettes are immutable
 fill.push('Square');
 p.free();s.free();

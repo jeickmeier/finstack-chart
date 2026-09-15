@@ -1,0 +1,181 @@
+{
+  "status": "GG05_COLORBAR_ALPHA_QUALIFIED",
+  "revision": "6e74ae6453b20ab0ffca5b88bbfee5a69d63bd9e",
+  "scope": [
+    "GG2-04 / FIX-GG05 guide-only alpha override for raster, rectangles and gradient displays",
+    "Definition version 67 retains authored alpha; omitted alpha preserves earlier versions",
+    "Missing paint identity, transparent paint replacement and eager alpha validation"
+  ],
+  "reference": {
+    "fixture": "fixtures/parity/ggplot2/colorbar-alpha.json",
+    "sha256": "ced38298b6655d1d66831fbc7064d26093b3cb76710ff3c0d1c9251aaa1284ca",
+    "generator": "tools/reference/r/colorbar-alpha.R",
+    "cases": 96,
+    "constructor_boundaries": 10,
+    "missing_comparisons": 6,
+    "environment": "R 4.6.1 / ggplot2 4.0.3"
+  },
+  "validation": {
+    "check": {
+      "path": "/tmp/gg05-alpha-final-check.log",
+      "sha256": "4ea505d1c40a1a2f437e3101cc26b3287351f423dc7cbfab4b02941906330c20",
+      "exit_code": 0
+    },
+    "test": {
+      "path": "/tmp/gg05-alpha-final-test.log",
+      "sha256": "47af563643fd35cc1f3a6af214df777acf740af54a1d50b8cd35a8f848d4a5d9",
+      "exit_code": 0,
+      "tests": 876,
+      "nonempty_targets": 187,
+      "total_targets": 199
+    },
+    "hosts": {
+      "path": "/tmp/gg05-alpha-hosts.log",
+      "sha256": "7077f9ed634392845655b12d8bfce41aa3028de64458783e3d0c535024010855",
+      "exit_code": 0
+    },
+    "focused": {
+      "path": "/tmp/gg05-alpha-missing-final2.log",
+      "sha256": "97bb85785ea99b311fa18c0352b9fa2e71416dec81e4cbb642521595cbf8914f",
+      "exit_code": 0
+    },
+    "native_build": {
+      "path": "/tmp/gg05-alpha-native-build.log",
+      "sha256": "8d142746b930bccddd29d21d33fb37393854a8aa5ee725be18d84d56cfd262fb",
+      "exit_code": 0
+    },
+    "reference": {
+      "path": "/tmp/gg05-alpha-reference.log",
+      "sha256": "a2be862aa491c51af95b81fce17541011ca4c03bda2be49fca2b860e03f252e1",
+      "exit_code": 0
+    }
+  },
+  "hosts": {
+    "states": 2440,
+    "publication_files": 627,
+    "comparison": "exact Python/WASM parsed states; byte-identical corresponding Rust/Python/WASM publication files",
+    "modes": {
+      "alpha-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-alpha/alpha-comparison.json",
+        "sha256": "30411bcb1747ace365f949748972083ec4af8cba133219059110a389e381b3c8",
+        "states": 384,
+        "publication_files": 72
+      },
+      "comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-alpha/comparison.json",
+        "sha256": "5782cfb3b267a3ce33dc986c6f26596feb40c6cbef20f05691845d6c9aa5530f",
+        "states": 108,
+        "publication_files": 27
+      },
+      "constant-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-alpha/constant-comparison.json",
+        "sha256": "47fa676837364fb42d7324b0a3f06e2ca26044c4b2630814305cc0fe22829ca3",
+        "states": 48,
+        "publication_files": 36
+      },
+      "demand-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-alpha/demand-comparison.json",
+        "sha256": "411d32d578c060d7b0728755f0b55a09d7617c70dcb74d5a6ea0413ce3e85c58",
+        "states": 60,
+        "publication_files": 0
+      },
+      "display-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-alpha/display-comparison.json",
+        "sha256": "e8e8f12205132be76f4e8198f21be449744ddae21f5c483d29217299bc794603",
+        "states": 704,
+        "publication_files": 120
+      },
+      "orientation-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-alpha/orientation-comparison.json",
+        "sha256": "d4570791f366f3a277b8b7b6b2e6e7ac96f7752ff31398e328f87347f907c118",
+        "states": 192,
+        "publication_files": 144
+      },
+      "presentation-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-alpha/presentation-comparison.json",
+        "sha256": "d5f3ca226db121223b9781afe9ffe0db8720a7a1446c0bcd0a03eaaa4140f560",
+        "states": 512,
+        "publication_files": 120
+      },
+      "sampling-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-alpha/sampling-comparison.json",
+        "sha256": "547d1d9a117cf60884a89e5b1a9f7e73fe8a5485402ff83c94aaa0559c5b486f",
+        "states": 432,
+        "publication_files": 108
+      }
+    }
+  },
+  "inspection": {
+    "status": "inspected",
+    "publication_files": 72,
+    "review_pages": {
+      "alpha-inspection/review-1.png": "4ef0de1f8a73fe26109b434f9aea524a3588180d50e56baf03cc2e3d914b7d6d",
+      "alpha-inspection/review-2.png": "725565fb7d71550d2f795f004705cf55614123b95be44702dd94fe7720810ce4",
+      "alpha-inspection/review-3.png": "620c44e64c793cbf27bb6e4886745499327f9a6e833aeb60f0329b2086bdadde",
+      "alpha-inspection/review-4.png": "940aed7685f0af12cb61a2219ccb7cd3cdf21cb0933fc255b4ad7e62459a1453",
+      "alpha-inspection/review-5.png": "e821c07a95b00fbb765ea579ec3bfcf68ba745b85f5be5ce500ada8540ec8753",
+      "alpha-inspection/review-6.png": "af0de90e06ebdab2c967c3d2a5b84a3addbf72bec2c9583fdf9273a45bb29210",
+      "alpha-inspection/review-7.png": "54a63d15a6fac8d901e3ef60d956e0909b0eec03193f4b0caa09cbf4adec6c5d",
+      "alpha-inspection/review-8.png": "826f5f7a49504072f155c04df6f414ae25df7e57f7de18126a82275278569d08"
+    },
+    "native": {
+      "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-alpha/native-window.png",
+      "sha256": "4abeecad3c1311458b5c9dca0ee6a46f38e48f049b4801f3ef10e2a37cdd1c1b",
+      "charts": 4,
+      "mode": "--alpha"
+    },
+    "unchanged_previous_publications": 555,
+    "observations": [
+      "All eight review pages covering 24 SVG/PDF/PNG triplets inspected: palette alpha, zero, half and opaque overrides agree across formats.",
+      "Zero-alpha bars retain labels and ticks; alpha overrides preserve mark styles.",
+      "Native four-chart window covers raster palette alpha, reversed gradient alpha .5, reversed rectangle alpha 1 and invisible raster alpha 0."
+    ]
+  },
+  "owned_changes_from_display": [
+    "docs/implementation-status.md",
+    "examples/chart-gallery/examples/ggplot_colorbars.rs",
+    "examples/common/ggplot_colorbar_fixtures.rs",
+    "scripts/run_primary_authoring_proofs.py",
+    "crates/chart-core/src/plot/wire.rs",
+    "crates/chart-export/examples/ggplot_colorbar_layout.rs",
+    "crates/chart-core/src/scales/mapped.rs",
+    "crates/chart-core/src/scales/ggplot_continuous_guide.rs",
+    "scripts/bindings/ggplot_colorbar_layout.cjs",
+    "scripts/bindings/ggplot_colorbar_layout.py",
+    "crates/chart-core/src/grammar/definition.rs",
+    "crates/chart-core/tests/ggplot_colorbar_layout.rs",
+    "fixtures/parity/ggplot2/colorbar-alpha.json",
+    "docs/evidence/phase-2-ggplot-colorbar-display-2026-09-14.json",
+    "docs/adr/024-sampled-gradient-paint.md",
+    "tools/reference/r/colorbar-alpha.R"
+  ],
+  "qualified_source_hashes": {
+    "docs/implementation-status.md": "cb564065a1f6d03a86b7fd50b7b033cba680414e9f9bbf7a9ffc2daf6a2a12ee",
+    "examples/chart-gallery/examples/ggplot_colorbars.rs": "eaf9fae9e8eb791808fc77bf63d07946d801617767214368e6754ebed787beac",
+    "examples/common/ggplot_colorbar_fixtures.rs": "4c0341d81a538eb5f755b0cd5cbf9dfa1b40fd185c7e33bd03ee911fd49a1d01",
+    "scripts/run_primary_authoring_proofs.py": "27d86c01c7c46852e2794fc93dae4fca54452bb097497c1707ef25d20a1b6e0e",
+    "crates/chart-core/src/plot/wire.rs": "7cce7249f8208cb04ba107df0b7549e705ac100e1a7eb254610e2d00da4f6c5d",
+    "crates/chart-export/examples/ggplot_colorbar_layout.rs": "89c43bc7a521095704ba863783d9be49531a7e0e92be518f5a4db4ed5374fe27",
+    "crates/chart-core/src/scales/mapped.rs": "b89e687412abe267f530c816a9e49ec7ce0481d3101102650178995211f3cc09",
+    "crates/chart-core/src/scales/ggplot_continuous_guide.rs": "b7e85bceb8002f2bc918fe0f480e29de2887acfa021e3ffb80e6728a4d03764f",
+    "scripts/bindings/ggplot_colorbar_layout.cjs": "674381dba79559b4b9481ac357e7d907e6fcb90ab501b28c29db500f51bab064",
+    "scripts/bindings/ggplot_colorbar_layout.py": "62775ed438888f3fe5f436ecf5b4e215ba778ada6862701d685b1864bee7cd6e",
+    "crates/chart-core/src/grammar/definition.rs": "cb41ce4e3c670dc113cd64ec8fdfe1436c02be4ef1285668268612db87bc63c7",
+    "crates/chart-core/tests/ggplot_colorbar_layout.rs": "fcd15150803c4071ac4a0430c6fe6aa0fd548518f5444dac96e6fa41c50a1385",
+    "fixtures/parity/ggplot2/colorbar-alpha.json": "ced38298b6655d1d66831fbc7064d26093b3cb76710ff3c0d1c9251aaa1284ca",
+    "docs/evidence/phase-2-ggplot-colorbar-display-2026-09-14.json": "f6f3cc8f4f337a256713f75d715e6f5c67e786d977428171754c94dbc9ee1550",
+    "docs/adr/024-sampled-gradient-paint.md": "925261aef8c6e401a5fb8489afc4a786d8bc883483c2f93a9d1c58d7b48c4c94",
+    "tools/reference/r/colorbar-alpha.R": "e96dafd45211fe73b99ca3993c7be94944894bfd549171703f7e2aa523e59a67"
+  },
+  "source_baseline": {
+    "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-alpha/source-baseline.json",
+    "sha256": "c031e233882131ce344d8cc7f478b4bcac4d837d555c1dd18d0c0ea661ad3125"
+  },
+  "limitations": [
+    "Full GG05 and GG05-19 remain open.",
+    "Stepped/binned guide rendering, mixed keys, guide composition, component identity and axis/custom guide contracts remain.",
+    "No new full cumulative bindings or Linux run.",
+    "Stepped-guide fixture preparation is excluded from this qualification."
+  ],
+  "next": "Implement and qualify stepped color guides against the prepared 64-case reference fixture."
+}

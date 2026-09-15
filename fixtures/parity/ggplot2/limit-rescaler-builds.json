@@ -1,0 +1,2720 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0,
+          0.25,
+          1
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5"
+            ],
+            "mapped": [
+              0.1875,
+              0.5,
+              0.8125
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [],
+            "labels": [],
+            "mapped": []
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.10000000000000001,
+          0.29999999999999999,
+          0.90000000000000002
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.1111111111111111,
+          0.33333333333333331,
+          1
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5"
+            ],
+            "mapped": [
+              0,
+              0.27777777777777779,
+              0.55555555555555558,
+              0.83333333333333337
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          null,
+          0.5
+        ],
+        "keys": [
+          {
+            "values": [
+              5
+            ],
+            "labels": [
+              "5"
+            ],
+            "mapped": [
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [],
+            "labels": [],
+            "mapped": []
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              5
+            ],
+            "labels": [
+              "5"
+            ],
+            "mapped": [
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              0
+            ],
+            "labels": [
+              "0"
+            ],
+            "mapped": [
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [],
+            "labels": [],
+            "mapped": []
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              5
+            ],
+            "labels": [
+              "5"
+            ],
+            "mapped": [
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.1111111111111111,
+          0.33333333333333331,
+          1
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5"
+            ],
+            "mapped": [
+              0.27777777777777779,
+              0.55555555555555558,
+              0.83333333333333337
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [],
+            "labels": [],
+            "mapped": []
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.10000000000000001,
+          0.29999999999999999,
+          0.90000000000000002
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.1111111111111111,
+          0.33333333333333331,
+          1
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5"
+            ],
+            "mapped": [
+              0,
+              0.27777777777777779,
+              0.55555555555555558,
+              0.83333333333333337
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              5
+            ],
+            "labels": [
+              "5"
+            ],
+            "mapped": [
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [],
+            "labels": [],
+            "mapped": []
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              5
+            ],
+            "labels": [
+              "5"
+            ],
+            "mapped": [
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              0
+            ],
+            "labels": [
+              "0"
+            ],
+            "mapped": [
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [],
+            "labels": [],
+            "mapped": []
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              5
+            ],
+            "labels": [
+              "5"
+            ],
+            "mapped": [
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.4285714285714286,
+          0.5714285714285714,
+          1
+        ],
+        "keys": [
+          {
+            "values": [
+              2.5,
+              5,
+              7.5
+            ],
+            "labels": [
+              "2.5",
+              "5.0",
+              "7.5"
+            ],
+            "mapped": [
+              0.5357142857142857,
+              0.7142857142857143,
+              0.89285714285714279
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [],
+            "labels": [],
+            "mapped": []
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.4375,
+          0.5625,
+          0.9375
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.375,
+              0.53125,
+              0.6875,
+              0.84375,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.4285714285714286,
+          0.5714285714285714,
+          1
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5"
+            ],
+            "mapped": [
+              0.35714285714285715,
+              0.5357142857142857,
+              0.7142857142857143,
+              0.89285714285714279
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          null,
+          null,
+          0.5
+        ],
+        "keys": [
+          {
+            "values": [
+              5
+            ],
+            "labels": [
+              "5"
+            ],
+            "mapped": [
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.375,
+              0.53125,
+              0.6875,
+              0.84375,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [],
+            "labels": [],
+            "mapped": []
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              5
+            ],
+            "labels": [
+              "5"
+            ],
+            "mapped": [
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              0,
+              2.5,
+              5,
+              7.5,
+              10
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.375,
+              0.53125,
+              0.6875,
+              0.84375,
+              1
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              0
+            ],
+            "labels": [
+              "0"
+            ],
+            "mapped": [
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [],
+            "labels": [],
+            "mapped": []
+          }
+        ]
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "continuous",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              5
+            ],
+            "labels": [
+              "5"
+            ],
+            "mapped": [
+              0.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.09375,
+          0.34375,
+          0.90625
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "2.5",
+              "5.0",
+              "7.5",
+              "9"
+            ],
+            "mapped": [
+              0.09375,
+              0.34375,
+              0.65625,
+              0.90625,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "argument is of length zero"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.125,
+          0.375,
+          0.875
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.125,
+              0.375,
+              0.625,
+              0.875,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.1388888888888889,
+          0.41666666666666669,
+          0.91666666666666674
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "9"
+            ],
+            "mapped": [
+              0.1388888888888889,
+              0.41666666666666669,
+              0.69444444444444442,
+              0.91666666666666674,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.125,
+              0.375,
+              0.625,
+              0.875,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          0.5,
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.125,
+              0.375,
+              0.625,
+              0.875,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "range",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.19444444444444445,
+          0.41666666666666669,
+          0.91666666666666674
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "2.5",
+              "5.0",
+              "7.5",
+              "9"
+            ],
+            "mapped": [
+              0.19444444444444445,
+              0.41666666666666669,
+              0.69444444444444442,
+              0.91666666666666674,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "argument is of length zero"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.125,
+          0.375,
+          0.875
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.125,
+              0.375,
+              0.625,
+              0.875,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.1388888888888889,
+          0.41666666666666669,
+          0.91666666666666674
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "9"
+            ],
+            "mapped": [
+              0.1388888888888889,
+              0.41666666666666669,
+              0.69444444444444442,
+              0.91666666666666674,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.125,
+              0.375,
+              0.625,
+              0.875,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          0.5,
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          0.5,
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          0.5,
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.125,
+              0.375,
+              0.625,
+              0.875,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "maximum",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "identity",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.48214285714285715,
+          0.625,
+          0.9464285714285714
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "1",
+              "2.5",
+              "5.0",
+              "7.5",
+              "9"
+            ],
+            "mapped": [
+              0.48214285714285715,
+              0.625,
+              0.8035714285714286,
+              0.9464285714285714,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "reverse",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "argument is of length zero"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "fixed",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.453125,
+          0.609375,
+          0.921875
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.453125,
+              0.609375,
+              0.765625,
+              0.921875,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "lower_zero",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.4464285714285714,
+          0.625,
+          0.9464285714285714
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "9"
+            ],
+            "mapped": [
+              0.4464285714285714,
+              0.625,
+              0.8035714285714286,
+              0.9464285714285714,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "missing_lower",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "empty",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "spaced",
+      "control": "single",
+      "inputs": [
+        1,
+        3,
+        9
+      ],
+      "result": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "identity",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "reverse",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "fixed",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          null,
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.453125,
+              0.609375,
+              0.765625,
+              0.921875,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "lower_zero",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "missing_lower",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "missing value where TRUE/FALSE needed"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "empty",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "error": "`x` must be length 1 or 2"
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "all_missing",
+      "control": "single",
+      "inputs": [
+        null,
+        null
+      ],
+      "result": {
+        "values": [
+          0.5,
+          0.5
+        ],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "identity",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "reverse",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "fixed",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": [
+          {
+            "values": [
+              0,
+              0.25,
+              0.5,
+              0.75,
+              1
+            ],
+            "labels": [
+              "0.0",
+              "2.5",
+              "5.0",
+              "7.5",
+              "10.0"
+            ],
+            "mapped": [
+              0.453125,
+              0.609375,
+              0.765625,
+              0.921875,
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "lower_zero",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "missing_lower",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "empty",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    },
+    {
+      "kind": "binned",
+      "rescaler": "midpoint",
+      "population": "empty",
+      "control": "single",
+      "inputs": [],
+      "result": {
+        "values": [],
+        "keys": []
+      }
+    }
+  ]
+}

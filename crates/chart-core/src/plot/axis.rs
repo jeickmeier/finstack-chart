@@ -56,6 +56,19 @@ pub fn scale_registered(
         }),
     }
 }
+/// Explicit shared positional transformation, before statistics under ggplot2.
+pub fn scale_transform(transform: ScaleTransform) -> ScaleBuilder {
+    ScaleBuilder {
+        value: match &transform {
+            ScaleTransform::Ggplot { transform } => transform.validate_authoring(),
+            _ => transform.validate(),
+        }
+        .map(|_| AxisScale::Nonlinear {
+            transform,
+            domain: ContinuousDomain::default(),
+        }),
+    }
+}
 /// Nonnegative square-root positional transformation, before statistics under ggplot2.
 pub fn scale_sqrt() -> ScaleBuilder {
     ScaleBuilder {
@@ -134,16 +147,11 @@ pub fn scale_date() -> ScaleBuilder {
         value: Ok(AxisScale::Date { domain: None }),
     }
 }
-/// D3-compatible exact timestamp knots with an explicit UTC or local calendar.
+/// Exact timestamp knots with an explicit UTC or local calendar.
+/// An empty domain infers its endpoints from the chart population.
 pub fn scale_calendar(spec: TimeScaleSpec) -> ScaleBuilder {
     ScaleBuilder {
-        value: TimeAxisScale::resolve(
-            spec.clone(),
-            Bounds::new(0., 1.).expect("finite"),
-            None,
-            OutsidePolicy::Extend,
-        )
-        .map(|_| AxisScale::Calendar {
+        value: TimeAxisScale::validate_axis_spec(&spec).map(|_| AxisScale::Calendar {
             spec,
             interval: None,
         }),
@@ -371,7 +379,99 @@ pub fn y_axis() -> AxisBuilder {
         secondary_transform: None,
     }
 }
+
+/// Typed limits for the reference `xlim` and `ylim` constructor helpers.
+/// Numeric and temporal vectors require two endpoints; discrete vectors retain
+/// arbitrary authored order, including empty and missing-category limits.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub enum PositionalLimits {
+    /// Numeric endpoints, with absent values filled from the current population.
+    Numeric(Vec<Option<crate::interpolate::Number>>),
+    /// Character or factor labels and explicit missing-category identities.
+    Discrete(Vec<ScaleKey>),
+    /// Exact timestamp endpoints with Date breaks and labels.
+    Date(Vec<Option<ScaleValue>>),
+    /// Exact timestamp endpoints with UTC datetime breaks and labels.
+    Datetime(Vec<Option<ScaleValue>>),
+}
+
+/// Construct x limits using the selected reference numeric/category/temporal family.
+pub fn xlim(limits: PositionalLimits) -> AxisBuilder {
+    helper_limits(x_axis(), limits)
+}
+
+/// Construct y limits using the selected reference numeric/category/temporal family.
+pub fn ylim(limits: PositionalLimits) -> AxisBuilder {
+    helper_limits(y_axis(), limits)
+}
+
+fn helper_limits(mut axis: AxisBuilder, limits: PositionalLimits) -> AxisBuilder {
+    let date = matches!(&limits, PositionalLimits::Date(_));
+    match limits {
+        PositionalLimits::Discrete(values) => {
+            axis.scale(scale_band())
+                .discrete_policy(Some(GgplotDiscretePosition {
+                    limits: Some(values),
+                    ..Default::default()
+                }))
+        }
+        PositionalLimits::Numeric(values) => {
+            let Ok(values) = <[Option<crate::interpolate::Number>; 2]>::try_from(values) else {
+                axis.failure = Some(error(
+                    DiagnosticCode::Validation,
+                    "Numeric limit helpers require exactly two endpoints.",
+                ));
+                return axis;
+            };
+            let reverse = values[0].zip(values[1]).is_some_and(|(a, b)| a.0 > b.0);
+            axis.scale(if reverse {
+                scale_reverse()
+            } else {
+                scale_linear()
+            })
+            .numeric_limits(Some(values))
+        }
+        PositionalLimits::Date(values) | PositionalLimits::Datetime(values) => {
+            let Ok(values) = <[Option<ScaleValue>; 2]>::try_from(values) else {
+                axis.failure = Some(error(
+                    DiagnosticCode::Validation,
+                    "Temporal limit helpers require exactly two endpoints.",
+                ));
+                return axis;
+            };
+            axis.scale(if date { scale_date() } else { scale_utc() })
+                .temporal_limits(Some(values))
+        }
+    }
+}
+
 impl AxisBuilder {
+    /// Set ggplot numeric source limits, filling missing endpoints from the population.
+    pub fn numeric_limits(
+        mut self,
+        limits: Option<[Option<crate::interpolate::Number>; 2]>,
+    ) -> Self {
+        self.spec.numeric_limits = limits;
+        self
+    }
+
+    /// Set exact timestamp population endpoints on a Date, UTC or calendar scale.
+    /// Use `time_value` for each present endpoint; missing endpoints retrain after
+    /// data changes. Descending endpoints retain temporal orientation.
+    pub fn temporal_limits(mut self, limits: Option<[Option<ScaleValue>; 2]>) -> Self {
+        self.spec.temporal_limits = limits;
+        self
+    }
+
+    /// Resolve registered positional limits before statistics and after positions.
+    /// Date/UTC callbacks receive source-unit offsets with exact origin/unit metadata;
+    /// returned fractional limits remain relative until geometry and guide projection.
+    pub fn limits_function(mut self, operation: crate::grammar::ScaleLimitsOperation) -> Self {
+        self.spec.limits_function = Some(Box::new(operation));
+        self
+    }
+
     /// Set factor levels, nullable category limits and reference guide selection.
     pub fn discrete_policy(
         mut self,
@@ -397,6 +497,18 @@ impl AxisBuilder {
     pub fn coordinate_scale(mut self, scale: ScaleBuilder) -> Self {
         self.spec.scale_stage = Some(crate::grammar::ScaleStage::AfterStatistics);
         self.scale(scale)
+    }
+    /// Replace missing positional values after transformation and OOB handling.
+    /// The replacement uses transformed units; `None` preserves missing values.
+    /// Duration axes retain ggplot2 4.0.3's no-op behavior for this argument.
+    pub fn missing_value(mut self, value: Option<crate::interpolate::Number>) -> Self {
+        self.spec.population_missing = value;
+        self
+    }
+    /// Select a pure vector function for positional out-of-bounds mapping.
+    pub fn oob_function(mut self, operation: Option<crate::grammar::ScaleVectorOperation>) -> Self {
+        self.spec.oob_function = operation.map(Box::new);
+        self
     }
     /// Explicit population handling outside scale limits; viewport clipping is separate.
     pub fn oob(mut self, policy: crate::grammar::ScaleOob) -> Self {
@@ -544,9 +656,20 @@ impl AxisBuilder {
         self.spec.minor_breaks = policy;
         self
     }
+    /// Select reference major breaks using an installed pure function.
+    pub fn breaks_function(
+        mut self,
+        operation: Option<crate::grammar::ScaleBreaksOperation>,
+    ) -> Self {
+        self.spec.breaks_function = operation.map(Box::new);
+        self.spec.tick_values = None;
+        self.spec.guide_ticks = None;
+        self
+    }
     /// Replace typed tick values independently of formatting. None restores automatic values.
     pub fn tick_values(mut self, values: Option<Vec<ScaleValue>>) -> Self {
         self.spec.tick_values = values;
+        self.spec.breaks_function = None;
         self.spec.guide_ticks = None;
         self
     }
@@ -560,6 +683,7 @@ impl AxisBuilder {
     }
     /// Supply coupled legacy tick values and labels; the D3 profile preserves empty labels.
     pub fn ticks(mut self, ticks: impl IntoIterator<Item = (ScaleValue, String)>) -> Self {
+        self.spec.breaks_function = None;
         self.spec.guide_ticks = Some(
             ticks
                 .into_iter()
@@ -820,9 +944,20 @@ impl GuideBuilder {
         self.spec.minor_breaks = policy;
         self
     }
+    /// Select reference major breaks using an installed pure function.
+    pub fn breaks_function(
+        mut self,
+        operation: Option<crate::grammar::ScaleBreaksOperation>,
+    ) -> Self {
+        self.spec.breaks_function = operation.map(Box::new);
+        self.spec.tick_values = None;
+        self.spec.guide_ticks = None;
+        self
+    }
     /// Replace typed tick values independently of formatting. None restores automatic values.
     pub fn tick_values(mut self, values: Option<Vec<ScaleValue>>) -> Self {
         self.spec.tick_values = values;
+        self.spec.breaks_function = None;
         self.spec.guide_ticks = None;
         self
     }
@@ -836,6 +971,7 @@ impl GuideBuilder {
     }
     /// Supply coupled legacy tick values and labels; the D3 profile preserves empty labels.
     pub fn ticks(mut self, ticks: impl IntoIterator<Item = (ScaleValue, String)>) -> Self {
+        self.spec.breaks_function = None;
         self.spec.guide_ticks = Some(
             ticks
                 .into_iter()

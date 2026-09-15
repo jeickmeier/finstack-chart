@@ -1,0 +1,1663 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "colour",
+      "kind": "date",
+      "zone": "UTC",
+      "epoch": 1704067200,
+      "control": "width",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "calls": [],
+      "label_calls": [
+        {
+          "values": [
+            19723,
+            19724,
+            19725,
+            19726,
+            19727
+          ],
+          "class": [
+            "Date"
+          ],
+          "zone": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.333888888888889,
+              0.666111111111111,
+              0.998333333333333
+            ],
+            "labels": [
+              "1/5",
+              "2/5",
+              "3/5",
+              "4/5"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "date",
+      "zone": "UTC",
+      "epoch": 1704067200,
+      "control": "format",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "calls": [
+        {
+          "values": [
+            19723,
+            19726
+          ],
+          "class": [
+            "Date"
+          ],
+          "zone": [],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "2024-01-04",
+              "2024-01-02",
+              "2024-01-01",
+              "2024-01-01"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "date",
+      "zone": "UTC",
+      "epoch": 1704067200,
+      "control": "both",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.333888888888889,
+              0.666111111111111,
+              0.998333333333333
+            ],
+            "labels": [
+              "2024-01-01",
+              "2024-01-02",
+              "2024-01-03",
+              "2024-01-04"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1710046800,
+      "control": "width",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [],
+      "label_calls": [
+        {
+          "values": [
+            1710046800,
+            1710050400,
+            1710054000,
+            1710057600,
+            1710061200
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "UTC"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.333888888888889,
+              0.666111111111111,
+              0.998333333333333
+            ],
+            "labels": [
+              "1/5",
+              "2/5",
+              "3/5",
+              "4/5"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1710046800,
+      "control": "format",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [
+        {
+          "values": [
+            1710046800,
+            1710057600
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "UTC"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "08:00",
+              "06:30",
+              "05:00",
+              "05:00"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1710046800,
+      "control": "both",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.333888888888889,
+              0.666111111111111,
+              0.998333333333333
+            ],
+            "labels": [
+              "05:00",
+              "06:00",
+              "07:00",
+              "08:00"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1730606400,
+      "control": "width",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [],
+      "label_calls": [
+        {
+          "values": [
+            1730606400,
+            1730610000,
+            1730613600,
+            1730617200,
+            1730620800
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "UTC"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.333888888888889,
+              0.666111111111111,
+              0.998333333333333
+            ],
+            "labels": [
+              "1/5",
+              "2/5",
+              "3/5",
+              "4/5"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1730606400,
+      "control": "format",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [
+        {
+          "values": [
+            1730606400,
+            1730617200
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "UTC"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "07:00",
+              "05:30",
+              "04:00",
+              "04:00"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1730606400,
+      "control": "both",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.333888888888889,
+              0.666111111111111,
+              0.998333333333333
+            ],
+            "labels": [
+              "04:00",
+              "05:00",
+              "06:00",
+              "07:00"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1710046800,
+      "control": "width",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [],
+      "label_calls": [
+        {
+          "values": [
+            1710046800,
+            1710050400,
+            1710054000,
+            1710057600,
+            1710061200
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "America/New_York"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.333888888888889,
+              0.666111111111111,
+              0.998333333333333
+            ],
+            "labels": [
+              "1/5",
+              "2/5",
+              "3/5",
+              "4/5"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1710046800,
+      "control": "format",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [
+        {
+          "values": [
+            1710046800,
+            1710057600
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "America/New_York"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "04:00",
+              "01:30",
+              "00:00",
+              "00:00"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1710046800,
+      "control": "both",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.333888888888889,
+              0.666111111111111,
+              0.998333333333333
+            ],
+            "labels": [
+              "00:00",
+              "01:00",
+              "03:00",
+              "04:00"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1730606400,
+      "control": "width",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [],
+      "label_calls": [
+        {
+          "values": [
+            1730606400,
+            1730610000,
+            1730613600,
+            1730617200,
+            1730620800
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "America/New_York"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.333888888888889,
+              0.666111111111111,
+              0.998333333333333
+            ],
+            "labels": [
+              "1/5",
+              "2/5",
+              "3/5",
+              "4/5"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1730606400,
+      "control": "format",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [
+        {
+          "values": [
+            1730606400,
+            1730617200
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "America/New_York"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.998333333333333,
+              0.5,
+              0.00166666666666667,
+              0.00166666666666667
+            ],
+            "labels": [
+              "02:00",
+              "01:30",
+              "00:00",
+              "00:00"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "colour",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1730606400,
+      "control": "both",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              0.00166666666666667,
+              0.333888888888889,
+              0.666111111111111,
+              0.998333333333333
+            ],
+            "labels": [
+              "00:00",
+              "01:00",
+              "01:00",
+              "02:00"
+            ]
+          }
+        ],
+        "mapped": [
+          "#132B43",
+          "#28547A",
+          "#3E81B7",
+          "#56B1F7"
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "date",
+      "zone": "UTC",
+      "epoch": 1704067200,
+      "control": "width",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "calls": [],
+      "label_calls": [
+        {
+          "values": [
+            19723,
+            19724,
+            19725,
+            19726,
+            19727
+          ],
+          "class": [
+            "Date"
+          ],
+          "zone": [],
+          "names": []
+        }
+      ],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              19723,
+              19724,
+              19725,
+              19726
+            ],
+            "labels": [
+              "1/5",
+              "2/5",
+              "3/5",
+              "4/5"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "date",
+      "zone": "UTC",
+      "epoch": 1704067200,
+      "control": "format",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "calls": [
+        {
+          "values": [
+            19723,
+            19726
+          ],
+          "class": [
+            "Date"
+          ],
+          "zone": [],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              19726,
+              19724.5,
+              19723,
+              19723
+            ],
+            "labels": [
+              "2024-01-04",
+              "2024-01-02",
+              "2024-01-01",
+              "2024-01-01"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "date",
+      "zone": "UTC",
+      "epoch": 1704067200,
+      "control": "both",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        19723,
+        19724,
+        19725,
+        19726
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              19723,
+              19724,
+              19725,
+              19726
+            ],
+            "labels": [
+              "2024-01-01",
+              "2024-01-02",
+              "2024-01-03",
+              "2024-01-04"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1710046800,
+      "control": "width",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [],
+      "label_calls": [
+        {
+          "values": [
+            1710046800,
+            1710050400,
+            1710054000,
+            1710057600,
+            1710061200
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "UTC"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1710046800,
+              1710050400,
+              1710054000,
+              1710057600
+            ],
+            "labels": [
+              "1/5",
+              "2/5",
+              "3/5",
+              "4/5"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1710046800,
+      "control": "format",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [
+        {
+          "values": [
+            1710046800,
+            1710057600
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "UTC"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1710057600,
+              1710052200,
+              1710046800,
+              1710046800
+            ],
+            "labels": [
+              "08:00",
+              "06:30",
+              "05:00",
+              "05:00"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1710046800,
+      "control": "both",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1710046800,
+              1710050400,
+              1710054000,
+              1710057600
+            ],
+            "labels": [
+              "05:00",
+              "06:00",
+              "07:00",
+              "08:00"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1730606400,
+      "control": "width",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [],
+      "label_calls": [
+        {
+          "values": [
+            1730606400,
+            1730610000,
+            1730613600,
+            1730617200,
+            1730620800
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "UTC"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1730606400,
+              1730610000,
+              1730613600,
+              1730617200
+            ],
+            "labels": [
+              "1/5",
+              "2/5",
+              "3/5",
+              "4/5"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1730606400,
+      "control": "format",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [
+        {
+          "values": [
+            1730606400,
+            1730617200
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "UTC"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1730617200,
+              1730611800,
+              1730606400,
+              1730606400
+            ],
+            "labels": [
+              "07:00",
+              "05:30",
+              "04:00",
+              "04:00"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "UTC",
+      "epoch": 1730606400,
+      "control": "both",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1730606400,
+              1730610000,
+              1730613600,
+              1730617200
+            ],
+            "labels": [
+              "04:00",
+              "05:00",
+              "06:00",
+              "07:00"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1710046800,
+      "control": "width",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [],
+      "label_calls": [
+        {
+          "values": [
+            1710046800,
+            1710050400,
+            1710054000,
+            1710057600,
+            1710061200
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "America/New_York"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1710046800,
+              1710050400,
+              1710054000,
+              1710057600
+            ],
+            "labels": [
+              "1/5",
+              "2/5",
+              "3/5",
+              "4/5"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1710046800,
+      "control": "format",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [
+        {
+          "values": [
+            1710046800,
+            1710057600
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "America/New_York"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1710057600,
+              1710052200,
+              1710046800,
+              1710046800
+            ],
+            "labels": [
+              "04:00",
+              "01:30",
+              "00:00",
+              "00:00"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1710046800,
+      "control": "both",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1710046800,
+        1710050400,
+        1710054000,
+        1710057600
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1710046800,
+              1710050400,
+              1710054000,
+              1710057600
+            ],
+            "labels": [
+              "00:00",
+              "01:00",
+              "03:00",
+              "04:00"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1730606400,
+      "control": "width",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [],
+      "label_calls": [
+        {
+          "values": [
+            1730606400,
+            1730610000,
+            1730613600,
+            1730617200,
+            1730620800
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "America/New_York"
+          ],
+          "names": []
+        }
+      ],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1730606400,
+              1730610000,
+              1730613600,
+              1730617200
+            ],
+            "labels": [
+              "1/5",
+              "2/5",
+              "3/5",
+              "4/5"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1730606400,
+      "control": "format",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [
+        {
+          "values": [
+            1730606400,
+            1730617200
+          ],
+          "class": [
+            "POSIXct",
+            "POSIXt"
+          ],
+          "zone": [
+            "America/New_York"
+          ],
+          "names": [],
+          "count": 3,
+          "effective": 3
+        }
+      ],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1730617200,
+              1730611800,
+              1730606400,
+              1730606400
+            ],
+            "labels": [
+              "02:00",
+              "01:30",
+              "00:00",
+              "00:00"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    },
+    {
+      "channel": "size",
+      "kind": "datetime",
+      "zone": "America/New_York",
+      "epoch": 1730606400,
+      "control": "both",
+      "population": "spaced",
+      "limits": "none",
+      "signature": "n",
+      "count": "three",
+      "mode": "mixed",
+      "inputs": [
+        1730606400,
+        1730610000,
+        1730613600,
+        1730617200
+      ],
+      "calls": [],
+      "label_calls": [],
+      "result": {
+        "keys": [
+          {
+            "values": [
+              1730606400,
+              1730610000,
+              1730613600,
+              1730617200
+            ],
+            "labels": [
+              "00:00",
+              "01:00",
+              "01:00",
+              "02:00"
+            ]
+          }
+        ],
+        "mapped": [
+          1,
+          3.88675134594813,
+          5.08248290463863,
+          6
+        ]
+      }
+    }
+  ]
+}

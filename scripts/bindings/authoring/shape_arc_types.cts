@@ -11,7 +11,7 @@ new ShapePie({order:'DataDescending'});
 // @ts-expect-error nonnumeric data requires values
 new ShapePie().layout(['a']);
 // @ts-expect-error exact named channel
-shapePie().shapeValue('Radius','weight');
+shapePie().shapeValue('UnknownChannel','weight');
 // @ts-expect-error missing is represented by omission
 new ShapeArc().centroid({end_angle:null});
 const exactPieId:string=new ShapePie().layout([{id:9007199254741001n}],[1])[0].data.id;

@@ -265,7 +265,9 @@ fn vertices(p: &Primitive) -> usize {
             .sum(),
         Primitive::Point { .. } | Primitive::Symbol { .. } => 1,
         Primitive::Rule { .. } => 2,
-        Primitive::Rectangle { .. } | Primitive::GradientRectangle { .. } => 4,
+        Primitive::Rectangle { .. }
+        | Primitive::GradientRectangle { .. }
+        | Primitive::SampledGradientRectangle { .. } => 4,
         _ => 0,
     }
 }

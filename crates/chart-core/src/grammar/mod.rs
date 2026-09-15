@@ -59,8 +59,8 @@ mod stack_position;
 pub use after_scale::*;
 mod colors;
 mod style_channels;
-pub(crate) use style_channels::reference_linewidth;
 pub use style_channels::{AestheticUnits, LineType, ValueAesthetic};
+pub(crate) use style_channels::{reference_linewidth, reference_point_radius};
 mod numeric_aesthetics;
 mod radial_shapes;
 mod shape_encoding;
@@ -88,6 +88,7 @@ pub use hierarchy::{
 pub(crate) mod hierarchy_extensions;
 pub use hierarchy_extensions::{CustomHierarchyOperation, HierarchyScalar};
 pub(crate) mod interpolation_extensions;
+mod palette_theme;
 pub use interpolation_extensions::{CustomInterpolationFactory, InterpolationInput};
 mod prepared;
 mod scale_extensions;
@@ -128,3 +129,29 @@ pub use symbols::{SymbolEncoding, SymbolLegend, SymbolLegendEntry, SymbolSizeGui
 
 mod scale_limit_extensions;
 pub use scale_limit_extensions::{CustomScaleLimits, ScaleLimitsInput, ScaleLimitsOperation};
+
+pub(crate) mod scale_break_extensions;
+pub use scale_break_extensions::{
+    CustomScaleBreaks, ScaleBreaksInput, ScaleBreaksOperation, ScaleBreaksOutput,
+};
+
+pub(crate) mod scale_palette_extensions;
+pub use scale_palette_extensions::{
+    CustomScalePalette, ScalePaletteDomain, ScalePaletteInput, ScalePaletteOperation,
+    ScalePaletteOutput,
+};
+
+pub(crate) mod scale_vector_extensions;
+pub use scale_vector_extensions::{
+    CustomScaleVector, ScaleVectorInput, ScaleVectorOperation, ScaleVectorStage,
+};
+
+mod positional_vectors;
+
+pub(crate) mod transform_extensions;
+pub use transform_extensions::{
+    CustomTransformFactory, PointwiseTransform, PreparedTransform, TransformOperation,
+    TransformSelection,
+};
+
+mod transform_resolution;

@@ -10,6 +10,7 @@ mod coordinates;
 mod engine;
 mod facets;
 mod hierarchy;
+mod legend_colorbar;
 pub use hierarchy::{HierarchyHistoryEntry, HierarchySnapshot, ResolvedHierarchy};
 mod guide_components;
 mod guide_config;
@@ -17,10 +18,13 @@ pub use guide_components::{GuideComponents, GuideLineStyle, GuideTextStyle, Guid
 mod guide_geometry;
 pub use guide_geometry::{GuideGeometry, GuideLabelPolicy, GuideOverflow};
 mod guide_animation;
+mod guide_breaks;
+mod guide_discrete;
 mod guide_selection;
 mod guide_ticks;
 mod guide_transition;
 mod minor_breaks;
+mod temporal_minor_breaks;
 pub use guide_animation::{GuidePresentationSnapshot, LayoutGuideTransition};
 pub use guide_config::*;
 pub use guide_transition::{

@@ -239,7 +239,7 @@ pub(super) fn apply(
                     stroke.width = w;
                 }
             }
-            Primitive::GradientRectangle { .. } => {}
+            Primitive::GradientRectangle { .. } | Primitive::SampledGradientRectangle { .. } => {}
             Primitive::Rectangle { fill, .. }
             | Primitive::NativePaint { fill, .. }
             | Primitive::Point { fill, .. }
@@ -368,6 +368,11 @@ pub(super) fn monochrome(p: &mut Primitive, mode: Option<crate::theme::ColorMode
         | Primitive::Path { stroke, .. }
         | Primitive::DashedPath { stroke, .. } => apply(&mut stroke.color),
         Primitive::Text { color, .. } | Primitive::GlyphRun { color, .. } => apply(color),
+        Primitive::SampledGradientRectangle { colors, .. } => {
+            for color in colors {
+                apply(color);
+            }
+        }
         Primitive::GradientRectangle { gradient, .. } => {
             apply(&mut gradient.start);
             apply(&mut gradient.end);

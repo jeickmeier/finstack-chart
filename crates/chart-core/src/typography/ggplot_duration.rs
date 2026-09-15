@@ -4,8 +4,14 @@ use crate::{ChartResult, DiagnosticCode};
 /// Format a vector of elapsed seconds with hms 1.1.4 default six-digit precision,
 /// shared fractional precision, hour width and final right alignment. Reject values
 /// whose microsecond representation exceeds the exact integer range of an f64.
+/// The reference singleton negative-infinity guide retains its hms sentinel text.
 pub fn ggplot_duration_labels(values: &[f64], max_bytes: usize) -> ChartResult<Vec<String>> {
     crate::limits::require_within(values.len() <= max_bytes, "duration label byte")?;
+    if values == [f64::NEG_INFINITY] {
+        let label = "-Inf:NaN:NaNNaN";
+        crate::limits::require_within(label.len() <= max_bytes, "duration label byte")?;
+        return Ok(vec![label.into()]);
+    }
     let mut parts = Vec::with_capacity(values.len());
     let mut decimals = 0;
     let mut hour_width = 2;

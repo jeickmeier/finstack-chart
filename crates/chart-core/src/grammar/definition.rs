@@ -61,6 +61,11 @@ pub enum Numeric {
         input: Box<Numeric>,
         /// Resolved transform, limits, out-of-bounds policy and scale identity.
         scale: Box<super::ScaleProjection>,
+        /// Execution-local vector results by durable source row; never serialized.
+        #[serde(skip)]
+        samples: Option<
+            std::sync::Arc<std::collections::BTreeMap<crate::RowKey, crate::interpolate::Number>>,
+        >,
     },
     /// Numeric source field; integer precision is checked, timestamps require `Timestamp`.
     Field(FieldId),
@@ -558,6 +563,8 @@ pub enum LineOrder {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum Geom {
+    /// Train mapped scales without emitting geometry or inspection targets.
+    Blank,
     /// Deferred hierarchy nodes/edges calculated after destination panel allocation.
     Hierarchy,
     /// Radial authored runs around one x/y center per run, with destination-unit radii.
@@ -789,7 +796,9 @@ pub struct Style<P = Color> {
     /// Independent line type, with dash lengths relative to stroke width.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub line_type: Option<super::LineType>,
-    /// Positive point radius in eventual destination units.
+    /// Point size in eventual destination units; reference mapped sizes retain
+    /// infinities for inspection while their glyphs have no drawable path.
+    #[serde(with = "crate::number::finite_or_special")]
     pub radius: f64,
     /// Positive stroke width in eventual destination units.
     pub stroke_width: f64,
@@ -1077,8 +1086,331 @@ pub struct ChartDefinition {
     pub layers: Vec<Layer>,
 }
 impl ChartDefinition {
+    pub(crate) fn any_ggplot_transform(
+        &self,
+        required: impl Fn(&crate::scales::GgplotTransform) -> bool + Copy,
+    ) -> bool {
+        super::interpolation_extensions::mapped_scales(self)
+            .any(|s| s.ggplot_transform().is_some_and(required))
+            || self.axes.iter().any(|a| {
+                let transform = match &a.scale {
+                    crate::layout::AxisScale::Nonlinear { transform, .. } => {
+                        transform.ggplot_transform()
+                    }
+                    crate::layout::AxisScale::Binned { spec, prepared } => {
+                        if prepared
+                            .as_ref()
+                            .and_then(|p| p.authored().transform.as_ref())
+                            .and_then(crate::scales::ScaleTransform::ggplot_transform)
+                            .is_some_and(required)
+                        {
+                            return true;
+                        }
+                        spec.transform
+                            .as_ref()
+                            .and_then(crate::scales::ScaleTransform::ggplot_transform)
+                    }
+                    crate::layout::AxisScale::Numeric(s) => s.family.ggplot_transform(),
+                    crate::layout::AxisScale::Secondary {
+                        transform: Some(s), ..
+                    } => s.family.ggplot_transform(),
+                    _ => None,
+                };
+                transform.is_some_and(required)
+            })
+            || self.has_scale_mapping(|s| {
+                s.transform
+                    .as_ref()
+                    .and_then(crate::scales::ScaleTransform::ggplot_transform)
+                    .is_some_and(required)
+                    || s.binned.as_ref().is_some_and(|b| {
+                        b.authored()
+                            .transform
+                            .as_ref()
+                            .and_then(crate::scales::ScaleTransform::ggplot_transform)
+                            .is_some_and(required)
+                    })
+            })
+    }
     /// Minimum definition-envelope version required by its retained capabilities.
     pub fn wire_version(&self) -> u32 {
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            scale
+                .colorbar_options
+                .as_deref()
+                .is_some_and(|o| o.alpha.is_some())
+        }) {
+            return 67;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            scale
+                .colorbar_options
+                .as_deref()
+                .is_some_and(|o| o.display != crate::scales::GgplotColorbarDisplay::Raster)
+        }) {
+            return 66;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            scale
+                .colorbar_options
+                .as_deref()
+                .is_some_and(crate::scales::GgplotColorbarOptions::has_presentation)
+        }) {
+            return 65;
+        }
+        if super::interpolation_extensions::mapped_scales(self)
+            .any(|scale| scale.colorbar_options.is_some())
+        {
+            return 64;
+        }
+        if super::interpolation_extensions::mapped_scales(self)
+            .any(|scale| scale.resolved_discrete_limits_null)
+        {
+            return 63;
+        }
+        if self.axes.iter().any(|a| {
+            matches!(a.scale, crate::layout::AxisScale::Secondary { .. })
+                && a.breaks_function.is_some()
+        }) {
+            return 62;
+        }
+        if self.axes.iter().any(|a| {
+            a.discrete
+                .as_ref()
+                .is_some_and(|p| p.palette_function.is_some())
+        }) {
+            return 61;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(
+                scale.guide.as_deref(),
+                Some(
+                    crate::scales::GgplotScaleGuide::TemporalBins(_)
+                        | crate::scales::GgplotScaleGuide::TemporalSteps(_)
+                )
+            )
+        }) {
+            return 60;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(
+                scale.guide.as_deref(),
+                Some(crate::scales::GgplotScaleGuide::TemporalColorbar(_))
+            )
+        }) {
+            return 59;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(
+                scale.guide.as_deref(),
+                Some(
+                    crate::scales::GgplotScaleGuide::ContinuousBins(_)
+                        | crate::scales::GgplotScaleGuide::ContinuousSteps(_)
+                )
+            )
+        }) {
+            return 58;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(
+                scale.guide.as_deref(),
+                Some(crate::scales::GgplotScaleGuide::Colorbar(_))
+            )
+        }) {
+            return 57;
+        }
+        if super::interpolation_extensions::mapped_scales(self)
+            .any(|scale| scale.trained_transformed_bounds.is_some())
+        {
+            return 56;
+        }
+        for version in [55, 54, 53] {
+            let required = |t: &crate::scales::GgplotTransform| match version {
+                55 => t.has_registered(),
+                54 => matches!(t, crate::scales::GgplotTransform::Compose { .. }),
+                _ => true,
+            };
+            if self.any_ggplot_transform(required) {
+                return version;
+            }
+        }
+
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(&scale.function,crate::scales::ScaleFunctionSpec::Interpolated(s)
+                if matches!(&s.output,crate::scales::ScaleRangeFunction::Interpolate(i) if i.wire_version()==5))
+        }) {return 52;}
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(&scale.function,crate::scales::ScaleFunctionSpec::Interpolated(s)
+                if matches!(&s.output,crate::scales::ScaleRangeFunction::Interpolate(i) if i.wire_version()==4))
+        }) {return 51;}
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(scale.ggplot.as_deref(), Some(crate::scales::GgplotScalePolicy::Discrete {
+                palette: crate::scales::GgplotDiscretePalette::Qualitative { .. }, ..
+            })) || matches!(scale.ggplot.as_deref(), Some(crate::scales::GgplotScalePolicy::Binned(policy))
+                if matches!(policy.palette.as_ref(), Some(crate::scales::GgplotBinnedPalette::Discrete(p))
+                    if matches!(p.as_ref(), crate::scales::GgplotDiscretePalette::Qualitative { .. })))
+        }) { return 50; }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(scale.ggplot.as_deref(), Some(crate::scales::GgplotScalePolicy::Discrete {
+                palette: crate::scales::GgplotDiscretePalette::OrdinalColors(_), ..
+            })) || matches!(scale.ggplot.as_deref(), Some(crate::scales::GgplotScalePolicy::Binned(policy))
+                if matches!(policy.palette.as_ref(), Some(crate::scales::GgplotBinnedPalette::Discrete(p))
+                    if matches!(p.as_ref(), crate::scales::GgplotDiscretePalette::OrdinalColors(_))))
+        }) { return 49; }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            matches!(scale.ggplot.as_deref(), Some(crate::scales::GgplotScalePolicy::Binned(policy))
+                if matches!(policy.palette, Some(crate::scales::GgplotBinnedPalette::Discrete(_))))
+        }) {
+            return 48;
+        }
+        if self
+            .theme
+            .as_ref()
+            .is_some_and(|theme| theme.required_version() == 5)
+            || super::interpolation_extensions::mapped_scales(self).any(|scale| {
+                matches!(
+                    scale.ggplot.as_deref(),
+                    Some(crate::scales::GgplotScalePolicy::Discrete {
+                        palette: crate::scales::GgplotDiscretePalette::Named(_),
+                        ..
+                    })
+                )
+            })
+        {
+            return 47;
+        }
+        if self
+            .theme
+            .as_ref()
+            .is_some_and(|theme| theme.required_version() == 4)
+            || super::interpolation_extensions::mapped_scales(self).any(|scale| {
+                matches!(
+                    scale.ggplot.as_deref(),
+                    Some(crate::scales::GgplotScalePolicy::Discrete {
+                        palette: crate::scales::GgplotDiscretePalette::Values(_),
+                        ..
+                    })
+                )
+            })
+        {
+            return 46;
+        }
+        if self
+            .theme
+            .as_ref()
+            .is_some_and(|theme| !theme.scale_palettes.is_empty())
+            || super::interpolation_extensions::mapped_scales(self)
+                .any(|scale| !scale.palette_theme_aesthetics.is_empty())
+        {
+            return 45;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|s| {
+            matches!(
+                s.guide.as_deref(),
+                Some(
+                    crate::scales::GgplotScaleGuide::BinnedBins(_)
+                        | crate::scales::GgplotScaleGuide::BinnedSteps(_)
+                )
+            )
+        }) {
+            return 44;
+        }
+        if self.axes.iter().any(|axis| axis.temporal_limits.is_some()) {
+            return 43;
+        }
+        if self.layers.iter().any(|layer| {
+            layer
+                .color
+                .iter()
+                .chain(layer.paint_scales.values())
+                .any(|color| color.automatic)
+        }) {
+            return 42;
+        }
+        if self.layers.iter().any(|layer| layer.geom == Geom::Blank) {
+            return 41;
+        }
+        if self.axes.iter().any(|a| a.oob_function.is_some()) {
+            return 40;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|s| {
+            matches!(
+                s.guide.as_deref(),
+                Some(crate::scales::GgplotScaleGuide::BinnedLegend(_))
+            )
+        }) {
+            return 39;
+        }
+        if super::interpolation_extensions::mapped_scales(self)
+            .any(|s| s.oob_function.is_some() || s.rescaler_function.is_some())
+        {
+            return 38;
+        }
+        if super::interpolation_extensions::mapped_scales(self)
+            .any(|s| s.palette_function.is_some() || s.missing_paint_is_na)
+        {
+            return 37;
+        }
+        if self
+            .axes
+            .iter()
+            .map(|a| &a.guide)
+            .chain(self.guides.iter().map(|g| &g.style))
+            .any(|g| {
+                matches!(
+                    g.minor_breaks,
+                    Some(crate::layout::MinorBreaks::Registered(_))
+                )
+            })
+        {
+            return 36;
+        }
+        if self.axes.iter().any(|axis| matches!(&axis.scale, crate::layout::AxisScale::Binned { spec, prepared } if spec.breaks_function.is_some() || prepared.as_ref().is_some_and(|p| p.has_break_names()))) || self.has_scale_mapping(|s| s.binned.as_ref().is_some_and(|b| b.has_break_names())) {
+            return 35;
+        }
+        if self
+            .axes
+            .iter()
+            .map(|a| &a.guide)
+            .chain(self.guides.iter().map(|g| &g.style))
+            .any(|g| g.breaks_function.is_some())
+        {
+            return 34;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|s| s.breaks_function.is_some())
+        {
+            return 33;
+        }
+        if super::guide_extensions::scale_label_policies(self)
+            .any(|labels| matches!(labels, crate::scales::GgplotGuideLabels::Registered { .. }))
+            || self.has_scale_mapping(|scale| {
+                scale.binned.as_ref().is_some_and(|bins| {
+                    matches!(
+                        bins.authored().labels,
+                        crate::scales::GgplotGuideLabels::Registered { .. }
+                    )
+                })
+            })
+        {
+            return 32;
+        }
+        if self.axes.iter().any(|a| a.numeric_limits.is_some()) {
+            return 31;
+        }
+        if self.axes.iter().any(|a| a.population_missing.is_some())
+            || self.has_scale_mapping(|s| s.missing.is_some())
+        {
+            return 30;
+        }
+        if self.axes.iter().any(|a| a.limits_function.is_some())
+            || self.has_scale_mapping(|s| s.function_limits.is_some() || s.binned.as_ref().is_some_and(|b| b.function_limits().is_some()))
+            || self.axes.iter().map(|a| &a.guide).chain(self.guides.iter().map(|g| &g.style)).any(|g| {
+                g.tick_values.iter().flatten().chain(g.guide_ticks.iter().flatten().map(|t| &t.value))
+                    .any(|v| matches!(v, crate::composition::ScaleValue::Number(n) if !n.is_finite()))
+            })
+        {
+            return 29;
+        }
         if super::interpolation_extensions::mapped_scales(self).any(|s| s.limits_function.is_some())
         {
             return 28;
@@ -1546,9 +1878,12 @@ impl ChartDefinition {
                 )
         })
     }
-    fn has_scale_mapping(&self, predicate: fn(&super::ScaleProjection) -> bool) -> bool {
+    fn has_scale_mapping(
+        &self,
+        predicate: impl Fn(&super::ScaleProjection) -> bool + Copy,
+    ) -> bool {
         let numeric = |mut value: &Numeric| {
-            while let Numeric::Scaled { input, scale } = value {
+            while let Numeric::Scaled { input, scale, .. } = value {
                 if predicate(scale) {
                     return true;
                 }

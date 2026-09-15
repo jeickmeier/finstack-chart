@@ -14,6 +14,7 @@ pub fn theme() -> ThemeBuilder {
     ThemeBuilder {
         spec: ThemeSpec {
             version: 1,
+            scale_palettes: Default::default(),
             geometry: None,
             named: None,
             plot: ThemePatch::default(),
@@ -88,8 +89,20 @@ impl StyleBuilder {
 impl ThemeBuilder {
     /// Set geometry defaults and tokens available to theme-derived expressions.
     pub fn geometry<P: Into<Paint>>(mut self, geometry: crate::theme::GeometryTheme<P>) -> Self {
-        self.spec.version = 2;
+        self.spec.version = self.spec.version.max(2);
         self.spec.geometry = Some(geometry.map_colors(Into::into));
+        self
+    }
+    /// Set palettes for reference scales that request theme lookup.
+    pub fn scale_palettes<P: Into<crate::theme::ThemeScalePalette>>(
+        mut self,
+        palettes: std::collections::BTreeMap<String, P>,
+    ) -> Self {
+        self.spec.scale_palettes = palettes
+            .into_iter()
+            .map(|(key, value)| (key, value.into()))
+            .collect();
+        self.spec.version = self.spec.required_version();
         self
     }
     /// Select an existing complete named theme.

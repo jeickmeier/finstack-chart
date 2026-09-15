@@ -6,6 +6,12 @@ pub mod guides;
 pub mod hierarchy;
 pub mod interpolate;
 pub mod numeric_limits;
+mod probability_transforms;
+pub mod scale_breaks;
+pub mod scale_labels;
+pub mod scale_palettes;
+pub mod scale_transforms;
+pub mod scale_vectors;
 pub mod scales;
 pub mod shapes;
 use chart_core::{data::*, grammar::*, layout::*, provenance::*, state::*, transaction::*, *};
@@ -311,6 +317,12 @@ pub fn registry() -> ChartResult<Arc<ExtensionRegistry>> {
     scales::register(&mut registry)?;
     interpolate::register(&mut registry)?;
     guides::register(&mut registry)?;
+    scale_labels::register(&mut registry)?;
+    scale_breaks::register(&mut registry)?;
+    scale_palettes::register(&mut registry)?;
+    scale_vectors::register(&mut registry)?;
+    scale_transforms::register(&mut registry)?;
+    probability_transforms::register(&mut registry)?;
     hierarchy::register(&mut registry)?;
     Ok(Arc::new(registry))
 }

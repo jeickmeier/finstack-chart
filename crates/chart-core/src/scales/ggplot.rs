@@ -29,7 +29,7 @@ pub enum GgplotOob {
     SquishInfinite,
 }
 impl GgplotOob {
-    pub(super) fn apply(self, input: Option<f64>, domain: [f64; 2]) -> Option<f64> {
+    pub(crate) fn apply(self, input: Option<f64>, domain: [f64; 2]) -> Option<f64> {
         let v = input.filter(|v| !v.is_nan())?;
         let [a, b] = domain;
         match self {
@@ -44,10 +44,33 @@ impl GgplotOob {
         }
     }
 }
+/// One candidate in a reference qualitative `type` palette list.
+#[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct GgplotQualitativeColors {
+    /// Colors retain lazy reference name validation until used by a mark.
+    pub values: Vec<String>,
+    /// Optional exact category identities; first duplicate name wins.
+    pub names: Option<Vec<ScaleKey>>,
+}
 /// Palette selected after the complete discrete population is known.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub enum GgplotDiscretePalette {
+    /// Pinned reference palette registry name, resolved without process-global state.
+    Named(String),
+    /// Reference ordinal `type` color vector, sampled across its full Lab ramp.
+    /// A single color retains lazy name validation until a mark needs its paint.
+    OrdinalColors(Vec<String>),
+    /// Choose the first shortest sufficient vector, falling back to hue.
+    Qualitative {
+        /// Candidate color vectors, in reference selection order.
+        palettes: Vec<GgplotQualitativeColors>,
+        /// Hue arguments used when every candidate is too short.
+        fallback: chromatic::ggplot::HuePalette,
+    },
+    /// Count palette with missing overflow, as used by reference theme color vectors.
+    Values(Vec<Value>),
     /// Six reference point codes; additional categories map to missing.
     Shape {
         /// Select filled rather than hollow reference point codes.
@@ -126,6 +149,20 @@ impl GgplotDiscretePalette {
     }
     fn values(&self, keys: &[ScaleKey]) -> ChartResult<Vec<Value>> {
         let n = keys.len();
+        if let Self::Qualitative { palettes, fallback } = self {
+            if let Some(selected) = palettes
+                .iter()
+                .filter(|p| p.values.len() >= n)
+                .min_by_key(|p| p.values.len())
+            {
+                return Self::Manual {
+                    values: selected.values.iter().cloned().map(Value::Text).collect(),
+                    names: selected.names.clone(),
+                }
+                .values(keys);
+            }
+            return Self::Hue(*fallback).count_values(n);
+        }
         if let Self::Manual { values, names } = self {
             for value in values {
                 value.validate()?;
@@ -164,6 +201,25 @@ impl GgplotDiscretePalette {
     }
     pub(super) fn count_values(&self, n: usize) -> ChartResult<Vec<Value>> {
         let paints = match self {
+            Self::Named(name) => return super::ggplot_named::discrete(name, n),
+            Self::OrdinalColors(colors) => {
+                if colors.len() == 1 {
+                    return Ok(vec![Value::Text(colors[0].clone()); n]);
+                }
+                let colors = colors
+                    .iter()
+                    .map(|c| crate::color::parse_r(c))
+                    .collect::<ChartResult<Vec<_>>>()?;
+                return gradient_count(&colors, n);
+            }
+            Self::Values(values) => {
+                for value in values {
+                    value.validate()?;
+                }
+                return Ok((0..n)
+                    .map(|i| values.get(i).cloned().unwrap_or(Value::Missing))
+                    .collect());
+            }
             Self::Shape { solid } => {
                 let codes = if *solid {
                     [16, 17, 15, 3, 7, 8]
@@ -241,7 +297,7 @@ impl GgplotDiscretePalette {
                 .into_iter()
                 .map(Some)
                 .collect(),
-            Self::Manual { .. } => {
+            Self::Manual { .. } | Self::Qualitative { .. } => {
                 return Err(error(
                     DiagnosticCode::Validation,
                     "Named/manual scales require category identities.",
@@ -310,7 +366,7 @@ impl GgplotScalePolicy {
             spec.function = ScaleFunctionSpec::Interpolated(InterpolatedScaleSpec {
                 normalization: NormalizationSpec::Ggplot {
                     timestamp: None,
-                    family: s.family,
+                    family: s.family.clone(),
                     domain: [s.domain[0], s.domain[1]],
                     reverse: false,
                     rescaler: GgplotRescaler::Range,
@@ -325,12 +381,12 @@ impl GgplotScalePolicy {
             });
         }
         if let ScaleFunctionSpec::Interpolated(s) = &mut spec.function
-            && let NormalizationSpec::Sequential { family, domain, .. } = s.normalization
+            && let NormalizationSpec::Sequential { family, domain, .. } = &s.normalization
         {
             s.normalization = NormalizationSpec::Ggplot {
                 timestamp: None,
-                family,
-                domain,
+                family: family.clone(),
+                domain: *domain,
                 reverse: false,
                 rescaler: GgplotRescaler::Range,
             };
@@ -349,13 +405,13 @@ impl GgplotScalePolicy {
         }
         Self::canonicalize(spec)?;
         let family = match &spec.function {
-            ScaleFunctionSpec::Continuous(s) => s.family,
+            ScaleFunctionSpec::Continuous(s) => s.family.clone(),
             ScaleFunctionSpec::Interpolated(InterpolatedScaleSpec {
                 normalization:
                     NormalizationSpec::Sequential { family, .. }
                     | NormalizationSpec::Ggplot { family, .. },
                 ..
-            }) => *family,
+            }) => family.clone(),
             _ => {
                 return Err(error(
                     DiagnosticCode::Validation,
@@ -370,7 +426,29 @@ impl GgplotScalePolicy {
         spec: &mut MappedScaleSpec,
         values: &[Option<Number>],
     ) -> ChartResult<()> {
+        self.train_number_batches(spec, values, &[values.len()])
+    }
+    pub(super) fn train_number_batches(
+        &self,
+        spec: &mut MappedScaleSpec,
+        values: &[Option<Number>],
+        batches: &[usize],
+    ) -> ChartResult<()> {
         let family = self.validate_numbers(spec)?;
+        spec.trained_transformed_bounds = None;
+        let population = values
+            .iter()
+            .map(|v| v.map_or(f64::NAN, |v| v.0))
+            .collect::<Vec<_>>();
+        let transformed = match &family {
+            NumericFamily::Ggplot { .. } => super::ggplot_continuous_guide::forward_batches(
+                &family,
+                false,
+                &population,
+                batches,
+            )?,
+            _ => population,
+        };
         let limits = match self {
             Self::Continuous { limits, .. } => limits,
             Self::Binned(p) => &p.limits,
@@ -389,7 +467,7 @@ impl GgplotScalePolicy {
             _ => {}
         }
         let mut extent = [f64::INFINITY, f64::NEG_INFINITY];
-        for v in values.iter().flatten().map(|n| n.0).filter(|v| {
+        for v in transformed.into_iter().filter(|v| {
             v.is_finite()
                 && (!matches!(family, NumericFamily::Log { .. }) || *v > 0.)
                 && (!matches!(family,NumericFamily::Pow {exponent} if exponent.fract()!=0.)
@@ -414,6 +492,19 @@ impl GgplotScalePolicy {
                 [0., 1.]
             };
         }
+        let mut transformed_extent = if nonfinite {
+            [f64::INFINITY, f64::NEG_INFINITY]
+        } else {
+            extent
+        };
+        let vector_transform =
+            matches!(&family, NumericFamily::Ggplot { transform } if !transform.is_pointwise());
+        if let NumericFamily::Ggplot { ref transform } = family {
+            extent = transform
+                .inverse_population(&extent)?
+                .try_into()
+                .expect("length-preserving transform");
+        }
         let reverse = matches!(
             &spec.function,
             ScaleFunctionSpec::Interpolated(InterpolatedScaleSpec {
@@ -424,11 +515,12 @@ impl GgplotScalePolicy {
         if reverse {
             extent.reverse();
         }
-        if let Some(mut limits) = super::ggplot_continuous_guide::comparable_limits(*limits, family)
+        if let Some(mut limits) =
+            super::ggplot_continuous_guide::comparable_limits(*limits, family.clone())
         {
             if let [Some(a), Some(b)] = limits {
-                limits = if super::ggplot_continuous_guide::forward(family, reverse, a.0)
-                    > super::ggplot_continuous_guide::forward(family, reverse, b.0)
+                limits = if super::ggplot_continuous_guide::forward(&family, reverse, a.0)
+                    > super::ggplot_continuous_guide::forward(&family, reverse, b.0)
                 {
                     [Some(b), Some(a)]
                 } else {
@@ -441,6 +533,19 @@ impl GgplotScalePolicy {
                 }
             }
         }
+        if vector_transform {
+            if reverse {
+                transformed_extent = transformed_extent.map(|v| -v);
+                transformed_extent.reverse();
+            }
+            transformed_extent = super::ggplot_continuous_guide::authored_bounds_batch(
+                *limits,
+                &family,
+                reverse,
+                transformed_extent,
+            )?;
+            spec.trained_transformed_bounds = Some(transformed_extent.map(Number));
+        }
         let mut domain = extent.map(Number);
         if let Self::Binned(policy) = self {
             let hidden = matches!(spec.guide.as_deref(), Some(GgplotScaleGuide::Hidden));
@@ -448,7 +553,22 @@ impl GgplotScalePolicy {
             let prepared = if values.is_empty() && hidden {
                 None
             } else {
-                let resolved = policy.resolve(domain, family, reverse)?;
+                let resolved = if vector_transform {
+                    let (bounds, cuts) = policy.resolve_transformed(
+                        transformed_extent,
+                        family.clone(),
+                        reverse,
+                        4096,
+                    )?;
+                    if !hidden {
+                        spec.trained_transformed_bounds = Some(bounds.map(Number));
+                    }
+                    let raw =
+                        super::ggplot_continuous_guide::inverse_values(&family, reverse, &bounds)?;
+                    ([Number(raw[0]), Number(raw[1])], cuts)
+                } else {
+                    policy.resolve(domain, family, reverse)?
+                };
                 // With no guide, R's first map captures trained limits before get_breaks()
                 // extends them. Visible guides select breaks before the first mapping.
                 if !hidden {
@@ -509,6 +629,7 @@ impl GgplotScalePolicy {
         &self,
         spec: &mut MappedScaleSpec,
         keys: &[ScaleKey],
+        registry: Option<&crate::grammar::ExtensionRegistry>,
     ) -> ChartResult<()> {
         let Self::Discrete {
             limits,
@@ -543,7 +664,8 @@ impl GgplotScalePolicy {
             *drop,
             *na_translate,
         );
-        if limits.is_none()
+        if spec.palette_function.is_none()
+            && limits.is_none()
             && let GgplotDiscretePalette::Manual {
                 names: Some(names), ..
             } = palette
@@ -557,27 +679,66 @@ impl GgplotScalePolicy {
             .filter(|key| **key != ScaleKey::Null)
             .cloned()
             .collect::<Vec<_>>();
-        let mut values = palette
-            .values_with_breaks(
-                &palette_domain,
-                match spec.guide.as_deref() {
-                    Some(GgplotScaleGuide::Discrete(guide)) => guide.breaks.as_deref(),
-                    _ => None,
-                },
-            )?
-            .into_iter();
-        let range = domain
-            .iter()
-            .map(|key| {
-                if *key == ScaleKey::Null {
-                    Value::Missing
-                } else {
-                    values
-                        .next()
-                        .expect("palette cardinality matches its domain")
+        let mut resolved = if let Some(call) = &spec.palette_function {
+            if keys.is_empty()
+                && match spec.guide.as_deref() {
+                    Some(GgplotScaleGuide::Hidden) => true,
+                    Some(GgplotScaleGuide::Discrete(guide)) => guide
+                        .breaks
+                        .as_ref()
+                        .is_some_and(|breaks| !breaks.iter().any(|key| domain.contains(key))),
+                    _ => false,
                 }
-            })
-            .collect();
+            {
+                super::ggplot_palette::DiscretePaletteValues::default()
+            } else if let Some(registry) = registry {
+                super::ggplot_palette::discrete_values(
+                    &registry.palette_function,
+                    call,
+                    &palette_domain,
+                )?
+            } else {
+                // Structural validation never calls user code on a fabricated population.
+                super::ggplot_palette::DiscretePaletteValues {
+                    values: vec![Value::Missing; palette_domain.len()],
+                    fallback_indices: vec![],
+                }
+            }
+        } else {
+            super::ggplot_palette::DiscretePaletteValues {
+                values: palette.values_with_breaks(
+                    &palette_domain,
+                    match spec.guide.as_deref() {
+                        Some(GgplotScaleGuide::Discrete(guide)) => guide.breaks.as_deref(),
+                        _ => None,
+                    },
+                )?,
+                fallback_indices: vec![],
+            }
+        };
+        spec.palette_fallback_indices.clear();
+        let mut values = resolved.values.drain(..).enumerate();
+        let mut range = vec![];
+        for key in &domain {
+            if *key == ScaleKey::Null {
+                if spec.palette_function.is_some()
+                    || matches!(
+                        palette,
+                        GgplotDiscretePalette::Values(_) | GgplotDiscretePalette::Named(_)
+                    )
+                {
+                    spec.palette_fallback_indices.push(range.len());
+                }
+                range.push(Value::Missing);
+            } else if let Some((index, value)) = values.next() {
+                if resolved.fallback_indices.binary_search(&index).is_ok() {
+                    spec.palette_fallback_indices.push(range.len());
+                }
+                range.push(value);
+            } else {
+                break;
+            }
+        }
         ordinal.domain = domain;
         ordinal.range = range;
         ordinal.unknown = OrdinalUnknown::Explicit(None);
@@ -604,7 +765,7 @@ impl GgplotScalePolicy {
                 empty_population: true,
                 limits,
                 ..
-            } if !finite_limits(*limits, family, reverse) => Some([0., 1.]),
+            } if !finite_limits(*limits, family.clone(), reverse) => Some([0., 1.]),
             Self::Binned(policy) => policy.population_bounds(family, reverse),
             _ => None,
         }
@@ -616,13 +777,15 @@ impl GgplotScalePolicy {
             _ => return input,
         };
         let (domain, family, reverse) = match function {
-            ScaleFunctionSpec::Continuous(s) => {
-                ([s.domain.first()?.0, s.domain.last()?.0], s.family, false)
-            }
+            ScaleFunctionSpec::Continuous(s) => (
+                [s.domain.first()?.0, s.domain.last()?.0],
+                s.family.clone(),
+                false,
+            ),
             ScaleFunctionSpec::Interpolated(InterpolatedScaleSpec {
                 normalization: NormalizationSpec::Sequential { domain, family, .. },
                 ..
-            }) => (domain.map(|n| n.0), *family, false),
+            }) => (domain.map(|n| n.0), family.clone(), false),
             ScaleFunctionSpec::Interpolated(InterpolatedScaleSpec {
                 normalization:
                     NormalizationSpec::Ggplot {
@@ -632,7 +795,7 @@ impl GgplotScalePolicy {
                         ..
                     },
                 ..
-            }) => (domain.map(|n| n.0), *family, *reverse),
+            }) => (domain.map(|n| n.0), family.clone(), *reverse),
             _ => return input,
         };
         let x = input.filter(|x| {
@@ -650,13 +813,13 @@ impl GgplotScalePolicy {
         };
         let transform = |v| {
             timestamp.map_or_else(
-                || super::ggplot_continuous_guide::forward(family, reverse, v),
+                || super::ggplot_continuous_guide::forward(&family, reverse, v),
                 |context| context.absolute(v),
             )
         };
         let source_bounds = domain.map(transform);
         let td = self
-            .population_bounds(family, reverse)
+            .population_bounds(family.clone(), reverse)
             .map(|bounds| bounds.map(|v| timestamp.map_or(v, |context| context.absolute(v))))
             .unwrap_or(source_bounds);
         let tx = transform(x);
@@ -668,7 +831,7 @@ impl GgplotScalePolicy {
             Some(if mapped == source_bounds[i] {
                 domain[i]
             } else {
-                super::ggplot_continuous_guide::inverse(family, reverse, mapped)
+                super::ggplot_continuous_guide::inverse(&family, reverse, mapped)
             })
         }
     }
@@ -709,9 +872,47 @@ pub fn ggplot_color_default(continuous: bool) -> ChartResult<ColorScale<Paint>> 
         )?
     };
     Ok(ColorScale::Mapped {
-        scale: mapped,
+        scale: mapped.with_theme_palette(vec!["colour".into()])?,
         missing: crate::theme::rgb(127, 127, 127).into(),
     })
+}
+
+pub(super) fn gradient_count(colors: &[Paint], n: usize) -> ChartResult<Vec<Value>> {
+    let gradient = chromatic::ggplot::Gradient::new(
+        &colors.iter().map(|p| p.value()).collect::<Vec<_>>(),
+        None,
+    )?;
+    Ok((0..n)
+        .map(|i| {
+            gradient
+                .sample(if n <= 1 {
+                    0.
+                } else {
+                    i as f64 / (n - 1) as f64
+                })
+                .map_or(Value::Missing, |c| Value::Color(Paint::from(c).value()))
+        })
+        .collect())
+}
+
+/// Reference ordinal paint constructor. Its viridis default bypasses theme palette lookup.
+/// Apply the returned mapped scale to either color or fill; category levels remain explicit.
+pub fn ggplot_color_ordinal() -> ChartResult<ColorScale<Paint>> {
+    let ColorScale::Mapped { mut scale, missing } = ggplot_color_default(false)? else {
+        unreachable!("reference color default is mapped")
+    };
+    if let Some(GgplotScalePolicy::Discrete { palette, .. }) = scale.ggplot.as_deref_mut() {
+        *palette = GgplotDiscretePalette::Viridis {
+            option: chromatic::ggplot::ViridisOption::Viridis,
+            begin: 0.,
+            end: 1.,
+            reverse: false,
+            alpha: 1.,
+        };
+    }
+    scale.palette_theme_aesthetics.clear();
+    scale.missing_paint_is_na = true;
+    Ok(ColorScale::Mapped { scale, missing })
 }
 
 /// Reference numeric aesthetic palette, independently selected from its input transform.
@@ -737,7 +938,7 @@ pub fn ggplot_numeric_default(kind: GgplotNumericPalette) -> ChartResult<MappedS
         _ => [1., 6.],
     };
     let exponent = if matches!(kind, Size | Area) { 0.5 } else { 1. };
-    MappedScaleSpec::authored(ScaleFunctionSpec::Interpolated(InterpolatedScaleSpec {
+    let scale = MappedScaleSpec::authored(ScaleFunctionSpec::Interpolated(InterpolatedScaleSpec {
         normalization: NormalizationSpec::Ggplot {
             timestamp: None,
             family: NumericFamily::Linear,
@@ -763,7 +964,13 @@ pub fn ggplot_numeric_default(kind: GgplotNumericPalette) -> ChartResult<MappedS
         nonfinite_population: false,
         limits: None,
         oob: GgplotOob::Censor,
-    })
+    })?;
+    match kind {
+        Size => scale.with_theme_palette(vec!["size".into()]),
+        Alpha => scale.with_theme_palette(vec!["alpha".into()]),
+        Linewidth => scale.with_theme_palette(vec!["linewidth".into()]),
+        Area | Radius => Ok(scale),
+    }
 }
 
 /// Ordinal defaults for the reference size, alpha and linewidth scale families.
@@ -779,8 +986,8 @@ pub fn ggplot_numeric_ordinal(kind: GgplotNumericPalette) -> ChartResult<MappedS
             ));
         }
     };
-    MappedScaleSpec::authored(ScaleFunctionSpec::Ordinal(OrdinalSpec::default())).with_ggplot(
-        GgplotScalePolicy::Discrete {
+    MappedScaleSpec::authored(ScaleFunctionSpec::Ordinal(OrdinalSpec::default()))
+        .with_ggplot(GgplotScalePolicy::Discrete {
             empty_population: false,
             limits: None,
             levels: None,
@@ -790,8 +997,16 @@ pub fn ggplot_numeric_ordinal(kind: GgplotNumericPalette) -> ChartResult<MappedS
                 range: range.map(Number),
                 area,
             },
-        },
-    )
+        })?
+        .with_theme_palette(vec![
+            match kind {
+                GgplotNumericPalette::Size => "size",
+                GgplotNumericPalette::Alpha => "alpha",
+                GgplotNumericPalette::Linewidth => "linewidth",
+                _ => unreachable!("validated ordinal palette"),
+            }
+            .into(),
+        ])
 }
 
 // Shared reference domain ordering, factor dropping and missing-level placement.

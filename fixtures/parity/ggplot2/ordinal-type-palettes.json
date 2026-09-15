@@ -1,0 +1,1293 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "colour",
+      "palette_name": "pair",
+      "palette": [
+        "red",
+        "blue"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "mapped": [
+          "#CA0088",
+          "#FF0000",
+          "#0000FF",
+          "#E80050",
+          "#9A00C3"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "pair",
+      "palette": [
+        "red",
+        "blue"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "pair",
+      "palette": [
+        "red",
+        "blue"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          null,
+          "#CA0088",
+          "#FF0000"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "pair",
+      "palette": [
+        "red",
+        "blue"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "pair",
+      "palette": [
+        "red",
+        "blue"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "three",
+      "palette": [
+        "#440154",
+        "#21908c",
+        "#fde725"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "mapped": [
+          "#21908C",
+          "#440154",
+          "#FDE725",
+          "#475070",
+          "#A6BB68"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "three",
+      "palette": [
+        "#440154",
+        "#21908c",
+        "#fde725"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#440154"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "three",
+      "palette": [
+        "#440154",
+        "#21908c",
+        "#fde725"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725",
+          null,
+          "#21908C",
+          "#440154"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "three",
+      "palette": [
+        "#440154",
+        "#21908c",
+        "#fde725"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "three",
+      "palette": [
+        "#440154",
+        "#21908c",
+        "#fde725"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "alpha",
+      "palette": [
+        "#ff000040",
+        "#0000ffcc"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "mapped": [
+          "#CA008886",
+          "#FF000040",
+          "#0000FFCC",
+          "#E8005063",
+          "#9A00C3A9"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "alpha",
+      "palette": [
+        "#ff000040",
+        "#0000ffcc"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#FF000040"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "alpha",
+      "palette": [
+        "#ff000040",
+        "#0000ffcc"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#0000FFCC",
+          null,
+          "#CA008886",
+          "#FF000040"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "alpha",
+      "palette": [
+        "#ff000040",
+        "#0000ffcc"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "alpha",
+      "palette": [
+        "#ff000040",
+        "#0000ffcc"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "transparent",
+      "palette": [
+        "transparent",
+        "red"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "mapped": [
+          "#FF9E8180",
+          "#FFFFFF00",
+          "#FF0000",
+          "#FFCFBF40",
+          "#FF6846BF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "transparent",
+      "palette": [
+        "transparent",
+        "red"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF00"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "transparent",
+      "palette": [
+        "transparent",
+        "red"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          null,
+          "#FF9E8180",
+          "#FFFFFF00"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "transparent",
+      "palette": [
+        "transparent",
+        "red"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "transparent",
+      "palette": [
+        "transparent",
+        "red"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "single",
+      "palette": [
+        "red"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "red",
+          "red",
+          "red",
+          "red"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "single",
+      "palette": [
+        "red"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "red"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "single",
+      "palette": [
+        "red"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          null,
+          "red",
+          "red"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "single",
+      "palette": [
+        "red"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "single",
+      "palette": [
+        "red"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "empty",
+      "palette": [],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "error": "Must provide at least one colour to create a colour ramp"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "empty",
+      "palette": [],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "error": "Must provide at least one colour to create a colour ramp"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "empty",
+      "palette": [],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "error": "Must provide at least one colour to create a colour ramp"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "empty",
+      "palette": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "Must provide at least one colour to create a colour ramp"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "empty",
+      "palette": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "error": "Must provide at least one colour to create a colour ramp"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-colour"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "error": "Problem while converting geom to grob.\ni Error occurred in the 1st layer.\nCaused by error:\n! Unknown colour name: not-a-colour"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-colour"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "error": "Problem while converting geom to grob.\ni Error occurred in the 1st layer.\nCaused by error:\n! Unknown colour name: not-a-colour"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-colour"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "error": "Problem while converting geom to grob.\ni Error occurred in the 1st layer.\nCaused by error:\n! Unknown colour name: not-a-colour"
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-colour"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-colour"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "pair",
+      "palette": [
+        "red",
+        "blue"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "mapped": [
+          "#CA0088",
+          "#FF0000",
+          "#0000FF",
+          "#E80050",
+          "#9A00C3"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "pair",
+      "palette": [
+        "red",
+        "blue"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "pair",
+      "palette": [
+        "red",
+        "blue"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          null,
+          "#CA0088",
+          "#FF0000"
+        ],
+        "point_count": 4
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "pair",
+      "palette": [
+        "red",
+        "blue"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "pair",
+      "palette": [
+        "red",
+        "blue"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "three",
+      "palette": [
+        "#440154",
+        "#21908c",
+        "#fde725"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "mapped": [
+          "#21908C",
+          "#440154",
+          "#FDE725",
+          "#475070",
+          "#A6BB68"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "three",
+      "palette": [
+        "#440154",
+        "#21908c",
+        "#fde725"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#440154"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "three",
+      "palette": [
+        "#440154",
+        "#21908c",
+        "#fde725"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725",
+          null,
+          "#21908C",
+          "#440154"
+        ],
+        "point_count": 4
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "three",
+      "palette": [
+        "#440154",
+        "#21908c",
+        "#fde725"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "three",
+      "palette": [
+        "#440154",
+        "#21908c",
+        "#fde725"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "alpha",
+      "palette": [
+        "#ff000040",
+        "#0000ffcc"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "mapped": [
+          "#CA008886",
+          "#FF000040",
+          "#0000FFCC",
+          "#E8005063",
+          "#9A00C3A9"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "alpha",
+      "palette": [
+        "#ff000040",
+        "#0000ffcc"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#FF000040"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "alpha",
+      "palette": [
+        "#ff000040",
+        "#0000ffcc"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#0000FFCC",
+          null,
+          "#CA008886",
+          "#FF000040"
+        ],
+        "point_count": 4
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "alpha",
+      "palette": [
+        "#ff000040",
+        "#0000ffcc"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "alpha",
+      "palette": [
+        "#ff000040",
+        "#0000ffcc"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "transparent",
+      "palette": [
+        "transparent",
+        "red"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "mapped": [
+          "#FF9E8180",
+          "#FFFFFF00",
+          "#FF0000",
+          "#FFCFBF40",
+          "#FF6846BF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "transparent",
+      "palette": [
+        "transparent",
+        "red"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF00"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "transparent",
+      "palette": [
+        "transparent",
+        "red"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          null,
+          "#FF9E8180",
+          "#FFFFFF00"
+        ],
+        "point_count": 4
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "transparent",
+      "palette": [
+        "transparent",
+        "red"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "transparent",
+      "palette": [
+        "transparent",
+        "red"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "single",
+      "palette": [
+        "red"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "red",
+          "red",
+          "red",
+          "red"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "single",
+      "palette": [
+        "red"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "red"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "single",
+      "palette": [
+        "red"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          null,
+          "red",
+          "red"
+        ],
+        "point_count": 4
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "single",
+      "palette": [
+        "red"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "single",
+      "palette": [
+        "red"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "empty",
+      "palette": [],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "error": "Must provide at least one colour to create a colour ramp"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "empty",
+      "palette": [],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "error": "Must provide at least one colour to create a colour ramp"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "empty",
+      "palette": [],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "error": "Must provide at least one colour to create a colour ramp"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "empty",
+      "palette": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "Must provide at least one colour to create a colour ramp"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "empty",
+      "palette": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "error": "Must provide at least one colour to create a colour ramp"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-colour"
+      ],
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "e",
+        "b",
+        "d"
+      ],
+      "result": {
+        "error": "Problem while converting geom to grob.\ni Error occurred in the 1st layer.\nCaused by error:\n! Unknown colour name: not-a-colour"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-colour"
+      ],
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "error": "Problem while converting geom to grob.\ni Error occurred in the 1st layer.\nCaused by error:\n! Unknown colour name: not-a-colour"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-colour"
+      ],
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "error": "Problem while converting geom to grob.\ni Error occurred in the 1st layer.\nCaused by error:\n! Unknown colour name: not-a-colour"
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-colour"
+      ],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "palette_name": "unknown",
+      "palette": [
+        "not-a-colour"
+      ],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    }
+  ]
+}

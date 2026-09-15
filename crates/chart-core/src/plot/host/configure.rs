@@ -299,6 +299,10 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Axis(b) => Kind::Axis(match method {
+                "numeric_limits" => scalar!(a, b, numeric_limits),
+                "temporal_limits" => scalar!(a, b, temporal_limits),
+                "limits_function" => scalar!(a, b, limits_function),
+                "oob_function" => scalar!(a, b, oob_function),
                 "expansion" => scalar!(a, b, expansion),
                 "discrete_policy" => scalar!(a, b, discrete_policy),
                 "continuous_limits" => {
@@ -328,6 +332,7 @@ impl Component {
                 "tick_size_outer" => scalar!(a, b, tick_size_outer),
                 "tick_padding" => scalar!(a, b, tick_padding),
                 "tick_offset" => scalar!(a, b, tick_offset),
+                "breaks_function" => scalar!(a, b, breaks_function),
                 "tick_arguments" => scalar!(a, b, tick_arguments),
                 "minor_breaks" => scalar!(a, b, minor_breaks),
                 "tick_format" => b.clone().tick_format(guide_formatter(a.one()?)?),
@@ -345,6 +350,7 @@ impl Component {
                 "numeric_format" => scalar!(a, b, numeric_format),
                 "time_format" => scalar!(a, b, time_format),
                 "oob" => scalar!(a, b, oob),
+                "missing_value" => scalar!(a, b, missing_value),
                 "name" => string!(a, b, name),
                 "side" => scalar!(a, b, side),
                 "label" => string!(a, b, label),
@@ -378,6 +384,7 @@ impl Component {
                 "tick_size_outer" => scalar!(a, b, tick_size_outer),
                 "tick_padding" => scalar!(a, b, tick_padding),
                 "tick_offset" => scalar!(a, b, tick_offset),
+                "breaks_function" => scalar!(a, b, breaks_function),
                 "tick_arguments" => scalar!(a, b, tick_arguments),
                 "minor_breaks" => scalar!(a, b, minor_breaks),
                 "tick_format" => b.clone().tick_format(guide_formatter(a.one()?)?),
@@ -467,26 +474,35 @@ impl Component {
                 "symbol" => scalar!(a, b, symbol),
                 _ => return Err(unsupported(method)),
             }),
-            Kind::Theme(b) => Kind::Theme(match method {
-                "geometry" => {
-                    let mut value: Value = a.one()?;
-                    if let Some(object) = value.as_object_mut() {
-                        for name in ["ink", "paper", "accent"] {
-                            if let Some(v) = object.get_mut(name) {
-                                *v = serde_json::to_value(color(v)?).map_err(|e| {
-                                    error(DiagnosticCode::Validation, e.to_string())
-                                })?;
-                            }
+            Kind::Theme(b) => {
+                Kind::Theme(
+                    match method {
+                        "scale_palettes" => {
+                            b.clone().scale_palettes(a.one::<std::collections::BTreeMap<
+                                String,
+                                crate::theme::ThemeScalePalette,
+                            >>()?)
                         }
-                    }
-                    b.clone()
-                        .geometry(options::<crate::theme::GeometryTheme<crate::color::Paint>>(
-                            value,
-                        )?)
-                }
-                "preset" => scalar!(a, b, preset),
-                _ => return Err(unsupported(method)),
-            }),
+                        "geometry" => {
+                            let mut value: Value = a.one()?;
+                            if let Some(object) = value.as_object_mut() {
+                                for name in ["ink", "paper", "accent"] {
+                                    if let Some(v) = object.get_mut(name) {
+                                        *v = serde_json::to_value(color(v)?).map_err(|e| {
+                                            error(DiagnosticCode::Validation, e.to_string())
+                                        })?;
+                                    }
+                                }
+                            }
+                            b.clone().geometry(options::<
+                                crate::theme::GeometryTheme<crate::color::Paint>,
+                            >(value)?)
+                        }
+                        "preset" => scalar!(a, b, preset),
+                        _ => return Err(unsupported(method)),
+                    },
+                )
+            }
             Kind::TextStyle(b) => Kind::TextStyle(match method {
                 "size" => scalar!(a, b, size),
                 "weight" => scalar!(a, b, weight),

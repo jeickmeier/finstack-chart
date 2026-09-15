@@ -146,7 +146,7 @@ pub enum InterpolationSpec {
         /// Take the absolute normalized parameter before exponentiation.
         absolute: bool,
     },
-    /// Version-three ggplot2 palette using the shared color/catalog/spline owners.
+    /// ggplot2 palette using shared color/catalog/spline owners (v3; count gradients v4).
     GgplotPalette {
         /// Portable palette recipe; scales supply normalized positions.
         spec: crate::scales::chromatic::ggplot::PaletteSpec,
@@ -651,7 +651,21 @@ fn compile(
 impl InterpolationSpec {
     /// Minimum standalone envelope version; builtins retain version one.
     pub fn wire_version(&self) -> u32 {
-        if matches!(self, Self::GgplotPalette { .. } | Self::PowerRange { .. }) {
+        if matches!(self, Self::GgplotPalette {
+            spec: crate::scales::chromatic::ggplot::PaletteSpec::Gradient { values: Some(values), .. }
+                | crate::scales::chromatic::ggplot::PaletteSpec::CountGradient { values: Some(values), .. }
+        } if values.iter().any(|n| !n.0.is_finite() || n.0 == 0. && n.0.is_sign_negative()))
+        {
+            return 5;
+        }
+        if matches!(
+            self,
+            Self::GgplotPalette {
+                spec: crate::scales::chromatic::ggplot::PaletteSpec::CountGradient { .. }
+            }
+        ) {
+            4
+        } else if matches!(self, Self::GgplotPalette { .. } | Self::PowerRange { .. }) {
             3
         } else if self.has_registration() {
             2

@@ -1,0 +1,47 @@
+'use strict';
+const { alphaByte } = require('./ggplot_reference_alpha.cjs');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'../..'),c=require(path.resolve(process.argv[2],'authoring.cjs')),out=path.resolve(process.argv[3]);fs.mkdirSync(out,{recursive:true});
+const registry=c.ExtensionRegistry.example(),records=[],output=new c.Output(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))),options=c.export_options(640,360).dpi(96).basis('current');
+const cases=['palette-functions','vector-palette-lookup','vector-palette-missing-paint'].flatMap(name=>JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2',name+'.json'))).cases.filter(t=>t.family==='continuous'));
+function descriptor(t){return {missing_paint_is_na:t.channel==='colour',training:'Eligible',function:{Interpolated:{normalization:{Ggplot:{family:'Linear',domain:[0,1],reverse:false,rescaler:'Range'}},output:'Identity',unknown:{kind:'Missing'}}},ggplot:{Continuous:{limits:t.limits==='full'?[1,10]:null,oob:'Censor'}},guide:t.guide_mode==='hidden'?'Hidden':{Continuous:{breaks:t.guide_mode==='first'?[1]:t.guide_mode==='restricted'?[10,1,4]:null,labels:'Automatic'}},palette_function:{operation:{id:t.operation??'example.scale_palette',version:'1'},parameters:{mode:t.mode,channel:t.channel}}};}
+function layer(t){return t.channel==='colour'?c.points().name('marks'):c.points().name('marks').numeric_scale(t.channel==='size'?'Size':'Alpha','v',descriptor(t));}
+function dataFor(t,name="data"){return c.Data.columns({x:c.column(t.inputs.map((_,i)=>i),{kind:'float64'}),v:c.column(t.inputs,{kind:'float64'}).nullable(true)},{name});}
+function build(t,d){const draft=c.plot(d).with_registry(registry).profile('Ggplot2_4_0_3');if(t.channel==='colour'){let scale=c.color_mapped('v',descriptor(t));if(t.na_mode&&t.na_mode!=='NA')scale=scale.missing(paint(t.na_mode==='green'?'#00ff00':'#00000000'));return draft.aes(c.aes().x('x').y(1).color('v').color_scale('v')).scale(scale).layer(layer(t)).build();}return draft.aes(c.aes().x('x').y(1)).layer(layer(t)).build();}
+function compare(a,b){if(typeof a==='number'&&typeof b==='number')assert.ok(Math.abs(a-b)<5e-14,`${a} != ${b}`);else if(Array.isArray(a)&&Array.isArray(b)){assert.equal(a.length,b.length);a.forEach((v,i)=>compare(v,b[i]));}else if(a&&b&&typeof a==='object'&&typeof b==='object'){assert.deepEqual(Object.keys(a).sort(),Object.keys(b).sort());for(const k of Object.keys(a))compare(a[k],b[k]);}else assert.deepEqual(a,b);}
+function paint(v){if(v==='black')v='#000000';return v===null?{red:0,green:0,blue:0,alpha:0}:Object.fromEntries(['red','green','blue','alpha'].map((k,i)=>[k,i===3?(v.length===9?parseInt(v.slice(7,9),16):255):parseInt(v.slice(1+2*i,3+2*i),16)]));}
+function check(t,chart,index=0){const state=chart.semantics().layers[index],styles=state.styles??[],wanted=t.result.mapped;if(t.channel==='colour')compare(styles.map(s=>s.color),wanted.filter(v=>v!==null).map(paint));else if(t.channel==='size')compare(styles.map(s=>s.radius),wanted.filter(v=>v!==null));else compare(styles.map(s=>s.color.alpha),wanted.map(v=>v===null?255:alphaByte(v)));return {styles,numeric_scales:Object.fromEntries(Object.entries(state.numeric_scales??{}).map(([k,v])=>[k,v.scale])),numeric_value_guides:Object.values(state.numeric_value_guides??{}),color_legend:state.color_legend?Object.fromEntries(Object.entries(state.color_legend).filter(([k])=>k!=='id')):null};}
+for(const [index,t] of cases.entries()){
+ const owned=[];
+ try{
+  const d=dataFor(t);owned.push(d);const p=build(t,d);owned.push(p);const wire=p.to_json();assert.equal(JSON.parse(wire).version,37);const restored=c.Plot.from_json(wire,registry);owned.push(restored);assert.equal(restored.to_json(),wire);
+  for(const state of ['original','edited']){const current=state==='original'?restored:restored.edit().layer('marks',layer(t)).build();if(current!==restored)owned.push(current);const chart=current.chart();owned.push(chart);const actual=check(t,chart);assert.ok(!t.result.error,JSON.stringify(t));records.push({index,state,...actual});}
+  let sample=null;if(!t.guide_mode&&!t.na_mode&&t.limits==='none'&&t.mode==='named'&&['ordinary','missing'].includes(t.population))sample=`${t.channel}-${t.population}`;if(t.na_mode&&t.mode==='missing'&&t.population==='missing')sample=`na-${t.na_mode.toLowerCase()}`;
+  if(sample){const request=output.request(restored,options);owned.push(request);const frame=request.prepare();owned.push(frame);for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`${sample}.${fmt}`),frame.export(fmt));}
+ }catch(error){assert.ok(error instanceof c.ChartError&&t.result.error,`${index}: ${error.stack}`);assert.ok(['CHART_VALIDATION','CHART_NUMERICAL_DOMAIN'].includes(error.code));records.push({index,error:error.code});}
+ finally{for(const obj of owned.reverse())obj.dispose();}
+}
+for(const channel of ['colour','size','alpha'])for(const mode of ['full','named']){
+ const selected=Object.fromEntries(cases.filter(t=>!t.guide_mode&&!t.na_mode&&t.channel===channel&&t.limits==='full'&&t.mode===mode).map(t=>[t.population,t])),owned=[];
+ try{
+  const original=dataFor(selected.ordinary);owned.push(original);const p=build(selected.ordinary,original);owned.push(p);const chart=p.chart();owned.push(chart);const wire=p.to_json(),request=output.request(p,options);owned.push(request);const held=request.prepare();owned.push(held);const scene=held.scene();
+  for(const population of ['missing','all_missing','empty','ordinary']){const t=selected[population],replacement=dataFor(t);owned.push(replacement);const tx=chart.transaction();owned.push(tx);const builder=tx.replace(original,replacement);owned.push(builder);const update=builder.build();owned.push(update);assert.ok('Applied' in chart.commit(update));const fresh=build(t,replacement);owned.push(fresh);const batch=fresh.chart();owned.push(batch);const actual=check(t,chart);assert.deepEqual(actual,check(t,batch));assert.equal(p.to_json(),wire);assert.deepEqual(held.scene(),scene);records.push({channel,mode,replacement:population,...actual});}
+ }finally{for(const obj of owned.reverse())obj.dispose();}
+}
+const batchCases=JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/vector-palette-batches.json'))).cases.filter(t=>t.family==='continuous');assert.equal(batchCases.length,81);
+for(const [index,source] of batchCases.entries()){
+ const owned=[],t={...source,limits:'full'};
+ try{
+  const datasets=t.inputs.map((inputs,i)=>dataFor({...t,inputs},`layer-${i}`));owned.push(...datasets);
+  let draft=c.plot(datasets[0]).with_registry(registry).profile('Ggplot2_4_0_3');owned.push(draft);
+  draft=t.channel==='colour'?draft.aes(c.aes().x('x').y(1).color('v').color_scale('v')).scale(c.color_mapped('v',descriptor(t))):draft.aes(c.aes().x('x').y(1));
+  const p=draft.layer(layer(t)).layer(layer(t).name('second').data(datasets[1])).build();owned.push(p);
+  const restored=c.Plot.from_json(p.to_json(),registry);owned.push(restored);const chart=restored.chart();owned.push(chart);
+  const states=[0,1].map(i=>check({...t,result:{mapped:t.result.mapped[i]}},chart,i));records.push({batch:index,layers:states});
+ }finally{for(const obj of owned.reverse())obj.dispose();}
+}
+for(const variant of ['missing_registration','native_only','invalid_parameters','downgrade']){
+ const t=structuredClone(cases[0]),owned=[];if(variant==='missing_registration')t.operation='example.missing_palette';if(variant==='native_only')t.operation='example.native_scale_palette';if(variant==='invalid_parameters')t.mode='invalid';
+ try{const d=dataFor(t);owned.push(d);const p=build(t,d);owned.push(p);let wire=p.to_json();if(variant==='downgrade'){wire=JSON.parse(wire);wire.version=36;const restored=c.Plot.from_json(JSON.stringify(wire),registry);owned.push(restored);}assert.fail(`expected rejection: ${variant}`);}catch(error){assert.ok(error instanceof c.ChartError,error.stack);records.push({rejection:variant,code:error.code});}finally{for(const obj of owned.reverse())obj.dispose();}
+}
+const expected=cases.reduce((n,t)=>n+(t.result.error?1:2),0)+28+81;assert.equal(records.length,expected);fs.writeFileSync(path.join(out,'records.json'),JSON.stringify(records,null,2));output.dispose();registry.dispose();console.log(`PASS WASM: ${records.length} continuous vector palette states including 24 replacements and four rejection contracts.`);

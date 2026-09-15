@@ -7,7 +7,7 @@ fn source_mapping(value: &Numeric, data: &Data) -> Mapping {
             expr.try_map_reads(|read| Ok(source_mapping(&read.numeric(), data)))
                 .expect("infallible source read conversion"),
         ),
-        Numeric::Scaled { input, scale } => Mapping::Scaled {
+        Numeric::Scaled { input, scale, .. } => Mapping::Scaled {
             input: Box::new(source_mapping(input, data)),
             scale: scale.as_ref().clone(),
         },
@@ -102,7 +102,7 @@ impl PlotEditBuilder {
                     .layers
                     .iter()
                     .flat_map(|l| l.color.iter().chain(l.paint_scales.values()))
-                    .find(|c| c.id == *id)
+                    .find(|c| c.id == *id && !c.automatic)
                     .map(|c| (name.clone(), c.scale.clone()))
             })
             .collect()
@@ -161,7 +161,7 @@ impl PlotEditBuilder {
                     .original
                     .colors
                     .iter()
-                    .find(|(_, id)| **id == color.id)
+                    .find(|(_, id)| **id == color.id && !color.automatic)
                     .map(|(name, _)| name.clone());
             }
             if let Some(existing) = &existing {
@@ -182,7 +182,7 @@ impl PlotEditBuilder {
                         .original
                         .colors
                         .iter()
-                        .find(|(_, id)| **id == color.id)
+                        .find(|(_, id)| **id == color.id && !color.automatic)
                         .map(|(name, _)| name.clone());
                     match channel {
                         crate::grammar::PaintAesthetic::Fill => {
@@ -265,6 +265,29 @@ impl PlotEditBuilder {
                 layer.scales = old.scales;
             }
             let color_scales = this.color_scales();
+            let mut ggplot_paint_scales = BTreeMap::new();
+            for existing in &this.definition.layers {
+                for (channel, encoding) in existing
+                    .color
+                    .iter()
+                    .map(|color| (None, color))
+                    .chain(
+                        existing
+                            .paint_scales
+                            .iter()
+                            .map(|(channel, color)| (Some(*channel), color)),
+                    )
+                    .filter(|(_, color)| color.automatic)
+                {
+                    ggplot_paint_scales.entry(channel).or_insert_with(|| {
+                        resolve::AutomaticPaintScale {
+                            id: encoding.id,
+                            title: encoding.title.clone().unwrap_or_default(),
+                            scale: encoding.scale.clone(),
+                        }
+                    });
+                }
+            }
             let ordinal_size =
                 crate::scales::ggplot_numeric_ordinal(crate::scales::GgplotNumericPalette::Size)?;
             let mut ggplot_numeric_ids = BTreeMap::new();
@@ -335,10 +358,22 @@ impl PlotEditBuilder {
                 axes: &this.original.axes,
                 color_ids: &mut this.original.colors,
                 color_scales: &color_scales,
+                ggplot_paint_scales: &mut ggplot_paint_scales,
                 ggplot_numeric_ids: &mut ggplot_numeric_ids,
                 ggplot_style_ids: &mut ggplot_style_ids,
             }
             .apply(&mut this.definition, &mut layer, &builder, &mapping, &data)?;
+            if let Some(existing) = &existing {
+                for (target, encoding) in &mut layer.numeric_scales {
+                    if let Some(previous) = existing.numeric_scales.get(target)
+                        && previous.input == encoding.input
+                        && previous.scale == encoding.scale
+                    {
+                        // Reauthoring the same scale must retain explicit sharing.
+                        encoding.id = previous.id;
+                    }
+                }
+            }
             this.original.layers.insert(name, layer.id);
             if let Some(index) = this.definition.layers.iter().position(|l| l.id == layer.id) {
                 this.definition.layers[index] = layer;

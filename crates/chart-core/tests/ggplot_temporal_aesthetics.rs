@@ -483,7 +483,7 @@ fn temporal_precision_paint_and_hidden_guide_match_reference() {
             .build()
             .unwrap();
         let mut wire: Json = serde_json::from_str(&figure.to_json().unwrap()).unwrap();
-        assert_eq!(wire["version"], 25);
+        assert_eq!(wire["version"], 42);
         if case["hidden"] == true {
             hide_guides(&mut wire);
         }

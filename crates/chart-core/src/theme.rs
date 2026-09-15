@@ -193,14 +193,35 @@ impl NamedTheme {
         }
     }
 }
-/// Version-one named theme plus portable plot/layer overrides.
+/// A retained reference theme palette, converted only when a scale selects it.
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[serde(untagged)]
+pub enum ThemeScalePalette {
+    /// Case-insensitive identity from the pinned reference palette registry.
+    Named(String),
+    /// Pure installed count/vector function; retains the v45 wire representation.
+    Registered(crate::grammar::ScalePaletteOperation),
+    /// Reference color vector. Missing entries differ from transparent color text.
+    Colors(Vec<Option<String>>),
+}
+impl From<crate::grammar::ScalePaletteOperation> for ThemeScalePalette {
+    fn from(value: crate::grammar::ScalePaletteOperation) -> Self {
+        Self::Registered(value)
+    }
+}
+
+/// Versioned named theme, palette selections and portable plot/layer overrides.
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ThemeSpec {
+    /// Reference palettes keyed by `palette.<aesthetic>.<continuous|discrete>`.
+    /// They are evaluated by the common scale engine, before guide preparation.
+    #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
+    pub scale_palettes: BTreeMap<String, ThemeScalePalette>,
     /// Version-two geometry defaults available to theme-derived expressions.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub geometry: Option<GeometryTheme<crate::color::Paint>>,
-    /// Supported version is one.
+    /// One for legacy, two for geometry, three for registered palettes, four for vectors, five for names.
     pub version: u32,
     /// Optional named theme; absent preserves the host/default cascade.
     pub named: Option<NamedTheme>,
@@ -212,10 +233,31 @@ pub struct ThemeSpec {
     pub layers: BTreeMap<LayerId, ThemePatch<crate::color::Paint>>,
 }
 impl ThemeSpec {
+    pub(crate) fn required_version(&self) -> u32 {
+        if self.scale_palettes.values().any(|p| {
+            matches!(p, ThemeScalePalette::Named(_))
+                || matches!(p, ThemeScalePalette::Colors(colors) if colors.len() == 1)
+        }) {
+            5
+        } else if self
+            .scale_palettes
+            .values()
+            .any(|p| matches!(p, ThemeScalePalette::Colors(_)))
+        {
+            4
+        } else if !self.scale_palettes.is_empty() {
+            3
+        } else if self.geometry.is_some() {
+            2
+        } else {
+            1
+        }
+    }
     /// Select a supplied theme.
     pub fn named(named: NamedTheme) -> Self {
         Self {
             version: 1,
+            scale_palettes: BTreeMap::new(),
             geometry: None,
             named: Some(named),
             plot: ThemePatch::default(),
@@ -234,11 +276,28 @@ impl ThemeSpec {
                 "Use a bounded chart theme.",
             ));
         }
-        if self.version != if self.geometry.is_some() { 2 } else { 1 } {
+        let version = self.required_version();
+        if self.version != version {
             return Err(Diagnostic::error(
                 DiagnosticCode::UnsupportedCapability,
                 "Unsupported theme version.",
-                "Use version two for geometry defaults and version one for legacy themes.",
+                "Use version four for color vectors, three for registered palettes, two for geometry defaults, or one for legacy themes.",
+            ));
+        }
+        if self.scale_palettes.len() > 128
+            || self.scale_palettes.keys().any(|key| {
+                key.strip_prefix("palette.")
+                    .and_then(|key| key.rsplit_once('.'))
+                    .is_none_or(|(aesthetic, family)| {
+                        !palette_aesthetic(aesthetic)
+                            || !matches!(family, "continuous" | "discrete")
+                    })
+            })
+        {
+            return Err(Diagnostic::error(
+                DiagnosticCode::Validation,
+                "Invalid reference theme palette keys or palette count.",
+                "Supply at most 128 palette.<aesthetic>.<continuous|discrete> registrations.",
             ));
         }
         if let Some(geometry) = &self.geometry {
@@ -257,6 +316,14 @@ impl ThemeSpec {
         t.overlay(&self.plot.resolve());
         Ok(t)
     }
+}
+
+pub(crate) fn palette_aesthetic(value: &str) -> bool {
+    !value.is_empty()
+        && value.len() <= 64
+        && value
+            .bytes()
+            .all(|b| b.is_ascii_alphanumeric() || b == b'_')
 }
 
 /// Apply the declared monochrome conversion after resolving constant or mapped colors.

@@ -683,7 +683,7 @@ fn manual_paints_alpha_and_linewidth_match_pinned_ggplot_builds() {
     {
         assert_eq!(
             mark.style.fill.unwrap().alpha,
-            (expected.as_f64().unwrap() * 255.).round() as u8
+            (expected.as_f64().unwrap() * 255.).round_ties_even() as u8
         );
     }
     for (id, layer) in [
@@ -854,6 +854,126 @@ fn zero_constant_point_size_retains_row_and_legacy_validation() {
         .build()
         .unwrap();
     assert_eq!(prepared(&negative).layers()[0].marks().len(), 1);
+}
+
+#[test]
+fn implicit_reference_circles_match_device_radii_including_empty_glyphs() {
+    let fixture: serde_json::Value = serde_json::from_str(include_str!(
+        "../../../fixtures/parity/ggplot2/point-sizes.json"
+    ))
+    .unwrap();
+    let mut checked = 0;
+    for case in fixture["cases"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|c| c["shape"] == 16)
+    {
+        let sizes: Vec<_> = case["size"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|v| v.as_f64().unwrap())
+            .collect();
+        let p = plot(
+            Data::columns()
+                .column("x", vec![2.; sizes.len()])
+                .column("size", sizes)
+                .build()
+                .unwrap(),
+        )
+        .profile(Profile::Ggplot2_4_0_3)
+        .aes(aes().x("x").y(2.))
+        .layer(
+            points()
+                .linewidth(case["stroke"].as_f64().unwrap())
+                .shape_value(A::Size, "size"),
+        )
+        .build()
+        .unwrap();
+        for units in [Units::Points, Units::LogicalPixels] {
+            let f = frame_units(&p, units);
+            let actual: Vec<_> = f
+                .scene()
+                .items()
+                .iter()
+                .filter(|i| i.layer.is_some())
+                .filter_map(|i| match i.primitive {
+                    Primitive::Point { radius, .. } => Some(radius),
+                    _ => None,
+                })
+                .collect();
+            let expected: Vec<_> = case["fontsize"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|v| v.as_f64().unwrap() * 0.375)
+                .filter(|v| *v > 0.)
+                .collect();
+            assert_eq!(actual.len(), expected.len(), "{case}");
+            for (actual, expected) in actual.into_iter().zip(expected) {
+                let points = actual
+                    * if units == Units::Points {
+                        1.
+                    } else {
+                        72. / 96.
+                    };
+                assert!(
+                    (points - expected).abs() < 1e-10,
+                    "{case}: {points} != {expected}"
+                );
+            }
+        }
+        checked += 1;
+    }
+    assert_eq!(checked, 3);
+}
+
+#[test]
+fn retained_empty_reference_glyphs_are_not_an_empty_population() {
+    use chart_core::{
+        interpolate::{Number, Value},
+        layout::LayoutStatus,
+    };
+    for empty in [false, true] {
+        for explicit in [false, true] {
+            let xs = if empty { vec![] } else { vec![1., 2.] };
+            let data = Data::columns()
+                .column("size", vec![-2.; xs.len()])
+                .column("x", xs)
+                .build()
+                .unwrap();
+            let mut layer = points().linewidth(0.5).shape_value(A::Size, "size");
+            if explicit {
+                layer = layer.aesthetic_value(
+                    chart_core::grammar::ValueAesthetic::Shape,
+                    Value::Number(Number(19.)),
+                );
+            }
+            let p = plot(data)
+                .profile(Profile::Ggplot2_4_0_3)
+                .aes(aes().x("x").y(2.))
+                .layer(layer)
+                .build()
+                .unwrap();
+            let f = frame(&p);
+            assert_eq!(
+                f.status(),
+                if empty {
+                    LayoutStatus::NoData
+                } else {
+                    LayoutStatus::Ready
+                }
+            );
+            assert_eq!(
+                f.scene().items().iter().any(
+                    |i| matches!(&i.primitive, Primitive::Text { text, .. } if text == "No data")
+                ),
+                empty
+            );
+            assert!(!f.scene().items().iter().any(|i| i.layer.is_some()));
+        }
+    }
 }
 
 #[test]

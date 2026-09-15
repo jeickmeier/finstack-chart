@@ -1,0 +1,39 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.resolve(__dirname,'../..'),c=require(path.resolve(process.argv[2],'authoring.cjs')),out=path.resolve(process.argv[3]);fs.mkdirSync(out,{recursive:true});
+const temporal=process.argv.includes('--temporal'),ordinal=process.argv.includes('--ordinal'),numeric=process.argv.includes('--numeric-constructors'),records=[];
+let cases=JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2',numeric?'numeric-paint-constructors.json':ordinal?'default-ordinal-theme-palettes.json':temporal?'default-temporal-theme-palettes.json':'default-palette-selection.json'))).cases;
+if(numeric)cases=cases.map(t=>({...t,route:t.constructor.endsWith('_area')?'area':t.constructor==='radius'?'radius':'constructor',family:'continuous',theme_mode:'absent'}));
+if(ordinal)cases=cases.map(t=>({...t,route:'ordinal',family:'discrete'}));
+if(temporal)cases=cases.map(t=>({...t,route:'automatic',family:'continuous'}));
+const registry=c.ExtensionRegistry.example(),output=new c.Output(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))),options=c.export_options(640,360).dpi(96).basis('current');
+function theme(t){const channel=t.channel,kind=['colour','fill'].includes(channel)?'colour':channel==='linewidth'?'size':channel;return t.theme_mode==='supplied'?c.theme().scale_palettes({[`palette.${channel}.${t.family}`]:{operation:{id:'example.scale_palette',version:'1'},parameters:{mode:'constant',channel:kind}}}):c.theme();}
+function descriptor(t){
+ const channel=t.channel,route=t.route,discrete=t.family==='discrete',area=route==='area';
+ const s={training:'Eligible',function:{Interpolated:{normalization:{Ggplot:{family:'Linear',domain:[0,1],reverse:false,rescaler:area?'Maximum':'Range'}},output:{Interpolate:{operation:'PowerRange',range:route==='range'?[.2,.8]:area?[0,6]:channel==='alpha'?[.1,1]:[1,6],exponent:channel==='size'&&route!=='radius'?.5:1,absolute:area}},unknown:{kind:'Missing'}}},ggplot:{Continuous:{limits:null,oob:'Censor'}}};
+ if(['colour','fill'].includes(channel))s.function.Interpolated.output={Interpolate:{operation:'GgplotPalette',spec:{Gradient:{colors:[{red:19,green:43,blue:67,alpha:255},{red:86,green:177,blue:247,alpha:255}],values:null}}}};
+ if(discrete){s.function={Ordinal:{domain:[],range:[],unknown:{Explicit:null}}};s.ggplot={Discrete:{limits:null,levels:null,drop:true,na_translate:true,palette:['colour','fill'].includes(channel)?{Hue:{h:[15,375],chroma:100,luminance:65,start:0,reverse:false}}:{NumericRange:{range:route==='range'?[.2,.8]:channel==='alpha'?[.1,1]:[2,6],area:channel==='size'}}}};}
+ if(ordinal){s.ggplot.Discrete.palette={Viridis:{option:'Viridis',begin:0,end:1,reverse:false,alpha:1}};s.guide='Hidden';s.missing_paint_is_na=true;}
+ if(numeric){s.guide='Hidden';if(t.configuration!=='default')s.function.Interpolated.output.Interpolate.range=area?[0,t.args.max_size]:t.args.range;if(t.constructor.includes('_binned'))s.ggplot={Binned:{limits:null,oob:'Squish',breaks:{Nice:5},right:true}};}
+ if(!['range','area','radius','ordinal'].includes(route)&&(!numeric||t.configuration==='default'))s.palette_theme_aesthetics=[channel];return s;
+}
+function layer(t){let p=((temporal||numeric)&&t.channel==='linewidth'?c.rule():c.points()).name('marks');if(ordinal)p=p.aesthetic_value('Shape',{kind:'Number',value:21});if(t.route!=='automatic'&&!['colour','fill'].includes(t.channel))p=p.numeric_scale({size:'Size',alpha:'Alpha',linewidth:'StrokeWidth'}[t.channel],'v',descriptor(t));return p;}
+function build(t,data){
+ const channel=t.channel;let mapping=c.aes().x('x').y(1);mapping=mapping[channel==='colour'?'color':channel]('v');if((temporal||numeric)&&channel==='linewidth')mapping=mapping.x2('end').y2(1);let p=c.plot(data).profile('Ggplot2_4_0_3').with_registry(registry).theme(theme(t));
+ if(t.route!=='automatic'&&['colour','fill'].includes(channel)){mapping=mapping[channel==='colour'?'color_scale':'fill_scale']('v');p=p.scale(c.color_mapped('v',descriptor(t)));}
+ return p.aes(mapping).layer(layer(t)).build();
+}
+const paint=raw=>{if(raw===null)return {red:0,green:0,blue:0,alpha:0};const v=raw==='grey50'?'#7F7F7F':raw;return ({red:parseInt(v.slice(1,3),16),green:parseInt(v.slice(3,5),16),blue:parseInt(v.slice(5,7),16),alpha:v.length===9?parseInt(v.slice(7,9),16):255});};
+const number=v=>Number(typeof v==='object'?v.number:v);
+function check(t,chart){const styles=chart.semantics().layers[0].styles??[],wanted=t.result.mapped.filter(v=>v!==null||!(ordinal?['size','linewidth','colour']:['size','linewidth']).includes(t.channel));assert.equal(styles.length,wanted.length);styles.forEach((s,i)=>{const v=wanted[i];if(t.channel==='linewidth'&&v===null){assert.deepEqual(s.color,paint(t.result[temporal||numeric?'mark_colours':'point_colours'][i]));return;}if(['colour','fill'].includes(t.channel))assert.deepEqual(s[t.channel==='colour'?'color':'fill']??null,paint(v),JSON.stringify(t));else{const actual=t.channel==='alpha'?s.color.alpha:number(s[t.channel==='size'?'radius':'stroke_width']),expected=t.channel==='alpha'?paint(t.result[temporal||numeric?'mark_colours':'point_colours'][i]).alpha:v;assert.ok(Math.abs(actual-expected)<2e-12,`${JSON.stringify(t)} ${actual} ${expected}`);}});return styles;}
+for(const [index,t] of cases.entries()){
+ const owned=[];try{
+  const d=c.Data.columns({x:c.column(t.inputs.map((_,i)=>i),{kind:'float64'}),...((temporal||numeric)?{end:c.column(t.inputs.map((_,i)=>i+.5),{kind:'float64'})}:{}),v:temporal?c.timestamps(t.inputs.map(v=>BigInt(v??0)*(t.kind==='date'?86400n:1n)*1000000000n),'ns','UTC').validity(t.inputs.map(v=>v!==null)):c.column(t.inputs,{kind:t.family==='discrete'?'string':'float64'})},{name:'data'});owned.push(d);
+  const p=build(t,d);owned.push(p);const wire=p.to_json(),restored=c.Plot.from_json(wire,registry);owned.push(restored);assert.equal(restored.to_json(),wire);
+  if(numeric&&t.result.error){const failed=p.chart();owned.push(failed);failed.semantics();assert.fail('expected reference rejection');}
+  for(const state of ['original','layer_edit','theme_edit']){let expected=t,current;if(state==='original')current=restored;else if(state==='layer_edit'){current=restored.edit().layer('marks',layer(t)).build();owned.push(current);}else{expected=numeric?t:cases.find(x=>['channel','family','route','kind','population'].every(k=>x[k]===t[k])&&x.theme_mode!==t.theme_mode);current=restored.edit().theme(theme(expected)).build();owned.push(current);}const chart=current.chart();owned.push(chart);records.push({index,state,styles:check(expected,chart)});assert.equal(restored.to_json(),wire);}
+  if(numeric&&t.population==='ordinary'){const request=output.request(restored,options);owned.push(request);const frame=request.prepare();owned.push(frame);for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`numeric-${t.constructor}-${t.configuration}.${fmt}`),frame.export(fmt));}
+  if((t.route==='automatic'||ordinal)&&t.theme_mode==='supplied'&&(!temporal||t.population==='ordinary')){const request=output.request(restored,options);owned.push(request);const frame=request.prepare();owned.push(frame);for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`${t.channel}-${ordinal?t.population:t.kind??t.family}.${fmt}`),frame.export(fmt));}
+ }catch(error){assert.ok(numeric&&t.result.error&&error instanceof c.ChartError,`${JSON.stringify(t)} ${error.stack}`);assert.equal(error.code,'CHART_NUMERICAL_DOMAIN');records.push({index,error:error.code});}finally{for(const o of owned.reverse())o.dispose();}
+}
+assert.equal(records.length,numeric?484:ordinal?60:temporal?180:168);fs.writeFileSync(path.join(out,'records.json'),JSON.stringify(records));options.dispose();output.dispose();registry.dispose();console.log('PASS',records.length,'palette states and',fs.readdirSync(out).filter(v=>/\.(svg|pdf|png)$/.test(v)).length,'publication files');

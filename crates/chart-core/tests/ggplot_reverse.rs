@@ -170,6 +170,8 @@ fn reverse_population_limits_and_numeric_edges_are_checked() {
         timestamp: None,
         transform: Some(ScaleTransform::Reverse),
         limits: Some(Bounds::new(2., 8.).unwrap()),
+        function_limits: None,
+        missing: None,
         outside: ScaleOob::Censor,
     };
     policy.validate().unwrap();
@@ -247,6 +249,7 @@ fn reverse_explicit_histogram_edges_retain_existing_left_closed_policy() {
 fn explicit_nested_reverse_mappings_require_v17_without_an_axis() {
     use chart_core::grammar::{ChartDefinition, Numeric, ScaleOob, ScaleProjection};
     let reverse = Numeric::Scaled {
+        samples: None,
         input: Box::new(Numeric::Literal(4.)),
         scale: Box::new(ScaleProjection {
             binned: None,
@@ -254,11 +257,14 @@ fn explicit_nested_reverse_mappings_require_v17_without_an_axis() {
             timestamp: None,
             transform: Some(ScaleTransform::Reverse),
             limits: None,
+            function_limits: None,
+            missing: None,
             outside: ScaleOob::Keep,
         }),
     };
     let mut definition = ChartDefinition::new(Revision::INITIAL);
     definition.mappings.x = Some(Numeric::Scaled {
+        samples: None,
         input: Box::new(reverse),
         scale: Box::new(ScaleProjection {
             binned: None,
@@ -266,6 +272,8 @@ fn explicit_nested_reverse_mappings_require_v17_without_an_axis() {
             timestamp: None,
             transform: None,
             limits: None,
+            function_limits: None,
+            missing: None,
             outside: ScaleOob::Keep,
         }),
     });

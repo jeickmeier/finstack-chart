@@ -10,6 +10,39 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
     let mut ids = BTreeSet::new();
     for a in axes {
         validate_style(&a.guide, limits)?;
+        if let Some(values) = &a.temporal_limits
+            && (a.numeric_limits.is_some()
+                || a.limits_function.is_some()
+                || !matches!(
+                    a.scale,
+                    AxisScale::Date { .. } | AxisScale::Utc { .. } | AxisScale::Calendar { .. }
+                )
+                || values
+                    .iter()
+                    .flatten()
+                    .any(|v| !matches!(v, crate::composition::ScaleValue::Timestamp { .. })))
+        {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Temporal limits require timestamp endpoints and a temporal axis without numeric limits or a limit function.",
+            ));
+        }
+        if a.numeric_limits.is_some()
+            && (a.limits_function.is_some()
+                || !matches!(
+                    a.scale,
+                    AxisScale::Auto
+                        | AxisScale::Linear(_)
+                        | AxisScale::Duration(_)
+                        | AxisScale::Nonlinear { .. }
+                ))
+        {
+            return Err(error(
+                DiagnosticCode::SchemaConflict,
+                "Authored numeric limits require a numeric axis without a limit function.",
+            ));
+        }
+
         if let Some(values) = &a.continuous_limits {
             crate::limits::require_within(
                 values.len() <= limits.max_items,
@@ -117,7 +150,7 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
         let range = Bounds::new(0., 1.)?;
         match &a.scale {
             AxisScale::Calendar { spec, interval } => {
-                TimeAxisScale::resolve(spec.clone(), range, None, a.outside)?;
+                TimeAxisScale::validate_axis_spec(spec)?;
                 if let Some(interval) = interval {
                     interval.validate()?;
                 }
@@ -134,8 +167,36 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
             AxisScale::Linear(domain) | AxisScale::Duration(domain) => {
                 domain.resolve(None)?;
             }
+            AxisScale::Nonlinear {
+                transform: transform @ ScaleTransform::Ggplot { .. },
+                domain,
+            } => {
+                transform.validate()?;
+                domain.resolve(None)?;
+                for bounds in domain.explicit.into_iter().chain(a.viewport) {
+                    for value in [bounds.start(), bounds.end()] {
+                        if transform.forward(value)?.is_none() {
+                            return Err(error(
+                                DiagnosticCode::NumericalDomain,
+                                "Authored axis limits are outside the transform domain.",
+                            ));
+                        }
+                    }
+                }
+            }
             AxisScale::Nonlinear { transform, domain } => {
-                NonlinearScale::resolve(None, *domain, *transform, range, a.viewport, a.outside)?;
+                NonlinearScale::resolve(
+                    None,
+                    *domain,
+                    transform.clone(),
+                    range,
+                    if a.numeric_limits.is_some() {
+                        None
+                    } else {
+                        a.viewport
+                    },
+                    a.outside,
+                )?;
             }
             AxisScale::D3Band(options) => {
                 BandScale::resolve_d3(&[], options, range)?;
@@ -159,6 +220,12 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
 }
 
 pub(super) fn validate_style(a: &GuideStyle, limits: crate::Limits) -> ChartResult<()> {
+    if a.breaks_function.is_some() && (a.tick_values.is_some() || a.guide_ticks.is_some()) {
+        return Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Registered break selection cannot compete with fixed guide values.",
+        ));
+    }
     if let Some(components) = &a.components {
         components.validate(limits)?;
     }
@@ -362,6 +429,7 @@ fn resolve_axis_inner(
     r: &LayoutRequest,
     spec: &AxisSpec,
     plot: Rect,
+    major_values: &mut super::guide_ticks::SelectedGuideValues,
 ) -> ChartResult<ResolvedAxis> {
     if let Some(f) = &spec.number_format {
         f.validate()?;
@@ -412,7 +480,7 @@ fn resolve_axis_inner(
         }
         let mut primary = primary.clone();
         primary.visible = spec.visible;
-        let resolved = resolve_axis_inner(chart, r, &primary, plot)?;
+        let resolved = resolve_axis_inner(chart, r, &primary, plot, &mut Default::default())?;
         if matches!(
             resolved.scale,
             ResolvedScale::Utc(_) | ResolvedScale::Calendar(_)
@@ -455,13 +523,38 @@ fn resolve_axis_inner(
                     viewport,
                 },
             };
-            axis.ticks = super::guide_ticks::resolve(chart, &axis, &spec.guide, r)?;
+            axis.ticks = super::guide_ticks::resolve_with_values(
+                chart,
+                &axis,
+                &spec.guide,
+                r,
+                major_values,
+            )?;
             return Ok(axis);
         }
         let (domain, view, range) = match &resolved.scale {
             ResolvedScale::Linear(s) => (s.domain(), s.viewport(), s.range()),
             ResolvedScale::Numeric(s) => (s.domain(), s.viewport(), s.range()),
             ResolvedScale::Nonlinear(s) => (s.domain(), s.viewport(), s.range()),
+            ResolvedScale::Unbounded(s)
+                if matches!(s.transform(), Some(ScaleTransform::Ggplot { .. })) =>
+            {
+                (
+                    s.invertible_domain().ok_or_else(|| {
+                        error(
+                            DiagnosticCode::NumericalDomain,
+                            "Secondary unit mapping requires a finite invertible source domain.",
+                        )
+                    })?,
+                    s.invertible_viewport().ok_or_else(|| {
+                        error(
+                            DiagnosticCode::NumericalDomain,
+                            "Secondary unit mapping requires a finite invertible source viewport.",
+                        )
+                    })?,
+                    s.range(),
+                )
+            }
             _ => {
                 return Err(error(
                     DiagnosticCode::SchemaConflict,
@@ -506,7 +599,7 @@ fn resolve_axis_inner(
             Ok(converted)
         };
         let domain = convert_bounds(domain)?;
-        let view = convert_bounds(view)?;
+        let mut view = convert_bounds(view)?;
         if !ggplot {
             domain.distinct()?;
             view.distinct()?;
@@ -532,8 +625,7 @@ fn resolve_axis_inner(
             })
             .collect::<ChartResult<_>>()?;
         let guide_inverse = if ggplot {
-            let mut secondary = Vec::with_capacity(1000);
-            let mut original = Vec::with_capacity(1000);
+            let mut samples = Vec::with_capacity(1000);
             for i in 0..1000 {
                 let position = range.start() + (range.end() - range.start()) * (i as f64 / 999.);
                 let crate::composition::ScaleValue::Number(value) =
@@ -541,12 +633,19 @@ fn resolve_axis_inner(
                 else {
                     unreachable!()
                 };
-                secondary.push(convert(value)?.into());
-                original.push(value.into());
+                samples.push([convert(value)?, value]);
             }
+            // The reference samples the expanded primary range. Its transformed
+            // extrema can differ from the transformed endpoints (for example x^2
+            // when an empty plot's expansion extends below zero).
+            let mut samples = crate::scales::ggplot_approx::knots(samples);
+            if samples.len() == 1 {
+                samples.push(samples[0]);
+            }
+            view = Bounds::new(samples[0][0], samples[samples.len() - 1][0])?;
             Some(Box::new(NumericScale::new(NumericScaleSpec {
-                domain: secondary,
-                range: original,
+                domain: samples.iter().map(|p| p[0].into()).collect(),
+                range: samples.iter().map(|p| p[1].into()).collect(),
                 ..NumericScaleSpec::d3(NumericFamily::Linear)
             })?))
         } else {
@@ -569,7 +668,19 @@ fn resolve_axis_inner(
         if chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
             || spec.guide.uses_tick_configuration()
         {
-            axis.ticks = super::guide_ticks::resolve(chart, &axis, &spec.guide, r)?;
+            axis.ticks = super::guide_ticks::resolve_with_values(
+                chart,
+                &axis,
+                &spec.guide,
+                r,
+                major_values,
+            )?;
+        }
+        if ggplot && view.start() == view.end() {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Reference secondary interpolation requires two distinct sample values.",
+            ));
         }
         return Ok(axis);
     }
@@ -637,31 +748,266 @@ fn resolve_axis_inner(
         }),
         _ => None,
     };
+    if matches!(spec.scale, AxisScale::Binned { .. }) {
+        let prepared = positional_bins(spec, &space)?;
+        if prepared
+            .function_limits()
+            .is_some_and(|limits| limits.iter().all(|v| v.0.is_nan()))
+        {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Positional bin dimensions require a comparable function limit.",
+            ));
+        }
+    }
+    if let Some(limits) = chart.positional_limits.get(&spec.id) {
+        if limits.len() > 2
+            || (limits.iter().any(|v| v.0.is_nan()) && limits.iter().any(|v| v.0.is_finite()))
+        {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Positional function limits cannot resolve this endpoint vector.",
+            ));
+        }
+        limits.iter().find(|v| !v.0.is_nan()).ok_or_else(|| {
+            error(
+                DiagnosticCode::NumericalDomain,
+                "Positional function limits have no comparable endpoints.",
+            )
+        })?;
+    }
     if let AxisScale::Binned { spec: bins, .. } = &spec.scale {
         let prepared = positional_bins(spec, &space)?;
         let limits = prepared.panel_limits();
-        if limits.iter().any(|v| !v.0.is_finite()) {
-            if viewport.is_some() {
-                return Err(error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "A finite viewport over unbounded positional bins requires retained infinite source geometry.",
-                ));
+        let view = viewport.map(|view| {
+            [view.start(), view.end()].map(|v| {
+                crate::interpolate::Number(bins.transform.as_ref().map_or(v, |t| t.forward_raw(v)))
+            })
+        });
+        if limits.iter().any(|v| !v.0.is_finite())
+            || view.is_some_and(|v| v.iter().any(|v| !v.0.is_finite()))
+        {
+            let mut scale = crate::scales::GgplotUnboundedScale::new(
+                limits,
+                range,
+                bins.transform.clone(),
+                spec.outside,
+            )?;
+            if let Some(view) = view {
+                scale = scale.with_transformed_viewport(view)?;
             }
             let mut axis = ResolvedAxis {
                 spec: spec.clone(),
                 space,
-                scale: ResolvedScale::Unbounded(crate::scales::GgplotUnboundedScale::new(
-                    limits,
-                    range,
-                    bins.transform,
-                    spec.outside,
-                )?),
+                scale: ResolvedScale::Unbounded(scale),
                 ticks: vec![],
             };
-            axis.ticks = super::guide_ticks::resolve(chart, &axis, &spec.guide, r)?;
+            axis.ticks = super::guide_ticks::resolve_with_values(
+                chart,
+                &axis,
+                &spec.guide,
+                r,
+                major_values,
+            )?;
             return Ok(axis);
         }
     }
+    // Reference transforms retain the panel in transformed units, including
+    // intervals whose inverse has an infinite or undefined endpoint.
+    if chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
+        && let AxisScale::Nonlinear {
+            transform: transform @ ScaleTransform::Ggplot { .. },
+            domain,
+        } = &spec.scale
+    {
+        let transformed = |bounds: Bounds| {
+            Bounds::new(
+                transform.forward_raw(bounds.start()),
+                transform.forward_raw(bounds.end()),
+            )
+        };
+        let domain = ContinuousDomain {
+            explicit: domain.explicit.map(transformed).transpose()?,
+            baseline: match domain.baseline {
+                Baseline::None => Baseline::None,
+                Baseline::Zero => Baseline::Value(transform.forward_raw(0.)),
+                Baseline::Value(v) => Baseline::Value(transform.forward_raw(v)),
+            },
+            ..*domain
+        };
+        let extent = if matches!(space, ValueSpace::Scaled { .. }) {
+            extent
+        } else {
+            extent.map(|e| {
+                let a = transform.forward_raw(e.minimum);
+                let b = transform.forward_raw(e.maximum);
+                crate::grammar::Extent {
+                    minimum: a.min(b),
+                    maximum: a.max(b),
+                }
+            })
+        };
+        let limits = if let Some(limits) = chart.positional_limits.get(&spec.id) {
+            [
+                limits.iter().map(|v| v.0).fold(f64::INFINITY, f64::min),
+                limits.iter().map(|v| v.0).fold(f64::NEG_INFINITY, f64::max),
+            ]
+        } else {
+            let b = if domain.explicit.is_none() && (domain.nice || domain.padding != 0.) {
+                domain.resolve(extent)?
+            } else {
+                domain.trained_limits(extent)?
+            };
+            [b.start(), b.end()]
+        };
+        let view = if let Some(view) = viewport {
+            let b = transformed(view)?;
+            [b.start(), b.end()]
+        } else if limits.iter().all(|v| v.is_finite()) {
+            let b = spec
+                .expansion
+                .unwrap_or_default()
+                .continuous_viewport(Bounds::new(limits[0], limits[1])?)?;
+            [b.start(), b.end()]
+        } else {
+            limits
+        };
+        let scale = GgplotUnboundedScale::new(
+            limits.map(crate::interpolate::Number),
+            range,
+            Some(transform.clone()),
+            spec.outside,
+        )?
+        .with_transformed_viewport(view.map(crate::interpolate::Number))?;
+        let mut axis = ResolvedAxis {
+            spec: spec.clone(),
+            space,
+            scale: ResolvedScale::Unbounded(scale),
+            ticks: vec![],
+        };
+        axis.ticks =
+            super::guide_ticks::resolve_with_values(chart, &axis, &spec.guide, r, major_values)?;
+        return Ok(axis);
+    }
+    let mut function_spec;
+    let spec = if let Some(limits) = chart.positional_limits.get(&spec.id)
+        && !matches!(spec.scale, AxisScale::Binned { .. })
+    {
+        let first = limits
+            .iter()
+            .find(|v| !v.0.is_nan())
+            .expect("validated endpoints")
+            .0;
+        let (low, high) = limits
+            .iter()
+            .filter(|v| !v.0.is_nan())
+            .fold((first, first), |(lo, hi), v| (lo.min(v.0), hi.max(v.0)));
+        let transform = match &spec.scale {
+            AxisScale::Nonlinear { transform, .. } => Some(transform),
+            _ => None,
+        };
+        if !low.is_finite()
+            || !high.is_finite()
+            || viewport.is_some_and(|view| {
+                [view.start(), view.end()].into_iter().any(|v| {
+                    !transform
+                        .as_ref()
+                        .map_or(v, |t| t.forward_raw(v))
+                        .is_finite()
+                })
+            })
+        {
+            let mut scale = crate::scales::GgplotUnboundedScale::new(
+                [
+                    crate::interpolate::Number(low),
+                    crate::interpolate::Number(high),
+                ],
+                range,
+                transform.cloned(),
+                spec.outside,
+            )?;
+            if let Some(view) = viewport {
+                scale = scale.with_transformed_viewport([view.start(), view.end()].map(|v| {
+                    crate::interpolate::Number(transform.as_ref().map_or(v, |t| t.forward_raw(v)))
+                }))?;
+            }
+            let mut axis = ResolvedAxis {
+                spec: spec.clone(),
+                space,
+                scale: ResolvedScale::Unbounded(scale),
+                ticks: vec![],
+            };
+            axis.ticks = super::guide_ticks::resolve_with_values(
+                chart,
+                &axis,
+                &spec.guide,
+                r,
+                major_values,
+            )?;
+            return Ok(axis);
+        }
+        if let ValueSpace::Timestamp {
+            origin,
+            representation,
+        } = &space
+        {
+            let time = crate::scales::GgplotTimestampNormalization {
+                origin: *origin,
+                unit: representation.unit,
+                date: matches!(spec.scale, AxisScale::Date { .. }),
+            };
+            let mut resolved_spec = spec.clone();
+            resolved_spec.resolved_temporal = Some(Box::new(time));
+            let mut axis = ResolvedAxis {
+                spec: resolved_spec,
+                space,
+                scale: ResolvedScale::Calendar(Box::new(TimeAxisScale::resolve_function(
+                    time,
+                    match &spec.scale {
+                        AxisScale::Calendar { spec, .. } => spec.zone.clone(),
+                        _ => CalendarZone::Utc,
+                    },
+                    Bounds::new(low, high)?,
+                    range,
+                    time_window.or(viewport
+                        .map(|view| {
+                            Ok(TimeBounds {
+                                start: project::timestamp(view.start(), time.origin)?,
+                                end: project::timestamp(view.end(), time.origin)?,
+                            })
+                        })
+                        .transpose()?),
+                    spec.outside,
+                    spec.expansion.unwrap_or_default(),
+                )?)),
+                ticks: vec![],
+            };
+            axis.ticks = super::guide_ticks::resolve_with_values(
+                chart,
+                &axis,
+                &spec.guide,
+                r,
+                major_values,
+            )?;
+            return Ok(axis);
+        }
+        function_spec = spec.clone();
+        let raw = [low, high].map(|v| transform.as_ref().map_or(Ok(v), |t| t.inverse(v)));
+        let domain = ContinuousDomain::explicit(Bounds::new(raw[0].clone()?, raw[1].clone()?)?);
+        function_spec.scale = if let Some(transform) = transform {
+            AxisScale::Nonlinear {
+                transform: transform.clone(),
+                domain,
+            }
+        } else if matches!(spec.scale, AxisScale::Duration(_)) {
+            AxisScale::Duration(domain)
+        } else {
+            AxisScale::Linear(domain)
+        };
+        &function_spec
+    } else {
+        spec
+    };
     let family = match (&spec.scale, &space) {
         (
             AxisScale::Auto,
@@ -676,12 +1022,15 @@ fn resolve_axis_inner(
             let prepared = positional_bins(spec, &space)?;
             let raw = prepared
                 .panel_limits()
-                .map(|v| bins.transform.map_or(Ok(v.0), |t| t.inverse(v.0)))
+                .map(|v| bins.transform.as_ref().map_or(Ok(v.0), |t| t.inverse(v.0)))
                 .into_iter()
                 .collect::<ChartResult<Vec<_>>>()?;
             let domain = ContinuousDomain::explicit(Bounds::new(raw[0], raw[1])?);
-            if let Some(transform) = bins.transform {
-                AxisScale::Nonlinear { transform, domain }
+            if let Some(transform) = &bins.transform {
+                AxisScale::Nonlinear {
+                    transform: transform.clone(),
+                    domain,
+                }
             } else {
                 AxisScale::Linear(domain)
             }
@@ -793,6 +1142,42 @@ fn resolve_axis_inner(
             "Time formatting requires a UTC or calendar time axis.",
         ));
     }
+    if spec.population_missing.is_some()
+        && spec.limits_function.is_none()
+        && let AxisScale::Nonlinear {
+            transform: ScaleTransform::Sqrt,
+            domain,
+        } = &family
+        && domain.explicit.is_none()
+        && matches!(space, ValueSpace::Scaled { .. })
+        && let Some(extent) = extent.filter(|e| e.minimum < 0.)
+    {
+        let limits = Bounds::new(extent.minimum, extent.maximum)?;
+        let view = match viewport {
+            Some(view) => Bounds::new(
+                ScaleTransform::Sqrt.forward_raw(view.start()),
+                ScaleTransform::Sqrt.forward_raw(view.end()),
+            )?,
+            None => expansion.unwrap_or_default().continuous_viewport(limits)?,
+        };
+        let mut axis = ResolvedAxis {
+            spec: spec.clone(),
+            space,
+            scale: ResolvedScale::Nonlinear(NonlinearScale::from_reference_transformed(
+                limits,
+                view,
+                ScaleTransform::Sqrt,
+                range,
+                spec.outside,
+            )?),
+            ticks: vec![],
+        };
+        axis.ticks =
+            super::guide_ticks::resolve_with_values(chart, &axis, &spec.guide, r, major_values)?;
+        axis.ticks
+            .retain(|tick| tick.position >= range.minimum() && tick.position <= range.maximum());
+        return Ok(axis);
+    }
     let scale = match (family, &space) {
         (
             AxisScale::Registered {
@@ -889,8 +1274,15 @@ fn resolve_axis_inner(
             if let Some(expansion) = spec.expansion {
                 policy.expansion = expansion;
             }
+            if matches!(policy.guide.labels, GgplotGuideLabels::Registered { .. }) {
+                policy.guide.labels = GgplotGuideLabels::Hidden;
+            }
             let provider = policy
-                .train_with_continuous_limits(&keys, spec.continuous_limits.as_deref())?
+                .train_using(
+                    &keys,
+                    spec.continuous_limits.as_deref(),
+                    &chart.palette_registrations,
+                )?
                 .into_provider(range, inner, outer, point)?;
             ResolvedScale::Provider(CheckedPositionalScale::new(
                 std::sync::Arc::new(provider),
@@ -964,13 +1356,14 @@ fn resolve_axis_inner(
             ValueSpace::Data | ValueSpace::Transformed { .. } | ValueSpace::Scaled { .. },
         ) => {
             let contribution = if let ValueSpace::Scaled { scale, .. } = &space {
-                if scale.transform != Some(transform) || scale.id != spec.id {
+                if scale.transform != Some(transform.clone()) || scale.id != spec.id {
                     return Err(error(
                         DiagnosticCode::SchemaConflict,
                         "Prepared scale stage differs from the bound axis transformation.",
                     ));
                 }
                 extent
+                    .filter(|_| domain.explicit.is_none())
                     .map(|e| -> ChartResult<crate::grammar::Extent> {
                         let a = transform.inverse(e.minimum)?;
                         let b = transform.inverse(e.maximum)?;
@@ -981,14 +1374,16 @@ fn resolve_axis_inner(
                     })
                     .transpose()?
             } else if matches!(transform, ScaleTransform::Log { .. } | ScaleTransform::Sqrt) {
-                eligible_transform_extent(chart, spec, transform)?
+                eligible_transform_extent(chart, spec, transform.clone())?
             } else {
                 extent
             };
             let reference_viewport = match viewport {
                 Some(_) => None,
                 None => expansion
-                    .map(|e| e.nonlinear_transformed_viewport(contribution, domain, transform))
+                    .map(|e| {
+                        e.nonlinear_transformed_viewport(contribution, domain, transform.clone())
+                    })
                     .transpose()?,
             };
             let mut scale = NonlinearScale::resolve(
@@ -1112,6 +1507,23 @@ fn resolve_axis_inner(
                     })
                 })
                 .transpose()?;
+            let mut options = options;
+            if options.domain.is_empty() {
+                options.domain = match extent {
+                    Some(e) => vec![
+                        project::timestamp(e.minimum, *origin)?,
+                        project::timestamp(e.maximum, *origin)?,
+                    ],
+                    None => vec![
+                        0,
+                        if expansion.is_some() {
+                            ticks_per_second(representation.unit) as i64
+                        } else {
+                            1
+                        },
+                    ],
+                };
+            }
             let scale = TimeAxisScale::resolve_reference(
                 options,
                 range,
@@ -1153,6 +1565,8 @@ fn resolve_axis_inner(
                         start: 0,
                         end: if is_date {
                             (ticks_per_second(representation.unit) * 86400) as i64
+                        } else if expansion.is_some() {
+                            ticks_per_second(representation.unit) as i64
                         } else {
                             1
                         },
@@ -1203,7 +1617,8 @@ fn resolve_axis_inner(
         scale,
         ticks: vec![],
     };
-    axis.ticks = super::guide_ticks::resolve(chart, &axis, &spec.guide, r)?;
+    axis.ticks =
+        super::guide_ticks::resolve_with_values(chart, &axis, &spec.guide, r, major_values)?;
     Ok(axis)
 }
 
@@ -1212,8 +1627,9 @@ pub(super) fn resolve_axis(
     r: &LayoutRequest,
     spec: &AxisSpec,
     plot: Rect,
+    major_values: &mut super::guide_ticks::SelectedGuideValues,
 ) -> ChartResult<ResolvedAxis> {
-    resolve_axis_inner(chart, r, spec, plot).map_err(|mut e: crate::Diagnostic| {
+    resolve_axis_inner(chart, r, spec, plot, major_values).map_err(|mut e: crate::Diagnostic| {
         e.message = format!("Scale {}: {}", spec.id.get(), e.message);
         e
     })
@@ -1247,12 +1663,14 @@ fn eligible_transform_extent(
             .iter()
             .find(|l| l.id == layer.id())
             .expect("prepared layer exists");
-        let mut include = |point: crate::Point, baseline_dependent: bool| -> ChartResult<()> {
-            let value = if axis.side.horizontal() {
+        let coordinate = |point: crate::Point| {
+            if axis.side.horizontal() {
                 point.x()
             } else {
                 point.y()
-            };
+            }
+        };
+        let mut include = |value: f64, baseline_dependent: bool| -> ChartResult<()> {
             if transform.forward(value)?.is_none() {
                 if baseline_dependent || authored.invalid == crate::data::InvalidPolicy::Strict {
                     return Err(error(
@@ -1276,32 +1694,40 @@ fn eligible_transform_extent(
         };
         for mark in layer.marks() {
             match &mark.geometry {
+                PreparedGeometry::UnboundedPoint(p) => {
+                    let value = p[usize::from(!axis.side.horizontal())].0;
+                    if value.is_finite() {
+                        include(value, false)?;
+                    }
+                }
                 PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {}
                 PreparedGeometry::Point(p)
                 | PreparedGeometry::ShapePath { center: p, .. }
-                | PreparedGeometry::ShapePathRun { center: p, .. } => include(*p, false)?,
+                | PreparedGeometry::ShapePathRun { center: p, .. } => {
+                    include(coordinate(*p), false)?
+                }
                 PreparedGeometry::Polygon(points) => {
                     for p in points {
-                        include(*p, true)?;
+                        include(coordinate(*p), true)?;
                     }
                 }
                 PreparedGeometry::BandRun { lower, upper }
                 | PreparedGeometry::StackBandRun { lower, upper, .. } => {
                     for p in lower.iter().chain(upper) {
-                        include(*p, true)?;
+                        include(coordinate(*p), true)?;
                     }
                 }
                 PreparedGeometry::LineRun(points) => {
                     for p in points {
-                        include(*p, false)?;
+                        include(coordinate(*p), false)?;
                     }
                 }
                 PreparedGeometry::Rule { from, to }
                 | PreparedGeometry::Rectangle { from, to }
                 | PreparedGeometry::Bar { from, to, .. }
                 | PreparedGeometry::NativePaint { from, to, .. } => {
-                    include(*from, true)?;
-                    include(*to, true)?;
+                    include(coordinate(*from), true)?;
+                    include(coordinate(*to), true)?;
                 }
             }
         }

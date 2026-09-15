@@ -1,0 +1,5383 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#FFFFFF",
+            "#FFB7A0"
+          ],
+          ".value": [
+            0.20000000000000001,
+            0.5
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#FFFFFF",
+            "#FFB7A0"
+          ],
+          ".value": [
+            0.80000000000000004,
+            0.5
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#FFFFFF",
+            "#FFB7A0"
+          ],
+          ".value": [
+            0.20000000000000001,
+            0.5
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#FFFFFF",
+            "#FFB7A0"
+          ],
+          ".value": [
+            0.80000000000000004,
+            0.5
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#FFFFFF",
+            "#FFB7A0"
+          ],
+          ".value": [
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#FFFFFF",
+            "#FFB7A0"
+          ],
+          ".value": [
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#FFFFFF",
+            "#FFB7A0"
+          ],
+          ".value": [
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#FFFFFF",
+            "#FFB7A0"
+          ],
+          ".value": [
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#0000FF",
+            "#FFFFFF",
+            "#FFB7A0",
+            "#FF0000"
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#0000FF",
+            "#FFFFFF",
+            "#FFB7A0",
+            "#FF0000"
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#0000FF",
+            "#FFFFFF",
+            "#FFB7A0",
+            "#FF0000"
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#0000FF",
+            "#FFFFFF",
+            "#FFB7A0",
+            "#FF0000"
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#0000FF",
+            "#FFFFFF",
+            "#FFB7A0",
+            "#FF0000"
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#0000FF",
+            "#FFFFFF",
+            "#FFB7A0",
+            "#FF0000"
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#0000FF",
+            "#FFFFFF",
+            "#FFB7A0",
+            "#FF0000"
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#0000FF",
+            "#FFFFFF",
+            "#FFB7A0",
+            "#FF0000"
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "continuous",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#0000FF",
+          "#FFFFFF",
+          "#FFB7A0",
+          "#FF0000"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#FFFFFF",
+            "#FFB7A0",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.20000000000000001,
+            0.5
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.80000000000000004,
+            0.5
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.20000000000000001,
+            0.5
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.80000000000000004,
+            0.5
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "max": [
+            0.20000000000000001,
+            0.5,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          ".value": [
+            0,
+            0.20000000000000001,
+            0.5,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.20000000000000001,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.20000000000000001,
+            0.29999999999999999,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": false,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "max": [
+            0.80000000000000004,
+            0.5,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          ".value": [
+            1,
+            0.80000000000000004,
+            0.5,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.80000000000000004,
+            0.5
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.19999999999999996,
+            0.30000000000000004,
+            0.5
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "vertical",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": true,
+      "direction": "horizontal",
+      "reverse": true,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "max": [
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331,
+            0
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            1,
+            0.66666666666666663,
+            0.33333333333333331
+          ],
+          "y": [
+            0
+          ],
+          "width": [
+            0.33333333333333337,
+            0.33333333333333331,
+            0.33333333333333331
+          ],
+          "height": [
+            1
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "guide_kind": "default",
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": false,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF"
+          ],
+          ".value": [
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          ".label": [
+            "0",
+            "3"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    },
+    {
+      "guide_kind": "default",
+      "family": "binned",
+      "palette": "asymmetric",
+      "endpoints": true,
+      "even_steps": true,
+      "show_limits": false,
+      "direction": "vertical",
+      "reverse": false,
+      "warnings": [],
+      "result": {
+        "mapped": [
+          "#B38BFF",
+          "#B38BFF",
+          "#FFDBCF",
+          "#FF7655"
+        ],
+        "decor": {
+          "colour": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ],
+          "min": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "max": [
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ]
+        },
+        "key": {
+          "colour": [
+            null,
+            "#B38BFF",
+            "#FFDBCF",
+            null
+          ],
+          ".value": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663,
+            1
+          ],
+          ".label": [
+            "-2",
+            "0",
+            "3",
+            "8"
+          ]
+        },
+        "bar": {
+          "class": [
+            "rect",
+            "grob",
+            "gDesc"
+          ],
+          "x": [
+            0
+          ],
+          "y": [
+            0,
+            0.33333333333333331,
+            0.66666666666666663
+          ],
+          "width": [
+            1
+          ],
+          "height": [
+            0.33333333333333331,
+            0.33333333333333331,
+            0.33333333333333337
+          ],
+          "colors": [
+            "#B38BFF",
+            "#FFDBCF",
+            "#FF7655"
+          ]
+        }
+      }
+    }
+  ]
+}

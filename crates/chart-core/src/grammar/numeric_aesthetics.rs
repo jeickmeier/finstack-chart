@@ -60,6 +60,7 @@ pub(super) struct NumericContext<'a> {
     pub samples: &'a BTreeMap<ScaleId, crate::scales::ScalePopulation>,
     pub registry: &'a ExtensionRegistry,
     pub profile: Profile,
+    pub guides: &'a mut super::style_channels::ValueGuides,
 }
 pub(super) fn apply(
     layer: &Layer,
@@ -73,6 +74,7 @@ pub(super) fn apply(
         samples,
         registry,
         profile,
+        guides,
     } = context;
     let mut trained = BTreeMap::new();
     for (aesthetic, encoding) in &layer.numeric_scales {
@@ -106,7 +108,7 @@ pub(super) fn apply(
         )?;
         let spec = encoding
             .scale
-            .trained_population(samples.get(&encoding.id), registry)?;
+            .trained_value_population(samples.get(&encoding.id), registry)?;
         if spec.guide_entries() > limits.max_groups {
             return Err(error(
                 DiagnosticCode::ResourceLimit,
@@ -114,6 +116,7 @@ pub(super) fn apply(
             ));
         }
         let scale = MappedScale::for_numbers_with_registry(spec, registry)?;
+        guides.insert(encoding.id, &scale, limits)?;
         trained.insert(
             *aesthetic,
             NumericEncoding {
@@ -122,8 +125,33 @@ pub(super) fn apply(
                 scale: scale.spec().clone(),
             },
         );
+        let source = super::colors::layer_batch(
+            scale.spec(),
+            samples.get(&encoding.id),
+            layer.id,
+            &encoding.input,
+        );
+        let batch =
+            super::colors::sample_layer_batch(source, table, rows, &input.values, |values| {
+                scale.row_palette_batch(values)
+            })?;
+        if batch.as_ref().is_some_and(|batch| batch.values.is_none()) {
+            // NULL removes the mapped vector, so geometry consumes its resolved
+            // default size. The authored size scale remains retained metadata.
+            if matches!(
+                aesthetic,
+                NumericAesthetic::Size | NumericAesthetic::AreaSize
+            ) {
+                for row in rows.iter_mut() {
+                    row.size = Some(layer.style.radius);
+                }
+            }
+            continue;
+        }
         for (i, row) in rows.iter_mut().enumerate() {
-            let result = if matches!(
+            let result = if let Some(batch) = &batch {
+                batch.values.as_ref().unwrap()[batch.indices[i]].clone()
+            } else if matches!(
                 encoding.input,
                 ColorInput::Category(_) | ColorInput::Group | ColorInput::GroupField(_)
             ) {
@@ -177,7 +205,15 @@ pub(super) fn apply(
                     row.y = None;
                     continue;
                 }
-                Value::Number(Number(v)) if v.is_finite() => v,
+                Value::Number(Number(v))
+                    if v.is_finite()
+                        || (profile == Profile::Ggplot2_4_0_3
+                            && layer.geom == Geom::Point
+                            && *aesthetic == NumericAesthetic::Size
+                            && v.is_infinite()) =>
+                {
+                    v
+                }
                 _ => {
                     return Err(error(
                         DiagnosticCode::NumericalDomain,
@@ -247,11 +283,7 @@ pub(super) fn apply_alpha(
     if let Some(alpha) = alpha.filter(|v| !v.is_nan()) {
         // Reference farver conversion retains original coverage for NA/NaN,
         // saturates finite values, and lowers either infinity to zero coverage.
-        paint.alpha = if alpha.is_infinite() {
-            0
-        } else {
-            (alpha * 255.).round() as u8
-        };
+        paint.alpha = crate::color::d65::alpha_byte(alpha);
     }
     paint
 }

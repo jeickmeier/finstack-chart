@@ -349,6 +349,21 @@ impl FigureSnapshot {
         )
     }
 }
+/// Fully clipped circular points require no backend coordinate conversion. Keep
+/// the original scene intact, including its retained semantic geometry.
+pub(crate) fn point_is_clipped(item: &SceneItem, bounds: Rect) -> bool {
+    let Primitive::Point { center, radius, .. } = &item.primitive else {
+        return false;
+    };
+    let clip = item.clip.unwrap_or(bounds);
+    clip.width() == 0.
+        || clip.height() == 0.
+        || center.x() + radius < clip.origin().x()
+        || center.x() - radius > clip.max_x()
+        || center.y() + radius < clip.origin().y()
+        || center.y() - radius > clip.max_y()
+}
+
 fn preflight(
     scene: &Scene,
     fonts: &FontResources,
@@ -368,6 +383,9 @@ fn preflight(
         Ok(())
     };
     for item in scene.items() {
+        if point_is_clipped(item, scene.bounds()) {
+            continue;
+        }
         let result = (|| {
             rect(item.clip.unwrap_or(scene.bounds()))?;
             match &item.primitive {
@@ -426,7 +444,8 @@ fn preflight(
                     profile.f32(stroke.width)?;
                 }
                 Primitive::Rectangle { bounds, .. }
-                | Primitive::GradientRectangle { bounds, .. } => rect(*bounds)?,
+                | Primitive::GradientRectangle { bounds, .. }
+                | Primitive::SampledGradientRectangle { bounds, .. } => rect(*bounds)?,
                 Primitive::Point { center, radius, .. }
                 | Primitive::Symbol { center, radius, .. } => {
                     point(*center)?;

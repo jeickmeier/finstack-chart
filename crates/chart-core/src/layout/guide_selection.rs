@@ -20,6 +20,19 @@ pub(super) fn is_duration(axis: &ResolvedAxis) -> bool {
 fn numeric(scale: &ResolvedScale) -> Option<(NumericFamily, Bounds)> {
     match scale {
         ResolvedScale::Linear(s) => Some((NumericFamily::Linear, s.viewport())),
+        ResolvedScale::Unbounded(s) => match s.transform()? {
+            ScaleTransform::Ggplot { transform } => Some((
+                NumericFamily::Ggplot {
+                    transform: transform.clone(),
+                },
+                Bounds::new(
+                    transform.inverse(s.viewport()[0].0),
+                    transform.inverse(s.viewport()[1].0),
+                )
+                .ok()?,
+            )),
+            _ => None,
+        },
         ResolvedScale::SecondaryDiscrete { viewport, .. } => {
             Some((NumericFamily::Linear, *viewport))
         }
@@ -29,6 +42,7 @@ fn numeric(scale: &ResolvedScale) -> Option<(NumericFamily, Bounds)> {
         }
         ResolvedScale::Nonlinear(s) => Some((
             match s.transform() {
+                ScaleTransform::Ggplot { transform } => NumericFamily::Ggplot { transform },
                 ScaleTransform::Reverse => NumericFamily::Linear,
                 ScaleTransform::Sqrt => NumericFamily::Pow { exponent: 0.5 },
                 ScaleTransform::Log { base } => NumericFamily::Log { base },
@@ -46,6 +60,7 @@ pub(super) fn reference_time_selection(
     axis: &ResolvedAxis,
     arguments: &GuideTickArguments,
     budget: usize,
+    crop: bool,
 ) -> ChartResult<Option<(crate::data::TimeUnit, GgplotTimeBreaks)>> {
     if arguments.interval.is_some()
         || arguments.seconds.is_some()
@@ -118,18 +133,26 @@ pub(super) fn reference_time_selection(
     if matches!(axis.spec.scale, super::AxisScale::Date { .. }) {
         return Ok(Some((
             unit,
-            ggplot_breaks_pretty_date(origin, view, unit, arguments.count.unwrap_or(5.), budget)?,
+            pretty_date(
+                origin,
+                view,
+                unit,
+                arguments.count.unwrap_or(5.),
+                budget,
+                crop,
+            )?,
         )));
     }
     Ok(Some((
         unit,
-        ggplot_breaks_pretty_time(
+        pretty_time(
             origin,
             view,
             unit,
             &calendar,
             arguments.count.unwrap_or(5.),
             budget,
+            crop,
         )?,
     )))
 }
@@ -141,12 +164,57 @@ pub(super) fn values(
     budget: usize,
     ggplot: bool,
 ) -> ChartResult<Vec<ScaleValue>> {
+    values_using(axis, arguments, budget, ggplot, false)
+}
+
+/// Retain numeric candidates for the reference label callback before censoring.
+pub(super) fn label_values(
+    axis: &ResolvedAxis,
+    arguments: &GuideTickArguments,
+    budget: usize,
+) -> ChartResult<Vec<ScaleValue>> {
+    values_using(axis, arguments, budget, true, true)
+}
+
+fn values_using(
+    axis: &ResolvedAxis,
+    arguments: &GuideTickArguments,
+    budget: usize,
+    ggplot: bool,
+    preserve_candidates: bool,
+) -> ChartResult<Vec<ScaleValue>> {
     if ggplot
         && arguments.interval.is_none()
         && let Some((_, bounds)) = numeric(&axis.scale)
         && ggplot_zero_range(bounds.start(), bounds.end())
     {
         return Ok(vec![ScaleValue::Number(bounds.start())]);
+    }
+    if ggplot
+        && let ResolvedScale::Unbounded(scale) = &axis.scale
+        && let Some(ScaleTransform::Ggplot { transform }) = scale.transform()
+        && arguments.interval.is_none()
+        && arguments.seconds.is_none()
+        && arguments.time_width.is_none()
+        && arguments.width.is_none()
+    {
+        let mut bounds = scale.viewport().map(|v| v.0);
+        bounds.sort_by(f64::total_cmp);
+        return Ok(GgplotContinuousGuide {
+            count: arguments.count,
+            ..Default::default()
+        }
+        .resolve_bounds(
+            bounds,
+            NumericFamily::Ggplot { transform },
+            false,
+            budget,
+            usize::MAX,
+        )?
+        .into_iter()
+        .filter(|entry| entry.value.0.is_finite() && (preserve_candidates || entry.visible))
+        .map(|entry| ScaleValue::Number(entry.value.0))
+        .collect());
     }
     let duration = is_duration(axis);
     let duration_width = if duration {
@@ -171,9 +239,19 @@ pub(super) fn values(
         let (bounds, unit) = match &axis.scale {
             ResolvedScale::Utc(s) => (s.viewport(), s.unit()),
             ResolvedScale::Calendar(s) => (
-                match s.tick_bounds()? {
-                    Some(b) => b,
-                    None => return Ok(vec![]),
+                if preserve_candidates {
+                    TimeBounds {
+                        start: absolute_number(
+                            s.relative_viewport().minimum().floor(),
+                            s.origin(),
+                        )?,
+                        end: absolute_number(s.relative_viewport().maximum().ceil(), s.origin())?,
+                    }
+                } else {
+                    match s.tick_bounds()? {
+                        Some(b) => b,
+                        None => return Ok(vec![]),
+                    }
                 },
                 s.unit(),
             ),
@@ -183,7 +261,20 @@ pub(super) fn values(
                 ));
             }
         };
-        let values = if matches!(axis.spec.scale, super::AxisScale::Date { .. }) {
+        let values = if preserve_candidates {
+            let calendar = match &axis.scale {
+                ResolvedScale::Calendar(s) => s.calendar().clone(),
+                _ => Calendar::new(CalendarZone::Utc)?,
+            };
+            aesthetic_width(
+                bounds,
+                unit,
+                &calendar,
+                matches!(axis.spec.scale, super::AxisScale::Date { .. }),
+                width,
+                budget,
+            )?
+        } else if matches!(axis.spec.scale, super::AxisScale::Date { .. }) {
             aligned_dates(bounds, unit, count, budget)?
         } else {
             aligned_seconds(
@@ -251,7 +342,23 @@ pub(super) fn values(
             .map(|value| ScaleValue::Timestamp { value, unit })
             .collect());
     }
-    let count = arguments.count.unwrap_or(if ggplot { 5. } else { 10. });
+    let inherited_count = if ggplot {
+        match &axis.scale {
+            ResolvedScale::Secondary { primary, .. } => primary
+                .spec
+                .guide
+                .tick_arguments
+                .as_ref()
+                .and_then(|ticks| ticks.count),
+            _ => None,
+        }
+    } else {
+        None
+    };
+    let count = arguments
+        .count
+        .or(inherited_count)
+        .unwrap_or(if ggplot { 5. } else { 10. });
     if let Some((family, domain)) = numeric(&axis.scale) {
         if arguments.interval.is_some() {
             return Err(unsupported("Calendar intervals require a time guide."));
@@ -261,15 +368,14 @@ pub(super) fn values(
             let values = if is_duration(axis) {
                 ggplot_breaks_duration(limits, count, budget)?
             } else {
-                match family {
-                    NumericFamily::Log { base } => ggplot_breaks_log(limits, count, base, budget)?,
-                    _ => ggplot_breaks_extended(limits, count, budget)?,
-                }
+                crate::scales::ggplot_numeric_breaks(&family, limits, count, budget)?
             };
             return Ok(values
                 .into_iter()
                 .filter(|v| {
-                    matches!(axis.scale, ResolvedScale::Secondary { .. }) || domain.contains(*v)
+                    preserve_candidates
+                        || matches!(axis.scale, ResolvedScale::Secondary { .. })
+                        || domain.contains(*v)
                 })
                 .map(ScaleValue::Number)
                 .collect());
@@ -319,6 +425,24 @@ pub(super) fn labels(
     budget: usize,
     ggplot_bytes: Option<usize>,
 ) -> ChartResult<Vec<String>> {
+    // Reference labels format the selected values even when viewport inversion is unavailable.
+    if let Some(max_label_bytes) = ggplot_bytes
+        && numeric_format.is_none()
+        && time_format.is_none()
+        && arguments.specifier.is_none()
+        && matches!(&axis.scale, ResolvedScale::Unbounded(s) if matches!(s.transform(), Some(ScaleTransform::Ggplot { .. })))
+    {
+        let numbers = values
+            .iter()
+            .map(|value| match value {
+                ScaleValue::Number(n) => Ok(*n),
+                _ => Err(unsupported(
+                    "Reference numeric labels require numeric candidates.",
+                )),
+            })
+            .collect::<ChartResult<Vec<_>>>()?;
+        return crate::typography::ggplot_numeric_labels(&numbers, max_label_bytes);
+    }
     if let Some((family, domain)) = numeric(&axis.scale) {
         let duration = is_duration(axis);
         if duration && let Some(format) = time_format {
@@ -452,6 +576,7 @@ pub(super) fn reference_time_labels(
     axis: &ResolvedAxis,
     values: &[ScaleValue],
     format: &GgplotTimeFormat,
+    selected_offsets: bool,
 ) -> ChartResult<Vec<String>> {
     if is_duration(axis) {
         let formatter = format.prepare(Calendar::new(CalendarZone::Utc)?)?;
@@ -477,17 +602,27 @@ pub(super) fn reference_time_labels(
     values
         .iter()
         .map(|value| {
-            let ScaleValue::Timestamp { value, unit } = value else {
-                return Err(unsupported(
-                    "R date/time formatting requires exact timestamps.",
-                ));
+            let (value, unit) = match value {
+                ScaleValue::Timestamp { value, unit } => (*value, *unit),
+                ScaleValue::Number(n) if !n.is_finite() => return Ok(String::new()),
+                ScaleValue::Number(n) if selected_offsets => {
+                    let crate::grammar::ValueSpace::Timestamp {
+                        origin,
+                        representation,
+                    } = &axis.space
+                    else {
+                        return Err(unsupported("Temporal labels require timestamp metadata."));
+                    };
+                    (absolute_number(n.floor(), *origin)?, representation.unit)
+                }
+                _ => return Err(unsupported("R date/time formatting requires timestamps.")),
             };
             let value = if date {
-                calendar.floor(*value, *unit, CalendarInterval::new(CalendarUnit::Day))?
+                calendar.floor(value, unit, CalendarInterval::new(CalendarUnit::Day))?
             } else {
-                *value
+                value
             };
-            formatter.format(value, *unit)
+            formatter.format(value, unit)
         })
         .collect()
 }

@@ -21,7 +21,7 @@ pub struct GgplotNumericIdentity {
 }
 impl GgplotNumericIdentity {
     pub(super) fn validate(&self) -> ChartResult<()> {
-        if let Some(transform) = self.transform {
+        if let Some(transform) = &self.transform {
             transform.validate()?;
         }
         if self.trained.iter().flatten().any(|v| !v.0.is_finite()) {
@@ -33,26 +33,51 @@ impl GgplotNumericIdentity {
         Ok(())
     }
     fn transform(&self, value: f64) -> f64 {
-        self.transform.map_or(value, |t| t.forward_raw(value))
+        self.transform
+            .as_ref()
+            .map_or(value, |t| t.forward_raw(value))
+    }
+    pub(super) fn transform_values(&self, values: &[f64]) -> ChartResult<Vec<f64>> {
+        match &self.transform {
+            Some(ScaleTransform::Ggplot { transform }) => transform.forward_population(values),
+            _ => Ok(values.iter().map(|v| self.transform(*v)).collect()),
+        }
     }
     pub(super) fn train(&mut self, values: &[Option<Number>]) -> ChartResult<()> {
+        self.train_batches(values, &[values.len()])
+    }
+    pub(super) fn train_batches(
+        &mut self,
+        values: &[Option<Number>],
+        batches: &[usize],
+    ) -> ChartResult<()> {
         self.validate()?;
         self.trained = None;
         self.has_population = self.guide && !values.is_empty();
-        if self.guide {
-            let mut trained = None;
-            for value in values
+        let mut offset = 0;
+        for count in batches {
+            let end = offset + count;
+            let raw = values[offset..end]
                 .iter()
-                .flatten()
-                .map(|v| self.transform(v.0))
-                .filter(|v| v.is_finite())
-            {
-                let extent = trained.get_or_insert([Number(value); 2]);
-                extent[0].0 = extent[0].0.min(value);
-                extent[1].0 = extent[1].0.max(value);
+                .map(|v| v.map_or(f64::NAN, |v| v.0))
+                .collect::<Vec<_>>();
+            if let Some(ScaleTransform::Ggplot { transform }) = &self.transform {
+                transform.validate_population(raw.iter().copied())?;
             }
-            self.trained = trained;
+            if self.guide {
+                for value in self
+                    .transform_values(&raw)?
+                    .into_iter()
+                    .filter(|v| v.is_finite())
+                {
+                    let extent = self.trained.get_or_insert([Number(value); 2]);
+                    extent[0].0 = extent[0].0.min(value);
+                    extent[1].0 = extent[1].0.max(value);
+                }
+            }
+            offset = end;
         }
+        debug_assert_eq!(offset, values.len());
         Ok(())
     }
     /// Guide extent in transformed coordinates; independent from raw mapping.
@@ -61,7 +86,9 @@ impl GgplotNumericIdentity {
         let mut domain =
             if self.guide { self.trained } else { None }.unwrap_or([Number(0.), Number(1.)]);
         if let Some(limits) = self.limits {
-            let mut limits = limits.map(|v| v.map(|v| self.transform(v.0)).filter(|v| !v.is_nan()));
+            let transformed =
+                self.transform_values(&limits.map(|v| v.map_or(f64::NAN, |v| v.0)))?;
+            let mut limits = [transformed[0], transformed[1]].map(|v| (!v.is_nan()).then_some(v));
             if let [Some(a), Some(b)] = limits {
                 limits = [Some(a.min(b)), Some(a.max(b))];
             }

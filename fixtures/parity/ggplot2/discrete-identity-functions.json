@@ -1,0 +1,6141 @@
+{
+  "paints": {
+    "red": {
+      "red": 255,
+      "green": 0,
+      "blue": 0,
+      "alpha": 255
+    },
+    "blue": {
+      "red": 0,
+      "green": 0,
+      "blue": 255,
+      "alpha": 255
+    },
+    "green": {
+      "red": 0,
+      "green": 255,
+      "blue": 0,
+      "alpha": 255
+    }
+  },
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "cases": [
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "blue",
+              "red"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "blue",
+              "red"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              "red",
+              "blue"
+            ],
+            "labels": [
+              "key1",
+              "key2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              "red",
+              "blue"
+            ],
+            "labels": [
+              "red",
+              "blue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            "red",
+            "blue"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              "red",
+              "blue"
+            ],
+            "labels": [
+              "red",
+              "blue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            "red",
+            "blue"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "key1",
+              "key2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red",
+              null
+            ],
+            "mapped": [
+              "blue",
+              "red",
+              null
+            ],
+            "labels": [
+              "blue",
+              "red",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red",
+              null
+            ],
+            "mapped": [
+              "blue",
+              "red",
+              null
+            ],
+            "labels": [
+              "blue",
+              "red",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null,
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              null,
+              "red",
+              "blue"
+            ],
+            "labels": [
+              "key1",
+              "key2",
+              "key3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null,
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              null,
+              "red",
+              "blue"
+            ],
+            "labels": [
+              null,
+              "red",
+              "blue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            null,
+            "red",
+            "blue"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null,
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              null,
+              "red",
+              "blue"
+            ],
+            "labels": [
+              null,
+              "red",
+              "blue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            null,
+            "red",
+            "blue"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red",
+              null
+            ],
+            "mapped": [
+              "blue",
+              "red",
+              null
+            ],
+            "labels": [
+              "key1",
+              "key2",
+              "key3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "green",
+              "blue",
+              "red"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "green",
+              "blue",
+              "red"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "mapped": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "labels": [
+              "key1",
+              "key2",
+              "key3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "mapped": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "labels": [
+              "red",
+              "blue",
+              "green"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            "red",
+            "blue",
+            "green"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "mapped": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "labels": [
+              "red",
+              "blue",
+              "green"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            "red",
+            "blue",
+            "green"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "key1",
+              "key2",
+              "key3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "colour",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "blue",
+              "red"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "blue",
+              "red"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              "red",
+              "blue"
+            ],
+            "labels": [
+              "key1",
+              "key2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              "red",
+              "blue"
+            ],
+            "labels": [
+              "red",
+              "blue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            "red",
+            "blue"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              "red",
+              "blue"
+            ],
+            "labels": [
+              "red",
+              "blue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            "red",
+            "blue"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "key1",
+              "key2"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "ordinary",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red",
+              null
+            ],
+            "mapped": [
+              "blue",
+              "red",
+              null
+            ],
+            "labels": [
+              "blue",
+              "red",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red",
+              null
+            ],
+            "mapped": [
+              "blue",
+              "red",
+              null
+            ],
+            "labels": [
+              "blue",
+              "red",
+              null
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null,
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              null,
+              "red",
+              "blue"
+            ],
+            "labels": [
+              "key1",
+              "key2",
+              "key3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null,
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              null,
+              "red",
+              "blue"
+            ],
+            "labels": [
+              null,
+              "red",
+              "blue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            null,
+            "red",
+            "blue"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              null,
+              "red",
+              "blue"
+            ],
+            "mapped": [
+              null,
+              "red",
+              "blue"
+            ],
+            "labels": [
+              null,
+              "red",
+              "blue"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            null,
+            "red",
+            "blue"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": [
+          {
+            "values": [
+              "blue",
+              "red",
+              null
+            ],
+            "mapped": [
+              "blue",
+              "red",
+              null
+            ],
+            "labels": [
+              "key1",
+              "key2",
+              "key3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [
+          "blue",
+          "red",
+          null
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [
+            "blue",
+            "red",
+            null
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "nullable",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue",
+        null
+      ],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue",
+          null
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "empty",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [],
+      "levels": null,
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "green",
+              "blue",
+              "red"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "green",
+              "blue",
+              "red"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "mapped": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "labels": [
+              "key1",
+              "key2",
+              "key3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "mapped": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "labels": [
+              "red",
+              "blue",
+              "green"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            "red",
+            "blue",
+            "green"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "mapped": [
+              "red",
+              "blue",
+              "green"
+            ],
+            "labels": [
+              "red",
+              "blue",
+              "green"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [
+            "red",
+            "blue",
+            "green"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": [
+          {
+            "values": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "mapped": [
+              "green",
+              "blue",
+              "red"
+            ],
+            "labels": [
+              "key1",
+              "key2",
+              "key3"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [
+          "green",
+          "blue",
+          "red"
+        ],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "legend",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [
+        {
+          "values": [
+            "green",
+            "blue",
+            "red"
+          ],
+          "is_null": false,
+          "names": []
+        }
+      ],
+      "break_calls": [
+        {
+          "values": [],
+          "is_null": true,
+          "names": []
+        }
+      ],
+      "result": {
+        "error": "attempt to set an attribute on NULL"
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "none",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "reverse",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "empty",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "auto",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "domain",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    },
+    {
+      "aesthetic": "fill",
+      "population": "factor",
+      "guide": "none",
+      "limit_mode": "null",
+      "break_mode": "named_reverse",
+      "inputs": [
+        "red",
+        "blue"
+      ],
+      "levels": [
+        "green",
+        "blue",
+        "red"
+      ],
+      "limit_calls": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [
+          "red",
+          "blue"
+        ],
+        "trained": [],
+        "keys": []
+      }
+    }
+  ]
+}

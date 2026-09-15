@@ -473,7 +473,7 @@ fn primary_reference_nan_output_is_missing_and_legacy_rejects_it() {
         .unwrap();
     let descriptor = spec(
         &serde_json::json!({"kind":"continuous","transform":"identity","rescaler":"maximum","control":"empty"}),
-    );
+    ).with_guide(GgplotScaleGuide::Hidden).unwrap();
     let registry = chart_extension_example::registry().unwrap();
     let build = |profile| {
         plot(data.clone())
@@ -501,4 +501,108 @@ fn primary_reference_nan_output_is_missing_and_legacy_rejects_it() {
             .code,
         chart_core::DiagnosticCode::NumericalDomain
     );
+}
+
+#[test]
+fn primary_numeric_limits_match_504_actual_reference_builds() {
+    use chart_core::prelude::*;
+    let fixture: serde_json::Value = serde_json::from_str(include_str!(
+        "../../../fixtures/parity/ggplot2/limit-function-builds.json"
+    ))
+    .unwrap();
+    let extra: serde_json::Value = serde_json::from_str(include_str!(
+        "../../../fixtures/parity/ggplot2/limit-rescaler-builds.json"
+    ))
+    .unwrap();
+    let cases = fixture["cases"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .chain(extra["cases"].as_array().unwrap())
+        .collect::<Vec<_>>();
+    assert_eq!(cases.len(), 504);
+    let registry = chart_extension_example::registry().unwrap();
+    let mut failures = vec![];
+    for c in cases {
+        let identity = c["kind"] == "identity";
+        let inputs = c["inputs"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|v| (!v.is_null()).then(|| number(v)))
+            .collect::<Vec<_>>();
+        let result: chart_core::ChartResult<Vec<_>> = (|| {
+            let p = plot(
+                Data::columns()
+                    .column("x", (0..inputs.len()).map(|i| i as f64).collect::<Vec<_>>())
+                    .column("v", inputs)
+                    .build()?,
+            )
+            .profile(Profile::Ggplot2_4_0_3)
+            .extensions(registry.clone())
+            .aes(aes().x("x").y(1.))
+            .layer(points().numeric_scale(
+                if identity {
+                    NumericAesthetic::Alpha
+                } else {
+                    NumericAesthetic::Size
+                },
+                "v",
+                spec(c),
+            ))
+            .build()?;
+            let prepared = p.chart()?.prepare()?;
+            Ok(prepared.layers()[0]
+                .marks()
+                .iter()
+                .map(|m| m.style)
+                .collect())
+        })();
+        let id = format!(
+            "{}/{}/{}/{}",
+            c["kind"], c["transform"], c["population"], c["control"]
+        );
+        if c["result"].get("error").is_some() {
+            if result.is_ok() {
+                failures.push(format!("{id}: expected primary error"));
+            }
+            continue;
+        }
+        let styles = match result {
+            Ok(v) => v,
+            Err(e) => {
+                failures.push(format!("{id}: {e:?}"));
+                continue;
+            }
+        };
+        let expected = c["result"]["values"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|v| identity || !v.is_null())
+            .collect::<Vec<_>>();
+        if styles.len() != expected.len() {
+            failures.push(format!(
+                "{id}: {} styles != {}",
+                styles.len(),
+                expected.len()
+            ));
+            continue;
+        }
+        for (style, value) in styles.iter().zip(expected) {
+            if identity {
+                let expected = if value.is_null() {
+                    255
+                } else {
+                    (number(value) * 255.).round_ties_even() as u8
+                };
+                if style.color.alpha != expected {
+                    failures.push(format!("{id}: alpha {} != {expected}", style.color.alpha));
+                }
+            } else if !same(style.radius, number(value)) {
+                failures.push(format!("{id}: radius {} != {value}", style.radius));
+            }
+        }
+    }
+    assert!(failures.is_empty(), "{}", failures.join("\n"));
 }

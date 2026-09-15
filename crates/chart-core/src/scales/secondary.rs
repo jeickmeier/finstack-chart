@@ -9,12 +9,15 @@ pub(crate) fn secondary_mapping(spec: &NumericScaleSpec) -> ChartResult<NumericS
             && (knots.windows(2).all(|v| v[0].0 < v[1].0)
                 || knots.windows(2).all(|v| v[0].0 > v[1].0))
     };
-    let monotone = match spec.family {
+    let monotone = match &spec.family {
         NumericFamily::Linear | NumericFamily::Radial => true,
+        NumericFamily::Ggplot { transform } => {
+            transform.monotone_on(&spec.domain.iter().map(|v| v.0).collect::<Vec<_>>())
+        }
         NumericFamily::Identity => spec.domain == spec.range,
-        NumericFamily::Pow { exponent } => exponent.is_finite() && exponent > 0.,
-        NumericFamily::Log { base } => base.is_finite() && base > 0. && base != 1.,
-        NumericFamily::Symlog { constant } => constant.is_finite() && constant > 0.,
+        NumericFamily::Pow { exponent } => exponent.is_finite() && *exponent > 0.,
+        NumericFamily::Log { base } => base.is_finite() && *base > 0. && *base != 1.,
+        NumericFamily::Symlog { constant } => constant.is_finite() && *constant > 0.,
     };
     if spec.clamp
         || spec.round

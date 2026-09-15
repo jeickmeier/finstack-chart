@@ -324,10 +324,62 @@ impl TextMeasurer for Metrics<'_> {
         )
     }
 }
+fn sampled_gradient_image(
+    direction: chart_core::scene::GradientDirection,
+    colors: &[Color],
+) -> ChartResult<Arc<gpui::RenderImage>> {
+    let count = u32::try_from(colors.len().checked_add(2).ok_or_else(|| {
+        error(
+            DiagnosticCode::ResourceLimit,
+            "Gradient sample size overflow.",
+        )
+    })?)
+    .map_err(|_| {
+        error(
+            DiagnosticCode::ResourceLimit,
+            "Gradient sample count exceeds native image dimensions.",
+        )
+    })?;
+    if colors.len() < 2 {
+        return Err(error(
+            DiagnosticCode::Validation,
+            "A sampled gradient needs two colors.",
+        ));
+    }
+    let (width, height) = match direction {
+        chart_core::scene::GradientDirection::Horizontal => (count, 3),
+        chart_core::scene::GradientDirection::Vertical => (3, count),
+    };
+    // Duplicate every edge pixel. GPUI filters inside a shared atlas; without
+    // our own border, an expanded one-pixel strip samples neighboring images.
+    let mut bytes = Vec::with_capacity(width as usize * height as usize * 4);
+    for y in 0..height {
+        for x in 0..width {
+            let i = match direction {
+                chart_core::scene::GradientDirection::Horizontal => x,
+                chart_core::scene::GradientDirection::Vertical => y,
+            };
+            let c = colors[(i.saturating_sub(1) as usize).min(colors.len() - 1)];
+            bytes.extend_from_slice(&[c.blue, c.green, c.red, c.alpha]);
+        }
+    }
+    let image = image::RgbaImage::from_raw(width, height, bytes).ok_or_else(|| {
+        error(
+            DiagnosticCode::InvalidResource,
+            "Invalid sampled gradient image size.",
+        )
+    })?;
+    Ok(Arc::new(gpui::RenderImage::new(vec![image::Frame::new(
+        image,
+    )])))
+}
+
 enum Paint {
     Custom(std::rc::Rc<dyn crate::PreparedNativePaint>),
     Empty,
     Quad(gpui::PaintQuad),
+    Quads(Vec<gpui::PaintQuad>),
+    Image(Bounds<Pixels>, Bounds<Pixels>, Arc<gpui::RenderImage>),
     Path(Path<Pixels>, gpui::Rgba),
     Paths(Vec<(Path<Pixels>, gpui::Rgba)>),
     Text(Box<ShapedLine>, gpui::Point<Pixels>),
@@ -549,6 +601,71 @@ impl NativeFrame {
                     Primitive::GlyphRun { .. }
                     | Primitive::DashedPath { .. }
                     | Primitive::Symbol { .. } => unreachable!(),
+                    Primitive::SampledGradientRectangle {
+                        bounds: r,
+                        direction,
+                        colors,
+                        mode,
+                    } => {
+                        if *mode == chart_core::scene::SampledGradientMode::Steps {
+                            let quads = colors
+                                .iter()
+                                .enumerate()
+                                .map(|(i, color)| {
+                                    let start = i as f64 / colors.len() as f64;
+                                    let end = (i + 1) as f64 / colors.len() as f64;
+                                    let cell = match direction {
+                                        chart_core::scene::GradientDirection::Horizontal => {
+                                            Rect::new(
+                                                r.origin().x() + start * r.width(),
+                                                r.origin().y(),
+                                                (end - start) * r.width(),
+                                                r.height(),
+                                            )?
+                                        }
+                                        chart_core::scene::GradientDirection::Vertical => {
+                                            Rect::new(
+                                                r.origin().x(),
+                                                r.origin().y() + start * r.height(),
+                                                r.width(),
+                                                (end - start) * r.height(),
+                                            )?
+                                        }
+                                    };
+                                    Ok(fill(rect_at(cell, bounds.origin)?, native_color(*color)))
+                                })
+                                .collect::<ChartResult<Vec<_>>>()?;
+                            Paint::Quads(quads)
+                        } else {
+                            let count = colors.len() as f64;
+                            let axis_padding = match mode {
+                                chart_core::scene::SampledGradientMode::CellCenters => 1. / count,
+                                chart_core::scene::SampledGradientMode::Endpoints => {
+                                    1.5 / (count - 1.)
+                                }
+                                chart_core::scene::SampledGradientMode::Steps => unreachable!(),
+                            };
+                            let (pad_x, pad_y) = match direction {
+                                chart_core::scene::GradientDirection::Horizontal => {
+                                    (r.width() * axis_padding, r.height())
+                                }
+                                chart_core::scene::GradientDirection::Vertical => {
+                                    (r.width(), r.height() * axis_padding)
+                                }
+                            };
+                            let image_bounds = Rect::new(
+                                r.origin().x() - pad_x,
+                                r.origin().y() - pad_y,
+                                r.width() + 2. * pad_x,
+                                r.height() + 2. * pad_y,
+                            )?;
+                            Paint::Image(
+                                rect_at(*r, bounds.origin)?,
+                                rect_at(image_bounds, bounds.origin)?,
+                                sampled_gradient_image(*direction, colors)?,
+                            )
+                        }
+                    }
                     Primitive::GradientRectangle {
                         bounds: r,
                         gradient,
@@ -718,6 +835,23 @@ impl NativeFrame {
                                 Paint::Custom(p) => p.paint(window, cx),
                                 Paint::Empty => {}
                                 Paint::Quad(q) => window.paint_quad(q.clone()),
+                                Paint::Quads(quads) => {
+                                    for q in quads {
+                                        window.paint_quad(q.clone());
+                                    }
+                                }
+                                Paint::Image(bounds, image_bounds, image) => window
+                                    .paint_image(
+                                        *bounds,
+                                        *image_bounds,
+                                        Default::default(),
+                                        image.clone(),
+                                        0,
+                                        false,
+                                    )
+                                    .map_err(|e| {
+                                        error(DiagnosticCode::InvalidResource, e.to_string())
+                                    })?,
                                 Paint::Path(p, c) => window.paint_path(p.clone(), *c),
                                 Paint::Paths(paths) => {
                                     for (p, c) in paths {
@@ -776,6 +910,43 @@ fn self_font_missing(font: &NativeFont, descriptor: &ResourceDescriptor) -> bool
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn sampled_gradient_image_keeps_channel_order_alpha_and_direction() {
+        use chart_core::scene::GradientDirection;
+        let colors = [
+            Color {
+                red: 255,
+                green: 10,
+                blue: 30,
+                alpha: 128,
+            },
+            Color {
+                red: 20,
+                green: 40,
+                blue: 220,
+                alpha: 255,
+            },
+        ];
+        for (direction, width, height) in [
+            (GradientDirection::Horizontal, 4, 3),
+            (GradientDirection::Vertical, 3, 4),
+        ] {
+            let image = sampled_gradient_image(direction, &colors).unwrap();
+            assert_eq!(image.size(0).width.0, width);
+            assert_eq!(image.size(0).height.0, height);
+            let expected = if direction == GradientDirection::Vertical {
+                [[30, 10, 255, 128].repeat(6), [220, 40, 20, 255].repeat(6)].concat()
+            } else {
+                [
+                    30, 10, 255, 128, 30, 10, 255, 128, 220, 40, 20, 255, 220, 40, 20, 255,
+                ]
+                .repeat(3)
+            };
+            assert_eq!(image.as_bytes(0).unwrap(), expected);
+            assert_eq!(image.frame_count(), 1);
+        }
+    }
+
     #[test]
     fn native_projection_rejects_nonfinite_overflow_and_quarter_pixel_loss() {
         for x in [f64::NAN, f64::INFINITY, f64::MAX, 16_777_217.] {

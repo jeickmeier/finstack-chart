@@ -130,16 +130,69 @@ pub(super) fn resolve<'a>(
     definition: &'a ChartDefinition,
     source: &crate::data::StoreSnapshot,
     limits: CompileLimits,
+    registry: &ExtensionRegistry,
+    execute_vectors: bool,
 ) -> ChartResult<std::borrow::Cow<'a, ChartDefinition>> {
-    let Some(policy) = &definition.semantics else {
-        if definition
-            .axes
-            .iter()
-            .any(|a| matches!(a.scale, crate::layout::AxisScale::Binned { .. }))
+    if needs_panel_training(definition) {
+        return Ok(std::borrow::Cow::Borrowed(definition));
+    }
+    resolve_scoped(definition, source, limits, registry, None, execute_vectors)
+}
+
+pub(super) fn needs_panel_training(definition: &ChartDefinition) -> bool {
+    definition.facets.as_ref().is_some_and(|facets| {
+        definition.axes.iter().any(|a| {
+            a.numeric_limits.is_some()
+                || a.temporal_limits.is_some()
+                || a.oob_function.is_some()
+                || a.limits_function.is_some()
+                || matches!(a.scale, crate::layout::AxisScale::Binned { .. })
+                    && if a.side.horizontal() {
+                        facets.scales.free_x
+                    } else {
+                        facets.scales.free_y
+                    }
+        })
+    })
+}
+
+pub(super) fn resolve_scoped<'a>(
+    definition: &'a ChartDefinition,
+    source: &crate::data::StoreSnapshot,
+    limits: CompileLimits,
+    registry: &ExtensionRegistry,
+    scope: Option<&super::facets::PanelScope>,
+    execute_vectors: bool,
+) -> ChartResult<std::borrow::Cow<'a, ChartDefinition>> {
+    for axis in &definition.axes {
+        if axis.population_missing.is_some()
+            && (definition.profile() != Profile::Ggplot2_4_0_3
+                || axis.scale_stage == Some(ScaleStage::AfterStatistics)
+                || !matches!(
+                    axis.scale,
+                    crate::layout::AxisScale::Auto
+                        | crate::layout::AxisScale::Linear(_)
+                        | crate::layout::AxisScale::Duration(_)
+                        | crate::layout::AxisScale::Nonlinear { .. }
+                ))
         {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,
-                "Positional bins require the ggplot2 pre-statistic scale stage.",
+                "Positional missing replacement requires a ggplot2 pre-statistic numeric or duration scale.",
+            ));
+        }
+    }
+    let Some(policy) = &definition.semantics else {
+        if definition.axes.iter().any(|a| {
+            a.numeric_limits.is_some()
+                || a.temporal_limits.is_some()
+                || a.oob_function.is_some()
+                || a.limits_function.is_some()
+                || matches!(a.scale, crate::layout::AxisScale::Binned { .. })
+        }) {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Population-dependent positional scales require the ggplot2 pre-statistic scale stage.",
             ));
         }
         return Ok(std::borrow::Cow::Borrowed(definition));
@@ -290,13 +343,47 @@ pub(super) fn resolve<'a>(
             }
         }
     }
-    super::scale_stage::train_binned_axes(&mut resolved, source, limits)?;
+    super::scale_stage::train_function_axes(&mut resolved, source, limits, registry, scope)?;
+    super::scale_stage::train_binned_axes(&mut resolved, source, limits, registry, scope)?;
     if policy.scale_stage == ScaleStage::BeforeStatistics {
+        let vector_context = execute_vectors
+            .then_some(&resolved)
+            .filter(|_| {
+                resolved
+                    .axes
+                    .iter()
+                    .any(super::positional_vectors::selected)
+            })
+            .cloned();
+        let mut vector_cache = super::positional_vectors::SourceCache::default();
         for layer in &mut resolved.layers {
             super::scale_stage::source_layer(layer, &resolved.axes)?;
+            if let Some(context) = &vector_context {
+                super::positional_vectors::source_layer(
+                    layer,
+                    context,
+                    source,
+                    registry,
+                    limits,
+                    None,
+                    &mut vector_cache,
+                )?;
+            }
         }
     }
     resolve_transforms(&mut resolved, definition, source, policy)?;
+    if execute_vectors && policy.scale_stage == ScaleStage::BeforeStatistics {
+        let context = resolved.clone();
+        super::positional_vectors::source_transforms(
+            &mut resolved,
+            &context,
+            source,
+            registry,
+            limits,
+            None,
+            &mut std::collections::BTreeMap::new(),
+        )?;
+    }
     Ok(std::borrow::Cow::Owned(resolved))
 }
 fn keep_missing(group: &Grouping) -> Grouping {
@@ -393,6 +480,10 @@ fn resolve_transforms(
                 })?;
             let mut layer = consumer.clone();
             layer.statistic = node.statistic.clone();
+            layer.data = node.input;
+            layer.filters = node.filters.clone();
+            layer.facet = node.facet.clone();
+            layer.scope = node.scope;
             // Consumer mappings are generated fields; only node source aesthetics
             // may determine the shared statistic's grouping and input axis.
             layer.mappings = Mappings::Source(SourceAes::default());

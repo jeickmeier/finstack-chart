@@ -322,6 +322,7 @@ fn every_retained_paint_location_requires_version_four_and_preserves_legacy_vers
     for missing in [false, true] {
         let mut d = old.definition().clone();
         d.layers[0].color = Some(chart_core::grammar::ColorEncoding {
+            automatic: false,
             id: chart_core::ScaleId::new(2),
             title: None,
             input: chart_core::grammar::ColorInput::Group,

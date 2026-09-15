@@ -3,7 +3,9 @@
 use std::cell::Cell;
 use std::rc::Rc;
 
-use chart_core::scene::{Color, PathCommand, Primitive, Scene, SceneItem, Stroke};
+use chart_core::scene::{
+    Color, GradientDirection, PathCommand, Primitive, Scene, SceneItem, Stroke,
+};
 use chart_core::services::{
     ResourceDescriptor, ResourceKind, ResourceProvider, TextMeasurer, TextMetrics, TextRequest,
     Units, measure_text, resolve_resource,
@@ -592,4 +594,62 @@ fn text_metric_construction_rejects_nonfinite_negative_and_overflowing_values() 
     }
     assert!(TextMetrics::new(1.0, f64::MAX, f64::MAX).is_err());
     assert_eq!(TextMetrics::new(0.0, 0.0, 0.0).unwrap().height(), 0.0);
+}
+
+#[test]
+fn sampled_gradients_validate_sample_cardinality_aggregate_work_and_wire_capability() {
+    let gradient = |n| {
+        item(Primitive::SampledGradientRectangle {
+            bounds: bounds(),
+            direction: GradientDirection::Vertical,
+            colors: vec![INK; n],
+            mode: chart_core::scene::SampledGradientMode::CellCenters,
+        })
+    };
+    for n in [0, 1] {
+        assert_eq!(
+            scene(&[gradient(n)], &[], Limits::default())
+                .unwrap_err()
+                .code,
+            DiagnosticCode::Validation
+        );
+    }
+    let kept = scene(&[gradient(3)], &[], Limits::default()).unwrap();
+    assert_eq!(kept.wire_version(), 17);
+    let centered = serde_json::to_value(&kept.items()[0].primitive).unwrap();
+    assert!(centered["SampledGradientRectangle"].get("mode").is_none());
+    let mut endpoint = gradient(3);
+    if let Primitive::SampledGradientRectangle { mode, .. } = &mut endpoint.primitive {
+        *mode = chart_core::scene::SampledGradientMode::Endpoints;
+    }
+    let endpoints = scene(&[endpoint], &[], Limits::default()).unwrap();
+    assert_eq!(endpoints.wire_version(), 18);
+    let encoded = serde_json::to_value(&endpoints.items()[0].primitive).unwrap();
+    assert_eq!(encoded["SampledGradientRectangle"]["mode"], "Endpoints");
+
+    let budget = Limits {
+        max_path_commands: 5,
+        ..Limits::default()
+    };
+    let mut bands = gradient(3);
+    if let Primitive::SampledGradientRectangle { mode, .. } = &mut bands.primitive {
+        *mode = chart_core::scene::SampledGradientMode::Steps;
+    }
+    assert_eq!(
+        scene(&[bands.clone()], &[], Limits::default())
+            .unwrap()
+            .wire_version(),
+        18
+    );
+    assert_eq!(
+        scene(&[bands], &[], budget).unwrap_err().code,
+        DiagnosticCode::ResourceLimit
+    );
+    assert_eq!(
+        scene(&[gradient(3), gradient(3)], &[], budget)
+            .unwrap_err()
+            .code,
+        DiagnosticCode::ResourceLimit
+    );
+    assert_eq!(kept.items().len(), 1);
 }

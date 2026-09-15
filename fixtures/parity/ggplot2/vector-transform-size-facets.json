@@ -1,0 +1,2694 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "configurations": [
+    {
+      "family": "cardinality",
+      "composed": false
+    },
+    {
+      "family": "cardinality",
+      "composed": true
+    },
+    {
+      "family": "center",
+      "composed": false
+    },
+    {
+      "family": "center",
+      "composed": true
+    }
+  ],
+  "cases": [
+    {
+      "configuration": 0,
+      "route": "size",
+      "population": "ordinary",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              1,
+              3.2360679774997898,
+              6
+            ],
+            "range": [
+              0.80000000000000004,
+              5.2000000000000002
+            ],
+            "breaks": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "positions": [
+              0.045454545454545442,
+              0.27272727272727271,
+              0.5,
+              0.72727272727272729,
+              0.95454545454545447
+            ],
+            "labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "minor": [
+              1,
+              1.5,
+              2,
+              2.5,
+              3,
+              3.5,
+              4,
+              4.5,
+              5
+            ]
+          },
+          {
+            "mapped": [
+              2.2909944487358054,
+              4.415650255319866
+            ],
+            "range": [
+              0.80000000000000004,
+              5.2000000000000002
+            ],
+            "breaks": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "positions": [
+              0.045454545454545442,
+              0.27272727272727271,
+              0.5,
+              0.72727272727272729,
+              0.95454545454545447
+            ],
+            "labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "minor": [
+              1,
+              1.5,
+              2,
+              2.5,
+              3,
+              3.5,
+              4,
+              4.5,
+              5
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              6,
+              21
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              4,
+              8,
+              12,
+              16,
+              20
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              9,
+              13,
+              17,
+              21,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "size",
+      "population": "ordinary",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              1,
+              3.2360679774997898,
+              6
+            ],
+            "range": [
+              0.80000000000000004,
+              5.2000000000000002
+            ],
+            "breaks": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "positions": [
+              0.045454545454545442,
+              0.27272727272727271,
+              0.5,
+              0.72727272727272729,
+              0.95454545454545447
+            ],
+            "labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "minor": [
+              1,
+              1.5,
+              2,
+              2.5,
+              3,
+              3.5,
+              4,
+              4.5,
+              5
+            ]
+          },
+          {
+            "mapped": [
+              2.2909944487358054,
+              4.415650255319866
+            ],
+            "range": [
+              1.8999999999999999,
+              4.0999999999999996
+            ],
+            "breaks": [
+              2,
+              2.5,
+              3,
+              3.5,
+              4
+            ],
+            "positions": [
+              0.045454545454545497,
+              0.27272727272727282,
+              0.50000000000000011,
+              0.7272727272727274,
+              0.9545454545454547
+            ],
+            "labels": [
+              "2.0",
+              "2.5",
+              "3.0",
+              "3.5",
+              "4.0"
+            ],
+            "minor": [
+              2,
+              2.25,
+              2.5,
+              2.75,
+              3,
+              3.25,
+              3.5,
+              3.75,
+              4
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              6,
+              21
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              4,
+              8,
+              12,
+              16,
+              20
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              9,
+              13,
+              17,
+              21,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "size",
+      "population": "nonfinite",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              1,
+              3.2360679774997898,
+              6,
+              {
+                "number": "NA"
+              }
+            ],
+            "range": [
+              0.64999999999999991,
+              8.3499999999999996
+            ],
+            "breaks": [
+              {
+                "number": "NA"
+              },
+              2,
+              4,
+              6,
+              8
+            ],
+            "positions": [
+              {
+                "number": "NA"
+              },
+              0.17532467532467536,
+              0.4350649350649351,
+              0.69480519480519487,
+              0.95454545454545459
+            ],
+            "labels": [
+              null,
+              "2",
+              "4",
+              "6",
+              "8"
+            ],
+            "minor": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          {
+            "mapped": [
+              2.2909944487358054,
+              4.415650255319866,
+              {
+                "number": "NA"
+              },
+              {
+                "number": "Infinity"
+              }
+            ],
+            "range": [
+              0.64999999999999991,
+              8.3499999999999996
+            ],
+            "breaks": [
+              {
+                "number": "NA"
+              },
+              2,
+              4,
+              6,
+              8
+            ],
+            "positions": [
+              {
+                "number": "NA"
+              },
+              0.17532467532467536,
+              0.4350649350649351,
+              0.69480519480519487,
+              0.95454545454545459
+            ],
+            "labels": [
+              null,
+              "2",
+              "4",
+              "6",
+              "8"
+            ],
+            "minor": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              {
+                "number": "NA"
+              },
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              9,
+              24
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              6,
+              10,
+              14,
+              18,
+              22
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              11,
+              15,
+              19,
+              23,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "size",
+      "population": "nonfinite",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              1,
+              3.2360679774997898,
+              6,
+              {
+                "number": "NA"
+              }
+            ],
+            "range": [
+              0.69999999999999996,
+              7.2999999999999998
+            ],
+            "breaks": [
+              {
+                "number": "NA"
+              },
+              2,
+              4,
+              6,
+              {
+                "number": "NA"
+              }
+            ],
+            "positions": [
+              {
+                "number": "NA"
+              },
+              0.19696969696969699,
+              0.5,
+              0.80303030303030309,
+              {
+                "number": "NA"
+              }
+            ],
+            "labels": [
+              null,
+              "2",
+              "4",
+              "6",
+              null
+            ],
+            "minor": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ]
+          },
+          {
+            "mapped": [
+              2.2909944487358054,
+              4.415650255319866,
+              {
+                "number": "NA"
+              },
+              {
+                "number": "Infinity"
+              }
+            ],
+            "range": [
+              1.7,
+              8.3000000000000007
+            ],
+            "breaks": [
+              2,
+              4,
+              6,
+              8
+            ],
+            "positions": [
+              0.045454545454545456,
+              0.34848484848484845,
+              0.65151515151515138,
+              0.95454545454545447
+            ],
+            "labels": [
+              "2",
+              "4",
+              "6",
+              "8"
+            ],
+            "minor": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              {
+                "number": "NA"
+              },
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              9,
+              24
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              6,
+              10,
+              14,
+              18,
+              22
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              11,
+              15,
+              19,
+              23,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "size",
+      "population": "empty",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          },
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          }
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "size",
+      "population": "empty",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          },
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          }
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "size",
+      "population": "ordinary",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              6,
+              5.4721359549995796,
+              1
+            ],
+            "range": [
+              0.80000000000000004,
+              5.2000000000000002
+            ],
+            "breaks": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "positions": [
+              0.045454545454545442,
+              0.27272727272727271,
+              0.5,
+              0.72727272727272729,
+              0.95454545454545447
+            ],
+            "labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "minor": [
+              1,
+              1.5,
+              2,
+              2.5,
+              3,
+              3.5,
+              4,
+              4.5,
+              5
+            ]
+          },
+          {
+            "mapped": [
+              5.8304589153964796,
+              4.6514837167011072
+            ],
+            "range": [
+              0.80000000000000004,
+              5.2000000000000002
+            ],
+            "breaks": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "positions": [
+              0.045454545454545442,
+              0.27272727272727271,
+              0.5,
+              0.72727272727272729,
+              0.95454545454545447
+            ],
+            "labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "minor": [
+              1,
+              1.5,
+              2,
+              2.5,
+              3,
+              3.5,
+              4,
+              4.5,
+              5
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              21,
+              6
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              4,
+              8,
+              12,
+              16,
+              20
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              9,
+              13,
+              17,
+              21,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "size",
+      "population": "ordinary",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              6,
+              5.4721359549995796,
+              1
+            ],
+            "range": [
+              0.80000000000000004,
+              5.2000000000000002
+            ],
+            "breaks": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "positions": [
+              0.045454545454545442,
+              0.27272727272727271,
+              0.5,
+              0.72727272727272729,
+              0.95454545454545447
+            ],
+            "labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "minor": [
+              1,
+              1.5,
+              2,
+              2.5,
+              3,
+              3.5,
+              4,
+              4.5,
+              5
+            ]
+          },
+          {
+            "mapped": [
+              5.8304589153964796,
+              4.6514837167011072
+            ],
+            "range": [
+              1.8999999999999999,
+              4.0999999999999996
+            ],
+            "breaks": [
+              2,
+              2.5,
+              3,
+              3.5,
+              4
+            ],
+            "positions": [
+              0.045454545454545497,
+              0.27272727272727282,
+              0.50000000000000011,
+              0.7272727272727274,
+              0.9545454545454547
+            ],
+            "labels": [
+              "2.0",
+              "2.5",
+              "3.0",
+              "3.5",
+              "4.0"
+            ],
+            "minor": [
+              2,
+              2.25,
+              2.5,
+              2.75,
+              3,
+              3.25,
+              3.5,
+              3.75,
+              4
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              21,
+              6
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              4,
+              8,
+              12,
+              16,
+              20
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              9,
+              13,
+              17,
+              21,
+              25
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "size",
+      "population": "nonfinite",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              6,
+              5.4721359549995796,
+              1,
+              {
+                "number": "Infinity"
+              }
+            ],
+            "range": [
+              0.64999999999999991,
+              8.3499999999999996
+            ],
+            "breaks": [
+              {
+                "number": "NA"
+              },
+              2,
+              4,
+              6,
+              8
+            ],
+            "positions": [
+              {
+                "number": "NA"
+              },
+              0.17532467532467536,
+              0.4350649350649351,
+              0.69480519480519487,
+              0.95454545454545459
+            ],
+            "labels": [
+              null,
+              "2",
+              "4",
+              "6",
+              "8"
+            ],
+            "minor": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          {
+            "mapped": [
+              5.8304589153964796,
+              4.6514837167011072,
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "range": [
+              0.64999999999999991,
+              8.3499999999999996
+            ],
+            "breaks": [
+              {
+                "number": "NA"
+              },
+              2,
+              4,
+              6,
+              8
+            ],
+            "positions": [
+              {
+                "number": "NA"
+              },
+              0.17532467532467536,
+              0.4350649350649351,
+              0.69480519480519487,
+              0.95454545454545459
+            ],
+            "labels": [
+              null,
+              "2",
+              "4",
+              "6",
+              "8"
+            ],
+            "minor": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              {
+                "number": "NA"
+              },
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              24,
+              9
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              6,
+              10,
+              14,
+              18,
+              22
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              11,
+              15,
+              19,
+              23,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "size",
+      "population": "nonfinite",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              6,
+              5.4721359549995796,
+              1,
+              {
+                "number": "Infinity"
+              }
+            ],
+            "range": [
+              0.69999999999999996,
+              7.2999999999999998
+            ],
+            "breaks": [
+              {
+                "number": "NA"
+              },
+              2,
+              4,
+              6,
+              {
+                "number": "NA"
+              }
+            ],
+            "positions": [
+              {
+                "number": "NA"
+              },
+              0.19696969696969699,
+              0.5,
+              0.80303030303030309,
+              {
+                "number": "NA"
+              }
+            ],
+            "labels": [
+              null,
+              "2",
+              "4",
+              "6",
+              null
+            ],
+            "minor": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ]
+          },
+          {
+            "mapped": [
+              5.8304589153964796,
+              4.6514837167011072,
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "range": [
+              1.7,
+              8.3000000000000007
+            ],
+            "breaks": [
+              2,
+              4,
+              6,
+              8
+            ],
+            "positions": [
+              0.045454545454545456,
+              0.34848484848484845,
+              0.65151515151515138,
+              0.95454545454545447
+            ],
+            "labels": [
+              "2",
+              "4",
+              "6",
+              "8"
+            ],
+            "minor": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              {
+                "number": "NA"
+              },
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              24,
+              9
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              6,
+              10,
+              14,
+              18,
+              22
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              11,
+              15,
+              19,
+              23,
+              27
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "size",
+      "population": "empty",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          },
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          }
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "size",
+      "population": "empty",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          },
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          }
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "size",
+      "population": "ordinary",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              1,
+              3.2360679774997898,
+              6
+            ],
+            "range": [
+              0.80000000000000004,
+              5.2000000000000002
+            ],
+            "breaks": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "positions": [
+              0.045454545454545442,
+              0.27272727272727271,
+              0.5,
+              0.72727272727272729,
+              0.95454545454545447
+            ],
+            "labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "minor": [
+              1,
+              1.5,
+              2,
+              2.5,
+              3,
+              3.5,
+              4,
+              4.5,
+              5
+            ]
+          },
+          {
+            "mapped": [
+              2.2909944487358054,
+              4.415650255319866
+            ],
+            "range": [
+              0.80000000000000004,
+              5.2000000000000002
+            ],
+            "breaks": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "positions": [
+              0.045454545454545442,
+              0.27272727272727271,
+              0.5,
+              0.72727272727272729,
+              0.95454545454545447
+            ],
+            "labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "minor": [
+              1,
+              1.5,
+              2,
+              2.5,
+              3,
+              3.5,
+              4,
+              4.5,
+              5
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              -5.2000000000000002,
+              9.8000000000000007
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              -5,
+              0,
+              5,
+              10
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              -7.5,
+              -2.5,
+              2.5,
+              7.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "size",
+      "population": "ordinary",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              1,
+              3.2360679774997898,
+              6
+            ],
+            "range": [
+              0.80000000000000004,
+              5.2000000000000002
+            ],
+            "breaks": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "positions": [
+              0.045454545454545442,
+              0.27272727272727271,
+              0.5,
+              0.72727272727272729,
+              0.95454545454545447
+            ],
+            "labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "minor": [
+              1,
+              1.5,
+              2,
+              2.5,
+              3,
+              3.5,
+              4,
+              4.5,
+              5
+            ]
+          },
+          {
+            "mapped": [
+              2.2909944487358054,
+              4.415650255319866
+            ],
+            "range": [
+              1.8999999999999999,
+              4.0999999999999996
+            ],
+            "breaks": [
+              2,
+              2.5,
+              3,
+              3.5,
+              4
+            ],
+            "positions": [
+              0.045454545454545497,
+              0.27272727272727282,
+              0.50000000000000011,
+              0.7272727272727274,
+              0.9545454545454547
+            ],
+            "labels": [
+              "2.0",
+              "2.5",
+              "3.0",
+              "3.5",
+              "4.0"
+            ],
+            "minor": [
+              2,
+              2.25,
+              2.5,
+              2.75,
+              3,
+              3.25,
+              3.5,
+              3.75,
+              4
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              -5.2000000000000002,
+              9.8000000000000007
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              -5,
+              0,
+              5,
+              10
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              -7.5,
+              -2.5,
+              2.5,
+              7.5
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "size",
+      "population": "nonfinite",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "range": [
+              0.64999999999999991,
+              8.3499999999999996
+            ],
+            "breaks": [
+              {
+                "number": "NA"
+              },
+              2,
+              4,
+              6,
+              8
+            ],
+            "positions": [
+              {
+                "number": "NA"
+              },
+              0.17532467532467536,
+              0.4350649350649351,
+              0.69480519480519487,
+              0.95454545454545459
+            ],
+            "labels": [
+              null,
+              "2",
+              "4",
+              "6",
+              "8"
+            ],
+            "minor": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          },
+          {
+            "mapped": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "range": [
+              0.64999999999999991,
+              8.3499999999999996
+            ],
+            "breaks": [
+              {
+                "number": "NA"
+              },
+              2,
+              4,
+              6,
+              8
+            ],
+            "positions": [
+              {
+                "number": "NA"
+              },
+              0.17532467532467536,
+              0.4350649350649351,
+              0.69480519480519487,
+              0.95454545454545459
+            ],
+            "labels": [
+              null,
+              "2",
+              "4",
+              "6",
+              "8"
+            ],
+            "minor": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              {
+                "number": "NA"
+              },
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              {
+                "number": "Infinity"
+              },
+              {
+                "number": "-Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "size",
+      "population": "nonfinite",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "range": [
+              0.69999999999999996,
+              7.2999999999999998
+            ],
+            "breaks": [
+              {
+                "number": "NA"
+              },
+              2,
+              4,
+              6,
+              {
+                "number": "NA"
+              }
+            ],
+            "positions": [
+              {
+                "number": "NA"
+              },
+              0.19696969696969699,
+              0.5,
+              0.80303030303030309,
+              {
+                "number": "NA"
+              }
+            ],
+            "labels": [
+              null,
+              "2",
+              "4",
+              "6",
+              null
+            ],
+            "minor": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ]
+          },
+          {
+            "mapped": [
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              },
+              {
+                "number": "NA"
+              }
+            ],
+            "range": [
+              1.7,
+              8.3000000000000007
+            ],
+            "breaks": [
+              2,
+              4,
+              6,
+              8
+            ],
+            "positions": [
+              0.045454545454545456,
+              0.34848484848484845,
+              0.65151515151515138,
+              0.95454545454545447
+            ],
+            "labels": [
+              "2",
+              "4",
+              "6",
+              "8"
+            ],
+            "minor": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ]
+          }
+        ],
+        "build_calls": [
+          {
+            "direction": "forward",
+            "input": [
+              1,
+              2,
+              4,
+              8,
+              16,
+              {
+                "number": "NA"
+              },
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": [
+              {
+                "number": "-Infinity"
+              },
+              {
+                "number": "Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "inverse",
+            "input": [
+              {
+                "number": "Infinity"
+              },
+              {
+                "number": "-Infinity"
+              }
+            ]
+          },
+          {
+            "direction": "forward",
+            "input": []
+          }
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "size",
+      "population": "empty",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          },
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          }
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "size",
+      "population": "empty",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "panels": [
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          },
+          {
+            "mapped": [],
+            "range": [
+              -0.050000000000000003,
+              1.05
+            ],
+            "breaks": [],
+            "positions": [],
+            "labels": [],
+            "minor": []
+          }
+        ],
+        "build_calls": []
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "size",
+      "population": "ordinary",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "size",
+      "population": "ordinary",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "size",
+      "population": "nonfinite",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "size",
+      "population": "nonfinite",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "size",
+      "population": "empty",
+      "facet": "fixed",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "size",
+      "population": "empty",
+      "facet": "free_x",
+      "second": null,
+      "count": null,
+      "limits": null,
+      "inputs": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    }
+  ],
+  "batches": [
+    {
+      "family": "cardinality",
+      "input": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "forward": [
+        6,
+        7,
+        9,
+        13,
+        21
+      ],
+      "inverse": [
+        -4,
+        -3,
+        -1,
+        3,
+        11
+      ]
+    },
+    {
+      "family": "cardinality",
+      "input": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "forward": [
+        9,
+        10,
+        12,
+        16,
+        24,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inverse": [
+        -7,
+        -6,
+        -4,
+        0,
+        8,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ]
+    },
+    {
+      "family": "cardinality",
+      "input": [],
+      "forward": [],
+      "inverse": []
+    },
+    {
+      "family": "cardinality",
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "forward": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "inverse": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ]
+    },
+    {
+      "family": "cardinality",
+      "input": [
+        1,
+        {
+          "number": "NA"
+        },
+        3
+      ],
+      "forward": [
+        4,
+        {
+          "number": "NA"
+        },
+        6
+      ],
+      "inverse": [
+        -2,
+        {
+          "number": "NA"
+        },
+        0
+      ]
+    },
+    {
+      "family": "center",
+      "input": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "forward": [
+        -5.2000000000000002,
+        -4.2000000000000002,
+        -2.2000000000000002,
+        1.7999999999999998,
+        9.8000000000000007
+      ],
+      "inverse": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ]
+    },
+    {
+      "family": "center",
+      "input": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "forward": [
+        {
+          "number": "NaN"
+        },
+        {
+          "number": "NaN"
+        },
+        {
+          "number": "NaN"
+        },
+        {
+          "number": "NaN"
+        },
+        {
+          "number": "NaN"
+        },
+        {
+          "number": "NA"
+        },
+        {
+          "number": "NaN"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "inverse": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ]
+    },
+    {
+      "family": "center",
+      "input": [],
+      "forward": [],
+      "inverse": []
+    },
+    {
+      "family": "center",
+      "input": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "forward": [
+        {
+          "number": "NaN"
+        },
+        {
+          "number": "NaN"
+        }
+      ],
+      "inverse": [
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ]
+    },
+    {
+      "family": "center",
+      "input": [
+        1,
+        {
+          "number": "NA"
+        },
+        3
+      ],
+      "forward": [
+        -1,
+        {
+          "number": "NA"
+        },
+        1
+      ],
+      "inverse": [
+        1,
+        {
+          "number": "NA"
+        },
+        3
+      ]
+    }
+  ]
+}

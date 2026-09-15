@@ -5,7 +5,7 @@ use chart_core::{
     data::TimeUnit,
     grammar::{
         Compiler, CustomGuideFormatter, ExtensionDescriptor, ExtensionRegistry, GuideFormatInput,
-        OperationRef, PreparedChart,
+        GuideLabelsInput, OperationRef, PreparedChart,
     },
     layout::{
         AxisScale, AxisSide, GuideFormatter, GuideProfile, GuideStyle, LayoutRequest, layout,
@@ -249,6 +249,51 @@ fn registered_formatter_gets_full_semantic_context_and_failures_precede_callback
         DiagnosticCode::ResourceLimit
     );
     assert_eq!(calls.load(Ordering::Relaxed), 0);
+}
+
+#[test]
+fn vector_formatter_preserves_order_missing_labels_and_checks_output() {
+    struct VectorFormatter;
+    impl CustomGuideFormatter for VectorFormatter {
+        fn descriptor(&self) -> ExtensionDescriptor {
+            ExtensionDescriptor::batch("test.guide-format", Revision::new(1), true)
+        }
+        fn validate(&self, _: &Json) -> ChartResult<()> {
+            Ok(())
+        }
+        fn format_labels(&self, input: GuideLabelsInput<'_>) -> ChartResult<Vec<Option<String>>> {
+            assert_eq!(input.values, &[0.8.into(), 0.2.into(), 0.8.into()]);
+            assert!(input.names.is_none());
+            Ok(match input.parameters.as_str().unwrap() {
+                "Short" => vec![Some("short".into())],
+                "Long" => vec![Some("x".repeat(input.limits.max_text_bytes + 1)); 3],
+                _ => vec![Some("first".into()), None, Some("last".into())],
+            })
+        }
+    }
+    let mut registry = ExtensionRegistry::new();
+    registry
+        .register_guide_formatter(Arc::new(VectorFormatter))
+        .unwrap();
+    let p = prepare(&numeric_plot(Arc::new(registry)));
+    let mut r = configured_request();
+    r.axes[0].tick_values = Some(vec![0.8.into(), 0.2.into(), 0.8.into()]);
+    r.axes[0].tick_format = Some(registered("Vector"));
+    let ticks = labels(p.clone(), &r);
+    assert_eq!(
+        ticks.iter().map(|t| t.1.as_str()).collect::<Vec<_>>(),
+        ["first", "", "last"]
+    );
+    r.axes[0].tick_format = Some(registered("Short"));
+    assert_eq!(
+        layout(p.clone(), &r, &Metrics).unwrap_err().code,
+        DiagnosticCode::SchemaConflict
+    );
+    r.axes[0].tick_format = Some(registered("Long"));
+    assert_eq!(
+        layout(p, &r, &Metrics).unwrap_err().code,
+        DiagnosticCode::ResourceLimit
+    );
 }
 
 #[test]

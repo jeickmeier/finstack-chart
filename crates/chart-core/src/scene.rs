@@ -52,6 +52,41 @@ pub enum PathCommand {
     Close,
 }
 
+/// How uniformly sampled colors fill a rectangle.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum SampledGradientMode {
+    /// Color i lies at (i + 0.5) / n, padded to the rectangle edges.
+    #[default]
+    CellCenters,
+    /// Color i lies at i / (n - 1), spanning the rectangle edges.
+    Endpoints,
+    /// Each color fills one equal-width cell, with hard transitions at cell edges.
+    Steps,
+}
+impl SampledGradientMode {
+    /// Shared sRGB stops for a validated multi-color gradient. Steps duplicate
+    /// each internal boundary so exporters paint one rectangle without cell seams.
+    pub fn stops(self, colors: &[Color]) -> impl Iterator<Item = (f64, Color)> + '_ {
+        colors
+            .iter()
+            .copied()
+            .enumerate()
+            .flat_map(move |(i, color)| {
+                let n = colors.len() as f64;
+                let start = match self {
+                    Self::CellCenters => (i as f64 + 0.5) / n,
+                    Self::Endpoints => i as f64 / (n - 1.),
+                    Self::Steps => i as f64 / n,
+                };
+                std::iter::once((start, color))
+                    .chain((self == Self::Steps).then_some(((i + 1) as f64 / n, color)))
+            })
+    }
+    fn is_cell_centers(&self) -> bool {
+        *self == Self::CellCenters
+    }
+}
+
 /// Authored minimal primitive, validated and copied into an immutable scene.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum Primitive {
@@ -109,6 +144,19 @@ pub enum Primitive {
         bounds: Rect,
         /// Full rectangle-local linear gradient.
         gradient: LinearGradient,
+    },
+    /// One sRGB gradient sampled uniformly, with explicit sample mode.
+    /// Colors follow increasing x for horizontal or increasing y for vertical paint.
+    SampledGradientRectangle {
+        /// Finite destination rectangle.
+        bounds: Rect,
+        /// Direction in rectangle-local coordinates.
+        direction: GradientDirection,
+        /// At least two colors.
+        colors: Vec<Color>,
+        /// Defaults to cell centers for existing scene wire version 17.
+        #[serde(default, skip_serializing_if = "SampledGradientMode::is_cell_centers")]
+        mode: SampledGradientMode,
     },
     /// Dashed straight path; phase resets for each explicitly opened subpath.
     DashedPath {
@@ -272,6 +320,31 @@ impl Scene {
     }
     /// Minimum scene wire version required by the retained primitive capabilities.
     pub fn wire_version(&self) -> u32 {
+        if self.items.iter().any(|item| {
+            matches!(
+                item.primitive,
+                Primitive::SampledGradientRectangle {
+                    mode: SampledGradientMode::Endpoints | SampledGradientMode::Steps,
+                    ..
+                }
+            )
+        }) {
+            return 18;
+        }
+        if self
+            .items
+            .iter()
+            .any(|item| matches!(item.primitive, Primitive::SampledGradientRectangle { .. }))
+        {
+            return 17;
+        }
+        if self.items.iter().any(|i| {
+            i.guide.as_ref().and_then(|g| g.tick.as_ref()).is_some_and(
+                |t| matches!(t.value, crate::composition::ScaleValue::Number(n) if !n.is_finite()),
+            )
+        }) {
+            return 16;
+        }
         if self
             .items
             .iter()
@@ -337,6 +410,24 @@ fn validate(
                 Ok(())
             }
 
+            Primitive::SampledGradientRectangle { colors, mode, .. } => {
+                let work = colors
+                    .len()
+                    .saturating_mul(if *mode == SampledGradientMode::Steps {
+                        2
+                    } else {
+                        1
+                    });
+                require_within(work <= path_remaining, "total gradient sample")?;
+                path_remaining -= work;
+                if colors.len() < 2 {
+                    return Err(crate::scales::error(
+                        DiagnosticCode::Validation,
+                        "A sampled gradient requires at least two colors.",
+                    ));
+                }
+                Ok(())
+            }
             Primitive::GlyphRun { run, .. } => {
                 require_within(
                     run.text.len().saturating_add(run.language.len()) <= text_remaining,
@@ -517,7 +608,9 @@ fn validate_primitive(
         Primitive::Rule { stroke, .. } => {
             positive(stroke.width, "Stroke width must be finite and positive.")
         }
-        Primitive::Rectangle { .. } | Primitive::GradientRectangle { .. } => Ok(()),
+        Primitive::Rectangle { .. }
+        | Primitive::GradientRectangle { .. }
+        | Primitive::SampledGradientRectangle { .. } => Ok(()),
         Primitive::Point { center, radius, .. } | Primitive::Symbol { center, radius, .. } => {
             if matches!(
                 primitive,

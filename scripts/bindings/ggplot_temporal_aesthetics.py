@@ -15,7 +15,8 @@ for index,case in enumerate(cases):
    data=c.Data.columns({'x':c.column(list(map(float,range(len(values)))),kind='float64'),'y':c.column(list(map(float,range(len(values)))),kind='float64'),'when':c.timestamps([int(v or 0)*factor for v in values],unit,'UTC').validity([v is not None for v in values])});owned.append(data)
    mapping=getattr(c.aes().x('x').y('y'),'color' if channel=='colour' else channel)('when')
    plot=c.plot(data).profile('Ggplot2_4_0_3').aes(mapping).layer(c.points().name('marks').stroke('#000000')).build();owned.append(plot)
-   wire=plot.to_json();assert json.loads(wire)['version']==25
+   # Automatic paint provenance and numeric theme selection have distinct envelopes.
+   wire=plot.to_json();assert json.loads(wire)['version']==(42 if channel in ('colour','fill') else 45)
    restored=c.Plot.from_json(wire);owned.append(restored);assert restored.to_json()==wire
    base_encoding=None
    for state in ('original','edited'):
@@ -31,7 +32,7 @@ for index,case in enumerate(cases):
     assert len(styles)==len(wanted),(index,unit,len(styles),len(wanted))
     for style,value in zip(styles,wanted):
      if channel=='alpha':
-      assert style['color']['alpha']==(255 if value is None else math.floor(value*255+0.5)),(index,style,value)
+      assert style['color']['alpha']==(255 if value is None else round(value*255)),(index,style,value)
      elif target:
       actual=style.get({'size':'radius','alpha':'alpha','linewidth':'stroke_width'}[channel])
       assert (actual is None)==(value is None),(index,style,value)

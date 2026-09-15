@@ -1,0 +1,30 @@
+// GG2-03: actual blank training layers, host round-trips and publication.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const ROOT=path.resolve(__dirname,'../..'),c=require(path.resolve(process.argv[2],'authoring.cjs'));
+const out=path.resolve(process.argv[3]);fs.mkdirSync(out,{recursive:true});
+const cases=JSON.parse(fs.readFileSync(path.join(ROOT,'fixtures/parity/ggplot2/scale-limit-helpers.json'))).expansions;
+const output=new c.Output(fs.readFileSync(path.join(ROOT,'fixtures/capability/fonts/NotoSans-Regular.ttf'))),options=c.export_options(640,360).dpi(96).basis('current'),records=[];
+function primary(t){const cat=t.family==='category';return c.Data.columns({x:c.column(cat?['b','c','b','c']:[1,2,3,4],{kind:cat?'category':'float64'}),y:c.column(cat?['b','c','b','c']:[2,4,6,8],{kind:cat?'category':'float64'}),g:c.column(['A','A','B','B'],{kind:'string'})});}
+function extra(t,reverse=false){return c.Data.columns(Object.fromEntries(Object.entries(t.arguments).map(([name,values])=>[name,c.column(Array.from({length:t.result.helper_rows},(_,i)=>values[(reverse?t.result.helper_rows-1-i:i)%values.length]),{kind:t.family==='category'?'category':'float64'})])),{name:'expansion'});}
+function layer(t,e){let a=c.aes();for(const name of Object.keys(t.arguments))a=a[name==='colour'?'color':name](name);return c.blank().name('expansion').data(e).independent().aes(a).facet_target('Broadcast');}
+function build(t,d,e){let base=c.aes().x('x').y('y');if(t.axes==='colour_shared')base=base.color('y');let p=c.plot(d).profile('Ggplot2_4_0_3').aes(base).layer(c.points()).layer(layer(t,e));if(t.facet!=='none')p=p.facet(c.facet_wrap('g').free_x(t.facet==='free').free_y(t.facet==='free'));return p.build();}
+// Training membership is independent of dictionary ordinal assignment.
+function domain(layers,axis){const spaces=layers.map(l=>l.domains[axis+'_space']).filter(s=>s!==null);if(spaces.length&&typeof spaces[0]==='object'&&('Categorical' in spaces[0]||'NullableCategorical' in spaces[0]))return [...new Set(spaces.flatMap(s=>Object.values(s)[0].categories))].sort();const extents=layers.map(l=>l.domains[axis]).filter(v=>v!==null);return extents.length?[Math.min(...extents.map(v=>v.minimum)),Math.max(...extents.map(v=>v.maximum))]:null;}
+function check(t,chart,frame){const s=chart.semantics(),panels=s.panels.length?s.panels:[{key:null,layers:s.layers}],allLayers=panels.flatMap(p=>p.layers);assert.equal(panels.length,t.result.panels.length);let painted=0;const result=panels.map((p,i)=>{const ls=p.layers;assert.equal(ls.length,2);assert.deepEqual(ls[1].targets,[]);assert.equal(ls[1].invalid_geometry,0);painted+=ls[0].targets.length;const trained=t.facet==='fixed'?allLayers:ls,actual=Object.fromEntries(['x','y'].map(a=>[a,domain(trained,a)]));assert.deepEqual(actual,t.result.panels[i],JSON.stringify(t));let labels=null;if(['colour','colour_shared'].includes(t.axes)){const legend=ls[1].color_legend;labels=t.family==='category'?legend.entries.map(v=>v[0]):legend.numeric_breaks.map(v=>v.label??'');assert.deepEqual(labels,t.result.colour_labels);}return {key:p.key,domains:actual,blank_training:Object.fromEntries(['x','y'].map(a=>[a,domain([ls[1]],a)])),color_labels:labels};});assert.equal(painted,4);let point_colors=null;if(t.axes==='colour_shared'){point_colors=frame.scene().items.filter(i=>i.layer!==null&&i.primitive.Point).map(i=>i.primitive.Point.fill);assert.deepEqual(point_colors,t.result.point_colours.map(h=>({red:parseInt(h.slice(1,3),16),green:parseInt(h.slice(3,5),16),blue:parseInt(h.slice(5,7),16),alpha:255})));}if(t.axes==='colour'){const palette=panels[0].layers[1].color_legend.entries.map(v=>JSON.stringify(v[1]));assert.ok(!frame.scene().items.some(i=>i.layer===null&&i.primitive.Rectangle&&palette.includes(JSON.stringify(i.primitive.Rectangle.fill))));}return {panels:result,point_colors,guides:frame.guides().guides.map(g=>({scope:g.scope,side:g.spec.side,ticks:g.ticks}))};}
+for(const [index,t] of cases.entries()){
+ const owned=[];
+ try{
+  const d=primary(t),e=extra(t);owned.push(d,e);const p=build(t,d,e);owned.push(p);const wire=p.to_json();assert.equal(JSON.parse(wire).version,t.axes.startsWith('colour')?45:41);const restored=c.Plot.from_json(wire);owned.push(restored);assert.equal(restored.to_json(),wire);
+  const edited=restored.edit().layer('expansion',layer(t,e)).build();owned.push(edited);
+  let retainedChart,retainedFrame,retainedScene;
+  for(const [state,current] of [['original',p],['restored',restored],['edited',edited]]){
+   const chart=current.chart(),request=output.request(current,options),frame=request.prepare();owned.push(chart,request,frame);const held=frame.scene();records.push({index,state,...check(t,chart,frame)});
+   if(state==='original'&&['xy','colour','colour_shared'].includes(t.axes))for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`${t.axes}-${t.family}-${t.facet}.${fmt}`),frame.export(fmt));assert.deepEqual(frame.scene(),held);retainedChart=chart;retainedFrame=frame;retainedScene=held;
+  }
+  if(t.axes==='xy'){
+   const replacement=extra(t,true);owned.push(replacement);const tx=retainedChart.transaction();owned.push(tx);const builder=tx.replace(e,replacement);owned.push(builder);const update=builder.build();owned.push(update);assert.ok('Applied' in retainedChart.commit(update));
+   const fresh=build(t,d,replacement);owned.push(fresh);const batch=fresh.chart();owned.push(batch);const ar=output.request(retainedChart,options),br=output.request(batch,options);owned.push(ar,br);const af=ar.prepare(),bf=br.prepare();owned.push(af,bf);const actual=check(t,retainedChart,af);assert.deepEqual(actual,check(t,batch,bf));assert.deepEqual(af.export('png'),bf.export('png'));assert.deepEqual(retainedFrame.scene(),retainedScene);assert.equal(p.to_json(),wire);records.push({index,state:'replaced_reversed',...actual});
+  }
+ }finally{for(const obj of owned.reverse())obj.dispose();}
+}
+assert.equal(records.length,96);fs.writeFileSync(path.join(out,'records.json'),JSON.stringify(records));options.dispose();output.dispose();console.log('PASS',records.length,'blank-layer host states');

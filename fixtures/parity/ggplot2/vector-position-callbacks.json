@@ -1,0 +1,3504 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "configurations": [
+    {
+      "family": "cardinality",
+      "composed": false
+    },
+    {
+      "family": "cardinality",
+      "composed": true
+    },
+    {
+      "family": "center",
+      "composed": false
+    },
+    {
+      "family": "center",
+      "composed": true
+    }
+  ],
+  "cases": [
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            5
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "minor": [
+          3.8500000000000001,
+          5.5,
+          7.1500000000000004
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "labels": [
+          "1.85",
+          "5.15"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            10
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          3.6000000000000001,
+          12.4
+        ],
+        "minor": [
+          3.6000000000000001,
+          8,
+          12.4
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "labels": [
+          "1.6",
+          "10.4"
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          5,
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          8.5999999999999996,
+          8.5999999999999996,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          8.5999999999999996,
+          8.5999999999999996,
+          8.5999999999999996,
+          8.5999999999999996,
+          8.5999999999999996,
+          8.5999999999999996,
+          8.5999999999999996
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          0.56818181818181812,
+          0.56818181818181812,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            5
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "minor": [
+          3.8500000000000001,
+          5.5,
+          7.1500000000000004
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "labels": [
+          "1.85",
+          "5.15"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.8500000000000001,
+            5.1500000000000004
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.8500000000000001,
+          7.1500000000000004
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            2,
+            10
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          3.6000000000000001,
+          12.4
+        ],
+        "minor": [
+          3.6000000000000001,
+          8,
+          12.4
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "labels": [
+          "1.6",
+          "10.4"
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            1.6000000000000001,
+            10.4
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          4,
+          {
+            "number": "NA"
+          },
+          7
+        ],
+        "range": [
+          3.6000000000000001,
+          12.4
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          8.5999999999999996,
+          8.5999999999999996,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [
+          8.5999999999999996,
+          8.5999999999999996,
+          8.5999999999999996,
+          8.5999999999999996,
+          8.5999999999999996,
+          8.5999999999999996,
+          8.5999999999999996
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          0.56818181818181812,
+          0.56818181818181812,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "mapped_second": [
+          4,
+          12
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            5,
+            2
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "minor": [
+          -7.1500000000000004,
+          -5.5,
+          -3.8500000000000001
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "labels": [
+          "5.15",
+          "1.85"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            10,
+            2
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "minor": [
+          -12.4,
+          -8,
+          -3.6000000000000001
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "labels": [
+          "10.4",
+          "1.6"
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          -5,
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -8.5999999999999996,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          0.43181818181818188,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            5,
+            2
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "minor": [
+          -7.1500000000000004,
+          -5.5,
+          -3.8500000000000001
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "labels": [
+          "5.15",
+          "1.85"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            5.1500000000000004,
+            1.8500000000000001
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -7.1500000000000004,
+          -3.8500000000000001
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            10,
+            2
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "minor": [
+          -12.4,
+          -8,
+          -3.6000000000000001
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "labels": [
+          "10.4",
+          "1.6"
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            10.4,
+            1.6000000000000001
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -4,
+          {
+            "number": "NA"
+          },
+          -7
+        ],
+        "range": [
+          -12.4,
+          -3.6000000000000001
+        ],
+        "breaks": [
+          -8.5999999999999996,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          0.43181818181818188,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NA"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "mapped_second": [
+          -4,
+          -12
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            -1.4833333333333334,
+            1.8166666666666664
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.4833333333333334,
+            1.8166666666666664
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.3333333333333335,
+            1.6666666666666665
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -1.4833333333333334,
+          1.8166666666666664
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            -1.4833333333333334,
+            1.8166666666666664
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.4833333333333334,
+            1.8166666666666664
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -1.4833333333333334,
+          1.8166666666666664
+        ],
+        "breaks": [
+          {
+            "number": "NA"
+          },
+          1.6499999999999999
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.9494949494949495
+        ],
+        "labels": [
+          null,
+          "1.65"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            -1.4833333333333334,
+            1.8166666666666664
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.4833333333333334,
+            1.8166666666666664
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -1.4833333333333334,
+          1.8166666666666664
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "minor": [
+          -4.4000000000000004,
+          0,
+          4.4000000000000004
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "labels": [
+          "-4.4",
+          "4.4"
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.3333333333333335,
+          -0.33333333333333348,
+          1.6666666666666665
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            -1.6499999999999999,
+            1.6499999999999999
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.6499999999999999,
+            1.6499999999999999
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.5,
+            1.5
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -1.6499999999999999,
+          1.6499999999999999
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            -1.6499999999999999,
+            1.6499999999999999
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.6499999999999999,
+            1.6499999999999999
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -1.6499999999999999,
+          1.6499999999999999
+        ],
+        "breaks": [
+          -1.6499999999999999,
+          1.6499999999999999
+        ],
+        "minor": [
+          -1.6499999999999999,
+          0,
+          1.6499999999999999
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "labels": [
+          "-1.65",
+          "1.65"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [
+        {
+          "values": [
+            -1.6499999999999999,
+            1.6499999999999999
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -1.6499999999999999,
+            1.6499999999999999
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -1.6499999999999999,
+          1.6499999999999999
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4,
+            4
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "minor": [
+          -4.4000000000000004,
+          0,
+          4.4000000000000004
+        ],
+        "positions": [
+          0,
+          1
+        ],
+        "labels": [
+          "-4.4",
+          "4.4"
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        },
+        {
+          "values": [
+            -4.4000000000000004,
+            4.4000000000000004
+          ],
+          "is_null": false
+        }
+      ],
+      "result": {
+        "mapped": [
+          -1.5,
+          {
+            "number": "NA"
+          },
+          1.5
+        ],
+        "range": [
+          -4.4000000000000004,
+          4.4000000000000004
+        ],
+        "breaks": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "minor": [],
+        "positions": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NA"
+          },
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "labels": [
+          "last",
+          "middle",
+          "first",
+          "again",
+          "missing",
+          "positive",
+          "negative"
+        ],
+        "mapped_second": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "breaks": [],
+        "minor": [],
+        "positions": [],
+        "labels": [],
+        "mapped_second": []
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        2,
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nullable",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [
+        1,
+        {
+          "number": "NA"
+        },
+        4
+      ],
+      "second": [
+        2,
+        10
+      ],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "one",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": null,
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "null",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "domain",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "layers": "two",
+      "limits": "auto",
+      "count": null,
+      "break_mode": "mixed",
+      "inputs": [],
+      "second": [],
+      "break_calls": [],
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    }
+  ]
+}

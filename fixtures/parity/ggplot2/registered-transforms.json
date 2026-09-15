@@ -1,0 +1,1864 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "constructor": "function (name, transform, inverse, d_transform = NULL, d_inverse = NULL, \n    breaks = extended_breaks(), minor_breaks = regular_minor_breaks(), \n    format = format_format(), domain = c(-Inf, Inf)) \n{\n    if (is.character(transform)) \n        transform <- match.fun(transform)\n    if (is.character(inverse)) \n        inverse <- match.fun(inverse)\n    if (is.character(d_transform)) \n        d_transform <- match.fun(d_transform)\n    if (is.character(d_inverse)) \n        d_inverse <- match.fun(d_inverse)\n    structure(list(name = name, transform = transform, inverse = inverse, \n        d_transform = d_transform, d_inverse = d_inverse, breaks = breaks, \n        minor_breaks = minor_breaks, format = format, domain = domain), \n        class = \"transform\")\n}",
+  "configurations": [
+    {
+      "family": "affine",
+      "custom": false,
+      "forward": "function (x) \n2 * x + 3",
+      "inverse": "function (x) \n(x - 3)/2",
+      "breaks": "function (x, n = n_default) \n{\n    x <- x[is.finite(x)]\n    if (length(x) == 0) {\n        return(numeric())\n    }\n    rng <- range(x)\n    labeling::extended(rng[1], rng[2], n, ...)\n}",
+      "format": "function (x) \n{\n    if (!is.null(names(x))) {\n        return(names(x))\n    }\n    ret <- format(x, ..., trim = TRUE, justify = \"left\")\n    ret[is.na(x)] <- NA\n    ret\n}"
+    },
+    {
+      "family": "affine",
+      "custom": true,
+      "forward": "function (x) \n2 * x + 3",
+      "inverse": "function (x) \n(x - 3)/2",
+      "breaks": "function (x) \nc(-2, -1, 0, 1, 2)",
+      "format": "function (x) \npaste0(\"value=\", format(x, trim = TRUE, scientific = FALSE))"
+    },
+    {
+      "family": "cubic",
+      "custom": false,
+      "forward": "function (x) \nx^3",
+      "inverse": "function (x) \nsign(x) * abs(x)^(1/3)",
+      "breaks": "function (x, n = n_default) \n{\n    x <- x[is.finite(x)]\n    if (length(x) == 0) {\n        return(numeric())\n    }\n    rng <- range(x)\n    labeling::extended(rng[1], rng[2], n, ...)\n}",
+      "format": "function (x) \n{\n    if (!is.null(names(x))) {\n        return(names(x))\n    }\n    ret <- format(x, ..., trim = TRUE, justify = \"left\")\n    ret[is.na(x)] <- NA\n    ret\n}"
+    },
+    {
+      "family": "cubic",
+      "custom": true,
+      "forward": "function (x) \nx^3",
+      "inverse": "function (x) \nsign(x) * abs(x)^(1/3)",
+      "breaks": "function (x) \nc(-2, -1, 0, 1, 2)",
+      "format": "function (x) \npaste0(\"value=\", format(x, trim = TRUE, scientific = FALSE))"
+    }
+  ],
+  "cases": [
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "breaks": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          -1,
+          1,
+          3,
+          5,
+          7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "breaks": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "position",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": [],
+        "breaks": [],
+        "labels": [],
+        "limits": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#132B43",
+          "#22496C",
+          "#336A98",
+          "#448DC6",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "breaks": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#132B43",
+          "#22496C",
+          "#336A98",
+          "#448DC6",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "panel_labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "breaks": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "paint",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": [],
+        "breaks": [],
+        "labels": [],
+        "limits": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "binned_paint",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#1B3A57",
+          "#1B3A57",
+          "#2A5A82",
+          "#3B7BAF",
+          "#4D9FDE"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "breaks": [
+          1,
+          3,
+          5
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "binned_paint",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#1B3A57",
+          "#1B3A57",
+          "#2A5A82",
+          "#3B7BAF",
+          "#4D9FDE",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "panel_labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "breaks": [
+          1,
+          3,
+          5
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 0,
+      "route": "binned_paint",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": [],
+        "breaks": [],
+        "labels": [],
+        "limits": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "breaks": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          -1,
+          1,
+          3,
+          5,
+          7,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -1.3999999999999999,
+          7.4000000000000004
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "breaks": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "position",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": {
+          "error": "`breaks` and `labels` have different lengths."
+        },
+        "breaks": [],
+        "labels": {
+          "error": "`breaks` and `labels` have different lengths."
+        },
+        "limits": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#132B43",
+          "#22496C",
+          "#336A98",
+          "#448DC6",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "breaks": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#132B43",
+          "#22496C",
+          "#336A98",
+          "#448DC6",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "panel_labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "breaks": [
+          -1,
+          1,
+          3,
+          5,
+          7
+        ],
+        "labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "paint",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": [],
+        "breaks": [],
+        "labels": {
+          "error": "`breaks` and `labels` have different lengths."
+        },
+        "limits": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "binned_paint",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#1B3A57",
+          "#1B3A57",
+          "#2A5A82",
+          "#3B7BAF",
+          "#4D9FDE"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "breaks": [
+          1,
+          3,
+          5
+        ],
+        "labels": [
+          "value=-1",
+          "value=0",
+          "value=1"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "binned_paint",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#1B3A57",
+          "#1B3A57",
+          "#2A5A82",
+          "#3B7BAF",
+          "#4D9FDE",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "panel_labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "breaks": [
+          1,
+          3,
+          5
+        ],
+        "labels": [
+          "value=-1",
+          "value=0",
+          "value=1"
+        ],
+        "limits": [
+          -1,
+          7
+        ]
+      }
+    },
+    {
+      "configuration": 1,
+      "route": "binned_paint",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": [],
+        "breaks": [],
+        "labels": {
+          "error": "`breaks` and `labels` have different lengths."
+        },
+        "limits": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "positions": [
+          0.045454545454545491,
+          0.44318181818181818,
+          0.5,
+          0.55681818181818177,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "breaks": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          -8,
+          -1,
+          0,
+          1,
+          8,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "positions": [
+          0.045454545454545491,
+          0.44318181818181818,
+          0.5,
+          0.55681818181818177,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "breaks": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "position",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": [],
+        "breaks": [],
+        "labels": [],
+        "limits": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#132B43",
+          "#2F628D",
+          "#336A98",
+          "#3773A3",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "breaks": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#132B43",
+          "#2F628D",
+          "#336A98",
+          "#3773A3",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "panel_labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "breaks": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "labels": [
+          "-2",
+          "-1",
+          "0",
+          "1",
+          "2"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "paint",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": [],
+        "breaks": [],
+        "labels": [],
+        "limits": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "binned_paint",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#204567",
+          "#204567",
+          "#316692",
+          "#356E9E",
+          "#4691CC"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "breaks": [
+          -1,
+          0,
+          1
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "binned_paint",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#204567",
+          "#204567",
+          "#316692",
+          "#356E9E",
+          "#4691CC",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "panel_labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "breaks": [
+          -1,
+          0,
+          1
+        ],
+        "labels": [
+          "-1",
+          "0",
+          "1"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 2,
+      "route": "binned_paint",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": [],
+        "breaks": [],
+        "labels": [],
+        "limits": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "positions": [
+          0.045454545454545491,
+          0.44318181818181818,
+          0.5,
+          0.55681818181818177,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "breaks": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          -8,
+          -1,
+          0,
+          1,
+          8,
+          {
+            "number": "NA"
+          },
+          {
+            "number": "-Infinity"
+          },
+          {
+            "number": "Infinity"
+          }
+        ],
+        "range": [
+          -8.8000000000000007,
+          8.8000000000000007
+        ],
+        "positions": [
+          0.045454545454545491,
+          0.44318181818181818,
+          0.5,
+          0.55681818181818177,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "breaks": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "position",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": {
+          "error": "`breaks` and `labels` have different lengths."
+        },
+        "breaks": [],
+        "labels": {
+          "error": "`breaks` and `labels` have different lengths."
+        },
+        "limits": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "paint",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#132B43",
+          "#2F628D",
+          "#336A98",
+          "#3773A3",
+          "#56B1F7"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "breaks": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "paint",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#132B43",
+          "#2F628D",
+          "#336A98",
+          "#3773A3",
+          "#56B1F7",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "panel_labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "breaks": [
+          -8,
+          -1,
+          0,
+          1,
+          8
+        ],
+        "labels": [
+          "value=-2",
+          "value=-1",
+          "value=0",
+          "value=1",
+          "value=2"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "paint",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": [],
+        "breaks": [],
+        "labels": {
+          "error": "`breaks` and `labels` have different lengths."
+        },
+        "limits": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "binned_paint",
+      "population": "ordinary",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#204567",
+          "#204567",
+          "#316692",
+          "#356E9E",
+          "#4691CC"
+        ],
+        "range": [
+          0.80000000000000004,
+          5.2000000000000002
+        ],
+        "positions": [
+          0.045454545454545442,
+          0.27272727272727271,
+          0.5,
+          0.72727272727272729,
+          0.95454545454545447
+        ],
+        "panel_labels": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "breaks": [
+          -1,
+          0,
+          1
+        ],
+        "labels": [
+          "value=-1",
+          "value=0",
+          "value=1"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "binned_paint",
+      "population": "nonfinite",
+      "inputs": [
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        {
+          "number": "NA"
+        },
+        {
+          "number": "-Infinity"
+        },
+        {
+          "number": "Infinity"
+        }
+      ],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [
+          "#204567",
+          "#204567",
+          "#316692",
+          "#356E9E",
+          "#4691CC",
+          "grey50",
+          "grey50",
+          "grey50"
+        ],
+        "range": [
+          0.64999999999999991,
+          8.3499999999999996
+        ],
+        "positions": [
+          {
+            "number": "NA"
+          },
+          0.17532467532467536,
+          0.4350649350649351,
+          0.69480519480519487,
+          0.95454545454545459
+        ],
+        "panel_labels": [
+          null,
+          "2",
+          "4",
+          "6",
+          "8"
+        ],
+        "breaks": [
+          -1,
+          0,
+          1
+        ],
+        "labels": [
+          "value=-1",
+          "value=0",
+          "value=1"
+        ],
+        "limits": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "configuration": 3,
+      "route": "binned_paint",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "build_draw": "ok",
+        "mapped": [],
+        "range": [
+          -0.050000000000000003,
+          1.05
+        ],
+        "positions": [],
+        "panel_labels": [],
+        "breaks": [],
+        "labels": {
+          "error": "`breaks` and `labels` have different lengths."
+        },
+        "limits": [
+          0,
+          1
+        ]
+      }
+    }
+  ]
+}

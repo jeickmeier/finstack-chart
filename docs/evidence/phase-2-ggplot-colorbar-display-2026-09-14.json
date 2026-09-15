@@ -1,0 +1,194 @@
+{
+  "status": "GG05_DISPLAY_MODES_QUALIFIED",
+  "revision": "6e74ae6453b20ab0ffca5b88bbfee5a69d63bd9e",
+  "scope": [
+    "GG2-04 / FIX-GG05 raster, rectangles and gradient colorbar displays",
+    "Definition version 66 for non-raster display; scene version 18 for endpoint and stepped sampled-gradient modes",
+    "Default/fractional sample counts, constant domains, source keys and unchanged mark mapping"
+  ],
+  "reference": {
+    "fixture": "fixtures/parity/ggplot2/colorbar-display.json",
+    "sha256": "3f6013b3b51f928ecd6a01dc133c3dfc3d792705a36f363e0b89a816e69edcc4",
+    "generator": "tools/reference/r/colorbar-display.R",
+    "cases": 80,
+    "additional_non_raster_boundary_cases": 96,
+    "environment": "R 4.6.1 / ggplot2 4.0.3"
+  },
+  "validation": {
+    "check": {
+      "path": "/tmp/gg05-display-final-check.log",
+      "sha256": "267943e6fcf1e6c8e3f9609d770956ae9fa96d08c96459df25920c038c3ee8f2",
+      "exit_code": 0
+    },
+    "test": {
+      "path": "/tmp/gg05-display-final-test.log",
+      "sha256": "bdd6ede49f3abeb9ee2c183496a5e8fdb9de9606bc62269c6378235869d7985e",
+      "exit_code": 0,
+      "tests": 874,
+      "nonempty_targets": 187,
+      "total_targets": 199
+    },
+    "hosts": {
+      "path": "/tmp/gg05-display-final-hosts.log",
+      "sha256": "dfa0bb82ead82b7d0dc30ef3c8928a3b98d2bdda24b8300f9af1cca6cbab39cc",
+      "exit_code": 0
+    },
+    "focused": {
+      "path": "/tmp/gg05-display-seams-after.log",
+      "sha256": "92615b6c47ae8791ec61bd857aeb7ba539162734beb890589e069b1c4870f282",
+      "exit_code": 0
+    },
+    "native_build": {
+      "path": "/tmp/gg05-display-final-native-build.log",
+      "sha256": "540b26b020833ed86bb2ba9d6b71b0491250f26faca71ff213ccc8b0e7c064b5",
+      "exit_code": 0
+    },
+    "reference": {
+      "path": "/tmp/gg05-display-reference.log",
+      "sha256": "844e8412a2424cea63044be1a0af8fd3646f120a5e4c94c47cc18976525272b8",
+      "exit_code": 0
+    }
+  },
+  "hosts": {
+    "states": 2056,
+    "publication_files": 555,
+    "comparison": "exact Python/WASM parsed states; byte-identical corresponding Rust/Python/WASM publication files",
+    "modes": {
+      "comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-display-final/comparison.json",
+        "sha256": "5782cfb3b267a3ce33dc986c6f26596feb40c6cbef20f05691845d6c9aa5530f",
+        "states": 108,
+        "publication_files": 27
+      },
+      "constant-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-display-final/constant-comparison.json",
+        "sha256": "47fa676837364fb42d7324b0a3f06e2ca26044c4b2630814305cc0fe22829ca3",
+        "states": 48,
+        "publication_files": 36
+      },
+      "demand-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-display-final/demand-comparison.json",
+        "sha256": "411d32d578c060d7b0728755f0b55a09d7617c70dcb74d5a6ea0413ce3e85c58",
+        "states": 60,
+        "publication_files": 0
+      },
+      "display-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-display-final/display-comparison.json",
+        "sha256": "e8e8f12205132be76f4e8198f21be449744ddae21f5c483d29217299bc794603",
+        "states": 704,
+        "publication_files": 120
+      },
+      "orientation-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-display-final/orientation-comparison.json",
+        "sha256": "d4570791f366f3a277b8b7b6b2e6e7ac96f7752ff31398e328f87347f907c118",
+        "states": 192,
+        "publication_files": 144
+      },
+      "presentation-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-display-final/presentation-comparison.json",
+        "sha256": "d5f3ca226db121223b9781afe9ffe0db8720a7a1446c0bcd0a03eaaa4140f560",
+        "states": 512,
+        "publication_files": 120
+      },
+      "sampling-comparison.json": {
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-display-final/sampling-comparison.json",
+        "sha256": "547d1d9a117cf60884a89e5b1a9f7e73fe8a5485402ff83c94aaa0559c5b486f",
+        "states": 432,
+        "publication_files": 108
+      }
+    }
+  },
+  "inspection": {
+    "status": "inspected",
+    "publication_files": 120,
+    "review_pages": {
+      "display-inspection/review-1.png": "f5839dcbbf4ef430f056ee703e3db344d38e627d436b6b4ce69af8784c8b0d61",
+      "display-inspection/review-10.png": "72d9912208641b448d8a16bce061aef814d962256b95dcb82ef23df35236852f",
+      "display-inspection/review-11.png": "e7897e3c473af276e3806d326d2d51fc18aae15e95bef634e5aa2dbc08926627",
+      "display-inspection/review-12.png": "da654d7a8890ad24c4f0bbcd4a9e238bec76367df48640c54a3cc225d3aae916",
+      "display-inspection/review-13.png": "a7e095053e476c32080ab35f1a34f8cc918ea06268f9667d862b3ed83bc636bc",
+      "display-inspection/review-14.png": "cd9fdbc59ddcccc87fdc3e70c302afd4cf602b1be3d2e6a87c995dbf94eaca8e",
+      "display-inspection/review-2.png": "8e35de91cb0897134c5696cbc7c09dea89da41dbf9224a1fa646b5023d431f5c",
+      "display-inspection/review-3.png": "9009f4aceaca62d92edb581b2d140dbfdfb7989621355962c633440d8a4c5f1b",
+      "display-inspection/review-4.png": "c8b234dae5f7b8e31349f2d187ac187aa4f0bb70dc0f64b48217796cff0f8b0d",
+      "display-inspection/review-5.png": "43cacd7afb419f0a0dafa120520b319ec5343d2455babc8684e70a0fa99f10a6",
+      "display-inspection/review-6.png": "1fb1dd25e1043f11172c3699ea7d3dd2f0848ab178705fbacc469561b82a2eb2",
+      "display-inspection/review-7.png": "750bcd918a6412671657384e9f65221dc6405b0911acd1d514c70c241da08ac5",
+      "display-inspection/review-8.png": "38b0621211464cde6ab4fd3aa21b3f13437f9d118feb557237c336b69109c2b1",
+      "display-inspection/review-9.png": "423843286f9ef1db91f22eb5209a1908f4a38d61b0d76e5e54cf619163732a8b"
+    },
+    "native": {
+      "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-display-final/native-window.png",
+      "sha256": "b31361c913a5c8b7c1accc5f545d091cf6dd417b7a78fca4801cd8704ab5bcf7",
+      "charts": 4,
+      "mode": "--display"
+    },
+    "unchanged_previous_publications": 435,
+    "observations": [
+      "Inspected all 14 pages covering 40 PNG/SVG/PDF triplets: endpoint gradients, flat rectangle bands, constant domains and reversals agree across formats.",
+      "Dense rectangle PNG seams reproduced with an independent interior-pixel assertion; coincident gradient stops remove the seams without changing cell colors.",
+      "Native four-chart window shows endpoint gradients and fractional/default rectangle cells without seams."
+    ]
+  },
+  "owned_changes_from_presentation": [
+    "docs/implementation-status.md",
+    "crates/chart-export/src/svg.rs",
+    "crates/chart-export/src/encode.rs",
+    "crates/chart-export/examples/ggplot_colorbar_layout.rs",
+    "crates/chart-export/tests/ggplot_colorbar_displays.rs",
+    "fixtures/parity/ggplot2/colorbar-display.json",
+    "crates/chart-core/src/layout/legend_colorbar.rs",
+    "crates/chart-core/src/scales/mod.rs",
+    "crates/chart-core/src/plot/wire.rs",
+    "crates/chart-core/src/scales/ggplot_continuous_guide.rs",
+    "scripts/bindings/ggplot_colorbar_layout.py",
+    "tools/reference/r/colorbar-display.R",
+    "docs/adr/024-sampled-gradient-paint.md",
+    "scripts/bindings/ggplot_colorbar_layout.cjs",
+    "scripts/run_primary_authoring_proofs.py",
+    "crates/chart-core/src/grammar/definition.rs",
+    "crates/chart-core/src/scene.rs",
+    "crates/gpui-charts/src/native.rs",
+    "docs/evidence/phase-2-ggplot-colorbar-presentation-2026-09-14.json",
+    "crates/chart-core/tests/contracts.rs",
+    "crates/chart-core/tests/ggplot_colorbar_layout.rs",
+    "examples/common/ggplot_colorbar_fixtures.rs",
+    "examples/chart-gallery/examples/ggplot_colorbars.rs"
+  ],
+  "qualified_source_hashes": {
+    "docs/implementation-status.md": "53faaaaa49778a4f1fc9d8f51593bb48da219319307f8bd5402de24f4aebabda",
+    "crates/chart-export/src/svg.rs": "65edaa88f764eead5e21124cdb89c1b40b8fd4c0f849484a109eb6d2750d63f7",
+    "crates/chart-export/src/encode.rs": "98dd4adcc092dd976d846a110a7d4b3e1975546b8249acb42a7861f6a7b91440",
+    "crates/chart-export/examples/ggplot_colorbar_layout.rs": "7d8846fe62a79775433f542fc6d6450b1c3ddcc846936e3a0d69ae2fbcf9976f",
+    "crates/chart-export/tests/ggplot_colorbar_displays.rs": "8ddb760f63dc713edeeadd1d5be01aaae6dd601861eaf433bb2c7aeb0bdfb54f",
+    "fixtures/parity/ggplot2/colorbar-display.json": "3f6013b3b51f928ecd6a01dc133c3dfc3d792705a36f363e0b89a816e69edcc4",
+    "crates/chart-core/src/layout/legend_colorbar.rs": "66aa76409da60a947ac055959ed00401643a2b2f3ffead8f9cb87a806065cd3a",
+    "crates/chart-core/src/scales/mod.rs": "bdaf06f7beb7e5e5aa9490336f0bb56faf53c29099a1acd21c054b243818e539",
+    "crates/chart-core/src/plot/wire.rs": "7c79f31a9152e7678fa96d73d1db2dd7995fd7bae6069456f6450fe642334af7",
+    "crates/chart-core/src/scales/ggplot_continuous_guide.rs": "8a051577bbbdb144fded263f6a6ff06b3d74350f95bfbfef35dd1c007974e922",
+    "scripts/bindings/ggplot_colorbar_layout.py": "7a81afd62dd8956dccbf9143ab9d37e01458ceeed69963392587fcea3e1fb0cb",
+    "tools/reference/r/colorbar-display.R": "7d9f832dd09b023d4054d9f2a1d5b3eee5d526ab1c23253dcc89f3acd8edc31f",
+    "docs/adr/024-sampled-gradient-paint.md": "37f10c6fdfde9eda0e42ca2d106191c6addf64f581d990e90b9c7656cf48dc0b",
+    "scripts/bindings/ggplot_colorbar_layout.cjs": "cf87720c0a2ced5003839d8f25d93ed51c3528a9eaf4c90ebbf34dc885c0a319",
+    "scripts/run_primary_authoring_proofs.py": "015c3a0781b20bb45525af3eca94c31e7ad80db3e0f5403232468e81b0b2a706",
+    "crates/chart-core/src/grammar/definition.rs": "b0f0124bec28b59438c93592dce622d9f6c595c2f419a58302b8e949caa6aa12",
+    "crates/chart-core/src/scene.rs": "e9db8c1b8c83d3cea4554f01c750d3dd185a6423ae78773dbd75106e7a7cc9a1",
+    "crates/gpui-charts/src/native.rs": "4a22937a097083714aa0a6848abc2f396113775fa1ca756e9d510af9c6c76cce",
+    "docs/evidence/phase-2-ggplot-colorbar-presentation-2026-09-14.json": "67adc34e9c74139ac22a9a0b35cce8e4c2054678160124d21558395eded53eb4",
+    "crates/chart-core/tests/contracts.rs": "defc0f87578d42aec5ccf6c06150e06abb53fdcf47619a7f298b0b2daf1014bc",
+    "crates/chart-core/tests/ggplot_colorbar_layout.rs": "93bbe1617300bc8e961e8f860ed1d77d4328a13fd9abecf94540803ad2a79c7d",
+    "examples/common/ggplot_colorbar_fixtures.rs": "24c3ce1bb69b22b795fbc1d4822aa4f4f23d8122384aac8e7f5e3249596cf761",
+    "examples/chart-gallery/examples/ggplot_colorbars.rs": "8c8b6a1ca62f289b7c61ab58632823d56c53318bbd89a8286ec583d87e3c78bd"
+  },
+  "limitations": [
+    "Full GG05 and GG05-19 remain open.",
+    "Alpha, guide composition, stepped/mixed keys, component identity and axis/custom guide contracts remain.",
+    "No new full cumulative bindings or Linux run.",
+    "Initial pre-fix publications matched hosts but failed visual review and are not qualified."
+  ],
+  "next": "Implement and qualify shared colorbar alpha controls against the prepared source fixture.",
+  "source_baseline": {
+    "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-display-final/source-baseline.json",
+    "sha256": "a939d097505899b194ec7666c525b3170f30e3c0fb6d4daf2d7fe1b2257fab95"
+  }
+}

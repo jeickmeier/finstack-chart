@@ -1,0 +1,3895 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "colour",
+      "constructor": "gradient",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#265075",
+          "#2C5D86",
+          "#3A78AA",
+          "#56B1F7"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#336A98"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "grey50",
+          "#56B1F7"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#E3005B",
+          "#D70072",
+          "#BA009F",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#CA0088"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient2",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#B26D65",
+          "#EED9D6",
+          "#FFFFFF",
+          "#C0B8DD",
+          "#3A3A98"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient2",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient2",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#832424",
+          "grey50",
+          "#3A3A98"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient2",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient2",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFB299",
+          "#FFD9CB",
+          "#E3D0FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#CFB1FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradient2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFB299",
+          "#FFD9CB",
+          "#E3D0FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF000040",
+          "#EEE2FF8A",
+          "#DCC4FF93",
+          "#B38BFFA6",
+          "#0000FFCC"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#C8A8FF9C"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF000040",
+          "grey50",
+          "#0000FFCC"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#3C8BC3",
+          "#549DCC",
+          "#8BBFDD",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#6BAED6"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1,
+        "values": [0, 0.050000000000000003, 0.10000000000000001, 0.40000000000000002, 0.69999999999999996, 0.90000000000000002, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#B2182B",
+          "#FAEEE7",
+          "#F7F7F7",
+          "#DEEBF2",
+          "#2166AC"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1,
+        "values": [0, 0.050000000000000003, 0.10000000000000001, 0.40000000000000002, 0.69999999999999996, 0.90000000000000002, 1]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#EAF1F5"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1,
+        "values": [0, 0.050000000000000003, 0.10000000000000001, 0.40000000000000002, 0.69999999999999996, 0.90000000000000002, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#B2182B",
+          "grey50",
+          "#2166AC"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1,
+        "values": [0, 0.050000000000000003, 0.10000000000000001, 0.40000000000000002, 0.69999999999999996, 0.90000000000000002, 1]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1,
+        "values": [0, 0.050000000000000003, 0.10000000000000001, 0.40000000000000002, 0.69999999999999996, 0.90000000000000002, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#3B5E8B",
+          "#2A788E",
+          "#22A884",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#2B9089"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FE9F6D80",
+          "#AD347A80",
+          "#9C2E7F80",
+          "#85258080",
+          "#3B0F7080"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#90298080"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FE9F6D80",
+          "grey50",
+          "#3B0F7080"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#193753",
+          "#265075",
+          "#265075",
+          "#336A98",
+          "#4FA2E3"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#1B3A57",
+          "grey50",
+          "#4D9FDE"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#F6002A",
+          "#E3005B",
+          "#E3005B",
+          "#CA0088",
+          "#6800E7"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#F40031",
+          "grey50",
+          "#7300E0"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps2",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#C89089",
+          "#EED9D6",
+          "#EED9D6",
+          "#E0DBEE",
+          "#6057A9"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps2",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps2",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#A75B54",
+          "grey50",
+          "#7167B2"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps2",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps2",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF5B3A",
+          "#FFB299",
+          "#FFB299",
+          "#FFFFFF",
+          "#7145FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF5232",
+          "grey50",
+          "#E8D8FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "steps2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF5B3A",
+          "#FFB299",
+          "#FFB299",
+          "#FFFFFF",
+          "#7145FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF6846",
+          "grey50",
+          "#7E52FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF9E8160",
+          "#EEE2FF8A",
+          "#EEE2FF8A",
+          "#C8A8FF9C",
+          "#5932FFC3"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FFB7A068",
+          "grey50",
+          "#643AFFC0"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "fermenter",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#08519C",
+          "#3182BD",
+          "#3182BD",
+          "#6BAED6",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "fermenter",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "fermenter",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#2171B5",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "fermenter",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "fermenter",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "fermenter",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#CA0020",
+          "#F4A582",
+          "#F4A582",
+          "#F7F7F7",
+          "#0571B0"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "fermenter",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "fermenter",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#CA0020",
+          "grey50",
+          "#0571B0"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "fermenter",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "fermenter",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_b",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF",
+          "#3B528BFF",
+          "#3B528BFF",
+          "#21908CFF",
+          "#FDE725FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_b",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_b",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF",
+          "grey50",
+          "#FDE725FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_b",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_b",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_b",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FE9F6D80",
+          "#ED5A5F80",
+          "#ED5A5F80",
+          "#B6367980",
+          "#3B0F7080"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_b",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_b",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FE9F6D80",
+          "grey50",
+          "#3B0F7080"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_b",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_b",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "#265075",
+          "#2C5D86",
+          "#3A78AA",
+          "#56B1F7"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#336A98"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#132B43",
+          "grey50",
+          "#56B1F7"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#E3005B",
+          "#D70072",
+          "#BA009F",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#CA0088"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient2",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#B26D65",
+          "#EED9D6",
+          "#FFFFFF",
+          "#C0B8DD",
+          "#3A3A98"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient2",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient2",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#832424",
+          "grey50",
+          "#3A3A98"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient2",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient2",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFB299",
+          "#FFD9CB",
+          "#E3D0FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#CFB1FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradient2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "#FFB299",
+          "#FFD9CB",
+          "#E3D0FF",
+          "#0000FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#FFFFFF"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF0000",
+          "grey50",
+          "#0000FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF000040",
+          "#EEE2FF8A",
+          "#DCC4FF93",
+          "#B38BFFA6",
+          "#0000FFCC"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#C8A8FF9C"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF000040",
+          "grey50",
+          "#0000FFCC"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "#3C8BC3",
+          "#549DCC",
+          "#8BBFDD",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#6BAED6"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#084594",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1,
+        "values": [0, 0.050000000000000003, 0.10000000000000001, 0.40000000000000002, 0.69999999999999996, 0.90000000000000002, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#B2182B",
+          "#FAEEE7",
+          "#F7F7F7",
+          "#DEEBF2",
+          "#2166AC"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1,
+        "values": [0, 0.050000000000000003, 0.10000000000000001, 0.40000000000000002, 0.69999999999999996, 0.90000000000000002, 1]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#EAF1F5"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1,
+        "values": [0, 0.050000000000000003, 0.10000000000000001, 0.40000000000000002, 0.69999999999999996, 0.90000000000000002, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#B2182B",
+          "grey50",
+          "#2166AC"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1,
+        "values": [0, 0.050000000000000003, 0.10000000000000001, 0.40000000000000002, 0.69999999999999996, 0.90000000000000002, 1]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1,
+        "values": [0, 0.050000000000000003, 0.10000000000000001, 0.40000000000000002, 0.69999999999999996, 0.90000000000000002, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "#3B5E8B",
+          "#2A788E",
+          "#22A884",
+          "#FDE725"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#2B9089"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154",
+          "grey50",
+          "#FDE725"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FE9F6D80",
+          "#AD347A80",
+          "#9C2E7F80",
+          "#85258080",
+          "#3B0F7080"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "mapped": [
+          "#90298080"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FE9F6D80",
+          "grey50",
+          "#3B0F7080"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          "grey50"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#193753",
+          "#265075",
+          "#265075",
+          "#336A98",
+          "#4FA2E3"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#1B3A57",
+          "grey50",
+          "#4D9FDE"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#F6002A",
+          "#E3005B",
+          "#E3005B",
+          "#CA0088",
+          "#6800E7"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#F40031",
+          "grey50",
+          "#7300E0"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "high": "blue"
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps2",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#C89089",
+          "#EED9D6",
+          "#EED9D6",
+          "#E0DBEE",
+          "#6057A9"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps2",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps2",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#A75B54",
+          "grey50",
+          "#7167B2"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps2",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps2",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF5B3A",
+          "#FFB299",
+          "#FFB299",
+          "#FFFFFF",
+          "#7145FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF5232",
+          "grey50",
+          "#E8D8FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "steps2",
+      "configuration": "custom",
+      "args": {
+        "low": "red",
+        "mid": "white",
+        "high": "blue",
+        "midpoint": 1
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF5B3A",
+          "#FFB299",
+          "#FFB299",
+          "#FFFFFF",
+          "#7145FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FF6846",
+          "grey50",
+          "#7E52FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "default",
+      "args": {
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FF9E8160",
+          "#EEE2FF8A",
+          "#EEE2FF8A",
+          "#C8A8FF9C",
+          "#5932FFC3"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FFB7A068",
+          "grey50",
+          "#643AFFC0"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "custom",
+      "args": {
+        "colors": ["#ff000040", "#ffffff80", "#0000ffcc"],
+        "values": [0, 0.20000000000000001, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "fermenter",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#08519C",
+          "#3182BD",
+          "#3182BD",
+          "#6BAED6",
+          "#EFF3FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "fermenter",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "fermenter",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#2171B5",
+          "grey50",
+          "#EFF3FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "fermenter",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "fermenter",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "fermenter",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#CA0020",
+          "#F4A582",
+          "#F4A582",
+          "#F7F7F7",
+          "#0571B0"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "fermenter",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "fermenter",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#CA0020",
+          "grey50",
+          "#0571B0"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "fermenter",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "fermenter",
+      "configuration": "custom",
+      "args": {
+        "type": "div",
+        "palette": "RdBu",
+        "direction": 1
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_b",
+      "configuration": "default",
+      "args": [],
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF",
+          "#3B528BFF",
+          "#3B528BFF",
+          "#21908CFF",
+          "#FDE725FF"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_b",
+      "configuration": "default",
+      "args": [],
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_b",
+      "configuration": "default",
+      "args": [],
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF",
+          "grey50",
+          "#FDE725FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_b",
+      "configuration": "default",
+      "args": [],
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_b",
+      "configuration": "default",
+      "args": [],
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_b",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "mapped": [
+          "#FE9F6D80",
+          "#ED5A5F80",
+          "#ED5A5F80",
+          "#B6367980",
+          "#3B0F7080"
+        ],
+        "point_count": 5
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_b",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_b",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "mapped": [
+          "#FE9F6D80",
+          "grey50",
+          "#3B0F7080"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_b",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_b",
+      "configuration": "custom",
+      "args": {
+        "alpha": 0.5,
+        "begin": 0.20000000000000001,
+        "end": 0.80000000000000004,
+        "direction": -1,
+        "option": "A",
+        "values": [0, 0.02, 0.10000000000000001, 0.40000000000000002, 0.80000000000000004, 1]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    }
+  ]
+}

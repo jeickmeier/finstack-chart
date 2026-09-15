@@ -15,6 +15,10 @@ pub struct GgplotDiscretePosition {
     /// Like a fixed-vector reference palette, it must cover the complete resolved domain.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub palette: Option<Vec<Number>>,
+    /// Pure count callback, evaluated against the resolved domain including a missing level.
+    /// Names are ignored for positional palettes. Takes precedence over a fixed palette.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub palette_function: Option<Box<crate::grammar::ScalePaletteOperation>>,
     /// Factor levels; absent uses reference character ordering.
     pub levels: Option<Vec<ScaleKey>>,
     /// Remove unobserved factor levels.
@@ -31,6 +35,7 @@ impl Default for GgplotDiscretePosition {
         Self {
             limits: None,
             palette: None,
+            palette_function: None,
             levels: None,
             drop: true,
             na_translate: true,
@@ -50,6 +55,25 @@ impl GgplotDiscretePosition {
         &self,
         values: &[ScaleKey],
         continuous_limits: Option<&[Number]>,
+    ) -> ChartResult<PreparedGgplotDiscretePosition> {
+        self.train_using(values, continuous_limits, &Default::default())
+    }
+
+    /// Train using an immutable registry selection for a population-dependent palette.
+    pub fn train_with_registry(
+        &self,
+        values: &[ScaleKey],
+        continuous_limits: Option<&[Number]>,
+        registry: &crate::grammar::ExtensionRegistry,
+    ) -> ChartResult<PreparedGgplotDiscretePosition> {
+        self.train_using(values, continuous_limits, &registry.palette_function)
+    }
+
+    pub(crate) fn train_using(
+        &self,
+        values: &[ScaleKey],
+        continuous_limits: Option<&[Number]>,
+        registry: &crate::grammar::scale_palette_extensions::ScalePaletteRegistrations,
     ) -> ChartResult<PreparedGgplotDiscretePosition> {
         if let Some(limits) = continuous_limits {
             crate::limits::require_within(
@@ -87,12 +111,6 @@ impl GgplotDiscretePosition {
             }
         }
         self.guide.validate()?;
-        if values.is_empty() && self.limits.as_ref().is_some_and(Vec::is_empty) {
-            return Err(error(
-                DiagnosticCode::NumericalDomain,
-                "Reference discrete positions reject empty limits on a zero-row population.",
-            ));
-        }
         let domain = super::ggplot::discrete_domain(
             values,
             self.limits.as_deref(),
@@ -100,13 +118,51 @@ impl GgplotDiscretePosition {
             self.drop,
             self.na_translate,
         );
+        let selected_palette = if let Some(call) = &self.palette_function {
+            registry.validate(call, false)?;
+            if !values.is_empty() || self.limits.is_some() {
+                let output = registry.evaluate(
+                    call,
+                    crate::grammar::ScalePaletteDomain::Count(domain.len()),
+                )?;
+                let output = output.values.ok_or_else(|| {
+                    error(
+                        DiagnosticCode::SchemaConflict,
+                        "A positional palette must return a numeric vector.",
+                    )
+                })?;
+                Some(
+                    output
+                        .into_iter()
+                        .map(|v| match v {
+                            crate::interpolate::Value::Number(v) => Ok(v),
+                            crate::interpolate::Value::Missing => Ok(Number(f64::NAN)),
+                            _ => Err(error(
+                                DiagnosticCode::SchemaConflict,
+                                "A positional palette must return a numeric vector.",
+                            )),
+                        })
+                        .collect::<ChartResult<Vec<_>>>()?,
+                )
+            } else {
+                None
+            }
+        } else {
+            self.palette.clone()
+        };
+        if values.is_empty() && self.limits.as_ref().is_some_and(Vec::is_empty) {
+            return Err(error(
+                DiagnosticCode::NumericalDomain,
+                "Reference discrete positions reject empty limits on a zero-row population.",
+            ));
+        }
         let index: BTreeMap<_, _> = domain
             .iter()
             .cloned()
             .enumerate()
             .map(|(i, key)| (key, i))
             .collect();
-        if let Some(palette) = &self.palette {
+        if let Some(palette) = &selected_palette {
             crate::limits::require_within(
                 palette.len() <= crate::interpolate::MAX_VALUES,
                 "positional palette",
@@ -118,12 +174,12 @@ impl GgplotDiscretePosition {
                 ));
             }
         }
-        let numeric = |i: usize| self.palette.as_ref().map_or(1. + i as f64, |p| p[i].0);
+        let numeric = |i: usize| selected_palette.as_ref().map_or(1. + i as f64, |p| p[i].0);
         let mut observed = super::spacing::observed_extent(
             values.iter().filter_map(|key| index.get(key).copied()),
             !values.is_empty(),
         );
-        if self.palette.is_some() && !values.is_empty() {
+        if selected_palette.is_some() && !values.is_empty() {
             let extent = values
                 .iter()
                 .filter_map(|key| index.get(key).map(|i| numeric(*i)))
@@ -152,7 +208,7 @@ impl GgplotDiscretePosition {
         Ok(PreparedGgplotDiscretePosition {
             domain,
             index,
-            palette: self.palette.clone(),
+            palette: selected_palette,
             viewport,
             entries,
             hidden_labels: matches!(self.guide.labels, super::GgplotGuideLabels::Hidden),

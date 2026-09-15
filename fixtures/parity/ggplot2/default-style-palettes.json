@@ -1,0 +1,657 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "shape",
+      "route": "automatic",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          15,
+          16,
+          17,
+          16
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "automatic",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          17,
+          16,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "automatic",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "automatic",
+      "theme_mode": "supplied",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          3,
+          3,
+          3,
+          3
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "automatic",
+      "theme_mode": "supplied",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          null,
+          3,
+          3,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "automatic",
+      "theme_mode": "supplied",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "constructor",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          15,
+          16,
+          17,
+          16
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "constructor",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          17,
+          16,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "constructor",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "constructor",
+      "theme_mode": "supplied",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          3,
+          3,
+          3,
+          3
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "constructor",
+      "theme_mode": "supplied",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          null,
+          3,
+          3,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "constructor",
+      "theme_mode": "supplied",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "solid",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          15,
+          16,
+          17,
+          16
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "solid",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          17,
+          16,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "solid",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "solid",
+      "theme_mode": "supplied",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          15,
+          16,
+          17,
+          16
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "solid",
+      "theme_mode": "supplied",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          17,
+          16,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "solid",
+      "theme_mode": "supplied",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "hollow",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          0,
+          1,
+          2,
+          1
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "hollow",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          2,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "hollow",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "hollow",
+      "theme_mode": "supplied",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          0,
+          1,
+          2,
+          1
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "hollow",
+      "theme_mode": "supplied",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          2,
+          1,
+          null
+        ]
+      }
+    },
+    {
+      "channel": "shape",
+      "route": "hollow",
+      "theme_mode": "supplied",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "automatic",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "42",
+          "solid",
+          "22",
+          "solid"
+        ]
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "automatic",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          "22",
+          "solid",
+          null
+        ]
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "automatic",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "automatic",
+      "theme_mode": "supplied",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "22",
+          "22",
+          "22",
+          "22"
+        ]
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "automatic",
+      "theme_mode": "supplied",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "22",
+          "22",
+          null
+        ]
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "automatic",
+      "theme_mode": "supplied",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "constructor",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          "42",
+          "solid",
+          "22",
+          "solid"
+        ]
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "constructor",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [],
+      "result": {
+        "mapped": [
+          null,
+          "22",
+          "solid",
+          null
+        ]
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "constructor",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "constructor",
+      "theme_mode": "supplied",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "calls": [
+        3
+      ],
+      "result": {
+        "mapped": [
+          "22",
+          "22",
+          "22",
+          "22"
+        ]
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "constructor",
+      "theme_mode": "supplied",
+      "population": "missing",
+      "inputs": [
+        null,
+        "b",
+        "a",
+        null
+      ],
+      "calls": [
+        2
+      ],
+      "result": {
+        "mapped": [
+          null,
+          "22",
+          "22",
+          null
+        ]
+      }
+    },
+    {
+      "channel": "linetype",
+      "route": "constructor",
+      "theme_mode": "supplied",
+      "population": "empty",
+      "inputs": [],
+      "calls": [],
+      "result": {
+        "mapped": []
+      }
+    }
+  ]
+}

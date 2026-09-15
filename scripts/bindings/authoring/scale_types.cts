@@ -23,3 +23,6 @@ s.configure({clamp:'yes'});
 // @ts-expect-error exact integer key requires bigint
 new ScaleKey('Unsigned','18446744073709551615');
 void [inverse,label,exact];
+
+import {scale_transform, x_axis} from "../../../packages/wasm/authoring.cjs";
+x_axis().scale(scale_transform({Ggplot:{transform:{BoxCox:{p:0.5,offset:2}}}}));

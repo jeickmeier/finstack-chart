@@ -1,0 +1,185 @@
+{
+  "status": "GG05_RASTER_PRESENTATION_QUALIFIED",
+  "revision": "6e74ae6453b20ab0ffca5b88bbfee5a69d63bd9e",
+  "scope": [
+    "GG2-04 / FIX-GG05 raster direction, reversal, selected endpoint ticks and independent tick/label painting",
+    "Definition version 65 for nondefault presentation; sampling-only version 64 unchanged",
+    "Horizontal measured legend allocation with minimum plot span retained"
+  ],
+  "reference": {
+    "fixture": "fixtures/parity/ggplot2/colorbar-presentation.json",
+    "sha256": "cf6e08e43831631f3c11cf208346d3d82f9909542b8281a29ec412306c739251",
+    "generator": "tools/reference/r/colorbar-presentation.R",
+    "cases": 128,
+    "environment": "R 4.6.1 / ggplot2 4.0.3",
+    "palette_orientation_fixture": "fixtures/parity/ggplot2/colorbar-boundaries.json"
+  },
+  "validation": {
+    "check": {
+      "path": "/tmp/gg05-presentation-final-check.log",
+      "sha256": "87066cf8905ad0c50eb22119c575c8c75f72957b0d3f5f9253cc78171c3cb9b8",
+      "exit_code": 0
+    },
+    "test": {
+      "path": "/tmp/gg05-presentation-final-test.log",
+      "sha256": "bdd7437c4012be575e8e61bb831db870d8a76e72406a76c26005b3fe425437fe",
+      "exit_code": 0,
+      "tests": 872,
+      "nonempty_targets": 186,
+      "total_targets": 198
+    },
+    "hosts": {
+      "path": "/tmp/gg05-presentation-hosts.log",
+      "sha256": "cced458361ce5586083d8ad0b000cf499f5508591bf74e72f811e76baae88dbd",
+      "exit_code": 0
+    },
+    "focused": {
+      "path": "/tmp/gg05-presentation-focused.log",
+      "sha256": "8048d174630cadfdded8a2cf1306be8a9863bfc94b79583af22b65141d004627",
+      "exit_code": 0
+    },
+    "native_build": {
+      "path": "/tmp/gg05-presentation-native-build.log",
+      "sha256": "90643108e4da3000cbd500313ee1fe353af94113d226695731a2a5a9dc87eaee",
+      "exit_code": 0
+    },
+    "reference": {
+      "path": "/tmp/gg05-colorbar-presentation-reference.log",
+      "sha256": "050dc5d8d8ef4e6dca5a1d9ec48c36f4e5f024e3a00b3fa8c6857148e72a72d7",
+      "exit_code": 0
+    }
+  },
+  "hosts": {
+    "states": 1352,
+    "publication_files": 435,
+    "comparison": "exact Python/WASM parsed states; byte-identical corresponding Rust/Python/WASM publication files",
+    "modes": {
+      "sampling-comparison.json": {
+        "states": 432,
+        "publication_files": 108,
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-presentation/sampling-comparison.json",
+        "sha256": "547d1d9a117cf60884a89e5b1a9f7e73fe8a5485402ff83c94aaa0559c5b486f"
+      },
+      "presentation-comparison.json": {
+        "states": 512,
+        "publication_files": 120,
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-presentation/presentation-comparison.json",
+        "sha256": "d5f3ca226db121223b9781afe9ffe0db8720a7a1446c0bcd0a03eaaa4140f560"
+      },
+      "constant-comparison.json": {
+        "states": 48,
+        "publication_files": 36,
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-presentation/constant-comparison.json",
+        "sha256": "47fa676837364fb42d7324b0a3f06e2ca26044c4b2630814305cc0fe22829ca3"
+      },
+      "comparison.json": {
+        "states": 108,
+        "publication_files": 27,
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-presentation/comparison.json",
+        "sha256": "5782cfb3b267a3ce33dc986c6f26596feb40c6cbef20f05691845d6c9aa5530f"
+      },
+      "orientation-comparison.json": {
+        "states": 192,
+        "publication_files": 144,
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-presentation/orientation-comparison.json",
+        "sha256": "d4570791f366f3a277b8b7b6b2e6e7ac96f7752ff31398e328f87347f907c118"
+      },
+      "demand-comparison.json": {
+        "states": 60,
+        "publication_files": 0,
+        "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-presentation/demand-comparison.json",
+        "sha256": "411d32d578c060d7b0728755f0b55a09d7617c70dcb74d5a6ea0413ce3e85c58"
+      }
+    }
+  },
+  "inspection": {
+    "status": "inspected",
+    "publication_files": 264,
+    "review_pages": {
+      "orientation-inspection/review-1.png": "b4cc2616a3bc37e3842af576ecba6e55677b7d51ea19aebdccc2687f1fec36bd",
+      "orientation-inspection/review-10.png": "e345fa6de5324822c0bb6f0c19f79ef677dfb5acd74988f4265843a2deb0e5b9",
+      "orientation-inspection/review-11.png": "33734e41f6aff43d93362004d832ec4724c99726a5a16434d783e37e52b7e30c",
+      "orientation-inspection/review-12.png": "e521ca597274255a837c8d2a78fc7a1cae499ff780510935322d879594df89a1",
+      "orientation-inspection/review-13.png": "fcfef2f7a84f19380275a9813d125a6ef3fe1deab697ea7b00f78946bf7812cd",
+      "orientation-inspection/review-14.png": "df84db4a41422cbf355284a2d9a08bcfb3dca85f653645682a006477adf0f06e",
+      "orientation-inspection/review-15.png": "a0ddf0532cf86053886c3b682a77af03a259295658d3de6c1b6a6a8f05a7184c",
+      "orientation-inspection/review-16.png": "65efdadffcc30c82dcac1480683d646e3d6cccc604fb6b66b7560046d061bc40",
+      "orientation-inspection/review-2.png": "cc3932457f94064d837cf1909533626e28520814a7a7d3705e9e3151843564f4",
+      "orientation-inspection/review-3.png": "a27a78d72d8ab30346c2964f6569951d7d742cacc261e4b140aefb38da8d7422",
+      "orientation-inspection/review-4.png": "a1ee0d8f2bdc0db75e9457779431b78c5709b98bdb2e3cc2dacc2f7e6b7b717b",
+      "orientation-inspection/review-5.png": "bb78294ef28cac428b73f1b076a498b68caae9bc752328b10bec9f3ad453cd23",
+      "orientation-inspection/review-6.png": "46e48486265d8d7e2a01822fff56ba3d84fed9f7f85967ef32fbb72fe8e132d0",
+      "orientation-inspection/review-7.png": "04397dcebfa42dd10c1ab0a5573f7b3a2ec130fc24014e53bdf8ae38cf535429",
+      "orientation-inspection/review-8.png": "866469caac125fd67b838b825d60c7aea086f5b49df0ddcf7e20e50c1000fbbd",
+      "orientation-inspection/review-9.png": "1f846b8a567f3b5f27965af3e0dd5930e655727e54e292c62fd7b61ff333774e",
+      "presentation-inspection/review-1.png": "947efc89088d6811970a5a790505dd7391346aef4a705521631324f6d382b86d",
+      "presentation-inspection/review-10.png": "0f3ea7dace60c884cfeef8425a6c110b4fede1e04a3c693b5e8b93ebad1b663e",
+      "presentation-inspection/review-11.png": "a28dec9f15d3f3b65d2104b71bd212b8c2539b7a2d03cce4033e834de08e10ee",
+      "presentation-inspection/review-12.png": "c74d3be7843859812040b7d77ffd7365dbaf0daf69c5225006e3f95ad01792cd",
+      "presentation-inspection/review-13.png": "48b30d4ff5b460d516f76bf470d0018bc1a5dfdf0ac49d5e152290b513794c81",
+      "presentation-inspection/review-14.png": "908407342d0e44507a3d90a4e43eb4ccad8631414865b6bf652330d2e70b2b83",
+      "presentation-inspection/review-2.png": "7cf98a4124b0d367abf491b986d2697f2c18323c1284179caa51933b0d7117d7",
+      "presentation-inspection/review-3.png": "85b3c10a787b23061a1983824042a13ff8e123e234be1c8889d4244f54d59c9f",
+      "presentation-inspection/review-4.png": "4b3749ffc3cfe58bbb5a0f612957af8c084957ed16f2e1764bdcd2e12735e154",
+      "presentation-inspection/review-5.png": "51aab47d811c67c003f22769596003c4786ab3a59f4a6c5e685a724b699ac439",
+      "presentation-inspection/review-6.png": "43c4b9a0d5cccb897643baf9a53a078edb16382746aa32b0bc32a60e075af2f4",
+      "presentation-inspection/review-7.png": "21c48ce31bf00ce18a6270ae8d32e1e8369d2840e1bf9fc9a1b1cbd78e7f5e46",
+      "presentation-inspection/review-8.png": "5fe760b5dc6d6002397a736e7bc2b702c3cc715aa33059c608746c7b66b2bc53",
+      "presentation-inspection/review-9.png": "a23030108bef17299536fb41087dc32fa0a361c10ff3539db8356354aac7bde3"
+    },
+    "native": {
+      "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-presentation/native-window.png",
+      "sha256": "eef8e24d450c0e37dfd1b740da7fa42ab6b0d6516fd6765afee77478aae1b563",
+      "charts": 4,
+      "mode": "--presentation"
+    },
+    "observations": [
+      "Horizontal and vertical ramps, reversal, independent labels/ticks and selected endpoint suppression agree across SVG/PDF/PNG.",
+      "One-sample raster keys coincide and labels overlap, matching the source coordinates; subnormal nonfinite keys have no ink.",
+      "Native four-chart window shows correct gradients without atlas bleed; hidden labels retain ticks and suppressed endpoint ticks retain labels."
+    ],
+    "unchanged_previous_publications": 171
+  },
+  "owned_changes_from_sampling": [
+    "docs/implementation-status.md",
+    "crates/chart-export/examples/ggplot_colorbar_layout.rs",
+    "examples/chart-gallery/examples/ggplot_colorbars.rs",
+    "scripts/run_primary_authoring_proofs.py",
+    "scripts/bindings/ggplot_colorbar_layout.cjs",
+    "crates/chart-core/src/layout/legend_colorbar.rs",
+    "crates/chart-core/src/layout/facets.rs",
+    "scripts/bindings/ggplot_colorbar_layout.py",
+    "crates/chart-core/src/scales/mapped.rs",
+    "crates/chart-core/src/scales/ggplot_continuous_guide.rs",
+    "crates/chart-core/src/grammar/definition.rs",
+    "crates/chart-core/src/plot/wire.rs",
+    "crates/chart-core/tests/ggplot_colorbar_layout.rs"
+  ],
+  "limitations": [
+    "Full GG05 and GG05-19 remain open.",
+    "Display modes, alpha, guide composition, stepped/mixed keys, component identity and axis/custom guide contracts remain.",
+    "No new full cumulative bindings or Linux run."
+  ],
+  "next": "Continue colorbar gradient and rectangles display modes in shared core and native/export consumers.",
+  "qualified_source_hashes": {
+    "crates/chart-export/examples/ggplot_colorbar_layout.rs": "6b64dd20385a928a905fb45afa2448088d8dbf895bed2b672e9c9f08c331e26d",
+    "examples/chart-gallery/examples/ggplot_colorbars.rs": "8f824fcb44371845aa40fbba46f8c9d3ff939112c0be1e2afc3e71ff76f722c2",
+    "scripts/run_primary_authoring_proofs.py": "4606e2f4baa1682fac62a040ed39436715ea2a358588cd3a0489cf1c125e752a",
+    "scripts/bindings/ggplot_colorbar_layout.cjs": "0a04f1a00983d4e43652afe6e3d2a86496bb441f971fea1ce073ac86cc8ffe4a",
+    "crates/chart-core/src/layout/legend_colorbar.rs": "2cacc2650abeca619cb2b2c6e0b9bac3b149e76b198d6e70c18b0b529027d195",
+    "crates/chart-core/src/layout/facets.rs": "7baad8b74bf19fbc5e724db46b83a9b02af4e57233418ab16a9d2048f1c3f07d",
+    "scripts/bindings/ggplot_colorbar_layout.py": "e0942d78e213f82fef9422ad0b89baaa57eed40aca79867fe6926bc41878cfb5",
+    "crates/chart-core/src/scales/mapped.rs": "37892029fcd30c1a877b00abc32b1e2bdf325e75e519da773291346034fa0b62",
+    "crates/chart-core/src/scales/ggplot_continuous_guide.rs": "ca33795103ae89531483090257c12f09790f60ba474f0163b1c536560ed30ac4",
+    "crates/chart-core/src/grammar/definition.rs": "6920f165e88e631db36b2a3cfe31fa4cf76b3e0f0097e932c7874597c544b60e",
+    "crates/chart-core/src/plot/wire.rs": "720526d31b6cf546b642163095f5033a541044f50708b2499c541f808063a742",
+    "crates/chart-core/tests/ggplot_colorbar_layout.rs": "7e287e1aae6e5b64314fade4fd925bdab166a5b36795254012bc47ec39d32873",
+    "tools/reference/r/colorbar-presentation.R": "64f0342db59d3b176e90a11c175056a953edc8033002548a4a4ece970255afbc",
+    "fixtures/parity/ggplot2/colorbar-presentation.json": "cf6e08e43831631f3c11cf208346d3d82f9909542b8281a29ec412306c739251"
+  },
+  "source_baseline": {
+    "path": "/private/tmp/finstack-chart-proof-20260914/gg05-colorbar-presentation/source-baseline.json",
+    "sha256": "057f8666778e1c3f2845e31fe358a31052e37c90a0d6daea94c84e6fb8419de8",
+    "scope": "Qualification source snapshot; later ledger wording changes are not production changes."
+  }
+}

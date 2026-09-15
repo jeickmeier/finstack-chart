@@ -1,0 +1,4145 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "gradientn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "stepsn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "distiller",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "colour",
+      "constructor": "viridis_c",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "gradientn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "zero",
+      "args": {
+        "values": [],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "stepsn",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ],
+        "colours": ["red", "white", "blue"]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "invalid 'breaks' argument"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "distiller",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "zero",
+      "args": {
+        "values": []
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "one",
+      "args": {
+        "values": [
+          0
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "identical",
+      "args": {
+        "values": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "all_nan",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "ordinary",
+      "inputs": [
+        -4,
+        -1,
+        0,
+        2,
+        6
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "missing",
+      "inputs": [
+        -2,
+        null,
+        2
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "singleton",
+      "inputs": [
+        1
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    },
+    {
+      "channel": "fill",
+      "constructor": "viridis_c",
+      "configuration": "one_present",
+      "args": {
+        "values": [
+          {
+            "number": "NaN"
+          },
+          0,
+          {
+            "number": "NaN"
+          }
+        ]
+      },
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "error": "need at least two non-NA values to interpolate"
+      }
+    }
+  ]
+}

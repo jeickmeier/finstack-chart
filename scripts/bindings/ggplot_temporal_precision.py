@@ -19,12 +19,12 @@ for index,case in enumerate(json.loads((ROOT/'fixtures/parity/ggplot2/temporal-a
   data=c.Data.columns({'x':c.column([0.,1.,2.,3.],kind='float64'),'y':c.column([0.,1.,2.,3.],kind='float64'),'when':c.timestamps(stamps,'ns','UTC')});owned.append(data)
   mapping=getattr(c.aes().x('x').y('y'),'color' if channel=='colour' else channel)('when')
   plot=c.plot(data).profile('Ggplot2_4_0_3').aes(mapping).layer(c.points().stroke('#000000')).build();owned.append(plot)
-  wire=json.loads(plot.to_json());assert wire['version']==25
+  wire=json.loads(plot.to_json());assert wire['version']==(42 if channel in ('colour','fill') else 45)
   if case['hidden']:hide(wire)
   restored=c.Plot.from_json(json.dumps(wire));owned.append(restored)
   chart=restored.chart();owned.append(chart);layer=chart.semantics()['layers'][0];styles=layer['styles'];assert len(styles)==4
   for style,value in zip(styles,case['values']):
-   if channel=='alpha':assert style['color']['alpha']==math.floor(value*255+0.5),(index,style,value)
+   if channel=='alpha':assert style['color']['alpha']==round(value*255),(index,style,value)
    elif channel in ('size','linewidth'):assert abs(style['radius' if channel=='size' else 'stroke_width']-value)<2e-12,(index,style,value)
    else:
     paint=style['fill' if channel=='fill' else 'color'];assert [paint[k] for k in ('red','green','blue')]==[int(value[i:i+2],16) for i in (1,3,5)],(index,paint,value)

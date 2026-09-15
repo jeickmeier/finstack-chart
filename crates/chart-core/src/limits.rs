@@ -8,7 +8,7 @@ use crate::{ChartResult, Diagnostic, DiagnosticCode};
 pub struct Limits {
     /// Maximum scene items, including decorative items.
     pub max_items: usize,
-    /// Maximum total numeric path commands across a scene.
+    /// Maximum total path commands, glyph/anchor geometry and gradient samples across a scene.
     pub max_path_commands: usize,
     /// Maximum total UTF-8 text bytes across a scene, or one measurement request.
     pub max_text_bytes: usize,

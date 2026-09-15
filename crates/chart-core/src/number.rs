@@ -208,3 +208,19 @@ pub(crate) fn ecma_pow(base: f64, exponent: f64) -> f64 {
         pxfm::f_pow(base, exponent)
     }
 }
+
+/// Preserve the existing finite f64 wire representation while retaining exceptional
+/// values through the canonical Number transport instead of JSON null.
+pub(crate) mod finite_or_special {
+    use serde::{Deserialize, Deserializer, Serialize, Serializer};
+    pub fn serialize<S: Serializer>(value: &f64, serializer: S) -> Result<S::Ok, S::Error> {
+        if value.is_finite() {
+            value.serialize(serializer)
+        } else {
+            super::Number(*value).serialize(serializer)
+        }
+    }
+    pub fn deserialize<'de, D: Deserializer<'de>>(deserializer: D) -> Result<f64, D::Error> {
+        super::Number::deserialize(deserializer).map(|value| value.0)
+    }
+}

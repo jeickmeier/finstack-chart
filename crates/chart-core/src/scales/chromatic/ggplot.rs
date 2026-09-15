@@ -140,11 +140,15 @@ pub fn brewer(id: SchemeId, n: usize, reverse: bool) -> ChartResult<Vec<Option<C
 pub struct Gradient {
     positions: Vec<[f64; 2]>,
     colors: Vec<([f64; 3], f64)>,
+    invalid_positions: bool,
 }
 impl Gradient {
     /// Construct from parsed colors. Explicit positions are sorted, and duplicate
     /// positions use the mean of their original uniform palette coordinates.
     pub fn new(colors: &[ColorValue], stops: Option<&[f64]>) -> ChartResult<Self> {
+        Self::compile(colors, stops, true)
+    }
+    fn compile(colors: &[ColorValue], stops: Option<&[f64]>, strict: bool) -> ChartResult<Self> {
         cardinality(colors.len())?;
         if colors.is_empty() {
             return Err(error(
@@ -178,45 +182,46 @@ impl Gradient {
             })
             .collect::<ChartResult<Vec<_>>>()?;
         let mut positions = Vec::new();
+        let mut invalid_positions = false;
         if let Some(stops) = stops {
-            if stops.len() != colors.len() || !stops.iter().all(|v| v.is_finite()) {
-                return Err(error(
-                    DiagnosticCode::Validation,
-                    "Gradient positions must be finite and match the colors.",
-                ));
-            }
-            let mut pairs = stops
+            cardinality(stops.len())?;
+            let pairs = stops
                 .iter()
                 .enumerate()
-                .map(|(i, x)| [*x, i as f64 / (colors.len() - 1) as f64])
+                // pal_gradient_n remaps against seq(0, 1, length(values)),
+                // independently of the number of color anchors.
+                .map(|(i, x)| [*x, i as f64 / stops.len().saturating_sub(1) as f64])
+                // approxfun removes NA pairs after assigning the original coordinates.
+                .filter(|p| !p[0].is_nan())
                 .collect::<Vec<_>>();
-            pairs.sort_by(|a, b| a[0].total_cmp(&b[0]));
-            let mut begin = 0;
-            while begin < pairs.len() {
-                let end =
-                    begin + 1 + pairs[begin + 1..].partition_point(|p| p[0] == pairs[begin][0]);
-                let mean =
-                    pairs[begin..end].iter().map(|p| p[1]).sum::<f64>() / (end - begin) as f64;
-                positions.push([pairs[begin][0], mean]);
-                begin = end;
-            }
+            positions = crate::scales::ggplot_approx::knots(pairs);
             if positions.len() < 2 {
-                return Err(error(
-                    DiagnosticCode::Validation,
-                    "Explicit gradient positions require two distinct values.",
-                ));
+                if strict {
+                    return Err(Self::position_error());
+                }
+                invalid_positions = true;
             }
         }
         let colors = colors
             .iter()
             .map(|c| (d65::lab(c.rgb()), c.opacity()))
             .collect();
-        Ok(Self { positions, colors })
+        Ok(Self {
+            positions,
+            colors,
+            invalid_positions,
+        })
+    }
+    fn position_error() -> crate::Diagnostic {
+        error(
+            DiagnosticCode::Validation,
+            "Explicit gradient positions require two distinct nonmissing values.",
+        )
     }
     /// Sample a normalized value. Missing/outside positions are missing; a
     /// single-color gradient without explicit positions is constant for finite input.
     pub fn sample(&self, t: f64) -> Option<Color> {
-        if t.is_nan() {
+        if self.invalid_positions || t.is_nan() {
             return None;
         }
         let t = if self.positions.is_empty() {
@@ -240,6 +245,9 @@ impl Gradient {
                 a + (b - a) * ((t - x) / (y - x))
             }
         };
+        if t.is_nan() {
+            return None;
+        }
         let (lab, alpha) = if self.colors.len() == 1 {
             self.colors[0]
         } else {
@@ -256,7 +264,9 @@ impl Gradient {
                 aa + (ba - aa) * f,
             )
         };
-        Some(ColorValue::from(d65::from_lab(lab).opacity(alpha)).to_paint())
+        let mut paint = ColorValue::from(d65::from_lab(lab).opacity(alpha)).to_paint();
+        paint.alpha = d65::alpha_byte(alpha);
+        Some(paint)
     }
 }
 
@@ -375,12 +385,21 @@ impl ViridisPalette {
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub enum PaletteSpec {
+    /// Lab interpolation through a fixed count palette, as used by distiller/viridis_c.
+    CountGradient {
+        /// Existing count palette owner, evaluated once at compilation.
+        palette: Box<crate::scales::GgplotDiscretePalette>,
+        /// Number of anchor colors; reference constructors use seven or six.
+        count: usize,
+        /// Independent remapping positions, including reference NA and infinities.
+        values: Option<Vec<crate::interpolate::Number>>,
+    },
     /// Piecewise Lab interpolation with optional uneven positions.
     Gradient {
         /// Colors retain hidden RGB channels even when alpha is zero.
         colors: Vec<crate::color::Paint>,
-        /// Positions of the colors; omitted uses evenly spaced stops.
-        values: Option<Vec<f64>>,
+        /// Independent remapping positions; omitted samples the color ramp directly.
+        values: Option<Vec<crate::interpolate::Number>>,
     },
     /// Continuous sampling of the viridisLite spline over an interval.
     Viridis {
@@ -415,9 +434,42 @@ impl PaletteRamp {
     /// Validate and compile the recipe once, without retaining external resources.
     pub fn new(spec: &PaletteSpec) -> ChartResult<Self> {
         let kernel = match spec {
-            PaletteSpec::Gradient { colors, values } => PaletteKernel::Gradient(Gradient::new(
+            PaletteSpec::CountGradient {
+                palette,
+                count,
+                values,
+            } => {
+                cardinality(*count)?;
+                let colors = palette
+                    .count_values(*count)?
+                    .into_iter()
+                    .map(|value| match value {
+                        crate::interpolate::Value::Color(color) => Ok(color),
+                        crate::interpolate::Value::Text(text) => {
+                            crate::color::parse_r(&text).map(|p| p.value())
+                        }
+                        _ => Err(error(
+                            DiagnosticCode::Validation,
+                            "A count gradient requires paint anchors.",
+                        )),
+                    })
+                    .collect::<ChartResult<Vec<_>>>()?;
+                PaletteKernel::Gradient(Gradient::compile(
+                    &colors,
+                    values
+                        .as_ref()
+                        .map(|v| v.iter().map(|n| n.0).collect::<Vec<_>>())
+                        .as_deref(),
+                    false,
+                )?)
+            }
+            PaletteSpec::Gradient { colors, values } => PaletteKernel::Gradient(Gradient::compile(
                 &colors.iter().map(|c| c.value()).collect::<Vec<_>>(),
-                values.as_deref(),
+                values
+                    .as_ref()
+                    .map(|v| v.iter().map(|n| n.0).collect::<Vec<_>>())
+                    .as_deref(),
+                false,
             )?),
             PaletteSpec::Viridis {
                 option,
@@ -446,6 +498,7 @@ impl PaletteRamp {
     /// Sample a normalized value; nonfinite values and OOB gradients are missing.
     pub fn sample(&self, t: f64) -> ChartResult<Option<Color>> {
         match &self.kernel {
+            PaletteKernel::Gradient(g) if g.invalid_positions => Err(Gradient::position_error()),
             PaletteKernel::Gradient(g) => Ok(g.sample(t)),
             PaletteKernel::Viridis {
                 palette,

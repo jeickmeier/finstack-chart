@@ -81,7 +81,7 @@ pub(crate) fn validate_filters(filters: &[SourceFilter], limits: CompileLimits) 
     Ok(())
 }
 pub(crate) fn numeric_space(data: &DatasetSnapshot, value: &Numeric) -> ChartResult<ValueSpace> {
-    if let Numeric::Scaled { input, scale } = value {
+    if let Numeric::Scaled { input, scale, .. } = value {
         let mut cursor = value;
         let mut depth = 0;
         while let Numeric::Scaled { input, .. } = cursor {
@@ -228,19 +228,26 @@ fn field_error(id: FieldId, message: &str) -> Diagnostic {
     e.context.field = Some(id);
     e
 }
-fn timestamp_value(row: RowView<'_>, value: &Numeric) -> Option<(i64, i64)> {
+pub(super) fn timestamp_value(row: RowView<'_>, value: &Numeric) -> Option<(i64, i64)> {
     match value {
         Numeric::Timestamp { field, origin } => match row.value(*field)? {
             ValueRef::Timestamp(value) => Some((value, *origin)),
             _ => None,
         },
-        Numeric::Scaled { input, scale } => {
+        Numeric::Scaled { input, scale, .. } => {
             let time = scale.timestamp.as_ref()?;
             let (value, origin) = timestamp_value(row, input)?;
             if time.origin != origin {
                 return None;
             }
-            Some((time.project(value, scale.outside)?, origin))
+            Some((
+                if scale.function_limits.is_some() {
+                    value
+                } else {
+                    time.project(value, scale.outside)?
+                },
+                origin,
+            ))
         }
         _ => None,
     }
@@ -265,16 +272,25 @@ pub(crate) fn raw_number(row: RowView<'_>, value: &Numeric) -> Option<f64> {
             )
             .ok()
             .and_then(|v| v[0].number()),
+        Numeric::Scaled {
+            samples: Some(samples),
+            ..
+        } => samples.get(&row.key()).map(|v| v.0).filter(|v| !v.is_nan()),
         Numeric::Scaled { scale, .. } if scale.timestamp.is_some() => timestamp_value(row, value)
             .and_then(|(value, origin)| {
                 let relative = i128::from(value) - i128::from(origin);
-                (relative.unsigned_abs() <= 1_u128 << 53).then_some(relative as f64)
+                let value = (relative.unsigned_abs() <= 1_u128 << 53).then_some(relative as f64)?;
+                if scale.function_limits.is_some() {
+                    scale.project(value)
+                } else {
+                    Some(value)
+                }
             }),
-        Numeric::Scaled { input, scale } => {
+        Numeric::Scaled { input, scale, .. } => {
             if let Some(bins) = &scale.binned {
                 bins.project_source(raw_number(row, input))
             } else {
-                number(row, input).and_then(|v| scale.project(v))
+                scale.project_optional(raw_number(row, input))
             }
         }
         Numeric::Category(_) => None,

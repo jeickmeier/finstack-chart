@@ -1,0 +1,317 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "channel": "colour",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725FF",
+          "#440154FF",
+          "#21908CFF",
+          "#440154FF"
+        ],
+        "point_count": 4
+      }
+    },
+    {
+      "channel": "colour",
+      "theme_mode": "absent",
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725FF",
+          null,
+          "#21908CFF",
+          "#440154FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "theme_mode": "absent",
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "theme_mode": "supplied",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725FF",
+          "#440154FF",
+          "#21908CFF",
+          "#440154FF"
+        ],
+        "point_count": 4
+      }
+    },
+    {
+      "channel": "colour",
+      "theme_mode": "supplied",
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "colour",
+      "theme_mode": "supplied",
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725FF",
+          null,
+          "#21908CFF",
+          "#440154FF"
+        ],
+        "point_count": 3
+      }
+    },
+    {
+      "channel": "colour",
+      "theme_mode": "supplied",
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "colour",
+      "theme_mode": "supplied",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "theme_mode": "absent",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725FF",
+          "#440154FF",
+          "#21908CFF",
+          "#440154FF"
+        ],
+        "point_count": 4
+      }
+    },
+    {
+      "channel": "fill",
+      "theme_mode": "absent",
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "theme_mode": "absent",
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725FF",
+          null,
+          "#21908CFF",
+          "#440154FF"
+        ],
+        "point_count": 4
+      }
+    },
+    {
+      "channel": "fill",
+      "theme_mode": "absent",
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "theme_mode": "absent",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    },
+    {
+      "channel": "fill",
+      "theme_mode": "supplied",
+      "population": "ordinary",
+      "inputs": [
+        "c",
+        "a",
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725FF",
+          "#440154FF",
+          "#21908CFF",
+          "#440154FF"
+        ],
+        "point_count": 4
+      }
+    },
+    {
+      "channel": "fill",
+      "theme_mode": "supplied",
+      "population": "singleton",
+      "inputs": [
+        "b"
+      ],
+      "result": {
+        "mapped": [
+          "#440154FF"
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "theme_mode": "supplied",
+      "population": "missing",
+      "inputs": [
+        "c",
+        null,
+        "b",
+        "a"
+      ],
+      "result": {
+        "mapped": [
+          "#FDE725FF",
+          null,
+          "#21908CFF",
+          "#440154FF"
+        ],
+        "point_count": 4
+      }
+    },
+    {
+      "channel": "fill",
+      "theme_mode": "supplied",
+      "population": "all_missing",
+      "inputs": [
+        null
+      ],
+      "result": {
+        "mapped": [
+          null
+        ],
+        "point_count": 1
+      }
+    },
+    {
+      "channel": "fill",
+      "theme_mode": "supplied",
+      "population": "empty",
+      "inputs": [],
+      "result": {
+        "mapped": [],
+        "point_count": 0
+      }
+    }
+  ]
+}

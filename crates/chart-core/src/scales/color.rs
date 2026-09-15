@@ -38,6 +38,24 @@ pub enum ColorScale<P = Color> {
         missing: P,
     },
 }
+/// One scale-space sample of a continuous color guide's actual mapping.
+#[derive(serde::Serialize, Clone, Debug, PartialEq)]
+pub struct ColorGuideSample {
+    /// Transformed value used by the reference mapping.
+    pub value: crate::interpolate::Number,
+    /// Resolved palette output at this sample.
+    pub color: Color,
+}
+/// One directed transformed interval of a stepped color guide.
+#[derive(serde::Serialize, Clone, Debug, PartialEq)]
+pub struct ColorGuideStep {
+    /// First boundary in guide order, before destination placement.
+    pub start: crate::interpolate::Number,
+    /// Second boundary in guide order.
+    pub end: crate::interpolate::Number,
+    /// Resolved palette output for this interval.
+    pub color: Color,
+}
 /// Semantic legend metadata, independent of its eventual destination layout.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub struct ColorLegend {
@@ -50,6 +68,15 @@ pub struct ColorLegend {
     /// Reference numeric break candidates and labels before guide composition.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub numeric_breaks: Vec<super::GgplotContinuousGuideEntry>,
+    /// Default reference colorbar samples, retained for guide composition.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub colorbar: Vec<ColorGuideSample>,
+    /// Prepared stepped guide cells; colors share the scale's interval palette batch.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub colorsteps: Vec<ColorGuideStep>,
+    /// Ordinal step-key positions aligned with numeric breaks; absent keys are censored.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub colorstep_positions: Vec<Option<crate::interpolate::Number>>,
     /// Whether colors interpolate between stops.
     pub continuous: bool,
     /// Missing-value swatch.
@@ -238,6 +265,9 @@ impl ColorScale {
             missing,
             entries,
             numeric_breaks: vec![],
+            colorbar: vec![],
+            colorsteps: vec![],
+            colorstep_positions: vec![],
             intervals: vec![],
             midpoint: None,
             mapping: None,
@@ -522,6 +552,14 @@ impl ColorScale<crate::color::Paint> {
     }
 }
 impl PreparedColorScale {
+    pub(crate) fn palette_paints(
+        &self,
+        inputs: &[Option<f64>],
+    ) -> ChartResult<Option<super::ggplot_palette::PaletteBatch<Option<crate::color::Paint>>>> {
+        self.mapped
+            .as_ref()
+            .map_or(Ok(None), |scale| scale.palette_paints(inputs, self.missing))
+    }
     pub(crate) fn missing_paint(&self, input: Option<f64>, key: Option<&ScaleKey>) -> bool {
         self.mapped
             .as_ref()

@@ -48,6 +48,9 @@ pub(super) fn encodings(layer: &Layer) -> impl Iterator<Item = &ColorEncoding> {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ColorEncoding {
+    /// Reuse the ggplot default scale for this aesthetic when authoring later layers.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub automatic: bool,
     /// Human-readable legend title; absent uses a generic color label, empty omits the title.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub title: Option<String>,
@@ -137,6 +140,7 @@ pub(super) fn preflight(
 }
 
 pub(super) struct ColorContext<'a> {
+    pub layer: crate::LayerId,
     pub limits: CompileLimits,
     pub registry: &'a ExtensionRegistry,
     pub shared: Option<&'a [String]>,
@@ -151,6 +155,7 @@ pub(super) fn apply(
     context: ColorContext<'_>,
 ) -> ChartResult<Option<ColorLegend>> {
     let ColorContext {
+        layer,
         limits,
         registry,
         shared,
@@ -222,9 +227,29 @@ pub(super) fn apply(
     } else {
         None
     };
-    let suppress_missing = matches!(scale,ColorScale::Mapped{scale,..} if matches!(scale.ggplot.as_deref(),Some(crate::scales::GgplotScalePolicy::Discrete{na_translate:false,..})) || matches!(scale.function, crate::scales::ScaleFunctionSpec::GgplotDiscreteIdentity(_)));
+    let mut legend = prepared_scale.legend(encoding.id, &labels)?;
+    let source = match scale {
+        ColorScale::Mapped { scale, .. } => layer_batch(scale, samples, layer, &encoding.input),
+        _ => None,
+    };
+    let batch = sample_layer_batch(source, table, rows, &values, |inputs| {
+        prepared_scale.palette_paints(inputs)
+    })?;
+    let missing_batch_paint = crate::scene::Color {
+        red: 0,
+        green: 0,
+        blue: 0,
+        alpha: 0,
+    }
+    .into();
+    let suppress_missing = matches!(scale,ColorScale::Mapped{scale,..} if scale.preserves_palette_missing() || scale.missing_paint_is_na || matches!(scale.ggplot.as_deref(),Some(crate::scales::GgplotScalePolicy::Discrete{na_translate:false,..})) || matches!(scale.function, crate::scales::ScaleFunctionSpec::GgplotDiscreteIdentity(_)));
     for (i, row) in rows.iter_mut().enumerate() {
-        let mut paint = Some(if let Some(catalog) = &categorical_map {
+        if batch.as_ref().is_some_and(|batch| batch.values.is_none()) {
+            continue;
+        }
+        let mut paint = Some(if let Some(batch) = &batch {
+            batch.values.as_ref().unwrap()[batch.indices[i]].unwrap_or(missing_batch_paint)
+        } else if let Some(catalog) = &categorical_map {
             categories[i]
                 .as_ref()
                 .and_then(|label| catalog.map(label))
@@ -252,7 +277,11 @@ pub(super) fn apply(
                     .as_ref()
                     .map(|s| crate::scales::ScaleKey::Text(s.clone()))
             });
-            if prepared_scale.missing_paint(values[i], key.as_ref()) {
+            let is_missing = batch.as_ref().map_or_else(
+                || prepared_scale.missing_paint(values[i], key.as_ref()),
+                |batch| batch.values.as_ref().unwrap()[batch.indices[i]].is_none(),
+            );
+            if is_missing {
                 let aesthetic = match channel {
                     None => AfterScaleAesthetic::Color,
                     Some(PaintAesthetic::Fill) => AfterScaleAesthetic::Fill,
@@ -280,8 +309,7 @@ pub(super) fn apply(
     {
         return Ok(None);
     }
-    let mut legend = prepared_scale.legend(encoding.id, &labels)?;
-    if legend.entries.len() > limits.max_groups {
+    if legend.entries.len().saturating_add(legend.colorbar.len()) > limits.max_groups {
         return Err(error(
             DiagnosticCode::ResourceLimit,
             "Prepared color guide exceeds the category budget.",
@@ -567,6 +595,7 @@ pub(super) fn numeric_population(
     input: &ColorInput,
     data: &DatasetSnapshot,
     table: &PreparedTable,
+    reference: bool,
 ) -> ChartResult<Vec<Option<crate::interpolate::Number>>> {
     use crate::interpolate::Number;
     match (input, &table.rows) {
@@ -579,7 +608,14 @@ pub(super) fn numeric_population(
             let index: BTreeMap<_, _> = data.rows().map(|r| (r.key(), r)).collect();
             Ok(rows
                 .iter()
-                .map(|r| super::stats::number(index[&r.key], value).map(Number))
+                .map(|r| {
+                    if reference {
+                        super::stats::raw_number(index[&r.key], value)
+                    } else {
+                        super::stats::number(index[&r.key], value)
+                    }
+                    .map(Number)
+                })
                 .collect())
         }
         (ColorInput::Statistical(field), PreparedRows::Statistical(rows)) => {
@@ -620,7 +656,7 @@ fn key_population(
             .collect());
     }
     if matches!(input, ColorInput::Numeric(_) | ColorInput::Statistical(_)) {
-        return Ok(numeric_population(input, data, table)?
+        return Ok(numeric_population(input, data, table, include_missing)?
             .into_iter()
             .flatten()
             .map(ScaleKey::Number)
@@ -748,17 +784,34 @@ pub(super) fn shared_samples<'a>(
                 }
                 continue;
             }
-            let values = numeric_population(input, source.dataset(table.input.dataset)?, table)?;
+            let values = numeric_population(
+                input,
+                source.dataset(table.input.dataset)?,
+                table,
+                scale.has_ggplot(),
+            )?;
             let population = samples
                 .entry(id)
-                .or_insert_with(|| ScalePopulation::Numbers(vec![]));
-            let ScalePopulation::Numbers(population) = population else {
+                .or_insert_with(|| ScalePopulation::Numbers {
+                    values: vec![],
+                    batches: vec![],
+                    sources: vec![],
+                });
+            let ScalePopulation::Numbers {
+                values: population,
+                batches,
+                sources,
+            } = population
+            else {
                 return Err(error(
                     DiagnosticCode::SchemaConflict,
                     "Shared scale population kinds disagree.",
                 ));
             };
-            if population.len().saturating_add(values.len())
+            if population
+                .len()
+                .saturating_add(sources.iter().map(|s| s.rows.len()).sum::<usize>())
+                .saturating_add(values.len())
                 > limits.max_prepared_rows.min(crate::interpolate::MAX_VALUES)
             {
                 return Err(error(
@@ -766,7 +819,75 @@ pub(super) fn shared_samples<'a>(
                     "Shared quantile population exceeds its value budget.",
                 ));
             }
-            population.extend(values);
+            if scale.ggplot_transform().is_some_and(|t| !t.is_pointwise()) {
+                let index = sources
+                    .iter()
+                    .position(|batch| batch.layer == layer.id && batch.input == *input)
+                    .unwrap_or_else(|| {
+                        sources.push(crate::scales::ScaleLayerBatch {
+                            layer: layer.id,
+                            input: input.clone(),
+                            rows: BTreeMap::new(),
+                            generated_panels: BTreeSet::new(),
+                        });
+                        sources.len() - 1
+                    });
+                if let PreparedRows::Source(rows) = &table.rows {
+                    let order = source
+                        .dataset(table.input.dataset)?
+                        .rows()
+                        .enumerate()
+                        .map(|(i, row)| (row.key(), i))
+                        .collect::<BTreeMap<_, _>>();
+                    for (row, value) in rows.iter().zip(&values) {
+                        sources[index].rows.insert(
+                            order[&row.key],
+                            (crate::scales::ScaleRowIdentity::Source(row.key), *value),
+                        );
+                    }
+                } else {
+                    let panel = table.population_operation().and_then(|op| op.panel.clone());
+                    if sources[index].generated_panels.insert(panel.clone()) {
+                        let offset = sources[index].rows.len();
+                        for (ordinal, value) in values.iter().enumerate() {
+                            sources[index].rows.insert(
+                                offset + ordinal,
+                                (
+                                    crate::scales::ScaleRowIdentity::Generated(
+                                        panel.clone(),
+                                        ordinal as u64,
+                                    ),
+                                    *value,
+                                ),
+                            );
+                        }
+                    }
+                }
+            } else {
+                batches.push(values.len());
+                population.extend(values);
+            }
+        }
+    }
+    for population in samples.values_mut() {
+        if let ScalePopulation::Numbers {
+            values,
+            batches,
+            sources,
+        } = population
+        {
+            for source in sources {
+                if values.len().saturating_add(source.rows.len())
+                    > limits.max_prepared_rows.min(crate::interpolate::MAX_VALUES)
+                {
+                    return Err(error(
+                        DiagnosticCode::ResourceLimit,
+                        "Shared numeric population exceeds its value budget.",
+                    ));
+                }
+                batches.push(source.rows.len());
+                values.extend(source.rows.values().map(|(_, value)| *value));
+            }
         }
     }
     Ok(samples)
@@ -779,4 +900,78 @@ fn validate_key(data: &DatasetSnapshot, field: FieldId) -> ChartResult<()> {
             "Mapped scale key field is absent.",
         )
     })
+}
+
+/// Retain the original layer vector when a transform couples observations across panels.
+pub(super) fn layer_batch<'a>(
+    scale: &crate::scales::MappedScaleSpec,
+    samples: Option<&'a crate::scales::ScalePopulation>,
+    layer: crate::LayerId,
+    input: &ColorInput,
+) -> Option<&'a crate::scales::ScaleLayerBatch> {
+    if !scale.ggplot_transform().is_some_and(|t| !t.is_pointwise()) {
+        return None;
+    }
+    match samples {
+        Some(crate::scales::ScalePopulation::Numbers { sources, .. }) => sources
+            .iter()
+            .find(|batch| batch.layer == layer && &batch.input == input),
+        _ => None,
+    }
+}
+/// Sample through the common scale engine, then select the current panel's rows.
+pub(super) fn sample_layer_batch<T>(
+    source: Option<&crate::scales::ScaleLayerBatch>,
+    table: &PreparedTable,
+    rows: &[EncodedRow],
+    values: &[Option<f64>],
+    sample: impl FnOnce(&[Option<f64>]) -> ChartResult<Option<crate::scales::PaletteBatch<T>>>,
+) -> ChartResult<Option<crate::scales::PaletteBatch<T>>> {
+    let Some(source) = source else {
+        return sample(values)?
+            .map(|batch| batch.for_rows(rows.len()))
+            .transpose();
+    };
+    let inputs = source
+        .rows
+        .values()
+        .map(|(_, value)| value.map(|v| v.0))
+        .collect::<Vec<_>>();
+    let mut batch = sample(&inputs)?
+        .map(|batch| batch.for_rows(inputs.len()))
+        .transpose()?;
+    if let Some(batch) = &mut batch
+        && batch.values.is_some()
+    {
+        let positions = source
+            .rows
+            .values()
+            .enumerate()
+            .map(|(i, (key, _))| (key.clone(), i))
+            .collect::<BTreeMap<_, _>>();
+        batch.indices = rows
+            .iter()
+            .map(|row| {
+                let identity = row
+                    .key
+                    .map(crate::scales::ScaleRowIdentity::Source)
+                    .unwrap_or_else(|| {
+                        crate::scales::ScaleRowIdentity::Generated(
+                            table.population_operation().and_then(|op| op.panel.clone()),
+                            row.ordinal,
+                        )
+                    });
+                positions
+                    .get(&identity)
+                    .map(|i| batch.indices[*i])
+                    .ok_or_else(|| {
+                        error(
+                            DiagnosticCode::SchemaConflict,
+                            "Transformed aesthetic row is absent from its population.",
+                        )
+                    })
+            })
+            .collect::<ChartResult<Vec<_>>>()?;
+    }
+    Ok(batch)
 }

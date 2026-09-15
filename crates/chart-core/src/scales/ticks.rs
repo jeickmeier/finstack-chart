@@ -61,14 +61,14 @@ fn budget_error() -> crate::Diagnostic {
 impl super::NumericFamily {
     /// Tick candidates use the first/last data endpoints; interior knots do not change the grid.
     pub fn ticks(
-        self,
+        &self,
         domain: &[crate::interpolate::Number],
         count: f64,
         budget: usize,
     ) -> ChartResult<Vec<f64>> {
         let start = domain.first().map_or(f64::NAN, |n| n.0);
         let stop = domain.last().map_or(f64::NAN, |n| n.0);
-        if let Self::Log { base } = self {
+        if let Self::Log { base } = *self {
             log_tick_candidates(start, stop, base, count, budget)
         } else {
             tick_candidates(start, stop, count, budget)
@@ -76,7 +76,7 @@ impl super::NumericFamily {
     }
     /// Tick labels are prepared separately from projection or collision thinning.
     pub fn tick_format(
-        self,
+        &self,
         domain: &[crate::interpolate::Number],
         count: f64,
         specifier: Option<&str>,
@@ -84,7 +84,7 @@ impl super::NumericFamily {
     ) -> ChartResult<NumericFormatter> {
         let start = domain.first().map_or(f64::NAN, |n| n.0);
         let stop = domain.last().map_or(f64::NAN, |n| n.0);
-        if let Self::Log { base } = self {
+        if let Self::Log { base } = *self {
             log_tick_format(start, stop, base, count, specifier, locale)
         } else {
             crate::typography::tick_format(start, stop, count, specifier, locale)

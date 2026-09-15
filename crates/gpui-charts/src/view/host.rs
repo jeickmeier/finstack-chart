@@ -339,6 +339,7 @@ fn anchor_description(anchor: &chart_core::composition::Anchor) -> String {
     let value = |v: &ScaleValue| match v {
         ScaleValue::Number(v) => v.to_string(),
         ScaleValue::Category(v) => v.clone(),
+        ScaleValue::MissingCategory => "Missing category".into(),
         ScaleValue::Timestamp { value, unit } => format!("{value} {unit:?}"),
     };
     match anchor {

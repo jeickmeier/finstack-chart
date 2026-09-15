@@ -355,3 +355,55 @@ fn repeated_frozen_paints_preserve_scene_and_capture_policy_after_live_commit() 
         serde_json::to_value(&policy).unwrap()
     );
 }
+
+#[test]
+fn fully_clipped_points_skip_backend_precision_but_partial_points_remain() {
+    let data = Data::columns()
+        .column("x", [1e12, 0.5, -0.001])
+        .column("y", [1.; 3])
+        .build()
+        .unwrap();
+    let p = plot(data)
+        .aes(aes().x("x").y("y"))
+        .layer(points())
+        .x_axis(x_axis().scale(scale_linear().domain(0., 1.)))
+        .y_axis(y_axis().scale(scale_linear().domain(0., 2.)))
+        .build()
+        .unwrap();
+    let output = output();
+    let snapshot = output
+        .request(&p, export_options(PageSize::points(640., 360.).unwrap()))
+        .unwrap()
+        .prepare()
+        .unwrap();
+    assert_eq!(
+        snapshot
+            .scene()
+            .items()
+            .iter()
+            .filter(|i| i.layer.is_some()
+                && matches!(i.primitive, chart_core::scene::Primitive::Point { .. }))
+            .count(),
+        3
+    );
+    let svg = String::from_utf8(snapshot.export(Format::Svg).unwrap().bytes).unwrap();
+    assert_eq!(
+        svg.matches("<circle").count(),
+        2,
+        "the partially clipped point must remain"
+    );
+    assert!(
+        snapshot
+            .export(Format::Pdf)
+            .unwrap()
+            .bytes
+            .starts_with(b"%PDF-")
+    );
+    assert!(
+        snapshot
+            .export(Format::Png)
+            .unwrap()
+            .bytes
+            .starts_with(b"\x89PNG\r\n\x1a\n")
+    );
+}

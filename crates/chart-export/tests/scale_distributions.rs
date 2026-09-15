@@ -129,8 +129,18 @@ fn data(name: &str, values: [f64; 2]) -> Data {
 }
 fn quantile_plot(a: Data, b: Data) -> Plot {
     let scale = MappedScaleSpec {
+        colorbar_options: None,
+        palette_theme_aesthetics: vec![],
+        oob_function: None,
+        rescaler_function: None,
+        palette_fallback_indices: vec![],
+        missing_paint_is_na: false,
+        palette_function: None,
         resolved_numeric_limits: None,
+        resolved_discrete_limits_null: false,
+        trained_transformed_bounds: None,
         limits_function: None,
+        breaks_function: None,
         guide: None,
         ggplot: None,
         catalog: None,
@@ -235,8 +245,18 @@ fn corrected_shared_quantile_population_matches_fresh_batch_and_ignores_zoom() {
 #[test]
 fn post_stat_training_and_exact_integer_threshold_keys_reach_the_chart() {
     let quantile = |range| MappedScaleSpec {
+        colorbar_options: None,
+        palette_theme_aesthetics: vec![],
+        oob_function: None,
+        rescaler_function: None,
+        palette_fallback_indices: vec![],
+        missing_paint_is_na: false,
+        palette_function: None,
         resolved_numeric_limits: None,
+        resolved_discrete_limits_null: false,
+        trained_transformed_bounds: None,
         limits_function: None,
+        breaks_function: None,
         guide: None,
         ggplot: None,
         catalog: None,

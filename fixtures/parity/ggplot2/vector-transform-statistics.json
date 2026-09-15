@@ -1,0 +1,177 @@
+{
+  "reference": "ggplot2 4.0.3 / scales 1.4.0 / R 4.6.1",
+  "cases": [
+    {
+      "family": "cardinality",
+      "composed": false,
+      "faceted": false,
+      "result": {
+        "panels": {
+          "1": {
+            "x": [
+              1,
+              2,
+              3
+            ],
+            "y": [
+              5,
+              4,
+              6
+            ]
+          }
+        }
+      }
+    },
+    {
+      "family": "cardinality",
+      "composed": false,
+      "faceted": true,
+      "result": {
+        "panels": {
+          "1": {
+            "x": [
+              1,
+              2,
+              3
+            ],
+            "y": [
+              6,
+              6,
+              6
+            ]
+          },
+          "2": {
+            "x": [
+              1,
+              3
+            ],
+            "y": [
+              6,
+              7
+            ]
+          }
+        }
+      }
+    },
+    {
+      "family": "cardinality",
+      "composed": true,
+      "faceted": false,
+      "result": {
+        "panels": {
+          "1": {
+            "x": [
+              1,
+              2,
+              3
+            ],
+            "y": [
+              -5,
+              -4,
+              -6
+            ]
+          }
+        }
+      }
+    },
+    {
+      "family": "cardinality",
+      "composed": true,
+      "faceted": true,
+      "result": {
+        "panels": {
+          "1": {
+            "x": [
+              1,
+              2,
+              3
+            ],
+            "y": [
+              -6,
+              -6,
+              -6
+            ]
+          },
+          "2": {
+            "x": [
+              1,
+              3
+            ],
+            "y": [
+              -6,
+              -7
+            ]
+          }
+        }
+      }
+    },
+    {
+      "family": "center",
+      "composed": false,
+      "faceted": false,
+      "result": {
+        "panels": {
+          "1": {
+            "x": [
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0,
+              -1,
+              1
+            ]
+          }
+        }
+      }
+    },
+    {
+      "family": "center",
+      "composed": false,
+      "faceted": true,
+      "result": {
+        "panels": {
+          "1": {
+            "x": [
+              1,
+              2,
+              3
+            ],
+            "y": [
+              -0.19999999999999996,
+              -0.19999999999999996,
+              -0.19999999999999996
+            ]
+          },
+          "2": {
+            "x": [
+              1,
+              3
+            ],
+            "y": [
+              -0.19999999999999996,
+              0.80000000000000004
+            ]
+          }
+        }
+      }
+    },
+    {
+      "family": "center",
+      "composed": true,
+      "faceted": false,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    },
+    {
+      "family": "center",
+      "composed": true,
+      "faceted": true,
+      "result": {
+        "error": "Sequence of transformations yields invalid domain"
+      }
+    }
+  ]
+}

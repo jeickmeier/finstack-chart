@@ -72,7 +72,10 @@ let chart=plot.chart();let d=chart.semantics().layers[0].domains;
 assert.deepEqual(d.x,{minimum:2,maximum:2});assert.deepEqual(d.y,{minimum:2,maximum:200});
 let [request,frame]=retain('source_expression',plot);for(const v of [frame,request,chart,plot])v.free();
 plot=figure(data).layer(c.points().afterScale(c.scaleAes().size(c.afterScaleExpr('Size').mul(2)))).build();
-[request,frame]=retain('after_scale_expression',plot);assert.deepEqual(marks(frame).map(p=>p.radius),reference.after_scale_expression.size);
+[request,frame]=retain('after_scale_expression',plot);
+// R gg_par fontsize combines size (.pt) and stroke (.stroke/2); circle radius is 3/8 fontsize.
+assert.equal(marks(frame).length,reference.after_scale_expression.size.length);
+marks(frame).forEach((p,i)=>assert.ok(Math.abs(p.radius-(reference.after_scale_expression.size[i]*72.27+reference.after_scale_expression.stroke[i]*48)/25.4*.375)<1e-12));
 for(const v of [frame,request,plot])v.free();
 plot=figure(data).theme(c.theme().geometry({accent:'#1256ab'})).layer(c.points().afterScale(c.scaleAes().color(c.fromTheme('Accent')))).build();
 [request,frame]=retain('theme_expression',plot);for(const p of marks(frame))assert.deepEqual(p.fill,{red:18,green:86,blue:171,alpha:255});

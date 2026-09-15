@@ -204,17 +204,24 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
             )
         })?;
     }
+    let mut major_values = BTreeMap::new();
     let scales = r
         .axes
         .iter()
         .map(|spec| {
             Ok((
                 spec.id,
-                resolve_axis(chart, r, spec, Rect::new(0., 0., 1., 1.)?)?,
+                resolve_axis(
+                    chart,
+                    r,
+                    spec,
+                    Rect::new(0., 0., 1., 1.)?,
+                    major_values.entry(spec.id).or_default(),
+                )?,
             ))
         })
         .collect::<ChartResult<BTreeMap<_, _>>>()?;
-    for guide in resolve_guides(chart, &scales, r)?.values() {
+    for guide in resolve_guides(chart, &scales, &major_values, r)?.values() {
         if guide.spec.visible {
             if guide.spec.profile == GuideProfile::D3_3_0_0 || guide.spec.geometry.is_some() {
                 require_within(paths >= 4, "guide domain path command")?;
@@ -883,6 +890,7 @@ fn guide_specs(r: &LayoutRequest) -> Vec<GuideSpec> {
 fn resolve_guides(
     chart: &PreparedChart,
     axes: &BTreeMap<ScaleId, ResolvedAxis>,
+    major_values: &BTreeMap<ScaleId, super::guide_ticks::SelectedGuideValues>,
     r: &LayoutRequest,
 ) -> ChartResult<BTreeMap<GuideId, ResolvedGuide>> {
     let mut guides = BTreeMap::new();
@@ -896,6 +904,7 @@ fn resolve_guides(
                     axis,
                     &spec.style,
                     &axis.ticks,
+                    major_values.get(&axis.spec.id),
                     r,
                 )?,
                 tick_indices: (0..axis.ticks.len()).collect(),
@@ -908,11 +917,20 @@ fn resolve_guides(
         let axis = axes
             .get(&spec.scale)
             .ok_or_else(|| error(DiagnosticCode::MissingResource, "Guide scale is absent."))?;
-        let ticks = super::guide_ticks::resolve(chart, axis, &spec.style, r)?;
+        let mut selected = super::guide_ticks::SelectedGuideValues::default();
+        let ticks =
+            super::guide_ticks::resolve_with_values(chart, axis, &spec.style, r, &mut selected)?;
         guides.insert(
             spec.id,
             ResolvedGuide {
-                minor_ticks: super::minor_breaks::resolve(chart, axis, &spec.style, &ticks, r)?,
+                minor_ticks: super::minor_breaks::resolve(
+                    chart,
+                    axis,
+                    &spec.style,
+                    &ticks,
+                    Some(&selected),
+                    r,
+                )?,
                 tick_indices: (0..ticks.len()).collect(),
                 spec: spec.clone(),
                 ticks,
@@ -1029,13 +1047,25 @@ pub(super) fn solve_panels(
                 w.guides.clear();
                 continue;
             };
+            let mut major_values = BTreeMap::new();
             w.axes = w
                 .request
                 .axes
                 .iter()
-                .map(|s| Ok((s.id, resolve_axis(&w.prepared, &w.request, s, p)?)))
+                .map(|s| {
+                    Ok((
+                        s.id,
+                        resolve_axis(
+                            &w.prepared,
+                            &w.request,
+                            s,
+                            p,
+                            major_values.entry(s.id).or_default(),
+                        )?,
+                    ))
+                })
                 .collect::<ChartResult<_>>()?;
-            w.guides = resolve_guides(&w.prepared, &w.axes, &w.request)?;
+            w.guides = resolve_guides(&w.prepared, &w.axes, &major_values, &w.request)?;
             w.labels = measure_guides(&w.guides, &w.request, measurer)?;
             w.passes = pass + 1;
             next = margins(&w.guides, &w.labels, &w.titles, &w.request, next);
@@ -1059,7 +1089,8 @@ pub(super) fn solve_panels(
                 crate::grammar::PreparedRows::Binned(bins) => bins.iter().any(|b| b.count > 0),
                 crate::grammar::PreparedRows::Source(_) | crate::grammar::PreparedRows::Statistical(_) => !l.marks().is_empty(),
             });
-            let status = if output.items.is_empty() || !has_population { LayoutStatus::NoData } else { LayoutStatus::Ready };
+            let retained_empty_glyphs = w.prepared.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3 && has_population && output.omitted == 0;
+            let status = if !has_population || (output.items.is_empty() && !retained_empty_glyphs) { LayoutStatus::NoData } else { LayoutStatus::Ready };
             if guides(&w.axes, &mut w.guides, &w.labels, p, request, &mut output)? {
                 w.diagnostics.push(pressure("Overlapping, duplicate or out-of-figure tick labels were encountered; each guide applied its declared preservation/adaptive policy."));
             }
