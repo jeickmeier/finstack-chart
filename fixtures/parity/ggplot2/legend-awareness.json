@@ -1,0 +1,57 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "force": null,
+      "labels": ["Alpha", "Beta"],
+      "draw": {
+        "geom_point": [true, false],
+        "geom_point...2": [false, true]
+      }
+    },
+    {
+      "force": true,
+      "labels": ["Alpha", "Beta"],
+      "draw": {
+        "geom_point": [true, true],
+        "geom_point...2": [false, true]
+      }
+    },
+    {
+      "force": false,
+      "labels": ["Alpha", "Beta"],
+      "draw": {
+        "geom_point...2": [false, true]
+      }
+    },
+    {
+      "force": {
+        "shape": false
+      },
+      "labels": ["Alpha", "Beta"],
+      "draw": {
+        "geom_point": [true, true],
+        "geom_point...2": [false, true]
+      }
+    },
+    {
+      "force": {
+        "colour": true
+      },
+      "labels": ["Alpha", "Beta"],
+      "draw": {
+        "geom_point": [true, true],
+        "geom_point...2": [false, true]
+      }
+    },
+    {
+      "force": {
+        "colour": false
+      },
+      "labels": ["Alpha", "Beta"],
+      "draw": {
+        "geom_point...2": [false, true]
+      }
+    }
+  ]
+}

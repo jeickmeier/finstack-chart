@@ -156,6 +156,7 @@ export type ValueAesthetic = 'Shape'|'LineType'|'Label'|'FontFamily'|'FontFace'|
 export type LineType = 'Blank'|'Solid'|'Dashed'|'Dotted'|'DotDash'|'LongDash'|'TwoDash'|{Custom:number};
 export type AestheticUnits = 'Destination'|'Millimeters'|'Points';
 export class Layer extends Component {
+  legend(value: Record<string, unknown>): this;
   fill(value:Color):this; stroke(value:Color):this;
   radius(value:number):this; linewidth(value:number):this; alpha(value:number):this;
   line_type(value:LineType):this; lineType(value:LineType):this;
@@ -362,6 +363,7 @@ export class Axis extends Component {
  continuous_limits(values:ReadonlyArray<number|boolean|Options>|null):this; continuousLimits(values:ReadonlyArray<number|boolean|Options>|null):this;
  guide_profile(profile:GuideProfile):this; guideProfile(profile:GuideProfile):this;
  guide_components(components:GuideComponents|null):this; guideComponents(components:GuideComponents|null):this;
+ ggplot_axis(options:Record<string, unknown>|null):this; ggplotAxis(options:Record<string, unknown>|null):this;
  guide_geometry(geometry:GuideGeometry|null):this; guideGeometry(geometry:GuideGeometry|null):this;
  tick_size(size:number):this; tickSize(size:number):this;
  tick_size_inner(size:number):this; tickSizeInner(size:number):this;
@@ -411,6 +413,9 @@ export class ColorScale extends Component {
 }
 
 export class Legend extends Component {
+  custom(guide:Record<string, unknown>):this;
+  options(value: Record<string, unknown>): this;
+  aesthetic(value: string): this;
   untitled(): this;
   generic_title(): this;
   genericTitle(): this;
@@ -740,6 +745,7 @@ export function scaleSession(calendar: Options): Scale;
 export class Guide extends Component {
  guide_profile(profile:GuideProfile):this; guideProfile(profile:GuideProfile):this;
  guide_components(components:GuideComponents|null):this; guideComponents(components:GuideComponents|null):this;
+ ggplot_axis(options:Record<string, unknown>|null):this; ggplotAxis(options:Record<string, unknown>|null):this;
  guide_geometry(geometry:GuideGeometry|null):this; guideGeometry(geometry:GuideGeometry|null):this;
  tick_size(size:number):this; tickSize(size:number):this;
  tick_size_inner(size:number):this; tickSizeInner(size:number):this;

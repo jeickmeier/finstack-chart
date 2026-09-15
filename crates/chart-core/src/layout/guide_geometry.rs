@@ -88,11 +88,13 @@ impl Geometry {
                     0.
                 },
             ),
-            labels: options.labels.unwrap_or(if d3 {
-                GuideLabelPolicy::Preserve
-            } else {
-                GuideLabelPolicy::ThinTicks
-            }),
+            labels: options
+                .labels
+                .unwrap_or(if d3 || style.ggplot_axis.is_some() {
+                    GuideLabelPolicy::Preserve
+                } else {
+                    GuideLabelPolicy::ThinTicks
+                }),
             overflow: options.overflow,
             clip_ticks: options.clip_ticks,
         }

@@ -114,6 +114,9 @@ pub enum AxisScale {
 /// Presentation shared by default and independently identified positional guides.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 pub struct GuideStyle {
+    /// Reference positional guide presentation (wire v70).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ggplot_axis: Option<super::GgplotAxisOptions>,
     /// Registered reference major-break selector over retained panel limits (wire v34).
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub breaks_function: Option<Box<crate::grammar::ScaleBreaksOperation>>,
@@ -175,6 +178,7 @@ impl GuideStyle {
 impl Default for GuideStyle {
     fn default() -> Self {
         Self {
+            ggplot_axis: None,
             breaks_function: None,
             minor_breaks: None,
             components: None,

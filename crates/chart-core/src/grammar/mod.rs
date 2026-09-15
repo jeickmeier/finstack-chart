@@ -124,6 +124,11 @@ fn error(code: DiagnosticCode, message: impl Into<String>) -> Diagnostic {
     )
 }
 
+mod legends;
+pub use legends::{
+    CustomGuidePath, CustomLegend, KeyGlyph, KeyOverrides, LayerLegend, LegendAesthetic,
+    LegendOptions, LegendPosition,
+};
 mod symbols;
 pub use symbols::{SymbolEncoding, SymbolLegend, SymbolLegendEntry, SymbolSizeGuide};
 

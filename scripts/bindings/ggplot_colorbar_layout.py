@@ -12,7 +12,10 @@ demand = '--demand' in sys.argv
 constant = '--constant' in sys.argv
 orientation = '--orientation' in sys.argv
 presentation = '--presentation' in sys.argv
-boundaries = '--steps-boundaries' in sys.argv
+step_controls = '--steps-controls' in sys.argv
+default_all = '--default-steps-all' in sys.argv
+default_steps = default_all or '--default-steps' in sys.argv
+boundaries = '--steps-boundaries' in sys.argv or step_controls or default_steps
 steps = '--steps' in sys.argv or boundaries
 alpha = '--alpha' in sys.argv
 display = '--display' in sys.argv or alpha or steps
@@ -39,7 +42,8 @@ if steps:
         r=q['result'];r['decor_colors']=[c for _,c in sorted(zip([min(a,b) for a,b in zip(r['decor']['min'],r['decor']['max'])],r['decor']['colour']))]
         r['values']=r['key']['.value'];r['labels']=r['key']['.label']
 if boundaries:
-    reference=[q for q in json.loads((ROOT/'fixtures/parity/ggplot2/colorsteps-boundaries.json').read_text())['cases'] if not(q['family']=='binned' and q['mode']=='null')]
+    reference=[q for q in json.loads((ROOT/('fixtures/parity/ggplot2/colorsteps-controls.json' if step_controls else 'fixtures/parity/ggplot2/colorsteps-default-boundaries.json' if default_steps else 'fixtures/parity/ggplot2/colorsteps-boundaries.json')).read_text())['cases'] if not(q['family']=='binned' and q['mode']=='null')]
+    if default_steps and not default_all: reference=[q for q in reference if q['population']!='constant']
     for q in reference:
         q.update(palette='asymmetric',display='rectangles',nbin=None,direction='vertical',reverse=False,constant=q['population']=='constant')
         r=q['result']
@@ -78,7 +82,7 @@ def scale(palette, hidden=False, nbin=None, constant=False, controls=None):
         result['function']['Interpolated']['normalization']={'Ggplot':{'family':'Linear','domain':limits,'reverse':False,'rescaler':'Range'}}
         if q['family']=='binned':
             result['ggplot']={'Binned':{'limits':limits,'breaks':{'Nice':5.} if cuts=='automatic' else {'Explicit':cuts},'oob':'Squish','right':True}}
-            result['guide']='Hidden' if hidden else {'BinnedSteps':'Automatic'}
+            result['guide']='Hidden' if hidden else {'Binned' if default_steps else 'BinnedSteps':'Automatic'}
         else:
             result['ggplot']={'Continuous':{'limits':limits,'oob':'Censor'}}
             result['guide']='Hidden' if hidden or q['mode']=='null' else {'ContinuousSteps':{'breaks':None if cuts=='automatic' else cuts,'labels':'Automatic'}}
@@ -104,12 +108,20 @@ def inspect(plot, case, channel, facet, state):
     request = output.request(plot, c.export_options(600,360).dpi(144)); frame = request.prepare(); scene = frame.scene()
     direction=case['direction'].capitalize()
     paired=[(i['primitive']['SampledGradientRectangle'],i.get('clip')) for i in scene['items'] if 'SampledGradientRectangle' in i['primitive']]
-    if (len(case['result']['decor_colors'])==1 or (display and case.get('constant') and case['display']=='gradient')):
+    if not (step_controls and not case['even_steps']) and (len(case['result']['decor_colors'])==1 or (display and case.get('constant') and case['display']=='gradient')):
         for item in scene['items']:
             r=item['primitive'].get('Rectangle')
             if r is not None and (abs(r['bounds']['height']/r['bounds']['width']-20/3)<1e-10 or abs(r['bounds']['width']/r['bounds']['height']-20/3)<1e-10):
                 paired.append((dict(bounds=r['bounds'],direction=direction,colors=[r['fill']]),item.get('clip')))
-    bars=0 if state=='hidden' or (boundaries and not case['result']['decor_colors']) else 2 if facet=='local' else 1
+    if step_controls and not case['even_steps']:
+        cells=[(i['primitive']['Rectangle'],i.get('clip')) for i in scene['items'] if i.get('layer') is None and 'Rectangle' in i['primitive'] and i.get('clip') is not None]
+        if cells:
+            top=min(r['bounds']['origin']['y'] for r,_ in cells);bottom=max(r['bounds']['origin']['y']+r['bounds']['height'] for r,_ in cells)
+            b=dict(origin=dict(x=cells[0][0]['bounds']['origin']['x'],y=top),width=cells[0][0]['bounds']['width'],height=bottom-top)
+            assert len(cells)==len(case['result']['bar']['height'])
+            for (r,_),height in zip(cells,case['result']['bar']['height']):close(r['bounds']['height']/b['height'],height)
+            paired.append((dict(bounds=b,direction=direction,colors=[r['fill'] for r,_ in reversed(cells)],mode='Steps'),cells[0][1]))
+    bars=0 if state=='hidden' or (boundaries and (not case['result']['decor_colors'] or (step_controls and case['result']['bar'] is None))) else 2 if facet=='local' else 1
     assert len(paired)==bars,(case['palette'],channel,facet,state,len(paired))
     normalized=[]
     expected_ticks=[v for v in case['result'].get('tick_positions',case['result']['values']) if v is not None]
@@ -151,6 +163,7 @@ for pi,case in enumerate(reference):
     if display and not steps: controls['display']=case['display'].capitalize()
     if steps: controls.update(steps_family=case['family'],steps_endpoints=case.get('endpoints',False),steps_default=case.get('guide_kind')=='default')
     if boundaries: controls['boundary']=case
+    if step_controls: controls.update(even_steps=case['even_steps'],show_limits=case['show_limits'])
     if alpha and case['alpha'] is not None: controls['alpha']=case['alpha']
     is_constant=constant or (display and case.get('constant',False))
     for channel in channels:
@@ -164,7 +177,7 @@ for pi,case in enumerate(reference):
                 continue
             plot=author(case['palette'],channel,facet,case.get('nbin'),is_constant,controls); wire=plot.to_json()
             if sampling or constant or orientation or presentation or display:
-                version=67 if alpha and case['alpha'] is not None else 66 if display and not steps and case['display']!='raster' else 65 if controls else 64
+                version=68 if step_controls and (not case['even_steps'] or case['show_limits']) else 67 if alpha and case['alpha'] is not None else 66 if display and not steps and case['display']!='raster' else 65 if controls else 64
                 assert json.loads(wire)['version']==version
                 stale=json.loads(wire);stale['version']=version-1
                 try: c.Plot.from_json(json.dumps(stale))
@@ -179,11 +192,11 @@ for pi,case in enumerate(reference):
             assert plot.to_json()==wire and frame.scene()==before
             publish=(case['nbin']==5 or (case['nbin']>0 and case['lower'] and case['upper'] and case['labels']=='automatic')) if presentation else orientation or constant or channel==['color','fill','stroke'][(pi+fi)%3]
             if display: publish=(pi<80 and (case['nbin'] is None or case['nbin']==2.5)) or (pi>=80 and case['palette']=='discontinuous' and case['nbin']==5)
-            if steps: publish=not boundaries or (case['population']=='ordinary' and bool(case['result']['decor_colors']))
+            if steps: publish=not boundaries or (case['population']=='ordinary' and bool(case['result'].get('bar')))
             if alpha: publish=pi%4==(pi//4)%4
             if publish:
                 name=f"{case['palette']}-{channel}-{facet}" + (f"-nbin-{case['nbin']:g}" if sampling or constant else "")
-                if orientation or presentation or display:name=f"{'step-boundaries' if boundaries else 'steps' if steps else 'alpha' if alpha else 'display' if display else 'orientation' if orientation else 'presentation'}-{pi:03}"
+                if orientation or presentation or display:name=f"{'step-controls' if step_controls else 'default-steps' if default_steps else 'step-boundaries' if boundaries else 'steps' if steps else 'alpha' if alpha else 'display' if display else 'orientation' if orientation else 'presentation'}-{pi:03}"
                 (out/f'{name}.scene.json').write_text(json.dumps(before));(out/f'{name}.plot.json').write_text(wire)
                 for fmt in ['svg','pdf','png']:(out/f'{name}.{fmt}').write_bytes(frame.export(fmt))
             frame.dispose();request.dispose();plot.dispose()
@@ -212,6 +225,6 @@ if demand:
         records.append({k:case[k] for k in ('nbin','population','selection','hidden')}|{'result':result})
         request.dispose();loaded.dispose();plot.dispose();builder.dispose();aes.dispose();data.dispose()
 output.dispose()
-assert len(records)==(180 if boundaries else 72 if steps else 384 if alpha else 704 if display else 192 if orientation else 512 if presentation else 60 if demand else 48 if constant else 432 if sampling else 108)
+assert len(records)==(711 if step_controls else 93 if default_all else 80 if default_steps else 180 if boundaries else 72 if steps else 384 if alpha else 704 if display else 192 if orientation else 512 if presentation else 60 if demand else 48 if constant else 432 if sampling else 108)
 (out/'records.json').write_text(json.dumps(records))
 print(f'PASS Python GG-05: {len(records)} geometry/lifecycle states and {len(list(out.glob("*.png")))*3} publication files.')

@@ -12,7 +12,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let output = Output::new(
         include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf").as_slice(),
     )?;
-    if std::env::args().any(|arg| arg == "--steps-boundaries") {
+    if std::env::args().any(|arg| {
+        matches!(
+            arg.as_str(),
+            "--steps-boundaries" | "--steps-controls" | "--default-steps" | "--default-steps-all"
+        )
+    }) {
         return steps_boundaries_proof(&output, &out);
     }
     if std::env::args().any(|arg| arg == "--steps") {
@@ -373,25 +378,38 @@ fn steps_boundaries_proof(
     out: &std::path::Path,
 ) -> Result<(), Box<dyn std::error::Error>> {
     use chart_core::{prelude::color_mapped, scales::*, scene::GradientDirection};
-    let source: serde_json::Value = serde_json::from_str(include_str!(
-        "../../../fixtures/parity/ggplot2/colorsteps-boundaries.json"
-    ))?;
+    let controls = std::env::args().any(|a| a == "--steps-controls");
+    let defaults = std::env::args().any(|a| a == "--default-steps" || a == "--default-steps-all");
+    let source: serde_json::Value = serde_json::from_str(if controls {
+        include_str!("../../../fixtures/parity/ggplot2/colorsteps-controls.json")
+    } else if defaults {
+        include_str!("../../../fixtures/parity/ggplot2/colorsteps-default-boundaries.json")
+    } else {
+        include_str!("../../../fixtures/parity/ggplot2/colorsteps-boundaries.json")
+    })?;
     let mut count = 0;
     for (index, case) in source["cases"]
         .as_array()
         .ok_or("cases")?
         .iter()
         .filter(|c| !(c["family"] == "binned" && c["mode"] == "null"))
+        .filter(|c| !defaults || c["population"] != "constant")
         .enumerate()
     {
         if case["population"] != "ordinary" || case["result"]["bar"].is_null() {
             continue;
         }
-        let descriptor =
+        let mut descriptor =
             boundary_fixtures::boundary_scale(case)?.with_colorbar_options(GgplotColorbarOptions {
                 direction: Some(GradientDirection::Vertical),
+                even_steps: case["even_steps"].as_bool().unwrap_or(true),
+                show_limits: case["show_limits"].as_bool().unwrap_or(false),
                 ..Default::default()
             });
+        if defaults {
+            descriptor =
+                descriptor.with_guide(GgplotScaleGuide::Binned(GgplotGuideLabels::Automatic))?;
+        }
         let plot = fixtures::author(
             "asymmetric",
             ["color", "fill", "stroke"][index % 3],
@@ -401,10 +419,33 @@ fn steps_boundaries_proof(
         .edit()
         .scale(color_mapped("v", descriptor))
         .build()?;
-        publish(output, &plot, out, &format!("step-boundaries-{index:03}"))?;
+        publish(
+            output,
+            &plot,
+            out,
+            &format!(
+                "{}-{index:03}",
+                if controls {
+                    "step-controls"
+                } else if defaults {
+                    "default-steps"
+                } else {
+                    "step-boundaries"
+                }
+            ),
+        )?;
         count += 1;
     }
-    assert_eq!(count, 16);
+    assert_eq!(
+        count,
+        if controls {
+            60
+        } else if defaults {
+            9
+        } else {
+            16
+        }
+    );
     println!(
         "PASS primary Rust stepped boundary publications: {} files.",
         count * 3

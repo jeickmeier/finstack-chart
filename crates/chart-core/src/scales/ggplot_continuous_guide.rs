@@ -59,6 +59,12 @@ pub struct GgplotColorbarOptions {
     /// Reference `nbin`; omitted selects 300 for raster/rectangles or 15 for gradient. Fractional counts round up for
     /// sampling but retain their authored value for raster key placement.
     pub nbin: Option<Number>,
+    /// Equal-width stepped cells; false retains transformed interval widths.
+    #[serde(skip_serializing_if = "is_true")]
+    pub even_steps: bool,
+    /// Add stepped guide endpoint labels; explicit label vectors ignore this control.
+    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    pub show_limits: bool,
     /// Display geometry; omitted retains the raster default.
     #[serde(skip_serializing_if = "GgplotColorbarDisplay::is_raster")]
     pub display: GgplotColorbarDisplay,
@@ -85,6 +91,8 @@ impl Default for GgplotColorbarOptions {
     fn default() -> Self {
         Self {
             nbin: None,
+            even_steps: true,
+            show_limits: false,
             display: GgplotColorbarDisplay::Raster,
             alpha: None,
             direction: None,

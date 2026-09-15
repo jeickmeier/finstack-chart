@@ -320,6 +320,20 @@ impl Scene {
     }
     /// Minimum scene wire version required by the retained primitive capabilities.
     pub fn wire_version(&self) -> u32 {
+        if self.items.iter().any(|i| {
+            i.guide.as_ref().is_some_and(|g| {
+                matches!(
+                    g.role,
+                    GuideRole::LegendTitle
+                        | GuideRole::LegendKey
+                        | GuideRole::LegendLabel
+                        | GuideRole::LegendBar
+                        | GuideRole::LegendTick
+                )
+            })
+        }) {
+            return 19;
+        }
         if self.items.iter().any(|item| {
             matches!(
                 item.primitive,

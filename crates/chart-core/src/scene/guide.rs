@@ -12,6 +12,16 @@ pub struct GuideTickIdentity {
 /// Addressable axis component role.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, serde::Serialize)]
 pub enum GuideRole {
+    /// A nonpositional guide title.
+    LegendTitle,
+    /// A nonpositional key glyph.
+    LegendKey,
+    /// A nonpositional key label.
+    LegendLabel,
+    /// A colorbar or stepped guide paint cell.
+    LegendBar,
+    /// A colorbar tick line.
+    LegendTick,
     /// The range-derived path, including outer caps.
     Domain,
     /// The line belonging to one semantic tick group.
@@ -42,7 +52,11 @@ pub struct GuideComponent {
 }
 impl GuideComponent {
     pub(super) fn validate(&self, remaining: &mut usize) -> ChartResult<()> {
-        let domain = self.role == GuideRole::Domain;
+        let domain = matches!(
+            self.role,
+            GuideRole::Domain | GuideRole::LegendBar | GuideRole::LegendTitle
+        );
+        let title = self.role == GuideRole::LegendTitle;
         if self
             .animation
             .is_some_and(|a| domain || !a.opacity.is_finite() || !(0. ..=1.).contains(&a.opacity))
@@ -54,7 +68,7 @@ impl GuideComponent {
         }
         if domain != self.tick.is_none()
             || domain != self.index.is_none()
-            || domain != self.label.is_none()
+            || (domain && !title) != self.label.is_none()
         {
             return Err(crate::scales::error(
                 DiagnosticCode::Validation,

@@ -220,6 +220,9 @@ pub(super) fn validate_specs(axes: &[AxisSpec], limits: crate::Limits) -> ChartR
 }
 
 pub(super) fn validate_style(a: &GuideStyle, limits: crate::Limits) -> ChartResult<()> {
+    if let Some(options) = &a.ggplot_axis {
+        options.validate()?;
+    }
     if a.breaks_function.is_some() && (a.tick_values.is_some() || a.guide_ticks.is_some()) {
         return Err(error(
             DiagnosticCode::SchemaConflict,

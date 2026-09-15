@@ -11,6 +11,7 @@ mod engine;
 mod facets;
 mod hierarchy;
 mod legend_colorbar;
+mod legend_keys;
 pub use hierarchy::{HierarchyHistoryEntry, HierarchySnapshot, ResolvedHierarchy};
 mod guide_components;
 mod guide_config;
@@ -42,3 +43,6 @@ pub use types::*;
 pub(crate) use axes::validate_definition_axes;
 
 mod secondary_discrete;
+
+mod ggplot_axis;
+pub use ggplot_axis::{AxisCap, GgplotAxisOptions, LogTickOptions};

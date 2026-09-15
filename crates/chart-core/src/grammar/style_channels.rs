@@ -165,7 +165,7 @@ pub enum ValueAesthetic {
     LineHeight,
 }
 impl ValueAesthetic {
-    pub(super) fn validate(self, value: &Value) -> ChartResult<()> {
+    pub(crate) fn validate(self, value: &Value) -> ChartResult<()> {
         use crate::interpolate::Number;
         let valid = match (self, value) {
             (Self::Shape, Value::Number(Number(value))) => {
@@ -220,6 +220,7 @@ pub(super) fn line_type(value: &Value) -> ChartResult<LineType> {
 }
 #[derive(Clone, Debug, Default)]
 pub(crate) struct ValueGuides {
+    pub samples: BTreeMap<crate::ScaleId, Vec<Value>>,
     pub discrete: BTreeMap<crate::ScaleId, Vec<crate::scales::GgplotDiscreteGuideEntry>>,
     pub numeric: BTreeMap<crate::ScaleId, Vec<crate::scales::GgplotContinuousGuideEntry>>,
 }
@@ -251,14 +252,57 @@ impl ValueGuides {
                     "Discrete aesthetic guide exceeds the category budget.",
                 ));
             }
+            self.samples.insert(
+                id,
+                entries
+                    .iter()
+                    .map(|e| scale.category(Some(&e.key)))
+                    .collect::<ChartResult<_>>()?,
+            );
             self.discrete.insert(id, entries);
         } else if let Some(entries) =
             scale.binned_value_guide_entries(limits.max_groups, 1_048_576)?
         {
+            self.samples.insert(
+                id,
+                entries
+                    .iter()
+                    .map(|e| {
+                        e.mapped.clone().map_or_else(
+                            || {
+                                if e.visible {
+                                    scale.numeric(Some(e.value.0))
+                                } else {
+                                    Ok(Value::Missing)
+                                }
+                            },
+                            Ok,
+                        )
+                    })
+                    .collect::<ChartResult<_>>()?,
+            );
             self.numeric.insert(id, entries);
         } else if let Some(entries) =
             scale.continuous_guide_entries(limits.max_groups, 1_048_576)?
         {
+            self.samples.insert(
+                id,
+                entries
+                    .iter()
+                    .map(|e| {
+                        e.mapped.clone().map_or_else(
+                            || {
+                                if e.visible {
+                                    scale.numeric(Some(e.value.0))
+                                } else {
+                                    Ok(Value::Missing)
+                                }
+                            },
+                            Ok,
+                        )
+                    })
+                    .collect::<ChartResult<_>>()?,
+            );
             self.numeric.insert(id, entries);
         }
         Ok(())

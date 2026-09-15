@@ -59,6 +59,9 @@ pub struct ColorGuideStep {
 /// Semantic legend metadata, independent of its eventual destination layout.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub struct ColorLegend {
+    /// Original discrete keys, aligned with swatches independently of display labels.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub discrete_keys: Vec<super::ScaleKey>,
     /// Declared semantic guide title, used when checking guide compatibility; empty omits it.
     pub title: Option<String>,
     /// Scale identity.
@@ -216,7 +219,7 @@ impl ColorScale {
     /// Return exact guide identity and swatches/stops for compatible guide composition.
     pub fn legend(&self, id: crate::ScaleId, first_seen: &[String]) -> ChartResult<ColorLegend> {
         self.validate()?;
-        let (continuous, missing, entries) = match self {
+        let (continuous, missing, entries): (bool, Color, Vec<(String, Color)>) = match self {
             Self::Mapped { scale, missing } => {
                 return MappedScale::for_colors(scale.clone())?.legend(id, *missing);
             }
@@ -259,6 +262,14 @@ impl ColorScale {
             ),
         };
         Ok(ColorLegend {
+            discrete_keys: if continuous {
+                vec![]
+            } else {
+                entries
+                    .iter()
+                    .map(|(label, _)| super::ScaleKey::Text(label.clone()))
+                    .collect()
+            },
             title: None,
             id,
             continuous,

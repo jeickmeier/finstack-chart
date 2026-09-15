@@ -569,6 +569,10 @@ impl PreparedLayer {
     pub fn value_scales(&self) -> &BTreeMap<super::ValueAesthetic, super::NumericEncoding> {
         &self.value_scales
     }
+    /// Resolved non-color guide outputs retained during scale preparation.
+    pub fn value_guide_samples(&self) -> &BTreeMap<crate::ScaleId, Vec<crate::interpolate::Value>> {
+        &self.value_guides.samples
+    }
     /// Selected non-color discrete keys and labels, before guide composition.
     pub fn discrete_value_guides(
         &self,

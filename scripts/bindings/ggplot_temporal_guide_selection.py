@@ -5,8 +5,9 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path[:0]=[str(ROOT/'packages/python'),str(Path(sys.argv[1]).resolve())]
 import finstack_chart as c
 out=Path(sys.argv[2]);out.mkdir(parents=True,exist_ok=True)
+step_controls='--steps-controls' in sys.argv[3:]
 label_cases='--interval-labels' in sys.argv[3:]
-fixture='temporal-interval-label-functions.json' if label_cases else 'temporal-guide-selection.json'
+fixture='temporal-colorsteps-controls.json' if step_controls else 'temporal-interval-label-functions.json' if label_cases else 'temporal-guide-selection.json'
 cases=json.loads((ROOT/'fixtures/parity/ggplot2'/fixture).read_text())['cases']
 registry=c.ExtensionRegistry.example()
 records=[]
@@ -21,6 +22,15 @@ def descriptor(t,origin,variant,factor):
  return {'training':'Eligible','function':{'Interpolated':{'normalization':{'Ggplot':{'family':'Linear','domain':[0,10*factor],'reverse':False,'rescaler':'Range','timestamp':{'origin':str(origin),'unit':variant,'date':date}}},'output':output,'unknown':{'kind':'Missing'}}},'ggplot':{'Continuous':{'limits':[0,10*factor] if t['limits']=='full' else None,'oob':'Censor'}},'guide':'Hidden' if t['guide']=='none' else {('TemporalColorbar' if colorbar(t) else 'TemporalBins' if t['guide']=='bins' else 'TemporalSteps' if t['guide']=='coloursteps' else 'Temporal'):{'origin':str(origin),'unit':variant,'zone':'Utc','arguments':args}}}
 def layer(t,source,scale):return c.points().name('marks') if t['channel']=='colour' else c.points().name('marks').numeric_scale('Size' if t['channel']=='size' else 'Alpha',source,scale)
 def check(t,chart,factor,multiplier):
+ if step_controls:
+  legend=chart.semantics()['layers'][0]['color_legend']
+  def paint(v):return dict(zip(('red','green','blue','alpha'),[int(v[i:i+2],16) for i in (1,3,5)]+[255]))
+  assert [v['color'] for v in legend['colorsteps']]==[paint(v) for v in t['decor']['colour']]
+  keys=[(pos,e.get('label')) for pos,e in zip(legend['colorstep_positions'],legend['numeric_breaks']) if pos is not None]
+  assert len(keys)==len(t['key']['.value'])
+  for (pos,label),expected,text in zip(keys,t['key']['.value'],t['key']['.label']):
+   assert abs(pos-expected)<3e-12 and label==text,(t,keys)
+  return {'keys':keys,'colorsteps':legend['colorsteps']}
  state=chart.semantics()['layers'][0];colour=t['channel']=='colour';date=t['kind']=='date'
  entries=(state.get('color_legend') or {}).get('numeric_breaks',[]) if colour else [e for group in state.get('numeric_value_guides',{}).values() for e in group]
  entries=[e for e in entries if e['visible']];guides=t['result']['guides']
@@ -55,16 +65,18 @@ for index,t in enumerate(cases):
   try:
    factor=multiplier*(86400 if t['kind']=='date' else 3600);origin=1577836800*multiplier;values=t['inputs']
    data=c.Data.columns({'x':c.column(list(map(float,range(len(values)))),kind='float64'),'v':c.timestamps([origin+int(v*factor) for v in values],unit,'UTC')});owned.append(data)
-   source={'field':'v','origin':str(origin)};scale=descriptor(t,origin,variant,factor);draft=c.plot(data).with_registry(registry).profile('Ggplot2_4_0_3')
+   source={'field':'v','origin':str(origin)};scale=descriptor(t,origin,variant,factor)
+   if step_controls:scale['colorbar_options']={'even_steps':t['even_steps'],'show_limits':t['show_limits']}
+   draft=c.plot(data).with_registry(registry).profile('Ggplot2_4_0_3')
    draft=draft.aes(c.aes().x('x').y(1.).color(source).color_scale('v')).scale(c.color_mapped('v',scale)) if t['channel']=='colour' else draft.aes(c.aes().x('x').y(1.))
    p=draft.layer(layer(t,source,scale)).build();owned.append(p);wire=p.to_json();restored=c.Plot.from_json(wire,registry);owned.append(restored);assert restored.to_json()==wire
    if colorbar(t) or t['guide'] in ('bins','coloursteps'):
-    version=59 if colorbar(t) else 60
+    version=(68 if not t['even_steps'] or t['show_limits'] else 64) if step_controls else 59 if colorbar(t) else 60
     old=json.loads(wire);assert old['version']==version;old['version']=version-1
     try:c.Plot.from_json(json.dumps(old),registry)
     except c.ChartError:pass
     else:raise AssertionError('temporal colorbar downgrade accepted')
-   if 'error' in t['result']:
+   if 'error' in t.get('result',{}):
     try:
      rejected=restored.chart();owned.append(rejected);rejected.semantics()
     except c.ChartError:records.append({'index':index,'unit':unit,'state':'rejected'})
@@ -79,10 +91,10 @@ for index,t in enumerate(cases):
    if label_cases:selected=t['label_mode']=='indexed' and t['limits']=='full' and ((t['population']=='ordinary' and t['breaks'] in ('auto','explicit')) or (t['population']=='empty' and t['breaks']=='auto'))
    if unit=='s' and selected:
     request=output.request(restored,options);owned.append(request);frame=request.prepare();owned.append(frame)
-    suffix=f"-format-{t['format_mode']}" if label_cases else ''
+    suffix=f"-even-{t['even_steps']}-limits-{t['show_limits']}" if step_controls else f"-format-{t['format_mode']}" if label_cases else ''
     for fmt in ('svg','pdf','png'):(out/f"{t['kind']}-{t['channel']}-{t['population']}-{t['guide']}-{t['breaks']}{suffix}.{fmt}").write_bytes(frame.export(fmt))
   finally:
    for obj in reversed(owned):obj.dispose()
-assert len(records)==(21872 if label_cases else 7680),len(records);assert len(list(out.glob('*.svg')))==(60 if label_cases else 66)
+assert len(records)==(192 if step_controls else 21872 if label_cases else 7680),len(records);assert len(list(out.glob('*.svg')))==(16 if step_controls else 60 if label_cases else 66)
 (out/'records.json').write_text(json.dumps(records,allow_nan=False));options.dispose();output.dispose()
 print(f'PASS Python: {len(records)} temporal guide-selection states and {len(list(out.glob("*.svg")))*3} publications.')

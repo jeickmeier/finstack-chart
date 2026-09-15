@@ -20,9 +20,9 @@ for(const [index,t] of cases.entries()){
    const current=state==='original'?restored:state==='layer_edit'?restored.edit().layer('marks',layer(t)).build():restored.edit().theme(c.theme()).build();if(current!==restored)owned.push(current);
    const chart=current.chart();owned.push(chart);const actual=check(t,chart);assert.ok(!t.result.error,JSON.stringify(t));records.push({index,state,...actual});assert.equal(restored.to_json(),wire);
   }
-  if(t.label_mode==='indexed'&&((['ordinary','empty'].includes(t.population)&&t.limits==='full'&&t.break_mode==='auto')||(t.population==='constant'&&t.limits==='none'&&t.break_mode==='empty'))){const request=output.request(restored,options);owned.push(request);const frame=request.prepare();owned.push(frame);for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`${t.channel}-${t.guide}-${t.transform}-${t.population}.${fmt}`),frame.export(fmt));}
+  if(t.label_mode==='indexed'&&((['ordinary','empty'].includes(t.population)&&t.limits==='full'&&t.break_mode==='auto')||(t.population==='constant'&&t.limits==='none'&&t.break_mode==='empty'))){const request=output.request(restored,options);owned.push(request);if(t.draw.error){assert.throws(()=>request.prepare(),e=>e instanceof c.ChartError&&e.code==='CHART_VALIDATION');continue;}const frame=request.prepare();owned.push(frame);for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`${t.channel}-${t.guide}-${t.transform}-${t.population}.${fmt}`),frame.export(fmt));}
  }catch(error){assert.ok(error instanceof c.ChartError&&t.result.error,`${index}: ${error.stack}`);assert.equal(error.code,'CHART_VALIDATION');records.push({index,error:error.code});}
  finally{for(const obj of owned.reverse())obj.dispose();}
 }
-assert.equal(fs.readdirSync(out).filter(f=>f.endsWith('.svg')).length,36);options.dispose();output.dispose();assert.equal(records.length,2720);fs.writeFileSync(path.join(out,'records.json'),JSON.stringify(records,null,2));registry.dispose();
+assert.equal(fs.readdirSync(out).filter(f=>f.endsWith('.svg')).length,34);options.dispose();output.dispose();assert.equal(records.length,2720);fs.writeFileSync(path.join(out,'records.json'),JSON.stringify(records,null,2));registry.dispose();
 console.log('PASS WASM: 2720 continuous interval label states: 820 successes in three states and 260 expected rejections.');

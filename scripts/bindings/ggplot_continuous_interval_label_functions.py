@@ -52,7 +52,13 @@ for index,t in enumerate(cases):
    chart=current.chart();owned.append(chart);actual=check(t,chart);assert 'error' not in t['result'],t
    records.append({'index':index,'state':state,**actual});assert restored.to_json()==wire
   if t['label_mode']=='indexed' and ((t['population'] in ('ordinary','empty') and t['limits']=='full' and t['break_mode']=='auto') or (t['population']=='constant' and t['limits']=='none' and t['break_mode']=='empty')):
-   request=output.request(restored,options);owned.append(request);frame=request.prepare();owned.append(frame)
+   request=output.request(restored,options);owned.append(request)
+   if 'error' in t['draw']:
+    try:request.prepare()
+    except c.ChartError as error:assert error.code=='CHART_VALIDATION'
+    else:raise AssertionError(('reference draw rejected',t))
+    continue
+   frame=request.prepare();owned.append(frame)
    for fmt in ('svg','pdf','png'):(out/f"{t['channel']}-{t['guide']}-{t['transform']}-{t['population']}.{fmt}").write_bytes(frame.export(fmt))
  except c.ChartError as error:
   assert 'error' in t['result'],(t,str(error));assert error.code=='CHART_VALIDATION',(t,error.code)
@@ -60,7 +66,7 @@ for index,t in enumerate(cases):
  finally:
   for obj in reversed(owned):obj.dispose()
 assert len(records)==2720,len(records)
-assert len(list(out.glob('*.svg')))==36
+assert len(list(out.glob('*.svg')))==34
 options.dispose();output.dispose()
 (out/'records.json').write_text(json.dumps(records,indent=2));registry.dispose()
 print('PASS Python: 2720 continuous interval label states: 820 successes in three states and 260 expected rejections.')

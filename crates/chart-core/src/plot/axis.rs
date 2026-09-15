@@ -447,6 +447,12 @@ fn helper_limits(mut axis: AxisBuilder, limits: PositionalLimits) -> AxisBuilder
 }
 
 impl AxisBuilder {
+    /// Set reference axis label and minor-tick presentation.
+    pub fn ggplot_axis(mut self, options: Option<crate::layout::GgplotAxisOptions>) -> Self {
+        self.spec.ggplot_axis = options;
+        self
+    }
+
     /// Set ggplot numeric source limits, filling missing endpoints from the population.
     pub fn numeric_limits(
         mut self,
@@ -834,6 +840,12 @@ pub fn axis_guide(name: impl Into<String>, source: impl Into<String>) -> GuideBu
     }
 }
 impl GuideBuilder {
+    /// Set reference axis label and minor-tick presentation.
+    pub fn ggplot_axis(mut self, options: Option<crate::layout::GgplotAxisOptions>) -> Self {
+        self.spec.ggplot_axis = options;
+        self
+    }
+
     /// Resolve this builder's independent identity without resolving its named scale.
     pub fn handle(&self) -> ChartResult<GuideHandle> {
         self.failure

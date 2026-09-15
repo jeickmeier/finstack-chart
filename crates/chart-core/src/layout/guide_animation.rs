@@ -43,7 +43,8 @@ pub(super) fn initial_frames(
         .values()
         .filter(|g| {
             g.spec.visible
-                && (g.spec.profile != GuideProfile::LibraryV1
+                && (g.spec.ggplot_axis.is_some()
+                    || g.spec.profile != GuideProfile::LibraryV1
                     || g.spec.geometry.is_some()
                     || g.spec.components.is_some())
         })

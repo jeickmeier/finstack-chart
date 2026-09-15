@@ -577,3 +577,43 @@ and extent remain mutually exclusive. Constructor field selections live in the c
 `StratifyOptions`/input descriptor; changing or resetting them constructs a new topology.
 The [final hierarchy catalog](evidence/phase-2-hierarchy-integration/verdict-catalog.md)
 maps every D3 export, method, default and adaptation to executed evidence.
+
+## ggplot guide composition
+
+Under `Profile::Ggplot2_4_0_3`, guides use prepared scale outputs for color, fill,
+stroke, size, area, alpha, width, shape and line type. Compatible titles, labels and
+presentation options merge their keys. Automatic layer awareness leaves a key's
+glyph blank when that layer has no matching value; labels and scale limits remain
+shared. `LayerLegend.show` and its `aesthetics` map control inclusion, while
+`key_glyph` selects the geometry drawn in the key. Guide overrides never alter marks.
+
+`legend().scale(name).options(LegendOptions { .. })` configures a named color scale;
+`legend().aesthetic(channel)` selects the relevant mapped aesthetic. Options include
+title, order, reverse, direction, row/column layout, fill order, key overrides and
+right/left/top/bottom or fractional inside placement. Order zero sorts as 99;
+equal orders retain authoring order, without depending on R's internal serialized
+hash order. Facet collection uses the existing shared/per-panel policy. Stepped
+color guides support `GgplotColorbarOptions.even_steps` and `show_limits`; binned
+key guides draw interval glyphs between labelled boundaries.
+
+`axis.ggplot_axis(Some(GgplotAxisOptions { .. }))` and the same independent-guide
+method provide label dodge, endpoint-first overlap removal, domain caps, minor
+breaks, log ticks and measured stacks. ggplot axes preserve labels by default.
+Log ticks reuse numeric projection, including finite secondary units; prescaled
+logs and signed ranges have explicit controls. Non-numeric or non-invertible
+infinite domains return a capability error. Angular guides belong to GG-13.
+
+`legend().custom(CustomLegend { .. })` adds portable paths with intrinsic bounds,
+optional title and ordinary guide placement. Content uses the shared vector path,
+paint and stroke types; text may be supplied as glyph outlines. It has no runtime
+R/grid object dependency. Theme-wide inheritance and mathematical typography
+remain owned by GG-14.
+
+Definition versions are 68 for nondefault step/limit controls, 69 for legend/layer
+controls, 70 for authored axis policies and 71 for custom vector guides. Scene
+version 19 retains legend title, key, label, bar and tick component roles, with
+original values and panel scope. Python uses the corresponding snake-case builder
+methods; WASM uses camelCase. See the independently authored
+[Rust example](../examples/common/ggplot_guide_composition.rs),
+[Python proof](../scripts/bindings/ggplot_guide_composition.py) and
+[WASM proof](../scripts/bindings/ggplot_guide_composition.cjs).

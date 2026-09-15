@@ -327,6 +327,29 @@ fn primary_reference_missing_color_matches_r_and_keeps_explicit_overrides() {
 #[test]
 fn primary_degenerate_color_scales_preserve_reference_paints_and_rejections() {
     use chart_core::prelude::*;
+    use chart_core::{
+        ChartResult, Rect, ResourceId, Revision,
+        layout::{LayoutRequest, layout},
+        services::{
+            ResourceDescriptor, ResourceKind, TextMeasurer, TextMetrics, TextRequest, Units,
+        },
+    };
+    struct Metrics;
+    impl TextMeasurer for Metrics {
+        fn measure(&self, request: TextRequest<'_>) -> ChartResult<TextMetrics> {
+            TextMetrics::new(request.text.len() as f64 * 5., 8., 2.)
+        }
+    }
+    let request = LayoutRequest::new(
+        Rect::new(0., 0., 600., 400.).unwrap(),
+        Units::Points,
+        ResourceDescriptor {
+            id: ResourceId::new(1),
+            revision: Revision::INITIAL,
+            kind: ResourceKind::Font,
+            byte_len: 1,
+        },
+    );
     let fixture: serde_json::Value = serde_json::from_str(include_str!(
         "../../../fixtures/parity/ggplot2/degenerate-bin-mapping.json"
     ))
@@ -358,6 +381,14 @@ fn primary_degenerate_color_scales_preserve_reference_paints_and_rejections() {
         });
         if case["guide"].get("error").is_some() || case["mapping"].get("error").is_some() {
             assert!(result.is_err(), "{case}");
+            continue;
+        }
+        // Scale mapping can succeed while the default guide rejects at draw time.
+        if case["draw"].get("error").is_some() {
+            assert!(
+                result.and_then(|p| layout(p, &request, &Metrics)).is_err(),
+                "{case}"
+            );
             continue;
         }
         let prepared = result.unwrap_or_else(|e| panic!("{e:?}: {case}"));

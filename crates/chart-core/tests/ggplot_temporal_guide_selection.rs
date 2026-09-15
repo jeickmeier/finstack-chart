@@ -452,3 +452,166 @@ fn temporal_interval_label_callbacks_and_formats_match_reference() {
     }
     assert_eq!(checked, 8640);
 }
+
+#[test]
+fn temporal_step_widths_and_limit_labels_match_reference() {
+    let source: Json = serde_json::from_str(include_str!(
+        "../../../fixtures/parity/ggplot2/temporal-colorsteps-controls.json"
+    ))
+    .unwrap();
+    for case in source["cases"].as_array().unwrap() {
+        for (unit, multiplier) in [
+            (TimeUnit::Seconds, 1.),
+            (TimeUnit::Milliseconds, 1000.),
+            (TimeUnit::Microseconds, 1e6),
+            (TimeUnit::Nanoseconds, 1e9),
+        ] {
+            let origin = (1_577_836_800. * multiplier) as i64;
+            let factor = if case["kind"] == "date" {
+                86400.
+            } else {
+                3600.
+            } * multiplier;
+            let descriptor =
+                spec(case, origin, factor, unit).with_colorbar_options(GgplotColorbarOptions {
+                    even_steps: case["even_steps"].as_bool().unwrap(),
+                    show_limits: case["show_limits"].as_bool().unwrap(),
+                    ..Default::default()
+                });
+            let legend = MappedScale::for_colors(descriptor)
+                .unwrap()
+                .legend(
+                    chart_core::ScaleId::new(1),
+                    chart_core::scene::Color {
+                        red: 127,
+                        green: 127,
+                        blue: 127,
+                        alpha: 255,
+                    },
+                )
+                .unwrap();
+            let expected: Vec<_> = case["decor"]["colour"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|v| {
+                    chart_core::color::Paint::from_css(v.as_str().unwrap())
+                        .unwrap()
+                        .resolve()
+                })
+                .collect();
+            assert_eq!(
+                legend
+                    .colorsteps
+                    .iter()
+                    .map(|s| s.color)
+                    .collect::<Vec<_>>(),
+                expected,
+                "{case}"
+            );
+            let keys: Vec<_> = legend
+                .numeric_breaks
+                .iter()
+                .zip(&legend.colorstep_positions)
+                .filter_map(|(e, p)| p.map(|p| (p.0, e.label.as_deref())))
+                .collect();
+            let positions = case["key"][".value"].as_array().unwrap();
+            let labels = case["key"][".label"].as_array().unwrap();
+            assert_eq!(keys.len(), positions.len(), "{case}");
+            for ((p, label), (want, text)) in keys.iter().zip(positions.iter().zip(labels)) {
+                assert!((p - want.as_f64().unwrap()).abs() < 3e-12, "{case}");
+                assert_eq!(*label, text.as_str(), "{case}");
+            }
+        }
+    }
+}
+
+#[test]
+fn temporal_colorbar_positions_share_the_key_timestamp_units() {
+    use chart_core::{
+        Rect, ResourceId,
+        layout::{LayoutRequest, layout},
+        scene::Primitive,
+        services::{
+            ResourceDescriptor, ResourceKind, TextMeasurer, TextMetrics, TextRequest, Units,
+        },
+    };
+    struct Metrics;
+    impl TextMeasurer for Metrics {
+        fn measure(&self, request: TextRequest<'_>) -> ChartResult<TextMetrics> {
+            TextMetrics::new(request.text.len() as f64 * 5., 8., 2.)
+        }
+    }
+    let fixture: Json = serde_json::from_str(include_str!(
+        "../../../fixtures/parity/ggplot2/temporal-guide-selection.json"
+    ))
+    .unwrap();
+    let request = LayoutRequest::new(
+        Rect::new(0., 0., 640., 360.).unwrap(),
+        Units::Points,
+        ResourceDescriptor {
+            id: ResourceId::new(1),
+            revision: Revision::INITIAL,
+            kind: ResourceKind::Font,
+            byte_len: 1,
+        },
+    );
+    let mut compared = 0;
+    for case in fixture["cases"].as_array().unwrap().iter().filter(|t| {
+        t["channel"] == "colour"
+            && t["guide"] == "default"
+            && t["limits"] == "full"
+            && t["population"] == "ordinary"
+            && t["breaks"] == "auto"
+    }) {
+        for (unit, multiplier) in [
+            (TimeUnit::Seconds, 1),
+            (TimeUnit::Milliseconds, 1000),
+            (TimeUnit::Microseconds, 1_000_000),
+            (TimeUnit::Nanoseconds, 1_000_000_000),
+        ] {
+            let plot = build_case(
+                case,
+                unit,
+                multiplier,
+                Arc::new(ExtensionRegistry::default()),
+            );
+            let frame =
+                layout(plot.chart().unwrap().prepare().unwrap(), &request, &Metrics).unwrap();
+            let bar = frame
+                .scene()
+                .items()
+                .iter()
+                .find_map(|item| match item.primitive {
+                    Primitive::SampledGradientRectangle { bounds, .. } => Some(bounds),
+                    _ => None,
+                })
+                .unwrap();
+            for (label, value) in case["result"]["guides"][0]["labels"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .zip(case["result"]["guides"][0]["values"].as_array().unwrap())
+            {
+                let y = frame
+                    .scene()
+                    .items()
+                    .iter()
+                    .find_map(|item| match &item.primitive {
+                        Primitive::Text { origin, text, .. } if text == label.as_str().unwrap() => {
+                            Some(origin.y() - 3.)
+                        }
+                        _ => None,
+                    })
+                    .unwrap();
+                let actual = (bar.max_y() - y) / bar.height();
+                assert!(
+                    (actual - value.as_f64().unwrap()).abs() < 3e-12,
+                    "{case}: {actual}"
+                );
+            }
+            compared += 1;
+        }
+    }
+    assert_eq!(compared, 8);
+}

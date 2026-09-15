@@ -975,3 +975,16 @@ pub(super) fn sample_layer_batch<T>(
     }
     Ok(batch)
 }
+
+/// Per-layer observed legend keys, using the same prepared population as scale training.
+pub(crate) fn guide_key_population(
+    input: &ColorInput,
+    layer: &Layer,
+    chart: &PreparedChart,
+    table: &PreparedTable,
+) -> ChartResult<std::collections::BTreeSet<crate::scales::ScaleKey>> {
+    let source = chart.source().get()?;
+    let data = source.dataset(table.input().dataset)?;
+    key_population(input, layer, chart.definition(), data, table, true)
+        .map(|keys| keys.into_iter().collect())
+}

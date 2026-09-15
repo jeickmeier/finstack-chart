@@ -40,6 +40,11 @@ fn component_attributes(component: Option<&GuideComponent>) -> String {
     match component {
         Some(c) => {
             let role = match c.role {
+                GuideRole::LegendTitle => "legend-title",
+                GuideRole::LegendKey => "legend-key",
+                GuideRole::LegendLabel => "legend-label",
+                GuideRole::LegendBar => "legend-bar",
+                GuideRole::LegendTick => "legend-tick",
                 GuideRole::Domain => "domain",
                 GuideRole::Line => "tick-line",
                 GuideRole::Label => "label",

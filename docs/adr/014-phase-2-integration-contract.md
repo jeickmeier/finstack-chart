@@ -563,3 +563,21 @@ as the pinned reference does. Temporal function guides reuse the existing calend
 owner after raw result arity validation. The implementation remains pure native
 registration selected by the portable operation identity; no host interpreter enters
 core. Positional limits and other callback arguments remain separate open work.
+
+## GG-05 portable guide composition
+
+Shared core preparation retains mapped key samples and source identities for compatible
+multi-aesthetic guide merging and per-layer inclusion. Layout consumes those samples;
+it does not call palettes or interpreters again. Temporal colourbar layout converts
+absolute palette endpoints to the same timestamp offsets as its keys using the
+existing timestamp-normalization owner.
+
+Custom guides are bounded portable vector paths, including supplied text outlines.
+They do not serialize R/grid objects or require a native event loop. This keeps the
+same scene usable by native, SVG, PDF and PNG consumers. Definition versions 68–71
+introduce authored step, legend, axis and custom-vector controls only when needed;
+scene v19 adds legend component roles. Angular policies remain owned by GG-13.
+
+Guide order zero follows the reference's effective order 99. Equal orders retain
+stable authoring order instead of depending on R's opaque serialized guide hashes.
+This deterministic portable ordering is explicit in the primary authoring contract.

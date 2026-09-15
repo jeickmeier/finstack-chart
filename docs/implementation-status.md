@@ -7,6 +7,34 @@ WP-05 is committed at `3cf1b33`; WP-06 at `f8657fb`; WP-07/08 at `fac148a`.
 WP-09/10 are committed at `c5ec829`; WP-11 at `a6fb2ea`; WP-12 at `63dbcc2`.
 Original reports retain the revision context from their evidence runs.
 
+## GG-05 complete — 14 September 2026
+
+The owner's full GG-05 assignment is **COMPLETE** on `fbaa1d5` plus owned changes
+(GG2-04 / FIX-GG05). Shared core now owns multi-aesthetic and binned keys, layer
+awareness/overrides, grids and all placements, unequal steps and limit labels,
+axis/logtick/stack policies, custom vectors, and scene-v19 component metadata.
+Definition versions 68–71 and the portable envelope support the new controls.
+Temporal colourbar endpoints now use the same timestamp units as their guide keys.
+
+Final `mise run test` passes **895 tests across 189 nonempty / 201 total targets**;
+`mise run check`, repository checks and `git diff --check` pass. Actual Python/WASM
+proofs match 711 numeric-control and 93 default-control states, plus 7,680 temporal
+selection, 21,872 temporal-label and 192 temporal-control states per host. Ten
+independent Rust/Python/WASM composed authors produce 30 identical publications.
+Numeric/default Rust PNG/PDF bytes match hosts; only process-local SVG guide IDs
+require bijective normalization. Native composition/step controls and 105 selected
+SVG/PDF/PNG triplets (315 files) were inspected. Original source mapping/callback
+records remain intact; new draw outcomes verify constant-guide rejections.
+
+Evidence: [completion report](evidence/phase-2-ggplot-guide-completion-2026-09-14.md)
+and [manifest](evidence/phase-2-ggplot-guide-completion-2026-09-14.json).
+The full cumulative primary runner is not claimed as passed: the temporal failure
+it found was corrected and all affected temporal matrices rerun independently.
+The legacy binding runner still fails on the pre-existing `family-secondary`
+fixture (declared v1, required v17). These are explicit whole-project validation
+boundaries; no global gate is closed. GG-06–19 and expanded WP-21/22/23 remain open.
+Next implementation package: **GG-06**, with GG-08 also ready within its prerequisites.
+
 ## GG-05 default binned boundary cells — 14 September 2026
 
 Core implementation for GG2-04 / FIX-GG05 on `6e74ae6` plus owned changes now
@@ -3854,7 +3882,7 @@ work and FIX-GG cases are defined once in the plan.
 | GG-02 — Compatibility profile, stages and inferred grouping | COMPLETE | GG2-01/02 | [Stage acceptance](evidence/phase-2-stages-2026-09-08.md); primary/binding proofs pass. Later ggplot2 families remain separate. |
 | GG-03 — Independent aesthetic encodings | COMPLETE | GG2-03 | [Accepted](evidence/phase-2-aesthetics-2026-09-10.md): 104 R glyph records, 12 core regressions, actual hosts/update/publication/native, 487 macOS / 468 Linux tests and full check. |
 | GG-04 — ggplot2 scale and palette policies | COMPLETE | GG2-03 | [Qualified owned scale contracts](evidence/phase-2-ggplot-scales-2026-09-14.json): 862 macOS tests/doctests, full check and 672 cumulative runner commands with inline assertions pass against verified source. [Coverage](evidence/ggplot-scales-coverage.md) maps all 152 exports, 960 formal occurrences, 276 methods and 160 fields. Named guide/extension and full export certification remain GG-05/GG-16/GG-19. |
-| GG-05 — Complete guides and legend composition | IN PROGRESS | GG2-04 | [Default colourbar slice qualified](evidence/phase-2-ggplot-colorbar-2026-09-14.json): 25 verified paths integrated, source-equivalent 866-test isolated suite, main full check and 24 focused tests; fresh hosts match 108 colourbar and 351 selection states, with inspected dedicated exports and native output. Authored controls, complete component metadata and remaining guide composition stay open. |
+| GG-05 — Complete guides and legend composition | COMPLETE | GG2-04 | [Full package acceptance](evidence/phase-2-ggplot-guide-completion-2026-09-14.md): 895 workspace tests and repository checks pass; source-backed guide composition, final actual host proofs and inspected native/SVG/PDF/PNG output. Angular guides remain GG-13; global host/certification gates remain open. |
 | GG-06 — Bin/count/summary and position semantics | NOT STARTED | GG2-02/05 | Requires GG-02, SP-03, WP-S06. |
 | GG-07 — Primitive and interval recipe completion | NOT STARTED | GG2-06 | Requires GG-03, GG-06, WP-S02/03/05. |
 | GG-08 — Data-driven text, labels and annotations | NOT STARTED | GG2-06/09 | Requires GG-03, WP-P04. |

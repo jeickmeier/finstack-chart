@@ -2,7 +2,8 @@
 // GG-04: actual temporal legend/colorbar selection, replay, edits and publication.
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'../..'),c=require(path.resolve(process.argv[2],'authoring.cjs')),out=path.resolve(process.argv[3]);fs.mkdirSync(out,{recursive:true});
-const labelCases=process.argv.slice(4).includes('--interval-labels'),fixture=labelCases?'temporal-interval-label-functions.json':'temporal-guide-selection.json',cases=JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2',fixture))).cases,records=[],registry=c.ExtensionRegistry.example();
+const stepControls=process.argv.slice(4).includes('--steps-controls');
+const labelCases=process.argv.slice(4).includes('--interval-labels'),fixture=stepControls?'temporal-colorsteps-controls.json':labelCases?'temporal-interval-label-functions.json':'temporal-guide-selection.json',cases=JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2',fixture))).cases,records=[],registry=c.ExtensionRegistry.example();
 function colorbar(t){return t.guide==='colourbar'||t.guide==='default'&&t.channel==='colour';}
 function descriptor(t,origin,unit,factor){
  const channel=t.channel,date=t.kind==='date',output=channel==='colour'?{Interpolate:{operation:'GgplotPalette',spec:{Gradient:{colors:[{red:19,green:43,blue:67,alpha:255},{red:86,green:177,blue:247,alpha:255}],values:null}}}}:{Interpolate:{operation:'PowerRange',range:channel==='alpha'?[.1,1]:[1,6],exponent:channel==='size'?.5:1,absolute:false}},args={date,breaks:t.breaks==='null'?'None':t.breaks==='empty'?{Explicit:[]}:t.breaks==='explicit'?{Explicit:[-factor,0,factor,factor,3*factor,20*factor,{number:'NaN'}]}:'Automatic'};
@@ -13,6 +14,14 @@ function layer(t,source,scale){return t.channel==='colour'?c.points().name('mark
 function paint(text){return Object.fromEntries(['red','green','blue','alpha'].map((k,i)=>[k,i===3?255:parseInt(text.slice(1+2*i,3+2*i),16)]));}
 function roundEven(v){const n=Math.floor(v);return v-n===.5?n+n%2:Math.round(v);}
 function check(t,chart,factor,multiplier){
+ if(stepControls){
+  const legend=chart.semantics().layers[0].color_legend;
+  assert.deepEqual(legend.colorsteps.map(v=>v.color),t.decor.colour.map(paint));
+  const keys=legend.colorstep_positions.flatMap((pos,i)=>pos===null?[]:[[pos,legend.numeric_breaks[i].label??null]]);
+  assert.equal(keys.length,t.key['.value'].length);
+  keys.forEach(([pos,label],i)=>{assert.ok(Math.abs(pos-t.key['.value'][i])<3e-12);assert.equal(label,t.key['.label'][i]);});
+  return {keys,colorsteps:legend.colorsteps};
+ }
  const state=chart.semantics().layers[0],colour=t.channel==='colour',date=t.kind==='date',entries=(colour?(state.color_legend?.numeric_breaks??[]):Object.values(state.numeric_value_guides??{}).flat()).filter(e=>e.visible),guides=t.result.guides,wanted=guides.length?( ['bins','coloursteps'].includes(t.guide)?guides[0].source_values.slice(0,guides[0].values.length):t.result.raw_breaks.filter(v=>typeof v==='number'&&v>=t.result.limits[0]&&v<=t.result.limits[1])):[],actual={values:entries.map(e=>date?18262+e.transformed/factor:1577836800+e.transformed/multiplier),labels:entries.map(e=>e.label)};
  assert.deepEqual(actual,{values:wanted,labels:guides[0]?.labels??[]},JSON.stringify(t));assert.equal(wanted.length,guides[0]?.values.length??0);
  if(guides.length&&['bins','coloursteps'].includes(t.guide))entries.forEach((entry,i)=>{const mapped=entry.mapped,value=guides[0].mapped[i],actual=['Missing','Null'].includes(mapped.kind)?null:mapped.value;if(mapped.kind==='Color'){assert.equal(actual.space,'Rgb');assert.deepEqual(actual.channels,{r:parseInt(value.slice(1,3),16),g:parseInt(value.slice(3,5),16),b:parseInt(value.slice(5,7),16),opacity:1});}else if(typeof value==='number')assert.ok(Math.abs(actual-value)<=3e-12*Math.max(1,Math.abs(value)),JSON.stringify([t,entry,value]));else assert.deepEqual(actual,value,JSON.stringify([t,entry,value]));});
@@ -28,19 +37,19 @@ for(const [index,t] of cases.entries()){
   const owned=[];
   try{
    const factor=multiplier*(t.kind==='date'?86400:3600),origin=1577836800n*BigInt(multiplier),values=t.inputs,data=c.Data.columns({x:c.column(Float64Array.from(values,(_,i)=>i),{kind:'float64'}),v:c.timestamps(values.map(v=>origin+BigInt(v)*BigInt(factor)),unit,'UTC')});owned.push(data);
-   const source={field:'v',origin:String(origin)},scale=descriptor(t,origin,variant,factor);let draft=c.plot(data).with_registry(registry).profile('Ggplot2_4_0_3');draft=t.channel==='colour'?draft.aes(c.aes().x('x').y(1).color(source).color_scale('v')).scale(c.color_mapped('v',scale)):draft.aes(c.aes().x('x').y(1));
+   const source={field:'v',origin:String(origin)},scale=descriptor(t,origin,variant,factor);if(stepControls)scale.colorbar_options={even_steps:t.even_steps,show_limits:t.show_limits};let draft=c.plot(data).with_registry(registry).profile('Ggplot2_4_0_3');draft=t.channel==='colour'?draft.aes(c.aes().x('x').y(1).color(source).color_scale('v')).scale(c.color_mapped('v',scale)):draft.aes(c.aes().x('x').y(1));
    const p=draft.layer(layer(t,source,scale)).build();owned.push(p);const wire=p.to_json(),restored=c.Plot.from_json(wire,registry);owned.push(restored);assert.equal(restored.to_json(),wire);
-   if(colorbar(t)||['bins','coloursteps'].includes(t.guide)){const version=colorbar(t)?59:60,old=JSON.parse(wire);assert.equal(old.version,version);old.version=version-1;assert.throws(()=>c.Plot.from_json(JSON.stringify(old),registry),c.ChartError);}
-   if(t.result.error){assert.throws(()=>{const rejected=restored.chart();owned.push(rejected);rejected.semantics();},c.ChartError);records.push({index,unit,state:'rejected'});continue;}
+   if(colorbar(t)||['bins','coloursteps'].includes(t.guide)){const version=stepControls?(!t.even_steps||t.show_limits?68:64):colorbar(t)?59:60,old=JSON.parse(wire);assert.equal(old.version,version);old.version=version-1;assert.throws(()=>c.Plot.from_json(JSON.stringify(old),registry),c.ChartError);}
+   if(t.result?.error){assert.throws(()=>{const rejected=restored.chart();owned.push(rejected);rejected.semantics();},c.ChartError);records.push({index,unit,state:'rejected'});continue;}
    for(const state of ['original','layer_edit','theme_edit']){
     const current=state==='original'?restored:state==='layer_edit'?restored.edit().layer('marks',layer(t,source,scale)).build():restored.edit().theme(c.theme()).build();if(current!==restored)owned.push(current);
     const chart=current.chart();owned.push(chart);records.push({index,unit,state,...check(t,chart,factor,multiplier)});assert.equal(restored.to_json(),wire);
    }
    let selected=(t.guide==='default'&&t.breaks==='auto'&&t.limits===(t.population==='ordinary'?'full':'none'))||(t.population==='ordinary'&&t.limits==='full'&&((t.guide==='colourbar'&&t.breaks==='auto')||(t.guide==='default'&&t.breaks==='null')));
    selected=labelCases?t.label_mode==='indexed'&&t.limits==='full'&&((t.population==='ordinary'&&['auto','explicit'].includes(t.breaks))||(t.population==='empty'&&t.breaks==='auto')):(selected||(['bins','coloursteps'].includes(t.guide)&&t.limits==='full'&&t.population==='ordinary'));
-   if(unit==='s'&&selected){const request=output.request(restored,options);owned.push(request);const frame=request.prepare();owned.push(frame);for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`${t.kind}-${t.channel}-${t.population}-${t.guide}-${t.breaks}${labelCases?'-format-'+t.format_mode:''}.${fmt}`),frame.export(fmt));}
+   if(unit==='s'&&selected){const request=output.request(restored,options);owned.push(request);const frame=request.prepare();owned.push(frame);for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`${t.kind}-${t.channel}-${t.population}-${t.guide}-${t.breaks}${stepControls?`-even-${t.even_steps?'True':'False'}-limits-${t.show_limits?'True':'False'}`:labelCases?'-format-'+t.format_mode:''}.${fmt}`),frame.export(fmt));}
   }finally{for(const obj of owned.reverse())obj.dispose();}
  }
 }
-assert.equal(records.length,labelCases?21872:7680);assert.equal(fs.readdirSync(out).filter(f=>f.endsWith('.svg')).length,labelCases?60:66);fs.writeFileSync(path.join(out,'records.json'),JSON.stringify(records));options.dispose();output.dispose();
+assert.equal(records.length,stepControls?192:labelCases?21872:7680);assert.equal(fs.readdirSync(out).filter(f=>f.endsWith('.svg')).length,stepControls?16:labelCases?60:66);fs.writeFileSync(path.join(out,'records.json'),JSON.stringify(records));options.dispose();output.dispose();
 console.log(`PASS WASM: ${records.length} temporal guide-selection states and ${fs.readdirSync(out).filter(f=>f.endsWith('.svg')).length*3} publications.`);

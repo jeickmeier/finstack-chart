@@ -856,6 +856,9 @@ pub enum ClipPolicy {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Layer {
+    /// Optional guide inclusion and key glyph policy.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub legend: Option<super::LayerLegend>,
     /// Explicit style constants override their corresponding mapped channels.
     #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
     pub aesthetic_values:
@@ -937,6 +940,7 @@ impl Layer {
     /// Author a source identity layer; callers can supply independent mappings/schema.
     pub fn new(id: LayerId, data: impl Into<DataRef>, geom: Geom, mappings: SourceAes) -> Self {
         Self {
+            legend: None,
             aesthetic_values: Default::default(),
             value_scales: Default::default(),
             paint_scales: Default::default(),
@@ -1057,6 +1061,12 @@ impl Layer {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ChartDefinition {
+    /// Portable custom guide content (wire v71).
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub custom_legends: Vec<super::CustomLegend>,
+    /// Scale-specific guide presentation (wire v69).
+    #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub legends: std::collections::BTreeMap<ScaleId, super::LegendOptions>,
     /// Canonical compatibility provenance and resolved execution policy.
     /// Absence preserves LibraryV1 byte and behavioral defaults.
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -1134,6 +1144,25 @@ impl ChartDefinition {
     }
     /// Minimum definition-envelope version required by its retained capabilities.
     pub fn wire_version(&self) -> u32 {
+        if !self.custom_legends.is_empty() {
+            return 71;
+        }
+        if self.axes.iter().any(|a| a.ggplot_axis.is_some())
+            || self.guides.iter().any(|a| a.ggplot_axis.is_some())
+        {
+            return 70;
+        }
+        if !self.legends.is_empty() || self.layers.iter().any(|l| l.legend.is_some()) {
+            return 69;
+        }
+        if super::interpolation_extensions::mapped_scales(self).any(|scale| {
+            scale
+                .colorbar_options
+                .as_deref()
+                .is_some_and(|o| !o.even_steps || o.show_limits)
+        }) {
+            return 68;
+        }
         if super::interpolation_extensions::mapped_scales(self).any(|scale| {
             scale
                 .colorbar_options
@@ -1758,6 +1787,8 @@ impl ChartDefinition {
     pub fn new(revision: Revision) -> Self {
         Self {
             revision,
+            custom_legends: vec![],
+            legends: Default::default(),
             semantics: None,
             facets: None,
             theme: None,

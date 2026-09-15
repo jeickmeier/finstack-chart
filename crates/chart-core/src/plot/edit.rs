@@ -497,35 +497,7 @@ impl PlotEditBuilder {
     }
     /// Override the title of an existing shared legend, independently of annotations.
     pub fn legend(self, legend: LegendBuilder) -> Self {
-        self.update(|this| {
-            let name = legend.scale.ok_or_else(|| {
-                error(
-                    DiagnosticCode::MissingResource,
-                    "Legend requires a scale name.",
-                )
-            })?;
-            let id = *this.original.colors.get(&name).ok_or_else(|| {
-                error(
-                    DiagnosticCode::MissingResource,
-                    "Legend names an absent scale.",
-                )
-            })?;
-            for color in this
-                .definition
-                .layers
-                .iter_mut()
-                .flat_map(|l| l.color.iter_mut().chain(l.paint_scales.values_mut()))
-                .filter(|c| c.id == id)
-            {
-                if legend.generic {
-                    color.title = None;
-                }
-                if let Some(title) = &legend.title {
-                    color.title = Some(title.clone());
-                }
-            }
-            Ok(())
-        })
+        self.update(|this| legend.apply(&mut this.definition, &this.original.colors))
     }
     /// Add or replace one stable annotation; use id() to target an existing annotation.
     pub fn annotation(self, label: impl Into<PlotLayer>) -> Self {

@@ -262,6 +262,23 @@ impl Compiler {
             false,
         )?;
         let definition = resolved.as_ref();
+        let mut custom_ids = std::collections::BTreeSet::new();
+        for guide in &definition.custom_legends {
+            guide.validate(crate::Limits {
+                max_items: limits.max_prepared_rows,
+                max_path_commands: limits.max_vertices,
+                ..Default::default()
+            })?;
+            if !custom_ids.insert(guide.id) {
+                return Err(error(
+                    DiagnosticCode::Validation,
+                    "Duplicate custom guide identity.",
+                ));
+            }
+        }
+        for options in definition.legends.values() {
+            options.validate()?;
+        }
         if let Some(semantics) = &definition.semantics {
             semantics.validate()?;
         }

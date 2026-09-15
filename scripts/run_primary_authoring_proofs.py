@@ -314,7 +314,7 @@ assert noncolor_binned_records == json.loads((noncolor_binned_labels/'wasm/recor
 interval_labels=output/'ggplot-continuous-interval-labels'
 run('interval-labels-python',[sys.executable,ROOT/'scripts/bindings/ggplot_continuous_interval_label_functions.py',module,interval_labels/'python'])
 run('interval-labels-wasm',[node,ROOT/'scripts/bindings/ggplot_continuous_interval_label_functions.cjs',wasm,interval_labels/'wasm'])
-run('interval-labels-compare',[sys.executable,ROOT/'scripts/bindings/ggplot_palette_compare.py',interval_labels/'python',interval_labels/'wasm',interval_labels/'comparison.json','2720','108'])
+run('interval-labels-compare',[sys.executable,ROOT/'scripts/bindings/ggplot_palette_compare.py',interval_labels/'python',interval_labels/'wasm',interval_labels/'comparison.json','2720','102'])
 noncolor_continuous_labels=output/'ggplot-noncolor-continuous-labels'
 run('noncolor-continuous-labels-python',[sys.executable,ROOT/'scripts/bindings/ggplot_noncolor_continuous_label_functions.py',module,noncolor_continuous_labels/'python'])
 run('noncolor-continuous-labels-wasm',[node,ROOT/'scripts/bindings/ggplot_noncolor_continuous_label_functions.cjs',wasm,noncolor_continuous_labels/'wasm'])
@@ -478,6 +478,23 @@ run('colorsteps-python',[sys.executable,ROOT/'scripts/bindings/ggplot_colorbar_l
 run('colorsteps-wasm',[node,ROOT/'scripts/bindings/ggplot_colorbar_layout.cjs',wasm,colorsteps/'wasm','--steps'])
 run('colorsteps-compare',[sys.executable,ROOT/'scripts/bindings/ggplot_palette_compare.py',colorsteps/'python',colorsteps/'wasm',colorsteps/'comparison.json','72','54',colorsteps/'rust'])
 
+for guide_mode, guide_states, guide_pubs in [('steps-controls',711,180),('default-steps-all',93,27)]:
+    guide_output=output/('ggplot-'+guide_mode)
+    run(guide_mode+'-rust',['cargo','run','-p','chart-export','--example','ggplot_colorbar_layout','--locked','--',guide_output/'rust','--'+guide_mode])
+    run(guide_mode+'-python',[sys.executable,ROOT/'scripts/bindings/ggplot_colorbar_layout.py',module,guide_output/'python','--'+guide_mode])
+    run(guide_mode+'-wasm',[node,ROOT/'scripts/bindings/ggplot_colorbar_layout.cjs',wasm,guide_output/'wasm','--'+guide_mode])
+    run(guide_mode+'-compare',[sys.executable,ROOT/'scripts/bindings/ggplot_palette_compare.py',guide_output/'python',guide_output/'wasm',guide_output/'comparison.json',str(guide_states),str(guide_pubs),guide_output/'rust'])
+src=(ROOT/'scripts/bindings/authoring/ggplot_guide_types.cts').read_text().replace('../../../packages/wasm/',str(wasm)+'/')
+(consumer/'ggplot-guides.cts').write_text(src)
+run('typescript-ggplot-guides',tsc+['--noEmit','--strict','--target','es2022','--lib','es2022,esnext.disposable','--module','nodenext',consumer/'ggplot-guides.cts'])
+run('python-ggplot-guide-types',base+[ROOT/'scripts/bindings/authoring/ggplot_guide_typing.py'])
+composition=output/'ggplot-guide-composition'
+run('guide-composition-rust',['cargo','run','-p','chart-export','--example','ggplot_guide_composition','--locked','--',composition/'rust'])
+run('guide-composition-python',[sys.executable,ROOT/'scripts/bindings/ggplot_guide_composition.py',module,composition/'python'])
+run('guide-composition-wasm',[node,ROOT/'scripts/bindings/ggplot_guide_composition.cjs',wasm,composition/'wasm'])
+for file in (composition/'rust').iterdir():
+    if file.suffix in ('.svg','.pdf','.png'):
+        assert file.read_bytes()==(composition/'python'/file.name).read_bytes()==(composition/'wasm'/file.name).read_bytes(),file
 colorsteps_boundaries=output/'ggplot-colorsteps-boundaries'
 run('colorsteps-boundaries-rust',['cargo','run','-p','chart-export','--example','ggplot_colorbar_layout','--locked','--',colorsteps_boundaries/'rust','--steps-boundaries'])
 run('colorsteps-boundaries-python',[sys.executable,ROOT/'scripts/bindings/ggplot_colorbar_layout.py',module,colorsteps_boundaries/'python','--steps-boundaries'])
@@ -490,6 +507,12 @@ run('temporal-guide-selection-core',['cargo','test','-p','chart-core','--test','
 run('temporal-guide-selection-python',[sys.executable,ROOT/'scripts/bindings/ggplot_temporal_guide_selection.py',module,temporal_selection/'python'])
 run('temporal-guide-selection-wasm',[node,ROOT/'scripts/bindings/ggplot_temporal_guide_selection.cjs',wasm,temporal_selection/'wasm'])
 run('temporal-guide-selection-compare',[sys.executable,ROOT/'scripts/bindings/ggplot_palette_compare.py',temporal_selection/'python',temporal_selection/'wasm',temporal_selection/'comparison.json','7680','198'])
+run('temporal-step-controls-python',[sys.executable,ROOT/'scripts/bindings/ggplot_temporal_guide_selection.py',module,temporal_selection/'controls-python','--steps-controls'])
+run('temporal-step-controls-wasm',[node,ROOT/'scripts/bindings/ggplot_temporal_guide_selection.cjs',wasm,temporal_selection/'controls-wasm','--steps-controls'])
+assert json.loads((temporal_selection/'controls-python/records.json').read_text()) == json.loads((temporal_selection/'controls-wasm/records.json').read_text())
+for source in (temporal_selection/'controls-python').iterdir():
+    if source.suffix in ('.svg','.pdf','.png'):
+        assert source.read_bytes() == (temporal_selection/'controls-wasm'/source.name).read_bytes(), source
 run('temporal-interval-labels-python',[sys.executable,ROOT/'scripts/bindings/ggplot_temporal_guide_selection.py',module,temporal_selection/'labels-python','--interval-labels'])
 run('temporal-interval-labels-wasm',[node,ROOT/'scripts/bindings/ggplot_temporal_guide_selection.cjs',wasm,temporal_selection/'labels-wasm','--interval-labels'])
 run('temporal-interval-labels-compare',[sys.executable,ROOT/'scripts/bindings/ggplot_palette_compare.py',temporal_selection/'labels-python',temporal_selection/'labels-wasm',temporal_selection/'labels-comparison.json','21872','180'])

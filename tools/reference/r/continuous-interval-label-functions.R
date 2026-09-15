@@ -1,6 +1,7 @@
 # FIX-GG04: interval guides share continuous break selection and vector label calls.
 stopifnot(as.character(getRversion()) == '4.6.1', as.character(packageVersion('ggplot2')) == '4.0.3')
 library(ggplot2)
+pdf(file=tempfile(fileext=".pdf"))
 encode <- function(x) lapply(unname(x), function(v) if(is.na(v)) NULL else if(is.numeric(v)&&!is.finite(v)) if(v>0)'Infinity' else '-Infinity' else v)
 cases <- list()
 for(channel in c('colour','size','alpha'))
@@ -28,7 +29,11 @@ for(channel in c('colour','size','alpha'))
         parsed <- ggplot2:::parse_binned_breaks(scale)
         list(keys=unname(keys),boundaries=if(length(keys)==0||is.null(parsed))list()else if(guide=='bins')encode(sort(unique(c(parsed$limits,parsed$breaks)),na.last=NA))else encode(parsed$breaks[!is.na(parsed$breaks)]))
        }),error=function(e)list(error=conditionMessage(e)))
-       cases[[length(cases)+1L]] <- list(channel=channel,kind='interval',guide=guide,transform=tr,population=pop,limits=limits,break_mode=bm,label_mode=mode,inputs=encode(values),calls=calls,result=result)
+       record <- list(channel=channel,kind='interval',guide=guide,transform=tr,population=pop,limits=limits,break_mode=bm,label_mode=mode,inputs=encode(values),calls=calls,result=result)
+       if(is.null(result$error) && mode=='indexed' && ((pop %in% c('ordinary','empty') && limits=='full' && bm=='auto') || (pop=='constant' && limits=='none' && bm=='empty'))) {
+        record$draw <- tryCatch(suppressWarnings({ggplot_gtable(built);list(ok=TRUE)}),error=function(e)list(error=conditionMessage(e)))
+       }
+       cases[[length(cases)+1L]] <- record
       }
 jsonlite::write_json(list(reference='ggplot2 4.0.3 / R 4.6.1',cases=cases),'fixtures/parity/ggplot2/continuous-interval-label-functions.json',auto_unbox=TRUE,pretty=TRUE,digits=NA,null='null')
 cat('captured',length(cases),'continuous interval label callback records\n')

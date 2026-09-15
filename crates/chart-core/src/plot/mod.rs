@@ -714,42 +714,7 @@ impl PlotBuilder {
             definition.layers.push(layer);
         }
         for legend in self.legends {
-            let name = legend.scale.ok_or_else(|| {
-                error(
-                    DiagnosticCode::MissingResource,
-                    "Legend override requires an existing scale name.",
-                )
-            })?;
-            let id = color_ids.get(&name).ok_or_else(|| {
-                error(
-                    DiagnosticCode::MissingResource,
-                    format!("Legend names absent scale '{name}'."),
-                )
-            })?;
-            if !definition.layers.iter().any(|l| {
-                l.color
-                    .iter()
-                    .chain(l.paint_scales.values())
-                    .any(|c| &c.id == id)
-            }) {
-                return Err(error(
-                    DiagnosticCode::MissingResource,
-                    format!("Legend scale '{name}' has no mapped layer."),
-                ));
-            }
-            for color in definition
-                .layers
-                .iter_mut()
-                .flat_map(|l| l.color.iter_mut().chain(l.paint_scales.values_mut()))
-                .filter(|c| &c.id == id)
-            {
-                if legend.generic {
-                    color.title = None;
-                }
-                if let Some(title) = &legend.title {
-                    color.title = Some(title.clone());
-                }
-            }
+            legend.apply(&mut definition, &color_ids)?;
         }
         for name in color_scales.keys() {
             if !definition.layers.iter().any(|l| {

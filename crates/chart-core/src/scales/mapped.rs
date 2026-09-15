@@ -2209,6 +2209,68 @@ impl MappedScale {
             }
             _ => &GgplotGuideLabels::Automatic,
         };
+        if self
+            .spec
+            .colorbar_options
+            .as_deref()
+            .is_some_and(|o| !o.even_steps)
+        {
+            let entries = if let Some(GgplotScaleGuide::ContinuousSteps(g)) =
+                self.spec.guide.as_deref()
+            {
+                self.continuous_guide_entries_using(
+                    budget,
+                    label_budget,
+                    Some(&GgplotScaleGuide::Continuous(g.clone())),
+                )?
+            } else if let Some(GgplotScaleGuide::TemporalSteps(g)) = self.spec.guide.as_deref() {
+                self.continuous_guide_entries_using(
+                    budget,
+                    label_budget,
+                    Some(&GgplotScaleGuide::Temporal(g.clone())),
+                )?
+            } else {
+                self.binned_guide_entries(budget, label_budget)?
+            };
+            if let Some(entries) = &entries
+                && entries.iter().any(|e| e.visible)
+            {
+                let ScaleFunctionSpec::Interpolated(scale) = &self.spec.function else {
+                    unreachable!("interval mapping")
+                };
+                let NormalizationSpec::Ggplot {
+                    domain,
+                    ref family,
+                    reverse,
+                    ..
+                } = scale.normalization
+                else {
+                    unreachable!("interval normalization")
+                };
+                let mut boundaries = self
+                    .interval_bounds(domain, family, reverse)?
+                    .into_iter()
+                    .chain(entries.iter().map(|e| e.transformed.0))
+                    .filter(|v| !v.is_nan())
+                    .collect::<Vec<_>>();
+                boundaries.sort_by(f64::total_cmp);
+                boundaries.dedup_by(|a, b| *a == *b);
+                let batch = self.interval_midpoint_batch(&boundaries, family, reverse)?;
+                *steps = self.color_step_cells(&boundaries, batch, family, reverse, missing)?;
+                if let (Some(first), Some(last)) = (boundaries.first(), boundaries.last()) {
+                    *positions = entries
+                        .iter()
+                        .map(|e| {
+                            let p = (e.transformed.0 - first) / (last - first);
+                            (e.visible && p.is_finite() && (0. ..=1.).contains(&p))
+                                .then_some(Number(p))
+                        })
+                        .collect();
+                }
+            }
+
+            return Ok(entries);
+        }
         if matches!(
             self.spec.guide.as_deref(),
             Some(
@@ -2266,6 +2328,15 @@ impl MappedScale {
             if let (Some(entries), PreparedMapping::Binned(mapping)) = (&entries, &self.mapping)
                 && !mapping.bounds.is_empty()
             {
+                if !entries.is_empty() {
+                    mapping.validate_guide_mapping()?;
+                    if mapping.bounds.len() == 1 && entries.len() > 1 {
+                        return Err(error(
+                            DiagnosticCode::Validation,
+                            "Binned color guide values exceed the constant mapped key count.",
+                        ));
+                    }
+                }
                 let mut keys = entries.clone();
                 *positions = super::ggplot_bins::prepare_color_label_inputs(
                     &mut keys,
@@ -2513,13 +2584,23 @@ impl MappedScale {
         };
         let bins = matches!(
             self.spec.guide.as_deref(),
+            None | Some(GgplotScaleGuide::Binned(_))
+        ) || matches!(
+            self.spec.guide.as_deref(),
             Some(
                 GgplotScaleGuide::BinnedBins(_)
                     | GgplotScaleGuide::ContinuousBins(_)
                     | GgplotScaleGuide::TemporalBins(_)
             )
         );
-        let defer_labels = bins && matches!(labels, GgplotGuideLabels::Registered { .. });
+        let defer_labels = matches!(
+            self.spec.guide.as_deref(),
+            Some(
+                GgplotScaleGuide::BinnedBins(_)
+                    | GgplotScaleGuide::ContinuousBins(_)
+                    | GgplotScaleGuide::TemporalBins(_)
+            )
+        ) && matches!(labels, GgplotGuideLabels::Registered { .. });
         let Some(mut entries) =
             self.binned_key_candidates(budget, label_budget, labels, false, &mut vec![])?
         else {
@@ -2563,14 +2644,7 @@ impl MappedScale {
         {
             boundaries.push(boundaries[0]);
         }
-        let mapped = if matches!(
-            self.spec.guide.as_deref(),
-            Some(
-                GgplotScaleGuide::BinnedBins(_)
-                    | GgplotScaleGuide::ContinuousBins(_)
-                    | GgplotScaleGuide::TemporalBins(_)
-            )
-        ) {
+        let mapped = if bins {
             let mut values =
                 if let Some(batch) = self.interval_midpoint_batch(&boundaries, family, reverse)? {
                     let values = batch.values.ok_or_else(|| {
@@ -3368,9 +3442,11 @@ impl MappedScale {
         domain: &[ScaleKey],
         missing: Color,
         entries: &mut Vec<(String, Color)>,
+        keys: &mut Vec<ScaleKey>,
     ) -> ChartResult<()> {
         if self.spec.reference_guides() {
             for entry in self.discrete_guide_entries()?.unwrap_or_default() {
+                keys.push(entry.key.clone());
                 let label = entry.label.unwrap_or_else(|| {
                     if matches!(
                         self.spec.discrete_guide().map(|g| &g.labels),
@@ -3385,6 +3461,7 @@ impl MappedScale {
             }
         } else {
             for key in domain {
+                keys.push(key.clone());
                 entries.push((key_label(key), self.color(None, Some(key), missing)?));
             }
         }
@@ -3548,11 +3625,12 @@ impl MappedScale {
             missing
         };
         let mut entries = vec![];
+        let mut discrete_keys = vec![];
         let mut intervals = vec![];
         let mut midpoint = None;
         let mut colorsteps = vec![];
         let mut colorstep_positions = vec![];
-        let numeric_breaks = if let Some(candidates) = self.binned_color_guide_entries(
+        let mut numeric_breaks = if let Some(candidates) = self.binned_color_guide_entries(
             crate::interpolate::MAX_VALUES,
             1_048_576,
             &mut colorsteps,
@@ -3575,7 +3653,12 @@ impl MappedScale {
                     if let ScaleFunctionSpec::GgplotDiscreteIdentity(s) = &self.spec.function
                         && s.guide
                     {
-                        self.discrete_entries(&s.domain()?, missing, &mut entries)?;
+                        self.discrete_entries(
+                            &s.domain()?,
+                            missing,
+                            &mut entries,
+                            &mut discrete_keys,
+                        )?;
                     }
                 }
                 PreparedMapping::Binned(_)
@@ -3641,7 +3724,12 @@ impl MappedScale {
                         if matches!(
                             self.spec.guide.as_deref(),
                             None | Some(GgplotScaleGuide::Binned(_))
-                        ) && !a.is_nan()
+                        ) && !self
+                            .spec
+                            .colorbar_options
+                            .as_deref()
+                            .is_some_and(|o| !o.even_steps)
+                            && !a.is_nan()
                             && !b.is_nan()
                             && a != b
                         {
@@ -3702,7 +3790,12 @@ impl MappedScale {
                     }
                 }
                 PreparedMapping::Ordinal(s) => {
-                    self.discrete_entries(&s.spec().domain, missing, &mut entries)?;
+                    self.discrete_entries(
+                        &s.spec().domain,
+                        missing,
+                        &mut entries,
+                        &mut discrete_keys,
+                    )?;
                 }
                 PreparedMapping::Continuous(s) => {
                     if self.spec.reference_guides() {
@@ -3747,6 +3840,80 @@ impl MappedScale {
                 }
             }
         }
+        if !colorsteps.is_empty()
+            && colorstep_positions.iter().any(Option::is_some)
+            && self
+                .spec
+                .colorbar_options
+                .as_deref()
+                .is_some_and(|o| o.show_limits)
+        {
+            let labels = self
+                .spec
+                .guide
+                .as_deref()
+                .and_then(GgplotScaleGuide::labels)
+                .unwrap_or(&GgplotGuideLabels::Automatic);
+            if !matches!(
+                labels,
+                GgplotGuideLabels::Explicit(_) | GgplotGuideLabels::Named(_)
+            ) {
+                let ScaleFunctionSpec::Interpolated(scale) = &self.spec.function else {
+                    unreachable!("interval mapping")
+                };
+                let NormalizationSpec::Ggplot {
+                    domain,
+                    ref family,
+                    reverse,
+                    ..
+                } = scale.normalization
+                else {
+                    unreachable!("interval normalization")
+                };
+                let bounds = self.interval_bounds(domain, family, reverse)?;
+                let temporal = self
+                    .spec
+                    .guide
+                    .as_deref()
+                    .and_then(GgplotScaleGuide::temporal)
+                    .filter(|_| matches!(labels, GgplotGuideLabels::Automatic))
+                    .map(|g| {
+                        g.interval_endpoint_labels(&bounds)
+                            .map(GgplotGuideLabels::Explicit)
+                    })
+                    .transpose()?;
+                let mut endpoints = super::ggplot_continuous_guide::numeric_guide_entries(
+                    bounds.to_vec(),
+                    bounds,
+                    family.clone(),
+                    reverse,
+                    temporal.as_ref().unwrap_or(
+                        if matches!(labels, GgplotGuideLabels::Registered { .. }) {
+                            &GgplotGuideLabels::Hidden
+                        } else {
+                            labels
+                        },
+                    ),
+                    1_048_576,
+                )?;
+                if matches!(labels, GgplotGuideLabels::Registered { .. }) {
+                    endpoints = self
+                        .registered_guide_entries(Some(endpoints), labels, 1_048_576, false)?
+                        .expect("limit labels");
+                }
+                for e in &mut endpoints {
+                    e.mapped = Some(Value::Missing);
+                }
+                if colorstep_positions.first().copied().flatten() != Some(Number(0.)) {
+                    numeric_breaks.insert(0, endpoints[0].clone());
+                    colorstep_positions.insert(0, Some(Number(0.)));
+                }
+                if colorstep_positions.last().copied().flatten() != Some(Number(1.)) {
+                    numeric_breaks.push(endpoints[1].clone());
+                    colorstep_positions.push(Some(Number(1.)));
+                }
+            }
+        }
         let colorbar =
             self.colorbar_samples(numeric_breaks.iter().any(|entry| entry.visible), missing)?;
         if self
@@ -3764,6 +3931,7 @@ impl MappedScale {
             }
         }
         Ok(ColorLegend {
+            discrete_keys,
             title: None,
             id,
             entries,

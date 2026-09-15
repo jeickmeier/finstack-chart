@@ -119,6 +119,9 @@ impl ColorScaleBuilder {
 /// Explicit color-guide override, separate from mappings and annotation text.
 #[derive(Clone, Debug, Default)]
 pub struct LegendBuilder {
+    custom: Option<crate::grammar::CustomLegend>,
+    pub(super) aesthetic: Option<crate::grammar::LegendAesthetic>,
+    pub(super) options: Option<crate::grammar::LegendOptions>,
     pub(super) scale: Option<String>,
     pub(super) title: Option<String>,
     pub(super) generic: bool,
@@ -128,6 +131,23 @@ pub fn legend() -> LegendBuilder {
     LegendBuilder::default()
 }
 impl LegendBuilder {
+    /// Place independent portable vector guide content.
+    pub fn custom(mut self, guide: crate::grammar::CustomLegend) -> Self {
+        self.custom = Some(guide);
+        self
+    }
+
+    /// Select every scale bound to a nonpositional aesthetic.
+    pub fn aesthetic(mut self, value: crate::grammar::LegendAesthetic) -> Self {
+        self.aesthetic = Some(value);
+        self
+    }
+    /// Set guide-only presentation and key overrides.
+    pub fn options(mut self, value: crate::grammar::LegendOptions) -> Self {
+        self.options = Some(value);
+        self
+    }
+
     /// Select an existing authored scale; this does not create a data mapping.
     pub fn scale(mut self, scale: impl Into<String>) -> Self {
         self.scale = Some(scale.into());
@@ -174,5 +194,116 @@ pub fn color_mapped(
             scale,
             missing: missing.into(),
         }),
+    }
+}
+
+impl LegendBuilder {
+    pub(super) fn apply(
+        self,
+        definition: &mut crate::grammar::ChartDefinition,
+        names: &std::collections::BTreeMap<String, ScaleId>,
+    ) -> ChartResult<()> {
+        use crate::grammar::{
+            LegendAesthetic as A, NumericAesthetic as N, PaintAesthetic as P, ValueAesthetic as V,
+        };
+        if let Some(mut guide) = self.custom {
+            if self.scale.is_some() || self.aesthetic.is_some() {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Custom guides do not select mapped scales.",
+                ));
+            }
+            if let Some(options) = self.options {
+                guide.options = options;
+            }
+            if let Some(title) = self.title {
+                guide.options.title = Some(title);
+            }
+            definition.custom_legends.push(guide);
+            return Ok(());
+        }
+        let mut ids = std::collections::BTreeSet::new();
+        if let Some(name) = &self.scale {
+            ids.insert(*names.get(name).ok_or_else(|| {
+                error(
+                    DiagnosticCode::MissingResource,
+                    format!("Legend names absent scale '{name}'."),
+                )
+            })?);
+        }
+        if let Some(a) = self.aesthetic {
+            for layer in &definition.layers {
+                match a {
+                    A::Color => ids.extend(layer.color.iter().map(|e| e.id)),
+                    A::Fill | A::Stroke => ids.extend(
+                        layer
+                            .paint_scales
+                            .get(&if a == A::Fill { P::Fill } else { P::Stroke })
+                            .map(|e| e.id),
+                    ),
+                    A::Shape | A::LineType => ids.extend(
+                        layer
+                            .value_scales
+                            .get(&if a == A::Shape { V::Shape } else { V::LineType })
+                            .map(|e| e.id),
+                    ),
+                    _ => {
+                        let channel = match a {
+                            A::Size => N::Size,
+                            A::AreaSize => N::AreaSize,
+                            A::Alpha => N::Alpha,
+                            A::Opacity => N::Opacity,
+                            A::StrokeWidth => N::StrokeWidth,
+                            _ => unreachable!(),
+                        };
+                        ids.extend(layer.numeric_scales.get(&channel).map(|e| e.id));
+                    }
+                }
+            }
+        }
+        if ids.is_empty() {
+            return Err(error(
+                DiagnosticCode::MissingResource,
+                "Legend override requires a mapped scale or aesthetic.",
+            ));
+        }
+        for id in ids {
+            let mut found = false;
+            for color in definition
+                .layers
+                .iter_mut()
+                .flat_map(|l| l.color.iter_mut().chain(l.paint_scales.values_mut()))
+                .filter(|c| c.id == id)
+            {
+                found = true;
+                if self.generic {
+                    color.title = None;
+                }
+                if let Some(title) = &self.title {
+                    color.title = Some(title.clone());
+                }
+            }
+            found |= definition.layers.iter().any(|l| {
+                l.numeric_scales
+                    .values()
+                    .chain(l.value_scales.values())
+                    .any(|e| e.id == id)
+            });
+            if !found {
+                return Err(error(
+                    DiagnosticCode::MissingResource,
+                    "Legend scale has no mapped layer.",
+                ));
+            }
+            if self.options.is_some() || self.aesthetic.is_some() {
+                let mut options = self.options.clone().unwrap_or_default();
+                if self.title.is_some() {
+                    options.title = self.title.clone();
+                }
+                options.validate()?;
+                definition.legends.insert(id, options);
+            }
+        }
+        Ok(())
     }
 }

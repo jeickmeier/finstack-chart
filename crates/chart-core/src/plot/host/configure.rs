@@ -87,6 +87,7 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Layer(b) => Kind::Layer(match method {
+                "legend" => scalar!(a, b, legend),
                 "hierarchy_value" => b.clone().hierarchy_value(a.mapping()?),
                 "hierarchy_label" => b.clone().hierarchy_label(a.mapping()?),
                 "hierarchy_layout" => scalar!(a, b, hierarchy_layout),
@@ -326,6 +327,7 @@ impl Component {
                 }
                 "guide_profile" => scalar!(a, b, guide_profile),
                 "guide_components" => scalar!(a, b, guide_components),
+                "ggplot_axis" => scalar!(a, b, ggplot_axis),
                 "guide_geometry" => scalar!(a, b, guide_geometry),
                 "tick_size" => scalar!(a, b, tick_size),
                 "tick_size_inner" => scalar!(a, b, tick_size_inner),
@@ -378,6 +380,7 @@ impl Component {
             Kind::Guide(b) => Kind::Guide(match method {
                 "guide_profile" => scalar!(a, b, guide_profile),
                 "guide_components" => scalar!(a, b, guide_components),
+                "ggplot_axis" => scalar!(a, b, ggplot_axis),
                 "guide_geometry" => scalar!(a, b, guide_geometry),
                 "tick_size" => scalar!(a, b, tick_size),
                 "tick_size_inner" => scalar!(a, b, tick_size_inner),
@@ -431,6 +434,9 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Legend(b) => Kind::Legend(match method {
+                "options" => scalar!(a, b, options),
+                "custom" => scalar!(a, b, custom),
+                "aesthetic" => scalar!(a, b, aesthetic),
                 "untitled" => empty!(a, b, untitled),
                 "generic_title" => empty!(a, b, generic_title),
                 "scale" => string!(a, b, scale),

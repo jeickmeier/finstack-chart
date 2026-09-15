@@ -14,6 +14,7 @@ impl LayerHandle {
 /// One composable layer; unresolved fields are temporary until Plot build.
 #[derive(Clone)]
 pub struct LayerBuilder {
+    legend: Option<LayerLegend>,
     pub(super) id: ChartResult<LayerId>,
     pub(super) name: Option<String>,
     pub(super) data: Option<Data>,
@@ -62,10 +63,17 @@ pub struct LayerBuilder {
     pub(super) failure: Option<crate::Diagnostic>,
 }
 impl LayerBuilder {
+    /// Configure layer guide inclusion and key topology without changing marks.
+    pub fn legend(mut self, policy: LayerLegend) -> Self {
+        self.legend = Some(policy);
+        self
+    }
+
     fn new(geom: Geom) -> Self {
         Self {
             id: fresh_id().map(LayerId::new),
             name: None,
+            legend: None,
             data: None,
             input: None,
             mappings: AesBuilder::default(),
@@ -604,6 +612,7 @@ impl LayerBuilder {
         layer.facet = self.facet.clone();
         layer.clip = self.clip;
         layer.invalid = self.invalid;
+        layer.legend = self.legend.clone();
         layer.geometry_extension = self.extension.clone();
         layer.candle_colors = self.candle_colors;
         layer.inherit = false;

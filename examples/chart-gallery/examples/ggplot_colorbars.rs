@@ -44,7 +44,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let display = std::env::args().any(|arg| arg == "--display");
     let alpha = std::env::args().any(|arg| arg == "--alpha");
     let boundaries = std::env::args().any(|arg| arg == "--steps-boundaries");
-    let steps = boundaries || std::env::args().any(|arg| arg == "--steps");
+    let step_controls = std::env::args().any(|arg| arg == "--steps-controls");
+    let steps = step_controls || boundaries || std::env::args().any(|arg| arg == "--steps");
     let cases = if steps {
         vec![
             ("asymmetric", "fill", "single", Some(3.)),
@@ -128,6 +129,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         GradientDirection::Vertical
                     });
                     options.reverse = index == 2;
+                    if step_controls {
+                        options.even_steps = index == 1;
+                        options.show_limits = index != 0;
+                    }
                 }
                 if boundaries {
                     let source: serde_json::Value = serde_json::from_str(include_str!(

@@ -84,7 +84,7 @@ fn source_ramps_and_key_positions_paint_in_single_collected_and_local_facets() {
                     })
                     .collect::<Vec<_>>();
                 assert_eq!(gradients.len(), bars, "{channel} {facet} {case}");
-                assert_eq!(frame.scene().wire_version(), 17);
+                assert_eq!(frame.scene().wire_version(), 19);
                 for (bounds, direction, samples) in gradients {
                     assert_eq!(direction, GradientDirection::Vertical);
                     assert_eq!(samples.len(), 300);
@@ -853,7 +853,7 @@ fn gradient_and_rectangle_displays_match_source_geometry_and_keep_mark_mapping()
             let bars = presentation_bars(&frame, direction, colors);
             for item in frame.scene().items() {
                 if let Primitive::SampledGradientRectangle { mode, colors, .. } = &item.primitive {
-                    assert_eq!(frame.scene().wire_version(), 18);
+                    assert_eq!(frame.scene().wire_version(), 19);
                     if display == GgplotColorbarDisplay::Gradient {
                         assert_eq!(*mode, SampledGradientMode::Endpoints);
                         if let Some(stops) = case["result"]["bar"]["gradient"]["stops"].as_array() {
@@ -1392,4 +1392,177 @@ fn default_binned_boundary_cells_reuse_palette_and_source_positions() {
         }
     }
     assert_eq!(checked, 40);
+}
+
+#[test]
+fn stepped_widths_and_limit_labels_match_source() {
+    use chart_core::scales::*;
+    let source: Json = serde_json::from_str(include_str!(
+        "../../../fixtures/parity/ggplot2/colorsteps-controls.json"
+    ))
+    .unwrap();
+    let mut checked = 0;
+    for case in source["cases"].as_array().unwrap().iter().filter(|c| {
+        c["population"] != "constant" && !(c["family"] == "binned" && c["mode"] == "null")
+    }) {
+        let descriptor = boundary_fixtures::boundary_scale(case)
+            .unwrap()
+            .with_colorbar_options(GgplotColorbarOptions {
+                even_steps: case["even_steps"].as_bool().unwrap(),
+                show_limits: case["show_limits"].as_bool().unwrap(),
+                ..Default::default()
+            });
+        let legend = MappedScale::for_colors(descriptor.clone())
+            .unwrap()
+            .legend(
+                chart_core::ScaleId::new(1),
+                paint(&Json::String("#7f7f7f".into())),
+            )
+            .unwrap();
+        let expected: Vec<_> = case["result"]["decor"]["colour"]
+            .as_array()
+            .map(|v| v.iter().map(paint).collect())
+            .unwrap_or_default();
+        assert_eq!(
+            legend
+                .colorsteps
+                .iter()
+                .map(|s| s.color)
+                .collect::<Vec<_>>(),
+            expected,
+            "{case}"
+        );
+        let actual: Vec<_> = legend
+            .numeric_breaks
+            .iter()
+            .zip(&legend.colorstep_positions)
+            .filter_map(|(key, p)| p.map(|p| (key.label.as_deref(), p.0)))
+            .collect();
+        let keys = case["result"]["key"][".value"]
+            .as_array()
+            .cloned()
+            .unwrap_or_default();
+        let labels = case["result"]["key"][".label"]
+            .as_array()
+            .cloned()
+            .unwrap_or_default();
+        assert_eq!(actual.len(), keys.len(), "{case}");
+        for ((label, pos), (key, want)) in actual.iter().zip(keys.iter().zip(&labels)) {
+            assert_eq!(*label, want.as_str(), "{case}");
+            close(*pos, key.as_f64().unwrap());
+        }
+        if case["population"] == "ordinary"
+            && !expected.is_empty()
+            && case["result"]["bar"].is_object()
+        {
+            let p = author("asymmetric", "color", "single", false)
+                .edit()
+                .scale(color_mapped("v", descriptor))
+                .build()
+                .unwrap();
+            let frame = draw(&p, &request(360.)).unwrap();
+            if !case["even_steps"].as_bool().unwrap() {
+                let cells: Vec<_> = frame
+                    .scene()
+                    .items()
+                    .iter()
+                    .filter_map(|i| match &i.primitive {
+                        Primitive::Rectangle { bounds, fill }
+                            if i.layer.is_none() && expected.contains(fill) =>
+                        {
+                            Some((*bounds, *fill))
+                        }
+                        _ => None,
+                    })
+                    .collect();
+                assert_eq!(cells.len(), expected.len(), "{case}");
+                for ((bounds, color), (height, want)) in cells.iter().zip(
+                    case["result"]["bar"]["height"]
+                        .as_array()
+                        .unwrap()
+                        .iter()
+                        .zip(&expected),
+                ) {
+                    assert_eq!(color, want);
+                    close(bounds.height() / 120., height.as_f64().unwrap());
+                }
+            }
+        }
+        checked += 1;
+    }
+    assert_eq!(checked, 152);
+}
+
+#[test]
+fn stepped_control_constant_draw_outcomes_match_source() {
+    use chart_core::scales::*;
+    let source: Json = serde_json::from_str(include_str!(
+        "../../../fixtures/parity/ggplot2/colorsteps-controls.json"
+    ))
+    .unwrap();
+    for case in source["cases"].as_array().unwrap().iter().filter(|c| {
+        c["population"] == "constant" && !(c["family"] == "binned" && c["mode"] == "null")
+    }) {
+        let descriptor = boundary_fixtures::boundary_scale(case)
+            .unwrap()
+            .with_colorbar_options(GgplotColorbarOptions {
+                even_steps: case["even_steps"].as_bool().unwrap(),
+                show_limits: case["show_limits"].as_bool().unwrap(),
+                ..Default::default()
+            });
+        let result = fixtures::author_values("asymmetric", "color", "single", false, [2.; 8])
+            .edit()
+            .scale(color_mapped("v", descriptor))
+            .build()
+            .and_then(|p| p.chart())
+            .and_then(|mut c| c.prepare())
+            .and_then(|p| layout(p, &request(360.), &Metrics));
+        assert_eq!(
+            result.is_err(),
+            case["result"]["error"].is_string(),
+            "{case}; actual error: {:?}",
+            result.err()
+        );
+    }
+}
+
+#[test]
+fn default_binned_constant_draw_outcomes_match_source() {
+    use chart_core::scales::*;
+    let source: Json = serde_json::from_str(include_str!(
+        "../../../fixtures/parity/ggplot2/colorsteps-default-boundaries.json"
+    ))
+    .unwrap();
+    let mut checked = 0;
+    for case in source["cases"]
+        .as_array()
+        .unwrap()
+        .iter()
+        .filter(|c| c["population"] == "constant" && c["mode"] != "null")
+    {
+        for implicit in [false, true] {
+            let mut descriptor = boundary_fixtures::boundary_scale(case)
+                .unwrap()
+                .with_guide(GgplotScaleGuide::Binned(GgplotGuideLabels::Automatic))
+                .unwrap();
+            if implicit {
+                descriptor.guide = None;
+            }
+            let result = fixtures::author_values("asymmetric", "color", "single", false, [2.; 8])
+                .edit()
+                .scale(color_mapped("v", descriptor))
+                .build()
+                .and_then(|p| p.chart())
+                .and_then(|mut c| c.prepare())
+                .and_then(|p| layout(p, &request(360.), &Metrics));
+            assert_eq!(
+                result.is_err(),
+                case["result"]["error"].is_string(),
+                "{case}: {:?}",
+                result.err()
+            );
+            checked += 1;
+        }
+    }
+    assert_eq!(checked, 20);
 }

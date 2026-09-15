@@ -3,7 +3,7 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'../..'),c=require(path.resolve(process.argv[2],'authoring.cjs')),out=path.resolve(process.argv[3]);
 fs.mkdirSync(out,{recursive:true});
-const sampling=process.argv.includes('--sampling'),demand=process.argv.includes('--demand'),constant=process.argv.includes('--constant'),orientation=process.argv.includes('--orientation'),presentation=process.argv.includes('--presentation'),boundaries=process.argv.includes('--steps-boundaries'),steps=process.argv.includes('--steps')||boundaries,alpha=process.argv.includes('--alpha'),display=process.argv.includes('--display')||alpha||steps;
+const sampling=process.argv.includes('--sampling'),demand=process.argv.includes('--demand'),constant=process.argv.includes('--constant'),orientation=process.argv.includes('--orientation'),presentation=process.argv.includes('--presentation'),stepControls=process.argv.includes('--steps-controls'),defaultAll=process.argv.includes('--default-steps-all'),defaultSteps=defaultAll||process.argv.includes('--default-steps'),boundaries=process.argv.includes('--steps-boundaries')||stepControls||defaultSteps,steps=process.argv.includes('--steps')||boundaries,alpha=process.argv.includes('--alpha'),display=process.argv.includes('--display')||alpha||steps;
 let reference=JSON.parse(fs.readFileSync(path.join(root,sampling?'fixtures/parity/ggplot2/colorbar-boundaries.json':'fixtures/parity/ggplot2/colorbar-layout.json'))).cases;
 if(sampling)reference=reference.filter(q=>q.display==='raster'&&!q.reverse&&q.direction==='vertical');
 if(demand)reference=[];
@@ -13,7 +13,7 @@ if(presentation){reference=JSON.parse(fs.readFileSync(path.join(root,'fixtures/p
 if(display){reference=JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/colorbar-display.json'))).cases;for(const q of reference)q.result.values=q.result.keys;reference.push(...JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/colorbar-boundaries.json'))).cases.filter(q=>q.display!=='raster'));}
 if(alpha){reference=JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/colorbar-alpha.json'))).cases;for(const q of reference)q.result.values=q.result.keys;}
 if(steps){reference=JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/colorsteps-layout.json'))).cases.filter(q=>q.even_steps&&!q.show_limits);for(const q of reference){q.display='rectangles';q.nbin=null;const r=q.result;r.decor_colors=r.decor.colour.map((c,i)=>[Math.min(r.decor.min[i],r.decor.max[i]),c]).sort((a,b)=>a[0]-b[0]).map(v=>v[1]);r.values=r.key['.value'];r.labels=r.key['.label'];}}
-if(boundaries){reference=JSON.parse(fs.readFileSync(path.join(root,'fixtures/parity/ggplot2/colorsteps-boundaries.json'))).cases.filter(q=>!(q.family==='binned'&&q.mode==='null'));for(const q of reference){Object.assign(q,{palette:'asymmetric',display:'rectangles',nbin:null,direction:'vertical',reverse:false,constant:q.population==='constant'});const r=q.result;if(!r.error){r.decor_colors=r.decor?.colour??[];r.values=r.key?.['.value']??[];r.labels=r.key?.['.label']??[];}}}
+if(boundaries){reference=JSON.parse(fs.readFileSync(path.join(root,stepControls?'fixtures/parity/ggplot2/colorsteps-controls.json':defaultSteps?'fixtures/parity/ggplot2/colorsteps-default-boundaries.json':'fixtures/parity/ggplot2/colorsteps-boundaries.json'))).cases.filter(q=>!(q.family==='binned'&&q.mode==='null'));if(defaultSteps&&!defaultAll)reference=reference.filter(q=>q.population!=='constant');for(const q of reference){Object.assign(q,{palette:'asymmetric',display:'rectangles',nbin:null,direction:'vertical',reverse:false,constant:q.population==='constant'});const r=q.result;if(!r.error){r.decor_colors=r.decor?.colour??[];r.values=r.key?.['.value']??[];r.labels=r.key?.['.label']??[];}}}
 const output=new c.Output(fs.readFileSync(path.join(root,'fixtures/capability/fonts/NotoSans-Regular.ttf'))),records=[];
 function paint(text){if(text==='grey50')return {red:127,green:127,blue:127,alpha:255};return {red:parseInt(text.slice(1,3),16),green:parseInt(text.slice(3,5),16),blue:parseInt(text.slice(5,7),16),alpha:text.length===9?parseInt(text.slice(7,9),16):255};}
 function scale(palette,hidden=false,nbin=null,constant=false,controls=null){
@@ -22,7 +22,7 @@ function scale(palette,hidden=false,nbin=null,constant=false,controls=null){
  if(controls)result.colorbar_options??={};
  if(controls)for(const [key,value]of Object.entries(controls))if(!['hidden_labels','steps_family','steps_endpoints','steps_default','boundary'].includes(key))result.colorbar_options[key]=value;
  if(steps&&controls){const cuts=controls.steps_endpoints?[-2,0,3,8]:[0,3];if(controls.steps_family==='binned'){result.function.Interpolated.normalization={Ggplot:{family:'Linear',domain:[-2,8],reverse:false,rescaler:'Range'}};result.ggplot={Binned:{limits:[-2,8],breaks:{Explicit:cuts},oob:'Squish',right:true}};result.guide=hidden?'Hidden':{[controls.steps_default?'Binned':'BinnedSteps']:'Automatic'};}else result.guide=hidden?'Hidden':{ContinuousSteps:{breaks:cuts,labels:'Automatic'}};}
- if(boundaries&&controls){const q=controls.boundary,limits=q.limits,cuts=Array.isArray(q.breaks)?q.breaks.map(v=>v===null?{number:'NaN'}:typeof v==='string'?{number:v}:v):q.breaks;result.function.Interpolated.normalization={Ggplot:{family:'Linear',domain:limits,reverse:false,rescaler:'Range'}};if(q.family==='binned'){result.ggplot={Binned:{limits,breaks:cuts==='automatic'?{Nice:5}:{Explicit:cuts},oob:'Squish',right:true}};result.guide=hidden?'Hidden':{BinnedSteps:'Automatic'};}else{result.ggplot={Continuous:{limits,oob:'Censor'}};result.guide=hidden||q.mode==='null'?'Hidden':{ContinuousSteps:{breaks:cuts==='automatic'?null:cuts,labels:'Automatic'}};}}
+ if(boundaries&&controls){const q=controls.boundary,limits=q.limits,cuts=Array.isArray(q.breaks)?q.breaks.map(v=>v===null?{number:'NaN'}:typeof v==='string'?{number:v}:v):q.breaks;result.function.Interpolated.normalization={Ggplot:{family:'Linear',domain:limits,reverse:false,rescaler:'Range'}};if(q.family==='binned'){result.ggplot={Binned:{limits,breaks:cuts==='automatic'?{Nice:5}:{Explicit:cuts},oob:'Squish',right:true}};result.guide=hidden?'Hidden':{[defaultSteps?'Binned':'BinnedSteps']:'Automatic'};}else{result.ggplot={Continuous:{limits,oob:'Censor'}};result.guide=hidden||q.mode==='null'?'Hidden':{ContinuousSteps:{breaks:cuts==='automatic'?null:cuts,labels:'Automatic'}};}}
  return result;
 }
 function author(palette,channel,facet,nbin=null,constant=false,controls=null){
@@ -38,8 +38,15 @@ function inspect(plot,q,channel,facet,state){
  const chart=plot.chart(),semantic=chart.semantics();chart.free();assert.equal(semantic.layers.length,facet==='single'?1:2);const styles=semantic.layers.flatMap(layer=>layer.styles??[]);
  const expected=[...q.result.mapped,...q.result.mapped].map(paint);assert.deepEqual(styles.map(s=>s[channel]),expected);
  const request=output.request(plot,c.export_options(600,360).dpi(144)),frame=request.prepare(),scene=frame.scene();
- const direction=q.direction[0].toUpperCase()+q.direction.slice(1),paired=scene.items.filter(i=>i.primitive.SampledGradientRectangle).map(i=>[i.primitive.SampledGradientRectangle,i.clip??null]),bars=state==='hidden'||(boundaries&&q.result.decor_colors.length===0)?0:facet==='local'?2:1;
- if((q.result.decor_colors.length===1||(display&&q.constant&&q.display==='gradient')))for(const item of scene.items){const r=item.primitive.Rectangle;if(r&&(Math.abs(r.bounds.height/r.bounds.width-20/3)<1e-10||Math.abs(r.bounds.width/r.bounds.height-20/3)<1e-10))paired.push([{bounds:r.bounds,direction,colors:[r.fill]},item.clip??null]);}
+ const direction=q.direction[0].toUpperCase()+q.direction.slice(1),paired=scene.items.filter(i=>i.primitive.SampledGradientRectangle).map(i=>[i.primitive.SampledGradientRectangle,i.clip??null]),bars=state==='hidden'||(boundaries&&(q.result.decor_colors.length===0||(stepControls&&q.result.bar===null)))?0:facet==='local'?2:1;
+ if(!(stepControls&&!q.even_steps)&&(q.result.decor_colors.length===1||(display&&q.constant&&q.display==='gradient')))for(const item of scene.items){const r=item.primitive.Rectangle;if(r&&(Math.abs(r.bounds.height/r.bounds.width-20/3)<1e-10||Math.abs(r.bounds.width/r.bounds.height-20/3)<1e-10))paired.push([{bounds:r.bounds,direction,colors:[r.fill]},item.clip??null]);}
+ if(stepControls&&!q.even_steps){
+  const cells=scene.items.filter(i=>i.layer==null&&i.primitive.Rectangle&&i.clip!=null).map(i=>[i.primitive.Rectangle,i.clip]);
+  if(cells.length){const top=Math.min(...cells.map(([r])=>r.bounds.origin.y)),bottom=Math.max(...cells.map(([r])=>r.bounds.origin.y+r.bounds.height)),b={origin:{x:cells[0][0].bounds.origin.x,y:top},width:cells[0][0].bounds.width,height:bottom-top};
+   assert.equal(cells.length,q.result.bar.height.length);cells.forEach(([r],i)=>close(r.bounds.height/b.height,q.result.bar.height[i]));
+   paired.push([{bounds:b,direction,colors:cells.map(([r])=>r.fill).reverse(),mode:'Steps'},cells[0][1]]);
+  }
+ }
  assert.equal(paired.length,bars,`${q.palette} ${channel} ${facet} ${state}`);const normalized=[];
  const expectedTicks=(q.result.tick_positions??q.result.values).filter(v=>v!==null),expectedLabels=q.result.labels.filter((_,i)=>q.result.values[i]!==null);
  for(const [ramp,clip] of paired){
@@ -70,18 +77,19 @@ for(const [pi,q] of reference.entries()){
  if(alpha&&q.alpha!==null)controls.alpha=q.alpha;
  if(steps)Object.assign(controls,{steps_family:q.family,steps_endpoints:q.endpoints,steps_default:q.guide_kind==='default'});
  if(boundaries)controls.boundary=q;
+ if(stepControls)Object.assign(controls,{even_steps:q.even_steps,show_limits:q.show_limits});
  const isConstant=constant||(display&&q.constant===true);
  for(const channel of channels)for(const [fi,facet] of facets.entries()){
  if(boundaries&&q.result.error){assert.throws(()=>{const p=author(q.palette,channel,facet,q.nbin??null,isConstant,controls);output.request(p,c.export_options(600,360)).prepare();},e=>e instanceof c.ChartError);records.push({family:q.family,population:q.population,mode:q.mode,error:true});continue;}
  const plot=author(q.palette,channel,facet,q.nbin??null,isConstant,controls),wire=plot.to_json(),[request,frame,before]=inspect(plot,q,channel,facet,'initial');
- if(sampling||constant||orientation||presentation||display){const version=alpha&&q.alpha!==null?67:display&&!steps&&q.display!=='raster'?66:controls?65:64;assert.equal(JSON.parse(wire).version,version);const stale=JSON.parse(wire);stale.version=version-1;assert.throws(()=>c.Plot.from_json(JSON.stringify(stale)),e=>e instanceof c.ChartError);}
+ if(sampling||constant||orientation||presentation||display){const version=stepControls&&(!q.even_steps||q.show_limits)?68:alpha&&q.alpha!==null?67:display&&!steps&&q.display!=='raster'?66:controls?65:64;assert.equal(JSON.parse(wire).version,version);const stale=JSON.parse(wire);stale.version=version-1;assert.throws(()=>c.Plot.from_json(JSON.stringify(stale)),e=>e instanceof c.ChartError);}
  const loaded=c.Plot.from_json(wire);let [rq,fr]=inspect(loaded,q,channel,facet,'roundtrip');fr.free();rq.free();loaded.free();
  const hidden=plot.edit().scale(c.color_mapped('v',scale(q.palette,true,q.nbin??null,isConstant,controls))).build();[rq,fr]=inspect(hidden,q,channel,facet,'hidden');fr.free();rq.free();
  const restored=hidden.edit().scale(c.color_mapped('v',scale(q.palette,false,q.nbin??null,isConstant,controls))).build();[rq,fr]=inspect(restored,q,channel,facet,'restored');fr.free();rq.free();restored.free();hidden.free();
  assert.equal(plot.to_json(),wire);assert.deepEqual(frame.scene(),before);
- const publish=steps?(!boundaries||(q.population==='ordinary'&&q.result.decor_colors.length>0)):alpha?pi%4===Math.floor(pi/4)%4:display?((pi<80&&(q.nbin===null||q.nbin===2.5))||(pi>=80&&q.palette==='discontinuous'&&q.nbin===5)):presentation?(q.nbin===5||(q.nbin>0&&q.lower&&q.upper&&q.labels==='automatic')):orientation||constant||channel===['color','fill','stroke'][(pi+fi)%3];
+ const publish=steps?(!boundaries||(q.population==='ordinary'&&q.result.bar!=null)):alpha?pi%4===Math.floor(pi/4)%4:display?((pi<80&&(q.nbin===null||q.nbin===2.5))||(pi>=80&&q.palette==='discontinuous'&&q.nbin===5)):presentation?(q.nbin===5||(q.nbin>0&&q.lower&&q.upper&&q.labels==='automatic')):orientation||constant||channel===['color','fill','stroke'][(pi+fi)%3];
  if(publish){
-  const name=orientation||presentation||display?`${boundaries?"step-boundaries":steps?"steps":alpha?"alpha":display?"display":orientation?"orientation":"presentation"}-${String(pi).padStart(3,"0")}`:`${q.palette}-${channel}-${facet}`+((sampling||constant)?`-nbin-${q.nbin}`:``);fs.writeFileSync(path.join(out,`${name}.scene.json`),JSON.stringify(before));fs.writeFileSync(path.join(out,`${name}.plot.json`),wire);
+  const name=orientation||presentation||display?`${stepControls?"step-controls":defaultSteps?"default-steps":boundaries?"step-boundaries":steps?"steps":alpha?"alpha":display?"display":orientation?"orientation":"presentation"}-${String(pi).padStart(3,"0")}`:`${q.palette}-${channel}-${facet}`+((sampling||constant)?`-nbin-${q.nbin}`:``);fs.writeFileSync(path.join(out,`${name}.scene.json`),JSON.stringify(before));fs.writeFileSync(path.join(out,`${name}.plot.json`),wire);
   for(const fmt of ['svg','pdf','png'])fs.writeFileSync(path.join(out,`${name}.${fmt}`),frame.export(fmt));
  }
  frame.free();request.free();plot.free();
@@ -98,5 +106,5 @@ if(demand)for(const q of JSON.parse(fs.readFileSync(path.join(root,'fixtures/par
  records.push({nbin:q.nbin,population:q.population,selection:q.selection,hidden:q.hidden,result});
  request.free();loaded.free();plot.free();builder.free();aes.free();data.free();
 }
-output.free();assert.equal(records.length,boundaries?180:steps?72:alpha?384:display?704:orientation?192:presentation?512:demand?60:constant?48:sampling?432:108);fs.writeFileSync(path.join(out,'records.json'),JSON.stringify(records));
+output.free();assert.equal(records.length,stepControls?711:defaultAll?93:defaultSteps?80:boundaries?180:steps?72:alpha?384:display?704:orientation?192:presentation?512:demand?60:constant?48:sampling?432:108);fs.writeFileSync(path.join(out,'records.json'),JSON.stringify(records));
 console.log(`PASS WASM GG-05: ${records.length} geometry/lifecycle states and ${fs.readdirSync(out).filter(n=>n.endsWith('.png')).length*3} publication files.`);

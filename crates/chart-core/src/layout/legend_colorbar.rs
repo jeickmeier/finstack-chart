@@ -15,13 +15,16 @@ struct Label {
     metrics: TextMetrics,
 }
 struct Key {
+    component: crate::scene::GuideComponent,
     position: f64,
     label: Option<Label>,
     tick: bool,
 }
 
 pub(super) struct Colorbar {
+    id: crate::ScaleId,
     colors: Vec<Color>,
+    intervals: Option<Vec<(f64, f64)>>,
     keys: Vec<Key>,
     direction: GradientDirection,
     display: GgplotColorbarDisplay,
@@ -50,6 +53,20 @@ impl Colorbar {
             legend.colorsteps[count - 1].end.0
         } else {
             legend.colorbar[count - 1].value.0
+        };
+        // Palette samples use absolute Date/POSIX arithmetic; guide keys retain
+        // offsets in the declared timestamp unit. Project both in that same unit.
+        let (lower, upper) = if !stepped
+            && let Some(mapping) = &legend.mapping
+            && let crate::scales::ScaleFunctionSpec::Interpolated(scale) = &mapping.function
+            && let crate::scales::NormalizationSpec::Ggplot {
+                timestamp: Some(timestamp),
+                ..
+            } = &scale.normalization
+        {
+            (timestamp.relative(lower), timestamp.relative(upper))
+        } else {
+            (lower, upper)
         };
         let defaults = GgplotColorbarOptions::default();
         let options = legend
@@ -81,12 +98,13 @@ impl Colorbar {
                     };
                     pad + (1. - 2. * pad) * unit
                 };
-                Some((entry, position))
+                Some((i, entry, position))
             })
             .collect::<Vec<_>>();
         let visible = positioned.len();
         let mut keys = vec![];
-        for (index, (entry, position)) in positioned.into_iter().enumerate() {
+        let mut occurrences = std::collections::BTreeMap::<u64, usize>::new();
+        for (index, (original_index, entry, position)) in positioned.into_iter().enumerate() {
             if !position.is_finite() {
                 continue;
             }
@@ -100,7 +118,31 @@ impl Colorbar {
             } else {
                 None
             };
+            let occurrence = occurrences
+                .entry(if entry.value.0 == 0. {
+                    0
+                } else {
+                    entry.value.0.to_bits()
+                })
+                .or_default();
+            let mut component = super::facets::legend_component(
+                legend.id,
+                crate::scene::GuideRole::LegendTick,
+                Some(original_index),
+                Some(entry.label.clone().unwrap_or_default()),
+            );
+            component.tick = Some(crate::scene::GuideTickIdentity {
+                value: crate::composition::ScaleValue::Number(entry.value.0),
+                occurrence: *occurrence,
+            });
+            component.side = if options.direction == Some(GradientDirection::Horizontal) {
+                super::AxisSide::Bottom
+            } else {
+                super::AxisSide::Right
+            };
+            *occurrence += 1;
             keys.push(Key {
+                component,
                 position,
                 label,
                 tick: (index != 0 || options.draw_lower_limit)
@@ -108,6 +150,19 @@ impl Colorbar {
             });
         }
         Ok(Self {
+            id: legend.id,
+            intervals: (stepped && !options.even_steps).then(|| {
+                legend
+                    .colorsteps
+                    .iter()
+                    .map(|step| {
+                        (
+                            (step.start.0 - lower) / (upper - lower),
+                            (step.end.0 - lower) / (upper - lower),
+                        )
+                    })
+                    .collect()
+            }),
             colors: if stepped {
                 legend.colorsteps.iter().map(|step| step.color).collect()
             } else if options.display == GgplotColorbarDisplay::Gradient && lower == upper {
@@ -207,7 +262,10 @@ impl Colorbar {
         request: &LayoutRequest,
     ) -> ChartResult<bool> {
         require_within(
-            self.keys.len().saturating_mul(2).saturating_add(1)
+            self.keys
+                .len()
+                .saturating_mul(2)
+                .saturating_add(self.intervals.as_ref().map_or(1, Vec::len))
                 <= request.limits.max_items.saturating_sub(items.len()),
             "colorbar scene item",
         )?;
@@ -216,9 +274,20 @@ impl Colorbar {
             return Ok(true);
         }
         let horizontal = self.horizontal();
-        let mut push = |primitive| {
+        let mut bar_component = super::facets::legend_component(
+            self.id,
+            crate::scene::GuideRole::LegendBar,
+            None,
+            None,
+        );
+        bar_component.side = if horizontal {
+            super::AxisSide::Bottom
+        } else {
+            super::AxisSide::Right
+        };
+        let mut push = |primitive, component: &crate::scene::GuideComponent| {
             items.push(SceneItem {
-                guide: None,
+                guide: Some(component.clone()),
                 layer: None,
                 clip: Some(bounds),
                 primitive,
@@ -229,22 +298,56 @@ impl Colorbar {
         } else {
             self.colors.iter().rev().copied().collect()
         };
-        if colors.len() == 1 {
-            push(Primitive::Rectangle {
-                bounds: bar,
-                fill: colors[0],
-            });
-        } else {
-            push(Primitive::SampledGradientRectangle {
-                bounds: bar,
-                direction: self.direction,
-                colors,
-                mode: match self.display {
-                    GgplotColorbarDisplay::Raster => SampledGradientMode::CellCenters,
-                    GgplotColorbarDisplay::Gradient => SampledGradientMode::Endpoints,
-                    GgplotColorbarDisplay::Rectangles => SampledGradientMode::Steps,
+        if let Some(intervals) = &self.intervals {
+            for ((start, end), color) in intervals.iter().zip(&self.colors) {
+                if !start.is_finite() || !end.is_finite() {
+                    continue;
+                }
+                let cell = if horizontal {
+                    Rect::new(
+                        bar.origin().x() + bar.width() * start,
+                        bar.origin().y(),
+                        bar.width() * (end - start),
+                        bar.height(),
+                    )?
+                } else {
+                    Rect::new(
+                        bar.origin().x(),
+                        bar.max_y() - bar.height() * end,
+                        bar.width(),
+                        bar.height() * (end - start),
+                    )?
+                };
+                push(
+                    Primitive::Rectangle {
+                        bounds: cell,
+                        fill: *color,
+                    },
+                    &bar_component,
+                );
+            }
+        } else if colors.len() == 1 {
+            push(
+                Primitive::Rectangle {
+                    bounds: bar,
+                    fill: colors[0],
                 },
-            });
+                &bar_component,
+            );
+        } else {
+            push(
+                Primitive::SampledGradientRectangle {
+                    bounds: bar,
+                    direction: self.direction,
+                    colors,
+                    mode: match self.display {
+                        GgplotColorbarDisplay::Raster => SampledGradientMode::CellCenters,
+                        GgplotColorbarDisplay::Gradient => SampledGradientMode::Endpoints,
+                        GgplotColorbarDisplay::Rectangles => SampledGradientMode::Steps,
+                    },
+                },
+                &bar_component,
+            );
         }
         let ink = request
             .host_theme
@@ -266,13 +369,16 @@ impl Colorbar {
                 bar.max_y() - bar.height() * key.position
             };
             if key.tick {
-                push(Primitive::Path {
-                    commands: tick_commands(bar, center, tick, horizontal)?,
-                    stroke: Stroke {
-                        color: ink,
-                        width: 0.5,
+                push(
+                    Primitive::Path {
+                        commands: tick_commands(bar, center, tick, horizontal)?,
+                        stroke: Stroke {
+                            color: ink,
+                            width: 0.5,
+                        },
                     },
-                });
+                    &key.component,
+                );
             }
             let Some(label) = &key.label else {
                 continue;
@@ -297,13 +403,18 @@ impl Colorbar {
             } else {
                 (top, top + label.metrics.height())
             });
-            push(Primitive::Text {
-                origin: Point::new(left, top + label.metrics.ascent())?,
-                text: label.text.clone(),
-                font: request.font.id,
-                font_size: request.font_size,
-                color: ink,
-            });
+            let mut component = key.component.clone();
+            component.role = crate::scene::GuideRole::LegendLabel;
+            push(
+                Primitive::Text {
+                    origin: Point::new(left, top + label.metrics.ascent())?,
+                    text: label.text.clone(),
+                    font: request.font.id,
+                    font_size: request.font_size,
+                    color: ink,
+                },
+                &component,
+            );
         }
         label_spans.sort_by(|a, b| a.0.total_cmp(&b.0));
         let mut end = f64::NEG_INFINITY;
