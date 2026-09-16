@@ -173,13 +173,21 @@ fn blank_expansion_layers_match_pinned_domains_without_geometry() {
             );
         if c["facet"] != "none" {
             p = p.facet(
+                // This test inspects every panel guide to verify scale catalog ordering.
+                // Default interior-axis suppression is independently qualified by GG12.
                 facet_wrap("g")
+                    .reference(chart_core::grammar::FacetPolicy {
+                        axes: chart_core::grammar::FacetAxes::All,
+                        ..Default::default()
+                    })
                     .free_x(c["facet"] == "free")
                     .free_y(c["facet"] == "free"),
             );
         }
         let p = p.build().unwrap_or_else(|e| panic!("{c}: {e:?}"));
-        let version = if c["axes"].as_str().unwrap().starts_with("colour") {
+        let version = if c["facet"] != "none" {
+            76
+        } else if c["axes"].as_str().unwrap().starts_with("colour") {
             45
         } else {
             41

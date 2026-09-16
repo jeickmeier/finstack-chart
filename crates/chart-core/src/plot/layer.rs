@@ -14,7 +14,11 @@ impl LayerHandle {
 /// One composable layer; unresolved fields are temporary until Plot build.
 #[derive(Clone)]
 pub struct LayerBuilder {
+    recipe: Option<BuiltinRecipe>,
+    recipe_aes: std::collections::BTreeMap<RecipeAesthetic, NumericScaleInput>,
     legend: Option<LayerLegend>,
+    text: Option<TextGeom>,
+    annotation: Option<RowAnnotation>,
     pub(super) id: ChartResult<LayerId>,
     pub(super) name: Option<String>,
     pub(super) data: Option<Data>,
@@ -63,6 +67,64 @@ pub struct LayerBuilder {
     pub(super) failure: Option<crate::Diagnostic>,
 }
 impl LayerBuilder {
+    /// Select a built-in recipe over common source/statistical channels.
+    pub fn recipe(mut self, recipe: BuiltinRecipe) -> Self {
+        self.recipe = Some(recipe);
+        self
+    }
+    /// Bind a source field/expression or constant to a recipe channel.
+    pub fn recipe_value(mut self, channel: RecipeAesthetic, value: impl Into<Mapping>) -> Self {
+        self.recipe_aes
+            .insert(channel, NumericScaleInput::Source(value.into()));
+        self
+    }
+    /// Bind a generated statistical field to a recipe channel.
+    pub fn recipe_stat_value(mut self, channel: RecipeAesthetic, value: StatField) -> Self {
+        self.recipe_aes
+            .insert(channel, NumericScaleInput::Statistical(value));
+        self
+    }
+
+    /// Position a portable custom vector or raster at every retained row anchor.
+    pub fn annotation(mut self, annotation: RowAnnotation) -> Self {
+        self.annotation = Some(annotation);
+        self
+    }
+
+    /// Render retained source/statistical rows as text using mapped Label aesthetics.
+    pub fn text_geom(mut self, options: TextGeom) -> Self {
+        self.text = Some(options);
+        self
+    }
+
+    /// Map source text or exact scalar identities without an artificial label palette.
+    pub fn text_label(self, field: impl Into<Mapping>) -> Self {
+        let field = field.into();
+        let scale = if matches!(
+            field,
+            Mapping::Expression(_) | Mapping::Literal(_) | Mapping::Scaled { .. }
+        ) {
+            crate::scales::ScaleFunctionSpec::GgplotNumericIdentity(Default::default())
+        } else {
+            crate::scales::ScaleFunctionSpec::GgplotDiscreteIdentity(Default::default())
+        };
+        self.value_scale(
+            ValueAesthetic::Label,
+            field,
+            crate::scales::MappedScaleSpec::authored(scale),
+        )
+    }
+    /// Format a finite generated statistic as a label while retaining its derived provenance.
+    pub fn text_stat_label(self, field: StatField) -> Self {
+        self.value_scale(
+            ValueAesthetic::Label,
+            NumericScaleInput::Statistical(field),
+            crate::scales::MappedScaleSpec::authored(
+                crate::scales::ScaleFunctionSpec::GgplotNumericIdentity(Default::default()),
+            ),
+        )
+    }
+
     /// Configure layer guide inclusion and key topology without changing marks.
     pub fn legend(mut self, policy: LayerLegend) -> Self {
         self.legend = Some(policy);
@@ -73,7 +135,11 @@ impl LayerBuilder {
         Self {
             id: fresh_id().map(LayerId::new),
             name: None,
+            recipe: None,
+            recipe_aes: Default::default(),
             legend: None,
+            text: None,
+            annotation: None,
             data: None,
             input: None,
             mappings: AesBuilder::default(),
@@ -221,6 +287,16 @@ impl LayerBuilder {
     /// Set explicit physical units for point, symbol, stroke and text dimensions.
     pub fn aesthetic_units(mut self, units: AestheticUnits) -> Self {
         self.style.units = Some(units);
+        self
+    }
+    /// Set stroke endpoint geometry through the shared core stroke renderer.
+    pub fn lineend(mut self, value: crate::grammar::LineEnd) -> Self {
+        self.style.line_end = Some(value);
+        self
+    }
+    /// Set stroke joins; miter joins use the reference limit of ten stroke radii.
+    pub fn linejoin(mut self, value: crate::grammar::LineJoin) -> Self {
+        self.style.line_join = Some(value);
         self
     }
     /// Set an independent constant line type.
@@ -527,6 +603,21 @@ impl LayerBuilder {
             .map(|recipe| recipe.try_map_fields(|field| field.field(data)))
             .transpose()?;
         layer.style = self.style;
+        if matches!(
+            self.recipe,
+            Some(BuiltinRecipe::Polygon(_) | BuiltinRecipe::Tile(_) | BuiltinRecipe::Raster(_))
+        ) {
+            if self.explicit_color && layer.style.stroke.is_none() {
+                layer.style.stroke = Some(layer.style.color);
+            }
+            if !self.explicit_line_width {
+                layer.style.stroke_width = if matches!(self.recipe, Some(BuiltinRecipe::Tile(_))) {
+                    0.2
+                } else {
+                    0.5
+                };
+            }
+        }
         layer.after_scale = self.after_scale.clone();
         layer.symbol = self
             .symbol
@@ -561,6 +652,8 @@ impl LayerBuilder {
                 },
             );
         }
+        layer.text = self.text.clone();
+        layer.annotation = self.annotation.clone();
         layer.aesthetic_values = self.aesthetic_values.clone();
         for (target, (input, scale)) in &self.value_scales {
             let input = match input {
@@ -579,12 +672,37 @@ impl LayerBuilder {
                 },
             );
         }
+        let implicit_sum =
+            if self.stat.is_none() && matches!(self.recipe, Some(BuiltinRecipe::Count(_))) {
+                Some(
+                    super::count()
+                        .sum_count()
+                        .x(mapped.x.clone().ok_or_else(|| {
+                            error(DiagnosticCode::Validation, "Count recipe requires x.")
+                        })?)
+                        .y(mapped.y.clone().ok_or_else(|| {
+                            error(DiagnosticCode::Validation, "Count recipe requires y.")
+                        })?),
+                )
+            } else {
+                None
+            };
+        let implicit_align = (profile == Profile::Ggplot2_4_0_3
+            && matches!(self.geom, Geom::Area { .. })
+            && self.stat.is_none())
+        .then(super::align_stat);
         let implicit_count = (profile == Profile::Ggplot2_4_0_3
             && matches!(self.geom, Geom::Bar { .. })
             && mapped.y.is_none()
             && self.stat.is_none())
         .then(super::count);
-        if let Some(stat) = self.stat.as_ref().or(implicit_count.as_ref()) {
+        if let Some(stat) = self
+            .stat
+            .as_ref()
+            .or(implicit_sum.as_ref())
+            .or(implicit_count.as_ref())
+            .or(implicit_align.as_ref())
+        {
             layer.statistic = stat.lower(data, &mapped)?;
             if self.generated.is_none()
                 && let Some(mappings) = stat.default_mappings(layer.geom)?
@@ -600,6 +718,38 @@ impl LayerBuilder {
         if let Some(mappings) = &self.generated {
             layer.mappings = mappings.clone();
         }
+        if matches!(layer.statistic.parameters, StatParameters::Distribution(_)) {
+            let fields: &[(RecipeAesthetic, StatField)] = match self.recipe {
+                Some(BuiltinRecipe::Boxplot(_)) => &[
+                    (RecipeAesthetic::Lower, StatField::Lower),
+                    (RecipeAesthetic::Upper, StatField::Upper),
+                    (RecipeAesthetic::Middle, StatField::Middle),
+                    (RecipeAesthetic::WhiskerLower, StatField::WhiskerLower),
+                    (RecipeAesthetic::WhiskerUpper, StatField::WhiskerUpper),
+                    (RecipeAesthetic::NotchLower, StatField::NotchLower),
+                    (RecipeAesthetic::NotchUpper, StatField::NotchUpper),
+                    (RecipeAesthetic::Width, StatField::Width),
+                    (RecipeAesthetic::RelativeWidth, StatField::RelativeWidth),
+                ],
+                Some(BuiltinRecipe::Violin(_)) => &[
+                    (RecipeAesthetic::Width, StatField::Width),
+                    (RecipeAesthetic::ViolinWidth, StatField::ViolinWidth),
+                    (RecipeAesthetic::QuantileFlag, StatField::QuantileFlag),
+                ],
+                Some(BuiltinRecipe::Dotplot(_)) => &[
+                    (RecipeAesthetic::Count, StatField::WeightedCount),
+                    (RecipeAesthetic::BinWidth, StatField::BinWidth),
+                    (RecipeAesthetic::Width, StatField::Width),
+                ],
+                _ => &[],
+            };
+            for (channel, field) in fields {
+                layer
+                    .recipe_aes
+                    .entry(*channel)
+                    .or_insert_with(|| ColorInput::Statistical(field.clone()));
+            }
+        }
         layer.filters = self
             .filters
             .iter()
@@ -607,6 +757,43 @@ impl LayerBuilder {
             .collect::<ChartResult<_>>()?;
         if let Some(position) = &self.position {
             layer.position = position.lower()?;
+        } else if profile == Profile::Ggplot2_4_0_3
+            && matches!(self.geom, Geom::Area { .. })
+            && !matches!(self.recipe, Some(BuiltinRecipe::Density(_)))
+        {
+            layer.position = Position::GgplotStack(GgplotStackSpec::default());
+        }
+        layer.recipe = self.recipe.clone();
+        if self.recipe.is_none()
+            && matches!(layer.geom, Geom::Line { .. })
+            && let StatParameters::Univariate(spec) = &layer.statistic.parameters
+            && let UnivariateKind::Connect { connection } = &spec.kind
+        {
+            let direction = match connection {
+                Connection::Hv => Some(StepDirection::Hv),
+                Connection::Vh => Some(StepDirection::Vh),
+                Connection::Mid => Some(StepDirection::Mid),
+                Connection::Matrix(_) => None,
+            };
+            if let Some(direction) = direction {
+                let recipe = step(direction);
+                layer.geom = recipe.geom;
+                layer.recipe = recipe.recipe;
+            }
+        }
+
+        for (channel, input) in &self.recipe_aes {
+            let input = match input {
+                NumericScaleInput::Source(mapping) => {
+                    if *channel == RecipeAesthetic::Subgroup {
+                        ColorInput::Category(mapping.field(data)?)
+                    } else {
+                        ColorInput::Numeric(mapping.resolve(data)?)
+                    }
+                }
+                NumericScaleInput::Statistical(field) => ColorInput::Statistical(field.clone()),
+            };
+            layer.recipe_aes.insert(*channel, input);
         }
         layer.scope = self.scope;
         layer.facet = self.facet.clone();
@@ -1164,4 +1351,132 @@ impl LayerBuilder {
     pub fn hierarchy_limits(self, value: crate::hierarchy::HierarchyLimits) -> Self {
         self.hierarchy_change(|r| r.limits = value)
     }
+}
+
+/// Vertical dependent-axis interval stem; lower/upper recipe channels are required.
+pub fn linerange() -> LayerBuilder {
+    LayerBuilder::new(Geom::Rule).recipe(BuiltinRecipe::Interval(IntervalRecipe {
+        kind: IntervalKind::LineRange,
+        width: None,
+        ..Default::default()
+    }))
+}
+/// Interval stem with a point at the mapped y anchor.
+pub fn pointrange() -> LayerBuilder {
+    LayerBuilder::new(Geom::Rule).recipe(BuiltinRecipe::Interval(IntervalRecipe {
+        kind: IntervalKind::PointRange,
+        width: None,
+        ..Default::default()
+    }))
+}
+/// Interval stem and caps with reference resolution-based widths.
+pub fn errorbar() -> LayerBuilder {
+    LayerBuilder::new(Geom::Rule).recipe(BuiltinRecipe::Interval(IntervalRecipe {
+        kind: IntervalKind::ErrorBar,
+        width: None,
+        ..Default::default()
+    }))
+}
+/// Interval box with a central mapped y rule.
+pub fn crossbar() -> LayerBuilder {
+    LayerBuilder::new(Geom::Rule).recipe(BuiltinRecipe::Interval(IntervalRecipe {
+        kind: IntervalKind::Crossbar,
+        width: None,
+        ..Default::default()
+    }))
+}
+/// Data-space sloped reference line clipped by the resolved panel.
+pub fn abline(slope: f64, intercept: f64) -> LayerBuilder {
+    LayerBuilder::new(Geom::Point)
+        .independent()
+        .recipe(BuiltinRecipe::Reference(ReferenceRecipe {
+            kind: ReferenceKind::Abline,
+            slope,
+            intercept,
+            arrow: None,
+        }))
+        .aes(super::aes().x(0.).y(0.))
+}
+/// Data-space horizontal reference line.
+pub fn hline(intercept: f64) -> LayerBuilder {
+    LayerBuilder::new(Geom::Point)
+        .independent()
+        .recipe(BuiltinRecipe::Reference(ReferenceRecipe {
+            kind: ReferenceKind::Horizontal,
+            slope: 0.,
+            intercept,
+            arrow: None,
+        }))
+        .aes(super::aes().x(0.).y(0.))
+}
+/// Data-space vertical reference line.
+pub fn vline(intercept: f64) -> LayerBuilder {
+    LayerBuilder::new(Geom::Point)
+        .independent()
+        .recipe(BuiltinRecipe::Reference(ReferenceRecipe {
+            kind: ReferenceKind::Vertical,
+            slope: 0.,
+            intercept,
+            arrow: None,
+        }))
+        .aes(super::aes().x(0.).y(0.))
+}
+/// Reference step path over the existing checked step kernel.
+pub fn step(direction: StepDirection) -> LayerBuilder {
+    LayerBuilder::new(Geom::ShapeLine {
+        order: LineOrder::X,
+        connect_gaps: false,
+        curve: match direction {
+            StepDirection::Hv => crate::shape::CurveSpec::StepAfter,
+            StepDirection::Vh => crate::shape::CurveSpec::StepBefore,
+            StepDirection::Mid => crate::shape::CurveSpec::Step,
+        },
+    })
+    .recipe(BuiltinRecipe::Step(direction))
+}
+/// Straight mapped endpoints, optionally decorated with shared arrows.
+pub fn segment() -> LayerBuilder {
+    LayerBuilder::new(Geom::Rule).recipe(BuiltinRecipe::Segment { arrow: None })
+}
+/// Boxplot with actual grouped hinges, whiskers, notches and observed outliers.
+pub fn boxplot() -> LayerBuilder {
+    rule()
+        .recipe(BuiltinRecipe::Boxplot(Box::default()))
+        .stat(super::boxplot_stat())
+}
+/// Reference density curve over the shared area geometry.
+pub fn density() -> LayerBuilder {
+    area()
+        .recipe(BuiltinRecipe::Density(
+            crate::grammar::DensityRecipe::default(),
+        ))
+        .stat(super::density_stat())
+}
+/// Violin with actual shared kernel density and panel normalization.
+pub fn violin() -> LayerBuilder {
+    line()
+        .recipe(BuiltinRecipe::Violin(ViolinRecipe::default()))
+        .stat(super::violin_stat())
+}
+/// Integer-weight dot bins with reference stacking geometry.
+pub fn dotplot() -> LayerBuilder {
+    points()
+        .recipe(BuiltinRecipe::Dotplot(DotplotRecipe::default()))
+        .stat(super::dotplot_stat())
+}
+/// Empirical cumulative distribution, drawn as horizontal-then-vertical steps.
+pub fn ecdf() -> LayerBuilder {
+    step(StepDirection::Hv).stat(super::ecdf_stat())
+}
+/// Sorted sample quantiles against a standard normal reference distribution.
+pub fn qq() -> LayerBuilder {
+    points().stat(super::qq_stat())
+}
+/// Reference quantile line through the first and third quartiles.
+pub fn qq_line() -> LayerBuilder {
+    line().stat(super::qq_line_stat())
+}
+/// Sample and draw a portable pure numeric function.
+pub fn function_curve(function: AnalyticFunction) -> LayerBuilder {
+    line().stat(super::function_stat(function))
 }

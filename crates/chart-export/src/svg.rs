@@ -210,6 +210,30 @@ fn build_with_outlines(
                 clip.height()
             )?;
             match &item.primitive {
+                Primitive::RasterImage {
+                    bounds,
+                    raster,
+                    interpolate,
+                    ..
+                } => {
+                    let encoded = crate::raster::png(raster).map_err(|_| std::fmt::Error)?;
+                    let uri = base64::engine::general_purpose::STANDARD.encode(encoded);
+                    write!(
+                        out,
+                        "<image id=\"item-{index}\"{attrs} x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" preserveAspectRatio=\"none\" image-rendering=\"{}\" href=\"data:image/png;base64,{}\"/>",
+                        bounds.origin().x(),
+                        bounds.origin().y(),
+                        bounds.width(),
+                        bounds.height(),
+                        if *interpolate {
+                            "optimizeQuality"
+                        } else {
+                            "optimizeSpeed"
+                        },
+                        uri
+                    )?;
+                }
+
                 Primitive::VectorPath {
                     fill,
                     stroke,
@@ -224,8 +248,19 @@ fn build_with_outlines(
                 } => {
                     write!(
                         out,
-                        "<path id=\"item-{index}\"{attrs} d=\"{}\" fill-rule=\"nonzero\"",
-                        vector_paths[index].as_deref().unwrap_or_default()
+                        "<path id=\"item-{index}\"{attrs} d=\"{}\" fill-rule=\"{}\"",
+                        vector_paths[index].as_deref().unwrap_or_default(),
+                        if matches!(
+                            &item.primitive,
+                            Primitive::ShapePath {
+                                fill_rule: chart_core::scene::FillRule::EvenOdd,
+                                ..
+                            }
+                        ) {
+                            "evenodd"
+                        } else {
+                            "nonzero"
+                        }
                     )?;
                     if let Some(c) = fill {
                         write!(

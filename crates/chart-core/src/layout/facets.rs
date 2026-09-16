@@ -1081,21 +1081,49 @@ pub(super) fn layout_facets(
         .max()
         .unwrap_or(1);
     let mut remaining = request.limits.max_text_bytes;
-    let labels = measure_labels(
+    let labels = if spec.reference.is_none() {
+        measure_labels(
+            prepared
+                .panels()
+                .iter()
+                .map(|p| (panel_label(&p.key), None))
+                .collect(),
+            request,
+            measurer,
+            &mut remaining,
+        )?
+    } else {
+        vec![]
+    };
+    let strips = if let Some(policy) = &spec.reference {
         prepared
             .panels()
             .iter()
-            .map(|p| (panel_label(&p.key), None))
-            .collect(),
-        request,
-        measurer,
-        &mut remaining,
-    )?;
-    let header_height = labels
-        .iter()
-        .map(|l| l.metrics.height())
-        .fold(0_f64, f64::max)
-        + request.label_gap;
+            .map(|p| {
+                super::facet_policy::strips(
+                    policy,
+                    &spec.layout,
+                    p,
+                    (rows, columns),
+                    request,
+                    measurer,
+                    &mut remaining,
+                )
+            })
+            .collect::<ChartResult<Vec<_>>>()?
+    } else {
+        vec![]
+    };
+    let strip_insets = super::facet_policy::insets(&strips, request.label_gap);
+    let header_height = if spec.reference.is_none() {
+        labels
+            .iter()
+            .map(|l| l.metrics.height())
+            .fold(0_f64, f64::max)
+            + request.label_gap
+    } else {
+        0.
+    };
     let shared_legends = if spec.collect_guides {
         legends(&prepared, request)?
     } else {
@@ -1109,8 +1137,15 @@ pub(super) fn layout_facets(
         measurer,
         &mut remaining,
     )?;
-    let cell_width = (shared.content.width() - spec.gap * (columns - 1) as f64) / columns as f64;
-    let cell_height = (shared.content.height() - spec.gap * (rows - 1) as f64) / rows as f64;
+    let grid_reference =
+        spec.reference.is_some() && matches!(spec.layout, crate::grammar::FacetLayout::Grid);
+    let content = if grid_reference {
+        super::facet_policy::inset(shared.content, strip_insets)?
+    } else {
+        shared.content
+    };
+    let cell_width = (content.width() - spec.gap * (columns - 1) as f64) / columns as f64;
+    let cell_height = (content.height() - spec.gap * (rows - 1) as f64) / rows as f64;
     if cell_width <= 0. || cell_height <= header_height || prepared.panels().is_empty() {
         // Reuse the ordinary compact-state route with the original snapshot retained afterwards.
         let mut empty = (*prepared).clone();
@@ -1130,49 +1165,129 @@ pub(super) fn layout_facets(
         result.prepared = prepared;
         return Ok(result);
     }
+    let mut widths = vec![cell_width; columns];
+    let mut heights = vec![cell_height; rows];
+    let mut xweights = vec![1_f64; columns];
+    let mut yweights = vec![1_f64; rows];
+    if let Some(policy) = &spec.reference {
+        for panel in prepared.panels() {
+            if policy.space.free(true) {
+                xweights[panel.column] = super::facet_policy::span(&panel.chart, request, true)?;
+            }
+            if policy.space.free(false) {
+                yweights[panel.row] = super::facet_policy::span(&panel.chart, request, false)?;
+            }
+        }
+    }
     let mut cells = vec![];
     let mut local_boxes = vec![];
-    let mut inputs = vec![];
-    for panel in prepared.panels() {
-        let cell = Rect::new(
-            shared.content.origin().x() + panel.column as f64 * (cell_width + spec.gap),
-            shared.content.origin().y() + panel.row as f64 * (cell_height + spec.gap),
-            cell_width,
-            cell_height,
-        )?;
-        let mut r = request.clone();
-        r.hierarchy_scope
-            .push(super::GuideScope::Panel(panel.key.clone()));
-        r.figure_bounds = Some(request.figure_bounds.unwrap_or(request.bounds));
-        let region = Rect::new(
-            cell.origin().x(),
-            cell.origin().y() + header_height,
-            cell.width(),
-            cell.height() - header_height,
-        )?;
-        let local = arrange_legends(
-            &if spec.collect_guides {
-                vec![]
+    let mut resolved = vec![];
+    let weighted = spec
+        .reference
+        .as_ref()
+        .is_some_and(|p| p.space != crate::grammar::FacetSpace::Fixed);
+    for pass in 0..if weighted { 2 } else { 1 } {
+        cells.clear();
+        local_boxes.clear();
+        let mut inputs = vec![];
+        for panel in prepared.panels() {
+            let cell = Rect::new(
+                content.origin().x()
+                    + widths[..panel.column].iter().sum::<f64>()
+                    + panel.column as f64 * spec.gap,
+                content.origin().y()
+                    + heights[..panel.row].iter().sum::<f64>()
+                    + panel.row as f64 * spec.gap,
+                widths[panel.column],
+                heights[panel.row],
+            )?;
+            let mut r = request.clone();
+            r.hierarchy_scope
+                .push(super::GuideScope::Panel(panel.key.clone()));
+            r.figure_bounds = Some(request.figure_bounds.unwrap_or(request.bounds));
+            let inset = if spec.reference.is_some() && !grid_reference {
+                strip_insets
             } else {
-                legends(&panel.chart, request)?
-            },
-            prepared.definition(),
-            region,
-            request,
-            measurer,
-            &mut remaining,
-        )?;
-        r.bounds = local.content;
-        local_boxes.push(local.boxes);
-        let mut chart = (*panel.chart).clone();
-        for (id, domain) in prepared.scale_domains() {
-            chart.scale_domains.insert(*id, domain.clone());
+                [0., 0., header_height, 0.]
+            };
+            let region = super::facet_policy::inset(cell, inset)?;
+            let local = arrange_legends(
+                &if spec.collect_guides {
+                    vec![]
+                } else {
+                    legends(&panel.chart, request)?
+                },
+                prepared.definition(),
+                region,
+                request,
+                measurer,
+                &mut remaining,
+            )?;
+            r.bounds = local.content;
+            local_boxes.push(local.boxes);
+            if let Some(policy) = &spec.reference {
+                super::facet_policy::apply_axes(
+                    policy,
+                    &spec.layout,
+                    panel,
+                    prepared.panels(),
+                    &mut r,
+                );
+            }
+            let mut chart = (*panel.chart).clone();
+            for (id, domain) in prepared.scale_domains() {
+                chart.scale_domains.insert(*id, domain.clone());
+            }
+            chart.shared_training = Some(prepared.clone());
+            inputs.push((Arc::new(chart), r));
+            cells.push(cell);
         }
-        chart.shared_training = Some(prepared.clone());
-        inputs.push((Arc::new(chart), r));
-        cells.push(cell);
+        let offsets = strips
+            .iter()
+            .map(|panel| {
+                let mut offsets = [0.; 4];
+                for strip in panel {
+                    let side = super::facet_policy::side_index(strip.side);
+                    offsets[side] = strip_insets[side];
+                }
+                offsets
+            })
+            .collect::<Vec<_>>();
+        resolved =
+            super::engine::solve_panels_with_strip_offsets(inputs, &offsets, measurer, stamp)?;
+        if weighted && pass == 0 {
+            let mut margin = [0_f64; 2];
+            for (cell, chart) in cells.iter().zip(&resolved) {
+                if let Some(plot) = chart.plot() {
+                    margin[0] = margin[0].max(cell.width() - plot.width());
+                    margin[1] = margin[1].max(cell.height() - plot.height());
+                }
+            }
+            if let Some(policy) = &spec.reference {
+                if policy.space.free(true) {
+                    let usable = (content.width()
+                        - spec.gap * (columns - 1) as f64
+                        - margin[0] * columns as f64)
+                        .max(0.);
+                    let total = xweights.iter().sum::<f64>();
+                    widths = xweights
+                        .iter()
+                        .map(|w| margin[0] + usable * w / total)
+                        .collect();
+                }
+                if policy.space.free(false) {
+                    let usable =
+                        (content.height() - spec.gap * (rows - 1) as f64 - margin[1] * rows as f64)
+                            .max(0.);
+                    let total = yweights.iter().sum::<f64>();
+                    heights = yweights
+                        .iter()
+                        .map(|w| margin[1] + usable * w / total)
+                        .collect();
+                }
+            }
+        }
     }
-    let resolved = solve_panels(inputs, measurer, stamp)?;
     let mut interactions = std::collections::BTreeMap::new();
     let mut items = vec![];
     let mut targets = vec![];
@@ -1219,19 +1334,76 @@ pub(super) fn layout_facets(
             chart.scene().items().len(),
         ));
         let before = items.len();
-        if labels[index].metrics.width() + request.padding > cells[index].width() {
-            diagnostics.push(pressure(
-                "Facet header exceeds its cell and is clipped; its full logical text is retained.",
-            ));
+        if spec.reference.is_none() {
+            if labels[index].metrics.width() + request.padding > cells[index].width() {
+                diagnostics.push(pressure("Facet header exceeds its cell and is clipped; its full logical text is retained."));
+            }
+            push_text(
+                &mut items,
+                &labels[index],
+                cells[index].origin().x() + request.padding,
+                cells[index].origin().y(),
+                cells[index],
+                request,
+            )?;
+        } else {
+            for strip in &strips[index] {
+                let cell = cells[index];
+                let side = strip.side;
+                let i = super::facet_policy::side_index(side);
+                let size = strip_insets[i];
+                let plot = chart.plot().unwrap_or(cell);
+                let bounds = match side {
+                    AxisSide::Top => Rect::new(
+                        plot.origin().x(),
+                        plot.origin().y() - size,
+                        plot.width(),
+                        size,
+                    )?,
+                    AxisSide::Bottom => {
+                        Rect::new(plot.origin().x(), plot.max_y(), plot.width(), size)?
+                    }
+                    AxisSide::Left => Rect::new(
+                        plot.origin().x() - size,
+                        plot.origin().y(),
+                        size,
+                        plot.height(),
+                    )?,
+                    AxisSide::Right => {
+                        Rect::new(plot.max_x(), plot.origin().y(), size, plot.height())?
+                    }
+                };
+                require_within(
+                    items.len() < request.limits.max_items,
+                    "facet strip background",
+                )?;
+                items.push(SceneItem {
+                    guide: None,
+                    layer: None,
+                    clip: Some(bounds),
+                    primitive: Primitive::Rectangle {
+                        bounds,
+                        fill: Color {
+                            red: 217,
+                            green: 217,
+                            blue: 217,
+                            alpha: 255,
+                        },
+                    },
+                });
+                let text = strip.block.items_at(
+                    bounds.origin().x() + (bounds.width() - strip.block.bounds.width()) / 2.,
+                    bounds.origin().y() + (bounds.height() - strip.block.bounds.height()) / 2.,
+                    bounds,
+                )?;
+                require_within(
+                    text.len() <= request.limits.max_items.saturating_sub(items.len()),
+                    "facet strip text",
+                )?;
+                items.extend(text);
+                diagnostics.extend(strip.block.diagnostics.clone());
+            }
         }
-        push_text(
-            &mut items,
-            &labels[index],
-            cells[index].origin().x() + request.padding,
-            cells[index].origin().y(),
-            cells[index],
-            request,
-        )?;
         paint_boxes(
             &mut items,
             &local_boxes[index],

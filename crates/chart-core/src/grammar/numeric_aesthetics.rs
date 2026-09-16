@@ -76,12 +76,21 @@ pub(super) fn apply(
         profile,
         guides,
     } = context;
+    let point_geometry = layer.reference_point()
+        || matches!(
+            layer.recipe,
+            Some(BuiltinRecipe::Interval(IntervalRecipe {
+                kind: IntervalKind::PointRange,
+                ..
+            }))
+        );
     let mut trained = BTreeMap::new();
     for (aesthetic, encoding) in &layer.numeric_scales {
         if *aesthetic == NumericAesthetic::Alpha && layer.style.alpha.is_some() {
             continue;
         }
         if *aesthetic == NumericAesthetic::Size
+            && !point_geometry
             && (layer.geom.run().is_some()
                 || matches!(
                     layer.geom,
@@ -97,6 +106,9 @@ pub(super) fn apply(
             ));
         }
         super::shape_encoding::validate_channel(layer.geom, *aesthetic)?;
+        if super::colors::dropped(&encoding.input, table) {
+            continue;
+        }
         let input = super::colors::read_inputs(
             &encoding.input,
             data,
@@ -208,7 +220,7 @@ pub(super) fn apply(
                 Value::Number(Number(v))
                     if v.is_finite()
                         || (profile == Profile::Ggplot2_4_0_3
-                            && layer.geom == Geom::Point
+                            && point_geometry
                             && *aesthetic == NumericAesthetic::Size
                             && v.is_infinite()) =>
                 {
@@ -241,12 +253,12 @@ pub(super) fn apply(
                 }
             } else if (value < 0.
                 && !(profile == Profile::Ggplot2_4_0_3
-                    && layer.geom == Geom::Point
+                    && point_geometry
                     && *aesthetic == NumericAesthetic::Size))
                 || (value == 0.
                     && !(profile == Profile::Ggplot2_4_0_3
-                        && (layer.geom == Geom::Point
-                            || (layer.geom.reference_linewidth()
+                        && (point_geometry
+                            || (layer.reference_linewidth()
                                 && matches!(
                                     aesthetic,
                                     NumericAesthetic::Size | NumericAesthetic::StrokeWidth

@@ -520,6 +520,9 @@ pub(super) fn prepare(
     tree.visit(tree.root().handle(), VisitOrder::PreOrder, |n, i, _| {
         let key = (!n.synthetic()).then(|| RowKey::new(n.handle().node.get()));
         encoded.push(EncodedRow {
+            stat_outliers: vec![],
+            outlier_anchor_y: None,
+            recipe_values: Default::default(),
             missing_aesthetics: 0,
             values: Default::default(),
             x: None,

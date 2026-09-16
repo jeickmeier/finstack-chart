@@ -24,6 +24,10 @@ impl Component {
             }
             (Kind::Stat(a), method, Kind::Expression(Expr::Source(expr))) => {
                 Kind::Stat(match method {
+                    "input" => a.clone().input(expr.clone()),
+                    "weight" => a.clone().weight(expr.clone()),
+                    "bin_weight" => a.clone().bin_weight(expr.clone()),
+                    "count_weight" => a.clone().count_weight(expr.clone()),
                     "x" => a.clone().x(expr.clone()),
                     "y" => a.clone().y(expr.clone()),
                     _ => return Err(unsupported(method)),
@@ -59,6 +63,9 @@ impl Component {
                     "linewidth" => a.clone().linewidth(expr.clone()),
                     _ => return Err(unsupported(method)),
                 })
+            }
+            (Kind::Layer(a), "text_label", Kind::Expression(Expr::Source(expr))) => {
+                Kind::Layer(a.clone().text_label(expr.clone()))
             }
             (Kind::Layer(a), "after_scale", Kind::ScaleAes(b)) => {
                 Kind::Layer(a.clone().after_scale(b.clone()))

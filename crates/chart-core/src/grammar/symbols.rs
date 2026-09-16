@@ -149,7 +149,9 @@ pub(super) fn apply(
         return Ok(vec![]);
     };
     let mut legends = vec![];
-    if let Some(s) = &layer.symbol {
+    if let Some(s) = &layer.symbol
+        && !super::colors::dropped(&s.input, table)
+    {
         let inputs = super::colors::read_inputs(&s.input, data, table, rows, limits, None, false)?;
         let catalog: BTreeMap<_, _> = s
             .domain

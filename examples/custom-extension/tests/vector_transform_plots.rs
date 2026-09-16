@@ -241,7 +241,14 @@ fn check_vector_positional_transform_reference_plots(fixture: &Value) {
             }
             let p = builder.build()?;
             let wire = p.to_json()?;
-            assert_eq!(serde_json::from_str::<Value>(&wire).unwrap()["version"], 55);
+            assert_eq!(
+                serde_json::from_str::<Value>(&wire).unwrap()["version"],
+                if p.definition().facets.is_some() {
+                    76
+                } else {
+                    55
+                }
+            );
             let restored =
                 chart_core::plot::Plot::from_json_with_extensions(&wire, extensions.clone())?;
             assert_eq!(restored.to_json()?, wire);

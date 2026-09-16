@@ -157,9 +157,18 @@ export type LineType = 'Blank'|'Solid'|'Dashed'|'Dotted'|'DotDash'|'LongDash'|'T
 export type AestheticUnits = 'Destination'|'Millimeters'|'Points';
 export class Layer extends Component {
   legend(value: Record<string, unknown>): this;
+  annotation(value: Record<string, unknown>): this;
+  text_geom(value: Record<string, unknown>): this;
+  textGeom(value: Record<string, unknown>): this;
+  text_label(value: MappingValue | SourceExpression): this;
+  textLabel(value: MappingValue | SourceExpression): this;
+  text_stat_label(value: unknown): this;
+  textStatLabel(value: unknown): this;
   fill(value:Color):this; stroke(value:Color):this;
   radius(value:number):this; linewidth(value:number):this; alpha(value:number):this;
   line_type(value:LineType):this; lineType(value:LineType):this;
+ lineend(value:'Butt'|'Round'|'Square'):this;
+ linejoin(value:'Miter'|'Round'|'Bevel'):this;
   aesthetic_units(units:AestheticUnits):this; aestheticUnits(units:AestheticUnits):this;
   aesthetic_value(target:ValueAesthetic,value:Options):this; aestheticValue(target:ValueAesthetic,value:Options):this;
   value_scale(target:ValueAesthetic,source:string|number|Field|SourceExpression|Options,scale:StandaloneScale|Options):this;
@@ -183,6 +192,11 @@ export class Layer extends Component {
   shape_protocol(family:ShapeFamily,selection:ShapeOperation):this;
   shapeProtocol(family:ShapeFamily,selection:ShapeOperation):this;
  shape_value(target:ShapeChannel,source:string|number|Field|SourceExpression|Options):this;
+ recipe(options:Options):this;
+ recipe_value(target:string,source:MappingValue|SourceExpression):this;
+ recipeValue(target:string,source:MappingValue|SourceExpression):this;
+ recipe_stat_value(target:string,field:string|Options):this;
+ recipeStatValue(target:string,field:string|Options):this;
  shapeValue(target:ShapeChannel,source:string|number|Field|SourceExpression|Options):this;
  arc_parameters(parameters:ArcParameters):this; arcParameters(parameters:ArcParameters):this;
  radial_parameters(parameters:RadialParameters):this; radialParameters(parameters:RadialParameters):this;
@@ -242,6 +256,31 @@ export class Layer extends Component {
 }
 
 export class Stat extends Component {
+  input(value: MappingValue | SourceExpression): this;
+  weight(value: MappingValue | SourceExpression): this;
+  width(value: number): this;
+  distribution_options(options: Options): this;
+  distributionOptions(options: Options): this;
+  univariate_options(options: string | Options): this;
+  univariateOptions(options: string | Options): this;
+  ggplot_count(): this;
+  sum_count(): this;
+  sumCount(): this;
+  count_partition(field:MappingValue): this;
+  countPartition(field:MappingValue): this;
+  ggplotCount(): this;
+  count_weight(value: MappingValue | SourceExpression): this;
+  countWeight(value: MappingValue | SourceExpression): this;
+  count_width(value: number): this;
+  countWidth(value: number): this;
+  summary_helper(helper: Options): this;
+  summaryHelper(helper: Options): this;
+  summary_bins(options: Options): this;
+  summaryBins(options: Options): this;
+  ggplot_bin(options: Options): this;
+  ggplotBin(options: Options): this;
+  bin_weight(value: MappingValue | SourceExpression): this;
+  binWeight(value: MappingValue | SourceExpression): this;
   field_parameter(name: string, value: MappingValue): this;
   fieldParameter(name: string, value: MappingValue): this;
   private readonly _family: "Stat";
@@ -288,6 +327,10 @@ export class BinAes extends Component {
 }
 
 export class Position extends Component {
+  preserve(value: "Total" | "Single"): this;
+  reverse(value: boolean): this;
+  padding(value: number): this;
+  vjust(value: number): this;
   stack_order(value: StackOrder): this;
   stackOrder(value: StackOrder): this;
   stack_offset(value: StackOffset): this;
@@ -425,6 +468,10 @@ export class Legend extends Component {
 }
 
 export class Facet extends Component {
+  fields(values: ReadonlyArray<string>): this;
+  row_fields(value: number): this;
+  rowFields(value: number): this;
+  reference(policy: Options): this;
   private readonly _family: "Facet";
   columns(value: number): this;
   empty(value: string): this;
@@ -687,6 +734,15 @@ export class Link extends Component {
 }
 export function aes(): Aes;
 export function blank(): Layer;
+export function linerange(): Layer;
+export function pointrange(): Layer;
+export function errorbar(): Layer;
+export function crossbar(): Layer;
+export function segment(): Layer;
+export function step(direction:'Hv'|'Vh'|'Mid'):Layer;
+export function abline(slope:number,intercept:number):Layer;
+export function hline(intercept:number):Layer;
+export function vline(intercept:number):Layer;
 export function points(): Layer;
 export function line(): Layer;
 export function area(): Layer;
@@ -1270,3 +1326,51 @@ export const hierarchyPack:typeof hierarchy_pack;
 export type MinorBreaks = "Automatic" | "Hidden" | {Registered:Options} | {Numeric: ReadonlyArray<number | Options>} | {TimeWidth:string} | {Timestamps:ReadonlyArray<Options|null>};
 
 export interface GgplotExpansion {mult:ReadonlyArray<number>;add:ReadonlyArray<number>; }
+
+export function ggplot_stack(): Position;
+export function ggplot_fill(): Position;
+export function ggplot_dodge(): Position;
+export function dodge2(): Position;
+export function nudge(x: number, y: number): Position;
+export function jitter_dodge(seed: number): Position;
+export const ggplotStack: typeof ggplot_stack;
+export const ggplotFill: typeof ggplot_fill;
+export const ggplotDodge: typeof ggplot_dodge;
+export const jitterDodge: typeof jitter_dodge;
+
+export function boxplot(): Layer;
+export function violin(): Layer;
+export function dotplot(): Layer;
+export function density(): Layer;
+export function ecdf(): Layer;
+export function qq(): Layer;
+export function qqLine(): Layer;
+export function qq_line(): Layer;
+export function functionCurve(specification: Options): Layer;
+export function function_curve(specification: Options): Layer;
+export function boxplotStat(): Stat;
+export function boxplot_stat(): Stat;
+export function violinStat(): Stat;
+export function violin_stat(): Stat;
+export function dotplotStat(): Stat;
+export function dotplot_stat(): Stat;
+export function densityStat(): Stat;
+export function density_stat(): Stat;
+export function ecdfStat(): Stat;
+export function ecdf_stat(): Stat;
+export function qqStat(): Stat;
+export function qq_stat(): Stat;
+export function qqLineStat(): Stat;
+export function qq_line_stat(): Stat;
+export function uniqueStat(): Stat;
+export function unique_stat(): Stat;
+export function alignStat(): Stat;
+export function align_stat(): Stat;
+export function functionStat(specification: Options): Stat;
+export function function_stat(specification: Options): Stat;
+export function distributionStat(options: Options): Stat;
+export function distribution_stat(options: Options): Stat;
+export function univariateStat(options: string | Options): Stat;
+export function univariate_stat(options: string | Options): Stat;
+export function connectStat(connection: string | Options): Stat;
+export function connect_stat(connection: string | Options): Stat;

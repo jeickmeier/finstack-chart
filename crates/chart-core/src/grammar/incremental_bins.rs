@@ -155,7 +155,7 @@ impl Accumulator {
         groups
     }
 }
-fn evaluate(row: RowView<'_>, spec: &BinSpec) -> Contribution {
+fn evaluate(row: RowView<'_>, spec: &BinSpec, edges: &[f64]) -> Contribution {
     let group = stats::group_value(row, &spec.grouping);
     let value = stats::number(row, &spec.input).and_then(|v| match &spec.space {
         StatSpace::Data => Some(v),
@@ -166,14 +166,24 @@ fn evaluate(row: RowView<'_>, spec: &BinSpec) -> Contribution {
     });
     let invalid = group.is_none() || value.is_none();
     let n = spec.edges.len() - 1;
-    let below = !invalid && value.is_some_and(|v| v < spec.edges[0]);
-    let above = !invalid && value.is_some_and(|v| v > spec.edges[n]);
+    let below = !invalid && value.is_some_and(|v| v < edges[0]);
+    let above = !invalid && value.is_some_and(|v| v > edges[n]);
     let bin = if invalid || ((below || above) && spec.outliers != OutlierPolicy::Overflow) {
         None
     } else {
         value.map(|v| {
-            spec.edges
-                .partition_point(|edge| *edge <= v)
+            edges
+                .partition_point(|edge| {
+                    if spec
+                        .ggplot
+                        .as_ref()
+                        .is_some_and(|s| s.closed == BinClosure::Right)
+                    {
+                        *edge < v
+                    } else {
+                        *edge <= v
+                    }
+                })
                 .saturating_sub(1)
                 .min(n - 1)
         })
@@ -231,6 +241,11 @@ impl BinCache {
         eligible: bool,
         limits: CompileLimits,
     ) -> ChartResult<Accumulator> {
+        let fuzzy = spec
+            .ggplot
+            .as_ref()
+            .map(|s| super::ggplot_stats::fuzzy_edges(&spec.edges, s.closed));
+        let edges = fuzzy.as_deref().unwrap_or(&spec.edges);
         let cached_elsewhere: usize = self
             .entries
             .iter()
@@ -254,7 +269,7 @@ impl BinCache {
             let mut a = Accumulator::default();
             for r in rows {
                 a.apply(
-                    &evaluate(index[&r.key], spec),
+                    &evaluate(index[&r.key], spec, edges),
                     true,
                     spec.edges.len() - 1,
                     limits,
@@ -312,7 +327,7 @@ impl BinCache {
             }
             let mut contributions = Vec::with_capacity(chunk.batch().len());
             for row in chunk.rows() {
-                let c = evaluate(row, spec);
+                let c = evaluate(row, spec, edges);
                 entry
                     .accumulated
                     .apply(&c, true, spec.edges.len() - 1, limits)?;

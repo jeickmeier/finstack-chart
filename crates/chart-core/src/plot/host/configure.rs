@@ -88,6 +88,10 @@ impl Component {
             }),
             Kind::Layer(b) => Kind::Layer(match method {
                 "legend" => scalar!(a, b, legend),
+                "annotation" => scalar!(a, b, annotation),
+                "text_geom" => scalar!(a, b, text_geom),
+                "text_label" => b.clone().text_label(a.mapping()?),
+                "text_stat_label" => scalar!(a, b, text_stat_label),
                 "hierarchy_value" => b.clone().hierarchy_value(a.mapping()?),
                 "hierarchy_label" => b.clone().hierarchy_label(a.mapping()?),
                 "hierarchy_layout" => scalar!(a, b, hierarchy_layout),
@@ -142,6 +146,12 @@ impl Component {
                 "pie_angles" => scalar!(a, b, pie_angles),
                 "pie_order" => scalar!(a, b, pie_order),
                 "pie_grouped" => scalar!(a, b, pie_grouped),
+                "recipe" => scalar!(a, b, recipe),
+                "recipe_stat_value" => pair!(a, b, recipe_stat_value),
+                "recipe_value" => {
+                    a.count(2)?;
+                    b.clone().recipe_value(a.at(0)?, mapping(&a.0[1])?)
+                }
                 "shape_value" => {
                     a.count(2)?;
                     let input = numeric_input(&a.0[1])?;
@@ -163,6 +173,8 @@ impl Component {
                 }
                 "aesthetic_units" => scalar!(a, b, aesthetic_units),
                 "line_type" => scalar!(a, b, line_type),
+                "lineend" => scalar!(a, b, lineend),
+                "linejoin" => scalar!(a, b, linejoin),
                 "radius" => scalar!(a, b, radius),
                 "linewidth" => scalar!(a, b, linewidth),
                 "alpha" => scalar!(a, b, alpha),
@@ -203,6 +215,18 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Stat(b) => Kind::Stat(match method {
+                "input" => b.clone().input(a.mapping()?),
+                "weight" => b.clone().weight(a.mapping()?),
+                "width" => scalar!(a, b, width),
+                "distribution_options" => scalar!(a, b, distribution_options),
+                "univariate_options" => scalar!(a, b, univariate_options),
+                "ggplot_count" => empty!(a, b, ggplot_count),
+                "sum_count" => empty!(a, b, sum_count),
+                "count_partition" => b.clone().count_partition(a.mapping()?),
+                "count_weight" => b.clone().count_weight(a.mapping()?),
+                "count_width" => scalar!(a, b, count_width),
+                "summary_helper" => scalar!(a, b, summary_helper),
+                "summary_bins" => scalar!(a, b, summary_bins),
                 "field_parameter" => {
                     a.count(2)?;
                     b.clone()
@@ -215,6 +239,8 @@ impl Component {
                 "bins" => scalar!(a, b, bins),
                 "breaks" => scalar!(a, b, breaks),
                 "outliers" => scalar!(a, b, outliers),
+                "ggplot_bin" => scalar!(a, b, ggplot_bin),
+                "bin_weight" => b.clone().bin_weight(a.mapping()?),
                 "required" => b.clone().required(
                     a.one::<Vec<Value>>()?
                         .iter()
@@ -260,6 +286,10 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Position(b) => Kind::Position(match method {
+                "preserve" => scalar!(a, b, preserve),
+                "reverse" => scalar!(a, b, reverse),
+                "vjust" => scalar!(a, b, vjust),
+                "padding" => scalar!(a, b, padding),
                 "normalize" => scalar!(a, b, normalize),
                 "stack_order" => scalar!(a, b, stack_order),
                 "stack_offset" => scalar!(a, b, stack_offset),
@@ -444,6 +474,9 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Facet(b) => Kind::Facet(match method {
+                "fields" => b.clone().fields(a.one::<Vec<String>>()?),
+                "row_fields" => scalar!(a, b, row_fields),
+                "reference" => scalar!(a, b, reference),
                 "columns" => scalar!(a, b, columns),
                 "empty" => scalar!(a, b, empty),
                 "free_x" => scalar!(a, b, free_x),

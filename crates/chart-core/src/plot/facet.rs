@@ -2,12 +2,15 @@ use super::{Data, error};
 use crate::{
     ChartResult, DiagnosticCode,
     data::ValueRef,
-    grammar::{EmptyPanels, FacetLayout, FacetScales, FacetSpec, GroupValue, PanelKey},
+    grammar::{
+        EmptyPanels, FacetLayout, FacetPolicy, FacetScales, FacetSpec, GroupValue, PanelKey,
+    },
 };
 /// Facet layout/catalog policy over the existing shared facet engine.
 #[derive(Clone, Debug)]
 pub struct FacetBuilder {
     fields: Vec<String>,
+    reference: Option<FacetPolicy>,
     layout: FacetLayout,
     order: Option<Vec<PanelKey>>,
     empty: EmptyPanels,
@@ -20,6 +23,7 @@ pub struct FacetBuilder {
 pub fn facet_wrap(field: impl Into<String>) -> FacetBuilder {
     FacetBuilder {
         fields: vec![field.into()],
+        reference: None,
         layout: FacetLayout::Wrap { columns: 2 },
         order: None,
         empty: EmptyPanels::Keep,
@@ -38,6 +42,23 @@ pub fn facet_grid(rows: impl Into<String>, columns: impl Into<String>) -> FacetB
     }
 }
 impl FacetBuilder {
+    /// Select reference catalog, population and scale-sharing semantics explicitly.
+    pub fn reference(mut self, policy: FacetPolicy) -> Self {
+        self.reference = Some(policy);
+        self
+    }
+    /// Set the number of leading row variables and select reference grid semantics.
+    pub fn row_fields(mut self, count: usize) -> Self {
+        self.reference
+            .get_or_insert_with(Default::default)
+            .row_fields = count;
+        self
+    }
+    /// Set flattened wrap variables or row-then-column grid variables.
+    pub fn fields(mut self, fields: impl IntoIterator<Item = impl Into<String>>) -> Self {
+        self.fields = fields.into_iter().map(Into::into).collect();
+        self
+    }
     /// Set wrap column count; grid callers choose row/column fields instead.
     pub fn columns(mut self, columns: usize) -> Self {
         if let FacetLayout::Wrap { columns: value } = &mut self.layout {
@@ -80,7 +101,28 @@ impl FacetBuilder {
         self.collect_guides = collect;
         self
     }
-    pub(super) fn lower(&self, data: &Data) -> ChartResult<FacetSpec> {
+    pub(super) fn lower_sources(
+        &self,
+        primary: &Data,
+        data: &[Data],
+        profile: crate::grammar::Profile,
+    ) -> ChartResult<FacetSpec> {
+        let reference =
+            self.reference.is_some() || profile == crate::grammar::Profile::Ggplot2_4_0_3;
+        let source = if reference {
+            data.iter()
+                .find(|d| self.fields.iter().all(|f| d.field(f).is_ok()))
+                .unwrap_or(primary)
+        } else {
+            primary
+        };
+        self.lower(source, profile)
+    }
+    pub(super) fn lower(
+        &self,
+        data: &Data,
+        profile: crate::grammar::Profile,
+    ) -> ChartResult<FacetSpec> {
         if let Some(error) = &self.failure {
             return Err(error.clone());
         }
@@ -89,6 +131,83 @@ impl FacetBuilder {
             .iter()
             .map(|f| data.field(f).map(|h| h.id()))
             .collect::<ChartResult<Vec<_>>>()?;
+        if let Some(mut policy) = self.reference.clone().or_else(|| {
+            (profile == crate::grammar::Profile::Ggplot2_4_0_3).then(FacetPolicy::default)
+        }) {
+            policy.field_names = self.fields.clone();
+            policy.fixed_catalog |= self.order.is_some();
+            let columns = fields
+                .iter()
+                .map(|f| data.batch.column(*f).expect("resolved facet field"))
+                .collect::<Vec<_>>();
+            let value = |v: Option<ValueRef<'_>>| -> ChartResult<GroupValue> {
+                Ok(match v {
+                    Some(ValueRef::Category(v) | ValueRef::Utf8(v)) => GroupValue::Text(v.into()),
+                    Some(ValueRef::Int64(v) | ValueRef::Timestamp(v)) => GroupValue::Int(v),
+                    Some(ValueRef::UInt64(v)) => GroupValue::UInt(v),
+                    Some(ValueRef::Boolean(v)) => GroupValue::Boolean(v),
+                    Some(ValueRef::Float64(v)) => GroupValue::Number(v.try_into()?),
+                    None => GroupValue::Missing,
+                })
+            };
+            let observed = (0..data.batch.len())
+                .map(|r| {
+                    columns
+                        .iter()
+                        .map(|c| value(c.value(r)))
+                        .collect::<ChartResult<Vec<_>>>()
+                })
+                .collect::<ChartResult<Vec<_>>>()?;
+            let mut levels = Vec::new();
+            for (index, column) in columns.iter().enumerate() {
+                let mut catalog = policy
+                    .levels
+                    .get(index)
+                    .and_then(Clone::clone)
+                    .unwrap_or_else(|| match column.values() {
+                        crate::data::ColumnValues::Categorical { dictionary, .. } => dictionary
+                            .iter()
+                            .map(|v| GroupValue::Text(v.clone()))
+                            .collect(),
+                        _ => observed
+                            .iter()
+                            .map(|r| r[index].clone())
+                            .filter(|v| *v != GroupValue::Missing)
+                            .collect::<std::collections::BTreeSet<_>>()
+                            .into_iter()
+                            .collect(),
+                    });
+                if observed.iter().any(|r| r[index] == GroupValue::Missing)
+                    && !catalog.contains(&GroupValue::Missing)
+                {
+                    catalog.push(GroupValue::Missing);
+                }
+                for row in &observed {
+                    if !catalog.contains(&row[index]) {
+                        return Err(error(
+                            DiagnosticCode::Validation,
+                            "Observed facet value is absent from the declared levels.",
+                        ));
+                    }
+                }
+                levels.push(catalog);
+            }
+            let order = if let Some(order) = &self.order {
+                order.clone()
+            } else {
+                crate::grammar::facet_policy::catalog(&policy, &self.layout, &observed, &levels)?
+            };
+            return Ok(FacetSpec {
+                reference: Some(policy),
+                fields,
+                order,
+                layout: self.layout.clone(),
+                empty: EmptyPanels::Keep,
+                scales: self.scales,
+                gap: self.gap,
+                collect_guides: self.collect_guides,
+            });
+        }
         let order = if let Some(order) = &self.order {
             order.clone()
         } else {
@@ -149,6 +268,7 @@ impl FacetBuilder {
             }
         };
         Ok(FacetSpec {
+            reference: None,
             fields,
             order,
             layout: self.layout.clone(),
@@ -201,6 +321,9 @@ pub(super) fn validate_dataset_fields(
                         error(DiagnosticCode::MissingResource, "Facet source is absent.")
                     })?;
                     for (field, name) in &expected {
+                        if facet.reference.is_some() {
+                            continue;
+                        }
                         if !data
                             .batch
                             .schema()

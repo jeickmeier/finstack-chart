@@ -41,6 +41,59 @@ impl ResolvedAxis {
         }
         self.map(value, space)
     }
+    // Reference positions move within category steps without changing catalog identities.
+    fn map_position_coordinate(
+        &self,
+        value: f64,
+        space: &ValueSpace,
+        position: &Position,
+        recipe: bool,
+    ) -> ChartResult<Option<f64>> {
+        if !recipe
+            && !matches!(
+                position,
+                Position::Nudge(_)
+                    | Position::GgplotDodge(_)
+                    | Position::GgplotDodge2(_)
+                    | Position::JitterDodge(_)
+            )
+            || !space.is_categorical()
+        {
+            return self.map_reference_coordinate(value, space);
+        }
+        let count = space.category_count().unwrap_or(0);
+        if count == 0 {
+            return Ok(None);
+        }
+        let anchor = value.round().clamp(0., count.saturating_sub(1) as f64);
+        let Some(mapped) = self.map(anchor, space)? else {
+            return Ok(None);
+        };
+        let step = if count > 1 {
+            let other = if anchor < (count - 1) as f64 {
+                anchor + 1.
+            } else {
+                anchor - 1.
+            };
+            let Some(next) = self.map(other, space)? else {
+                return Ok(None);
+            };
+            (next - mapped) / (other - anchor)
+        } else if let ResolvedScale::Band(scale) = &self.scale {
+            scale.step()
+                * if scale.range().end() >= scale.range().start() {
+                    1.
+                } else {
+                    -1.
+                }
+        } else {
+            return Err(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Single-category positioned axes require a band step.",
+            ));
+        };
+        Ok(Some(mapped + (value - anchor) * step))
+    }
     /// Map a prepared layer coordinate using that layer's exact value-space metadata.
     /// Category ordinals never become identities; UTC adds the checked integer origin first.
     pub fn map(&self, value: f64, layer_space: &ValueSpace) -> ChartResult<Option<f64>> {
@@ -139,6 +192,10 @@ impl ResolvedAxis {
 }
 
 pub(super) struct Output {
+    pub(super) stroke_end: Option<crate::grammar::LineEnd>,
+    pub(super) stroke_join: Option<crate::grammar::LineJoin>,
+    pub(super) stroke_remaining: usize,
+    pub diagnostics: Vec<crate::Diagnostic>,
     pub hierarchies: BTreeMap<crate::LayerId, super::ResolvedHierarchy>,
     pub interactions: BTreeMap<usize, crate::grammar::GeometryInteraction>,
     pub items: Vec<SceneItem>,
@@ -152,12 +209,41 @@ impl Output {
         targets: Vec<Target>,
         request: &LayoutRequest,
     ) -> ChartResult<()> {
+        if self.stroke_end.is_none() && self.stroke_join.is_none() {
+            crate::limits::require_within(
+                self.items.len() < request.limits.max_items,
+                "layout scene item",
+            )?;
+            self.items.push(item);
+            self.targets.push(targets);
+            return Ok(());
+        }
+        let SceneItem {
+            guide,
+            layer,
+            clip,
+            primitive,
+        } = item;
+        let primitives = super::stroke_outline::expand(
+            primitive,
+            targets.len(),
+            self.stroke_end,
+            self.stroke_join,
+            &mut self.stroke_remaining,
+        )?;
         crate::limits::require_within(
-            self.items.len() < request.limits.max_items,
+            self.items.len().saturating_add(primitives.len()) <= request.limits.max_items,
             "layout scene item",
         )?;
-        self.items.push(item);
-        self.targets.push(targets);
+        for primitive in primitives {
+            self.items.push(SceneItem {
+                primitive,
+                guide: guide.clone(),
+                layer,
+                clip,
+            });
+            self.targets.push(targets.clone());
+        }
         Ok(())
     }
 }
@@ -166,8 +252,13 @@ pub(super) fn project(
     axes: &BTreeMap<crate::ScaleId, ResolvedAxis>,
     plot: Rect,
     request: &LayoutRequest,
+    measurer: &dyn crate::services::TextMeasurer,
 ) -> ChartResult<Output> {
     let mut out = Output {
+        stroke_end: None,
+        stroke_join: None,
+        stroke_remaining: request.limits.max_path_commands,
+        diagnostics: Vec::new(),
         hierarchies: BTreeMap::new(),
         interactions: BTreeMap::new(),
         items: vec![],
@@ -175,6 +266,8 @@ pub(super) fn project(
         omitted: 0,
     };
     for layer in chart.layers().iter().filter(|l| l.visible()) {
+        out.stroke_end = None;
+        out.stroke_join = None;
         let definition = chart
             .definition()
             .layers
@@ -202,13 +295,27 @@ pub(super) fn project(
         } else {
             request.figure_bounds.unwrap_or(request.bounds)
         });
+        let mut text_bounds = Vec::new();
+        let mut text_bytes = 0_usize;
         for (mark_index, mark) in layer.marks().iter().enumerate() {
+            out.stroke_end = mark.style.line_end;
+            out.stroke_join = mark.style.line_join;
             let output_index = out.items.len();
             let coordinates =
                 |px: f64, py: f64, target: &Target, edge: f64| -> ChartResult<Option<Point>> {
                     let (Some(mut a), Some(mut b)) = (
-                        x.map_reference_coordinate(px, xspace)?,
-                        y.map_reference_coordinate(py, yspace)?,
+                        x.map_position_coordinate(
+                            px,
+                            xspace,
+                            layer.position(),
+                            definition.is_some_and(|l| l.recipe.is_some()),
+                        )?,
+                        y.map_position_coordinate(
+                            py,
+                            yspace,
+                            layer.position(),
+                            definition.is_some_and(|l| l.recipe.is_some()),
+                        )?,
                     ) else {
                         return Ok(None);
                     };
@@ -284,7 +391,75 @@ pub(super) fn project(
             let point =
                 |p: Point, target: &Target, edge: f64| coordinates(p.x(), p.y(), target, edge);
 
+            if let Some(annotation) = definition.and_then(|l| l.annotation.as_ref()) {
+                if let PreparedGeometry::Point(center) = &mark.geometry {
+                    if let Some(anchor) = point(*center, &mark.targets[0], 0.)? {
+                        super::row_annotation::project(
+                            annotation,
+                            mark,
+                            layer.id(),
+                            anchor,
+                            clip,
+                            request,
+                            &mut out,
+                        )?;
+                    } else {
+                        out.omitted += 1;
+                    }
+                }
+                continue;
+            }
+            if let Some(options) = definition.and_then(|l| l.text.as_ref()) {
+                let center = match &mark.geometry {
+                    PreparedGeometry::Point(p) => Some([p.x(), p.y()]),
+                    PreparedGeometry::UnboundedPoint(p) => Some([p[0].0, p[1].0]),
+                    _ => None,
+                };
+                if let Some(center) = center {
+                    if let Some(anchor) = coordinates(center[0], center[1], &mark.targets[0], 0.)? {
+                        super::text_marks::project(
+                            options,
+                            mark,
+                            layer.id(),
+                            anchor,
+                            clip,
+                            request,
+                            measurer,
+                            &mut text_bounds,
+                            &mut text_bytes,
+                            &mut out,
+                        )?;
+                    } else {
+                        out.omitted += 1;
+                    }
+                }
+                continue;
+            }
+
             let mut style = mark.style;
+            if chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
+                && matches!(mark.geometry, PreparedGeometry::Rule { .. })
+                && definition.is_some_and(|l| {
+                    matches!(
+                        l.recipe,
+                        Some(crate::grammar::BuiltinRecipe::Interval(
+                            crate::grammar::IntervalRecipe {
+                                kind: crate::grammar::IntervalKind::Crossbar,
+                                ..
+                            }
+                        ))
+                    )
+                })
+            {
+                let Some(crate::grammar::BuiltinRecipe::Interval(spec)) =
+                    definition.unwrap().recipe.as_ref()
+                else {
+                    unreachable!()
+                };
+                if spec.middle.linewidth.is_none() {
+                    style.stroke_width *= spec.fatten.unwrap_or(2.5);
+                }
+            }
             if let PreparedGeometry::ShapePath { paint, .. }
             | PreparedGeometry::ShapePathRun { paint, .. } = &mark.geometry
             {
@@ -295,6 +470,71 @@ pub(super) fn project(
                     style.stroke = None;
                 }
             }
+            if chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
+                && matches!(mark.geometry, PreparedGeometry::Point(_))
+                && definition.is_some_and(|l| {
+                    matches!(
+                        l.recipe,
+                        Some(crate::grammar::BuiltinRecipe::Interval(
+                            crate::grammar::IntervalRecipe {
+                                kind: crate::grammar::IntervalKind::PointRange,
+                                ..
+                            }
+                        ))
+                    )
+                })
+            {
+                let definition = definition.unwrap();
+                let default_size = definition.grammar.as_ref().is_none_or(|g| g.default_size);
+                let mapped_size = definition
+                    .numeric_scales
+                    .contains_key(&crate::grammar::NumericAesthetic::Size)
+                    || definition
+                        .grammar
+                        .as_ref()
+                        .is_some_and(|g| g.source.size.is_some());
+                let Some(crate::grammar::BuiltinRecipe::Interval(spec)) =
+                    definition.recipe.as_ref()
+                else {
+                    unreachable!()
+                };
+                style.radius = spec.point.size.unwrap_or(if default_size && !mapped_size {
+                    0.5
+                } else {
+                    style.radius
+                }) * spec.fatten.unwrap_or(4.);
+                style.stroke_width = spec.point.stroke.unwrap_or(1.);
+                style
+                    .units
+                    .get_or_insert(crate::grammar::AestheticUnits::Millimeters);
+            }
+            if matches!(mark.geometry, PreparedGeometry::Point(_)) {
+                let code = definition
+                    .and_then(|l| match &l.recipe {
+                        Some(crate::grammar::BuiltinRecipe::Interval(s))
+                            if s.kind == crate::grammar::IntervalKind::PointRange =>
+                        {
+                            s.point.shape
+                        }
+                        _ => None,
+                    })
+                    .or_else(|| {
+                        match mark.aesthetics.get(&crate::grammar::ValueAesthetic::Shape) {
+                            Some(crate::interpolate::Value::Number(v)) => Some(v.0 as u8),
+                            _ => None,
+                        }
+                    });
+                if let Some(code) = code {
+                    let paint = crate::shape::SymbolPaint::Auto
+                        .resolve(crate::shape::SymbolKind::Ggplot(code))?;
+                    if paint.color_fill() {
+                        style.fill = Some(style.stroke.unwrap_or(style.color));
+                    }
+                    if paint == crate::shape::SymbolPaint::ColorFill {
+                        style.stroke = None;
+                    }
+                }
+            }
             let factor = style
                 .units
                 .unwrap_or(crate::grammar::AestheticUnits::Destination)
@@ -303,14 +543,24 @@ pub(super) fn project(
             style.stroke_width *= factor;
             if chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
                 && style.units.is_none()
-                && definition.is_some_and(|l| l.geom.reference_linewidth())
+                && definition.is_some_and(|l| l.reference_linewidth())
             {
                 style.stroke_width =
                     crate::grammar::reference_linewidth(style.stroke_width, request.units);
             }
             if chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
                 && definition.is_some_and(|l| {
-                    l.geom == crate::grammar::Geom::Point
+                    (l.reference_point()
+                        || (matches!(mark.geometry, PreparedGeometry::Point(_))
+                            && matches!(
+                                l.recipe,
+                                Some(crate::grammar::BuiltinRecipe::Interval(
+                                    crate::grammar::IntervalRecipe {
+                                        kind: crate::grammar::IntervalKind::PointRange,
+                                        ..
+                                    }
+                                ))
+                            )))
                         && !l
                             .grammar
                             .as_ref()
@@ -349,7 +599,53 @@ pub(super) fn project(
                     primitive: independent_paints(primitive, style, mark.targets.len())?,
                 })
             };
+            if let Some(definition) = definition
+                && let Some(primitives) = super::recipe_intervals::project(
+                    mark,
+                    definition,
+                    request,
+                    plot,
+                    &|p| point(p, &mark.targets[0], 0.),
+                    [x, y],
+                    &|v, is_x| {
+                        if is_x {
+                            x.map_position_coordinate(v, xspace, layer.position(), true)
+                        } else {
+                            y.map_position_coordinate(v, yspace, layer.position(), true)
+                        }
+                    },
+                )?
+            {
+                for mut primitive in primitives {
+                    if let Primitive::ShapePath { anchors, .. } = &mut primitive
+                        && anchors.len() == 1
+                        && mark.targets.len() > 1
+                    {
+                        *anchors = vec![anchors[0]; mark.targets.len()];
+                    }
+                    let scene_item = if matches!(&mark.geometry, PreparedGeometry::Recipe(recipe) if matches!(recipe.as_ref(), crate::grammar::PreparedRecipe::Distribution(_)))
+                    {
+                        // Distribution glyphs already resolve symbol fill policy and physical stroke units.
+                        SceneItem {
+                            guide: None,
+                            layer: Some(layer.id()),
+                            clip,
+                            primitive,
+                        }
+                    } else {
+                        item(primitive)?
+                    };
+                    out.push(scene_item, mark.targets.clone(), request)?;
+                }
+                continue;
+            }
             match &mark.geometry {
+                PreparedGeometry::Recipe(_) => {
+                    return Err(error(
+                        DiagnosticCode::Validation,
+                        "Recipe requires its normalized layer definition.",
+                    ));
+                }
                 PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {
                     return Err(error(
                         DiagnosticCode::Validation,
@@ -396,6 +692,7 @@ pub(super) fn project(
                         if geometry.has_segments() || (run && !geometry.commands().is_empty()) {
                             out.push(
                                 item(Primitive::ShapePath {
+                                    fill_rule: crate::scene::FillRule::NonZero,
                                     dashes: vec![],
                                     geometry,
                                     fill: paint.fills().then_some(style.color),
@@ -494,6 +791,42 @@ pub(super) fn project(
                         if lo.is_empty() {
                             return Ok(());
                         }
+                        if let Some(crate::grammar::BuiltinRecipe::Density(spec)) =
+                            definition.and_then(|l| l.recipe.as_ref())
+                        {
+                            // Area bands retain data y first and baseline y2 second;
+                            // these slots are not sorted geometric lower/upper boundaries.
+                            let (baseline, curve) = if definition.is_some_and(|l| {
+                                matches!(l.geom, crate::grammar::Geom::Area { .. })
+                            }) {
+                                (&*hi, &*lo)
+                            } else {
+                                (&*lo, &*hi)
+                            };
+                            for primitive in super::recipe_distributions::density_band(
+                                baseline,
+                                curve,
+                                anchors,
+                                style,
+                                spec.outline,
+                            )? {
+                                out.push(
+                                    SceneItem {
+                                        guide: None,
+                                        layer: Some(layer.id()),
+                                        clip,
+                                        primitive,
+                                    },
+                                    targets.clone(),
+                                    request,
+                                )?;
+                            }
+                            targets.clear();
+                            anchors.clear();
+                            lo.clear();
+                            hi.clear();
+                            return Ok(());
+                        }
                         if let Some((curve, true)) = shape {
                             let data: Vec<_> = lo
                                 .iter()
@@ -517,6 +850,7 @@ pub(super) fn project(
                             if !geometry.commands().is_empty() {
                                 out.push(
                                     item(Primitive::ShapePath {
+                                        fill_rule: crate::scene::FillRule::NonZero,
                                         dashes: vec![],
                                         geometry,
                                         fill: Some(style.color),
@@ -624,6 +958,7 @@ pub(super) fn project(
                             if !geometry.commands().is_empty() {
                                 out.push(
                                     item(Primitive::ShapePath {
+                                        fill_rule: crate::scene::FillRule::NonZero,
                                         dashes: vec![],
                                         geometry,
                                         fill: None,
@@ -732,6 +1067,72 @@ pub(super) fn project(
                         // Empty reference glyphs retain their prepared row, just as
                         // empty explicitly selected symbol paths do above.
                         if style.radius > 0. {
+                            let mapped_shape =
+                                mark.aesthetics.get(&crate::grammar::ValueAesthetic::Shape);
+                            let configured_shape = definition.and_then(|l| match &l.recipe {
+                                Some(crate::grammar::BuiltinRecipe::Interval(s))
+                                    if s.kind == crate::grammar::IntervalKind::PointRange =>
+                                {
+                                    s.point.shape
+                                }
+                                _ => None,
+                            });
+                            if configured_shape.is_none()
+                                && matches!(
+                                    mapped_shape,
+                                    Some(
+                                        crate::interpolate::Value::Missing
+                                            | crate::interpolate::Value::Null
+                                    )
+                                )
+                            {
+                                continue;
+                            }
+                            let code = configured_shape.or(match mapped_shape {
+                                Some(crate::interpolate::Value::Number(v)) => Some(v.0 as u8),
+                                _ => None,
+                            });
+
+                            if let Some(code) = code {
+                                let kind = crate::shape::SymbolKind::Ggplot(code);
+                                let policy = crate::shape::SymbolPaint::Auto.resolve(kind)?;
+                                let geometry = crate::shape::Symbol::new()
+                                    .kind(kind)
+                                    .size(std::f64::consts::PI * style.radius * style.radius)
+                                    .generate()?
+                                    .geometry()
+                                    .transformed(
+                                        crate::path::Affine::new([
+                                            1.,
+                                            0.,
+                                            0.,
+                                            1.,
+                                            center.x(),
+                                            center.y(),
+                                        ])?,
+                                        0.01,
+                                        request.limits.max_path_commands,
+                                    )?;
+                                out.push(
+                                    item(Primitive::ShapePath {
+                                        geometry,
+                                        fill: if policy.color_fill() {
+                                            Some(style.color)
+                                        } else if policy.fills() {
+                                            style.fill
+                                        } else {
+                                            None
+                                        },
+                                        stroke: policy.strokes().then_some(stroke),
+                                        dashes: vec![],
+                                        anchors: vec![center],
+                                        fill_rule: crate::scene::FillRule::NonZero,
+                                    })?,
+                                    mark.targets.clone(),
+                                    request,
+                                )?;
+                                continue;
+                            }
                             out.push(
                                 item(Primitive::Point {
                                     center,
@@ -747,7 +1148,9 @@ pub(super) fn project(
                     }
                 }
                 PreparedGeometry::Rule { from, to } | PreparedGeometry::Rectangle { from, to } => {
-                    let edge = if matches!(mark.geometry, PreparedGeometry::Rectangle { .. }) {
+                    let edge = if matches!(mark.geometry, PreparedGeometry::Rectangle { .. })
+                        && !definition.is_some_and(|l| l.recipe.is_some())
+                    {
                         0.5
                     } else {
                         0.
@@ -770,6 +1173,7 @@ pub(super) fn project(
                             if !geometry.commands().is_empty() {
                                 out.push(
                                     item(Primitive::ShapePath {
+                                        fill_rule: crate::scene::FillRule::NonZero,
                                         dashes: vec![],
                                         geometry,
                                         fill: None,
@@ -784,6 +1188,32 @@ pub(super) fn project(
                         }
                         let primitive = if matches!(mark.geometry, PreparedGeometry::Rule { .. }) {
                             Primitive::Rule { from, to, stroke }
+                        } else if definition.is_some_and(|l| {
+                            matches!(
+                                l.recipe,
+                                Some(crate::grammar::BuiltinRecipe::Interval(
+                                    crate::grammar::IntervalRecipe {
+                                        kind: crate::grammar::IntervalKind::Crossbar,
+                                        ..
+                                    }
+                                ))
+                            )
+                        }) {
+                            let mut path = crate::path::Path::new();
+                            path.rect(
+                                from.x().min(to.x()),
+                                from.y().min(to.y()),
+                                (to.x() - from.x()).abs(),
+                                (to.y() - from.y()).abs(),
+                            )?;
+                            Primitive::ShapePath {
+                                geometry: path.geometry(),
+                                fill: style.fill,
+                                stroke: Some(stroke),
+                                dashes: vec![],
+                                anchors: vec![from],
+                                fill_rule: crate::scene::FillRule::NonZero,
+                            }
                         } else {
                             Primitive::Rectangle {
                                 bounds: Rect::new(
@@ -835,6 +1265,8 @@ pub(super) fn project(
             }
         }
     }
+    out.stroke_end = None;
+    out.stroke_join = None;
     Ok(out)
 }
 
@@ -868,6 +1300,7 @@ fn independent_paints(
                     vec![from, to]
                 };
                 return Ok(Primitive::ShapePath {
+                    fill_rule: crate::scene::FillRule::NonZero,
                     geometry: path.geometry(),
                     fill: None,
                     stroke: stroke_visible.then_some(outline.unwrap_or(stroke)),
@@ -880,6 +1313,7 @@ fn independent_paints(
                 stroke,
             } => {
                 return Ok(Primitive::ShapePath {
+                    fill_rule: crate::scene::FillRule::NonZero,
                     geometry: crate::path::PathGeometry::from_beziers(commands)?,
                     fill: None,
                     stroke: stroke_visible.then_some(outline.unwrap_or(stroke)),
@@ -928,6 +1362,7 @@ fn independent_paints(
             )?;
             path.close_path()?;
             return Ok(Primitive::ShapePath {
+                fill_rule: crate::scene::FillRule::NonZero,
                 geometry: path.geometry(),
                 fill: Some(style.fill.unwrap_or(*fill)),
                 stroke: outline
@@ -949,6 +1384,7 @@ fn independent_paints(
                 bounds.height(),
             )?;
             return Ok(Primitive::ShapePath {
+                fill_rule: crate::scene::FillRule::NonZero,
                 geometry: path.geometry(),
                 fill: Some(style.fill.unwrap_or(*fill)),
                 stroke: outline
@@ -966,6 +1402,7 @@ fn independent_paints(
         }
         Primitive::FilledPath { commands, fill } if outline.is_some() => {
             return Ok(Primitive::ShapePath {
+                fill_rule: crate::scene::FillRule::NonZero,
                 anchors: command_anchors(commands, target_count),
                 geometry: crate::path::PathGeometry::from_beziers(commands)?,
                 fill: Some(style.fill.unwrap_or(*fill)),
@@ -991,7 +1428,7 @@ fn independent_paints(
     Ok(primitive)
 }
 
-fn command_anchors(commands: &[PathCommand], count: usize) -> Vec<Point> {
+pub(super) fn command_anchors(commands: &[PathCommand], count: usize) -> Vec<Point> {
     commands
         .iter()
         .filter_map(|c| match c {

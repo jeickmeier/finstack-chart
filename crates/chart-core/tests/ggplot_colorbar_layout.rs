@@ -187,7 +187,10 @@ fn authored_raster_sample_counts_match_reference_keys_and_paint() {
                 .build()
                 .unwrap();
             let wire = p.to_json().unwrap();
-            assert_eq!(serde_json::from_str::<Json>(&wire).unwrap()["version"], 64);
+            assert_eq!(
+                serde_json::from_str::<Json>(&wire).unwrap()["version"],
+                if facet == "single" { 64 } else { 76 }
+            );
             let mut stale: Json = serde_json::from_str(&wire).unwrap();
             stale["version"] = 63.into();
             assert!(Plot::from_json(&stale.to_string()).is_err());
@@ -550,7 +553,7 @@ fn raster_direction_and_reversal_match_reference_without_changing_marks() {
                     .unwrap();
                 let wire = p.to_json().unwrap();
                 let mut stale: Json = serde_json::from_str(&wire).unwrap();
-                assert_eq!(stale["version"], 65);
+                assert_eq!(stale["version"], if facet == "single" { 65 } else { 76 });
                 stale["version"] = 64.into();
                 assert!(Plot::from_json(&stale.to_string()).is_err());
                 let p = Plot::from_json(&wire).unwrap();
@@ -825,7 +828,7 @@ fn gradient_and_rectangle_displays_match_source_geometry_and_keep_mark_mapping()
                 .unwrap();
             let wire = p.to_json().unwrap();
             let mut stale: Json = serde_json::from_str(&wire).unwrap();
-            assert_eq!(stale["version"], 66);
+            assert_eq!(stale["version"], if facet == "single" { 66 } else { 76 });
             stale["version"] = 65.into();
             assert!(Plot::from_json(&stale.to_string()).is_err());
             let p = Plot::from_json(&wire).unwrap();
@@ -954,7 +957,7 @@ fn colorbar_alpha_matches_source_without_changing_marks_or_keys() {
             let wire = p.to_json().unwrap();
             let mut stale: Json = serde_json::from_str(&wire).unwrap();
             if !case["alpha"].is_null() {
-                assert_eq!(stale["version"], 67);
+                assert_eq!(stale["version"], if facet == "single" { 67 } else { 76 });
                 stale["version"] = 66.into();
                 assert!(Plot::from_json(&stale.to_string()).is_err());
             }

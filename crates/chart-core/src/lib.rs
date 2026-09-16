@@ -74,8 +74,8 @@ pub mod prelude {
     pub use crate::composition::{Collision, ConnectorOrigin, ScaleValue};
     pub use crate::data::TimeUnit;
     pub use crate::grammar::{
-        BinField, ClipPolicy, EmptyPanels, FacetTarget, GroupValue, JitterUnits, LineOrder,
-        NumericAesthetic, Orientation, OutlierPolicy, PanelKey, StatField, StatScope,
+        BinField, ClipPolicy, EmptyPanels, FacetTarget, GroupValue, JitterUnits, LineEnd, LineJoin,
+        LineOrder, NumericAesthetic, Orientation, OutlierPolicy, PanelKey, StatField, StatScope,
     };
     pub use crate::path::{Path, PathGeometry, PathLimits, PathOp, Precision, path, path_round};
     pub use crate::plot::{
@@ -88,21 +88,26 @@ pub mod prelude {
         PositionalLimits, Profile, RenderOptions, RichTextBuilder, RowsBuilder, ScaleBuilder,
         SourceNoteBuilder, StatAesBuilder, StatBuilder, StreamOptions, StyleBuilder,
         SubtitleBuilder, TextRunBuilder, TextStyle, ThemeBuilder, TitleBuilder, TransactionBuilder,
-        TransformBuilder, TransformHandle, TransformRef, aes, after_scale_expr, annotation_edit,
-        area, axis_guide, bars, bin, bin_aes, blank, callout, caption, categorical, cells,
-        color_continuous, color_discrete, color_mapped, column, count, custom_stat, dodge,
-        facet_grid, facet_wrap, filter, fit, footnote, from_theme, hierarchy, hierarchy_cluster,
-        hierarchy_icicle, hierarchy_pack, hierarchy_sunburst, hierarchy_tree, hierarchy_treemap,
-        histogram, identity_stat, inset, jitter, labels, layout_options, legend, line, link,
-        nullable_timestamps, number_format, ohlc, panel_letter, plot, points, rectangle,
-        render_options, ribbon, rich_text, rule, scale_aes, scale_band, scale_band_d3,
-        scale_binned, scale_calendar, scale_date, scale_duration, scale_linear, scale_log,
-        scale_numeric, scale_point, scale_point_d3, scale_registered, scale_reverse, scale_session,
-        scale_sqrt, scale_symlog, scale_utc, shape_arc, shape_area, shape_area_radial, shape_line,
+        TransformBuilder, TransformHandle, TransformRef, abline, aes, after_scale_expr, align_stat,
+        annotation_edit, area, axis_guide, bars, bin, bin_aes, blank, boxplot, boxplot_stat,
+        callout, caption, categorical, cells, color_continuous, color_discrete, color_mapped,
+        column, connect_stat, count, crossbar, custom_stat, density, density_stat,
+        distribution_stat, dodge, dodge2, dotplot, dotplot_stat, ecdf, ecdf_stat, errorbar,
+        facet_grid, facet_wrap, filter, fit, footnote, from_theme, function_curve, function_stat,
+        ggplot_dodge, ggplot_fill, ggplot_stack, hierarchy, hierarchy_cluster, hierarchy_icicle,
+        hierarchy_pack, hierarchy_sunburst, hierarchy_tree, hierarchy_treemap, histogram, hline,
+        identity_stat, inset, jitter, jitter_dodge, labels, layout_options, legend, line,
+        linerange, link, nudge, nullable_timestamps, number_format, ohlc, panel_letter, plot,
+        pointrange, points, qq, qq_line, qq_line_stat, qq_stat, rectangle, render_options, ribbon,
+        rich_text, rule, scale_aes, scale_band, scale_band_d3, scale_binned, scale_calendar,
+        scale_date, scale_duration, scale_linear, scale_log, scale_numeric, scale_point,
+        scale_point_d3, scale_registered, scale_reverse, scale_session, scale_sqrt, scale_symlog,
+        scale_utc, segment, shape_arc, shape_area, shape_area_radial, shape_line,
         shape_line_radial, shape_link, shape_link_horizontal, shape_link_radial,
         shape_link_vertical, shape_pie, shape_stack, shape_symbol, source_expr, source_note, stack,
-        stat_aes, stream_options, style, subtitle, summary, text_run, text_style, theme,
-        time_value, timestamps, title, transform, volume, x_axis, xlim, y_axis, ylim,
+        stat_aes, step, stream_options, style, subtitle, summary, text_run, text_style, theme,
+        time_value, timestamps, title, transform, unique_stat, univariate_stat, violin,
+        violin_stat, vline, volume, x_axis, xlim, y_axis, ylim,
     };
     pub use crate::plot::{VectorPathBuilder, vector_path};
     pub use crate::runtime::Chart;

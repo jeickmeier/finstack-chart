@@ -831,3 +831,102 @@ fn legacy_follow_window_is_used_by_prepared_timestamp_axis_after_reconciliation(
         }
     );
 }
+
+#[test]
+fn reference_bins_keep_exact_members_and_weights_through_updates() {
+    use chart_core::{grammar::*, state::ChartState};
+    for weighted in [false, true] {
+        let mut store = DataStore::new(
+            SourceEpoch::new(1),
+            vec![(D, stat_batch(&[(1, 0, 0.), (2, 1, 2.), (3, 2, 4.)]))],
+            DataLimits {
+                chunk_rows: 2,
+                ..Default::default()
+            },
+        )
+        .unwrap();
+        let mut bins = BinSpec::new(FieldId::new(2), vec![0., 2., 4., 10.]);
+        bins.ggplot = Some(GgplotBinOptions {
+            weight: weighted.then_some(Numeric::Field(FieldId::new(2))),
+            pad: true,
+            ..Default::default()
+        });
+        let definition = ChartDefinition::new(Revision::new(1)).layer(Layer::histogram(
+            LayerId::new(1),
+            D,
+            bins,
+        ));
+        let mut compiler = Compiler::new();
+        let first = compiler
+            .prepare(
+                &definition,
+                &store.snapshot(),
+                &ChartState::default(),
+                CompileLimits::default(),
+            )
+            .unwrap();
+        let initial = first.layers()[0].table().clone();
+        for (index, mutation) in [
+            Mutation::AppendBatch(stat_batch(&[(4, 3, 6.)])),
+            Mutation::UpsertByKey(stat_batch(&[(2, 1, 8.)])),
+            Mutation::RemoveKeys(vec![RowKey::new(3)]),
+            Mutation::SetRetention(RetentionPolicy::Count(2)),
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let transaction = tx(&store, &format!("reference-bin-{index}"), vec![mutation]);
+            applied(store.apply(transaction));
+            let prepared = compiler
+                .prepare(
+                    &definition,
+                    &store.snapshot(),
+                    &ChartState::default(),
+                    CompileLimits::default(),
+                )
+                .unwrap();
+            let batch = Compiler::new()
+                .prepare(
+                    &definition,
+                    &store.snapshot(),
+                    &ChartState::default(),
+                    CompileLimits::default(),
+                )
+                .unwrap();
+            assert_eq!(prepared.layers()[0].table(), batch.layers()[0].table());
+            assert_eq!(prepared.domains(), batch.domains());
+            if weighted {
+                assert_eq!(compiler.update_metrics().updated_operations, 0);
+            }
+            let PreparedRows::Binned(rows) = prepared.layers()[0].table().rows() else {
+                panic!()
+            };
+            assert_eq!(rows.len(), 5);
+            for row in rows.iter() {
+                let expected: Vec<_> = store
+                    .snapshot()
+                    .get()
+                    .unwrap()
+                    .dataset(D)
+                    .unwrap()
+                    .rows()
+                    .filter(|r| {
+                        let Some(ValueRef::Float64(v)) = r.value(FieldId::new(2)) else {
+                            panic!()
+                        };
+                        if row.start < 0. || row.start >= 10. {
+                            false
+                        } else {
+                            v > row.start || row.start == 0. && v == 0.
+                        }
+                        .then_some(v)
+                        .is_some_and(|v| v <= row.end)
+                    })
+                    .map(|r| r.key())
+                    .collect();
+                assert_eq!(row.count, expected.len() as u64);
+            }
+            assert_eq!(first.layers()[0].table(), &initial);
+        }
+    }
+}

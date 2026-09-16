@@ -173,6 +173,8 @@ impl ValueAesthetic {
             }
             (Self::LineType, value) => return line_type(value).map(|_| ()),
             (Self::Label | Self::FontFamily, Value::Text(value)) => value.len() <= 4096,
+            (Self::Label, Value::Number(Number(value))) => value.is_finite(),
+            (Self::Label, Value::Boolean(_)) => true,
             (Self::FontFace, Value::Text(value)) => {
                 matches!(value.as_str(), "plain" | "bold" | "italic" | "bold.italic")
             }
@@ -324,7 +326,14 @@ pub(super) fn apply(
     } = context;
     if (layer.value_scales.contains_key(&ValueAesthetic::Shape)
         || layer.aesthetic_values.contains_key(&ValueAesthetic::Shape))
-        && layer.geom != Geom::Point
+        && !layer.reference_point()
+        && !matches!(
+            layer.recipe,
+            Some(BuiltinRecipe::Interval(IntervalRecipe {
+                kind: IntervalKind::PointRange,
+                ..
+            }))
+        )
     {
         return Err(error(
             DiagnosticCode::UnsupportedCapability,
@@ -336,6 +345,9 @@ pub(super) fn apply(
         if layer.aesthetic_values.contains_key(channel)
             || (*channel == ValueAesthetic::LineType && layer.style.line_type.is_some())
         {
+            continue;
+        }
+        if super::colors::dropped(&encoding.input, table) {
             continue;
         }
         let input = super::colors::read_inputs(

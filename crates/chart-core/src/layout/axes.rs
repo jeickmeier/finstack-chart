@@ -1697,6 +1697,11 @@ fn eligible_transform_extent(
         };
         for mark in layer.marks() {
             match &mark.geometry {
+                PreparedGeometry::Recipe(v) => {
+                    for p in v.points() {
+                        include(coordinate(p), true)?;
+                    }
+                }
                 PreparedGeometry::UnboundedPoint(p) => {
                     let value = p[usize::from(!axis.side.horizontal())].0;
                     if value.is_finite() {

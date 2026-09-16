@@ -374,6 +374,39 @@ fn sampled_gradient_image(
     )])))
 }
 
+fn raster_image(
+    raster: &chart_core::grammar::RasterAnnotation,
+) -> ChartResult<Arc<gpui::RenderImage>> {
+    let width = u32::try_from(
+        raster
+            .width
+            .checked_add(2)
+            .ok_or_else(|| error(DiagnosticCode::ResourceLimit, "Raster width overflow."))?,
+    )
+    .map_err(|_| error(DiagnosticCode::ResourceLimit, "Raster width overflow."))?;
+    let height = u32::try_from(
+        raster
+            .height
+            .checked_add(2)
+            .ok_or_else(|| error(DiagnosticCode::ResourceLimit, "Raster height overflow."))?,
+    )
+    .map_err(|_| error(DiagnosticCode::ResourceLimit, "Raster height overflow."))?;
+    let mut bytes = Vec::with_capacity(width as usize * height as usize * 4);
+    for y in 0..height {
+        for x in 0..width {
+            let row = (y.saturating_sub(1) as usize).min(raster.height - 1);
+            let col = (x.saturating_sub(1) as usize).min(raster.width - 1);
+            let c = raster.pixels[row * raster.width + col];
+            bytes.extend_from_slice(&[c.blue, c.green, c.red, c.alpha]);
+        }
+    }
+    let image = image::RgbaImage::from_raw(width, height, bytes)
+        .ok_or_else(|| error(DiagnosticCode::InvalidResource, "Invalid raster size."))?;
+    Ok(Arc::new(gpui::RenderImage::new(vec![image::Frame::new(
+        image,
+    )])))
+}
+
 enum Paint {
     Custom(std::rc::Rc<dyn crate::PreparedNativePaint>),
     Empty,
@@ -555,7 +588,20 @@ impl NativeFrame {
                                     ),
                                     None => PathBuilder::fill().with_style(gpui::PathStyle::Fill(
                                         gpui::FillOptions::default()
-                                            .with_fill_rule(gpui::FillRule::NonZero)
+                                            .with_fill_rule(
+                                                if matches!(
+                                                    primitive,
+                                                    Primitive::ShapePath {
+                                                        fill_rule:
+                                                            chart_core::scene::FillRule::EvenOdd,
+                                                        ..
+                                                    }
+                                                ) {
+                                                    gpui::FillRule::EvenOdd
+                                                } else {
+                                                    gpui::FillRule::NonZero
+                                                },
+                                            )
                                             .with_tolerance(tolerance as f32),
                                     )),
                                 };
@@ -601,6 +647,50 @@ impl NativeFrame {
                     Primitive::GlyphRun { .. }
                     | Primitive::DashedPath { .. }
                     | Primitive::Symbol { .. } => unreachable!(),
+                    Primitive::RasterImage {
+                        bounds: r,
+                        raster,
+                        interpolate,
+                        ..
+                    } => {
+                        if *interpolate {
+                            let px = r.width() / raster.width as f64;
+                            let py = r.height() / raster.height as f64;
+                            let expanded = Rect::new(
+                                r.origin().x() - px,
+                                r.origin().y() - py,
+                                r.width() + 2. * px,
+                                r.height() + 2. * py,
+                            )?;
+                            Paint::Image(
+                                rect_at(*r, bounds.origin)?,
+                                rect_at(expanded, bounds.origin)?,
+                                raster_image(raster)?,
+                            )
+                        } else {
+                            let mut quads = Vec::with_capacity(raster.pixels.len());
+                            for y in 0..raster.height {
+                                for x in 0..raster.width {
+                                    let x0 =
+                                        r.origin().x() + r.width() * x as f64 / raster.width as f64;
+                                    let x1 = r.origin().x()
+                                        + r.width() * (x + 1) as f64 / raster.width as f64;
+                                    let y0 = r.origin().y()
+                                        + r.height() * y as f64 / raster.height as f64;
+                                    let y1 = r.origin().y()
+                                        + r.height() * (y + 1) as f64 / raster.height as f64;
+                                    quads.push(fill(
+                                        rect_at(
+                                            Rect::new(x0, y0, x1 - x0, y1 - y0)?,
+                                            bounds.origin,
+                                        )?,
+                                        native_color(raster.pixels[y * raster.width + x]),
+                                    ));
+                                }
+                            }
+                            Paint::Quads(quads)
+                        }
+                    }
                     Primitive::SampledGradientRectangle {
                         bounds: r,
                         direction,

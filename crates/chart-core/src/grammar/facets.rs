@@ -48,6 +48,9 @@ pub struct FacetScales {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct FacetSpec {
+    /// Optional reference facet semantics; absent retains explicit legacy catalogs and targeting.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub reference: Option<FacetPolicy>,
     /// One field for wrap, or two fields for a row/column grid.
     pub fields: Vec<FieldId>,
     /// Exact panel order and retained empty keys; keys must be unique.
@@ -92,6 +95,10 @@ pub enum StatScope {
 /// One immutable panel, retaining the same coherent source snapshot as its figure.
 #[derive(Clone, Debug)]
 pub struct PreparedPanel {
+    /// Stable horizontal scale-sharing population.
+    pub x_group: GroupValue,
+    /// Stable vertical scale-sharing population.
+    pub y_group: GroupValue,
     /// Stable semantic panel key.
     pub key: PanelKey,
     /// Zero-based layout row, independent of source row positions.
@@ -106,6 +113,22 @@ pub struct PreparedPanel {
 pub(crate) struct PanelScope {
     pub fields: Vec<FieldId>,
     pub key: PanelKey,
+    pub names: Vec<String>,
+    pub axis_group: bool,
+}
+impl PanelScope {
+    pub(crate) fn new(spec: &FacetSpec, key: PanelKey) -> Self {
+        Self {
+            axis_group: false,
+            fields: spec.fields.clone(),
+            key,
+            names: spec
+                .reference
+                .as_ref()
+                .map(|p| p.field_names.clone())
+                .unwrap_or_default(),
+        }
+    }
 }
 
 pub(crate) fn scoped_stat(stat: &Statistic, scope: StatScope) -> Statistic {
@@ -113,6 +136,8 @@ pub(crate) fn scoped_stat(stat: &Statistic, scope: StatScope) -> Statistic {
     if scope != StatScope::Group {
         match &mut stat.parameters {
             StatParameters::Identity => {}
+            StatParameters::Distribution(s) => s.grouping = Grouping::All,
+            StatParameters::Univariate(s) => s.grouping = Grouping::All,
             StatParameters::Custom(s) => s.grouping = Grouping::All,
             StatParameters::AutoBin(s) => s.grouping = Grouping::All,
             StatParameters::Bin(s) => s.grouping = Grouping::All,
@@ -129,8 +154,24 @@ pub(crate) fn row_matches(row: crate::data::RowView<'_>, scope: &PanelScope) -> 
         .fields
         .iter()
         .zip(&scope.key.values)
-        .all(|(field, value)| {
-            stats::group_value(row, &Grouping::Field(*field)).as_ref() == Some(value)
+        .enumerate()
+        .all(|(index, (field, value))| {
+            if scope.names.is_empty() {
+                return stats::group_value(row, &Grouping::Field(*field)).as_ref() == Some(value);
+            }
+            if *value == GroupValue::All {
+                return true;
+            }
+            let schema = row.chunk.batch().schema();
+            let Some(actual) = schema
+                .fields()
+                .iter()
+                .find(|f| f.name == scope.names[index])
+                .map(|f| f.id)
+            else {
+                return true;
+            };
+            super::facet_policy::row_value(row, actual) == *value
         })
 }
 
@@ -148,8 +189,26 @@ pub(crate) fn filter_panel(
     let PreparedRows::Source(rows) = &table.rows else {
         return Ok(table);
     };
-    for field in &scope.fields {
-        stats::validate_group(data, &Grouping::Field(*field))?;
+    for (index, field) in scope.fields.iter().enumerate() {
+        let actual = if scope.names.is_empty() {
+            Some(*field)
+        } else {
+            data.schema()
+                .fields()
+                .iter()
+                .find(|f| f.name == scope.names[index])
+                .map(|f| f.id)
+        };
+        if let Some(field) = actual {
+            stats::validate_group(
+                data,
+                &if scope.names.is_empty() {
+                    Grouping::Field(field)
+                } else {
+                    Grouping::Interaction(vec![field])
+                },
+            )?;
+        }
     }
     let rows = rows
         .iter()
@@ -164,7 +223,16 @@ pub(crate) fn filter_panel(
 
 pub(crate) fn targeted(target: &FacetTarget, scope: Option<&PanelScope>) -> bool {
     match (target, scope) {
-        (FacetTarget::Panels(keys), Some(scope)) => keys.contains(&scope.key),
+        (FacetTarget::Panels(keys), Some(scope)) => {
+            keys.contains(&scope.key)
+                || scope.axis_group
+                    && keys.iter().any(|k| {
+                        k.values
+                            .iter()
+                            .zip(&scope.key.values)
+                            .all(|(actual, wanted)| *wanted == GroupValue::All || actual == wanted)
+                    })
+        }
         _ => true,
     }
 }
@@ -179,12 +247,21 @@ pub(super) fn validate_facets(
         .facets
         .as_ref()
         .ok_or_else(|| error(DiagnosticCode::Validation, "Missing facet specification."))?;
-    let expected_fields = if matches!(spec.layout, FacetLayout::Grid) {
+    let expected_fields = if spec.reference.is_some() {
+        spec.fields.len()
+    } else if matches!(spec.layout, FacetLayout::Grid) {
         2
     } else {
         1
     };
-    if spec.fields.len() != expected_fields
+    if expected_fields == 0
+        || expected_fields > 32
+        || spec.reference.as_ref().is_some_and(|p| {
+            p.field_names.len() != expected_fields
+                || p.row_fields > expected_fields
+                || p.margins.iter().any(|i| *i >= expected_fields)
+        })
+        || spec.fields.len() != expected_fields
         || spec.fields.iter().collect::<BTreeSet<_>>().len() != expected_fields
         || spec.order.is_empty()
         || spec.order.len() > limits.max_groups.min(256)
@@ -197,11 +274,38 @@ pub(super) fn validate_facets(
             "Facets need one wrap/two grid fields, 1..256 bounded panels, positive columns and a finite nonnegative gap.",
         ));
     }
+    if let Some(policy) = &spec.reference {
+        if policy.levels.len() > expected_fields
+            || policy.margins.iter().collect::<BTreeSet<_>>().len() != policy.margins.len()
+            || policy.field_names.iter().any(|n| n.len() > 4096)
+            || policy.labeller.separator.len() > 4096
+            || policy.labeller.wrap_width == Some(0)
+            || matches!(spec.layout, FacetLayout::Wrap { .. }) && policy.space == FacetSpace::Free
+        {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "Facet policy catalog, label or wrap-space controls are invalid.",
+            ));
+        }
+        let bytes = policy
+            .labeller
+            .lookup
+            .iter()
+            .map(|(k, v)| k.len() + v.iter().map(|(k, v)| k.len() + v.len()).sum::<usize>())
+            .sum::<usize>();
+        if bytes > 1024 * 1024 {
+            return Err(error(
+                DiagnosticCode::ResourceLimit,
+                "Facet label lookup exceeds byte budget.",
+            ));
+        }
+    }
     let mut keys = BTreeSet::new();
     for key in &spec.order {
         if key.values.len() != expected_fields
             || key.values.iter().any(|v| {
-                matches!(v, GroupValue::All) || matches!(v, GroupValue::Text(s) if s.len() > 4096)
+                (spec.reference.is_none() && matches!(v, GroupValue::All))
+                    || matches!(v, GroupValue::Text(s) if s.len() > 4096)
             })
             || !keys.insert(key)
         {
@@ -235,11 +339,21 @@ pub(super) fn validate_facets(
     let mut columns = Vec::new();
     if matches!(spec.layout, FacetLayout::Grid) {
         for key in &spec.order {
-            if !rows.contains(&key.values[0]) {
-                rows.push(key.values[0].clone());
+            let row = if let Some(policy) = &spec.reference {
+                super::facet_policy::side_key(key, 0, policy.row_fields)
+            } else {
+                key.values[0].clone()
+            };
+            let column = if let Some(policy) = &spec.reference {
+                super::facet_policy::side_key(key, policy.row_fields, spec.fields.len())
+            } else {
+                key.values[1].clone()
+            };
+            if !rows.contains(&row) {
+                rows.push(row);
             }
-            if !columns.contains(&key.values[1]) {
-                columns.push(key.values[1].clone());
+            if !columns.contains(&column) {
+                columns.push(column);
             }
         }
         if rows.len().checked_mul(columns.len()) != Some(spec.order.len()) {
@@ -259,9 +373,23 @@ pub(crate) fn prepare_facets(
     state: &ChartState,
     limits: CompileLimits,
 ) -> ChartResult<PreparedChart> {
+    let resolved = super::facet_policy::resolve(definition, source.get()?, limits)?;
+    let definition = resolved.as_ref();
     let (mut population_diagnostics, rows, columns) =
         validate_facets(definition, source.get()?, limits, &compiler.extensions)?;
     let spec = definition.facets.as_ref().expect("validated facets");
+    if let Some(policy) = &spec.reference
+        && let FacetLayout::Wrap { columns } = &spec.layout
+        && policy.space != FacetSpace::Fixed
+        && (*columns != spec.order.len() || policy.space == FacetSpace::FreeY)
+    {
+        let mut diagnostic = error(
+            DiagnosticCode::Validation,
+            "Reference free-space wrap normalizes the authored row/column arrangement; use one row for free_x or one column for free_y.",
+        );
+        diagnostic.severity = crate::Severity::Warning;
+        population_diagnostics.push(diagnostic);
+    }
     let mut child = definition.clone();
     child.facets = None;
     let mut panels = vec![];
@@ -272,7 +400,13 @@ pub(crate) fn prepare_facets(
     let mut definitions = vec![];
     for key in &spec.order {
         let scope = PanelScope {
+            axis_group: false,
             fields: spec.fields.clone(),
+            names: spec
+                .reference
+                .as_ref()
+                .map(|p| p.field_names.clone())
+                .unwrap_or_default(),
             key: key.clone(),
         };
         let mut panel_definition = if super::semantics::needs_panel_training(definition) {
@@ -327,9 +461,16 @@ pub(crate) fn prepare_facets(
             }
         }
     }
+    super::ggplot_bin_training::resolve(&mut definitions, source.get()?, limits, Some(spec))?;
     for (key, panel_definition) in spec.order.iter().zip(&definitions) {
         let scope = PanelScope {
+            axis_group: false,
             fields: spec.fields.clone(),
+            names: spec
+                .reference
+                .as_ref()
+                .map(|p| p.field_names.clone())
+                .unwrap_or_default(),
             key: key.clone(),
         };
         let population = compiler.prepare_scope(
@@ -393,6 +534,13 @@ pub(crate) fn prepare_facets(
             .map(|((_, population), definition)| (definition, population))
             .collect::<Vec<_>>(),
     )?;
+    super::compiler::synchronize_position_populations(
+        &mut definitions,
+        &populations
+            .iter()
+            .map(|(_, population)| population)
+            .collect::<Vec<_>>(),
+    );
     let mut positioned = Vec::new();
     let mut keys = Vec::new();
     for ((key, population), panel_definition) in populations.into_iter().zip(&definitions) {
@@ -406,6 +554,13 @@ pub(crate) fn prepare_facets(
             &samples,
         )?);
     }
+    super::compiler::retain_facet_raw_domains(
+        definition,
+        &definitions,
+        &mut positioned,
+        source.get()?,
+        limits,
+    )?;
     super::compiler::train_facet_positioned_scopes(
         definition,
         &definitions,
@@ -474,16 +629,43 @@ pub(crate) fn prepare_facets(
             continue;
         }
         let (row, column) = match spec.layout {
-            FacetLayout::Wrap { columns } => (panels.len() / columns, panels.len() % columns),
+            FacetLayout::Wrap { .. } => {
+                super::facet_policy::coordinates(spec, panels.len(), spec.order.len())
+            }
             FacetLayout::Grid => (
-                rows.iter().position(|v| v == &key.values[0]).unwrap_or(0),
+                rows.iter()
+                    .position(|v| {
+                        v == &spec
+                            .reference
+                            .as_ref()
+                            .map(|p| super::facet_policy::side_key(key, 0, p.row_fields))
+                            .unwrap_or_else(|| key.values[0].clone())
+                    })
+                    .unwrap_or(0),
                 columns
                     .iter()
-                    .position(|v| v == &key.values[1])
+                    .position(|v| {
+                        v == &spec
+                            .reference
+                            .as_ref()
+                            .map(|p| {
+                                super::facet_policy::side_key(key, p.row_fields, spec.fields.len())
+                            })
+                            .unwrap_or_else(|| key.values[1].clone())
+                    })
                     .unwrap_or(0),
             ),
         };
+        let row = if matches!(spec.layout, FacetLayout::Grid)
+            && spec.reference.as_ref().is_some_and(|p| !p.as_table)
+        {
+            rows.len() - 1 - row
+        } else {
+            row
+        };
         panels.push(PreparedPanel {
+            x_group: super::facet_policy::sharing_group(spec, key, true),
+            y_group: super::facet_policy::sharing_group(spec, key, false),
             key: key.clone(),
             row,
             column,
@@ -509,6 +691,38 @@ pub(crate) fn prepare_facets(
         panels,
         shared_training: None,
     };
+    let mut grouped = std::collections::BTreeMap::<
+        GroupValue,
+        std::collections::BTreeMap<crate::ScaleId, DomainContributions>,
+    >::new();
+    if spec.reference.is_some() {
+        for panel in &result.panels {
+            for layer in panel.chart.layers() {
+                let d = compiler::eligible_domains(layer);
+                for (id, horizontal, group) in [
+                    (layer.scales.x, true, &panel.x_group),
+                    (layer.scales.y, false, &panel.y_group),
+                ] {
+                    compiler::merge_axis(
+                        grouped.entry(group.clone()).or_default(),
+                        id,
+                        horizontal,
+                        &d,
+                    )?;
+                }
+            }
+        }
+        for panel in &mut result.panels {
+            let chart = Arc::make_mut(&mut panel.chart);
+            for group in [&panel.x_group, &panel.y_group] {
+                if let Some(domains) = grouped.get(group) {
+                    for (id, d) in domains {
+                        chart.scale_domains.insert(*id, d.clone());
+                    }
+                }
+            }
+        }
+    }
     for panel in &result.panels {
         result
             .diagnostics
@@ -585,7 +799,19 @@ fn validate_population(
                 ));
             }
             let data = snapshot.dataset(input.dataset)?;
-            for field in &spec.fields {
+            for (index, field) in spec.fields.iter().enumerate() {
+                if let Some(policy) = &spec.reference {
+                    if let Some(field) = data
+                        .schema()
+                        .fields()
+                        .iter()
+                        .find(|f| f.name == policy.field_names[index])
+                        .map(|f| f.id)
+                    {
+                        stats::validate_group(data, &Grouping::Interaction(vec![field]))?;
+                    }
+                    continue;
+                }
                 if data.schema().field(*field).is_none() {
                     return Err(error(
                         DiagnosticCode::SchemaConflict,
@@ -623,6 +849,19 @@ fn validate_population(
                 .iter()
                 .all(|filter| stats::filter_matches(*row, filter) == Some(true))
         }) {
+            if spec.reference.is_some() {
+                if !spec
+                    .order
+                    .iter()
+                    .any(|key| row_matches(row, &PanelScope::new(spec, key.clone())))
+                {
+                    return Err(error(
+                        DiagnosticCode::Validation,
+                        "Observed reference facet values are absent from the panel catalog.",
+                    ));
+                }
+                continue;
+            }
             let values = spec
                 .fields
                 .iter()
@@ -680,8 +919,26 @@ pub(crate) fn source_table(
     else {
         return stats::source_table(data, max_rows);
     };
-    for field in &scope.fields {
-        stats::validate_group(data, &Grouping::Field(*field))?;
+    for (index, field) in scope.fields.iter().enumerate() {
+        let actual = if scope.names.is_empty() {
+            Some(*field)
+        } else {
+            data.schema()
+                .fields()
+                .iter()
+                .find(|f| f.name == scope.names[index])
+                .map(|f| f.id)
+        };
+        if let Some(field) = actual {
+            stats::validate_group(
+                data,
+                &if scope.names.is_empty() {
+                    Grouping::Field(field)
+                } else {
+                    Grouping::Interaction(vec![field])
+                },
+            )?;
+        }
     }
     stats::source_table_where(data, max_rows, |row| row_matches(row, scope))
 }

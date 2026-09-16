@@ -115,6 +115,16 @@ fn source(a: &mut SourceAes, r: &TransformRegistrations, p: bool) -> ChartResult
 }
 fn statistic(s: &mut Statistic, r: &TransformRegistrations, p: bool) -> ChartResult<()> {
     match &mut s.parameters {
+        StatParameters::Distribution(s) => {
+            for n in s.numerics_mut() {
+                numeric(n, r, p)?;
+            }
+        }
+        StatParameters::Univariate(s) => {
+            for n in s.numerics_mut() {
+                numeric(n, r, p)?;
+            }
+        }
         StatParameters::Bin(s) => numeric(&mut s.input, r, p)?,
         StatParameters::AutoBin(s) => numeric(&mut s.input, r, p)?,
         StatParameters::Summary(s) => numeric(&mut s.input, r, p)?,

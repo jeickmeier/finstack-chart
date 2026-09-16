@@ -1,0 +1,609 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "name": "crossbar-default",
+      "controls": [],
+      "data": [
+        {
+          "x": 1,
+          "y": 2,
+          "ymin": 1,
+          "ymax": 3,
+          "PANEL": "1",
+          "group": -1,
+          "flipped_aes": false,
+          "xmin": 0.55000000000000004,
+          "xmax": 1.45,
+          "colour": "black",
+          "fill": null,
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": null
+        }
+      ],
+      "draw": {
+        "geom_crossbar.gTree.5": {
+          "class": "gTree",
+          "gp": {},
+          "pch": {},
+          "children": {
+            "geom_polygon.polygon.3": {
+              "class": "polygon",
+              "gp": {
+                "col": "black",
+                "fill": null,
+                "lwd": 1.4226377952755906,
+                "lty": 1,
+                "lineend": "butt",
+                "linejoin": "mitre"
+              },
+              "pch": {},
+              "children": {}
+            },
+            "GRID.segments.4": {
+              "class": "segments",
+              "gp": {
+                "col": "#000000FF",
+                "fill": "#000000FF",
+                "lwd": 3.5565944881889768,
+                "lty": 1,
+                "lineend": "butt",
+                "linejoin": "mitre"
+              },
+              "pch": {},
+              "children": {}
+            }
+          }
+        }
+      },
+      "warnings": []
+    },
+    {
+      "name": "crossbar-alpha",
+      "controls": {
+        "alpha": 0.20000000000000001
+      },
+      "data": [
+        {
+          "x": 1,
+          "y": 2,
+          "ymin": 1,
+          "ymax": 3,
+          "PANEL": "1",
+          "group": -1,
+          "flipped_aes": false,
+          "xmin": 0.55000000000000004,
+          "xmax": 1.45,
+          "colour": "black",
+          "fill": null,
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": 0.20000000000000001
+        }
+      ],
+      "draw": {
+        "geom_crossbar.gTree.47": {
+          "class": "gTree",
+          "gp": {},
+          "pch": {},
+          "children": {
+            "geom_polygon.polygon.45": {
+              "class": "polygon",
+              "gp": {
+                "col": "black",
+                "fill": null,
+                "lwd": 1.4226377952755906,
+                "lty": 1,
+                "lineend": "butt",
+                "linejoin": "mitre"
+              },
+              "pch": {},
+              "children": {}
+            },
+            "GRID.segments.46": {
+              "class": "segments",
+              "gp": {
+                "col": "#000000FF",
+                "fill": "#000000FF",
+                "lwd": 3.5565944881889768,
+                "lty": 1,
+                "lineend": "butt",
+                "linejoin": "mitre"
+              },
+              "pch": {},
+              "children": {}
+            }
+          }
+        }
+      },
+      "warnings": []
+    },
+    {
+      "name": "crossbar-components",
+      "controls": {
+        "middle_colour": "red",
+        "middle_linetype": 2,
+        "middle_linewidth": 2,
+        "box_colour": "blue",
+        "box_linetype": 3,
+        "box_linewidth": 0.25,
+        "fill": "gold",
+        "alpha": 0.20000000000000001
+      },
+      "data": [
+        {
+          "x": 1,
+          "y": 2,
+          "ymin": 1,
+          "ymax": 3,
+          "PANEL": "1",
+          "group": -1,
+          "flipped_aes": false,
+          "xmin": 0.55000000000000004,
+          "xmax": 1.45,
+          "colour": "black",
+          "fill": "gold",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": 0.20000000000000001
+        }
+      ],
+      "draw": {
+        "geom_crossbar.gTree.86": {
+          "class": "gTree",
+          "gp": {},
+          "pch": {},
+          "children": {
+            "geom_polygon.polygon.84": {
+              "class": "polygon",
+              "gp": {
+                "col": "blue",
+                "fill": "#FFD70033",
+                "lwd": 0.71131889763779532,
+                "lty": 3,
+                "lineend": "butt",
+                "linejoin": "mitre"
+              },
+              "pch": {},
+              "children": {}
+            },
+            "GRID.segments.85": {
+              "class": "segments",
+              "gp": {
+                "col": "#FF0000FF",
+                "fill": "#FF0000FF",
+                "lwd": 5.6905511811023626,
+                "lty": 2,
+                "lineend": "butt",
+                "linejoin": "mitre"
+              },
+              "pch": {},
+              "children": {}
+            }
+          }
+        }
+      },
+      "warnings": []
+    },
+    {
+      "name": "crossbar-embedded-alpha",
+      "controls": {
+        "colour": "#FF000080",
+        "alpha": 0.20000000000000001,
+        "fill": "#FFD70080"
+      },
+      "data": [
+        {
+          "x": 1,
+          "y": 2,
+          "ymin": 1,
+          "ymax": 3,
+          "PANEL": "1",
+          "group": -1,
+          "flipped_aes": false,
+          "xmin": 0.55000000000000004,
+          "xmax": 1.45,
+          "colour": "#FF000080",
+          "fill": "#FFD70080",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": 0.20000000000000001
+        }
+      ],
+      "draw": {
+        "geom_crossbar.gTree.125": {
+          "class": "gTree",
+          "gp": {},
+          "pch": {},
+          "children": {
+            "geom_polygon.polygon.123": {
+              "class": "polygon",
+              "gp": {
+                "col": "#FF000080",
+                "fill": "#FFD70033",
+                "lwd": 1.4226377952755906,
+                "lty": 1,
+                "lineend": "butt",
+                "linejoin": "mitre"
+              },
+              "pch": {},
+              "children": {}
+            },
+            "GRID.segments.124": {
+              "class": "segments",
+              "gp": {
+                "col": "#FF000080",
+                "fill": "#FF000080",
+                "lwd": 3.5565944881889768,
+                "lty": 1,
+                "lineend": "butt",
+                "linejoin": "mitre"
+              },
+              "pch": {},
+              "children": {}
+            }
+          }
+        }
+      },
+      "warnings": []
+    },
+    {
+      "name": "crossbar-fatten",
+      "controls": {
+        "fatten": 1
+      },
+      "data": [
+        {
+          "x": 1,
+          "y": 2,
+          "ymin": 1,
+          "ymax": 3,
+          "PANEL": "1",
+          "group": -1,
+          "flipped_aes": false,
+          "xmin": 0.55000000000000004,
+          "xmax": 1.45,
+          "colour": "black",
+          "fill": null,
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": null
+        }
+      ],
+      "draw": {
+        "geom_crossbar.gTree.164": {
+          "class": "gTree",
+          "gp": {},
+          "pch": {},
+          "children": {
+            "geom_polygon.polygon.162": {
+              "class": "polygon",
+              "gp": {
+                "col": "black",
+                "fill": null,
+                "lwd": 1.4226377952755906,
+                "lty": 1,
+                "lineend": "butt",
+                "linejoin": "mitre"
+              },
+              "pch": {},
+              "children": {}
+            },
+            "GRID.segments.163": {
+              "class": "segments",
+              "gp": {
+                "col": "#000000FF",
+                "fill": "#000000FF",
+                "lwd": 1.4226377952755906,
+                "lty": 1,
+                "lineend": "butt",
+                "linejoin": "mitre"
+              },
+              "pch": {},
+              "children": {}
+            }
+          }
+        }
+      },
+      "warnings": "The `fatten` argument of `geom_crossbar()` is deprecated as of ggplot2 4.0.0.\ni Please use the `middle.linewidth` argument instead."
+    },
+    {
+      "name": "pointrange-default",
+      "controls": [],
+      "data": [
+        {
+          "x": 1,
+          "y": 2,
+          "ymin": 1,
+          "ymax": 3,
+          "PANEL": "1",
+          "group": -1,
+          "flipped_aes": false,
+          "colour": "black",
+          "size": 0.5,
+          "linewidth": 0.5,
+          "linetype": 1,
+          "shape": 19,
+          "fill": null,
+          "alpha": null,
+          "stroke": 1
+        }
+      ],
+      "draw": {
+        "geom_pointrange.gTree.204": {
+          "class": "gTree",
+          "gp": {},
+          "pch": {},
+          "children": {
+            "geom_linerange.segments.200": {
+              "class": "segments",
+              "gp": {
+                "col": "#000000FF",
+                "fill": "#000000FF",
+                "lwd": 1.4226377952755906,
+                "lty": 1,
+                "lineend": "butt",
+                "linejoin": "round"
+              },
+              "pch": {},
+              "children": {}
+            },
+            "geom_point.points.203": {
+              "class": "points",
+              "gp": {
+                "col": "#000000FF",
+                "fill": null,
+                "lwd": 1.8897637795275593,
+                "fontsize": 7.5803149606299218
+              },
+              "pch": 19,
+              "children": {}
+            }
+          }
+        }
+      },
+      "warnings": []
+    },
+    {
+      "name": "pointrange-point-controls",
+      "controls": {
+        "size": 1,
+        "stroke": 2,
+        "shape": 21,
+        "fill": "gold",
+        "linewidth": 0.25
+      },
+      "data": [
+        {
+          "x": 1,
+          "y": 2,
+          "ymin": 1,
+          "ymax": 3,
+          "PANEL": "1",
+          "group": -1,
+          "flipped_aes": false,
+          "colour": "black",
+          "size": 1,
+          "linewidth": 0.25,
+          "linetype": 1,
+          "shape": 21,
+          "fill": "gold",
+          "alpha": null,
+          "stroke": 2
+        }
+      ],
+      "draw": {
+        "geom_pointrange.gTree.244": {
+          "class": "gTree",
+          "gp": {},
+          "pch": {},
+          "children": {
+            "geom_linerange.segments.240": {
+              "class": "segments",
+              "gp": {
+                "col": "#000000FF",
+                "fill": "#000000FF",
+                "lwd": 0.71131889763779532,
+                "lty": 1,
+                "lineend": "butt",
+                "linejoin": "round"
+              },
+              "pch": {},
+              "children": {}
+            },
+            "geom_point.points.243": {
+              "class": "points",
+              "gp": {
+                "col": "#000000FF",
+                "fill": "#FFD700FF",
+                "lwd": 3.7795275590551185,
+                "fontsize": 15.160629921259844
+              },
+              "pch": 21,
+              "children": {}
+            }
+          }
+        }
+      },
+      "warnings": []
+    },
+    {
+      "name": "pointrange-fatten",
+      "controls": {
+        "fatten": 2
+      },
+      "data": [
+        {
+          "x": 1,
+          "y": 2,
+          "ymin": 1,
+          "ymax": 3,
+          "PANEL": "1",
+          "group": -1,
+          "flipped_aes": false,
+          "colour": "black",
+          "size": 0.5,
+          "linewidth": 0.5,
+          "linetype": 1,
+          "shape": 19,
+          "fill": null,
+          "alpha": null,
+          "stroke": 1
+        }
+      ],
+      "draw": {
+        "geom_pointrange.gTree.284": {
+          "class": "gTree",
+          "gp": {},
+          "pch": {},
+          "children": {
+            "geom_linerange.segments.280": {
+              "class": "segments",
+              "gp": {
+                "col": "#000000FF",
+                "fill": "#000000FF",
+                "lwd": 1.4226377952755906,
+                "lty": 1,
+                "lineend": "butt",
+                "linejoin": "round"
+              },
+              "pch": {},
+              "children": {}
+            },
+            "geom_point.points.283": {
+              "class": "points",
+              "gp": {
+                "col": "#000000FF",
+                "fill": null,
+                "lwd": 1.8897637795275593,
+                "fontsize": 4.7350393700787405
+              },
+              "pch": 19,
+              "children": {}
+            }
+          }
+        }
+      },
+      "warnings": "The `fatten` argument of `geom_pointrange()` is deprecated as of ggplot2 4.0.0.\ni Please use the `size` aesthetic instead."
+    },
+    {
+      "name": "pointrange-round",
+      "controls": {
+        "lineend": "round"
+      },
+      "data": [
+        {
+          "x": 1,
+          "y": 2,
+          "ymin": 1,
+          "ymax": 3,
+          "PANEL": "1",
+          "group": -1,
+          "flipped_aes": false,
+          "colour": "black",
+          "size": 0.5,
+          "linewidth": 0.5,
+          "linetype": 1,
+          "shape": 19,
+          "fill": null,
+          "alpha": null,
+          "stroke": 1
+        }
+      ],
+      "draw": {
+        "geom_pointrange.gTree.324": {
+          "class": "gTree",
+          "gp": {},
+          "pch": {},
+          "children": {
+            "geom_linerange.segments.320": {
+              "class": "segments",
+              "gp": {
+                "col": "#000000FF",
+                "fill": "#000000FF",
+                "lwd": 1.4226377952755906,
+                "lty": 1,
+                "lineend": "round",
+                "linejoin": "round"
+              },
+              "pch": {},
+              "children": {}
+            },
+            "geom_point.points.323": {
+              "class": "points",
+              "gp": {
+                "col": "#000000FF",
+                "fill": null,
+                "lwd": 1.8897637795275593,
+                "fontsize": 7.5803149606299218
+              },
+              "pch": 19,
+              "children": {}
+            }
+          }
+        }
+      },
+      "warnings": []
+    },
+    {
+      "name": "pointrange-square",
+      "controls": {
+        "lineend": "square"
+      },
+      "data": [
+        {
+          "x": 1,
+          "y": 2,
+          "ymin": 1,
+          "ymax": 3,
+          "PANEL": "1",
+          "group": -1,
+          "flipped_aes": false,
+          "colour": "black",
+          "size": 0.5,
+          "linewidth": 0.5,
+          "linetype": 1,
+          "shape": 19,
+          "fill": null,
+          "alpha": null,
+          "stroke": 1
+        }
+      ],
+      "draw": {
+        "geom_pointrange.gTree.364": {
+          "class": "gTree",
+          "gp": {},
+          "pch": {},
+          "children": {
+            "geom_linerange.segments.360": {
+              "class": "segments",
+              "gp": {
+                "col": "#000000FF",
+                "fill": "#000000FF",
+                "lwd": 1.4226377952755906,
+                "lty": 1,
+                "lineend": "square",
+                "linejoin": "round"
+              },
+              "pch": {},
+              "children": {}
+            },
+            "geom_point.points.363": {
+              "class": "points",
+              "gp": {
+                "col": "#000000FF",
+                "fill": null,
+                "lwd": 1.8897637795275593,
+                "fontsize": 7.5803149606299218
+              },
+              "pch": 19,
+              "children": {}
+            }
+          }
+        }
+      },
+      "warnings": []
+    }
+  ]
+}

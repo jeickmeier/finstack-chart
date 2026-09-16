@@ -4,6 +4,7 @@
 //! Saving encoded bytes is an explicit optional host operation.
 mod authoring;
 mod encode;
+mod raster;
 pub use authoring::{CaptureBasis, ExportOptions, Output, export_options};
 mod fonts;
 mod jobs;

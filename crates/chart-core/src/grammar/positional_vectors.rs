@@ -311,7 +311,13 @@ pub(super) fn source_layer(
                                 super::facets::row_matches(
                                     *r,
                                     &super::facets::PanelScope {
+                                        axis_group: false,
                                         fields: facets.fields.clone(),
+                                        names: facets
+                                            .reference
+                                            .as_ref()
+                                            .map(|p| p.field_names.clone())
+                                            .unwrap_or_default(),
                                         key: facets.order[*index].clone(),
                                     },
                                 )
@@ -395,7 +401,116 @@ pub(super) fn source_layer(
                 f.scales.free_y
             }
         });
-        let values = if definition.facets.is_some() && !matched {
+        let values = if free
+            && matched
+            && definition
+                .facets
+                .as_ref()
+                .is_some_and(|f| f.reference.is_some())
+        {
+            let facets = definition.facets.as_ref().expect("facets");
+            let axes = panel_axes.expect("panel axes").1;
+            let mut groups = Vec::new();
+            let mut populations = Vec::new();
+            for (index, key) in facets.order.iter().enumerate() {
+                if !population.targets(key) {
+                    continue;
+                }
+                let group = super::facet_policy::sharing_group(facets, key, axis.side.horizontal());
+                if groups.contains(&group) {
+                    continue;
+                }
+                let scope = super::facets::PanelScope::new(facets, key.clone());
+                let scope = super::facet_policy::axis_scope(
+                    definition,
+                    Some(&scope),
+                    axis.side.horizontal(),
+                )
+                .expect("axis scope");
+                let axis = axes[index]
+                    .iter()
+                    .find(|a| a.id == scale.id)
+                    .expect("panel axis");
+                let selected = rows
+                    .iter()
+                    .zip(&inputs)
+                    .enumerate()
+                    .filter(|(_, (row, _))| super::facets::row_matches(**row, &scope))
+                    .map(|(i, (_, value))| (i, *value))
+                    .collect::<Vec<_>>();
+                groups.push(group);
+                populations.push((axis, selected));
+            }
+            if facets
+                .reference
+                .as_ref()
+                .is_some_and(|policy| !policy.margins.is_empty())
+            {
+                // Reference margins append each margin combination in field order,
+                // preserving original row order within that expansion. The same row
+                // can enter one shared scale more than once through opposite margins.
+                let mut occurrences = Vec::new();
+                for (panel, key) in facets.order.iter().enumerate() {
+                    if !population.targets(key) {
+                        continue;
+                    }
+                    let mask = key
+                        .values
+                        .iter()
+                        .enumerate()
+                        .fold(0u64, |mask, (index, value)| {
+                            mask | if *value == super::GroupValue::All {
+                                1u64 << index
+                            } else {
+                                0
+                            }
+                        });
+                    let scope = super::facets::PanelScope::new(facets, key.clone());
+                    for (row, source) in rows.iter().enumerate() {
+                        if super::facets::row_matches(*source, &scope) {
+                            super::compiler::charge(
+                                &mut remaining,
+                                1,
+                                "margin positional vector population",
+                            )?;
+                            occurrences.push((mask, row, panel));
+                        }
+                    }
+                }
+                occurrences.sort_unstable();
+                let mut expanded = populations
+                    .iter()
+                    .map(|(axis, _)| (*axis, Vec::new()))
+                    .collect::<Vec<_>>();
+                for (index, (_, row, panel)) in occurrences.iter().enumerate() {
+                    let group = super::facet_policy::sharing_group(
+                        facets,
+                        &facets.order[*panel],
+                        axis.side.horizontal(),
+                    );
+                    let group = groups
+                        .iter()
+                        .position(|candidate| *candidate == group)
+                        .expect("active scale group");
+                    expanded[group].1.push((index, inputs[*row]));
+                }
+                let mapped = map_populations(&expanded, occurrences.len(), registry)?;
+                let mut maps = vec![BTreeMap::new(); facets.order.len()];
+                for ((_, row, panel), value) in occurrences.into_iter().zip(mapped) {
+                    maps[panel].insert(rows[row].key(), value);
+                }
+                maps.into_iter().map(Arc::new).collect()
+            } else {
+                let mapped = map_populations(&populations, rows.len(), registry)?;
+                let values = Arc::new(
+                    rows.iter()
+                        .zip(mapped)
+                        .map(|(row, value)| (row.key(), value))
+                        .collect::<BTreeMap<_, _>>(),
+                );
+                vec![values]
+            }
+        } else if definition.facets.is_some() && !matched {
             let axes = panel_axes.expect("broadcast panel axes").1;
             let active = active.as_ref().expect("facet targets");
             let width = inputs.len();
@@ -410,7 +525,7 @@ pub(super) fn source_layer(
                 count,
                 "broadcast positional vector population",
             )?;
-            let populations = if free {
+            let mut populations = if free {
                 active
                     .iter()
                     .enumerate()
@@ -444,6 +559,25 @@ pub(super) fn source_layer(
                         .collect(),
                 )]
             };
+            if free
+                && definition
+                    .facets
+                    .as_ref()
+                    .is_some_and(|f| f.reference.is_some())
+            {
+                let facets = definition.facets.as_ref().expect("facets");
+                let mut grouped = BTreeMap::new();
+                for (index, (axis, values)) in active.iter().zip(populations) {
+                    let group = super::facet_policy::sharing_group(
+                        facets,
+                        &facets.order[*index],
+                        axis.side.horizontal(),
+                    );
+                    let entry = grouped.entry(group).or_insert_with(|| (axis, Vec::new()));
+                    entry.1.extend(values);
+                }
+                populations = grouped.into_values().collect();
+            }
             let mapped = map_populations(&populations, count, registry)?;
             (0..axes.len())
                 .map(|panel| {
@@ -469,7 +603,13 @@ pub(super) fn source_layer(
                     .filter(|(key, _)| population.targets(key))
                     .map(|(key, axes)| {
                         let scope = super::facets::PanelScope {
+                            axis_group: false,
                             fields: facets.fields.clone(),
+                            names: facets
+                                .reference
+                                .as_ref()
+                                .map(|p| p.field_names.clone())
+                                .unwrap_or_default(),
                             key: key.clone(),
                         };
                         let axis = axes.iter().find(|a| a.id == scale.id).expect("panel axis");
@@ -522,14 +662,53 @@ pub(super) fn source_layer(
         }
     }
     match &mut layer.statistic.parameters {
-        StatParameters::Bin(s) => bind(&mut s.input)?,
-        StatParameters::AutoBin(s) => bind(&mut s.input)?,
-        StatParameters::Summary(s) => bind(&mut s.input)?,
+        StatParameters::Distribution(s) => {
+            for n in s.numerics_mut() {
+                bind(n)?;
+            }
+        }
+        StatParameters::Univariate(s) => {
+            for n in s.numerics_mut() {
+                bind(n)?;
+            }
+        }
+        StatParameters::Bin(s) => {
+            bind(&mut s.input)?;
+            if let Some(weight) = s.ggplot.as_mut().and_then(|o| o.weight.as_mut()) {
+                bind(weight)?;
+            }
+        }
+        StatParameters::AutoBin(s) => {
+            bind(&mut s.input)?;
+            if let Some(weight) = s.ggplot.as_mut().and_then(|o| o.weight.as_mut()) {
+                bind(weight)?;
+            }
+        }
+        StatParameters::Summary(s) => {
+            bind(&mut s.input)?;
+            if let Some(n) = s.ggplot.as_mut().and_then(|g| g.position.as_mut()) {
+                bind(n)?;
+            }
+        }
         StatParameters::Ols(s) => {
             bind(&mut s.x)?;
             bind(&mut s.y)?;
         }
         StatParameters::Count(s) => {
+            if let Some(g) = &mut s.ggplot {
+                if let Some(n) = &mut g.joint_position {
+                    bind(n)?;
+                }
+                for n in &mut g.joint_numeric {
+                    bind(n)?;
+                }
+                if let Some(n) = &mut g.position {
+                    bind(n)?;
+                }
+                if let Some(n) = &mut g.weight {
+                    bind(n)?;
+                }
+            }
             for n in &mut s.required {
                 bind(n)?;
             }

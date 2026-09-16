@@ -1,0 +1,4204 @@
+{
+  "reference": {
+    "ggplot2": "4.0.3",
+    "R": "4.6.1"
+  },
+  "cases": [
+    {
+      "name": "ecdf-FALSE-FALSE-FALSE",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 3,
+          "w": 2
+        },
+        {
+          "x": 1,
+          "w": 1
+        },
+        {
+          "x": 2,
+          "w": 0
+        },
+        {
+          "x": 2,
+          "w": 3
+        }
+      ],
+      "params": {
+        "weighted": false,
+        "pad": false,
+        "n": null
+      },
+      "rows": [
+        {
+          "x": 3,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": 0.25,
+          "ecdf": 0.25,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 0.75,
+          "ecdf": 0.75,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "ecdf-FALSE-FALSE-TRUE",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 3,
+          "w": 2
+        },
+        {
+          "x": 1,
+          "w": 1
+        },
+        {
+          "x": 2,
+          "w": 0
+        },
+        {
+          "x": 2,
+          "w": 3
+        }
+      ],
+      "params": {
+        "weighted": false,
+        "pad": false,
+        "n": 5
+      },
+      "rows": [
+        {
+          "x": 1,
+          "y": 0.25,
+          "ecdf": 0.25,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.5,
+          "y": 0.25,
+          "ecdf": 0.25,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 0.75,
+          "ecdf": 0.75,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5,
+          "y": 0.75,
+          "ecdf": 0.75,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "ecdf-FALSE-TRUE-FALSE",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 3,
+          "w": 2
+        },
+        {
+          "x": 1,
+          "w": 1
+        },
+        {
+          "x": 2,
+          "w": 0
+        },
+        {
+          "x": 2,
+          "w": 3
+        }
+      ],
+      "params": {
+        "weighted": false,
+        "pad": true,
+        "n": null
+      },
+      "rows": [
+        {
+          "x": "-Inf",
+          "y": 0,
+          "ecdf": 0,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": 0.25,
+          "ecdf": 0.25,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 0.75,
+          "ecdf": 0.75,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": "Inf",
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "ecdf-FALSE-TRUE-TRUE",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 3,
+          "w": 2
+        },
+        {
+          "x": 1,
+          "w": 1
+        },
+        {
+          "x": 2,
+          "w": 0
+        },
+        {
+          "x": 2,
+          "w": 3
+        }
+      ],
+      "params": {
+        "weighted": false,
+        "pad": true,
+        "n": 5
+      },
+      "rows": [
+        {
+          "x": "-Inf",
+          "y": 0,
+          "ecdf": 0,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": 0.25,
+          "ecdf": 0.25,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.5,
+          "y": 0.25,
+          "ecdf": 0.25,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 0.75,
+          "ecdf": 0.75,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5,
+          "y": 0.75,
+          "ecdf": 0.75,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": "Inf",
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "ecdf-TRUE-FALSE-FALSE",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 3,
+          "w": 2
+        },
+        {
+          "x": 1,
+          "w": 1
+        },
+        {
+          "x": 2,
+          "w": 0
+        },
+        {
+          "x": 2,
+          "w": 3
+        }
+      ],
+      "params": {
+        "weighted": true,
+        "pad": false,
+        "n": null
+      },
+      "rows": [
+        {
+          "x": 3,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": 0.16666666666666666,
+          "ecdf": 0.16666666666666666,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 0.66666666666666663,
+          "ecdf": 0.66666666666666663,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "ecdf-TRUE-FALSE-TRUE",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 3,
+          "w": 2
+        },
+        {
+          "x": 1,
+          "w": 1
+        },
+        {
+          "x": 2,
+          "w": 0
+        },
+        {
+          "x": 2,
+          "w": 3
+        }
+      ],
+      "params": {
+        "weighted": true,
+        "pad": false,
+        "n": 5
+      },
+      "rows": [
+        {
+          "x": 1,
+          "y": 0.16666666666666666,
+          "ecdf": 0.16666666666666666,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.5,
+          "y": 0.16666666666666666,
+          "ecdf": 0.16666666666666666,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 0.66666666666666663,
+          "ecdf": 0.66666666666666663,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5,
+          "y": 0.66666666666666663,
+          "ecdf": 0.66666666666666663,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "ecdf-TRUE-TRUE-FALSE",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 3,
+          "w": 2
+        },
+        {
+          "x": 1,
+          "w": 1
+        },
+        {
+          "x": 2,
+          "w": 0
+        },
+        {
+          "x": 2,
+          "w": 3
+        }
+      ],
+      "params": {
+        "weighted": true,
+        "pad": true,
+        "n": null
+      },
+      "rows": [
+        {
+          "x": "-Inf",
+          "y": 0,
+          "ecdf": 0,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": 0.16666666666666666,
+          "ecdf": 0.16666666666666666,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 0.66666666666666663,
+          "ecdf": 0.66666666666666663,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": "Inf",
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "ecdf-TRUE-TRUE-TRUE",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 3,
+          "w": 2
+        },
+        {
+          "x": 1,
+          "w": 1
+        },
+        {
+          "x": 2,
+          "w": 0
+        },
+        {
+          "x": 2,
+          "w": 3
+        }
+      ],
+      "params": {
+        "weighted": true,
+        "pad": true,
+        "n": 5
+      },
+      "rows": [
+        {
+          "x": "-Inf",
+          "y": 0,
+          "ecdf": 0,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": 0.16666666666666666,
+          "ecdf": 0.16666666666666666,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.5,
+          "y": 0.16666666666666666,
+          "ecdf": 0.16666666666666666,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 0.66666666666666663,
+          "ecdf": 0.66666666666666663,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5,
+          "y": 0.66666666666666663,
+          "ecdf": 0.66666666666666663,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": "Inf",
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-normal-1",
+      "family": "qq",
+      "input": [
+        {
+          "sample": 1
+        }
+      ],
+      "params": {
+        "distribution": "normal"
+      },
+      "rows": [
+        {
+          "sample": 1,
+          "theoretical": 0,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0,
+          "y": 1,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-normal-1",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": 1
+        }
+      ],
+      "params": {
+        "distribution": "normal"
+      },
+      "rows": [
+        {
+          "x": 0,
+          "y": 1,
+          "slope": 0,
+          "intercept": 1,
+          "sample": 1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "slope": 0,
+          "intercept": 1,
+          "sample": 1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-uniform-1",
+      "family": "qq",
+      "input": [
+        {
+          "sample": 1
+        }
+      ],
+      "params": {
+        "distribution": "uniform"
+      },
+      "rows": [
+        {
+          "sample": 1,
+          "theoretical": 0.5,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.5,
+          "y": 1,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-uniform-1",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": 1
+        }
+      ],
+      "params": {
+        "distribution": "uniform"
+      },
+      "rows": [
+        {
+          "x": 0.5,
+          "y": 1,
+          "slope": 0,
+          "intercept": 1,
+          "sample": 1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.5,
+          "y": 1,
+          "slope": 0,
+          "intercept": 1,
+          "sample": 1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-logistic-1",
+      "family": "qq",
+      "input": [
+        {
+          "sample": 1
+        }
+      ],
+      "params": {
+        "distribution": "logistic"
+      },
+      "rows": [
+        {
+          "sample": 1,
+          "theoretical": 0,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0,
+          "y": 1,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-logistic-1",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": 1
+        }
+      ],
+      "params": {
+        "distribution": "logistic"
+      },
+      "rows": [
+        {
+          "x": 0,
+          "y": 1,
+          "slope": 0,
+          "intercept": 1,
+          "sample": 1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "slope": 0,
+          "intercept": 1,
+          "sample": 1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-normal-4",
+      "family": "qq",
+      "input": [
+        {
+          "sample": 1
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 4
+        }
+      ],
+      "params": {
+        "distribution": "normal"
+      },
+      "rows": [
+        {
+          "sample": 1,
+          "theoretical": -1.0491313979639711,
+          "PANEL": "1",
+          "group": -1,
+          "x": -1.0491313979639711,
+          "y": 1,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 2,
+          "theoretical": -0.29930691046566715,
+          "PANEL": "1",
+          "group": -1,
+          "x": -0.29930691046566715,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 3,
+          "theoretical": 0.29930691046566715,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.29930691046566715,
+          "y": 3,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 4,
+          "theoretical": 1.0491313979639711,
+          "PANEL": "1",
+          "group": -1,
+          "x": 1.0491313979639711,
+          "y": 4,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-normal-4",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": 1
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 4
+        }
+      ],
+      "params": {
+        "distribution": "normal"
+      },
+      "rows": [
+        {
+          "x": -1.0491313979639711,
+          "y": 1.3334165964060496,
+          "slope": 1.1119516638792015,
+          "intercept": 2.5,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.0491313979639711,
+          "y": 3.6665834035939504,
+          "slope": 1.1119516638792015,
+          "intercept": 2.5,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-uniform-4",
+      "family": "qq",
+      "input": [
+        {
+          "sample": 1
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 4
+        }
+      ],
+      "params": {
+        "distribution": "uniform"
+      },
+      "rows": [
+        {
+          "sample": 1,
+          "theoretical": 0.14705882352941177,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.14705882352941177,
+          "y": 1,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 2,
+          "theoretical": 0.38235294117647056,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.38235294117647056,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 3,
+          "theoretical": 0.61764705882352944,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.61764705882352944,
+          "y": 3,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 4,
+          "theoretical": 0.8529411764705882,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.8529411764705882,
+          "y": 4,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-uniform-4",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": 1
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 4
+        }
+      ],
+      "params": {
+        "distribution": "uniform"
+      },
+      "rows": [
+        {
+          "x": 0.14705882352941177,
+          "y": 1.4411764705882353,
+          "slope": 3,
+          "intercept": 1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.8529411764705882,
+          "y": 3.5588235294117645,
+          "slope": 3,
+          "intercept": 1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-logistic-4",
+      "family": "qq",
+      "input": [
+        {
+          "sample": 1
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 4
+        }
+      ],
+      "params": {
+        "distribution": "logistic"
+      },
+      "rows": [
+        {
+          "sample": 1,
+          "theoretical": -1.7578579175523736,
+          "PANEL": "1",
+          "group": -1,
+          "x": -1.7578579175523736,
+          "y": 1,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 2,
+          "theoretical": -0.47957308026188639,
+          "PANEL": "1",
+          "group": -1,
+          "x": -0.47957308026188639,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 3,
+          "theoretical": 0.47957308026188644,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.47957308026188644,
+          "y": 3,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 4,
+          "theoretical": 1.7578579175523734,
+          "PANEL": "1",
+          "group": -1,
+          "x": 1.7578579175523734,
+          "y": 4,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-logistic-4",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": 1
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 4
+        }
+      ],
+      "params": {
+        "distribution": "logistic"
+      },
+      "rows": [
+        {
+          "x": -1.7578579175523736,
+          "y": 1.2999465764554483,
+          "slope": 0.68267941997012804,
+          "intercept": 2.5,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.7578579175523734,
+          "y": 3.7000534235445515,
+          "slope": 0.68267941997012804,
+          "intercept": 2.5,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-normal-7",
+      "family": "qq",
+      "input": [
+        {
+          "sample": -2
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 1
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 5
+        },
+        {
+          "sample": 9
+        }
+      ],
+      "params": {
+        "distribution": "normal"
+      },
+      "rows": [
+        {
+          "sample": -2,
+          "theoretical": -1.3644887481703281,
+          "PANEL": "1",
+          "group": -1,
+          "x": -1.3644887481703281,
+          "y": -2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 0,
+          "theoretical": -0.7582925569911515,
+          "PANEL": "1",
+          "group": -1,
+          "x": -0.7582925569911515,
+          "y": 0,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 0,
+          "theoretical": -0.3529339861269164,
+          "PANEL": "1",
+          "group": -1,
+          "x": -0.3529339861269164,
+          "y": 0,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 1,
+          "theoretical": 0,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0,
+          "y": 1,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 3,
+          "theoretical": 0.35293398612691657,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.35293398612691657,
+          "y": 3,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 5,
+          "theoretical": 0.7582925569911515,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.7582925569911515,
+          "y": 5,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 9,
+          "theoretical": 1.3644887481703285,
+          "PANEL": "1",
+          "group": -1,
+          "x": 1.3644887481703285,
+          "y": 9,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-normal-7",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": -2
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 1
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 5
+        },
+        {
+          "sample": 9
+        }
+      ],
+      "params": {
+        "distribution": "normal"
+      },
+      "rows": [
+        {
+          "x": -1.3644887481703281,
+          "y": -2.04598809032652,
+          "slope": 2.9652044370112041,
+          "intercept": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.3644887481703285,
+          "y": 6.0459880903265217,
+          "slope": 2.9652044370112041,
+          "intercept": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-uniform-7",
+      "family": "qq",
+      "input": [
+        {
+          "sample": -2
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 1
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 5
+        },
+        {
+          "sample": 9
+        }
+      ],
+      "params": {
+        "distribution": "uniform"
+      },
+      "rows": [
+        {
+          "sample": -2,
+          "theoretical": 0.086206896551724144,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.086206896551724144,
+          "y": -2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 0,
+          "theoretical": 0.22413793103448276,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.22413793103448276,
+          "y": 0,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 0,
+          "theoretical": 0.36206896551724138,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.36206896551724138,
+          "y": 0,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 1,
+          "theoretical": 0.5,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.5,
+          "y": 1,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 3,
+          "theoretical": 0.63793103448275867,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.63793103448275867,
+          "y": 3,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 5,
+          "theoretical": 0.77586206896551724,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.77586206896551724,
+          "y": 5,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 9,
+          "theoretical": 0.91379310344827591,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.91379310344827591,
+          "y": 9,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-uniform-7",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": -2
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 1
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 5
+        },
+        {
+          "sample": 9
+        }
+      ],
+      "params": {
+        "distribution": "uniform"
+      },
+      "rows": [
+        {
+          "x": 0.086206896551724144,
+          "y": -1.3103448275862069,
+          "slope": 8,
+          "intercept": -2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.91379310344827591,
+          "y": 5.3103448275862073,
+          "slope": 8,
+          "intercept": -2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-logistic-7",
+      "family": "qq",
+      "input": [
+        {
+          "sample": -2
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 1
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 5
+        },
+        {
+          "sample": 9
+        }
+      ],
+      "params": {
+        "distribution": "logistic"
+      },
+      "rows": [
+        {
+          "sample": -2,
+          "theoretical": -2.3608540011180215,
+          "PANEL": "1",
+          "group": -1,
+          "x": -2.3608540011180215,
+          "y": -2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 0,
+          "theoretical": -1.2417131323087829,
+          "PANEL": "1",
+          "group": -1,
+          "x": -1.2417131323087829,
+          "y": 0,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 0,
+          "theoretical": -0.56639547492080144,
+          "PANEL": "1",
+          "group": -1,
+          "x": -0.56639547492080144,
+          "y": 0,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 1,
+          "theoretical": 0,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0,
+          "y": 1,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 3,
+          "theoretical": 0.56639547492080167,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.56639547492080167,
+          "y": 3,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 5,
+          "theoretical": 1.2417131323087831,
+          "PANEL": "1",
+          "group": -1,
+          "x": 1.2417131323087831,
+          "y": 5,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 9,
+          "theoretical": 2.3608540011180219,
+          "PANEL": "1",
+          "group": -1,
+          "x": 2.3608540011180219,
+          "y": 9,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-logistic-7",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": -2
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 0
+        },
+        {
+          "sample": 1
+        },
+        {
+          "sample": 3
+        },
+        {
+          "sample": 5
+        },
+        {
+          "sample": 9
+        }
+      ],
+      "params": {
+        "distribution": "logistic"
+      },
+      "rows": [
+        {
+          "x": -2.3608540011180215,
+          "y": -2.2978838403130846,
+          "slope": 1.8204784532536746,
+          "intercept": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.3608540011180219,
+          "y": 6.2978838403130855,
+          "slope": 1.8204784532536746,
+          "intercept": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-normal-3",
+      "family": "qq",
+      "input": [
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        }
+      ],
+      "params": {
+        "distribution": "normal"
+      },
+      "rows": [
+        {
+          "sample": 2,
+          "theoretical": -0.86942377328888609,
+          "PANEL": "1",
+          "group": -1,
+          "x": -0.86942377328888609,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 2,
+          "theoretical": 0,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 2,
+          "theoretical": 0.86942377328888609,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.86942377328888609,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-normal-3",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        }
+      ],
+      "params": {
+        "distribution": "normal"
+      },
+      "rows": [
+        {
+          "x": -0.86942377328888609,
+          "y": 2,
+          "slope": 0,
+          "intercept": 2,
+          "sample": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.86942377328888609,
+          "y": 2,
+          "slope": 0,
+          "intercept": 2,
+          "sample": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-uniform-3",
+      "family": "qq",
+      "input": [
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        }
+      ],
+      "params": {
+        "distribution": "uniform"
+      },
+      "rows": [
+        {
+          "sample": 2,
+          "theoretical": 0.19230769230769232,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.19230769230769232,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 2,
+          "theoretical": 0.5,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.5,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 2,
+          "theoretical": 0.80769230769230771,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0.80769230769230771,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-uniform-3",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        }
+      ],
+      "params": {
+        "distribution": "uniform"
+      },
+      "rows": [
+        {
+          "x": 0.19230769230769232,
+          "y": 2,
+          "slope": 0,
+          "intercept": 2,
+          "sample": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.80769230769230771,
+          "y": 2,
+          "slope": 0,
+          "intercept": 2,
+          "sample": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-logistic-3",
+      "family": "qq",
+      "input": [
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        }
+      ],
+      "params": {
+        "distribution": "logistic"
+      },
+      "rows": [
+        {
+          "sample": 2,
+          "theoretical": -1.4350845252893225,
+          "PANEL": "1",
+          "group": -1,
+          "x": -1.4350845252893225,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 2,
+          "theoretical": 0,
+          "PANEL": "1",
+          "group": -1,
+          "x": 0,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "sample": 2,
+          "theoretical": 1.4350845252893227,
+          "PANEL": "1",
+          "group": -1,
+          "x": 1.4350845252893227,
+          "y": 2,
+          "shape": 19,
+          "colour": "black",
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "qq-line-logistic-3",
+      "family": "qq_line",
+      "input": [
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        },
+        {
+          "sample": 2
+        }
+      ],
+      "params": {
+        "distribution": "logistic"
+      },
+      "rows": [
+        {
+          "x": -1.4350845252893225,
+          "y": 2,
+          "slope": 0,
+          "intercept": 2,
+          "sample": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.4350845252893227,
+          "y": 2,
+          "slope": 0,
+          "intercept": 2,
+          "sample": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "function-square-FALSE",
+      "family": "function",
+      "input": [
+        {
+          "x": 1
+        },
+        {
+          "x": 100
+        }
+      ],
+      "params": {
+        "n": 5,
+        "expression": "x*x",
+        "log_x": false
+      },
+      "rows": [
+        {
+          "x": 1,
+          "y": 1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 25.75,
+          "y": 663.0625,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 50.5,
+          "y": 2550.25,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 75.25,
+          "y": 5662.5625,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 100,
+          "y": 10000,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "function-square-TRUE",
+      "family": "function",
+      "input": [
+        {
+          "x": 1
+        },
+        {
+          "x": 100
+        }
+      ],
+      "params": {
+        "n": 5,
+        "expression": "x*x",
+        "log_x": true
+      },
+      "rows": [
+        {
+          "x": 0,
+          "y": 1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.5,
+          "y": 10.000000000000002,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": 100,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.5,
+          "y": 1000,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 10000,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "unique-aesthetics",
+      "family": "unique",
+      "input": [
+        {
+          "x": 1,
+          "y": 2,
+          "colour": "A"
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "colour": "A"
+        },
+        {
+          "x": 1,
+          "y": 3,
+          "colour": "A"
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "colour": "B"
+        }
+      ],
+      "params": [],
+      "rows": [
+        {
+          "x": 1,
+          "y": 2,
+          "colour": "#F8766D",
+          "PANEL": "1",
+          "group": 1,
+          "shape": 19,
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "x": 1,
+          "y": 3,
+          "colour": "#F8766D",
+          "PANEL": "1",
+          "group": 1,
+          "shape": 19,
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "colour": "#00BFC4",
+          "PANEL": "1",
+          "group": 2,
+          "shape": 19,
+          "fill": "NA",
+          "size": 1.5,
+          "alpha": "NA",
+          "stroke": 0.5
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "align-FALSE",
+      "family": "align",
+      "input": [
+        {
+          "x": 0,
+          "y": 0,
+          "g": "A"
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "g": "A"
+        },
+        {
+          "x": 3,
+          "y": -1,
+          "g": "A"
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "g": "B"
+        },
+        {
+          "x": 2,
+          "y": -2,
+          "g": "B"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "g": "B"
+        }
+      ],
+      "params": [],
+      "rows": [
+        {
+          "x": -0.0030000000000000001,
+          "y": 0,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": true,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.0030000000000000001,
+          "y": 0.0060000000000000001,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.0060000000000000001,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66366666666666663,
+          "y": 1.3273333333333333,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1.3273333333333333,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66666666666666663,
+          "y": 1.3333333333333333,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1.3333333333333333,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66966666666666663,
+          "y": 1.3393333333333333,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1.3393333333333333,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.997,
+          "y": 1.994,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1.994,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 2,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.0029999999999999,
+          "y": 1.9955000000000003,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1.9955000000000003,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.9970000000000001,
+          "y": 0.50449999999999984,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.50449999999999984,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 0.5,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.5,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.0030000000000001,
+          "y": 0.49549999999999983,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.49549999999999983,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.3303333333333329,
+          "y": 0.0045000000000006146,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.0045000000000006146,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.333333333333333,
+          "y": 4.4408920985006262e-16,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 4.4408920985006262e-16,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.3363333333333332,
+          "y": -0.0044999999999997264,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.0044999999999997264,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.4969999999999999,
+          "y": -0.24549999999999983,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.24549999999999983,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5,
+          "y": -0.25,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.25,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5030000000000001,
+          "y": -0.25450000000000017,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.25450000000000017,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.9969999999999999,
+          "y": -0.99549999999999983,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.99549999999999983,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": -1,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -1,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3.0030000000000001,
+          "y": 0,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": true,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": -0.0030000000000000001,
+          "y": 0,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": true,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.0030000000000000001,
+          "y": 0.99550000000000005,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.99550000000000005,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66366666666666663,
+          "y": 0.0045000000000000595,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.0045000000000000595,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66666666666666663,
+          "y": 5.5511151231257827e-17,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 5.5511151231257827e-17,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66966666666666663,
+          "y": -0.0044999999999999485,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.0044999999999999485,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.997,
+          "y": -0.4955,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.4955,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": -0.5,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.5,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.0029999999999999,
+          "y": -0.50449999999999984,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.50449999999999984,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.9970000000000001,
+          "y": -1.9955000000000003,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -1.9955000000000003,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": -2,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -2,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.0030000000000001,
+          "y": -1.9879999999999995,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -1.9879999999999995,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.3303333333333329,
+          "y": -0.67866666666666831,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.67866666666666831,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.333333333333333,
+          "y": -0.66666666666666785,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.66666666666666785,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.3363333333333332,
+          "y": -0.6546666666666674,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.6546666666666674,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.4969999999999999,
+          "y": -0.012000000000000455,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.012000000000000455,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5,
+          "y": 0,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5030000000000001,
+          "y": 0.012000000000000455,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.012000000000000455,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.9969999999999999,
+          "y": 1.9879999999999995,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1.9879999999999995,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 2,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3.0030000000000001,
+          "y": 0,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": true,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "align-TRUE",
+      "family": "align",
+      "input": [
+        {
+          "x": 0,
+          "y": 0,
+          "g": "A"
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "g": "A"
+        },
+        {
+          "x": 1,
+          "y": -1,
+          "g": "A"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "g": "A"
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "g": "B"
+        },
+        {
+          "x": 2,
+          "y": -2,
+          "g": "B"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "g": "B"
+        }
+      ],
+      "params": [],
+      "rows": [
+        {
+          "x": -0.0030000000000000001,
+          "y": 0,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": true,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.0030000000000000001,
+          "y": 0.0060180541624874628,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.0060180541624874628,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66366666666666663,
+          "y": 1.3313273152791707,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1.3313273152791707,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66666666666666663,
+          "y": 1.3373453694416582,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1.3373453694416582,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66966666666666663,
+          "y": 1.3433634236041456,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1.3433634236041456,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.997,
+          "y": 2,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 2,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": -1,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -1,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.0029999999999999,
+          "y": -0.99700000000000011,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.99700000000000011,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.9970000000000001,
+          "y": -0.0029999999999998916,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.0029999999999998916,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.0030000000000001,
+          "y": 0.0030000000000001137,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.0030000000000001137,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.4969999999999999,
+          "y": 0.49699999999999989,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.49699999999999989,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5,
+          "y": 0.5,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.5,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5030000000000001,
+          "y": 0.50300000000000011,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.50300000000000011,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.9969999999999999,
+          "y": 0.99699999999999989,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.99699999999999989,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3.0030000000000001,
+          "y": 0,
+          "group": 1,
+          "PANEL": "1",
+          "align_padding": true,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": -0.0030000000000000001,
+          "y": 0,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": true,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.0030000000000000001,
+          "y": 0.99550000000000005,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.99550000000000005,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66366666666666663,
+          "y": 0.0045000000000000595,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.0045000000000000595,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66666666666666663,
+          "y": 5.5511151231257827e-17,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 5.5511151231257827e-17,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.66966666666666663,
+          "y": -0.0044999999999999485,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.0044999999999999485,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 0.997,
+          "y": -0.4955,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.4955,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": -0.5,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.5,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.0029999999999999,
+          "y": -0.50449999999999984,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.50449999999999984,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.9970000000000001,
+          "y": -1.9955000000000003,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -1.9955000000000003,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": -2,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -2,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.0030000000000001,
+          "y": -1.9879999999999995,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -1.9879999999999995,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.4969999999999999,
+          "y": -0.012000000000000455,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": -0.012000000000000455,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5,
+          "y": 0,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5030000000000001,
+          "y": 0.012000000000000455,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0.012000000000000455,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.9969999999999999,
+          "y": 1.9879999999999995,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 1.9879999999999995,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": false,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 2,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3.0030000000000001,
+          "y": 0,
+          "group": 2,
+          "PANEL": "1",
+          "align_padding": true,
+          "flipped_aes": false,
+          "ymin": 0,
+          "ymax": 0,
+          "colour": "NA",
+          "fill": "#333333FF",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "ecdf-weight-boundary-37",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 1,
+          "w": 1
+        },
+        {
+          "x": 2,
+          "w": -2
+        },
+        {
+          "x": 3,
+          "w": 3
+        }
+      ],
+      "params": {
+        "weighted": true,
+        "pad": false
+      },
+      "rows": [
+        {
+          "x": 1,
+          "y": 0.5,
+          "ecdf": 0.5,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": -0.5,
+          "ecdf": -0.5,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "ecdf-weight-boundary-38",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 1,
+          "w": 0
+        },
+        {
+          "x": 2,
+          "w": 0
+        },
+        {
+          "x": 3,
+          "w": 0
+        }
+      ],
+      "params": {
+        "weighted": true,
+        "pad": false
+      },
+      "rows": [],
+      "warnings": "Computation failed in `stat_ecdf()`.\nCaused by error in `wecdf()`:\n! Cannot compute eCDF when the weight aesthetic sums up to \"0\"."
+    },
+    {
+      "name": "ecdf-weight-boundary-39",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 1,
+          "w": 1
+        },
+        {
+          "x": 2,
+          "w": "NA"
+        },
+        {
+          "x": 3,
+          "w": "Inf"
+        }
+      ],
+      "params": {
+        "weighted": true,
+        "pad": false
+      },
+      "rows": [
+        {
+          "x": 1,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": "The weight aesthetic does not support non-finite or `NA` values.\ni These weights were replaced by \"0\"."
+    },
+    {
+      "name": "ecdf-weight-boundary-40",
+      "family": "ecdf",
+      "input": [
+        {
+          "x": 1,
+          "w": 1
+        },
+        {
+          "x": 2,
+          "w": -1
+        },
+        {
+          "x": 3,
+          "w": 1.0000000000000001e-15
+        }
+      ],
+      "params": {
+        "weighted": true,
+        "pad": false
+      },
+      "rows": [
+        {
+          "x": 1,
+          "y": 999999999999999.88,
+          "ecdf": 999999999999999.88,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "ecdf": 0,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "ecdf": 1,
+          "flipped_aes": false,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": "The sum of the weight aesthetic is close to \"0\".\ni Computed eCDF might be unstable."
+    },
+    {
+      "name": "connect-41",
+      "family": "connect",
+      "input": [
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": -1
+        },
+        {
+          "x": 2,
+          "y": 4
+        }
+      ],
+      "params": {
+        "connection": "hv"
+      },
+      "rows": [
+        {
+          "x": 1,
+          "y": -1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": -1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 4,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "connect-42",
+      "family": "connect",
+      "input": [
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": -1
+        },
+        {
+          "x": 2,
+          "y": 4
+        }
+      ],
+      "params": {
+        "connection": "vh"
+      },
+      "rows": [
+        {
+          "x": 1,
+          "y": -1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1,
+          "y": 4,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "connect-43",
+      "family": "connect",
+      "input": [
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": -1
+        },
+        {
+          "x": 2,
+          "y": 4
+        }
+      ],
+      "params": {
+        "connection": "mid"
+      },
+      "rows": [
+        {
+          "x": 1,
+          "y": -1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.5,
+          "y": -1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.5,
+          "y": 4,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5,
+          "y": 4,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.5,
+          "y": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "name": "connect-44",
+      "family": "connect",
+      "input": [
+        {
+          "x": 3,
+          "y": 2
+        },
+        {
+          "x": 1,
+          "y": -1
+        },
+        {
+          "x": 2,
+          "y": 4
+        }
+      ],
+      "params": {
+        "connection": [
+          [0, 0],
+          [0.25, 0.75],
+          [1, 1]
+        ]
+      },
+      "rows": [
+        {
+          "x": 1,
+          "y": -1,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 1.25,
+          "y": 2.75,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 2.25,
+          "y": 2.5,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "PANEL": "1",
+          "group": -1,
+          "colour": "black",
+          "linewidth": 0.5,
+          "linetype": 1,
+          "alpha": "NA"
+        }
+      ],
+      "warnings": []
+    }
+  ]
+}

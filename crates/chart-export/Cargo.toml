@@ -14,9 +14,9 @@ serde.workspace = true
 serde_json.workspace = true
 chart-core.workspace = true
 chart-text.workspace = true
-resvg_export = { package = "resvg", version = "=0.48.1", default-features = false, features = ["text"] }
+resvg_export = { package = "resvg", version = "=0.48.1", default-features = false, features = ["text", "raster-images"] }
 usvg = { version = "=0.48.1", default-features = false, features = ["text", "writer"] }
-krilla = { version = "=0.8.2", default-features = false }
+krilla = { version = "=0.8.2", default-features = false, features = ["raster-images"] }
 skrifa = "=0.44.0"
 sha2 = "=0.10.9"
 base64 = "=0.22.1"

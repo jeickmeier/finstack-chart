@@ -8,6 +8,7 @@ mod axes;
 mod composition;
 mod coordinates;
 mod engine;
+mod facet_policy;
 mod facets;
 mod hierarchy;
 mod legend_colorbar;
@@ -32,7 +33,12 @@ pub use guide_transition::{
     GuideDomain, GuideTransitionFrame, GuideTransitionPlan, GuideTransitionTick,
 };
 mod project;
+mod recipe_intervals;
+mod recipe_marks;
+mod recipe_surfaces;
+mod row_annotation;
 mod text;
+mod text_marks;
 mod theme;
 mod types;
 mod work;
@@ -46,3 +52,7 @@ mod secondary_discrete;
 
 mod ggplot_axis;
 pub use ggplot_axis::{AxisCap, GgplotAxisOptions, LogTickOptions};
+
+mod stroke_outline;
+
+mod recipe_distributions;

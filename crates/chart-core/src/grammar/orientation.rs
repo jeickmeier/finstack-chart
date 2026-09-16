@@ -60,6 +60,9 @@ pub(super) fn resolve(definition: &ChartDefinition) -> ChartResult<Cow<'_, Chart
             if let Some(g) = &mut layer.grammar {
                 transpose_source(&mut g.source);
             }
+            if let Position::Nudge(s) = &mut layer.position {
+                std::mem::swap(&mut s.x, &mut s.y);
+            }
             if let Position::Jitter(s) = &mut layer.position {
                 std::mem::swap(&mut s.x, &mut s.y);
             }
@@ -76,6 +79,7 @@ fn point(p: Point) -> ChartResult<Point> {
 }
 fn geometry(geometry: &mut PreparedGeometry) -> ChartResult<()> {
     match geometry {
+        PreparedGeometry::Recipe(recipe) => recipe.transpose()?,
         PreparedGeometry::UnboundedPoint(p) => p.swap(0, 1),
         PreparedGeometry::HierarchyNode(_) | PreparedGeometry::HierarchyLink { .. } => {}
         PreparedGeometry::Point(p)

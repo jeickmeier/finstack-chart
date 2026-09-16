@@ -3,11 +3,15 @@ use crate::{ChartResult, DiagnosticCode, Revision, grammar::*};
 
 #[derive(Clone)]
 enum Kind {
+    Distribution(DistributionKind),
+    Univariate(UnivariateKind),
     Identity,
     Bin {
         bins: usize,
         edges: Option<Vec<f64>>,
         outliers: OutlierPolicy,
+        options: Option<GgplotBinOptions>,
+        weight: Option<Mapping>,
     },
     Count {
         required: Vec<Mapping>,
@@ -22,7 +26,17 @@ enum Kind {
 /// Statistical component using the existing kernels and source/generated-stage contracts.
 #[derive(Clone)]
 pub struct StatBuilder {
+    analytic_input: Option<Mapping>,
+    analytic_weight: Option<Mapping>,
+    analytic_width: Option<f64>,
     kind: Kind,
+    reference_count: bool,
+    sum_count: bool,
+    count_partitions: Vec<Mapping>,
+    summary_helper: Option<SummaryHelper>,
+    summary_bins: Option<SummaryBins>,
+    count_weight: Option<Mapping>,
+    count_width: Option<f64>,
     x: Option<Mapping>,
     y: Option<Mapping>,
     group: Option<Mapping>,
@@ -34,7 +48,17 @@ pub struct StatBuilder {
 }
 fn stat(kind: Kind) -> StatBuilder {
     StatBuilder {
+        analytic_input: None,
+        analytic_weight: None,
+        analytic_width: None,
         kind,
+        reference_count: false,
+        sum_count: false,
+        count_partitions: vec![],
+        summary_helper: None,
+        summary_bins: None,
+        count_weight: None,
+        count_width: None,
         x: None,
         y: None,
         group: None,
@@ -55,6 +79,8 @@ pub fn bin() -> StatBuilder {
         bins: 30,
         edges: None,
         outliers: OutlierPolicy::Exclude,
+        options: None,
+        weight: None,
     })
 }
 /// Count rows satisfying the optional required numeric inputs.
@@ -72,6 +98,93 @@ pub fn summary() -> StatBuilder {
 pub fn fit() -> StatBuilder {
     stat(Kind::Fit)
 }
+/// Built-in distribution statistic with explicit estimator controls.
+pub fn distribution_stat(kind: DistributionKind) -> StatBuilder {
+    stat(Kind::Distribution(kind))
+}
+/// Built-in univariate statistic with explicit function or interpolation controls.
+pub fn univariate_stat(kind: UnivariateKind) -> StatBuilder {
+    stat(Kind::Univariate(kind))
+}
+/// Type-seven hinges, observed whiskers and source outlier membership.
+pub fn boxplot_stat() -> StatBuilder {
+    distribution_stat(DistributionKind::Boxplot {
+        coefficient: 1.5,
+        quantile_type: 7,
+    })
+}
+/// Gaussian FFT density with the reference default bandwidth selector.
+pub fn density_stat() -> StatBuilder {
+    distribution_stat(DistributionKind::Density {
+        trim: false,
+        controls: DensityControls::default(),
+    })
+}
+/// Trimmed area-normalized violin density and inserted quantile rows.
+pub fn violin_stat() -> StatBuilder {
+    distribution_stat(DistributionKind::Violin {
+        controls: DensityControls::default(),
+        trim: true,
+        scale: ViolinScale::Area,
+        quantiles: vec![0.25, 0.5, 0.75],
+        drop: true,
+    })
+}
+/// Successive dot-density bins along the x axis.
+pub fn dotplot_stat() -> StatBuilder {
+    distribution_stat(DistributionKind::Dotplot {
+        bin_axis: DotAxis::X,
+        method: DotBinMethod::DotDensity,
+        bin_width: None,
+        bin_positions_all: false,
+        closed: BinClosure::Right,
+        origin: None,
+    })
+}
+/// Empirical distribution with reference infinite endpoint padding.
+pub fn ecdf_stat() -> StatBuilder {
+    univariate_stat(UnivariateKind::Ecdf { n: None, pad: true })
+}
+/// Theoretical normal quantiles against sorted sample values.
+pub fn qq_stat() -> StatBuilder {
+    univariate_stat(UnivariateKind::Qq {
+        distribution: AnalyticFunction::default(),
+        quantiles: None,
+        line: false,
+        probabilities: [0.25, 0.75],
+        full_range: false,
+    })
+}
+/// Reference line through the sample's first and third quartiles.
+pub fn qq_line_stat() -> StatBuilder {
+    univariate_stat(UnivariateKind::Qq {
+        distribution: AnalyticFunction::default(),
+        quantiles: None,
+        line: true,
+        probabilities: [0.25, 0.75],
+        full_range: false,
+    })
+}
+/// Sample one pure function at 101 transformed x coordinates.
+pub fn function_stat(function: AnalyticFunction) -> StatBuilder {
+    univariate_stat(UnivariateKind::Function {
+        function,
+        n: 101,
+        range: None,
+    })
+}
+/// Retain one source observation for each distinct mapped tuple.
+pub fn unique_stat() -> StatBuilder {
+    univariate_stat(UnivariateKind::Unique)
+}
+/// Connect sorted observations using a named step or relative coordinate matrix.
+pub fn connect_stat(connection: Connection) -> StatBuilder {
+    univariate_stat(UnivariateKind::Connect { connection })
+}
+/// Align group curves and zero crossings before area positioning.
+pub fn align_stat() -> StatBuilder {
+    univariate_stat(UnivariateKind::Align)
+}
 /// Select an explicitly registered statistic and declarative parameters.
 pub fn custom_stat(
     id: impl Into<String>,
@@ -81,6 +194,80 @@ pub fn custom_stat(
     stat(Kind::Custom(OperationRef::new(id, version), parameters))
 }
 impl StatBuilder {
+    /// Set the sample input independently of x/y geometry mappings.
+    pub fn input(mut self, mapping: impl Into<Mapping>) -> Self {
+        self.analytic_input = Some(mapping.into());
+        self
+    }
+    /// Bind observation weights for an analytical statistic.
+    pub fn weight(mut self, mapping: impl Into<Mapping>) -> Self {
+        self.analytic_weight = Some(mapping.into());
+        self
+    }
+    /// Set distribution group width in independent-axis data units.
+    pub fn width(mut self, width: f64) -> Self {
+        self.analytic_width = Some(width);
+        self
+    }
+    /// Replace the typed distribution controls without changing bound inputs.
+    pub fn distribution_options(mut self, options: DistributionKind) -> Self {
+        self.kind = Kind::Distribution(options);
+        self
+    }
+    /// Replace the typed univariate controls without changing bound inputs.
+    pub fn univariate_options(mut self, options: UnivariateKind) -> Self {
+        self.kind = Kind::Univariate(options);
+        self
+    }
+    /// Joint-position StatSum counts, distinct from one-dimensional stat_count.
+    pub fn sum_count(mut self) -> Self {
+        self = self.ggplot_count();
+        self.sum_count = true;
+        self
+    }
+    /// Additional mapped source aesthetics whose distinct values partition StatSum rows.
+    pub fn count_partition(mut self, mapping: impl Into<Mapping>) -> Self {
+        self.count_partitions.push(mapping.into());
+        self
+    }
+    /// Count distinct positions with reference signed-count/proportion outputs.
+    pub fn ggplot_count(mut self) -> Self {
+        if !matches!(self.kind, Kind::Count { .. }) {
+            return self.invalid("Reference count requires count().");
+        }
+        self.reference_count = true;
+        self
+    }
+    /// Reference count weights; missing weights contribute zero.
+    pub fn count_weight(mut self, mapping: impl Into<Mapping>) -> Self {
+        self = self.ggplot_count();
+        self.count_weight = Some(mapping.into());
+        self
+    }
+    /// Explicit reference count bar width.
+    pub fn count_width(mut self, width: f64) -> Self {
+        self = self.ggplot_count();
+        self.count_width = Some(width);
+        self
+    }
+    /// Summarize responses using a typed reference helper; x/y select predictor/response.
+    pub fn summary_helper(mut self, helper: SummaryHelper) -> Self {
+        if !matches!(self.kind, Kind::Summary { .. }) {
+            return self.invalid("Summary helper requires summary().");
+        }
+        self.summary_helper = Some(helper);
+        self
+    }
+    /// Partition the summary predictor using the shared reference bin arithmetic.
+    pub fn summary_bins(mut self, bins: SummaryBins) -> Self {
+        if !matches!(self.kind, Kind::Summary { .. }) {
+            return self.invalid("Summary bins require summary().");
+        }
+        self.summary_helper.get_or_insert_with(Default::default);
+        self.summary_bins = Some(bins);
+        self
+    }
+
     pub(super) fn explicit_grouping(&self, data: &Data) -> ChartResult<Option<Grouping>> {
         if self.all_groups {
             Ok(Some(Grouping::All))
@@ -121,6 +308,27 @@ impl StatBuilder {
     pub fn group_all(mut self) -> Self {
         self.group = None;
         self.all_groups = true;
+        self
+    }
+    /// Author reference bin closure, alignment, padding and numeric source weights.
+    pub fn ggplot_bin(mut self, options: GgplotBinOptions) -> Self {
+        if let Kind::Bin {
+            options: target, ..
+        } = &mut self.kind
+        {
+            *target = Some(options);
+        } else {
+            return self.invalid("Reference bin options require a bin statistic.");
+        }
+        self
+    }
+    /// Bind a reference histogram weight through the shared source mapping resolver.
+    pub fn bin_weight(mut self, weight: impl Into<Mapping>) -> Self {
+        if let Kind::Bin { weight: target, .. } = &mut self.kind {
+            *target = Some(weight.into());
+        } else {
+            return self.invalid("Bin weights require a bin statistic.");
+        }
         self
     }
     /// Set the number of equal-width bins.
@@ -195,18 +403,43 @@ impl StatBuilder {
         if let Some(e) = &self.failure {
             return Err(e.clone());
         }
-        if (self.x.is_some()
-            && !matches!(
-                self.kind,
-                Kind::Bin { .. } | Kind::Summary { .. } | Kind::Fit
-            ))
-            || (self.y.is_some() && !matches!(self.kind, Kind::Fit))
+        if ((self.analytic_input.is_some()
+            || self.analytic_weight.is_some()
+            || self.analytic_width.is_some())
+            && !matches!(self.kind, Kind::Distribution(_) | Kind::Univariate(_)))
+            || (self.analytic_width.is_some() && matches!(self.kind, Kind::Univariate(_)))
+            || (self.x.is_some()
+                && !self.reference_count
+                && !matches!(
+                    self.kind,
+                    Kind::Bin { .. }
+                        | Kind::Summary { .. }
+                        | Kind::Fit
+                        | Kind::Distribution(_)
+                        | Kind::Univariate(_)
+                ))
+            || (self.y.is_some()
+                && !self.sum_count
+                && self.summary_helper.is_none()
+                && !matches!(
+                    self.kind,
+                    Kind::Fit | Kind::Distribution(_) | Kind::Univariate(_)
+                ))
             || (self.space != StatSpace::Data
                 && !matches!(
                     self.kind,
-                    Kind::Bin { .. } | Kind::Summary { .. } | Kind::Fit | Kind::Custom(..)
+                    Kind::Bin { .. }
+                        | Kind::Summary { .. }
+                        | Kind::Fit
+                        | Kind::Custom(..)
+                        | Kind::Distribution(_)
+                        | Kind::Univariate(_)
                 ))
-            || (self.y_space != StatSpace::Data && !matches!(self.kind, Kind::Fit))
+            || (self.y_space != StatSpace::Data
+                && !matches!(
+                    self.kind,
+                    Kind::Fit | Kind::Distribution(_) | Kind::Univariate(_)
+                ))
             || (matches!(self.kind, Kind::Identity) && (self.group.is_some() || self.all_groups))
         {
             return Err(error(
@@ -238,14 +471,132 @@ impl StatBuilder {
                 .resolve(data)
         };
         Ok(match &self.kind {
+            Kind::Distribution(kind) => {
+                let sample_y = !matches!(
+                    kind,
+                    DistributionKind::Density { .. }
+                        | DistributionKind::Dotplot {
+                            bin_axis: DotAxis::X,
+                            ..
+                        }
+                );
+                let primary = if sample_y {
+                    self.y.as_ref().or(aes.y.as_ref())
+                } else {
+                    self.x.as_ref().or(aes.x.as_ref())
+                };
+                let position = if sample_y {
+                    self.x.as_ref().or(aes.x.as_ref())
+                } else {
+                    self.y.as_ref().or(aes.y.as_ref())
+                };
+                let input = self
+                    .analytic_input
+                    .as_ref()
+                    .or(primary)
+                    .ok_or_else(|| {
+                        error(
+                            DiagnosticCode::SchemaConflict,
+                            "Distribution statistic requires a sample input.",
+                        )
+                    })?
+                    .resolve(data)?;
+                Statistic::distribution(DistributionSpec {
+                    retained_fields: vec![],
+                    retained_numeric: vec![],
+                    training_range: None,
+                    input,
+                    position: if matches!(kind, DistributionKind::Density { .. }) {
+                        None
+                    } else {
+                        position.map(|p| p.resolve(data)).transpose()?
+                    },
+                    weight: self
+                        .analytic_weight
+                        .as_ref()
+                        .map(|w| w.resolve(data))
+                        .transpose()?,
+                    grouping: group,
+                    space: self.space.clone(),
+                    position_space: self.y_space.clone(),
+                    width: self.analytic_width,
+                    kind: kind.clone(),
+                })
+            }
+            Kind::Univariate(kind) => {
+                let primary = if matches!(kind, UnivariateKind::Qq { .. }) {
+                    self.y
+                        .as_ref()
+                        .or(aes.y.as_ref())
+                        .or(self.x.as_ref())
+                        .or(aes.x.as_ref())
+                } else {
+                    self.x.as_ref().or(aes.x.as_ref())
+                };
+                let input = self
+                    .analytic_input
+                    .as_ref()
+                    .or(primary)
+                    .map(|p| p.resolve(data))
+                    .transpose()?
+                    .or_else(|| {
+                        matches!(kind, UnivariateKind::Function { .. })
+                            .then(|| Numeric::Expression(Expression::constant(0.)))
+                    })
+                    .ok_or_else(|| {
+                        error(
+                            DiagnosticCode::SchemaConflict,
+                            "Univariate statistic requires a sample input.",
+                        )
+                    })?;
+                let second = if matches!(
+                    kind,
+                    UnivariateKind::Unique | UnivariateKind::Connect { .. } | UnivariateKind::Align
+                ) {
+                    self.y
+                        .as_ref()
+                        .or(aes.y.as_ref())
+                        .map(|p| p.resolve(data))
+                        .transpose()?
+                } else {
+                    None
+                };
+                Statistic::univariate(UnivariateSpec {
+                    default_input: matches!(kind, UnivariateKind::Function { .. })
+                        && self.analytic_input.as_ref().or(primary).is_none(),
+                    training_range: None,
+                    output_scale: None,
+                    input,
+                    second,
+                    weight: self
+                        .analytic_weight
+                        .as_ref()
+                        .map(|w| w.resolve(data))
+                        .transpose()?,
+                    grouping: group,
+                    space: self.space.clone(),
+                    second_space: self.y_space.clone(),
+                    retained_fields: vec![],
+                    retained_numeric: vec![],
+                    kind: kind.clone(),
+                })
+            }
             Kind::Identity => Statistic::identity(),
             Kind::Bin {
                 bins,
                 edges,
                 outliers,
+                options,
+                weight,
             } => {
+                let mut ggplot = options.clone();
+                if let Some(weight) = weight {
+                    ggplot.get_or_insert_with(Default::default).weight =
+                        Some(weight.resolve(data)?);
+                }
                 if let Some(edges) = edges {
                     Statistic::bin(BinSpec {
+                        ggplot,
                         input: x()?,
                         edges: edges.clone(),
                         outliers: *outliers,
@@ -254,6 +605,7 @@ impl StatBuilder {
                     })
                 } else {
                     Statistic::auto_bin(AutoBinSpec {
+                        ggplot,
                         input: x()?,
                         bins: *bins,
                         grouping: group,
@@ -262,6 +614,48 @@ impl StatBuilder {
                 }
             }
             Kind::Count { required } => Statistic::count(CountSpec {
+                ggplot: self
+                    .reference_count
+                    .then(|| -> ChartResult<_> {
+                        Ok(GgplotCountOptions {
+                            position: self.x.as_ref().map(|m| m.resolve(data)).transpose()?,
+                            joint_position: if self.sum_count {
+                                Some(
+                                    self.y
+                                        .as_ref()
+                                        .ok_or_else(|| {
+                                            error(DiagnosticCode::Validation, "StatSum requires y.")
+                                        })?
+                                        .resolve(data)?,
+                                )
+                            } else {
+                                None
+                            },
+                            joint_numeric: vec![],
+                            joint_aesthetics: self
+                                .count_partitions
+                                .iter()
+                                .map(|m| {
+                                    m.resolve(data).and_then(|n| match n {
+                                        Numeric::Field(id)
+                                        | Numeric::Category(id)
+                                        | Numeric::Timestamp { field: id, .. } => Ok(id),
+                                        _ => Err(error(
+                                            DiagnosticCode::Validation,
+                                            "Count partitions require source fields.",
+                                        )),
+                                    })
+                                })
+                                .collect::<ChartResult<_>>()?,
+                            weight: self
+                                .count_weight
+                                .as_ref()
+                                .map(|m| m.resolve(data))
+                                .transpose()?,
+                            width: self.count_width,
+                        })
+                    })
+                    .transpose()?,
                 required: required
                     .iter()
                     .map(|m| m.resolve(data))
@@ -272,7 +666,31 @@ impl StatBuilder {
                 quantiles,
                 empty_sum_zero,
             } => Statistic::summary(SummarySpec {
-                input: x()?,
+                ggplot: self
+                    .summary_helper
+                    .as_ref()
+                    .map(|h| -> ChartResult<_> {
+                        Ok(GgplotSummaryOptions {
+                            position: self.x.as_ref().map(|m| m.resolve(data)).transpose()?,
+                            bins: self.summary_bins.clone(),
+                            helper: h.clone(),
+                        })
+                    })
+                    .transpose()?,
+                input: if self.summary_helper.is_some() {
+                    self.y
+                        .as_ref()
+                        .or(aes.y.as_ref())
+                        .ok_or_else(|| {
+                            error(
+                                DiagnosticCode::SchemaConflict,
+                                "Reference summary requires a response y.",
+                            )
+                        })?
+                        .resolve(data)?
+                } else {
+                    x()?
+                },
                 grouping: group,
                 quantiles: quantiles.clone(),
                 empty_sum_zero: *empty_sum_zero,
@@ -325,11 +743,36 @@ impl StatBuilder {
     }
     pub(super) fn default_mappings(&self, geom: Geom) -> ChartResult<Option<Mappings>> {
         let mut aes = match self.kind {
+            Kind::Distribution(_) | Kind::Univariate(_) => StatAes::new(StatField::X, StatField::Y),
             Kind::Identity => return Ok(None),
             Kind::Bin { .. } => return Ok(Some(Mappings::Binned(BinAes::histogram()))),
             Kind::Fit => StatAes::new(StatField::X, StatField::Y),
-            Kind::Count { .. } => StatAes::new(StatField::Group, StatField::Count),
-            Kind::Summary { .. } => StatAes::new(StatField::Group, StatField::Mean),
+            Kind::Count { .. } => StatAes::new(
+                if self.reference_count && self.x.is_some() {
+                    StatField::X
+                } else {
+                    StatField::Group
+                },
+                if self.sum_count {
+                    StatField::Y
+                } else if self.reference_count {
+                    StatField::WeightedCount
+                } else {
+                    StatField::Count
+                },
+            ),
+            Kind::Summary { .. } => StatAes::new(
+                if self.summary_helper.is_some() && self.x.is_some() {
+                    StatField::X
+                } else {
+                    StatField::Group
+                },
+                if self.summary_helper.is_some() {
+                    StatField::Y
+                } else {
+                    StatField::Mean
+                },
+            ),
             Kind::Custom(_, _) => {
                 return Err(error(
                     DiagnosticCode::SchemaConflict,
@@ -531,7 +974,119 @@ pub fn jitter(seed: u64) -> PositionBuilder {
         failure: None,
     }
 }
+/// Reference stack; descending group order and upper anchor by default.
+pub fn ggplot_stack() -> PositionBuilder {
+    PositionBuilder {
+        value: Position::GgplotStack(GgplotStackSpec::default()),
+        failure: None,
+    }
+}
+/// Reference fill, with separate positive and negative normalization.
+pub fn ggplot_fill() -> PositionBuilder {
+    PositionBuilder {
+        value: Position::GgplotStack(GgplotStackSpec {
+            fill: true,
+            ..Default::default()
+        }),
+        failure: None,
+    }
+}
+/// Reference dodge; width is in independent-axis calculation units.
+pub fn ggplot_dodge() -> PositionBuilder {
+    PositionBuilder {
+        value: Position::GgplotDodge(GgplotDodgeSpec::default()),
+        failure: None,
+    }
+}
+/// Reference variable-width dodge with ten percent padding.
+pub fn dodge2() -> PositionBuilder {
+    PositionBuilder {
+        value: Position::GgplotDodge2(GgplotDodgeSpec::default()),
+        failure: None,
+    }
+}
+/// Constant displacement in calculation units.
+pub fn nudge(x: f64, y: f64) -> PositionBuilder {
+    PositionBuilder {
+        value: Position::Nudge(NudgeSpec { x, y }),
+        failure: None,
+    }
+}
+/// Reference dodge followed by stable-key FNV-1a/SplitMix64 jitter (not R RNG).
+pub fn jitter_dodge(seed: u64) -> PositionBuilder {
+    PositionBuilder {
+        value: Position::JitterDodge(JitterDodgeSpec {
+            resolved_dodge_count: None,
+            resolved_resolution: None,
+            auto_width: true,
+            dodge: GgplotDodgeSpec {
+                width: Some(0.75),
+                ..Default::default()
+            },
+            jitter: JitterSpec {
+                seed,
+                x: 0.4,
+                y: 0.,
+                units: JitterUnits::Data,
+            },
+        }),
+        failure: None,
+    }
+}
 impl PositionBuilder {
+    /// Reference collision width preservation.
+    pub fn preserve(mut self, preserve: DodgePreserve) -> Self {
+        match &mut self.value {
+            Position::GgplotDodge(s) | Position::GgplotDodge2(s) => s.preserve = preserve,
+            Position::JitterDodge(s) => s.dodge.preserve = preserve,
+            _ => {
+                self.failure = Some(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Preserve requires reference dodge.",
+                ))
+            }
+        }
+        self
+    }
+    /// Reverse the reference stack or dodge group ordering.
+    pub fn reverse(mut self, reverse: bool) -> Self {
+        match &mut self.value {
+            Position::GgplotDodge(s) | Position::GgplotDodge2(s) => s.reverse = reverse,
+            Position::JitterDodge(s) => s.dodge.reverse = reverse,
+            Position::GgplotStack(s) => s.reverse = reverse,
+            _ => {
+                self.failure = Some(error(
+                    DiagnosticCode::UnsupportedCapability,
+                    "Reverse requires reference stack/dodge.",
+                ))
+            }
+        }
+        self
+    }
+    /// Set reference point/text anchor within a stack interval.
+    pub fn vjust(mut self, vjust: f64) -> Self {
+        if let Position::GgplotStack(s) = &mut self.value {
+            s.vjust = vjust;
+        } else {
+            self.failure = Some(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Vjust requires reference stack/fill.",
+            ));
+        }
+        self
+    }
+    /// Fraction removed from the width of colliding dodge2 intervals.
+    pub fn padding(mut self, padding: f64) -> Self {
+        if let Position::GgplotDodge2(s) = &mut self.value {
+            s.padding = padding;
+        } else {
+            self.failure = Some(error(
+                DiagnosticCode::UnsupportedCapability,
+                "Position padding requires dodge2.",
+            ));
+        }
+        self
+    }
     pub(super) fn lower(&self) -> ChartResult<Position> {
         self.failure.clone().map_or(Ok(self.value.clone()), Err)
     }
@@ -587,6 +1142,10 @@ impl PositionBuilder {
     pub fn width(mut self, width: f64) -> Self {
         if let Position::Dodge(spec) = &mut self.value {
             spec.width = width;
+        } else if let Position::GgplotDodge(spec) | Position::GgplotDodge2(spec) = &mut self.value {
+            spec.width = Some(width);
+        } else if let Position::JitterDodge(spec) = &mut self.value {
+            spec.dodge.width = Some(width);
         } else {
             self.failure = Some(error(
                 DiagnosticCode::UnsupportedCapability,
@@ -600,6 +1159,10 @@ impl PositionBuilder {
         if let Position::Jitter(spec) = &mut self.value {
             spec.x = x;
             spec.y = y;
+        } else if let Position::JitterDodge(spec) = &mut self.value {
+            spec.jitter.x = x;
+            spec.jitter.y = y;
+            spec.auto_width = false;
         } else {
             self.failure = Some(error(
                 DiagnosticCode::UnsupportedCapability,

@@ -168,6 +168,22 @@ impl _Component {
             .map(Self::wrap)
             .map_err(failure)
     }
+    pub fn recipe_value_field(&self, target: &str, field: &_Field) -> Result<Self, JsError> {
+        self.get()?
+            .recipe_value_field(portable::decode(target).map_err(failure)?, *field.get()?)
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    pub fn recipe_value_expression(
+        &self,
+        target: &str,
+        input: &_Component,
+    ) -> Result<Self, JsError> {
+        self.get()?
+            .recipe_value_expression(portable::decode(target).map_err(failure)?, input.get()?)
+            .map(Self::wrap)
+            .map_err(failure)
+    }
     pub fn field_parameter(&self, name: &str, field: &_Field) -> Result<Self, JsError> {
         self.get()?
             .field_parameter(name, *field.get()?)

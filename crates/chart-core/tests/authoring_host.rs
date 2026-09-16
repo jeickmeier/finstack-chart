@@ -99,3 +99,47 @@ fn primary_envelope_roundtrip_preserves_exact_data_names_and_rejects_malformed_r
     malformed["version"] = serde_json::json!(2);
     assert!(Plot::from_json(&malformed.to_string()).is_err());
 }
+
+#[test]
+fn text_label_host_accepts_owner_fields_and_source_expressions() {
+    let data = Data::columns()
+        .column("x", [1., 2.])
+        .column("label", [3., 4.])
+        .build()
+        .unwrap();
+    let base = Component::new("points", "[]").unwrap();
+    let layers = [
+        base.set("text_label", r#"["label"]"#).unwrap(),
+        base.field("text_label", data.field("label").unwrap())
+            .unwrap(),
+        base.with(
+            "text_label",
+            &Component::new("source_expr", r#"["label"]"#)
+                .unwrap()
+                .set("add", "[1]")
+                .unwrap(),
+        )
+        .unwrap(),
+    ];
+    for layer in layers {
+        let mappings = Component::new("aes", "[]")
+            .unwrap()
+            .set("x", r#"["x"]"#)
+            .unwrap()
+            .set("y", r#"["x"]"#)
+            .unwrap();
+        let plot = Draft::new(&data)
+            .with("aes", &mappings)
+            .unwrap()
+            .with("layer", &layer)
+            .unwrap()
+            .build()
+            .unwrap();
+        assert_eq!(
+            plot.chart().unwrap().prepare().unwrap().layers()[0]
+                .marks()
+                .len(),
+            2
+        );
+    }
+}

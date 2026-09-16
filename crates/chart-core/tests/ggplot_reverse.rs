@@ -203,46 +203,51 @@ fn reverse_population_limits_and_numeric_edges_are_checked() {
 }
 
 #[test]
-fn reverse_explicit_histogram_edges_retain_existing_left_closed_policy() {
-    use chart_core::grammar::PreparedRows;
+fn reverse_explicit_histogram_edges_support_both_declared_closures() {
+    use chart_core::grammar::{BinClosure, GgplotBinOptions, PreparedRows};
     let fixture: serde_json::Value = serde_json::from_str(include_str!(
         "../../../fixtures/parity/ggplot2/reverse-position.json"
     ))
     .unwrap();
-    let case = fixture["histograms"]
-        .as_array()
-        .unwrap()
-        .iter()
-        .find(|c| c["closed"] == "left")
-        .unwrap();
-    let list = |name: &str| {
-        case[name]
-            .as_array()
-            .unwrap()
-            .iter()
-            .map(|v| v.as_f64().unwrap())
-            .collect::<Vec<_>>()
-    };
-    let figure = plot(Data::columns().column("x", list("x")).build().unwrap())
-        .profile(Profile::Ggplot2_4_0_3)
-        .aes(aes().x("x"))
-        .layer(histogram().breaks(list("breaks")))
-        .x_axis(x_axis().scale(scale_reverse()))
-        .build()
-        .unwrap();
-    let prepared = figure.chart().unwrap().prepare().unwrap();
-    let PreparedRows::Binned(rows) = prepared.layers()[0].table().rows() else {
-        panic!()
-    };
-    assert_eq!(
-        rows.iter().map(|r| r.count as f64).collect::<Vec<_>>(),
-        list("count")
-    );
-    assert_eq!(
-        rows.iter().map(|r| r.start).collect::<Vec<_>>(),
-        list("start")
-    );
-    assert_eq!(rows.iter().map(|r| r.end).collect::<Vec<_>>(), list("end"));
+    for case in fixture["histograms"].as_array().unwrap() {
+        let list = |name: &str| {
+            case[name]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|v| v.as_f64().unwrap())
+                .collect::<Vec<_>>()
+        };
+        let figure = plot(Data::columns().column("x", list("x")).build().unwrap())
+            .profile(Profile::Ggplot2_4_0_3)
+            .aes(aes().x("x"))
+            .layer(
+                histogram().stat(bin().breaks(list("breaks")).ggplot_bin(GgplotBinOptions {
+                    closed: if case["closed"] == "left" {
+                        BinClosure::Left
+                    } else {
+                        BinClosure::Right
+                    },
+                    ..Default::default()
+                })),
+            )
+            .x_axis(x_axis().scale(scale_reverse()))
+            .build()
+            .unwrap();
+        let prepared = figure.chart().unwrap().prepare().unwrap();
+        let PreparedRows::Binned(rows) = prepared.layers()[0].table().rows() else {
+            panic!()
+        };
+        assert_eq!(
+            rows.iter().map(|r| r.count as f64).collect::<Vec<_>>(),
+            list("count")
+        );
+        assert_eq!(
+            rows.iter().map(|r| r.start).collect::<Vec<_>>(),
+            list("start")
+        );
+        assert_eq!(rows.iter().map(|r| r.end).collect::<Vec<_>>(), list("end"));
+    }
 }
 
 #[test]

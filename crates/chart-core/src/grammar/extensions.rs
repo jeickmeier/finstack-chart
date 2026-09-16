@@ -131,6 +131,7 @@ pub fn extension_input_space(
 /// portable JSON can only select an existing entry and never supplies executable code.
 #[derive(Clone, Default)]
 pub struct ExtensionRegistry {
+    pub(crate) analytic_functions: Arc<super::analytic_functions::AnalyticRegistrations>,
     pub(crate) transforms_function: Arc<super::transform_extensions::TransformRegistrations>,
     pub(crate) scale_vectors: Arc<super::scale_vector_extensions::ScaleVectorRegistrations>,
     pub(crate) breaks_function: Arc<super::scale_break_extensions::ScaleBreakRegistrations>,
@@ -239,6 +240,9 @@ impl ExtensionRegistry {
             .map(|t| &t.statistic)
             .chain(definition.layers.iter().map(|l| &l.statistic))
         {
+            if let StatParameters::Univariate(spec) = &stat.parameters {
+                super::univariate_stage::validate_registry(spec, self, true)?;
+            }
             if matches!(stat.parameters, StatParameters::Custom(_))
                 && !self.stat_descriptor(&stat.operation)?.portable
             {

@@ -172,6 +172,9 @@ impl CustomStat for DensityHistogram {
                     members: members.clone(),
                 };
                 output.rows.push(StatisticalRow {
+                    outliers: vec![],
+                    retained: GroupValue::All,
+                    retained_numeric: Vec::new(),
                     group: group.clone(),
                     count,
                     values: vec![

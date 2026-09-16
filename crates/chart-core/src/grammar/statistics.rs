@@ -46,8 +46,19 @@ fn transformed(value: Option<f64>, space: &StatSpace) -> Option<f64> {
 }
 pub(super) fn validate(stat: &Statistic, limits: CompileLimits) -> ChartResult<()> {
     match &stat.parameters {
+        StatParameters::Distribution(s) => {
+            validate_operation(&stat.operation, "chart.distribution")?;
+            super::distribution_stage::validate(s, limits)
+        }
+        StatParameters::Univariate(s) => {
+            validate_operation(&stat.operation, "chart.univariate")?;
+            super::univariate_stage::validate(s, limits)
+        }
         StatParameters::AutoBin(s) => {
             validate_operation(&stat.operation, "chart.auto_bin")?;
+            if let Some(options) = &s.ggplot {
+                options.validate()?;
+            }
             if s.bins == 0 || s.bins.checked_add(1).is_none_or(|n| n > limits.max_edges) {
                 return Err(error(
                     DiagnosticCode::ResourceLimit,
@@ -58,6 +69,9 @@ pub(super) fn validate(stat: &Statistic, limits: CompileLimits) -> ChartResult<(
         }
         StatParameters::Count(s) => {
             validate_operation(&stat.operation, "chart.count")?;
+            if let Some(g) = &s.ggplot {
+                super::ggplot_summary::validate_count(g)?;
+            }
             if s.required.len() > limits.max_filters {
                 return Err(error(
                     DiagnosticCode::ResourceLimit,
@@ -68,6 +82,9 @@ pub(super) fn validate(stat: &Statistic, limits: CompileLimits) -> ChartResult<(
         }
         StatParameters::Summary(s) => {
             validate_operation(&stat.operation, "chart.summary")?;
+            if let Some(g) = &s.ggplot {
+                super::ggplot_summary::validate_summary(g, limits)?;
+            }
             if s.quantiles.len() > limits.max_edges {
                 return Err(error(
                     DiagnosticCode::ResourceLimit,
@@ -99,6 +116,12 @@ pub(super) fn schema(
     limits: CompileLimits,
 ) -> ChartResult<Vec<StatColumn>> {
     validate(stat, limits)?;
+    if let StatParameters::Distribution(s) = &stat.parameters {
+        return super::distribution_stage::schema(s, data, limits);
+    }
+    if let StatParameters::Univariate(s) = &stat.parameters {
+        return super::univariate_stage::schema(s, data, limits);
+    }
     let mut fields = vec![StatColumn {
         field: StatField::Count,
         kind: GeneratedKind::UInt64,
@@ -150,12 +173,21 @@ pub(super) fn schema(
             ));
         }
     }
+    fields.extend(super::ggplot_summary::extra_schema(stat, data)?);
     let grouping = match &stat.parameters {
         StatParameters::Count(s) => &s.grouping,
         StatParameters::Summary(s) => &s.grouping,
         StatParameters::Ols(s) => &s.grouping,
         _ => unreachable!(),
     };
+    fields.push(group_column(data, grouping, limits)?);
+    Ok(fields)
+}
+pub(super) fn group_column(
+    data: &DatasetSnapshot,
+    grouping: &Grouping,
+    limits: CompileLimits,
+) -> ChartResult<StatColumn> {
     let mut catalog = std::collections::BTreeSet::new();
     for group in data.rows().filter_map(|r| group_value(r, grouping)) {
         if !catalog.contains(&group) && catalog.len() >= limits.max_groups {
@@ -186,15 +218,14 @@ pub(super) fn schema(
                 .unwrap_or(usize::MAX)
         });
     }
-    fields.push(StatColumn {
+    Ok(StatColumn {
         field: StatField::Group,
         kind: GeneratedKind::Categorical,
         nullable: false,
         space: ValueSpace::Categorical {
             categories: groups.iter().map(group_label).collect(),
         },
-    });
-    Ok(fields)
+    })
 }
 pub(super) fn group_label(group: &GroupValue) -> String {
     group.label()
@@ -272,7 +303,7 @@ fn finite(v: f64, message: &str) -> ChartResult<f64> {
         Err(error(DiagnosticCode::PrecisionLoss, message))
     }
 }
-fn quantile(values: &[f64], p: f64) -> Option<f64> {
+pub(super) fn quantile(values: &[f64], p: f64) -> Option<f64> {
     if values.is_empty() {
         return None;
     }
@@ -303,8 +334,49 @@ pub(super) fn run(
     limits: CompileLimits,
     counts: &mut PopulationCounts,
     diagnostics: &mut Vec<Diagnostic>,
+    registry: &ExtensionRegistry,
 ) -> ChartResult<(Grouping, StatSpace)> {
+    if let StatParameters::Distribution(s) = &stat.parameters {
+        return super::distribution_stage::run(
+            table,
+            data,
+            s,
+            policy,
+            scope,
+            limits,
+            counts,
+            diagnostics,
+        );
+    }
+    if let StatParameters::Univariate(s) = &stat.parameters {
+        return super::univariate_stage::run(
+            table,
+            data,
+            s,
+            policy,
+            scope,
+            limits,
+            counts,
+            diagnostics,
+            registry,
+        );
+    }
     let fields = schema(stat, data, limits)?;
+    if matches!(&stat.parameters, StatParameters::Count(s) if s.ggplot.is_some())
+        || matches!(&stat.parameters, StatParameters::Summary(s) if s.ggplot.is_some())
+    {
+        return super::ggplot_summary::run(
+            table,
+            data,
+            stat,
+            policy,
+            scope,
+            limits,
+            counts,
+            diagnostics,
+            fields,
+        );
+    }
     let PreparedRows::Source(rows) = &table.rows else {
         return Err(error(
             DiagnosticCode::SchemaConflict,
@@ -487,6 +559,9 @@ pub(super) fn run(
                         "OLS endpoint is not representable.",
                     )?;
                     output.push(StatisticalRow {
+                        outliers: vec![],
+                        retained: GroupValue::All,
+                        retained_numeric: vec![],
                         group: group.clone(),
                         count,
                         members: members.clone(),
@@ -516,6 +591,9 @@ pub(super) fn run(
             _ => unreachable!(),
         }
         output.push(StatisticalRow {
+            outliers: vec![],
+            retained: GroupValue::All,
+            retained_numeric: vec![],
             group,
             count,
             values,
@@ -554,6 +632,17 @@ pub(super) fn automatic(
             bounds = Some(bounds.map_or((v, v), |(a, b)| (a.min(v), b.max(v))));
         }
     }
+    if let Some(options) = &spec.ggplot {
+        let (lo, hi) = bounds.unwrap_or((0., 1.));
+        return Ok(BinSpec {
+            input: spec.input.clone(),
+            edges: super::ggplot_stats::automatic_edges(lo, hi, spec.bins, options)?,
+            ggplot: Some(options.clone()),
+            outliers: OutlierPolicy::Exclude,
+            grouping: spec.grouping.clone(),
+            space: spec.space.clone(),
+        });
+    }
     let (mut lo, mut hi) = bounds.unwrap_or((0., 1.));
     if lo == hi {
         let half = if lo == 0. {
@@ -583,6 +672,7 @@ pub(super) fn automatic(
         ));
     }
     Ok(BinSpec {
+        ggplot: spec.ggplot.clone(),
         input: spec.input.clone(),
         edges,
         outliers: OutlierPolicy::Exclude,

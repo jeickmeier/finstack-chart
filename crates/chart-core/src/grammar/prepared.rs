@@ -1,3 +1,4 @@
+use super::BinStatistics;
 use super::{
     ChartDefinition, Grouping, NumericTransform, OperationRef, SourceFilter, StatSpace, Style,
 };
@@ -66,6 +67,9 @@ pub enum GroupValue {
     Interaction(Vec<(crate::FieldId, GroupValue)>),
 }
 impl GroupValue {
+    pub(crate) fn is_all(&self) -> bool {
+        matches!(self, Self::All)
+    }
     /// Display label, distinct from the exact structural group identity.
     pub fn label(&self) -> String {
         match self {
@@ -183,6 +187,9 @@ pub enum GeneratedKind {
 /// Generated schema descriptor, separate from any original source schema.
 #[derive(serde::Serialize, Clone, Debug, Eq, PartialEq)]
 pub struct GeneratedField {
+    /// Missing normalized values are possible for zero total/maximum bin weights.
+    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    pub nullable: bool,
     /// Generated accessor identity.
     pub field: super::BinField,
     /// Portable physical kind.
@@ -230,6 +237,9 @@ pub struct SourceRow {
 /// Typed bin output; no source-row accessor receives this generated row.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub struct BinnedRow {
+    /// Reference weighted and normalized values, when requested by the statistic.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub statistics: Option<BinStatistics>,
     /// Left edge in the declared output space.
     pub start: f64,
     /// Right edge, final edge included by the bin computation.
@@ -398,6 +408,8 @@ pub struct DomainContributions {
 /// Portable prepared geometry, explicitly in calculation/data units, never pixels.
 #[derive(Clone, Debug, PartialEq)]
 pub enum PreparedGeometry {
+    /// Typed deferred built-in geometry with shared projection/provenance.
+    Recipe(Box<super::PreparedRecipe>),
     /// Reference point with an infinite source coordinate. These are data values,
     /// not finite scene geometry; coordinate projection must resolve both values
     /// before constructing a destination point. NaN positions are omitted earlier.

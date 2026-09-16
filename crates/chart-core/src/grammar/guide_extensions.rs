@@ -231,6 +231,15 @@ impl ExtensionRegistry {
         definition: &super::ChartDefinition,
         portable: bool,
     ) -> ChartResult<()> {
+        if let Some(call) = definition
+            .facets
+            .as_ref()
+            .and_then(|s| s.reference.as_ref())
+            .and_then(|p| p.labeller.registered.as_ref())
+        {
+            self.guides
+                .validate(&call.operation, &call.parameters, portable)?;
+        }
         for axis in &definition.axes {
             if let crate::layout::AxisScale::Binned { spec, .. } = &axis.scale
                 && let Some(call) = &spec.breaks_function

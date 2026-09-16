@@ -145,6 +145,35 @@ impl Component {
                 .shape_value(target, Mapping::Expression(expr.clone())),
         )))
     }
+    /// Attach an unnormalized recipe parameter through an owned source field.
+    pub fn recipe_value_field(
+        &self,
+        target: crate::grammar::RecipeAesthetic,
+        field: FieldHandle,
+    ) -> ChartResult<Self> {
+        let Kind::Layer(layer) = &self.0 else {
+            return Err(unsupported("recipe_value"));
+        };
+        Ok(Self(Kind::Layer(
+            layer.clone().recipe_value(target, Mapping::Handle(field)),
+        )))
+    }
+    /// Attach an unnormalized recipe parameter through a core source expression.
+    pub fn recipe_value_expression(
+        &self,
+        target: crate::grammar::RecipeAesthetic,
+        expression: &Self,
+    ) -> ChartResult<Self> {
+        let (Kind::Layer(layer), Kind::Expression(Expr::Source(expr))) = (&self.0, &expression.0)
+        else {
+            return Err(unsupported("recipe_value source expression"));
+        };
+        Ok(Self(Kind::Layer(
+            layer
+                .clone()
+                .recipe_value(target, Mapping::Expression(expr.clone())),
+        )))
+    }
     /// Attach a numeric aesthetic through a source expression without host evaluation.
     /// Attach a typed text or line-type scale through the same owner-checked core path.
     pub fn value_scale_expression(
@@ -407,6 +436,18 @@ impl Component {
             "from_theme" => Kind::Expression(Expr::Scale(from_theme(a.one()?))),
             "scale_aes" => empty!(ScaleAes, scale_aes),
             "aes" => empty!(Aes, aes),
+            "linerange" => empty!(Layer, linerange),
+            "pointrange" => empty!(Layer, pointrange),
+            "errorbar" => empty!(Layer, errorbar),
+            "crossbar" => empty!(Layer, crossbar),
+            "segment" => empty!(Layer, segment),
+            "step" => Kind::Layer(step(a.one()?)),
+            "hline" => Kind::Layer(hline(a.one()?)),
+            "vline" => Kind::Layer(vline(a.one()?)),
+            "abline" => {
+                let (slope, intercept) = a.pair()?;
+                Kind::Layer(abline(slope, intercept))
+            }
             "points" => empty!(Layer, points),
             "blank" => empty!(Layer, blank),
             "line" => empty!(Layer, line),
@@ -459,6 +500,27 @@ impl Component {
             "rectangle" => empty!(Layer, rectangle),
             "cells" => empty!(Layer, cells),
             "histogram" => empty!(Layer, histogram),
+            "boxplot" => empty!(Layer, boxplot),
+            "violin" => empty!(Layer, violin),
+            "dotplot" => empty!(Layer, dotplot),
+            "density" => empty!(Layer, density),
+            "ecdf" => empty!(Layer, ecdf),
+            "qq" => empty!(Layer, qq),
+            "qq_line" => empty!(Layer, qq_line),
+            "boxplot_stat" => empty!(Stat, boxplot_stat),
+            "violin_stat" => empty!(Stat, violin_stat),
+            "dotplot_stat" => empty!(Stat, dotplot_stat),
+            "density_stat" => empty!(Stat, density_stat),
+            "ecdf_stat" => empty!(Stat, ecdf_stat),
+            "qq_stat" => empty!(Stat, qq_stat),
+            "qq_line_stat" => empty!(Stat, qq_line_stat),
+            "unique_stat" => empty!(Stat, unique_stat),
+            "align_stat" => empty!(Stat, align_stat),
+            "function_curve" => Kind::Layer(function_curve(a.one()?)),
+            "function_stat" => Kind::Stat(function_stat(a.one()?)),
+            "distribution_stat" => Kind::Stat(distribution_stat(a.one()?)),
+            "univariate_stat" => Kind::Stat(univariate_stat(a.one()?)),
+            "connect_stat" => Kind::Stat(connect_stat(a.one()?)),
             "identity_stat" => empty!(Stat, identity_stat),
             "bin" => empty!(Stat, bin),
             "count" => empty!(Stat, count),
@@ -477,6 +539,30 @@ impl Component {
             "stack" => Kind::Position(stack(groups(a.one()?)?)),
             "shape_stack" => Kind::Position(shape_stack(groups(a.one()?)?)),
             "dodge" => Kind::Position(dodge(groups(a.one()?)?)),
+            "ggplot_stack" => {
+                a.count(0)?;
+                Kind::Position(ggplot_stack())
+            }
+            "ggplot_fill" => {
+                a.count(0)?;
+                Kind::Position(ggplot_fill())
+            }
+            "ggplot_dodge" => {
+                a.count(0)?;
+                Kind::Position(ggplot_dodge())
+            }
+            "dodge2" => {
+                a.count(0)?;
+                Kind::Position(dodge2())
+            }
+            "nudge" => {
+                a.count(2)?;
+                Kind::Position(nudge(a.at(0)?, a.at(1)?))
+            }
+            "jitter_dodge" => {
+                a.count(1)?;
+                Kind::Position(jitter_dodge(exact_u64(&a.0[0])?))
+            }
             "jitter" => {
                 a.count(1)?;
                 Kind::Position(jitter(exact_u64(&a.0[0])?))
@@ -565,6 +651,7 @@ impl Component {
         let mapping = Mapping::Handle(field);
         Ok(Self(match &self.0 {
             Kind::Layer(b) => Kind::Layer(match method {
+                "text_label" => b.clone().text_label(mapping),
                 "hierarchy_value" => b.clone().hierarchy_value(mapping),
                 "hierarchy_label" => b.clone().hierarchy_label(mapping),
                 _ => return Err(unsupported(method)),
@@ -588,6 +675,11 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Stat(b) => Kind::Stat(match method {
+                "input" => b.clone().input(mapping),
+                "weight" => b.clone().weight(mapping),
+                "bin_weight" => b.clone().bin_weight(mapping),
+                "count_weight" => b.clone().count_weight(mapping),
+                "count_partition" => b.clone().count_partition(mapping),
                 "x" => b.clone().x(mapping),
                 "y" => b.clone().y(mapping),
                 "group" => b.clone().group(mapping),

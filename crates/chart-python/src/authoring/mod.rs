@@ -165,6 +165,18 @@ impl ComponentHandle {
             .map(Self::wrap)
             .map_err(failure)
     }
+    fn recipe_value_field(&self, target: &str, field: &FieldHandle) -> PyResult<Self> {
+        self.get()?
+            .recipe_value_field(portable::decode(target).map_err(failure)?, *field.get()?)
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+    fn recipe_value_expression(&self, target: &str, input: &ComponentHandle) -> PyResult<Self> {
+        self.get()?
+            .recipe_value_expression(portable::decode(target).map_err(failure)?, input.get()?)
+            .map(Self::wrap)
+            .map_err(failure)
+    }
     fn field_parameter(&self, name: &str, field: &FieldHandle) -> PyResult<Self> {
         self.get()?
             .field_parameter(name, *field.get()?)

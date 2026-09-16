@@ -463,7 +463,11 @@ impl PlotEditBuilder {
     /// Replace wrap/grid policy using the retained default data and exact catalog rules.
     pub fn facet(self, facet: FacetBuilder) -> Self {
         self.update(|this| {
-            this.definition.facets = Some(facet.lower(&this.original.data[0])?);
+            this.definition.facets = Some(facet.lower_sources(
+                &this.original.data[0],
+                &this.original.data,
+                this.definition.profile(),
+            )?);
             Ok(())
         })
     }

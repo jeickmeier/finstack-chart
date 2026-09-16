@@ -54,14 +54,53 @@ fn statistic(
     f: &mut impl FnMut(&mut Numeric) -> ChartResult<()>,
 ) -> ChartResult<()> {
     match &mut stat.parameters {
-        StatParameters::Bin(s) => f(&mut s.input)?,
-        StatParameters::AutoBin(s) => f(&mut s.input)?,
-        StatParameters::Summary(s) => f(&mut s.input)?,
+        StatParameters::Distribution(s) => {
+            for n in s.numerics_mut() {
+                f(n)?;
+            }
+        }
+        StatParameters::Univariate(s) => {
+            for n in s.numerics_mut() {
+                f(n)?;
+            }
+        }
+        StatParameters::Bin(s) => {
+            f(&mut s.input)?;
+            if let Some(weight) = s.ggplot.as_mut().and_then(|o| o.weight.as_mut()) {
+                f(weight)?;
+            }
+        }
+        StatParameters::AutoBin(s) => {
+            f(&mut s.input)?;
+            if let Some(weight) = s.ggplot.as_mut().and_then(|o| o.weight.as_mut()) {
+                f(weight)?;
+            }
+        }
+        StatParameters::Summary(s) => {
+            f(&mut s.input)?;
+            if let Some(n) = s.ggplot.as_mut().and_then(|g| g.position.as_mut()) {
+                f(n)?;
+            }
+        }
         StatParameters::Ols(s) => {
             f(&mut s.x)?;
             f(&mut s.y)?;
         }
         StatParameters::Count(s) => {
+            if let Some(g) = &mut s.ggplot {
+                if let Some(n) = &mut g.joint_position {
+                    f(n)?;
+                }
+                for n in &mut g.joint_numeric {
+                    f(n)?;
+                }
+                if let Some(n) = &mut g.position {
+                    f(n)?;
+                }
+                if let Some(n) = &mut g.weight {
+                    f(n)?;
+                }
+            }
             for n in &mut s.required {
                 f(n)?;
             }
@@ -183,11 +222,39 @@ fn has_aes(a: &SourceAes) -> bool {
 }
 fn has_stat(s: &Statistic) -> bool {
     match &s.parameters {
-        StatParameters::Bin(s) => has_numeric(&s.input),
-        StatParameters::AutoBin(s) => has_numeric(&s.input),
-        StatParameters::Summary(s) => has_numeric(&s.input),
+        StatParameters::Bin(s) => {
+            has_numeric(&s.input)
+                || s.ggplot
+                    .as_ref()
+                    .and_then(|o| o.weight.as_ref())
+                    .is_some_and(has_numeric)
+        }
+        StatParameters::AutoBin(s) => {
+            has_numeric(&s.input)
+                || s.ggplot
+                    .as_ref()
+                    .and_then(|o| o.weight.as_ref())
+                    .is_some_and(has_numeric)
+        }
+        StatParameters::Summary(s) => {
+            has_numeric(&s.input)
+                || s.ggplot
+                    .as_ref()
+                    .and_then(|g| g.position.as_ref())
+                    .is_some_and(has_numeric)
+        }
+        StatParameters::Distribution(s) => s.numerics().any(has_numeric),
+        StatParameters::Univariate(s) => s.numerics().any(has_numeric),
         StatParameters::Ols(s) => has_numeric(&s.x) || has_numeric(&s.y),
-        StatParameters::Count(s) => s.required.iter().any(has_numeric),
+        StatParameters::Count(s) => {
+            s.required.iter().any(has_numeric)
+                || s.ggplot.as_ref().is_some_and(|g| {
+                    g.joint_numeric.iter().any(has_numeric)
+                        || g.joint_position.as_ref().is_some_and(has_numeric)
+                        || g.position.as_ref().is_some_and(has_numeric)
+                        || g.weight.as_ref().is_some_and(has_numeric)
+                })
+        }
         _ => false,
     }
 }

@@ -1,0 +1,10 @@
+# GG10 one-dimensional LOESS surfaces, uncertainty and explicit controls.
+stopifnot(as.character(getRversion())=='4.6.1',as.character(packageVersion('ggplot2'))=='4.0.3')
+x=seq(-2,2,length.out=41);y=sin(x)+.1*cos(7*x);w=1+(seq_along(x)%%3);cases=list()
+for(surface in c('interpolate','direct'))for(degree in 0:2)for(statistics in c('approximate','exact')){
+ warnings=character();c=list(surface=surface,degree=degree,statistics=statistics,span=.75,cell=.2,normalize=TRUE,family='gaussian',trace='exact');result=withCallingHandlers(tryCatch({m=loess(y~x,weights=w,degree=degree,control=loess.control(surface=surface,statistics=statistics));list(ok=TRUE,prediction=predict(m,data.frame(x=c(-3,-2,-.3,0,1.2,2,3)),se=TRUE),delta1=m$one.delta,delta2=m$two.delta,scale=m$s,trace=m$trace.hat,mean_only=predict(m,data.frame(x=c(-3,-2,-.3,0,1.2,2,3)),se=FALSE))},error=function(e)list(ok=FALSE,error=conditionMessage(e))),warning=function(e){warnings<<-c(warnings,conditionMessage(e));invokeRestart('muffleWarning')});cases[[length(cases)+1]]=list(controls=c,result=result,warnings=warnings)
+}
+for(mode in c('span-large','cell-small','trace-approx','robust-direct','normalize-false')){
+ c=list(surface=if(mode=='robust-direct')'direct'else'interpolate',degree=2,statistics='approximate',span=if(mode=='span-large')1.5 else .75,cell=if(mode=='cell-small').05 else .2,normalize=mode!='normalize-false',family=if(mode=='robust-direct')'symmetric'else'gaussian',trace=if(mode=='trace-approx')'approximate'else'exact');m=loess(y~x,weights=w,span=c$span,degree=c$degree,normalize=c$normalize,family=c$family,control=loess.control(surface=c$surface,cell=c$cell,trace.hat=c$trace));cases[[length(cases)+1]]=list(controls=c,result=list(ok=TRUE,prediction=predict(m,data.frame(x=c(-3,-2,-.3,0,1.2,2,3)),se=TRUE),delta1=m$one.delta,delta2=m$two.delta,scale=m$s,trace=m$trace.hat,mean_only=predict(m,data.frame(x=c(-3,-2,-.3,0,1.2,2,3)),se=FALSE)))
+}
+jsonlite::write_json(list(reference='R 4.6.1 stats / ggplot2 4.0.3',data=data.frame(x=x,y=y,w=w),grid=c(-3,-2,-.3,0,1.2,2,3),cases=cases),'fixtures/parity/ggplot2/loess-controls.json',auto_unbox=TRUE,digits=17,na='null',null='null')

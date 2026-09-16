@@ -55,8 +55,12 @@
 //! ```
 
 mod after_scale;
+mod ggplot_position;
 mod stack_position;
 pub use after_scale::*;
+pub use ggplot_position::{
+    DodgePreserve, GgplotDodgeSpec, GgplotStackSpec, JitterDodgeSpec, NudgeSpec,
+};
 mod colors;
 mod style_channels;
 pub use style_channels::{AestheticUnits, LineType, ValueAesthetic};
@@ -73,7 +77,12 @@ mod definition;
 mod expression;
 mod expression_stage;
 mod extensions;
+pub(crate) mod facet_policy;
 mod facets;
+pub use facet_policy::{
+    FacetAxes, FacetDirection, FacetLabelOperation, FacetLabeller, FacetPolicy, FacetSpace,
+    FacetStripPosition, FacetSwitch,
+};
 mod geometry_extensions;
 pub(crate) mod orientation;
 pub(crate) mod positions;
@@ -113,6 +122,8 @@ pub use scale_stage::*;
 pub use semantics::*;
 pub use shape_extensions::*;
 pub use statistical_types::*;
+mod ggplot_stats;
+pub use ggplot_stats::{BinClosure, BinStatistics, GgplotBinOptions};
 pub use typed::*;
 
 use crate::{Diagnostic, DiagnosticCode};
@@ -160,3 +171,49 @@ pub use transform_extensions::{
 };
 
 mod transform_resolution;
+
+mod text_geom;
+pub use text_geom::{TextFont, TextGeom, TextSizeUnit};
+
+mod ggplot_summary;
+pub use ggplot_summary::{
+    GgplotCountOptions, GgplotSummaryOptions, SummaryBins, SummaryFunction, SummaryHelper,
+    summary_values,
+};
+
+mod row_annotation;
+pub use row_annotation::{AnnotationContent, RasterAnnotation, RowAnnotation};
+
+mod ggplot_bin_training;
+
+mod recipe_types;
+pub use recipe_types::*;
+mod recipe_emit;
+mod recipe_intervals;
+mod recipe_marks;
+mod recipe_surfaces;
+pub use recipe_marks::{
+    ColumnRecipe, CountRecipe, CurveRecipe, PreparedMarkRecipe, RugRecipe, SpokeRecipe,
+};
+pub use recipe_surfaces::{PolygonRecipe, PreparedSurface, RasterRecipe, TileRecipe};
+
+mod stroke_controls;
+pub use stroke_controls::{LineEnd, LineJoin};
+
+pub(crate) mod quantile_regression;
+
+mod recipe_distributions;
+pub use recipe_distributions::{
+    AreaOutline, BoxplotRecipe, DensityRecipe, DotAxis, DotStack, DotplotRecipe,
+    PreparedDistribution, SourceBoxOutliers, ViolinRecipe,
+};
+
+pub(crate) mod distributions;
+pub use distributions::{Bandwidth, DensityControls, DensityKernel};
+mod analytic_types;
+pub use analytic_types::*;
+mod analytic_functions;
+pub use analytic_functions::CustomAnalyticFunction;
+mod distribution_stage;
+mod univariate_kernels;
+mod univariate_stage;

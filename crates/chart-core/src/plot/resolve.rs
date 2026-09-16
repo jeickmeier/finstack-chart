@@ -109,7 +109,17 @@ impl LayerContext<'_> {
             use crate::grammar::ValueAesthetic as V;
             for (target, input) in [(V::Shape, &mapping.shape), (V::LineType, &mapping.linetype)] {
                 let Some(input) = input else { continue };
-                if (target == V::Shape && layer.geom != crate::grammar::Geom::Point)
+                if (target == V::Shape
+                    && !layer.reference_point()
+                    && !matches!(
+                        layer.recipe,
+                        Some(crate::grammar::BuiltinRecipe::Interval(
+                            crate::grammar::IntervalRecipe {
+                                kind: crate::grammar::IntervalKind::PointRange,
+                                ..
+                            }
+                        ))
+                    ))
                     || (target == V::LineType
                         && matches!(
                             layer.geom,
@@ -201,11 +211,40 @@ impl LayerContext<'_> {
                     .numeric_scales
                     .insert(target, crate::grammar::NumericEncoding { id, input, scale });
             }
+            if matches!(layer.recipe, Some(crate::grammar::BuiltinRecipe::Count(_)))
+                && !builder.explicit_size
+                && !builder.explicit_radius
+                && mapping.size.is_none()
+                && !layer
+                    .numeric_scales
+                    .contains_key(&crate::grammar::NumericAesthetic::Size)
+            {
+                let input = ColorInput::Statistical(crate::grammar::StatField::WeightedCount);
+                let scale =
+                    default_numeric_scale(crate::scales::GgplotNumericPalette::Size, &input, data)?;
+                layer.numeric_scales.insert(
+                    crate::grammar::NumericAesthetic::Size,
+                    crate::grammar::NumericEncoding {
+                        id: ScaleId::new(fresh_id()?),
+                        input,
+                        scale,
+                    },
+                );
+            }
             let mut source = mapping.resolve(data)?;
             if mapping.all_groups {
                 source = source.grouped(crate::grammar::Grouping::All);
             }
-            if matches!(layer.geom, crate::grammar::Geom::Point)
+            if (layer.reference_point()
+                || matches!(
+                    layer.recipe,
+                    Some(crate::grammar::BuiltinRecipe::Interval(
+                        crate::grammar::IntervalRecipe {
+                            kind: crate::grammar::IntervalKind::PointRange,
+                            ..
+                        }
+                    ))
+                ))
                 && !builder.explicit_size
                 && !builder.explicit_radius
                 && !layer
@@ -262,7 +301,16 @@ impl LayerContext<'_> {
             }
             layer.grammar = Some(crate::grammar::LayerGrammar {
                 default_radius: builder.explicit_radius.then_some(false),
-                default_line_width: builder.explicit_line_width.then_some(false),
+                default_line_width: (builder.explicit_line_width
+                    || matches!(
+                        layer.recipe,
+                        Some(
+                            crate::grammar::BuiltinRecipe::Polygon(_)
+                                | crate::grammar::BuiltinRecipe::Tile(_)
+                                | crate::grammar::BuiltinRecipe::Raster(_)
+                        )
+                    ))
+                .then_some(false),
                 default_size: !builder.explicit_size,
                 default_color: !builder.explicit_color,
                 source,
@@ -409,7 +457,14 @@ impl LayerContext<'_> {
             } else {
                 default_color_scale()
             };
-            let input = if matches!(layer.mappings, Mappings::Source(_)) {
+            let input = if matches!(layer.mappings, Mappings::Source(_))
+                || matches!(
+                    layer.statistic.parameters,
+                    crate::grammar::StatParameters::Distribution(_)
+                        | crate::grammar::StatParameters::Univariate(_)
+                )
+                || matches!(layer.recipe, Some(crate::grammar::BuiltinRecipe::Count(_)))
+            {
                 if !scale.is_categorical() {
                     ColorInput::Numeric(color.resolve(data)?)
                 } else {
@@ -456,6 +511,67 @@ impl LayerContext<'_> {
                 layer.color = Some(encoding);
             }
         }
+        complete_count_partitions(layer);
         Ok(())
+    }
+}
+
+/// StatSum partitions the mapped input values, independently of its normalization group.
+fn complete_count_partitions(layer: &mut crate::grammar::Layer) {
+    use crate::grammar::{ColorInput, Numeric, StatParameters};
+    let mut fields = std::collections::BTreeSet::new();
+    let mut numeric = Vec::new();
+    let inputs = layer
+        .color
+        .iter()
+        .map(|e| &e.input)
+        .chain(layer.paint_scales.values().map(|e| &e.input))
+        .chain(layer.numeric_scales.values().map(|e| &e.input))
+        .chain(layer.value_scales.values().map(|e| &e.input))
+        .chain(layer.symbol.iter().map(|e| &e.input))
+        .chain(layer.recipe_aes.values());
+    for input in inputs {
+        match input {
+            ColorInput::Category(field) => {
+                fields.insert(*field);
+            }
+            ColorInput::Numeric(
+                Numeric::Field(field) | Numeric::Category(field) | Numeric::Timestamp { field, .. },
+            ) => {
+                fields.insert(*field);
+            }
+            ColorInput::Numeric(value @ (Numeric::Expression(_) | Numeric::Scaled { .. }))
+                if !numeric.contains(value) =>
+            {
+                numeric.push(value.clone());
+            }
+            _ => {}
+        }
+    }
+    match &mut layer.statistic.parameters {
+        StatParameters::Distribution(spec) => {
+            spec.retained_fields = fields.iter().copied().collect();
+            spec.retained_numeric = numeric.clone();
+        }
+        StatParameters::Univariate(spec) => {
+            spec.retained_fields = fields.iter().copied().collect();
+            spec.retained_numeric = numeric.clone();
+        }
+        _ => {}
+    }
+    if let StatParameters::Count(count) = &mut layer.statistic.parameters
+        && let Some(options) = &mut count.ggplot
+        && options.joint_position.is_some()
+    {
+        for field in fields {
+            if !options.joint_aesthetics.contains(&field) {
+                options.joint_aesthetics.push(field);
+            }
+        }
+        for value in numeric {
+            if !options.joint_numeric.contains(&value) {
+                options.joint_numeric.push(value);
+            }
+        }
     }
 }

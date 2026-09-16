@@ -122,6 +122,7 @@ fn fixture() -> DataStore {
 }
 fn specification() -> FacetSpec {
     FacetSpec {
+        reference: None,
         fields: vec![F],
         order: vec![key("B"), key("A")],
         layout: FacetLayout::Wrap { columns: 2 },

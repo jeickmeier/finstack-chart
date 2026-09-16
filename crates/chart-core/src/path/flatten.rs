@@ -198,13 +198,26 @@ impl FlattenedPath {
     /// Test nonzero fill and/or butt-cap, miter-join (limit 4) stroke of the approximation.
     /// Queries within max_error of a boundary have the declared flattening uncertainty.
     pub fn contains(&self, p: Point, fill: bool, stroke_width: Option<f64>) -> bool {
+        self.contains_with_rule(p, fill, stroke_width, crate::scene::FillRule::NonZero)
+    }
+    /// Test an explicit compound-path fill rule and the same stroke contract.
+    pub fn contains_with_rule(
+        &self,
+        p: Point,
+        fill: bool,
+        stroke_width: Option<f64>,
+        rule: crate::scene::FillRule,
+    ) -> bool {
+        let winding = self
+            .subpaths
+            .iter()
+            .map(|s| winding(&s.points, p))
+            .sum::<i64>();
         if fill
-            && self
-                .subpaths
-                .iter()
-                .map(|s| winding(&s.points, p))
-                .sum::<i64>()
-                != 0
+            && match rule {
+                crate::scene::FillRule::NonZero => winding != 0,
+                crate::scene::FillRule::EvenOdd => winding % 2 != 0,
+            }
         {
             return true;
         }

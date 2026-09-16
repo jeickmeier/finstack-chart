@@ -1,0 +1,7981 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "ordinary",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        1.00000001,
+        2.00000001,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 3,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0.375,
+          "ncount": 0.75,
+          "ndensity": 0.75
+        },
+        {
+          "count": 4,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0.5,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0.0625,
+          "ncount": 0.25,
+          "ndensity": 0.125
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "ordinary",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.750000015,
+        2.250000015,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": 3,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": 0.25,
+          "ncount": 0.75,
+          "ndensity": 0.75
+        },
+        {
+          "count": 4,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": 0.333333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": 0.0833333333333333,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "ordinary",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3750000075,
+        1.1250000075,
+        1.8750000075,
+        2.6250000075,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 2,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 0.333333333333333,
+          "ncount": 0.5,
+          "ndensity": 0.5
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "ordinary",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6250000075,
+        1.3750000075,
+        2.1250000075,
+        2.8750000075,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": 3,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": 0.5,
+          "ncount": 0.75,
+          "ndensity": 0.75
+        },
+        {
+          "count": 0,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "ordinary",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2500000075,
+        1.0000000075,
+        1.7500000075,
+        2.5000000075,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 2,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 0.333333333333333,
+          "ncount": 0.5,
+          "ndensity": 0.5
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "boundary",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        1.00000001,
+        2.00000001,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 7,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0.875,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.142857142857143,
+          "ndensity": 0.142857142857143
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "boundary",
+      "mode": "bins",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.5,
+        1.5,
+        2.5
+      ],
+      "fuzzy": [
+        -0.50000001,
+        0.50000001,
+        1.50000001,
+        2.50000001
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.5,
+          "xmax": 0.5,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 1,
+          "xmin": 0.5,
+          "xmax": 1.5,
+          "width": 1,
+          "density": 0.75,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 2,
+          "xmin": 1.5,
+          "xmax": 2.5,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "boundary",
+      "mode": "width",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3750000075,
+        1.1250000075,
+        1.8750000075,
+        2.6250000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "boundary",
+      "mode": "center",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6250000075,
+        1.3750000075,
+        2.1250000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "boundary",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2500000075,
+        1.0000000075,
+        1.7500000075,
+        2.5000000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "constant",
+      "mode": "explicit",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        1.00000001,
+        2.00000001,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 8,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "constant",
+      "mode": "bins",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.95,
+        1.05
+      ],
+      "fuzzy": [
+        0.949999999,
+        1.050000001
+      ],
+      "result": [
+        {
+          "count": 8,
+          "x": 1,
+          "xmin": 0.95,
+          "xmax": 1.05,
+          "width": 0.1,
+          "density": 10,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "constant",
+      "mode": "width",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.375,
+        1.125
+      ],
+      "fuzzy": [
+        0.3749999925,
+        1.1250000075
+      ],
+      "result": [
+        {
+          "count": 8,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "constant",
+      "mode": "center",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.625,
+        1.375
+      ],
+      "fuzzy": [
+        0.6249999925,
+        1.3750000075
+      ],
+      "result": [
+        {
+          "count": 8,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "constant",
+      "mode": "boundary",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        1,
+        1.75
+      ],
+      "fuzzy": [
+        0.9999999925,
+        1.7500000075
+      ],
+      "result": [
+        {
+          "count": 8,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "signed",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        1.00000001,
+        2.00000001,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 2,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0.181818181818182,
+          "ncount": 0.4,
+          "ndensity": 0.5
+        },
+        {
+          "count": -4,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": -0.363636363636364,
+          "ncount": -0.8,
+          "ndensity": -1
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0.227272727272727,
+          "ncount": 1,
+          "ndensity": 0.625
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "signed",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.750000015,
+        2.250000015,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": -1,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": -0.0952380952380952,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": -1,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": -0.0952380952380952,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": 0.476190476190476,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "signed",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3750000075,
+        1.1250000075,
+        1.8750000075,
+        2.6250000075,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 1,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": -4,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": -0.484848484848485,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": 0.606060606060606,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "signed",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6250000075,
+        1.3750000075,
+        2.1250000075,
+        2.8750000075,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": -1,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": -0.102564102564103,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": 3,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 0.307692307692308,
+          "ncount": 0.6,
+          "ndensity": 0.6
+        },
+        {
+          "count": -4,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": -0.41025641025641,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 5,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": 0.512820512820513,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "signed",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2500000075,
+        1.0000000075,
+        1.7500000075,
+        2.5000000075,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 1,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": -4,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": -0.484848484848485,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 5,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": 0.606060606060606,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "zero",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        1.00000001,
+        2.00000001,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "zero",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.750000015,
+        2.250000015,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "zero",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3750000075,
+        1.1250000075,
+        1.8750000075,
+        2.6250000075,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "zero",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6250000075,
+        1.3750000075,
+        2.1250000075,
+        2.8750000075,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": false,
+      "population": "zero",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2500000075,
+        1.0000000075,
+        1.7500000075,
+        2.5000000075,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "ordinary",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        1.00000001,
+        2.00000001,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -1,
+          "xmax": 0,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 3,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0.375,
+          "ncount": 0.75,
+          "ndensity": 0.75
+        },
+        {
+          "count": 4,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0.5,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0.0625,
+          "ncount": 0.25,
+          "ndensity": 0.125
+        },
+        {
+          "count": 0,
+          "x": 5,
+          "xmin": 4,
+          "xmax": 6,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "ordinary",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.750000015,
+        2.250000015,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -1.5,
+          "xmin": -2.25,
+          "xmax": -0.75,
+          "width": 1.5,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 3,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": 0.25,
+          "ncount": 0.75,
+          "ndensity": 0.75
+        },
+        {
+          "count": 4,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": 0.333333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": 0.0833333333333333,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 0,
+          "x": 4.5,
+          "xmin": 3.75,
+          "xmax": 5.25,
+          "width": 1.5,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "ordinary",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3750000075,
+        1.1250000075,
+        1.8750000075,
+        2.6250000075,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.75,
+          "xmin": -1.125,
+          "xmax": -0.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 2,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 0.333333333333333,
+          "ncount": 0.5,
+          "ndensity": 0.5
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 0,
+          "x": 3.75,
+          "xmin": 3.375,
+          "xmax": 4.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "ordinary",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6250000075,
+        1.3750000075,
+        2.1250000075,
+        2.8750000075,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -0.875,
+          "xmax": -0.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 3,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": 0.5,
+          "ncount": 0.75,
+          "ndensity": 0.75
+        },
+        {
+          "count": 0,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 0,
+          "x": 4,
+          "xmin": 3.625,
+          "xmax": 4.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "ordinary",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2500000075,
+        1.0000000075,
+        1.7500000075,
+        2.5000000075,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.875,
+          "xmin": -1.25,
+          "xmax": -0.5,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 2,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 0.333333333333333,
+          "ncount": 0.5,
+          "ndensity": 0.5
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 0,
+          "x": 3.625,
+          "xmin": 3.25,
+          "xmax": 4,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "boundary",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        1.00000001,
+        2.00000001,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -1,
+          "xmax": 0,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 7,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0.875,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.142857142857143,
+          "ndensity": 0.142857142857143
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 0,
+          "x": 5,
+          "xmin": 4,
+          "xmax": 6,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "boundary",
+      "mode": "bins",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.5,
+        1.5,
+        2.5
+      ],
+      "fuzzy": [
+        -0.50000001,
+        0.50000001,
+        1.50000001,
+        2.50000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -1,
+          "xmin": -1.5,
+          "xmax": -0.5,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.5,
+          "xmax": 0.5,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 1,
+          "xmin": 0.5,
+          "xmax": 1.5,
+          "width": 1,
+          "density": 0.75,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 2,
+          "xmin": 1.5,
+          "xmax": 2.5,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.5,
+          "xmax": 3.5,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "boundary",
+      "mode": "width",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3750000075,
+        1.1250000075,
+        1.8750000075,
+        2.6250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.75,
+          "xmin": -1.125,
+          "xmax": -0.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "boundary",
+      "mode": "center",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6250000075,
+        1.3750000075,
+        2.1250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -0.875,
+          "xmax": -0.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "boundary",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2500000075,
+        1.0000000075,
+        1.7500000075,
+        2.5000000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.875,
+          "xmin": -1.25,
+          "xmax": -0.5,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 0,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "constant",
+      "mode": "explicit",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        1.00000001,
+        2.00000001,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -1,
+          "xmax": 0,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 8,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 0,
+          "x": 5,
+          "xmin": 4,
+          "xmax": 6,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "constant",
+      "mode": "bins",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.95,
+        1.05
+      ],
+      "fuzzy": [
+        0.949999999,
+        1.050000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0.9,
+          "xmin": 0.85,
+          "xmax": 0.95,
+          "width": 0.1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 8,
+          "x": 1,
+          "xmin": 0.95,
+          "xmax": 1.05,
+          "width": 0.1,
+          "density": 10,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.1,
+          "xmin": 1.05,
+          "xmax": 1.15,
+          "width": 0.1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "constant",
+      "mode": "width",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.375,
+        1.125
+      ],
+      "fuzzy": [
+        0.3749999925,
+        1.1250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 8,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "constant",
+      "mode": "center",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.625,
+        1.375
+      ],
+      "fuzzy": [
+        0.6249999925,
+        1.3750000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 8,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "constant",
+      "mode": "boundary",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        1,
+        1.75
+      ],
+      "fuzzy": [
+        0.9999999925,
+        1.7500000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 8,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "signed",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        1.00000001,
+        2.00000001,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -1,
+          "xmax": 0,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 2,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0.181818181818182,
+          "ncount": 0.4,
+          "ndensity": 0.5
+        },
+        {
+          "count": -4,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": -0.363636363636364,
+          "ncount": -0.8,
+          "ndensity": -1
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0.227272727272727,
+          "ncount": 1,
+          "ndensity": 0.625
+        },
+        {
+          "count": 0,
+          "x": 5,
+          "xmin": 4,
+          "xmax": 6,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "signed",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.750000015,
+        2.250000015,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -1.5,
+          "xmin": -2.25,
+          "xmax": -0.75,
+          "width": 1.5,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": -1,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": -0.0952380952380952,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": -1,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": -0.0952380952380952,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": 0.476190476190476,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 4.5,
+          "xmin": 3.75,
+          "xmax": 5.25,
+          "width": 1.5,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "signed",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3750000075,
+        1.1250000075,
+        1.8750000075,
+        2.6250000075,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.75,
+          "xmin": -1.125,
+          "xmax": -0.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 1,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": -4,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": -0.484848484848485,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": 0.606060606060606,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 3.75,
+          "xmin": 3.375,
+          "xmax": 4.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "signed",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6250000075,
+        1.3750000075,
+        2.1250000075,
+        2.8750000075,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -0.875,
+          "xmax": -0.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": -1,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": -0.102564102564103,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": 3,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 0.307692307692308,
+          "ncount": 0.6,
+          "ndensity": 0.6
+        },
+        {
+          "count": -4,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": -0.41025641025641,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 5,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": 0.512820512820513,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 4,
+          "xmin": 3.625,
+          "xmax": 4.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "signed",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2500000075,
+        1.0000000075,
+        1.7500000075,
+        2.5000000075,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.875,
+          "xmin": -1.25,
+          "xmax": -0.5,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 1,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": -4,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": -0.484848484848485,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 5,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": 0.606060606060606,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 3.625,
+          "xmin": 3.25,
+          "xmax": 4,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "zero",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        1.00000001,
+        2.00000001,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -1,
+          "xmax": 0,
+          "width": 1,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 5,
+          "xmin": 4,
+          "xmax": 6,
+          "width": 2,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "zero",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.750000015,
+        2.250000015,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -1.5,
+          "xmin": -2.25,
+          "xmax": -0.75,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 4.5,
+          "xmin": 3.75,
+          "xmax": 5.25,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "zero",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3750000075,
+        1.1250000075,
+        1.8750000075,
+        2.6250000075,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.75,
+          "xmin": -1.125,
+          "xmax": -0.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3.75,
+          "xmin": 3.375,
+          "xmax": 4.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "zero",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6250000075,
+        1.3750000075,
+        2.1250000075,
+        2.8750000075,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -0.875,
+          "xmax": -0.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 4,
+          "xmin": 3.625,
+          "xmax": 4.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "right",
+      "pad": true,
+      "population": "zero",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2500000075,
+        1.0000000075,
+        1.7500000075,
+        2.5000000075,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.875,
+          "xmin": -1.25,
+          "xmax": -0.5,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3.625,
+          "xmin": 3.25,
+          "xmax": 4,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "ordinary",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        0.99999999,
+        1.99999999,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 3,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0.375,
+          "ncount": 0.6,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0.3125,
+          "ncount": 1,
+          "ndensity": 0.833333333333333
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "ordinary",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.749999985,
+        2.249999985,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": 3,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": 0.25,
+          "ncount": 0.75,
+          "ndensity": 0.75
+        },
+        {
+          "count": 4,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": 0.333333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": 0.0833333333333333,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "ordinary",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3749999925,
+        1.1249999925,
+        1.8749999925,
+        2.6249999925,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 2,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 0.333333333333333,
+          "ncount": 0.5,
+          "ndensity": 0.5
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "ordinary",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6249999925,
+        1.3749999925,
+        2.1249999925,
+        2.8749999925,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": 3,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": 0.5,
+          "ncount": 0.75,
+          "ndensity": 0.75
+        },
+        {
+          "count": 0,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "ordinary",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2499999925,
+        0.9999999925,
+        1.7499999925,
+        2.4999999925,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 2,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 0.333333333333333,
+          "ncount": 0.5,
+          "ndensity": 0.5
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "boundary",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        0.99999999,
+        1.99999999,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0.75,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0.0625,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.0833333333333333
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "boundary",
+      "mode": "bins",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.5,
+        1.5,
+        2.5
+      ],
+      "fuzzy": [
+        -0.50000001,
+        0.49999999,
+        1.49999999,
+        2.50000001
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.5,
+          "xmax": 0.5,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 1,
+          "xmin": 0.5,
+          "xmax": 1.5,
+          "width": 1,
+          "density": 0.75,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 2,
+          "xmin": 1.5,
+          "xmax": 2.5,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "boundary",
+      "mode": "width",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3749999925,
+        1.1249999925,
+        1.8749999925,
+        2.6250000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "boundary",
+      "mode": "center",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6249999925,
+        1.3749999925,
+        2.1250000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "boundary",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2499999925,
+        0.9999999925,
+        1.7499999925,
+        2.5000000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 0,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 6,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "constant",
+      "mode": "explicit",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        0.99999999,
+        1.99999999,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 8,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "constant",
+      "mode": "bins",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.95,
+        1.05
+      ],
+      "fuzzy": [
+        0.949999999,
+        1.050000001
+      ],
+      "result": [
+        {
+          "count": 8,
+          "x": 1,
+          "xmin": 0.95,
+          "xmax": 1.05,
+          "width": 0.1,
+          "density": 10,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "constant",
+      "mode": "width",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.375,
+        1.125
+      ],
+      "fuzzy": [
+        0.3749999925,
+        1.1250000075
+      ],
+      "result": [
+        {
+          "count": 8,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "constant",
+      "mode": "center",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.625,
+        1.375
+      ],
+      "fuzzy": [
+        0.6249999925,
+        1.3750000075
+      ],
+      "result": [
+        {
+          "count": 8,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "constant",
+      "mode": "boundary",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        1,
+        1.75
+      ],
+      "fuzzy": [
+        0.9999999925,
+        1.7500000075
+      ],
+      "result": [
+        {
+          "count": 8,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "signed",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        0.99999999,
+        1.99999999,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": -1,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": -0.2,
+          "ncount": -0.333333333333333,
+          "ndensity": -0.333333333333333
+        },
+        {
+          "count": 3,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0.6,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0.1,
+          "ncount": 0.333333333333333,
+          "ndensity": 0.166666666666667
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "signed",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.749999985,
+        2.249999985,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": -1,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": -0.0952380952380952,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": -1,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": -0.0952380952380952,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": 0.476190476190476,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "signed",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3749999925,
+        1.1249999925,
+        1.8749999925,
+        2.6249999925,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 1,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": -4,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": -0.484848484848485,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": 0.606060606060606,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "signed",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6249999925,
+        1.3749999925,
+        2.1249999925,
+        2.8749999925,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": -1,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": -0.102564102564103,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": 3,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 0.307692307692308,
+          "ncount": 0.6,
+          "ndensity": 0.6
+        },
+        {
+          "count": -4,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": -0.41025641025641,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 5,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": 0.512820512820513,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "signed",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2499999925,
+        0.9999999925,
+        1.7499999925,
+        2.4999999925,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.0888888888888889,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": -2,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": -0.177777777777778,
+          "ncount": -0.4,
+          "ndensity": -0.4
+        },
+        {
+          "count": 3,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 0.266666666666667,
+          "ncount": 0.6,
+          "ndensity": 0.6
+        },
+        {
+          "count": -4,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": -0.355555555555556,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 5,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": 0.444444444444444,
+          "ncount": 1,
+          "ndensity": 1
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "zero",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        0.99999999,
+        1.99999999,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "zero",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.749999985,
+        2.249999985,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "zero",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3749999925,
+        1.1249999925,
+        1.8749999925,
+        2.6249999925,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "zero",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6249999925,
+        1.3749999925,
+        2.1249999925,
+        2.8749999925,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": false,
+      "population": "zero",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2499999925,
+        0.9999999925,
+        1.7499999925,
+        2.4999999925,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "ordinary",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        0.99999999,
+        1.99999999,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -1,
+          "xmax": 0,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 3,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0.375,
+          "ncount": 0.6,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0.3125,
+          "ncount": 1,
+          "ndensity": 0.833333333333333
+        },
+        {
+          "count": 0,
+          "x": 5,
+          "xmin": 4,
+          "xmax": 6,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "ordinary",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.749999985,
+        2.249999985,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -1.5,
+          "xmin": -2.25,
+          "xmax": -0.75,
+          "width": 1.5,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 3,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": 0.25,
+          "ncount": 0.75,
+          "ndensity": 0.75
+        },
+        {
+          "count": 4,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": 0.333333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": 0.0833333333333333,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 0,
+          "x": 4.5,
+          "xmin": 3.75,
+          "xmax": 5.25,
+          "width": 1.5,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "ordinary",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3749999925,
+        1.1249999925,
+        1.8749999925,
+        2.6249999925,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.75,
+          "xmin": -1.125,
+          "xmax": -0.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 2,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 0.333333333333333,
+          "ncount": 0.5,
+          "ndensity": 0.5
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 0,
+          "x": 3.75,
+          "xmin": 3.375,
+          "xmax": 4.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "ordinary",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6249999925,
+        1.3749999925,
+        2.1249999925,
+        2.8749999925,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -0.875,
+          "xmax": -0.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 3,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": 0.5,
+          "ncount": 0.75,
+          "ndensity": 0.75
+        },
+        {
+          "count": 0,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 0,
+          "x": 4,
+          "xmin": 3.625,
+          "xmax": 4.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "ordinary",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2499999925,
+        0.9999999925,
+        1.7499999925,
+        2.4999999925,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.875,
+          "xmin": -1.25,
+          "xmax": -0.5,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 2,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 0.333333333333333,
+          "ncount": 0.5,
+          "ndensity": 0.5
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 4,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": 0.666666666666667,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.25,
+          "ndensity": 0.25
+        },
+        {
+          "count": 0,
+          "x": 3.625,
+          "xmin": 3.25,
+          "xmax": 4,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "boundary",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        0.99999999,
+        1.99999999,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -1,
+          "xmax": 0,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0.75,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0.0625,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.0833333333333333
+        },
+        {
+          "count": 0,
+          "x": 5,
+          "xmin": 4,
+          "xmax": 6,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "boundary",
+      "mode": "bins",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.5,
+        1.5,
+        2.5
+      ],
+      "fuzzy": [
+        -0.50000001,
+        0.49999999,
+        1.49999999,
+        2.50000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -1,
+          "xmin": -1.5,
+          "xmax": -0.5,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.5,
+          "xmax": 0.5,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 1,
+          "xmin": 0.5,
+          "xmax": 1.5,
+          "width": 1,
+          "density": 0.75,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 2,
+          "xmin": 1.5,
+          "xmax": 2.5,
+          "width": 1,
+          "density": 0.125,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.5,
+          "xmax": 3.5,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "boundary",
+      "mode": "width",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3749999925,
+        1.1249999925,
+        1.8749999925,
+        2.6250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.75,
+          "xmin": -1.125,
+          "xmax": -0.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "boundary",
+      "mode": "center",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6249999925,
+        1.3749999925,
+        2.1250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -0.875,
+          "xmax": -0.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 6,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "boundary",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.999999999,
+        1,
+        1.000000001,
+        2
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2499999925,
+        0.9999999925,
+        1.7499999925,
+        2.5000000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.875,
+          "xmin": -1.25,
+          "xmax": -0.5,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 0,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 6,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": 0.166666666666667,
+          "ncount": 0.166666666666667,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 0,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "constant",
+      "mode": "explicit",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        0.99999999,
+        1.99999999,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -1,
+          "xmax": 0,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 0,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 8,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 1,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 0,
+          "x": 5,
+          "xmin": 4,
+          "xmax": 6,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "constant",
+      "mode": "bins",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.95,
+        1.05
+      ],
+      "fuzzy": [
+        0.949999999,
+        1.050000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0.9,
+          "xmin": 0.85,
+          "xmax": 0.95,
+          "width": 0.1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 8,
+          "x": 1,
+          "xmin": 0.95,
+          "xmax": 1.05,
+          "width": 0.1,
+          "density": 10,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.1,
+          "xmin": 1.05,
+          "xmax": 1.15,
+          "width": 0.1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "constant",
+      "mode": "width",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.375,
+        1.125
+      ],
+      "fuzzy": [
+        0.3749999925,
+        1.1250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 8,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "constant",
+      "mode": "center",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        0.625,
+        1.375
+      ],
+      "fuzzy": [
+        0.6249999925,
+        1.3750000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 8,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "constant",
+      "mode": "boundary",
+      "input": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "weight": [
+        1,
+        2,
+        0,
+        4,
+        1
+      ],
+      "breaks": [
+        1,
+        1.75
+      ],
+      "fuzzy": [
+        0.9999999925,
+        1.7500000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 8,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 1.33333333333333,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "signed",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        0.99999999,
+        1.99999999,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -1,
+          "xmax": 0,
+          "width": 1,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": -1,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": -0.2,
+          "ncount": -0.333333333333333,
+          "ndensity": -0.333333333333333
+        },
+        {
+          "count": 3,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": 0.6,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 1,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": 0.1,
+          "ncount": 0.333333333333333,
+          "ndensity": 0.166666666666667
+        },
+        {
+          "count": 0,
+          "x": 5,
+          "xmin": 4,
+          "xmax": 6,
+          "width": 2,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "signed",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.749999985,
+        2.249999985,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -1.5,
+          "xmin": -2.25,
+          "xmax": -0.75,
+          "width": 1.5,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": -1,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": -0.0952380952380952,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": -1,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": -0.0952380952380952,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": 0.476190476190476,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 4.5,
+          "xmin": 3.75,
+          "xmax": 5.25,
+          "width": 1.5,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "signed",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3749999925,
+        1.1249999925,
+        1.8749999925,
+        2.6249999925,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.75,
+          "xmin": -1.125,
+          "xmax": -0.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 1,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": 0.121212121212121,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": -4,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": -0.484848484848485,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 5,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": 0.606060606060606,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 3.75,
+          "xmin": 3.375,
+          "xmax": 4.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "signed",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6249999925,
+        1.3749999925,
+        2.1249999925,
+        2.8749999925,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -0.875,
+          "xmax": -0.125,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": -1,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": -0.102564102564103,
+          "ncount": -0.2,
+          "ndensity": -0.2
+        },
+        {
+          "count": 3,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": 0.307692307692308,
+          "ncount": 0.6,
+          "ndensity": 0.6
+        },
+        {
+          "count": -4,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": -0.41025641025641,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 5,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": 0.512820512820513,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 4,
+          "xmin": 3.625,
+          "xmax": 4.375,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "signed",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        1,
+        -2,
+        3,
+        -4,
+        5
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2499999925,
+        0.9999999925,
+        1.7499999925,
+        2.4999999925,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.875,
+          "xmin": -1.25,
+          "xmax": -0.5,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        },
+        {
+          "count": 1,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": 0.0888888888888889,
+          "ncount": 0.2,
+          "ndensity": 0.2
+        },
+        {
+          "count": -2,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": -0.177777777777778,
+          "ncount": -0.4,
+          "ndensity": -0.4
+        },
+        {
+          "count": 3,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": 0.266666666666667,
+          "ncount": 0.6,
+          "ndensity": 0.6
+        },
+        {
+          "count": -4,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": -0.355555555555556,
+          "ncount": -0.8,
+          "ndensity": -0.8
+        },
+        {
+          "count": 5,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": 0.444444444444444,
+          "ncount": 1,
+          "ndensity": 1
+        },
+        {
+          "count": 0,
+          "x": 3.625,
+          "xmin": 3.25,
+          "xmax": 4,
+          "width": 0.75,
+          "density": 0,
+          "ncount": 0,
+          "ndensity": 0
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "zero",
+      "mode": "explicit",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "fuzzy": [
+        -1e-08,
+        0.99999999,
+        1.99999999,
+        4.00000001
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -1,
+          "xmax": 0,
+          "width": 1,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.5,
+          "xmin": 0,
+          "xmax": 1,
+          "width": 1,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1,
+          "xmax": 2,
+          "width": 1,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2,
+          "xmax": 4,
+          "width": 2,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 5,
+          "xmin": 4,
+          "xmax": 6,
+          "width": 2,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "zero",
+      "mode": "bins",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.75,
+        0.75,
+        2.25,
+        3.75
+      ],
+      "fuzzy": [
+        -0.750000015,
+        0.749999985,
+        2.249999985,
+        3.750000015
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -1.5,
+          "xmin": -2.25,
+          "xmax": -0.75,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0,
+          "xmin": -0.75,
+          "xmax": 0.75,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 0.75,
+          "xmax": 2.25,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.25,
+          "xmax": 3.75,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 4.5,
+          "xmin": 3.75,
+          "xmax": 5.25,
+          "width": 1.5,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "zero",
+      "mode": "width",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.375,
+        0.375,
+        1.125,
+        1.875,
+        2.625,
+        3.375
+      ],
+      "fuzzy": [
+        -0.3750000075,
+        0.3749999925,
+        1.1249999925,
+        1.8749999925,
+        2.6249999925,
+        3.3750000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.75,
+          "xmin": -1.125,
+          "xmax": -0.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0,
+          "xmin": -0.375,
+          "xmax": 0.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.75,
+          "xmin": 0.375,
+          "xmax": 1.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.5,
+          "xmin": 1.125,
+          "xmax": 1.875,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.25,
+          "xmin": 1.875,
+          "xmax": 2.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3,
+          "xmin": 2.625,
+          "xmax": 3.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3.75,
+          "xmin": 3.375,
+          "xmax": 4.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "zero",
+      "mode": "center",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.125,
+        0.625,
+        1.375,
+        2.125,
+        2.875,
+        3.625
+      ],
+      "fuzzy": [
+        -0.1250000075,
+        0.6249999925,
+        1.3749999925,
+        2.1249999925,
+        2.8749999925,
+        3.6250000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.5,
+          "xmin": -0.875,
+          "xmax": -0.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.25,
+          "xmin": -0.125,
+          "xmax": 0.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1,
+          "xmin": 0.625,
+          "xmax": 1.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.75,
+          "xmin": 1.375,
+          "xmax": 2.125,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.5,
+          "xmin": 2.125,
+          "xmax": 2.875,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3.25,
+          "xmin": 2.875,
+          "xmax": 3.625,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 4,
+          "xmin": 3.625,
+          "xmax": 4.375,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    },
+    {
+      "closed": "left",
+      "pad": true,
+      "population": "zero",
+      "mode": "boundary",
+      "input": [
+        0,
+        0.5,
+        1,
+        2,
+        3
+      ],
+      "weight": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "breaks": [
+        -0.5,
+        0.25,
+        1,
+        1.75,
+        2.5,
+        3.25
+      ],
+      "fuzzy": [
+        -0.5000000075,
+        0.2499999925,
+        0.9999999925,
+        1.7499999925,
+        2.4999999925,
+        3.2500000075
+      ],
+      "result": [
+        {
+          "count": 0,
+          "x": -0.875,
+          "xmin": -1.25,
+          "xmax": -0.5,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": -0.125,
+          "xmin": -0.5,
+          "xmax": 0.25,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 0.625,
+          "xmin": 0.25,
+          "xmax": 1,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 1.375,
+          "xmin": 1,
+          "xmax": 1.75,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.125,
+          "xmin": 1.75,
+          "xmax": 2.5,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 2.875,
+          "xmin": 2.5,
+          "xmax": 3.25,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        },
+        {
+          "count": 0,
+          "x": 3.625,
+          "xmin": 3.25,
+          "xmax": 4,
+          "width": 0.75,
+          "density": null,
+          "ncount": null,
+          "ndensity": null
+        }
+      ]
+    }
+  ]
+}

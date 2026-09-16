@@ -76,7 +76,7 @@ fn key_groups_place_inside_and_on_every_side_and_roundtrip() {
                 let wire = p.to_json().unwrap();
                 assert_eq!(
                     serde_json::from_str::<serde_json::Value>(&wire).unwrap()["version"],
-                    69
+                    if facet == "single" { 69 } else { 76 }
                 );
                 let restored = Plot::from_json(&wire).unwrap();
                 let a =

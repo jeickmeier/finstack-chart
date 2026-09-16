@@ -1,8 +1,12 @@
+use super::GgplotBinOptions;
 use super::RadialParameters;
 use super::{
     AutoBinSpec, CountSpec, DodgeSpec, JitterSpec, OlsSpec, ShapeStackSpec, StackSpec, StatAes,
     SummarySpec,
 };
+use super::{DistributionSpec, UnivariateSpec};
+use super::{ExpressionNode, StatField, StatNumeric};
+use super::{GgplotDodgeSpec, GgplotStackSpec, JitterDodgeSpec, NudgeSpec};
 use crate::data::InvalidPolicy;
 use crate::scene::Color;
 use crate::{DatasetId, FieldId, LayerId, Revision, ScaleId, TransformId};
@@ -169,6 +173,9 @@ pub enum OutlierPolicy {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct BinSpec {
+    /// Reference bin controls; absent preserves the legacy closure and schema.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ggplot: Option<GgplotBinOptions>,
     /// Required source channel.
     pub input: Numeric,
     /// At least two finite strictly increasing edges in the declared calculation space.
@@ -184,6 +191,7 @@ impl BinSpec {
     /// Whole-population source-space histogram with explicit edges and reported outliers.
     pub fn new(input: impl Into<Numeric>, edges: Vec<f64>) -> Self {
         Self {
+            ggplot: None,
             input: input.into(),
             edges,
             outliers: OutlierPolicy::Exclude,
@@ -197,6 +205,10 @@ impl BinSpec {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum StatParameters {
+    /// Built-in boxplot, KDE, violin and dotplot operations.
+    Distribution(DistributionSpec),
+    /// Built-in ECDF, QQ, sampled function and one-dimensional helpers.
+    Univariate(UnivariateSpec),
     /// Parameters for an explicitly registered custom statistic.
     Custom(super::ExtensionParameters),
     /// Preserve source or already-generated rows/provenance.
@@ -229,17 +241,35 @@ impl Statistic {
         }
         let staged = |n: &Numeric| matches!(n, Numeric::Scaled { .. } | Numeric::Expression(_));
         match &self.parameters {
+            StatParameters::Distribution(s) => s.numerics().any(staged),
+            StatParameters::Univariate(s) => s.numerics().any(staged),
             StatParameters::Bin(s) => staged(&s.input),
             StatParameters::AutoBin(s) => staged(&s.input),
-            StatParameters::Summary(s) => staged(&s.input),
+            StatParameters::Summary(s) => {
+                staged(&s.input)
+                    || s.ggplot
+                        .as_ref()
+                        .and_then(|g| g.position.as_ref())
+                        .is_some_and(staged)
+            }
             StatParameters::Ols(s) => staged(&s.x) || staged(&s.y),
-            StatParameters::Count(s) => s.required.iter().any(staged),
+            StatParameters::Count(s) => {
+                s.required.iter().any(staged)
+                    || s.ggplot.as_ref().is_some_and(|g| {
+                        g.joint_numeric.iter().any(staged)
+                            || g.joint_position.as_ref().is_some_and(staged)
+                            || g.position.as_ref().is_some_and(staged)
+                            || g.weight.as_ref().is_some_and(staged)
+                    })
+            }
             _ => false,
         }
     }
     /// Declared source population grouping; identity operations preserve their input groups.
     pub fn grouping(&self) -> Option<&Grouping> {
         match &self.parameters {
+            StatParameters::Distribution(s) => Some(&s.grouping),
+            StatParameters::Univariate(s) => Some(&s.grouping),
             StatParameters::Identity => None,
             StatParameters::Bin(s) => Some(&s.grouping),
             StatParameters::AutoBin(s) => Some(&s.grouping),
@@ -433,13 +463,21 @@ impl SourceAes {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum BinField {
+    /// Interval width in the declared statistical calculation space.
+    Width,
+    /// Weighted bin count divided by bin width and total absolute bin count.
+    Density,
+    /// Bin count normalized by maximum absolute count within its group.
+    NCount,
+    /// Bin density normalized by maximum absolute density within its group.
+    NDensity,
     /// Left interval edge in the stat's output space.
     Start,
     /// Right interval edge in the stat's output space.
     End,
     /// Overflow-safe midpoint of the interval.
     Midpoint,
-    /// Exact membership count (checked when projected to f64).
+    /// Weighted count for reference bins; exact membership count for legacy bins.
     Count,
 }
 
@@ -521,6 +559,61 @@ pub enum Mappings {
 }
 
 impl Mappings {
+    fn requires_gg06(&self) -> bool {
+        let bin = |f: &BinField| {
+            matches!(
+                f,
+                BinField::Width | BinField::Density | BinField::NCount | BinField::NDensity
+            )
+        };
+        let stat = |f: &StatField| {
+            matches!(
+                f,
+                StatField::WeightedCount
+                    | StatField::Proportion
+                    | StatField::Lower
+                    | StatField::Upper
+                    | StatField::Width
+            )
+        };
+        match self {
+            Self::Binned(a) => [
+                Some(&a.x),
+                Some(&a.y),
+                a.x2.as_ref(),
+                a.y2.as_ref(),
+                a.size.as_ref(),
+            ]
+            .into_iter()
+            .flatten()
+            .any(|n| match n {
+                BinNumeric::Field(f) => bin(f),
+                BinNumeric::Expression(e) => e
+                    .nodes
+                    .iter()
+                    .any(|n| matches!(n, ExpressionNode::Read(f) if bin(f))),
+                _ => false,
+            }),
+            Self::Statistical(a) => [
+                Some(&a.x),
+                Some(&a.y),
+                a.x2.as_ref(),
+                a.y2.as_ref(),
+                a.size.as_ref(),
+            ]
+            .into_iter()
+            .flatten()
+            .any(|n| match n {
+                StatNumeric::Field(f) => stat(f),
+                StatNumeric::Expression(e) => e
+                    .nodes
+                    .iter()
+                    .any(|n| matches!(n, ExpressionNode::Read(f) if stat(f))),
+                _ => false,
+            }),
+            _ => false,
+        }
+    }
     fn requires_stages(&self) -> bool {
         match self {
             Self::Source(a) => a.requires_stages(),
@@ -765,6 +858,16 @@ pub enum Position {
     /// Preserve prepared endpoints.
     #[default]
     Identity,
+    /// Reference separate-sign stack/fill with reverse and anchor controls.
+    GgplotStack(GgplotStackSpec),
+    /// Reference collision dodge with total/single width preservation.
+    GgplotDodge(GgplotDodgeSpec),
+    /// Variable-width overlapping interval dodge.
+    GgplotDodge2(GgplotDodgeSpec),
+    /// Reference dodge followed by explicitly stable-key jitter.
+    JitterDodge(JitterDodgeSpec),
+    /// Constant displacement in calculation units.
+    Nudge(NudgeSpec),
     /// Add positive and negative heights separately, in explicit group order.
     Stack(StackSpec),
     /// Reference order/offset stack over explicit tidy groups and sorted samples.
@@ -779,6 +882,12 @@ pub enum Position {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Style<P = Color> {
+    /// Optional portable open-run endpoint policy; absent preserves legacy butt caps.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub line_end: Option<super::LineEnd>,
+    /// Optional portable corner policy; absent preserves legacy stroke primitives.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub line_join: Option<super::LineJoin>,
     /// Fill/stroke color, before any future palette scale.
     pub color: P,
     /// Explicit alpha replaces paint alpha, matching the ggplot2 alpha aesthetic.
@@ -806,6 +915,8 @@ pub struct Style<P = Color> {
 impl<P: From<Color>> Default for Style<P> {
     fn default() -> Self {
         Self {
+            line_end: None,
+            line_join: None,
             color: Color {
                 red: 35,
                 green: 90,
@@ -856,6 +967,18 @@ pub enum ClipPolicy {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct Layer {
+    /// Built-in recipe over shared encoded values and positioning.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub recipe: Option<super::BuiltinRecipe>,
+    /// Extra source/statistical inputs read by the existing common reader.
+    #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
+    pub recipe_aes: std::collections::BTreeMap<super::RecipeAesthetic, super::ColorInput>,
+    /// Portable row-anchored custom vectors or raster pixels.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub annotation: Option<super::RowAnnotation>,
+    /// Row-driven text/label rendering over prepared point anchors.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub text: Option<super::TextGeom>,
     /// Optional guide inclusion and key glyph policy.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub legend: Option<super::LayerLegend>,
@@ -937,10 +1060,33 @@ pub struct Layer {
     pub invalid: InvalidPolicy,
 }
 impl Layer {
+    pub(crate) fn reference_point(&self) -> bool {
+        match self.recipe {
+            Some(super::BuiltinRecipe::Count(_)) => true,
+            Some(_) => false,
+            None => self.geom == Geom::Point,
+        }
+    }
+    pub(crate) fn reference_linewidth(&self) -> bool {
+        match self.recipe {
+            None => self.geom.reference_linewidth(),
+            Some(
+                super::BuiltinRecipe::Count(_)
+                | super::BuiltinRecipe::Polygon(_)
+                | super::BuiltinRecipe::Tile(_)
+                | super::BuiltinRecipe::Raster(_),
+            ) => false,
+            Some(_) => true,
+        }
+    }
     /// Author a source identity layer; callers can supply independent mappings/schema.
     pub fn new(id: LayerId, data: impl Into<DataRef>, geom: Geom, mappings: SourceAes) -> Self {
         Self {
+            recipe: None,
+            recipe_aes: Default::default(),
             legend: None,
+            text: None,
+            annotation: None,
             aesthetic_values: Default::default(),
             value_scales: Default::default(),
             paint_scales: Default::default(),
@@ -1144,6 +1290,92 @@ impl ChartDefinition {
     }
     /// Minimum definition-envelope version required by its retained capabilities.
     pub fn wire_version(&self) -> u32 {
+        if self.facets.as_ref().is_some_and(|f| f.reference.is_some()) {
+            return 76;
+        }
+        if self.layers.iter().any(|l| {
+            matches!(
+                l.recipe,
+                Some(
+                    super::BuiltinRecipe::Boxplot(_)
+                        | super::BuiltinRecipe::Violin(_)
+                        | super::BuiltinRecipe::Dotplot(_)
+                        | super::BuiltinRecipe::Density(_)
+                )
+            )
+        }) || self.layers.iter().any(|l| {
+            l.recipe_aes.keys().any(|channel| {
+                matches!(
+                    channel,
+                    super::RecipeAesthetic::Middle
+                        | super::RecipeAesthetic::WhiskerLower
+                        | super::RecipeAesthetic::WhiskerUpper
+                        | super::RecipeAesthetic::NotchLower
+                        | super::RecipeAesthetic::NotchUpper
+                        | super::RecipeAesthetic::RelativeWidth
+                        | super::RecipeAesthetic::ViolinWidth
+                        | super::RecipeAesthetic::QuantileFlag
+                        | super::RecipeAesthetic::BinWidth
+                        | super::RecipeAesthetic::StackPosition
+                        | super::RecipeAesthetic::Count
+                )
+            })
+        }) || self
+            .layers
+            .iter()
+            .map(|l| &l.statistic)
+            .chain(self.transforms.iter().map(|t| &t.statistic))
+            .any(|s| {
+                matches!(
+                    s.parameters,
+                    StatParameters::Distribution(_) | StatParameters::Univariate(_)
+                )
+            })
+        {
+            return 75;
+        }
+        if self.layers.iter().any(|layer| layer.recipe.is_some() || !layer.recipe_aes.is_empty() || layer.style.line_end.is_some() || layer.style.line_join.is_some())
+            || self.layers.iter().map(|layer| &layer.statistic)
+                .chain(self.transforms.iter().map(|transform| &transform.statistic))
+                .any(|stat| matches!(&stat.parameters, StatParameters::Count(count)
+                    if count.ggplot.as_ref().is_some_and(|options|
+                        options.joint_position.is_some() || !options.joint_aesthetics.is_empty() || !options.joint_numeric.is_empty())))
+        {
+            return 74;
+        }
+        if self
+            .layers
+            .iter()
+            .any(|l| l.text.is_some() || l.annotation.is_some())
+        {
+            return 73;
+        }
+        if self.layers.iter().any(|l| l.mappings.requires_gg06())
+            || self.layers.iter().any(|l| {
+                matches!(
+                    l.position,
+                    Position::Nudge(_)
+                        | Position::GgplotStack(_)
+                        | Position::GgplotDodge(_)
+                        | Position::GgplotDodge2(_)
+                        | Position::JitterDodge(_)
+                )
+            })
+            || self
+                .layers
+                .iter()
+                .map(|l| &l.statistic)
+                .chain(self.transforms.iter().map(|t| &t.statistic))
+                .any(|s| match &s.parameters {
+                    StatParameters::Bin(s) => s.ggplot.is_some(),
+                    StatParameters::AutoBin(s) => s.ggplot.is_some(),
+                    StatParameters::Count(s) => s.ggplot.is_some(),
+                    StatParameters::Summary(s) => s.ggplot.is_some(),
+                    _ => false,
+                })
+        {
+            return 72;
+        }
         if !self.custom_legends.is_empty() {
             return 71;
         }
@@ -1859,6 +2091,8 @@ impl<P> Style<P> {
     /// Transform the authored color while preserving numeric styling.
     pub fn map_color<Q>(self, mut map: impl FnMut(P) -> Q) -> Style<Q> {
         Style {
+            line_end: self.line_end,
+            line_join: self.line_join,
             color: map(self.color),
             alpha: self.alpha,
             units: self.units,
@@ -1929,6 +2163,8 @@ impl ChartDefinition {
                 .any(numeric)
         };
         let statistic = |s: &Statistic| match &s.parameters {
+            StatParameters::Distribution(s) => s.numerics().any(numeric),
+            StatParameters::Univariate(s) => s.numerics().any(numeric),
             StatParameters::Bin(s) => numeric(&s.input),
             StatParameters::AutoBin(s) => numeric(&s.input),
             StatParameters::Summary(s) => numeric(&s.input),

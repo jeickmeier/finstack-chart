@@ -441,6 +441,7 @@ pub(super) fn project(
                 layer: Some(layer.id()),
                 clip,
                 primitive: Primitive::ShapePath {
+                    fill_rule: crate::scene::FillRule::NonZero,
                     geometry,
                     fill: fill.then_some(mark.style.color),
                     stroke: (!fill).then_some(Stroke {

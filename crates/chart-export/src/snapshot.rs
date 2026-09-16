@@ -443,7 +443,8 @@ fn preflight(
                     point(*to)?;
                     profile.f32(stroke.width)?;
                 }
-                Primitive::Rectangle { bounds, .. }
+                Primitive::RasterImage { bounds, .. }
+                | Primitive::Rectangle { bounds, .. }
                 | Primitive::GradientRectangle { bounds, .. }
                 | Primitive::SampledGradientRectangle { bounds, .. } => rect(*bounds)?,
                 Primitive::Point { center, radius, .. }

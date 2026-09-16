@@ -1,0 +1,1026 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "margins": false,
+      "mode": "identity",
+      "result": {
+        "ok": true,
+        "data": [
+          [
+            {
+              "x": 1,
+              "y": 2,
+              "PANEL": "1",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "PANEL": "2",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "PANEL": "3",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 4,
+              "y": 8,
+              "PANEL": "4",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            }
+          ]
+        ],
+        "layout": [
+          {
+            "PANEL": "1",
+            "ROW": 1,
+            "COL": 1,
+            "r": "A",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "2",
+            "ROW": 1,
+            "COL": 2,
+            "r": "A",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "3",
+            "ROW": 2,
+            "COL": 1,
+            "r": "B",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          },
+          {
+            "PANEL": "4",
+            "ROW": 2,
+            "COL": 2,
+            "r": "B",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          }
+        ]
+      },
+      "calls": [
+        {
+          "values": [2, 4],
+          "range": [2, 4]
+        },
+        {
+          "values": [6, 8],
+          "range": [6, 8]
+        },
+        {
+          "values": [2, 4],
+          "range": [2, 4]
+        },
+        {
+          "values": [6, 8],
+          "range": [6, 8]
+        }
+      ]
+    },
+    {
+      "margins": false,
+      "mode": "reverse",
+      "result": {
+        "ok": true,
+        "data": [
+          [
+            {
+              "x": 1,
+              "y": 2,
+              "PANEL": "1",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "PANEL": "2",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "PANEL": "3",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 4,
+              "y": 8,
+              "PANEL": "4",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            }
+          ]
+        ],
+        "layout": [
+          {
+            "PANEL": "1",
+            "ROW": 1,
+            "COL": 1,
+            "r": "A",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "2",
+            "ROW": 1,
+            "COL": 2,
+            "r": "A",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "3",
+            "ROW": 2,
+            "COL": 1,
+            "r": "B",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          },
+          {
+            "PANEL": "4",
+            "ROW": 2,
+            "COL": 2,
+            "r": "B",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          }
+        ]
+      },
+      "calls": [
+        {
+          "values": [2, 4],
+          "range": [2, 4]
+        },
+        {
+          "values": [6, 8],
+          "range": [6, 8]
+        },
+        {
+          "values": [4, 2],
+          "range": [2, 4]
+        },
+        {
+          "values": [8, 6],
+          "range": [6, 8]
+        }
+      ]
+    },
+    {
+      "margins": false,
+      "mode": "scalar",
+      "result": {
+        "ok": true,
+        "data": [
+          [
+            {
+              "x": 1,
+              "y": 5,
+              "PANEL": "1",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 2,
+              "y": 5,
+              "PANEL": "2",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 3,
+              "y": 5,
+              "PANEL": "3",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 4,
+              "y": 5,
+              "PANEL": "4",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            }
+          ]
+        ],
+        "layout": [
+          {
+            "PANEL": "1",
+            "ROW": 1,
+            "COL": 1,
+            "r": "A",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "2",
+            "ROW": 1,
+            "COL": 2,
+            "r": "A",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "3",
+            "ROW": 2,
+            "COL": 1,
+            "r": "B",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          },
+          {
+            "PANEL": "4",
+            "ROW": 2,
+            "COL": 2,
+            "r": "B",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          }
+        ]
+      },
+      "calls": [
+        {
+          "values": [2, 4],
+          "range": [2, 4]
+        },
+        {
+          "values": [6, 8],
+          "range": [6, 8]
+        },
+        {
+          "values": [3, 7],
+          "range": [3, 7]
+        },
+        {
+          "values": [3, 7],
+          "range": [3, 7]
+        }
+      ]
+    },
+    {
+      "margins": true,
+      "mode": "identity",
+      "result": {
+        "ok": true,
+        "data": [
+          [
+            {
+              "x": 1,
+              "y": 2,
+              "PANEL": "1",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "PANEL": "2",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "PANEL": "4",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 4,
+              "y": 8,
+              "PANEL": "5",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "PANEL": "7",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "PANEL": "8",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "PANEL": "7",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 4,
+              "y": 8,
+              "PANEL": "8",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "PANEL": "3",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "PANEL": "3",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "PANEL": "6",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 4,
+              "y": 8,
+              "PANEL": "6",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "PANEL": "9",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "PANEL": "9",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "PANEL": "9",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 4,
+              "y": 8,
+              "PANEL": "9",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            }
+          ]
+        ],
+        "layout": [
+          {
+            "PANEL": "1",
+            "ROW": 1,
+            "COL": 1,
+            "r": "A",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "2",
+            "ROW": 1,
+            "COL": 2,
+            "r": "A",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "3",
+            "ROW": 1,
+            "COL": 3,
+            "r": "A",
+            "c": "(all)",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "4",
+            "ROW": 2,
+            "COL": 1,
+            "r": "B",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          },
+          {
+            "PANEL": "5",
+            "ROW": 2,
+            "COL": 2,
+            "r": "B",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          },
+          {
+            "PANEL": "6",
+            "ROW": 2,
+            "COL": 3,
+            "r": "B",
+            "c": "(all)",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          },
+          {
+            "PANEL": "7",
+            "ROW": 3,
+            "COL": 1,
+            "r": "(all)",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 3,
+            "COORD": 3
+          },
+          {
+            "PANEL": "8",
+            "ROW": 3,
+            "COL": 2,
+            "r": "(all)",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 3,
+            "COORD": 3
+          },
+          {
+            "PANEL": "9",
+            "ROW": 3,
+            "COL": 3,
+            "r": "(all)",
+            "c": "(all)",
+            "SCALE_X": 1,
+            "SCALE_Y": 3,
+            "COORD": 3
+          }
+        ]
+      },
+      "calls": [
+        {
+          "values": [2, 4, 2, 4],
+          "range": [2, 4]
+        },
+        {
+          "values": [6, 8, 6, 8],
+          "range": [6, 8]
+        },
+        {
+          "values": [2, 4, 6, 8, 2, 4, 6, 8],
+          "range": [2, 8]
+        },
+        {
+          "values": [2, 4, 2, 4],
+          "range": [2, 4]
+        },
+        {
+          "values": [6, 8, 6, 8],
+          "range": [6, 8]
+        },
+        {
+          "values": [2, 4, 6, 8, 2, 4, 6, 8],
+          "range": [2, 8]
+        }
+      ]
+    },
+    {
+      "margins": true,
+      "mode": "reverse",
+      "result": {
+        "ok": true,
+        "data": [
+          [
+            {
+              "x": 1,
+              "y": 2,
+              "PANEL": "1",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "PANEL": "2",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "PANEL": "4",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 4,
+              "y": 8,
+              "PANEL": "5",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "PANEL": "7",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "PANEL": "8",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "PANEL": "7",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 4,
+              "y": 8,
+              "PANEL": "8",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "PANEL": "3",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "PANEL": "3",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "PANEL": "6",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 4,
+              "y": 8,
+              "PANEL": "6",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 1,
+              "y": 2,
+              "PANEL": "9",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 2,
+              "y": 4,
+              "PANEL": "9",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 3,
+              "y": 6,
+              "PANEL": "9",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            },
+            {
+              "x": 4,
+              "y": 8,
+              "PANEL": "9",
+              "group": -1,
+              "shape": 19,
+              "colour": "black",
+              "fill": null,
+              "size": 1.5,
+              "alpha": null,
+              "stroke": 0.5
+            }
+          ]
+        ],
+        "layout": [
+          {
+            "PANEL": "1",
+            "ROW": 1,
+            "COL": 1,
+            "r": "A",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "2",
+            "ROW": 1,
+            "COL": 2,
+            "r": "A",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "3",
+            "ROW": 1,
+            "COL": 3,
+            "r": "A",
+            "c": "(all)",
+            "SCALE_X": 1,
+            "SCALE_Y": 1,
+            "COORD": 1
+          },
+          {
+            "PANEL": "4",
+            "ROW": 2,
+            "COL": 1,
+            "r": "B",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          },
+          {
+            "PANEL": "5",
+            "ROW": 2,
+            "COL": 2,
+            "r": "B",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          },
+          {
+            "PANEL": "6",
+            "ROW": 2,
+            "COL": 3,
+            "r": "B",
+            "c": "(all)",
+            "SCALE_X": 1,
+            "SCALE_Y": 2,
+            "COORD": 2
+          },
+          {
+            "PANEL": "7",
+            "ROW": 3,
+            "COL": 1,
+            "r": "(all)",
+            "c": "L",
+            "SCALE_X": 1,
+            "SCALE_Y": 3,
+            "COORD": 3
+          },
+          {
+            "PANEL": "8",
+            "ROW": 3,
+            "COL": 2,
+            "r": "(all)",
+            "c": "R",
+            "SCALE_X": 1,
+            "SCALE_Y": 3,
+            "COORD": 3
+          },
+          {
+            "PANEL": "9",
+            "ROW": 3,
+            "COL": 3,
+            "r": "(all)",
+            "c": "(all)",
+            "SCALE_X": 1,
+            "SCALE_Y": 3,
+            "COORD": 3
+          }
+        ]
+      },
+      "calls": [
+        {
+          "values": [2, 4, 2, 4],
+          "range": [2, 4]
+        },
+        {
+          "values": [6, 8, 6, 8],
+          "range": [6, 8]
+        },
+        {
+          "values": [2, 4, 6, 8, 2, 4, 6, 8],
+          "range": [2, 8]
+        },
+        {
+          "values": [4, 2, 4, 2],
+          "range": [2, 4]
+        },
+        {
+          "values": [8, 6, 8, 6],
+          "range": [6, 8]
+        },
+        {
+          "values": [8, 6, 4, 2, 8, 6, 4, 2],
+          "range": [2, 8]
+        }
+      ]
+    },
+    {
+      "margins": true,
+      "mode": "scalar",
+      "result": {
+        "ok": false,
+        "error": "replacement element 1 has 3 rows, need 16"
+      },
+      "calls": [
+        {
+          "values": [2, 4, 2, 4],
+          "range": [2, 4]
+        },
+        {
+          "values": [6, 8, 6, 8],
+          "range": [6, 8]
+        },
+        {
+          "values": [2, 4, 6, 8, 2, 4, 6, 8],
+          "range": [2, 8]
+        }
+      ]
+    }
+  ]
+}

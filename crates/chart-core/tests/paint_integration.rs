@@ -33,9 +33,10 @@ fn base() -> Plot {
 #[test]
 fn paint_retains_descriptors_and_legacy_bytes_with_strict_ingestion() {
     assert_eq!(std::mem::size_of::<Color>(), 4);
-    // GG-03 adds independent paints, alpha, units and line type to the resolved
-    // style. Colors remain four bytes; the expanded style has an explicit budget.
-    assert_eq!(std::mem::size_of::<chart_core::grammar::Style>(), 56);
+    // GG-03 independent paints/alpha/units/line type used 56 bytes. GG-07's
+    // optional cap/join selectors increase the aligned style to 64 bytes;
+    // Color itself remains four bytes and the total stays one cache line.
+    assert_eq!(std::mem::size_of::<chart_core::grammar::Style>(), 64);
     for (css, expected) in [
         (
             "#12345678",

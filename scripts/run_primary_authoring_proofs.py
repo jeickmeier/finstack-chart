@@ -11,6 +11,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from build_primary_modules import python_module, wasm_module
 
 ROOT=Path(__file__).resolve().parents[1]
 output=Path(sys.argv[1]).resolve() if len(sys.argv)>1 else ROOT/'target/authoring'
@@ -34,15 +35,9 @@ run('typescript-version',tsc+['--version'])
 run('mypy-version',[sys.executable,'-m','mypy','--version'])
 (output/'environment.json').write_text(json.dumps({'python':sys.version,'executable':sys.executable,'platform':sys.platform,'wasm_bindgen':version,'node':subprocess.check_output([node,'--version'],text=True).strip(),'rust':subprocess.check_output(['rustc','-Vv'],text=True),'revision':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()},indent=2))
 run('rust-primary',['cargo','run','-p','chart-export','--example','primary_binding_proof','--locked','--',output/'native'])
-run('python-primary-build',['cargo','build','-p','chart-python','--features','extension-module,extension-proof','--locked'])
-module=output/'python-module';module.mkdir(exist_ok=True)
-lib=target/'debug'/('libchart_python.dylib' if sys.platform=='darwin' else 'libchart_python.so')
-shutil.copy2(lib,module/'chart_python.so')
+module=python_module(ROOT,output,target,run)
 run('python-primary',[sys.executable,ROOT/'scripts/bindings/authoring/python_proof.py',module,output/'python'])
-run('wasm-primary-build',['cargo','build','-p','chart-wasm','--features','extension-proof','--target','wasm32-unknown-unknown','--locked'])
-wasm=output/'wasm-module'
-run('wasm-primary-generate',[cli,target/'wasm32-unknown-unknown/debug/chart_wasm.wasm','--target','nodejs','--out-dir',wasm])
-for file in ('authoring.cjs','authoring.d.cts','interpolation.cjs','interpolation.d.cts','scales.cjs','scales.d.cts','examples.cjs','examples.d.cts','hierarchy.cjs','hierarchy.d.cts'):shutil.copy2(ROOT/'packages/wasm'/file,wasm/file)
+wasm=wasm_module(ROOT,output,target,run,cli)
 run('wasm-primary',[node,'--expose-gc',ROOT/'scripts/bindings/authoring/wasm_proof.cjs',wasm,output/'wasm'])
 run('primary-compare',[sys.executable,ROOT/'scripts/bindings/authoring/compare.py',output])
 consumer=output/'typing';consumer.mkdir(exist_ok=True)

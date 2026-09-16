@@ -238,6 +238,7 @@ fn count_requires_all_inputs_and_reports_invalid_strict_and_empty_groups() {
         (3, Some(1.), Some(f64::INFINITY), 2),
     ]);
     let spec = CountSpec {
+        ggplot: None,
         required: vec![X.into(), Y.into()],
         grouping: Grouping::Field(G),
     };
@@ -570,6 +571,7 @@ fn exact_batch_fallback_after_append_correction_removal_and_reorder() {
     ]);
     let stats = [
         Statistic::count(CountSpec {
+            ggplot: None,
             required: vec![X.into()],
             grouping: Grouping::All,
         }),

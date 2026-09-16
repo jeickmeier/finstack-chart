@@ -496,7 +496,7 @@ impl PlotBuilder {
         definition.facets = self
             .facet
             .as_ref()
-            .map(|f| f.lower(&self.data))
+            .map(|f| f.lower_sources(&self.data, &datasets, self.profile))
             .transpose()?;
         if self.figure != crate::composition::FigureComposition::default() {
             definition.figure = Some(self.figure);

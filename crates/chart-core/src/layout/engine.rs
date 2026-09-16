@@ -1288,6 +1288,16 @@ pub(super) fn solve_panels(
     measurer: &dyn TextMeasurer,
     stamp: SceneStamp,
 ) -> ChartResult<Vec<LaidOutChart>> {
+    solve_panels_with_strip_offsets(inputs, &[], measurer, stamp)
+}
+/// Paint guides outside strips whose physical space the facet planner already reserved.
+/// Offset application follows the common margin solve and retains guide metadata.
+pub(super) fn solve_panels_with_strip_offsets(
+    inputs: Vec<(Arc<PreparedChart>, LayoutRequest)>,
+    strip_offsets: &[[f64; 4]],
+    measurer: &dyn TextMeasurer,
+    stamp: SceneStamp,
+) -> ChartResult<Vec<LaidOutChart>> {
     struct Work {
         prepared: Arc<PreparedChart>,
         request: LayoutRequest,
@@ -1383,10 +1393,16 @@ pub(super) fn solve_panels(
         }
         m = next;
     }
-    work.into_iter().map(|mut w| {
+    work.into_iter().enumerate().map(|(index,mut w)| {
+        let offsets=strip_offsets.get(index).copied().unwrap_or_default();
+        for guide in w.guides.values_mut(){
+            let (dimension,sign,side)=match guide.spec.side{AxisSide::Left=>(0,-1.,0),AxisSide::Right=>(0,1.,1),AxisSide::Top=>(1,-1.,2),AxisSide::Bottom=>(1,1.,3)};
+            guide.spec.translation[dimension]+=sign*offsets[side];
+        }
         let request = &w.request;
         let (mut output, status) = if let Some(p) = w.plot {
-            let mut output = project::project(&w.prepared, &w.axes, p, request)?;
+            let mut output = project::project(&w.prepared, &w.axes, p, request, measurer)?;
+            w.diagnostics.append(&mut output.diagnostics);
             let has_population = w.prepared.layers().iter().filter(|l| l.visible()).any(|l| match l.table().rows() {
                 crate::grammar::PreparedRows::Binned(bins) => bins.iter().any(|b| b.count > 0),
                 crate::grammar::PreparedRows::Source(_) | crate::grammar::PreparedRows::Statistical(_) => !l.marks().is_empty(),
@@ -1422,12 +1438,13 @@ pub(super) fn solve_panels(
         } else {
             w.axes.clear();
             w.guides.clear();
-            let mut output = Output {hierarchies:Default::default(),items: vec![],targets:vec![],omitted:0,interactions:Default::default()};
+            let mut output = Output {stroke_end:None,stroke_join:None,stroke_remaining:request.limits.max_path_commands,diagnostics: Vec::new(),hierarchies:Default::default(),items: vec![],targets:vec![],omitted:0,interactions:Default::default()};
             compact("Not enough space",request,measurer,&mut output)?;
             w.diagnostics.push(pressure("Bounds and destination text metrics cannot accommodate the minimum useful plot."));
             (output,LayoutStatus::NoSpace)
         };
-        if status == LayoutStatus::NoData { compact("No data",request,measurer,&mut output)?; }
+        let reference_facet = w.prepared.shared_training.as_ref().and_then(|p| p.definition().facets.as_ref()).is_some_and(|f| f.reference.is_some());
+        if status == LayoutStatus::NoData && !reference_facet { compact("No data",request,measurer,&mut output)?; }
         if output.omitted > 0 { w.diagnostics.push(pressure(&format!("Explicit scale policies omitted {} marks/vertices; source statistics are unchanged.",output.omitted))); }
         for label in w.labels.values().flatten(){if let Some(block)=&label.rich {for d in &block.diagnostics {if !w.diagnostics.contains(d){w.diagnostics.push(d.clone());}}}}
         let resources=super::text::resources(&output.items,request)?;

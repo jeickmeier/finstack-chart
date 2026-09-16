@@ -87,11 +87,40 @@ impl SampledGradientMode {
     }
 }
 
+/// Interior rule for a compound path with multiple subpaths.
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Default, Eq, PartialEq)]
+pub enum FillRule {
+    /// Fill where the signed winding number is nonzero.
+    #[default]
+    NonZero,
+    /// Fill where an odd number of contour boundaries have been crossed.
+    EvenOdd,
+}
+impl FillRule {
+    fn is_nonzero(&self) -> bool {
+        *self == Self::NonZero
+    }
+}
 /// Authored minimal primitive, validated and copied into an immutable scene.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum Primitive {
+    /// Bounded portable RGBA image with explicit interpolation and destination extent.
+    RasterImage {
+        /// Optional per-source cell hit rectangles, ordered exactly like semantic targets.
+        #[serde(skip_serializing_if = "Vec::is_empty")]
+        cells: Vec<Rect>,
+        /// Positive destination rectangle.
+        bounds: Rect,
+        /// Immutable row-major sRGB pixels and dimensions.
+        raster: crate::grammar::RasterAnnotation,
+        /// Linear image filtering when true, nearest-neighbor when false.
+        interpolate: bool,
+    },
     /// Generated path with source anchors independent of control/tessellation vertices.
     ShapePath {
+        /// Explicit compound-path interior rule.
+        #[serde(skip_serializing_if = "FillRule::is_nonzero")]
+        fill_rule: FillRule,
         /// Shared checked full-precision path geometry.
         geometry: crate::path::PathGeometry,
         /// Optional nonzero fill, including implicit subpath closure.
@@ -320,6 +349,29 @@ impl Scene {
     }
     /// Minimum scene wire version required by the retained primitive capabilities.
     pub fn wire_version(&self) -> u32 {
+        if self.items.iter().any(
+            |i| matches!(&i.primitive, Primitive::RasterImage { cells, .. } if !cells.is_empty()),
+        ) {
+            return 21;
+        }
+        if self.items.iter().any(|i| {
+            matches!(
+                i.primitive,
+                Primitive::ShapePath {
+                    fill_rule: FillRule::EvenOdd,
+                    ..
+                }
+            )
+        }) {
+            return 21;
+        }
+        if self
+            .items
+            .iter()
+            .any(|i| matches!(i.primitive, Primitive::RasterImage { .. }))
+        {
+            return 20;
+        }
         if self.items.iter().any(|i| {
             i.guide.as_ref().is_some_and(|g| {
                 matches!(
@@ -424,6 +476,21 @@ fn validate(
                 Ok(())
             }
 
+            Primitive::RasterImage { raster, cells, .. } => {
+                let count = raster
+                    .pixels
+                    .len()
+                    .saturating_add(cells.len().saturating_mul(4));
+                require_within(count <= path_remaining, "total raster pixels and hit cells")?;
+                path_remaining -= count;
+                if raster.width == 0
+                    || raster.height == 0
+                    || raster.width.checked_mul(raster.height) != Some(raster.pixels.len())
+                {
+                    return Err(path_error());
+                }
+                Ok(())
+            }
             Primitive::SampledGradientRectangle { colors, mode, .. } => {
                 let work = colors
                     .len()
@@ -622,6 +689,10 @@ fn validate_primitive(
         Primitive::Rule { stroke, .. } => {
             positive(stroke.width, "Stroke width must be finite and positive.")
         }
+        Primitive::RasterImage { bounds, .. } => {
+            positive(bounds.width(), "Raster width must be positive.")?;
+            positive(bounds.height(), "Raster height must be positive.")
+        }
         Primitive::Rectangle { .. }
         | Primitive::GradientRectangle { .. }
         | Primitive::SampledGradientRectangle { .. } => Ok(()),
@@ -776,7 +847,9 @@ pub fn dash_polyline(
         let from = previous.ok_or_else(path_error)?;
         let dx = to.x() - from.x();
         let dy = to.y() - from.y();
-        let length = dx.hypot(dy);
+        // Use the same length calculation on native and WASM so dash endpoints
+        // remain identical when lowered into portable stroke outlines.
+        let length = libm::hypot(dx, dy);
         if !length.is_finite() {
             return Err(path_error());
         }

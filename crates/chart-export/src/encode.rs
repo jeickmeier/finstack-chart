@@ -172,6 +172,33 @@ pub(crate) fn pdf(
             let node = tree.node_by_id(&format!("item-{index}"));
             match (&item.primitive, node) {
                 (
+                    Primitive::RasterImage {
+                        bounds,
+                        raster,
+                        interpolate,
+                        ..
+                    },
+                    _,
+                ) => {
+                    surface.push_transform(&Transform::from_translate(
+                        p.f32(bounds.origin().x())?,
+                        p.f32(bounds.origin().y())?,
+                    ));
+                    let size = krilla::geom::Size::from_wh(
+                        p.f32(bounds.width())?,
+                        p.f32(bounds.height())?,
+                    )
+                    .ok_or_else(|| {
+                        error(
+                            DiagnosticCode::PrecisionLoss,
+                            "Raster PDF dimensions cannot be represented.",
+                        )
+                    })?;
+                    surface.draw_image(crate::raster::pdf(raster, *interpolate)?, size);
+                    surface.pop();
+                }
+
+                (
                     Primitive::GlyphRun {
                         origin,
                         rotation,
@@ -269,6 +296,9 @@ pub(crate) fn pdf(
                 }
                 (primitive, Some(usvg::Node::Path(node))) => {
                     match primitive {
+                        Primitive::RasterImage { .. } => {
+                            unreachable!("raster handled before vector paths")
+                        }
                         Primitive::VectorPath {
                             fill: c,
                             stroke,
@@ -281,7 +311,19 @@ pub(crate) fn pdf(
                             dashes,
                             ..
                         } => {
-                            surface.set_fill(c.map(fill));
+                            surface.set_fill(c.map(|c| {
+                                let mut f = fill(c);
+                                if matches!(
+                                    primitive,
+                                    Primitive::ShapePath {
+                                        fill_rule: chart_core::scene::FillRule::EvenOdd,
+                                        ..
+                                    }
+                                ) {
+                                    f.rule = FillRule::EvenOdd;
+                                }
+                                f
+                            }));
                             surface.set_stroke(
                                 stroke
                                     .map(|s| -> ChartResult<Stroke> {

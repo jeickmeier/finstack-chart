@@ -63,6 +63,7 @@ pub struct InspectionOutcome {
 }
 #[derive(Clone, Debug)]
 struct ShapeHit {
+    fill_rule: crate::scene::FillRule,
     path: crate::path::FlattenedPath,
     dashed_stroke: Option<crate::path::FlattenedPath>,
     fill: bool,
@@ -71,7 +72,7 @@ struct ShapeHit {
 }
 impl ShapeHit {
     fn contains(&self, p: Point) -> bool {
-        self.path.contains(
+        self.path.contains_with_rule(
             p,
             self.fill,
             if self.dashed_stroke.is_some() {
@@ -79,6 +80,7 @@ impl ShapeHit {
             } else {
                 self.stroke
             },
+            self.fill_rule,
         ) || self
             .dashed_stroke
             .as_ref()
@@ -220,6 +222,7 @@ impl Inspector {
                 continue;
             }
             if let Primitive::ShapePath {
+                fill_rule,
                 geometry,
                 anchors,
                 fill,
@@ -286,6 +289,7 @@ impl Inspector {
                         }
                         let hit = sources[0].clone();
                         let shape = Arc::new(ShapeHit {
+                            fill_rule: *fill_rule,
                             path: {
                                 let flat = geometry.flatten(0.01, remaining_shape_vertices)?;
                                 remaining_shape_vertices -=
@@ -364,7 +368,29 @@ impl Inspector {
                         add(*center, t, None, None);
                     }
                 }
-                Primitive::Rectangle { bounds, .. } => {
+                Primitive::RasterImage { cells, .. } if !cells.is_empty() => {
+                    if cells.len() != targets.len() {
+                        return Err(error(
+                            DiagnosticCode::Validation,
+                            "Raster cell and source target counts differ.",
+                        ));
+                    }
+                    for (bounds, target) in cells.iter().zip(targets) {
+                        let left = bounds.origin().x().max(clip.origin().x());
+                        let right = bounds.max_x().min(clip.max_x());
+                        let top = bounds.origin().y().max(clip.origin().y());
+                        let bottom = bounds.max_y().min(clip.max_y());
+                        if left < right && top < bottom {
+                            add(
+                                Point::new(left.midpoint(right), top.midpoint(bottom))?,
+                                target,
+                                Some(*bounds),
+                                None,
+                            );
+                        }
+                    }
+                }
+                Primitive::Rectangle { bounds, .. } | Primitive::RasterImage { bounds, .. } => {
                     if let Some(t) = targets.first() {
                         let left = bounds.origin().x().max(clip.origin().x());
                         let right = bounds.max_x().min(clip.max_x());

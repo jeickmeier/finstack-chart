@@ -21,7 +21,9 @@ pub(crate) fn validate_operation(operation: &OperationRef, expected: &str) -> Ch
 }
 pub(crate) fn validate_stat(stat: &Statistic, limits: CompileLimits) -> ChartResult<()> {
     match &stat.parameters {
-        StatParameters::AutoBin(_)
+        StatParameters::Distribution(_)
+        | StatParameters::Univariate(_)
+        | StatParameters::AutoBin(_)
         | StatParameters::Count(_)
         | StatParameters::Summary(_)
         | StatParameters::Ols(_) => super::statistics::validate(stat, limits),
@@ -29,6 +31,9 @@ pub(crate) fn validate_stat(stat: &Statistic, limits: CompileLimits) -> ChartRes
         StatParameters::Identity => validate_operation(&stat.operation, "chart.identity"),
         StatParameters::Bin(spec) => {
             validate_operation(&stat.operation, "chart.bin")?;
+            if let Some(options) = &spec.ggplot {
+                options.validate()?;
+            }
             if spec.edges.len() > limits.max_edges {
                 return Err(error(
                     DiagnosticCode::ResourceLimit,
@@ -495,18 +500,21 @@ pub(crate) fn run(
     };
     let (grouping, space) = match resolved.as_ref().unwrap_or(&stat.parameters) {
         StatParameters::AutoBin(_) => unreachable!("resolved above"),
-        StatParameters::Count(_) | StatParameters::Summary(_) | StatParameters::Ols(_) => {
-            super::statistics::run(
-                &mut table,
-                data,
-                stat,
-                policy,
-                scope,
-                limits,
-                &mut counts,
-                diagnostics,
-            )?
-        }
+        StatParameters::Distribution(_)
+        | StatParameters::Univariate(_)
+        | StatParameters::Count(_)
+        | StatParameters::Summary(_)
+        | StatParameters::Ols(_) => super::statistics::run(
+            &mut table,
+            data,
+            stat,
+            policy,
+            scope,
+            limits,
+            &mut counts,
+            diagnostics,
+            extensions,
+        )?,
         StatParameters::Custom(p) => {
             super::extensions::run_custom(
                 extensions,
@@ -527,6 +535,12 @@ pub(crate) fn run(
                     "Bin inputs must be source observations, not generated bins.",
                 ));
             };
+            if spec.edges.len() > limits.max_edges {
+                return Err(error(
+                    DiagnosticCode::ResourceLimit,
+                    "Resolved bin edge budget exceeded.",
+                ));
+            }
             let input_space = numeric_space(data, &spec.input)?;
             validate_group(data, &spec.grouping)?;
             table.space = match &spec.space {
@@ -543,6 +557,7 @@ pub(crate) fn run(
                 scope,
                 filters.is_empty()
                     && input.operations.is_empty()
+                    && spec.ggplot.as_ref().is_none_or(|o| o.weight.is_none())
                     && matches!(stat.parameters, StatParameters::Bin(_)),
                 limits,
             )?;
@@ -581,8 +596,36 @@ pub(crate) fn run(
                 ),
                 diagnostics,
             )?;
+            let weight = spec.ggplot.as_ref().and_then(|o| o.weight.as_ref());
+            if let Some(weight) = weight {
+                numeric_space(data, weight)?;
+            }
+            let weight_rows: BTreeMap<_, _> = if weight.is_some() {
+                data.rows().map(|r| (r.key(), r)).collect()
+            } else {
+                BTreeMap::new()
+            };
             let mut output = Vec::new();
             for (group, bins) in groups {
+                let generated = if spec.ggplot.is_some() {
+                    let counts = bins
+                        .iter()
+                        .map(|members| {
+                            if let Some(weight) = weight {
+                                super::statistics::sum(members.iter().map(|key| {
+                                    raw_number(weight_rows[key], weight)
+                                        .filter(|v| !v.is_nan())
+                                        .unwrap_or(0.)
+                                }))
+                            } else {
+                                Ok(members.len() as f64)
+                            }
+                        })
+                        .collect::<ChartResult<Vec<_>>>()?;
+                    Some(super::ggplot_stats::statistics(&counts, &spec.edges)?)
+                } else {
+                    None
+                };
                 for (i, mut members) in bins.into_iter().enumerate() {
                     members.sort_unstable();
                     let count = members.len() as u64;
@@ -597,6 +640,7 @@ pub(crate) fn run(
                         members: members.into(),
                     };
                     output.push(BinnedRow {
+                        statistics: generated.as_ref().map(|v| v[i].clone()),
                         start: spec.edges[i],
                         end: spec.edges[i + 1],
                         count,
@@ -605,28 +649,111 @@ pub(crate) fn run(
                     });
                 }
             }
+            if spec.ggplot.as_ref().is_some_and(|o| o.pad) {
+                let n = spec.edges.len() - 1;
+                if output.len().saturating_add(output.len() / n * 2) > limits.max_prepared_rows {
+                    return Err(error(
+                        DiagnosticCode::ResourceLimit,
+                        "Padded bin output exceeds row budget.",
+                    ));
+                }
+                let mut padded = Vec::with_capacity(output.len() + output.len() / n * 2);
+                for chunk in output.chunks(n) {
+                    let make = |row: &BinnedRow, start: f64, end: f64| -> ChartResult<BinnedRow> {
+                        if !start.is_finite() || !end.is_finite() || start >= end {
+                            return Err(error(
+                                DiagnosticCode::PrecisionLoss,
+                                "Padded bin edge is not representable.",
+                            ));
+                        }
+                        let Target::Aggregate { input, .. } = &row.target else {
+                            unreachable!()
+                        };
+                        Ok(BinnedRow {
+                            start,
+                            end,
+                            count: 0,
+                            group: row.group.clone(),
+                            statistics: row.statistics.as_ref().map(|s| BinStatistics {
+                                count: 0.,
+                                density: s.density.map(|_| 0.),
+                                ncount: s.ncount.map(|_| 0.),
+                                ndensity: s.ndensity.map(|_| 0.),
+                            }),
+                            target: Target::Aggregate {
+                                id: AggregateId::new(u64::MAX),
+                                group: format!(
+                                    "{scope}/{:?}/{:016x}:{:016x}",
+                                    row.group,
+                                    start.to_bits(),
+                                    end.to_bits()
+                                ),
+                                input: *input,
+                                members: Arc::from([]),
+                            },
+                        })
+                    };
+                    let first = &chunk[0];
+                    let last = &chunk[n - 1];
+                    padded.push(make(
+                        first,
+                        first.start - (first.end - first.start),
+                        first.start,
+                    )?);
+                    padded.extend_from_slice(chunk);
+                    padded.push(make(last, last.end, last.end + (last.end - last.start))?);
+                }
+                output = padded;
+            }
             table.rows = PreparedRows::Binned(output.into());
             table.schema = OutputSchema::Binned {
                 version: SchemaVersion::new(1),
                 fields: vec![
                     GeneratedField {
+                        nullable: false,
                         field: BinField::Start,
                         kind: GeneratedKind::Float64,
                     },
                     GeneratedField {
+                        nullable: false,
                         field: BinField::End,
                         kind: GeneratedKind::Float64,
                     },
                     GeneratedField {
+                        nullable: false,
                         field: BinField::Midpoint,
                         kind: GeneratedKind::Float64,
                     },
                     GeneratedField {
+                        nullable: false,
                         field: BinField::Count,
-                        kind: GeneratedKind::UInt64,
+                        kind: if spec.ggplot.is_some() {
+                            GeneratedKind::Float64
+                        } else {
+                            GeneratedKind::UInt64
+                        },
                     },
                 ],
             };
+            if spec.ggplot.is_some()
+                && let OutputSchema::Binned { version, fields } = &mut table.schema
+            {
+                *version = SchemaVersion::new(2);
+                fields.extend(
+                    [
+                        BinField::Width,
+                        BinField::Density,
+                        BinField::NCount,
+                        BinField::NDensity,
+                    ]
+                    .into_iter()
+                    .map(|field| GeneratedField {
+                        nullable: !matches!(field, BinField::Width),
+                        field,
+                        kind: GeneratedKind::Float64,
+                    }),
+                );
+            }
             (spec.grouping.clone(), spec.space.clone())
         }
     };

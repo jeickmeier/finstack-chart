@@ -52,6 +52,11 @@ pub(super) fn validate(
     }
     match &layer.position {
         Position::Identity => {}
+        Position::Nudge(_)
+        | Position::GgplotStack(_)
+        | Position::GgplotDodge(_)
+        | Position::GgplotDodge2(_)
+        | Position::JitterDodge(_) => super::ggplot_position::validate(&layer.position)?,
         Position::ShapeStack(s) => {
             order(&s.groups, limits)?;
             super::stack_position::validate(layer, domains, s, limits)?;
@@ -264,7 +269,7 @@ pub(super) fn apply(
             }
         }
         Position::Jitter(s) if s.units == JitterUnits::Data => {
-            for r in rows {
+            for r in rows.iter_mut() {
                 let (dx, dy) = jitter(s, &r.target, &r.group);
                 for (value, delta) in [
                     (&mut r.x, dx),
@@ -286,6 +291,7 @@ pub(super) fn apply(
         }
         _ => {}
     }
+    super::ggplot_position::apply(&layer.position, rows)?;
     Ok(None)
 }
 fn stable_key(target: &Target, group: &Option<GroupValue>) -> String {
@@ -328,13 +334,15 @@ pub(crate) fn jitter(spec: &JitterSpec, target: &Target, group: &Option<GroupVal
 pub(super) fn output_space(layer: &Layer, domains: &mut DomainContributions) {
     if matches!(
         &layer.position,
-        Position::Stack(StackSpec {
-            normalize: true,
-            ..
-        }) | Position::ShapeStack(ShapeStackSpec {
-            offset: crate::shape::StackOffset::Expand,
-            ..
-        })
+        Position::GgplotStack(GgplotStackSpec { fill: true, .. })
+            | Position::Stack(StackSpec {
+                normalize: true,
+                ..
+            })
+            | Position::ShapeStack(ShapeStackSpec {
+                offset: crate::shape::StackOffset::Expand,
+                ..
+            })
     ) {
         domains.y_space = Some(ValueSpace::Data);
     }

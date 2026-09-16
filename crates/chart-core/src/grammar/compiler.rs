@@ -42,6 +42,47 @@ pub(crate) struct PositionedScope {
     positional_empty: std::collections::BTreeSet<crate::ScaleId>,
 }
 
+pub(crate) fn synchronize_position_populations(
+    definitions: &mut [ChartDefinition],
+    populations: &[&PreparedScope],
+) {
+    let mut counts = std::collections::BTreeMap::<crate::LayerId, (usize, Vec<f64>)>::new();
+    for (definition, population) in definitions.iter().zip(populations) {
+        for layer in &definition.layers {
+            if !matches!(
+                layer.position,
+                Position::GgplotDodge(_) | Position::GgplotDodge2(_) | Position::JitterDodge(_)
+            ) {
+                continue;
+            }
+            if let Some(encoded) = population.encoded.get(&layer.id) {
+                let count =
+                    super::ggplot_position::collision_population(&layer.position, &encoded.encoded);
+                let entry = counts.entry(layer.id).or_default();
+                entry.0 = entry.0.max(count);
+                if matches!(layer.position, Position::JitterDodge(_)) {
+                    entry.1.extend(encoded.encoded.iter().filter_map(|r| r.x));
+                }
+            }
+        }
+    }
+    let counts = counts
+        .into_iter()
+        .map(|(id, (count, values))| (id, (count, super::ggplot_position::resolution(values))))
+        .collect::<BTreeMap<_, _>>();
+    for definition in definitions {
+        for layer in &mut definition.layers {
+            if let Some((count, resolution)) = counts.get(&layer.id) {
+                super::ggplot_position::resolve_population(
+                    &mut layer.position,
+                    *count,
+                    *resolution,
+                );
+            }
+        }
+    }
+}
+
 pub(crate) fn transform_generated_scopes(
     scopes: &mut [(&ChartDefinition, &mut PreparedScope)],
 ) -> ChartResult<()> {
@@ -68,6 +109,131 @@ pub(crate) fn transform_generated_scopes(
     Ok(())
 }
 
+/// Keep pre-stat positional contributions for reference shrink=false without painting source rows.
+pub(crate) fn retain_facet_raw_domains(
+    definition: &ChartDefinition,
+    panels: &[ChartDefinition],
+    scopes: &mut [PositionedScope],
+    source: &StoreSnapshot,
+    limits: CompileLimits,
+) -> ChartResult<()> {
+    let spec = definition.facets.as_ref().expect("facet source training");
+    if spec.reference.as_ref().is_none_or(|p| p.shrink) {
+        return Ok(());
+    }
+    let mut remaining = limits.max_prepared_rows;
+    for (index, (panel, scope)) in panels.iter().zip(scopes).enumerate() {
+        let panel_scope = super::facets::PanelScope::new(spec, spec.order[index].clone());
+        for (layer, positioned) in &mut scope.layers {
+            let data = source.dataset(positioned.prepared.table.input.dataset)?;
+            let mut mappings = match &layer.mappings {
+                Mappings::Source(a) => a.clone(),
+                _ => layer
+                    .grammar
+                    .as_ref()
+                    .map(|g| g.source.clone())
+                    .unwrap_or_default(),
+            };
+            match &layer.statistic.parameters {
+                StatParameters::Distribution(s) => {
+                    if s.sample_axis() == 0 {
+                        mappings.x = Some(s.input.clone());
+                        mappings.y = s.position.clone();
+                    } else {
+                        mappings.x = s.position.clone();
+                        mappings.y = Some(s.input.clone());
+                    }
+                }
+                StatParameters::Univariate(s) => {
+                    if s.sample_axis() == 0 {
+                        mappings.x = Some(s.input.clone());
+                        mappings.y = s.second.clone();
+                    } else {
+                        mappings.y = Some(s.input.clone());
+                    }
+                }
+                StatParameters::Summary(s) => {
+                    mappings.x = s
+                        .ggplot
+                        .as_ref()
+                        .and_then(|g| g.position.clone())
+                        .or(mappings.x);
+                    mappings.y = Some(s.input.clone());
+                }
+                StatParameters::Count(s) => {
+                    mappings.x = s
+                        .ggplot
+                        .as_ref()
+                        .and_then(|g| g.position.clone())
+                        .or(mappings.x);
+                }
+                StatParameters::Bin(s) => mappings.x = Some(s.input.clone()),
+                StatParameters::AutoBin(s) => mappings.x = Some(s.input.clone()),
+                StatParameters::Ols(s) => {
+                    mappings.x = Some(s.x.clone());
+                    mappings.y = Some(s.y.clone());
+                }
+                _ => {}
+            }
+            let projections = super::scale_stage::layer_projections(layer, &panel.axes);
+            let values = [mappings.x, mappings.y]
+                .into_iter()
+                .enumerate()
+                .map(|(i, n)| {
+                    n.map(|n| {
+                        if matches!(n, Numeric::Scaled { .. } | Numeric::Category(_)) {
+                            n
+                        } else {
+                            projections[i]
+                                .as_ref()
+                                .map_or_else(|| n.clone(), |p| p.mapping(n.clone()))
+                        }
+                    })
+                })
+                .collect::<Vec<_>>();
+            let mut filters = layer.filters.clone();
+            let mut input = layer.data;
+            for _ in 0..=panel.transforms.len() {
+                let DataRef::Transform(id) = input else { break };
+                let node = panel
+                    .transforms
+                    .iter()
+                    .find(|n| n.id == id)
+                    .ok_or_else(|| {
+                        error(
+                            DiagnosticCode::MissingResource,
+                            "Facet source transform is absent.",
+                        )
+                    })?;
+                filters.extend(node.filters.clone());
+                input = node.input;
+            }
+            for row in data.rows().filter(|row| {
+                filters
+                    .iter()
+                    .all(|f| stats::filter_matches(*row, f) == Some(true))
+                    && (layer.scope == StatScope::Chart
+                        || layer.facet != FacetTarget::Match
+                        || super::facets::row_matches(*row, &panel_scope))
+            }) {
+                charge(&mut remaining, 1, "facet raw positional row")?;
+                let numbers = [
+                    values[0].as_ref().and_then(|v| stats::number(row, v)),
+                    values[1].as_ref().and_then(|v| stats::number(row, v)),
+                ];
+                if let Some(v) = numbers[0] {
+                    Extent::include(&mut positioned.prepared.domains.x, v);
+                }
+                if let Some(v) = numbers[1] {
+                    Extent::include(&mut positioned.prepared.domains.y, v);
+                }
+                positioned.raw_training.push(numbers);
+            }
+        }
+    }
+    Ok(())
+}
+
 pub(crate) fn train_facet_positioned_scopes(
     definition: &ChartDefinition,
     panel_definitions: &[ChartDefinition],
@@ -79,58 +245,45 @@ pub(crate) fn train_facet_positioned_scopes(
     let Some(first) = panel_definitions.first() else {
         return Ok(());
     };
-    let mut shared = first.clone();
-    shared.axes.retain(|a| {
-        if a.side.horizontal() {
-            !facets.scales.free_x
-        } else {
-            !facets.scales.free_y
-        }
-    });
-    let mut empty = std::collections::BTreeSet::new();
-    let resolved = train_positioned_limits(
-        &shared,
-        &mut scopes
-            .iter_mut()
-            .flat_map(|s| s.layers.iter_mut().map(|(l, p)| (&*l, p)))
-            .collect::<Vec<_>>(),
-        registry,
-        limits,
-        &mut empty,
-        false,
-    )?;
-    for (scope, panel_definition) in scopes.iter_mut().zip(panel_definitions) {
-        let mut free = panel_definition.clone();
-        free.axes.retain(|a| {
-            if a.side.horizontal() {
-                facets.scales.free_x
-            } else {
-                facets.scales.free_y
+    for horizontal in [true, false] {
+        let groups = facets
+            .order
+            .iter()
+            .map(|key| super::facet_policy::sharing_group(facets, key, horizontal))
+            .collect::<Vec<_>>();
+        for group in groups.iter().collect::<BTreeSet<_>>() {
+            let mut shared = first.clone();
+            shared.axes.retain(|a| a.side.horizontal() == horizontal);
+            let mut empty = BTreeSet::new();
+            let resolved = train_positioned_limits(
+                &shared,
+                &mut scopes
+                    .iter_mut()
+                    .enumerate()
+                    .filter(|(i, _)| &groups[*i] == group)
+                    .flat_map(|(_, s)| s.layers.iter_mut().map(|(l, p)| (&*l, p)))
+                    .collect::<Vec<_>>(),
+                registry,
+                limits,
+                &mut empty,
+                false,
+            )?;
+            for (i, scope) in scopes.iter_mut().enumerate() {
+                if &groups[i] == group {
+                    scope.positional_limits.extend(resolved.clone());
+                    scope.positional_empty.extend(empty.iter().copied());
+                }
             }
-        });
-        scope.positional_limits = resolved.clone();
-        scope.positional_empty = empty.clone();
-        scope.positional_limits.extend(train_positioned_limits(
-            &free,
-            &mut scope
-                .layers
-                .iter_mut()
-                .map(|(l, p)| (&*l, p))
-                .collect::<Vec<_>>(),
-            registry,
-            limits,
-            &mut scope.positional_empty,
-            false,
-        )?);
+        }
     }
     for axis in definition.axes.iter().filter(|a| {
         a.oob_function.is_some() && !matches!(a.scale, crate::layout::AxisScale::Binned { .. })
     }) {
-        let free = if axis.side.horizontal() {
-            facets.scales.free_x
-        } else {
-            facets.scales.free_y
-        };
+        let identities = facets
+            .order
+            .iter()
+            .map(|key| super::facet_policy::sharing_group(facets, key, axis.side.horizontal()))
+            .collect::<Vec<_>>();
         let axes = scopes
             .iter()
             .zip(panel_definitions)
@@ -158,33 +311,20 @@ pub(crate) fn train_facet_positioned_scopes(
                 .expect("layer")
                 .0
                 .clone();
-            let mut groups = if free {
-                scopes
-                    .iter_mut()
-                    .zip(&axes)
-                    .map(|(scope, axis)| {
-                        (
-                            axis,
-                            scope
-                                .layers
-                                .iter_mut()
-                                .filter(|(l, _)| l.id == id)
-                                .flat_map(|(_, p)| p.encoded.iter_mut())
-                                .collect(),
-                        )
-                    })
-                    .collect::<Vec<_>>()
-            } else {
-                vec![(
-                    &axes[0],
-                    scopes
+            let mut grouped = BTreeMap::<GroupValue, (_, Vec<_>)>::new();
+            for (i, scope) in scopes.iter_mut().enumerate() {
+                let entry = grouped
+                    .entry(identities[i].clone())
+                    .or_insert_with(|| (&axes[i], vec![]));
+                entry.1.extend(
+                    scope
+                        .layers
                         .iter_mut()
-                        .flat_map(|s| s.layers.iter_mut())
                         .filter(|(l, _)| l.id == id)
-                        .flat_map(|(_, p)| p.encoded.iter_mut())
-                        .collect(),
-                )]
-            };
+                        .flat_map(|(_, p)| p.encoded.iter_mut()),
+                );
+            }
+            let mut groups = grouped.into_values().collect::<Vec<_>>();
             super::positional_vectors::generated_populations(
                 definition,
                 &layer,
@@ -289,7 +429,8 @@ impl Compiler {
         }
         validate_definition(definition, snapshot, limits, &self.extensions)?;
         if definition.facets.is_some() {
-            facets::validate_facets(definition, snapshot, limits, &self.extensions)?;
+            let planned = super::facet_policy::resolve(definition, snapshot, limits)?;
+            facets::validate_facets(planned.as_ref(), snapshot, limits, &self.extensions)?;
         }
         Ok(())
     }
@@ -389,7 +530,18 @@ impl Compiler {
             facets::prepare_facets(self, definition, source, state, limits)
         } else {
             self.cache.retain(|key, _| key.is_none());
-            self.prepare_scoped(definition, source, state, limits, None)
+            if super::ggplot_bin_training::needed(definition) {
+                let mut trained = definition.clone();
+                super::ggplot_bin_training::resolve(
+                    std::slice::from_mut(&mut trained),
+                    snapshot,
+                    limits,
+                    None,
+                )
+                .and_then(|()| self.prepare_scoped(&trained, source, state, limits, None))
+            } else {
+                self.prepare_scoped(definition, source, state, limits, None)
+            }
         };
         let result = match result {
             Ok(result) => result,
@@ -894,12 +1046,18 @@ pub(super) fn validate_definition(
             ));
         }
         stats::validate_stat(&node.statistic, limits)?;
+        if let StatParameters::Univariate(spec) = &node.statistic.parameters {
+            super::univariate_stage::validate_registry(spec, extensions, false)?;
+        }
         if matches!(node.statistic.parameters, StatParameters::Custom(_)) {
             extensions.stat_descriptor(&node.statistic.operation)?;
         }
         stats::validate_filters(&node.filters, limits)?;
     }
     for layer in &definition.layers {
+        super::text_geom::validate_layer(layer)?;
+        super::row_annotation::validate_layer(layer, limits.max_vertices)?;
+        super::recipe_emit::validate(layer)?;
         super::shape_encoding::validate(layer)?;
         match layer.geom {
             Geom::ShapeLine { curve, .. }
@@ -938,6 +1096,9 @@ pub(super) fn validate_definition(
             ));
         }
         stats::validate_stat(&layer.statistic, limits)?;
+        if let StatParameters::Univariate(spec) = &layer.statistic.parameters {
+            super::univariate_stage::validate_registry(spec, extensions, false)?;
+        }
         if matches!(layer.statistic.parameters, StatParameters::Custom(_)) {
             extensions.stat_descriptor(&layer.statistic.operation)?;
         }
@@ -953,7 +1114,7 @@ pub(super) fn validate_definition(
             ));
         }
         let reference_line =
-            definition.profile() == Profile::Ggplot2_4_0_3 && layer.geom.reference_linewidth();
+            definition.profile() == Profile::Ggplot2_4_0_3 && layer.reference_linewidth();
         if let Some(line_type) = layer.style.line_type {
             line_type.pattern(if reference_line && layer.style.stroke_width == 0. {
                 1.
@@ -965,7 +1126,7 @@ pub(super) fn validate_definition(
             channel.validate(value)?;
         }
         let reference_point = definition.profile() == Profile::Ggplot2_4_0_3
-            && layer.geom == Geom::Point
+            && layer.reference_point()
             && !layer
                 .grammar
                 .as_ref()
@@ -1029,7 +1190,11 @@ pub(super) fn validate_definition(
     Ok(order)
 }
 
+#[derive(Clone)]
 pub(super) struct EncodedRow {
+    pub(super) stat_outliers: Vec<StatOutlier>,
+    pub(super) outlier_anchor_y: Option<f64>,
+    pub(super) recipe_values: BTreeMap<RecipeAesthetic, crate::interpolate::Value>,
     pub(super) missing_aesthetics: u8,
     pub(super) values: BTreeMap<ValueAesthetic, crate::interpolate::Value>,
     pub(super) shape: Option<Box<super::shape_encoding::ShapeRow>>,
@@ -1122,7 +1287,13 @@ fn bin_space(space: &ValueSpace, value: &BinNumeric) -> ChartResult<Option<Value
             "Generated literal mappings must be finite.",
         )),
         BinNumeric::Literal(_) => Ok(None),
-        BinNumeric::Field(BinField::Count) => Ok(Some(ValueSpace::Data)),
+        BinNumeric::Field(
+            BinField::Count
+            | BinField::Width
+            | BinField::Density
+            | BinField::NCount
+            | BinField::NDensity,
+        ) => Ok(Some(ValueSpace::Data)),
         BinNumeric::Field(_) => Ok(Some(space.clone())),
     }
 }
@@ -1132,6 +1303,13 @@ fn bin_number(row: &BinnedRow, value: &BinNumeric) -> Option<f64> {
         BinNumeric::Field(BinField::Start) => Some(row.start),
         BinNumeric::Field(BinField::End) => Some(row.end),
         BinNumeric::Field(BinField::Midpoint) => Some(row.start.midpoint(row.end)),
+        BinNumeric::Field(BinField::Width) => Some(row.end - row.start),
+        BinNumeric::Field(BinField::Density) => row.statistics.as_ref().and_then(|s| s.density),
+        BinNumeric::Field(BinField::NCount) => row.statistics.as_ref().and_then(|s| s.ncount),
+        BinNumeric::Field(BinField::NDensity) => row.statistics.as_ref().and_then(|s| s.ndensity),
+        BinNumeric::Field(BinField::Count) if row.statistics.is_some() => {
+            row.statistics.as_ref().map(|s| s.count)
+        }
         BinNumeric::Field(BinField::Count) if row.count <= 1_u64 << 53 => Some(row.count as f64),
         _ => None,
     }
@@ -1174,6 +1352,11 @@ pub(super) fn eligible_domains(layer: &PreparedLayer) -> DomainContributions {
             };
             for mark in layer.marks.iter() {
                 match &mark.geometry {
+                    PreparedGeometry::Recipe(recipe) => {
+                        for p in recipe.points() {
+                            include(p.x(), p.y());
+                        }
+                    }
                     PreparedGeometry::UnboundedPoint(p) => {
                         include(p[0].0, p[1].0);
                     }
@@ -1361,13 +1544,17 @@ fn source_binding(
         }
         return Ok((aes, DomainContributions::default()));
     }
-    if layer.geom != Geom::Blank && (aes.x.is_none() || aes.y.is_none()) {
+    if layer.geom != Geom::Blank
+        && !matches!(layer.recipe, Some(BuiltinRecipe::Rug(_)))
+        && (aes.x.is_none()
+            || (aes.y.is_none() && !matches!(layer.recipe, Some(BuiltinRecipe::Interval(_)))))
+    {
         return Err(error(
             DiagnosticCode::SchemaConflict,
             "Geometry requires x and y source mappings.",
         ));
     }
-    if endpoints && (aes.x2.is_none() || aes.y2.is_none()) {
+    if layer.recipe.is_none() && endpoints && (aes.x2.is_none() || aes.y2.is_none()) {
         return Err(error(
             DiagnosticCode::SchemaConflict,
             "Rules/rectangles require both second endpoints; baselines must be explicit.",
@@ -1469,7 +1656,7 @@ fn bin_binding(
         Geom::Rule | Geom::ShapeLink { .. } | Geom::Rectangle | Geom::ShapeArea { .. }
     );
     let mut domains = DomainContributions::default();
-    if endpoints && (aes.x2.is_none() || aes.y2.is_none()) {
+    if layer.recipe.is_none() && endpoints && (aes.x2.is_none() || aes.y2.is_none()) {
         return Err(error(
             DiagnosticCode::SchemaConflict,
             "Generated rule/rectangle mappings require both endpoints.",
@@ -1524,6 +1711,7 @@ struct GeometryBudget<'a> {
 /// Encoded rows after statistics and positions, before final scale mapping and
 /// geometry. Retaining this stage lets shared scales train across all layers once.
 struct PositionedLayer {
+    raw_training: Vec<[Option<f64>; 2]>,
     prepared: PreparedLayer,
     encoded: Vec<EncodedRow>,
     mapped_size: bool,
@@ -1604,7 +1792,10 @@ fn encode_layer(
                 .map(|r| {
                     let row = index[&r.key];
                     EncodedRow {
+                        stat_outliers: vec![],
+                        outlier_anchor_y: None,
                         missing_aesthetics: 0,
+                        recipe_values: BTreeMap::new(),
                         values: BTreeMap::new(),
                         x: aes.x.as_ref().and_then(|v| coordinate(row, v)),
                         y: aes.y.as_ref().and_then(|v| coordinate(row, v)),
@@ -1686,7 +1877,10 @@ fn encode_layer(
                 rows.iter()
                     .enumerate()
                     .map(|(i, r)| EncodedRow {
+                        stat_outliers: r.outliers.clone(),
+                        outlier_anchor_y: None,
                         missing_aesthetics: 0,
+                        recipe_values: BTreeMap::new(),
                         values: BTreeMap::new(),
                         x: value(i, r, &aes.x, 0),
                         y: value(i, r, &aes.y, 1),
@@ -1712,6 +1906,41 @@ fn encode_layer(
             )
         }
         (PreparedRows::Binned(rows), Mappings::Binned(aes)) => {
+            let OutputSchema::Binned { fields, .. } = &table.schema else {
+                unreachable!()
+            };
+            let check = |field: &BinField| -> ChartResult<()> {
+                if fields.iter().any(|f| f.field == *field) {
+                    Ok(())
+                } else {
+                    Err(error(
+                        DiagnosticCode::SchemaConflict,
+                        "Mapped bin field is absent from the statistic output schema.",
+                    ))
+                }
+            };
+            for mapping in [
+                Some(&aes.x),
+                Some(&aes.y),
+                aes.x2.as_ref(),
+                aes.y2.as_ref(),
+                aes.size.as_ref(),
+            ]
+            .into_iter()
+            .flatten()
+            {
+                match mapping {
+                    BinNumeric::Field(f) => check(f)?,
+                    BinNumeric::Expression(e) => {
+                        for node in &e.nodes {
+                            if let ExpressionNode::Read(f) = node {
+                                check(f)?;
+                            }
+                        }
+                    }
+                    _ => {}
+                }
+            }
             domains = bin_binding(layer, aes, &table.space)?;
             let expressions = [&aes.x, &aes.y]
                 .into_iter()
@@ -1727,7 +1956,14 @@ fn encode_layer(
                                 expression_number(
                                     bin_number(&rows[i], &BinNumeric::Field(*field)).and_then(
                                         |v| {
-                                            if *field == BinField::Count {
+                                            if matches!(
+                                                field,
+                                                BinField::Count
+                                                    | BinField::Width
+                                                    | BinField::Density
+                                                    | BinField::NCount
+                                                    | BinField::NDensity
+                                            ) {
                                                 Some(v)
                                             } else {
                                                 backtransform(v, &table.space)
@@ -1752,7 +1988,10 @@ fn encode_layer(
                 .iter()
                 .enumerate()
                 .map(|(i, r)| EncodedRow {
+                    stat_outliers: vec![],
+                    outlier_anchor_y: None,
                     missing_aesthetics: 0,
+                    recipe_values: BTreeMap::new(),
                     values: BTreeMap::new(),
                     x: value(i, r, &aes.x, 0),
                     y: value(i, r, &aes.y, 1),
@@ -1835,6 +2074,7 @@ fn encode_layer(
         // positional observation for a summary without any usable input.
         encoded.retain(|row| rows.get(row.ordinal as usize).is_none_or(|r| r.count != 0));
     }
+    super::recipe_emit::resolve(layer, data, table, &mut encoded, &domains, limits)?;
     Ok(EncodedLayer {
         domains,
         encoded,
@@ -1861,6 +2101,9 @@ fn position_layer(
     let limits = budget.limits;
     let vertices = &mut budget.vertices;
     super::scale_stage::generated_rows(layer, budget.population_axes, &mut domains, &mut encoded)?;
+    for row in &mut encoded {
+        row.outlier_anchor_y = row.y;
+    }
     let catalog = layer
         .color
         .as_ref()
@@ -1952,6 +2195,7 @@ fn position_layer(
             .contains_key(&NumericAesthetic::AreaSize);
     let mapped_size =
         mapped_size || area_size || layer.numeric_scales.contains_key(&NumericAesthetic::Size);
+    super::recipe_emit::setup(layer, &mut encoded, limits)?;
     let stack = super::positions::apply(layer, &domains, &mut encoded, limits, &shape_protocols)?;
     super::positions::output_space(layer, &mut domains);
     let prepared = PreparedLayer {
@@ -1977,6 +2221,7 @@ fn position_layer(
         visible: state.is_visible(layer.id),
     };
     Ok(PositionedLayer {
+        raw_training: vec![],
         prepared,
         encoded,
         mapped_size,
@@ -1991,6 +2236,7 @@ fn finish_layer(
     diagnostics: &mut Vec<Diagnostic>,
 ) -> ChartResult<PreparedLayer> {
     let PositionedLayer {
+        raw_training: _,
         mut prepared,
         mut encoded,
         mapped_size,
@@ -2012,7 +2258,7 @@ fn finish_layer(
     // still exclude them before constructing checked Points.
     for row in &mut encoded {
         let retain_infinite_point = budget.profile == Profile::Ggplot2_4_0_3
-            && layer.geom == Geom::Point
+            && layer.reference_point()
             && !row.values.contains_key(&ValueAesthetic::Shape);
         for value in [
             &mut row.x,
@@ -2108,6 +2354,10 @@ fn finish_layer(
         }
     }
     prepared.unpainted_categories = unpainted_categories;
+    if super::recipe_emit::emit(layer, &encoded, &mut prepared, vertices)? {
+        super::orientation::output(&mut prepared)?;
+        return Ok(prepared);
+    }
     if layer.geom == Geom::Blank {
         return Ok(prepared);
     }
@@ -2227,8 +2477,8 @@ fn finish_layer(
                     .filter(|v| {
                         *v > 0.
                             || (budget.profile == Profile::Ggplot2_4_0_3
-                                && ((!v.is_nan() && layer.geom == Geom::Point)
-                                    || (layer.geom.reference_linewidth() && *v == 0.)))
+                                && ((!v.is_nan() && layer.reference_point())
+                                    || (layer.reference_linewidth() && *v == 0.)))
                     })
                     .map(|size| Style {
                         radius: size,
@@ -2427,6 +2677,7 @@ fn finish_layer(
             };
             if let (Some(geometry), Some(style), Some(group)) = (geometry, style, row.group) {
                 let n = match geometry {
+                    PreparedGeometry::Recipe(ref v) => v.points().len(),
                     PreparedGeometry::ShapePathRun {
                         ref geometry,
                         ref anchors,
@@ -2507,7 +2758,7 @@ pub(super) fn row_style(layer: &Layer, row: &EncodedRow) -> ChartResult<Style> {
                 ..
             }
         );
-    Ok(Style {
+    let mut style = Style {
         color: resolve(row.color.unwrap_or(layer.style.color)),
         fill: layer.style.fill.or(row.fill).map(resolve).or_else(|| {
             default_fill.then_some(crate::scene::Color {
@@ -2525,7 +2776,23 @@ pub(super) fn row_style(layer: &Layer, row: &EncodedRow) -> ChartResult<Style> {
             .transpose()?),
         stroke_width: row.stroke_width.unwrap_or(layer.style.stroke_width),
         ..layer.style.resolve()
-    })
+    };
+    if matches!(layer.recipe, Some(super::BuiltinRecipe::Density(_))) {
+        style.color = super::numeric_aesthetics::apply_opacity(
+            row.color.unwrap_or(layer.style.color),
+            row.opacity,
+        );
+        style.stroke = Some(super::numeric_aesthetics::apply_opacity(
+            layer
+                .style
+                .stroke
+                .or(row.stroke)
+                .unwrap_or(row.color.unwrap_or(layer.style.color)),
+            row.opacity,
+        ));
+        style.alpha = None;
+    }
+    Ok(style)
 }
 pub(super) fn run_style<'a>(
     layer: &Layer,
@@ -2700,6 +2967,12 @@ pub(super) fn include_geometry(domains: &mut DomainContributions, geometry: &Pre
         Extent::include(&mut domains.y, p.y());
     };
     match geometry {
+        PreparedGeometry::Recipe(recipe) => {
+            for p in recipe.points() {
+                Extent::include(&mut domains.x, p.x());
+                Extent::include(&mut domains.y, p.y());
+            }
+        }
         PreparedGeometry::UnboundedPoint(p) => {
             if p[0].0.is_finite() {
                 Extent::include(&mut domains.x, p[0].0);
@@ -2854,6 +3127,7 @@ fn stat_shape(
     }
     let automatic = if let StatParameters::AutoBin(s) = &stat.parameters {
         Some(BinSpec {
+            ggplot: s.ggplot.clone(),
             input: s.input.clone(),
             edges: vec![],
             grouping: s.grouping.clone(),
@@ -2877,7 +3151,11 @@ fn stat_shape(
     }
     if matches!(
         stat.parameters,
-        StatParameters::Count(_) | StatParameters::Summary(_) | StatParameters::Ols(_)
+        StatParameters::Distribution(_)
+            | StatParameters::Univariate(_)
+            | StatParameters::Count(_)
+            | StatParameters::Summary(_)
+            | StatParameters::Ols(_)
     ) {
         input.statistical = Some(super::statistics::schema(stat, data, limits)?);
     }
@@ -2963,7 +3241,8 @@ fn statistical_binding(
     if matches!(
         layer.geom,
         Geom::Rule | Geom::ShapeLink { .. } | Geom::Rectangle | Geom::ShapeArea { .. }
-    ) {
+    ) && layer.recipe.is_none()
+    {
         let (Some(x2), Some(y2)) = (&aes.x2, &aes.y2) else {
             return Err(error(
                 DiagnosticCode::SchemaConflict,
@@ -3248,6 +3527,10 @@ fn train_positioned_limits(
             } else {
                 continue;
             };
+            for raw in &positioned.raw_training {
+                charge(&mut remaining, 1, "facet raw limit population")?;
+                values.push(raw[dimension].map(Number));
+            }
             for row in &positioned.encoded {
                 // A built-in summary with no usable observations has no reference
                 // population at the post-stat stage, even though the library keeps

@@ -482,6 +482,25 @@ pub(super) fn source_layer(layer: &mut Layer, axes: &[crate::layout::AxisSpec]) 
         }
     }
     match &mut layer.statistic.parameters {
+        StatParameters::Distribution(s) => {
+            let axis = s.sample_axis();
+            let scales = [x.as_ref(), y.as_ref()];
+            wrap(&mut s.input, scales[axis]);
+            if let Some(p) = &mut s.position {
+                wrap(p, scales[1 - axis]);
+            }
+        }
+        StatParameters::Univariate(s) => {
+            let axis = s.sample_axis();
+            let scales = [x.as_ref(), y.as_ref()];
+            wrap(&mut s.input, scales[axis]);
+            if let Some(p) = &mut s.second {
+                wrap(p, scales[1 - axis]);
+            }
+            if matches!(s.kind, UnivariateKind::Function { .. }) {
+                s.output_scale = y.clone();
+            }
+        }
         StatParameters::Bin(s) => {
             if let Some(scale) = &x
                 && let Some(transform) = &scale.transform
@@ -502,22 +521,32 @@ pub(super) fn source_layer(layer: &mut Layer, axes: &[crate::layout::AxisSpec]) 
         }
         StatParameters::AutoBin(s) => wrap(&mut s.input, x.as_ref()),
         StatParameters::Summary(s) => {
-            let input_scale = if layer
-                .grammar
-                .as_ref()
-                .is_some_and(|g| g.source.y.as_ref() == Some(&s.input))
+            let input_scale = if s.ggplot.is_some()
+                || layer
+                    .grammar
+                    .as_ref()
+                    .is_some_and(|g| g.source.y.as_ref() == Some(&s.input))
             {
                 y.as_ref()
             } else {
                 x.as_ref()
             };
             wrap(&mut s.input, input_scale);
+            if let Some(n) = s.ggplot.as_mut().and_then(|g| g.position.as_mut()) {
+                wrap(n, x.as_ref());
+            }
         }
         StatParameters::Ols(s) => {
             wrap(&mut s.x, x.as_ref());
             wrap(&mut s.y, y.as_ref());
         }
         StatParameters::Count(s) => {
+            if let Some(n) = s.ggplot.as_mut().and_then(|g| g.joint_position.as_mut()) {
+                wrap(n, y.as_ref());
+            }
+            if let Some(n) = s.ggplot.as_mut().and_then(|g| g.position.as_mut()) {
+                wrap(n, x.as_ref());
+            }
             if let Some(grammar) = &layer.grammar {
                 for value in &mut s.required {
                     if grammar.source.x.as_ref() == Some(value) {
@@ -647,6 +676,71 @@ pub(super) fn transform_generated_populations(
                 }
             }
         }
+        if dimension == 1 {
+            let channels = groups
+                .iter()
+                .flat_map(|(_, _, _, rows)| {
+                    rows.iter().flat_map(|r| r.recipe_values.keys().copied())
+                })
+                .filter(|channel| super::recipe_emit::dependent_channel(*channel))
+                .collect::<std::collections::BTreeSet<_>>();
+            for channel in channels {
+                let raw = groups
+                    .iter()
+                    .zip(&projections)
+                    .filter(|(_, p)| p.is_some())
+                    .flat_map(|((_, _, _, rows), _)| {
+                        rows.iter().map(|r| match r.recipe_values.get(&channel) {
+                            Some(crate::interpolate::Value::Number(v)) => v.0,
+                            _ => f64::NAN,
+                        })
+                    })
+                    .collect::<Vec<_>>();
+                let mut values =
+                    crate::scales::ggplot_numeric_limits::forward_values(&family, reverse, &raw)?
+                        .into_iter();
+                for ((_, _, _, rows), projection) in groups.iter_mut().zip(&projections) {
+                    if projection.is_none() {
+                        continue;
+                    }
+                    for row in rows.iter_mut() {
+                        let value = values.next().expect("length preserving transform");
+                        if let Some(slot) = row.recipe_values.get_mut(&channel) {
+                            *slot = if value.is_nan() {
+                                crate::interpolate::Value::Missing
+                            } else {
+                                crate::interpolate::Value::Number(crate::interpolate::Number(value))
+                            };
+                        }
+                    }
+                }
+            }
+            let raw = groups
+                .iter()
+                .zip(&projections)
+                .filter(|(_, p)| p.is_some())
+                .flat_map(|((_, _, _, rows), _)| {
+                    rows.iter()
+                        .flat_map(|r| r.stat_outliers.iter().map(|v| v.value))
+                })
+                .collect::<Vec<_>>();
+            if !raw.is_empty() {
+                let mut values =
+                    crate::scales::ggplot_numeric_limits::forward_values(&family, reverse, &raw)?
+                        .into_iter();
+                for ((_, _, _, rows), projection) in groups.iter_mut().zip(&projections) {
+                    if projection.is_none() {
+                        continue;
+                    }
+                    for row in rows.iter_mut() {
+                        row.stat_outliers.retain_mut(|outlier| {
+                            outlier.value = values.next().expect("length preserving transform");
+                            !outlier.value.is_nan()
+                        });
+                    }
+                }
+            }
+        }
         for ((_, _, domains, _), scale) in groups.iter_mut().zip(projections) {
             if let Some(scale) = scale {
                 let space = if dimension == 0 {
@@ -731,6 +825,26 @@ pub(super) fn generated_rows(
         };
         for row in rows.iter_mut() {
             row.y = project(row.y);
+            for (channel, value) in &mut row.recipe_values {
+                if super::recipe_emit::dependent_channel(*channel) {
+                    let raw = if let crate::interpolate::Value::Number(value) = value {
+                        Some(value.0)
+                    } else {
+                        None
+                    };
+                    *value = project(raw)
+                        .map(|v| crate::interpolate::Value::Number(crate::interpolate::Number(v)))
+                        .unwrap_or(crate::interpolate::Value::Missing);
+                }
+            }
+            row.stat_outliers.retain_mut(|outlier| {
+                if let Some(value) = project(Some(outlier.value)) {
+                    outlier.value = value;
+                    true
+                } else {
+                    false
+                }
+            });
             if y2 || row.y2.is_some() {
                 row.y2 = project(row.y2);
             }
@@ -796,7 +910,12 @@ pub(super) fn train_binned_axes(
             axis.id,
             &mut remaining,
             None,
-            scope.filter(|_| free),
+            super::facet_policy::axis_scope(
+                definition,
+                scope.filter(|_| free),
+                axis.side.horizontal(),
+            )
+            .as_ref(),
             None,
         )?;
         // A retained free panel has an untrained NULL bin population in the
@@ -904,7 +1023,13 @@ fn numeric_population(
         let mut values = Vec::new();
         for key in &facets.order {
             let panel = super::facets::PanelScope {
+                axis_group: false,
                 fields: facets.fields.clone(),
+                names: facets
+                    .reference
+                    .as_ref()
+                    .map(|p| p.field_names.clone())
+                    .unwrap_or_default(),
                 key: key.clone(),
             };
             values.extend(numeric_population_scoped(
@@ -1264,7 +1389,12 @@ pub(super) fn train_function_axes(
             axis.id,
             &mut remaining,
             is_temporal.then_some(&mut population),
-            scope.filter(|_| free),
+            super::facet_policy::axis_scope(
+                definition,
+                scope.filter(|_| free),
+                axis.side.horizontal(),
+            )
+            .as_ref(),
             Some(&mut batches),
         )?;
         let mut temporal = population.normalization;

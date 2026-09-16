@@ -207,6 +207,24 @@ pub(super) fn resolve_scoped<'a>(
         ));
     }
     let mut resolved = definition.clone();
+    if policy.profile == Profile::Ggplot2_4_0_3 {
+        for statistic in resolved
+            .layers
+            .iter_mut()
+            .map(|l| &mut l.statistic)
+            .chain(resolved.transforms.iter_mut().map(|t| &mut t.statistic))
+        {
+            match &mut statistic.parameters {
+                StatParameters::Bin(s) => {
+                    s.ggplot.get_or_insert_with(Default::default);
+                }
+                StatParameters::AutoBin(s) => {
+                    s.ggplot.get_or_insert_with(Default::default);
+                }
+                _ => {}
+            }
+        }
+    }
     for layer in &mut resolved.layers {
         let mut input = layer.data;
         for _ in 0..=definition.transforms.len() {
@@ -233,7 +251,7 @@ pub(super) fn resolve_scoped<'a>(
         };
         let data = source.dataset(id)?;
         if policy.profile == Profile::Ggplot2_4_0_3
-            && layer.geom == Geom::Point
+            && layer.reference_point()
             && !layer
                 .grammar
                 .as_ref()
@@ -269,7 +287,29 @@ pub(super) fn resolve_scoped<'a>(
             } else {
                 layer.color = None;
             }
-            if matches!(layer.geom, Geom::Point) {
+            if matches!(layer.recipe, Some(super::BuiltinRecipe::Column(_)))
+                && layer.style.fill.is_none()
+                && !layer
+                    .paint_scales
+                    .contains_key(&super::PaintAesthetic::Fill)
+            {
+                // geom_col defaults to a 35% paper blend, independent of outline colour.
+                let ink = theme.ink.resolve();
+                let paper = theme.paper.resolve();
+                let mix = |ink: u8, paper: u8| {
+                    (f64::from(ink) * 0.65 + f64::from(paper) * 0.35).round() as u8
+                };
+                layer.style.fill = Some(
+                    crate::scene::Color {
+                        red: mix(ink.red, paper.red),
+                        green: mix(ink.green, paper.green),
+                        blue: mix(ink.blue, paper.blue),
+                        alpha: mix(ink.alpha, paper.alpha),
+                    }
+                    .into(),
+                );
+            }
+            if layer.reference_point() {
                 if grammar.default_radius != Some(false) && grammar.default_line_width.is_none() {
                     layer.style.stroke_width = theme.line_width;
                 }
@@ -287,6 +327,7 @@ pub(super) fn resolve_scoped<'a>(
                     source.size = None;
                 }
             }
+            super::recipe_distributions::apply_defaults(layer, &theme);
         }
         if policy.grouping == GroupPolicy::DiscreteInteraction {
             let authored = match &layer.mappings {
@@ -443,6 +484,8 @@ fn resolve_group(
 }
 fn set_group(stat: &mut Statistic, group: Grouping) {
     match &mut stat.parameters {
+        StatParameters::Distribution(s) => s.grouping = group,
+        StatParameters::Univariate(s) => s.grouping = group,
         StatParameters::Identity => {}
         StatParameters::Custom(s) => s.grouping = group,
         StatParameters::AutoBin(s) => s.grouping = group,

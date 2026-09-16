@@ -105,14 +105,16 @@ pub(super) fn preflight(
         ));
     }
     match &encoding.input {
-        ColorInput::Category(field) if source => {
+        ColorInput::Category(field) if source || fields.is_some() => {
             if matches!(encoding.scale, ColorScale::Mapped { .. }) {
                 validate_key(data, *field)?;
             } else {
                 super::stats::validate_group(data, &Grouping::Field(*field))?;
             }
         }
-        ColorInput::Numeric(value) if source || matches!(value, Numeric::Literal(_)) => {
+        ColorInput::Numeric(value)
+            if source || fields.is_some() || matches!(value, Numeric::Literal(_)) =>
+        {
             super::stats::numeric_space(data, value)?;
         }
         ColorInput::Group => {}
@@ -164,6 +166,9 @@ pub(super) fn apply(
     let Some(encoding) = encoding else {
         return Ok(None);
     };
+    if dropped(&encoding.input, table) {
+        return Ok(None);
+    }
     let fields = match &table.schema {
         OutputSchema::Statistical { fields, .. } | OutputSchema::Custom { fields, .. } => {
             Some(fields.as_slice())
@@ -355,35 +360,43 @@ pub(super) fn read_inputs(
             }
         }
         ColorInput::Category(field) => {
-            if !matches!(table.rows, PreparedRows::Source(_)) {
-                return Err(error(
-                    DiagnosticCode::SchemaConflict,
-                    "Source color fields require source rows.",
-                ));
-            }
-            validate_key(data, *field)?;
-            let catalog = data.categories(*field).unwrap_or_default();
-            if catalog.len() > limits.max_groups {
-                return Err(error(
-                    DiagnosticCode::ResourceLimit,
-                    "Color catalog exceeds category budget.",
-                ));
-            }
-            if shared.is_none() {
-                labels = catalog.to_vec();
-            }
-            let source: BTreeMap<_, _> = data.rows().map(|r| (r.key(), r)).collect();
-            for (i, row) in rows.iter().enumerate() {
-                let Some(r) = row.key.and_then(|key| source.get(&key)) else {
-                    continue;
-                };
-                keys[i] = r.value(*field).map(scale_key);
-                categories[i] = match r.value(*field) {
-                    None => None,
-                    Some(ValueRef::Category(s) | ValueRef::Utf8(s)) => Some(s.to_owned()),
-                    _ => super::stats::group_value(*r, &Grouping::Field(*field))
-                        .map(|g| super::statistics::group_label(&g)),
-                };
+            if let PreparedRows::Statistical(retained_rows) = &table.rows {
+                for (i, row) in retained_rows.iter().enumerate() {
+                    let value = retained(row, *field)?;
+                    keys[i] = group_key(value);
+                    categories[i] = (!matches!(value, GroupValue::Missing)).then(|| value.label());
+                }
+            } else {
+                if !matches!(table.rows, PreparedRows::Source(_)) {
+                    return Err(error(
+                        DiagnosticCode::SchemaConflict,
+                        "Source color fields require source rows.",
+                    ));
+                }
+                validate_key(data, *field)?;
+                let catalog = data.categories(*field).unwrap_or_default();
+                if catalog.len() > limits.max_groups {
+                    return Err(error(
+                        DiagnosticCode::ResourceLimit,
+                        "Color catalog exceeds category budget.",
+                    ));
+                }
+                if shared.is_none() {
+                    labels = catalog.to_vec();
+                }
+                let source: BTreeMap<_, _> = data.rows().map(|r| (r.key(), r)).collect();
+                for (i, row) in rows.iter().enumerate() {
+                    let Some(r) = row.key.and_then(|key| source.get(&key)) else {
+                        continue;
+                    };
+                    keys[i] = r.value(*field).map(scale_key);
+                    categories[i] = match r.value(*field) {
+                        None => None,
+                        Some(ValueRef::Category(s) | ValueRef::Utf8(s)) => Some(s.to_owned()),
+                        _ => super::stats::group_value(*r, &Grouping::Field(*field))
+                            .map(|g| super::statistics::group_label(&g)),
+                    };
+                }
             }
         }
         ColorInput::Numeric(value @ Numeric::Literal(number)) => {
@@ -391,22 +404,28 @@ pub(super) fn read_inputs(
             values.fill(Some(*number));
         }
         ColorInput::Numeric(value) => {
-            if !matches!(table.rows, PreparedRows::Source(_)) {
-                return Err(error(
-                    DiagnosticCode::SchemaConflict,
-                    "Source color mappings require source rows.",
-                ));
-            }
-            super::stats::numeric_space(data, value)?;
-            let source: BTreeMap<_, _> = data.rows().map(|r| (r.key(), r)).collect();
-            for (i, row) in rows.iter().enumerate() {
-                values[i] = row.key.and_then(|key| source.get(&key)).and_then(|r| {
-                    if reference {
-                        super::stats::raw_number(*r, value)
-                    } else {
-                        super::stats::number(*r, value)
-                    }
-                });
+            if let PreparedRows::Statistical(retained_rows) = &table.rows {
+                for (i, row) in retained_rows.iter().enumerate() {
+                    values[i] = retained_number(row, value)?;
+                }
+            } else {
+                if !matches!(table.rows, PreparedRows::Source(_)) {
+                    return Err(error(
+                        DiagnosticCode::SchemaConflict,
+                        "Source color mappings require source rows.",
+                    ));
+                }
+                super::stats::numeric_space(data, value)?;
+                let source: BTreeMap<_, _> = data.rows().map(|r| (r.key(), r)).collect();
+                for (i, row) in rows.iter().enumerate() {
+                    values[i] = row.key.and_then(|key| source.get(&key)).and_then(|r| {
+                        if reference {
+                            super::stats::raw_number(*r, value)
+                        } else {
+                            super::stats::number(*r, value)
+                        }
+                    });
+                }
             }
         }
         ColorInput::Statistical(field) => {
@@ -494,6 +513,9 @@ pub(super) fn shared_catalogs(
         let Some(table) = tables.get(&layer.id) else {
             continue;
         };
+        if dropped(&encoding.input, table) {
+            continue;
+        }
         let data = source.dataset(table.input.dataset)?;
         let labels = catalogs.entry(encoding.id).or_default();
         let seen = seen.entry(encoding.id).or_default();
@@ -510,6 +532,14 @@ pub(super) fn shared_catalogs(
             Ok(())
         };
         match (&encoding.input, &table.rows) {
+            (ColorInput::Category(field), PreparedRows::Statistical(rows)) => {
+                for row in rows.iter() {
+                    let value = retained(row, *field)?;
+                    if !matches!(value, GroupValue::Missing) {
+                        add(value.label())?;
+                    }
+                }
+            }
             (ColorInput::Category(field), PreparedRows::Source(rows)) => {
                 for label in data.categories(*field).unwrap_or_default() {
                     add(label.clone())?;
@@ -579,6 +609,90 @@ pub(super) fn shared_catalogs(
     Ok(catalogs)
 }
 
+/// Analytical statistics drop source aesthetics that vary within their groups.
+/// Count partitions retain their stricter source-column contract.
+pub(super) fn dropped(input: &ColorInput, table: &PreparedTable) -> bool {
+    if !table.population_operation().is_some_and(|op| {
+        matches!(
+            op.parameters,
+            StatParameters::Distribution(_) | StatParameters::Univariate(_)
+        )
+    }) {
+        return false;
+    }
+    let PreparedRows::Statistical(rows) = &table.rows else {
+        return false;
+    };
+    fn has_numeric(row: &StatisticalRow, value: &Numeric) -> bool {
+        if row.retained_numeric.iter().any(|(input, _)| input == value) {
+            return true;
+        }
+        match value {
+            Numeric::Literal(_) => true,
+            Numeric::Field(field) | Numeric::Category(field) | Numeric::Timestamp { field, .. } => {
+                row.retained.component(*field).is_some()
+            }
+            Numeric::Scaled { input, .. } => has_numeric(row, input),
+            _ => false,
+        }
+    }
+    rows.iter().any(|row| match input {
+        ColorInput::Category(field) => row.retained.component(*field).is_none(),
+        ColorInput::Numeric(value) => !has_numeric(row, value),
+        _ => false,
+    })
+}
+
+fn retained(row: &StatisticalRow, field: crate::FieldId) -> ChartResult<&GroupValue> {
+    row.retained.component(field).ok_or_else(|| {
+        error(
+            DiagnosticCode::SchemaConflict,
+            "Generated aesthetic source field is not retained by its statistical partition.",
+        )
+    })
+}
+fn group_key(v: &GroupValue) -> Option<crate::scales::ScaleKey> {
+    use crate::scales::ScaleKey;
+    match v {
+        GroupValue::Text(v) => Some(ScaleKey::Text(v.clone())),
+        GroupValue::Int(v) => Some(ScaleKey::Integer(*v)),
+        GroupValue::UInt(v) => Some(ScaleKey::Unsigned(*v)),
+        GroupValue::Boolean(v) => Some(ScaleKey::Boolean(*v)),
+        GroupValue::Number(v) => Some(ScaleKey::Number(crate::interpolate::Number(f64::from(*v)))),
+        _ => None,
+    }
+}
+fn retained_number(row: &StatisticalRow, value: &Numeric) -> ChartResult<Option<f64>> {
+    if let Some((_, result)) = row
+        .retained_numeric
+        .iter()
+        .find(|(input, _)| input == value)
+    {
+        return Ok(*result);
+    }
+    match value {
+        Numeric::Field(field) => Ok(match retained(row, *field)? {
+            GroupValue::Number(v) => Some(f64::from(*v)),
+            GroupValue::Int(v) if v.unsigned_abs() <= 1 << 53 => Some(*v as f64),
+            GroupValue::UInt(v) if *v <= 1 << 53 => Some(*v as f64),
+            GroupValue::Missing => None,
+            _ => {
+                return Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Retained aesthetic is not a representable numeric value.",
+                ));
+            }
+        }),
+        Numeric::Scaled { input, scale, .. } => {
+            Ok(scale.project_optional(retained_number(row, input)?))
+        }
+        Numeric::Literal(v) => Ok(Some(*v)),
+        _ => Err(error(
+            DiagnosticCode::SchemaConflict,
+            "Generated source aesthetic requires an explicitly retained numeric field.",
+        )),
+    }
+}
 fn scale_key(value: ValueRef<'_>) -> crate::scales::ScaleKey {
     use crate::{interpolate::Number, scales::ScaleKey};
     match value {
@@ -598,6 +712,9 @@ pub(super) fn numeric_population(
     reference: bool,
 ) -> ChartResult<Vec<Option<crate::interpolate::Number>>> {
     use crate::interpolate::Number;
+    if dropped(input, table) {
+        return Ok(vec![]);
+    }
     match (input, &table.rows) {
         (ColorInput::Numeric(value @ Numeric::Literal(number)), rows) => {
             super::stats::numeric_space(data, value)?;
@@ -618,6 +735,10 @@ pub(super) fn numeric_population(
                 })
                 .collect())
         }
+        (ColorInput::Numeric(value), PreparedRows::Statistical(rows)) => rows
+            .iter()
+            .map(|r| retained_number(r, value).map(|v| v.map(Number)))
+            .collect(),
         (ColorInput::Statistical(field), PreparedRows::Statistical(rows)) => {
             Ok(rows.iter().map(|r| r.value(field).map(Number)).collect())
         }
@@ -636,7 +757,16 @@ fn key_population(
     include_missing: bool,
 ) -> ChartResult<Vec<crate::scales::ScaleKey>> {
     use crate::scales::ScaleKey;
+    if dropped(input, table) {
+        return Ok(vec![]);
+    }
     if let ColorInput::Category(field) = input {
+        if let PreparedRows::Statistical(rows) = &table.rows {
+            return rows
+                .iter()
+                .map(|r| retained(r, *field).map(|v| group_key(v).unwrap_or(ScaleKey::Null)))
+                .collect();
+        }
         let PreparedRows::Source(rows) = &table.rows else {
             return Err(error(
                 DiagnosticCode::SchemaConflict,

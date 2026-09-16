@@ -130,6 +130,9 @@ impl CustomScaleVector for Vector {
                     .collect(),
             ),
             "reverse" => Some(i.values.iter().rev().copied().collect()),
+            "mean" => Some(vec![Number(
+                i.values.iter().map(|v| v.0).sum::<f64>() / i.values.len() as f64,
+            )]),
             "index" => Some((1..=i.values.len()).map(|v| Number(v as f64)).collect()),
             "short" => Some(i.values.iter().take(1).copied().collect()),
             "empty" => Some(vec![]),
@@ -1605,6 +1608,103 @@ fn check_targeted_vectors(chart_scope: bool, identity_chain: bool, routes: u8) {
                     );
                 }
             }
+        }
+    }
+}
+
+#[test]
+fn grid_margin_vectors_match_pinned_shared_scale_occurrences() {
+    let source: Json = serde_json::from_str(include_str!(
+        "../../../fixtures/parity/ggplot2/facet-vector-sharing.json"
+    ))
+    .unwrap();
+    for case in source["cases"].as_array().unwrap() {
+        let calls = Arc::new(Mutex::new(vec![]));
+        let mut registry = ExtensionRegistry::new();
+        registry
+            .register_scale_vector(Arc::new(Vector(calls.clone())))
+            .unwrap();
+        let margins = case["margins"].as_bool().unwrap();
+        let mode = match case["mode"].as_str().unwrap() {
+            "identity" => "default",
+            "scalar" => "mean",
+            other => other,
+        };
+        let p = plot(
+            Data::columns()
+                .column("x", [1., 2., 3., 4.])
+                .column("y", [2., 4., 6., 8.])
+                .column("r", ["A", "A", "B", "B"])
+                .column("c", ["L", "R", "L", "R"])
+                .build()
+                .unwrap(),
+        )
+        .profile(Profile::Ggplot2_4_0_3)
+        .extensions(Arc::new(registry))
+        .aes(aes().x("x").y("y"))
+        .layer(points())
+        .facet(facet_grid("r", "c").free_y(true).reference(FacetPolicy {
+            margins: if margins { vec![0, 1] } else { vec![] },
+            ..Default::default()
+        }))
+        .y_axis(y_axis().oob_function(Some(ScaleVectorOperation {
+            operation: OperationRef::new("test.positional_vector", Revision::new(1)),
+            parameters: json!(mode),
+        })))
+        .build()
+        .unwrap();
+        let result = p.chart().unwrap().prepare();
+        assert_eq!(
+            result.is_ok(),
+            case["result"]["ok"].as_bool().unwrap(),
+            "{case}: {:?}",
+            result.as_ref().err()
+        );
+        let n = if margins { 3 } else { 2 };
+        let observed = calls.lock().unwrap();
+        for (actual, expected) in observed
+            .iter()
+            .take(n)
+            .zip(case["calls"].as_array().unwrap())
+        {
+            assert!(
+                same(&actual["values"], &expected["values"]),
+                "{case}: {observed:?}"
+            );
+            assert!(
+                same(&actual["range"], &expected["range"]),
+                "{case}: {observed:?}"
+            );
+        }
+        assert!(observed.len() >= n);
+        if let Ok(prepared) = result {
+            let mut actual = prepared
+                .panels()
+                .iter()
+                .enumerate()
+                .flat_map(|(index, p)| {
+                    p.chart.layers()[0].marks().iter().map(move |m| {
+                        let PreparedGeometry::Point(v) = m.geometry else {
+                            panic!()
+                        };
+                        (index + 1, v.y())
+                    })
+                })
+                .collect::<Vec<_>>();
+            let mut expected = case["result"]["data"][0]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|row| {
+                    (
+                        row["PANEL"].as_str().unwrap().parse::<usize>().unwrap(),
+                        row["y"].as_f64().unwrap(),
+                    )
+                })
+                .collect::<Vec<_>>();
+            actual.sort_by(|a, b| a.0.cmp(&b.0).then(a.1.total_cmp(&b.1)));
+            expected.sort_by(|a, b| a.0.cmp(&b.0).then(a.1.total_cmp(&b.1)));
+            assert_eq!(actual, expected, "{case}");
         }
     }
 }

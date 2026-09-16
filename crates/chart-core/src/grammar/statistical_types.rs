@@ -7,6 +7,9 @@ use std::sync::Arc;
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct AutoBinSpec {
+    /// Reference break and weighting policies; absent preserves legacy equal-width bins.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ggplot: Option<GgplotBinOptions>,
     /// Numeric input.
     pub input: Numeric,
     /// Positive number of equal-width bins; defaults to thirty.
@@ -20,6 +23,7 @@ impl AutoBinSpec {
     /// Thirty equal-width bins in source units.
     pub fn new(input: impl Into<Numeric>) -> Self {
         Self {
+            ggplot: None,
             input: input.into(),
             bins: 30,
             grouping: Grouping::All,
@@ -31,6 +35,9 @@ impl AutoBinSpec {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Default, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct CountSpec {
+    /// Explicit reference count-by-position policy; absent preserves raw group counts.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ggplot: Option<GgplotCountOptions>,
     /// Every listed input must be finite and exactly representable.
     pub required: Vec<Numeric>,
     /// Population partition.
@@ -40,6 +47,9 @@ pub struct CountSpec {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct SummarySpec {
+    /// Reference summary-by-position helper; absent preserves raw descriptive summaries.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub ggplot: Option<GgplotSummaryOptions>,
     /// Numeric input.
     pub input: Numeric,
     /// Population partition.
@@ -57,6 +67,7 @@ impl SummarySpec {
         Self {
             input: input.into(),
             grouping: Grouping::All,
+            ggplot: None,
             quantiles: vec![0.5],
             empty_sum_zero: false,
             space: StatSpace::Data,
@@ -91,6 +102,20 @@ impl OlsSpec {
     }
 }
 impl Statistic {
+    /// Select a built-in distribution statistic with explicit estimator controls.
+    pub fn distribution(spec: DistributionSpec) -> Self {
+        Self {
+            operation: OperationRef::builtin("chart.distribution"),
+            parameters: StatParameters::Distribution(spec),
+        }
+    }
+    /// Select a built-in univariate analysis or source-row helper.
+    pub fn univariate(spec: UnivariateSpec) -> Self {
+        Self {
+            operation: OperationRef::builtin("chart.univariate"),
+            parameters: StatParameters::Univariate(spec),
+        }
+    }
     /// Automatic equal-width bins.
     pub fn auto_bin(spec: AutoBinSpec) -> Self {
         Self {
@@ -123,9 +148,9 @@ impl Statistic {
     /// transformed-source populations, automatic bins and other statistics use exact batch fallbacks.
     pub fn incremental_capabilities(&self) -> IncrementalCapabilities {
         IncrementalCapabilities {
-            append: matches!(self.parameters, StatParameters::Bin(_)),
-            window: matches!(self.parameters, StatParameters::Bin(_)),
-            correction: matches!(self.parameters, StatParameters::Bin(_)),
+            append: matches!(&self.parameters, StatParameters::Bin(s) if s.ggplot.as_ref().is_none_or(|o| o.weight.is_none())),
+            window: matches!(&self.parameters, StatParameters::Bin(s) if s.ggplot.as_ref().is_none_or(|o| o.weight.is_none())),
+            correction: matches!(&self.parameters, StatParameters::Bin(s) if s.ggplot.as_ref().is_none_or(|o| o.weight.is_none())),
             full_recompute: true,
         }
     }
@@ -152,6 +177,48 @@ pub enum StatField {
     Group,
     /// Membership count.
     Count,
+    /// Signed sum of weights, independently of exact membership count.
+    WeightedCount,
+    /// Signed count divided by sum of absolute counts within the group.
+    Proportion,
+    /// Summary lower endpoint.
+    Lower,
+    /// Summary upper endpoint.
+    Upper,
+    /// Reference interval or bar width.
+    Width,
+    /// Boxplot median.
+    Middle,
+    /// Observed lower nonoutlier whisker.
+    WhiskerLower,
+    /// Observed upper nonoutlier whisker.
+    WhiskerUpper,
+    /// Lower median notch endpoint.
+    NotchLower,
+    /// Upper median notch endpoint.
+    NotchUpper,
+    /// Square root of the group weight used by variable-width boxes.
+    RelativeWidth,
+    /// Normalized width of one violin density row.
+    ViolinWidth,
+    /// Requested violin quantile probability; missing on ordinary density rows.
+    QuantileFlag,
+    /// Data-space diameter of one dot bin.
+    BinWidth,
+    /// Dot center offset before physical spacing is applied.
+    StackPosition,
+    /// Probability density per input unit.
+    Density,
+    /// Density divided by its group maximum.
+    ScaledDensity,
+    /// Density multiplied by total observation weight.
+    WeightedDensity,
+    /// Density multiplied by unweighted group size; distinct from exact membership count.
+    DensityCount,
+    /// Empirical cumulative distribution value.
+    Ecdf,
+    /// One for artificial zero-height alignment padding, zero otherwise.
+    AlignPadding,
     /// Minimum finite value.
     Min,
     /// Maximum finite value.
@@ -191,9 +258,28 @@ pub struct StatValue {
     /// Missing never silently substitutes zero.
     pub value: Option<f64>,
 }
+/// One observed boxplot outlier, retaining its own source provenance.
+#[derive(serde::Serialize, Clone, Debug, PartialEq)]
+pub struct StatOutlier {
+    /// Value in the statistic's dependent calculation space.
+    pub value: f64,
+    /// Original source observation, distinct from the box aggregate.
+    pub target: Target,
+}
 /// Typed summary/model output, distinct from source and bin rows.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub struct StatisticalRow {
+    /// Boxplot observations emitted after positioning the summary once.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub outliers: Vec<StatOutlier>,
+    /// Proven identical source aesthetic values retained by a partitioning statistic.
+    /// This is independent of the original group used for normalization.
+    #[serde(skip_serializing_if = "GroupValue::is_all")]
+    pub retained: GroupValue,
+    /// Exact evaluated numeric aesthetic inputs retained by joint-position statistics.
+    #[serde(skip_serializing_if = "Vec::is_empty")]
+    pub retained_numeric: Vec<(Numeric, Option<f64>)>,
+
     /// Stable partition identity.
     pub group: GroupValue,
     /// Exact usable count; kept as a decimal string on portable surfaces.

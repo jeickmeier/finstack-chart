@@ -1,0 +1,186 @@
+{
+  "reference": "ggplot2 4.0.3 / R 4.6.1",
+  "cases": [
+    {
+      "name": "constant-hline",
+      "data": [
+        [
+          {
+            "yintercept": 0.5,
+            "PANEL": "1",
+            "group": -1,
+            "colour": "black",
+            "linewidth": 0.5,
+            "linetype": 1,
+            "alpha": 0.5
+          }
+        ]
+      ],
+      "draw_ok": true
+    },
+    {
+      "name": "constant-vline",
+      "data": [
+        [
+          {
+            "xintercept": 0.5,
+            "PANEL": "1",
+            "group": -1,
+            "colour": "black",
+            "linewidth": 0.5,
+            "linetype": 1,
+            "alpha": 0.5
+          }
+        ]
+      ],
+      "draw_ok": true
+    },
+    {
+      "name": "constant-abline",
+      "data": [
+        [
+          {
+            "intercept": 0.5,
+            "slope": 1,
+            "PANEL": "1",
+            "group": -1,
+            "colour": "black",
+            "linewidth": 0.5,
+            "linetype": 1,
+            "alpha": 0.5
+          }
+        ]
+      ],
+      "draw_ok": true
+    },
+    {
+      "name": "mapped-hline",
+      "data": [
+        [
+          {
+            "yintercept": 1,
+            "PANEL": "1",
+            "group": -1,
+            "colour": "black",
+            "linewidth": 0.5,
+            "linetype": 1,
+            "alpha": 0.5
+          },
+          {
+            "yintercept": 1,
+            "PANEL": "1",
+            "group": -1,
+            "colour": "black",
+            "linewidth": 0.5,
+            "linetype": 1,
+            "alpha": 0.5
+          },
+          {
+            "yintercept": 2,
+            "PANEL": "1",
+            "group": -1,
+            "colour": "black",
+            "linewidth": 0.5,
+            "linetype": 1,
+            "alpha": 0.5
+          }
+        ]
+      ],
+      "draw_ok": true
+    },
+    {
+      "name": "reversed-linerange",
+      "data": [
+        [
+          {
+            "x": 1,
+            "y": 1,
+            "ymin": 2,
+            "ymax": 0,
+            "PANEL": "1",
+            "group": -1,
+            "flipped_aes": false,
+            "colour": "black",
+            "linewidth": 0.5,
+            "linetype": 1,
+            "alpha": null
+          }
+        ]
+      ],
+      "draw_ok": true
+    },
+    {
+      "name": "reversed-pointrange",
+      "data": [
+        [
+          {
+            "x": 1,
+            "y": 1,
+            "ymin": 2,
+            "ymax": 0,
+            "PANEL": "1",
+            "group": -1,
+            "flipped_aes": false,
+            "colour": "black",
+            "size": 0.5,
+            "linewidth": 0.5,
+            "linetype": 1,
+            "shape": 19,
+            "fill": null,
+            "alpha": null,
+            "stroke": 1
+          }
+        ]
+      ],
+      "draw_ok": true
+    },
+    {
+      "name": "reversed-errorbar",
+      "data": [
+        [
+          {
+            "x": 1,
+            "y": 1,
+            "ymin": 2,
+            "ymax": 0,
+            "PANEL": "1",
+            "group": -1,
+            "flipped_aes": false,
+            "xmin": 0.55000000000000004,
+            "xmax": 1.45,
+            "colour": "black",
+            "linewidth": 0.5,
+            "linetype": 1,
+            "width": 0.90000000000000002,
+            "alpha": null
+          }
+        ]
+      ],
+      "draw_ok": true
+    },
+    {
+      "name": "reversed-crossbar",
+      "data": [
+        [
+          {
+            "x": 1,
+            "y": 1,
+            "ymin": 2,
+            "ymax": 0,
+            "PANEL": "1",
+            "group": -1,
+            "flipped_aes": false,
+            "xmin": 0.55000000000000004,
+            "xmax": 1.45,
+            "colour": "black",
+            "fill": null,
+            "linewidth": 0.5,
+            "linetype": 1,
+            "alpha": null
+          }
+        ]
+      ],
+      "draw_ok": true
+    }
+  ]
+}
