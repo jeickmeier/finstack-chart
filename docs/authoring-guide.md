@@ -196,7 +196,8 @@ let output = Output::new(font_bytes)?;
 let svg = output
     .request(&authored, export_options(PageSize::millimeters(180.0, 120.0)?))?
     .prepare()?
-    .export(Format::Svg)?;
+    .export(Format::Svg)?
+    .bytes;
 ```
 
 `Output` retains explicit fonts for many plots. `export_options` configures physical

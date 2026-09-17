@@ -134,7 +134,7 @@ let plot = plot(data)
     .build()?;
 
 // Explicit font resources were configured once on this export destination.
-let svg = output.request(&plot, export_options(Size::mm(180.0, 120.0)))?.prepare()?.export(Format::Svg)?;
+let svg = output.request(&plot, export_options(Size::mm(180.0, 120.0)))?.prepare()?.export(Format::Svg)?.bytes;
 ```
 
 Typed rows use `Data::rows(rows).field("time", |r| r.time)...build()?`, with optional

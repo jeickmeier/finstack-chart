@@ -54,7 +54,7 @@ pub fn format(name: &str) -> ChartResult<Format> {
         "emf" | "wmf" => Ok(Format::Emf),
         _ => Err(error(
             DiagnosticCode::UnsupportedCapability,
-            "Format must be svg, pdf, png, jpeg, tiff or bmp.",
+            "Format must be svg, pdf, png, jpeg, tiff, bmp, ps, eps, tex or emf.",
         )),
     }
 }

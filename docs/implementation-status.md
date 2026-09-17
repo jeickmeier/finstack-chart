@@ -4623,6 +4623,45 @@ study ran. GG2 and G4 remain open. Next action: prioritize a bounded plot/data/l
 authoring slice and define compiling everyday examples early in the existing parity
 plan; semantic prerequisites and legacy defaults must be preserved.
 
+## chart-export simplification — 16 September 2026
+
+Owner-assigned `finstack-simplify` pass over `crates/chart-export/src` (read-only audit,
+then four behaviour-preserving slices; the plan checkpoint was waived by the owner).
+Scope: EXP-01/02 encoder parity, BND-03/04 binding shape, QLT-05. No wire field, serde
+name, diagnostic code, output byte or fixture changed; diagnostic *messages* for the
+PostScript/EMF alpha, mask and image rejections were unified to one device-parameterised
+wording and the PicTeX budget message now names PicTeX.
+
+Slices and revisions: (1) `5e82865` micro-duplication sweep — `Format::name` reused by
+`SaveOptions::resolve`, `resource_error` helper, one `PathCommand` point visitor, shared
+linear-gradient emission in SVG/PDF, impl blocks co-located, serde aliases replace
+hand-parsed `basis`/`view`/`text`; (2) landed inside owner commit `dab6746` — new private
+`devices.rs` with `BoundedString`/`BoundedBytes`, `AlphaPolicy` and one usvg leaf walker
+shared by PostScript and EMF, single-page forwarders `encode::pdf`,
+`devices_vector::postscript`, `svg::build_with_outlines` removed; (3) landed inside owner
+commit `6ddefda` — public surface: `FigureSnapshot::capture_with_extensions`,
+`Output::export/svg/pdf/png`, `host::Options::request` removed, `FigureSnapshot::export_pages`
+is `pub(crate)` behind `FigurePages`, bindings/README/authoring guide updated;
+(4) this revision — provenance `engines` string corrected (stale `skrifa /0.42.1` dropped)
+and pinned to `Cargo.lock` by a unit test, `host::format` error text lists every format,
+doc snippets bind `.bytes`. Net source delta across slices ≈ −190 lines in
+`crates/chart-export/src` with two new unit tests.
+
+Executed in `/Users/jeickmeier/Projects/finstack-chart`, Darwin arm64, Rust 1.97.1:
+after every slice `cargo fmt --all`, `cargo clippy -p chart-export --all-targets --locked
+-- -D warnings`, `RUSTDOCFLAGS=-D warnings cargo doc -p chart-export --no-deps --locked`,
+`cargo test -p chart-export --locked` (all suites pass; slice 3 additionally
+`cargo clippy -p chart-python -p chart-wasm --all-targets -- -D warnings` and
+`cargo check -p chart-gallery --examples`) and `cargo check -p chart-python -p chart-wasm
+--locked`. Limitations: `mise run check` currently fails at `scripts/check_repository.py`
+on the owner-committed removal of `benches/README.md` (`6e4bc28`) referenced from
+`docs/impl_plans/package-infrastructure-plan.md`; the full workspace `mise run test` and
+`bindings-proof` were not rerun for this pass. Open: audit F12 (`ExportOptions` ↔
+`PublicationProfile` field duplication) and H4 (dev-only second `resvg 0.45.1` +
+`svg2pdf` used solely by `examples/capability_export.rs`, which WP-03 evidence cites)
+are recorded, not changed. Next action: owner decision on H4 and repair of the
+`benches/README.md` link, then rerun `mise run check && mise run test`.
+
 ## Evidence updates
 
 Before ending every task, including reviews and partial or blocked slices, update this

@@ -21,6 +21,24 @@ pub struct FontManifest {
     /// Lowercase SHA-256 of the supplied bytes.
     pub sha256: String,
 }
+/// Locked dependency versions advertised by capture provenance; the lockfile test pins each pair.
+const ENGINES: [(&str, &str); 6] = [
+    ("chart-text", env!("CARGO_PKG_VERSION")),
+    ("usvg/resvg", "0.48.1"),
+    ("harfrust", "0.12.0"),
+    ("krilla", "0.8.2"),
+    ("skrifa", "0.44.0"),
+    ("PNG", "0.17.16"),
+];
+
+fn engines() -> String {
+    let mut engines = format!("chart-export {}", env!("CARGO_PKG_VERSION"));
+    for (name, version) in ENGINES {
+        engines.push_str(&format!("; {name} {version}"));
+    }
+    engines
+}
+
 /// Reproduction inputs, returned with bytes. This is not the WP-09 portable wire envelope.
 #[derive(Clone, Debug)]
 pub struct Reproducibility {
@@ -247,10 +265,7 @@ impl FigureSnapshot {
                 interaction: request.interaction,
                 origin_scene: request.origin_scene,
                 origin_layout: request.origin_layout.clone(),
-                engines: format!(
-                    "chart-export {}; chart-text 0.1.0; usvg/resvg 0.48.1; harfrust 0.12.0; krilla 0.8.2; skrifa 0.44.0/0.42.1; PNG 0.17.16",
-                    env!("CARGO_PKG_VERSION")
-                ),
+                engines: engines(),
                 stamp: scene.stamp(),
                 captured_state,
                 effective_state,
@@ -699,6 +714,42 @@ impl FigureTransition {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn engines_string_matches_locked_dependency_versions() {
+        let mut locked: std::collections::BTreeMap<&str, Vec<&str>> = Default::default();
+        for package in include_str!("../../../Cargo.lock")
+            .split("[[package]]")
+            .skip(1)
+        {
+            let mut lines = package.lines().map(str::trim);
+            if let Some(name) = lines.find_map(|l| {
+                l.strip_prefix("name = \"")
+                    .and_then(|n| n.strip_suffix('"'))
+            }) {
+                let version = lines
+                    .find_map(|l| {
+                        l.strip_prefix("version = \"")
+                            .and_then(|v| v.strip_suffix('"'))
+                    })
+                    .expect("lockfile package version");
+                locked.entry(name).or_default().push(version);
+            }
+        }
+        assert!(
+            locked
+                .get("chart-export")
+                .is_some_and(|v| v.contains(&env!("CARGO_PKG_VERSION")))
+        );
+        for (names, version) in super::ENGINES {
+            for name in names.to_lowercase().split('/') {
+                assert!(
+                    locked.get(name).is_some_and(|v| v.contains(&version)),
+                    "{name} {version} is not a locked version in Cargo.lock"
+                );
+            }
+        }
+    }
+
     #[test]
     fn empty_page_list_rejects() {
         assert!(
