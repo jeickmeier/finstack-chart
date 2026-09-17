@@ -1,4 +1,5 @@
 //! FIX-GG04 / GG2-03: independent R positional null/factor/limits corpus.
+use chart_core::plot::{scale_band_d3, scale_point_d3};
 use chart_core::{DiagnosticCode, scales::*};
 use serde_json::Value;
 fn keys(value: &Value) -> Vec<ScaleKey> {

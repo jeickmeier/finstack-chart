@@ -141,14 +141,6 @@ fn path(data: &usvg::tiny_skia_path::Path) -> ChartResult<Path> {
         )
     })
 }
-pub(crate) fn pdf(
-    scene: &Scene,
-    tree: &usvg::Tree,
-    fonts: &FontResources,
-    p: &PublicationProfile,
-) -> ChartResult<Vec<u8>> {
-    pdf_pages(&[(scene, tree, fonts, p)])
-}
 pub(crate) fn pdf_pages(
     pages: &[(&Scene, &usvg::Tree, &FontResources, &PublicationProfile)],
 ) -> ChartResult<Vec<u8>> {

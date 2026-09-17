@@ -35,7 +35,7 @@ pub(super) fn space(
         },
     })
 }
-fn transformed(value: Option<f64>, space: &StatSpace) -> Option<f64> {
+pub(super) fn transformed(value: Option<f64>, space: &StatSpace) -> Option<f64> {
     value.and_then(|v| match space {
         StatSpace::Data => Some(v),
         StatSpace::Transformed(t) => {

@@ -1,7 +1,10 @@
 //! Versioned key glyphs lower to the same validated portable paths as custom guides.
-use super::{CustomGuidePath, ExtensionDescriptor, ExtensionRegistry, OperationRef};
-use crate::{ChartResult, DiagnosticCode, LayerId, Limits, Rect, scene::Color, services::Units};
-use std::{collections::BTreeMap, sync::Arc};
+use super::{
+    CustomGuidePath, ExtensionDescriptor, ExtensionRegistry, OperationRef,
+    registry::{VersionedMap, reject_native_only},
+};
+use crate::{ChartResult, LayerId, Limits, Rect, scene::Color, services::Units};
+use std::sync::Arc;
 /// Portable selection of an explicitly registered legend-key implementation.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -55,40 +58,24 @@ pub trait CustomKeyGlyph: Send + Sync {
     /// Emit one key for a complete resolved guide context.
     fn draw(&self, input: KeyGlyphInput<'_>) -> ChartResult<KeyGlyphOutput>;
 }
-#[derive(Clone)]
-struct Entry {
-    descriptor: ExtensionDescriptor,
-    implementation: Arc<dyn CustomKeyGlyph>,
-}
-impl std::fmt::Debug for Entry {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.descriptor.fmt(f)
-    }
-}
 #[derive(Clone, Debug, Default)]
-pub(crate) struct KeyRegistrations {
-    entries: BTreeMap<(String, u64), Entry>,
-}
+pub(crate) struct KeyRegistrations(VersionedMap<Arc<dyn CustomKeyGlyph>>);
 impl KeyRegistrations {
-    fn get(&self, s: &KeyGlyphSelection) -> ChartResult<&Entry> {
-        self.entries
-            .get(&(s.operation.id.clone(), s.operation.version.get()))
-            .ok_or_else(|| {
-                super::error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "Selected key glyph is not registered.",
-                )
-            })
+    fn get(
+        &self,
+        s: &KeyGlyphSelection,
+    ) -> crate::ChartResult<&super::registry::VersionedEntry<Arc<dyn CustomKeyGlyph>>> {
+        self.0
+            .get(&s.operation, "Selected key glyph is not registered.")
     }
-    pub(crate) fn validate(&self, s: &KeyGlyphSelection, portable: bool) -> ChartResult<()> {
+    pub(crate) fn validate(&self, s: &KeyGlyphSelection, portable: bool) -> crate::ChartResult<()> {
         super::extensions::parameter_size(&s.parameters)?;
         let entry = self.get(s)?;
-        if portable && !entry.descriptor.portable {
-            return Err(super::error(
-                DiagnosticCode::UnsupportedCapability,
-                "A native-only key glyph cannot execute in a portable chart.",
-            ));
-        }
+        reject_native_only(
+            portable,
+            entry.descriptor.portable,
+            "A native-only key glyph cannot execute in a portable chart.",
+        )?;
         entry.implementation.validate(&s.parameters)
     }
     pub(crate) fn draw(
@@ -99,30 +86,16 @@ impl KeyRegistrations {
         self.validate(s, false)?;
         let limits = input.limits;
         let out = self.get(s)?.implementation.draw(input)?;
-        // Reuse the existing complete vector guide resource/geometry validator.
         super::CustomLegend {
             id: crate::ScaleId::new(1),
             bounds: [0., 0., out.size[0], out.size[1]],
             paths: out.paths.clone(),
             options: Default::default(),
         }
-        .validate(limits)?;
-        for p in &out.paths {
-            if let Some(b) = p.geometry.bounds(0.01, limits.max_path_commands)? {
-                // Path bounds deliberately include the 0.01 lowering-error envelope.
-                let tolerance = 0.01 + 1e-8 * out.size[0].max(out.size[1]).max(1.);
-                if b.origin().x() < -tolerance
-                    || b.origin().y() < -tolerance
-                    || b.max_x() > out.size[0] + tolerance
-                    || b.max_y() > out.size[1] + tolerance
-                {
-                    return Err(super::error(
-                        DiagnosticCode::Validation,
-                        "Custom key paths exceed their declared local bounds.",
-                    ));
-                }
-            }
-        }
+        .validate_local(
+            limits,
+            "Custom key paths exceed their declared local bounds.",
+        )?;
         Ok(out)
     }
 }
@@ -133,27 +106,12 @@ impl ExtensionRegistry {
         implementation: Arc<dyn CustomKeyGlyph>,
     ) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        super::extensions::validate_descriptor(&descriptor)?;
-        let entries = &mut Arc::make_mut(&mut self.keys).entries;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        if entries.contains_key(&key) {
-            return Err(super::error(
-                DiagnosticCode::SchemaConflict,
-                "Key glyph version is already registered.",
-            ));
-        }
-        crate::limits::require_within(entries.len() < 64, "key registrations")?;
-        entries.insert(
-            key,
-            Entry {
-                descriptor,
-                implementation,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.keys).0.insert(
+            descriptor,
+            implementation,
+            "Key glyph version is already registered.",
+            "key registrations",
+        )
     }
     pub(crate) fn validate_key_selections(
         &self,

@@ -1,7 +1,10 @@
 //! Explicitly installed transforms with immutable prepared state.
-use super::{ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions};
+use super::{
+    ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions,
+    registry::{VersionedMap, reject_native_only},
+};
 use crate::{ChartResult, DiagnosticCode, interpolate::Number};
-use std::{collections::BTreeMap, sync::Arc};
+use std::sync::Arc;
 
 /// A versioned transform selection. Deserialization does not install executable code.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -87,44 +90,29 @@ pub trait CustomTransformFactory: Send + Sync {
     /// Create an owned transform kernel without retaining borrowed host state.
     fn compile(&self, parameters: &serde_json::Value) -> ChartResult<Arc<dyn PointwiseTransform>>;
 }
-#[derive(Clone)]
-struct Registration {
-    descriptor: ExtensionDescriptor,
-    implementation: Arc<dyn CustomTransformFactory>,
-}
-impl std::fmt::Debug for Registration {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.descriptor.fmt(f)
-    }
-}
 #[derive(Clone, Debug, Default)]
-pub(crate) struct TransformRegistrations {
-    entries: BTreeMap<(String, u64), Registration>,
-}
+pub(crate) struct TransformRegistrations(VersionedMap<Arc<dyn CustomTransformFactory>>);
 impl TransformRegistrations {
-    fn registration(&self, operation: &OperationRef) -> ChartResult<&Registration> {
-        self.entries
-            .get(&(operation.id.clone(), operation.version.get()))
-            .ok_or_else(|| {
-                super::error(
-                    DiagnosticCode::UnsupportedCapability,
-                    format!(
-                        "Transform {} version {} is not registered.",
-                        operation.id,
-                        operation.version.get()
-                    ),
-                )
-            })
+    fn registration(
+        &self,
+        operation: &OperationRef,
+    ) -> ChartResult<&super::registry::VersionedEntry<Arc<dyn CustomTransformFactory>>> {
+        self.0.get_fmt(operation, || {
+            format!(
+                "Transform {} version {} is not registered.",
+                operation.id,
+                operation.version.get()
+            )
+        })
     }
     pub(crate) fn validate(&self, call: &TransformOperation, portable: bool) -> ChartResult<()> {
         extensions::parameter_size(&call.parameters)?;
         let registration = self.registration(&call.operation)?;
-        if portable && !registration.descriptor.portable {
-            return Err(super::error(
-                DiagnosticCode::UnsupportedCapability,
-                "A native-only transform cannot execute in portable publication.",
-            ));
-        }
+        reject_native_only(
+            portable,
+            registration.descriptor.portable,
+            "A native-only transform cannot execute in portable publication.",
+        )?;
         registration.implementation.validate(&call.parameters)
     }
     pub(crate) fn compile(
@@ -173,27 +161,12 @@ impl ExtensionRegistry {
         implementation: Arc<dyn CustomTransformFactory>,
     ) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        extensions::validate_descriptor(&descriptor)?;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        let entries = &mut Arc::make_mut(&mut self.transforms_function).entries;
-        if entries.contains_key(&key) {
-            return Err(super::error(
-                DiagnosticCode::SchemaConflict,
-                "A transform version is already registered.",
-            ));
-        }
-        crate::limits::require_within(entries.len() < 64, "registered transform")?;
-        entries.insert(
-            key,
-            Registration {
-                descriptor,
-                implementation,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.transforms_function).0.insert(
+            descriptor,
+            implementation,
+            "A transform version is already registered.",
+            "registered transform",
+        )
     }
     /// Read a captured descriptor without executing its factory.
     pub fn transform_descriptor(

@@ -210,7 +210,7 @@ impl FigureSnapshot {
                 profile.layout.limits,
             )?;
             preflight(&scene, &fonts, &profile)?;
-            let text = crate::svg::build(&scene, &fonts, &profile, false)?;
+            let text = crate::svg::build(&scene, &fonts, &profile, false, None)?;
             let tree = usvg::Tree::from_str(&text, &fonts.options())
                 .map_err(|e| error(DiagnosticCode::ExportFidelity, e.to_string()))?;
             // Fail instead of accepting a parser's silent text/font substitution.
@@ -322,20 +322,22 @@ impl FigureSnapshot {
             let mut diagnostics = self.0.layout.diagnostics().to_vec();
             let bytes = match format {
                 Format::Svg if profile.text == TextMode::Preserve => {
-                    crate::svg::build(&self.0.scene, &self.0.fonts, profile, true)?.into_bytes()
+                    crate::svg::build(&self.0.scene, &self.0.fonts, profile, true, None)?
+                        .into_bytes()
                 }
                 Format::Svg => {
                     crate::svg::outline(&self.0.tree, &self.0.scene, &self.0.fonts, profile)?
                 }
-                Format::Pdf => {
-                    crate::encode::pdf(&self.0.scene, &self.0.tree, &self.0.fonts, profile)?
-                }
+                Format::Pdf => crate::encode::pdf_pages(&[(
+                    &self.0.scene,
+                    &self.0.tree,
+                    &self.0.fonts,
+                    profile,
+                )])?,
                 Format::Png => crate::encode::png(&self.0.tree, profile)?,
                 Format::PostScript | Format::Eps => {
-                    let (bytes, omitted) = crate::devices_vector::postscript(
-                        &self.0.scene,
-                        &self.0.tree,
-                        profile,
+                    let (bytes, omitted) = crate::devices_vector::postscript_pages(
+                        &[(&self.0.scene, &self.0.tree, profile)],
                         format == Format::Eps,
                     )?;
                     if omitted > 0 {

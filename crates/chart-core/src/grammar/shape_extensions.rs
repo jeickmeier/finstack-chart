@@ -1,5 +1,8 @@
 //! Versioned selections for trusted implementations of the shared shape protocols.
-use super::{ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions};
+use super::{
+    ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions,
+    registry::{VersionedMap, reject_native_only},
+};
 use crate::{ChartResult, DiagnosticCode, shape::*};
 use std::{collections::BTreeMap, sync::Arc};
 
@@ -68,62 +71,42 @@ pub trait CustomShape: Send + Sync {
 }
 
 #[derive(Clone)]
-struct Registration {
-    descriptor: ExtensionDescriptor,
+struct ShapeImpl {
     family: ShapeFamily,
     implementation: Arc<dyn CustomShape>,
 }
 #[derive(Clone, Default)]
-pub(crate) struct ShapeRegistrations(BTreeMap<(String, u64), Registration>);
+pub(crate) struct ShapeRegistrations(VersionedMap<ShapeImpl>);
 impl ExtensionRegistry {
     /// Install one shape implementation, with at most 64 exact shape versions per registry.
     pub fn register_shape(&mut self, implementation: Arc<dyn CustomShape>) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        extensions::validate_descriptor(&descriptor)?;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        if self.shapes.0.contains_key(&key) {
-            return Err(super::error(
-                DiagnosticCode::SchemaConflict,
-                "A shape extension version is already registered.",
-            ));
-        }
-        if self.shapes.0.len() >= 64 {
-            return Err(super::error(
-                DiagnosticCode::ResourceLimit,
-                "At most 64 shape extensions can be registered.",
-            ));
-        }
+        let family = implementation.family();
         self.shapes.0.insert(
-            key,
-            Registration {
-                descriptor,
-                family: implementation.family(),
+            descriptor,
+            ShapeImpl {
+                family,
                 implementation,
             },
-        );
-        Ok(())
+            "A shape extension version is already registered.",
+            "shape extensions",
+        )
     }
     /// Read captured metadata without invoking native implementation code.
     pub fn shape_descriptor(&self, operation: &OperationRef) -> ChartResult<ExtensionDescriptor> {
         Ok(self.shape_registration(operation)?.descriptor.clone())
     }
-    fn shape_registration(&self, operation: &OperationRef) -> ChartResult<&Registration> {
-        self.shapes
-            .0
-            .get(&(operation.id.clone(), operation.version.get()))
-            .ok_or_else(|| {
-                super::error(
-                    DiagnosticCode::UnsupportedCapability,
-                    format!(
-                        "Shape {} version {} is not registered.",
-                        operation.id,
-                        operation.version.get()
-                    ),
-                )
-            })
+    fn shape_registration(
+        &self,
+        operation: &OperationRef,
+    ) -> ChartResult<&super::registry::VersionedEntry<ShapeImpl>> {
+        self.shapes.0.get_fmt(operation, || {
+            format!(
+                "Shape {} version {} is not registered.",
+                operation.id,
+                operation.version.get()
+            )
+        })
     }
     /// Resolve a native selection, including explicitly native-only implementations.
     pub fn resolve_shape(
@@ -149,19 +132,21 @@ impl ExtensionRegistry {
     ) -> ChartResult<ShapeProtocol> {
         extensions::parameter_size(&selection.parameters)?;
         let registration = self.shape_registration(&selection.operation)?;
-        if registration.family != family {
+        if registration.implementation.family != family {
             return Err(super::error(
                 DiagnosticCode::Validation,
                 "Registered shape protocol does not match the requested family.",
             ));
         }
-        if portable && !registration.descriptor.portable {
-            return Err(super::error(
-                DiagnosticCode::UnsupportedCapability,
-                "A native-only shape cannot execute or serialize in a portable session.",
-            ));
-        }
-        let protocol = registration.implementation.resolve(&selection.parameters)?;
+        reject_native_only(
+            portable,
+            registration.descriptor.portable,
+            "A native-only shape cannot execute or serialize in a portable session.",
+        )?;
+        let protocol = registration
+            .implementation
+            .implementation
+            .resolve(&selection.parameters)?;
         if protocol.family() != family {
             return Err(super::error(
                 DiagnosticCode::Validation,

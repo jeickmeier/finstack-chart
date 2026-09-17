@@ -1,7 +1,10 @@
 //! Pure scale limit functions over shared population training.
-use super::{ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions};
-use crate::{ChartResult, DiagnosticCode, scales::ScaleKey};
-use std::{collections::BTreeMap, sync::Arc};
+use super::{
+    ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions,
+    registry::{VersionedMap, reject_native_only},
+};
+use crate::{ChartResult, scales::ScaleKey};
+use std::sync::Arc;
 
 /// Select an installed pure function; JSON never contains executable code.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -42,20 +45,8 @@ pub trait CustomScaleLimits: Send + Sync {
     /// Some(empty) deliberately selects no levels.
     fn evaluate(&self, input: ScaleLimitsInput<'_>) -> ChartResult<Option<Vec<ScaleKey>>>;
 }
-#[derive(Clone)]
-struct Registration {
-    descriptor: ExtensionDescriptor,
-    implementation: Arc<dyn CustomScaleLimits>,
-}
-impl std::fmt::Debug for Registration {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.descriptor.fmt(f)
-    }
-}
 #[derive(Clone, Debug, Default)]
-pub(crate) struct ScaleLimitRegistrations {
-    entries: BTreeMap<(String, u64), Registration>,
-}
+pub(crate) struct ScaleLimitRegistrations(VersionedMap<Arc<dyn CustomScaleLimits>>);
 impl ScaleLimitRegistrations {
     pub(crate) fn requires_domain(&self, call: &ScaleLimitsOperation) -> ChartResult<bool> {
         self.validate(call, false)?;
@@ -64,29 +55,26 @@ impl ScaleLimitRegistrations {
             .implementation
             .requires_domain(&call.parameters))
     }
-    fn registration(&self, operation: &OperationRef) -> ChartResult<&Registration> {
-        self.entries
-            .get(&(operation.id.clone(), operation.version.get()))
-            .ok_or_else(|| {
-                super::error(
-                    DiagnosticCode::UnsupportedCapability,
-                    format!(
-                        "Scale limits {} version {} are not registered.",
-                        operation.id,
-                        operation.version.get()
-                    ),
-                )
-            })
+    fn registration(
+        &self,
+        operation: &OperationRef,
+    ) -> ChartResult<&super::registry::VersionedEntry<Arc<dyn CustomScaleLimits>>> {
+        self.0.get_fmt(operation, || {
+            format!(
+                "Scale limits {} version {} are not registered.",
+                operation.id,
+                operation.version.get()
+            )
+        })
     }
     pub(crate) fn validate(&self, call: &ScaleLimitsOperation, portable: bool) -> ChartResult<()> {
         extensions::parameter_size(&call.parameters)?;
         let registration = self.registration(&call.operation)?;
-        if portable && !registration.descriptor.portable {
-            return Err(super::error(
-                DiagnosticCode::UnsupportedCapability,
-                "Native-only scale limits cannot serialize or execute in portable publication.",
-            ));
-        }
+        reject_native_only(
+            portable,
+            registration.descriptor.portable,
+            "Native-only scale limits cannot serialize or execute in portable publication.",
+        )?;
         registration.implementation.validate(&call.parameters)
     }
     pub(crate) fn evaluate(
@@ -132,27 +120,12 @@ impl ExtensionRegistry {
         implementation: Arc<dyn CustomScaleLimits>,
     ) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        extensions::validate_descriptor(&descriptor)?;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        let entries = &mut Arc::make_mut(&mut self.limits_function).entries;
-        if entries.contains_key(&key) {
-            return Err(super::error(
-                DiagnosticCode::SchemaConflict,
-                "A scale limit function version is already registered.",
-            ));
-        }
-        crate::limits::require_within(entries.len() < 64, "registered scale limit function")?;
-        entries.insert(
-            key,
-            Registration {
-                descriptor,
-                implementation,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.limits_function).0.insert(
+            descriptor,
+            implementation,
+            "A scale limit function version is already registered.",
+            "registered scale limit function",
+        )
     }
     /// Read the captured identity without running the installed function.
     pub fn scale_limits_descriptor(

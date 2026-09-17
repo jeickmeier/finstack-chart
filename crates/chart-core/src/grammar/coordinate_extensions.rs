@@ -1,7 +1,10 @@
 //! Registered paired coordinate maps compose with the common post-stat projection.
-use super::{ExtensionDescriptor, ExtensionRegistry, OperationRef};
+use super::{
+    ExtensionDescriptor, ExtensionRegistry, OperationRef,
+    registry::{VersionedMap, reject_native_only},
+};
 use crate::{ChartResult, DiagnosticCode};
-use std::{collections::BTreeMap, sync::Arc};
+use std::sync::Arc;
 /// Explicit versioned coordinate implementation with bounded parameters.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -44,40 +47,24 @@ pub trait CustomCoordinate: Send + Sync {
     /// Train an immutable paired map from explicit domains and views.
     fn train(&self, input: CoordinateTrainInput<'_>) -> ChartResult<Arc<dyn TrainedCoordinate>>;
 }
-#[derive(Clone)]
-struct Entry {
-    descriptor: ExtensionDescriptor,
-    implementation: Arc<dyn CustomCoordinate>,
-}
-impl std::fmt::Debug for Entry {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.descriptor.fmt(f)
-    }
-}
 #[derive(Clone, Debug, Default)]
-pub(crate) struct CoordinateRegistrations {
-    entries: BTreeMap<(String, u64), Entry>,
-}
+pub(crate) struct CoordinateRegistrations(VersionedMap<Arc<dyn CustomCoordinate>>);
 impl CoordinateRegistrations {
-    fn get(&self, s: &CoordinateSelection) -> ChartResult<&Entry> {
-        self.entries
-            .get(&(s.operation.id.clone(), s.operation.version.get()))
-            .ok_or_else(|| {
-                super::error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "Coordinate implementation is not registered.",
-                )
-            })
+    fn get(
+        &self,
+        s: &CoordinateSelection,
+    ) -> ChartResult<&super::registry::VersionedEntry<Arc<dyn CustomCoordinate>>> {
+        self.0
+            .get(&s.operation, "Coordinate implementation is not registered.")
     }
     pub(crate) fn validate(&self, s: &CoordinateSelection, portable: bool) -> ChartResult<()> {
         super::extensions::parameter_size(&s.parameters)?;
         let e = self.get(s)?;
-        if portable && !e.descriptor.portable {
-            return Err(super::error(
-                DiagnosticCode::UnsupportedCapability,
-                "Native-only coordinate cannot execute portably.",
-            ));
-        }
+        reject_native_only(
+            portable,
+            e.descriptor.portable,
+            "Native-only coordinate cannot execute portably.",
+        )?;
         e.implementation.validate(&s.parameters)
     }
     pub(crate) fn train(
@@ -96,27 +83,12 @@ impl ExtensionRegistry {
         implementation: Arc<dyn CustomCoordinate>,
     ) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        super::extensions::validate_descriptor(&descriptor)?;
-        let entries = &mut Arc::make_mut(&mut self.coordinates).entries;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        if entries.contains_key(&key) {
-            return Err(super::error(
-                DiagnosticCode::SchemaConflict,
-                "Coordinate version is already registered.",
-            ));
-        }
-        crate::limits::require_within(entries.len() < 64, "coordinate registrations")?;
-        entries.insert(
-            key,
-            Entry {
-                descriptor,
-                implementation,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.coordinates).0.insert(
+            descriptor,
+            implementation,
+            "Coordinate version is already registered.",
+            "coordinate registrations",
+        )
     }
     pub(crate) fn validate_coordinate_selection(
         &self,

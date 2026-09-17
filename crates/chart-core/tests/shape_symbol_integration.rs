@@ -1,4 +1,5 @@
 //! FIX-S06/09: area-size symbols, explicit type domains, guides and source targets.
+use chart_core::plot::shape_symbol;
 use chart_core::{
     ChartResult, Point, Rect, ResourceId, Revision,
     grammar::{Compiler, NumericAesthetic as A, PreparedGeometry},

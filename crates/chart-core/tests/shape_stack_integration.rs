@@ -1,4 +1,5 @@
 //! FIX-S07/09: tidy adaptation, sparse topology, actual targets and legacy isolation.
+use chart_core::plot::{shape_area, shape_stack};
 use chart_core::{
     ChartResult, Point, Rect, ResourceId, Revision,
     grammar::{Compiler, GroupValue, PreparedChart, PreparedGeometry},

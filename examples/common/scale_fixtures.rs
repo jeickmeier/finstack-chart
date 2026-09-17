@@ -1,4 +1,5 @@
 //! SP-07: shared native/publication examples, with independently authored host counterparts.
+use chart_core::plot::scale_band_d3;
 use chart_core::{
     Revision,
     data::TimeUnit,

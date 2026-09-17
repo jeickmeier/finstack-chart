@@ -1,4 +1,5 @@
 //! FIX-S09: curved and filled vector strokes retain dash styling in immutable output.
+use chart_core::plot::shape_line;
 use chart_core::{
     composition::Anchor,
     path::Path,

@@ -1,4 +1,5 @@
 //! SP-03 named D3 category axes, dodge slots and live retained publication.
+use chart_core::plot::{scale_band_d3, scale_point_d3};
 use chart_core::{grammar::GroupValue, prelude::*, scales::*, scene::Primitive};
 use chart_export::*;
 const FONT: &[u8] = include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf");

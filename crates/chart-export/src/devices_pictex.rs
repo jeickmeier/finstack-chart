@@ -7,14 +7,14 @@ use chart_core::{
 };
 const TEX_POINTS_PER_BIG_POINT: f64 = 72.27 / 72.;
 struct Writer {
-    text: String,
-    limit: usize,
+    text: crate::devices::BoundedString,
     remaining: usize,
     height: f64,
 }
 impl Writer {
     fn add(&mut self, args: std::fmt::Arguments<'_>) -> ChartResult<()> {
-        super::devices_vector::append(&mut self.text, self.limit, args)
+        self.text
+            .add(args, "PicTeX exceeds the output byte budget.")
     }
     fn point(&self, p: Point) -> [f64; 2] {
         [
@@ -231,8 +231,7 @@ pub(crate) fn encode(
     p: &PublicationProfile,
 ) -> ChartResult<Vec<u8>> {
     let mut w = Writer {
-        text: String::new(),
-        limit: p.max_output_bytes,
+        text: crate::devices::BoundedString::new(p.max_output_bytes),
         remaining: p.layout.limits.max_path_commands,
         height: p.page.height(),
     };
@@ -286,7 +285,7 @@ pub(crate) fn encode(
         }
     }
     w.add(format_args!("\\endpicture\n}}\n"))?;
-    Ok(w.text.into_bytes())
+    Ok(w.text.text.into_bytes())
 }
 #[cfg(test)]
 mod tests {
@@ -304,8 +303,7 @@ mod tests {
         assert_eq!(a.x(), 0.);
         assert_eq!(b.x(), 10.);
         let mut w = Writer {
-            text: String::new(),
-            limit: 10_000,
+            text: crate::devices::BoundedString::new(10_000),
             remaining: 100,
             height: 10.,
         };
@@ -318,7 +316,7 @@ mod tests {
             r,
         )
         .unwrap();
-        assert!(!w.text.contains("\\input"));
-        assert!(w.text.contains("\\char92{}"));
+        assert!(!w.text.text.contains("\\input"));
+        assert!(w.text.text.contains("\\char92{}"));
     }
 }

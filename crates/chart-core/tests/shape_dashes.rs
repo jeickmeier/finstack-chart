@@ -1,4 +1,5 @@
 //! SHP-09 / FIX-S09: retained curved dashes, source identity and bounded ink containment.
+use chart_core::plot::shape_line;
 use chart_core::{
     ChartResult, Point, Rect, ResourceId, Revision,
     grammar::Compiler,

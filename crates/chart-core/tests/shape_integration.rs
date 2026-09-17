@@ -1,4 +1,5 @@
 //! FIX-S02/03/09: projected geometry, provenance, actual curved containment and legacy contracts.
+use chart_core::plot::shape_area;
 use chart_core::{
     ChartResult, Point, Rect, ResourceId, Revision,
     grammar::Compiler,

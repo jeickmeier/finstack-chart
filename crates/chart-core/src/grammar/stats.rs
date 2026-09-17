@@ -51,19 +51,7 @@ pub(crate) fn validate_stat(stat: &Statistic, limits: CompileLimits) -> ChartRes
                     "Explicit bin edges must be finite, strictly increasing and contain at least two values.",
                 ));
             }
-            if let StatSpace::Transformed(transform) = &spec.space {
-                validate_operation(&transform.operation, "chart.affine")?;
-                if !transform.factor.is_finite()
-                    || transform.factor == 0.
-                    || !transform.offset.is_finite()
-                {
-                    return Err(error(
-                        DiagnosticCode::NumericalDomain,
-                        "Affine statistic space requires a finite nonzero factor and finite offset.",
-                    ));
-                }
-            }
-            Ok(())
+            super::statistics::validate_space(&spec.space)
         }
     }
 }

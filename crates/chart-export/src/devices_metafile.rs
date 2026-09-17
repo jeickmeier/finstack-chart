@@ -1,6 +1,10 @@
 //! Checked EMF records over the immutable publication tree (MS-EMF, version 1).
 //! Text uses the shared supplied-font outlines; no native fonts or Windows APIs are required.
-use crate::{PublicationProfile, VectorAlphaPolicy, error};
+use crate::{
+    PublicationProfile,
+    devices::{AlphaPolicy, BoundedBytes, Leaf, LeafPaint, quad_to_cubic},
+    error,
+};
 use chart_core::{
     ChartResult, DiagnosticCode,
     scene::{Primitive, Scene},
@@ -17,12 +21,9 @@ fn coordinate(v: f64) -> ChartResult<u32> {
     Ok((v as i32) as u32)
 }
 struct Writer {
-    bytes: Vec<u8>,
-    limit: usize,
+    bytes: BoundedBytes,
     records: u32,
     bounds: [u32; 4],
-    alpha: VectorAlphaPolicy,
-    omitted: usize,
 }
 impl Writer {
     fn record(&mut self, kind: u32, words: &[u32]) -> ChartResult<()> {
@@ -31,13 +32,7 @@ impl Writer {
             .checked_add(2)
             .and_then(|v| v.checked_mul(4))
             .ok_or_else(|| error(DiagnosticCode::ResourceLimit, "EMF record length overflow."))?;
-        if self
-            .bytes
-            .len()
-            .checked_add(length)
-            .is_none_or(|v| v > self.limit)
-            || length > u32::MAX as usize
-        {
+        if !self.bytes.fits(length) || length > u32::MAX as usize {
             return Err(error(
                 DiagnosticCode::ResourceLimit,
                 "EMF output exceeds the byte budget.",
@@ -47,30 +42,14 @@ impl Writer {
             .records
             .checked_add(1)
             .ok_or_else(|| error(DiagnosticCode::ResourceLimit, "EMF record count overflow."))?;
-        self.bytes.extend_from_slice(&kind.to_le_bytes());
-        self.bytes.extend_from_slice(&(length as u32).to_le_bytes());
+        self.bytes.bytes.extend_from_slice(&kind.to_le_bytes());
+        self.bytes
+            .bytes
+            .extend_from_slice(&(length as u32).to_le_bytes());
         for word in words {
-            self.bytes.extend_from_slice(&word.to_le_bytes());
+            self.bytes.bytes.extend_from_slice(&word.to_le_bytes());
         }
         Ok(())
-    }
-    fn alpha(&mut self, alpha: f32) -> ChartResult<bool> {
-        if alpha == 0. {
-            return Ok(false);
-        }
-        if alpha == 1. {
-            return Ok(true);
-        }
-        match self.alpha {
-            VectorAlphaPolicy::OmitTranslucent => {
-                self.omitted += 1;
-                Ok(false)
-            }
-            VectorAlphaPolicy::Reject => Err(error(
-                DiagnosticCode::ExportFidelity,
-                "EMF device does not preserve partial transparency; choose an explicit vector alpha policy.",
-            )),
-        }
     }
     fn path(&mut self, path: &usvg::tiny_skia_path::Path) -> ChartResult<()> {
         use usvg::tiny_skia_path::PathSegment::*;
@@ -95,14 +74,8 @@ impl Writer {
                     current = p;
                 }
                 QuadTo(a, b) => {
-                    let a1 = usvg::tiny_skia_path::Point::from_xy(
-                        current.x + 2. / 3. * (a.x - current.x),
-                        current.y + 2. / 3. * (a.y - current.y),
-                    );
-                    let a2 = usvg::tiny_skia_path::Point::from_xy(
-                        b.x + 2. / 3. * (a.x - b.x),
-                        b.y + 2. / 3. * (a.y - b.y),
-                    );
+                    let [a1, a2] = quad_to_cubic((current.x, current.y), (a.x, a.y), (b.x, b.y))
+                        .map(|(x, y)| usvg::tiny_skia_path::Point::from_xy(x, y));
                     self.cubic([a1, a2, b])?;
                     current = b;
                 }
@@ -144,110 +117,55 @@ impl Writer {
         self.record(37, &[0x80000005])?;
         self.record(40, &[1])
     }
-    fn node(&mut self, node: &usvg::Node) -> ChartResult<()> {
-        match node {
-            usvg::Node::Group(group) => {
-                if !self.alpha(group.opacity().get())? {
-                    return Ok(());
-                }
-                if group.mask().is_some() || !group.filters().is_empty() {
-                    return Err(error(
-                        DiagnosticCode::ExportFidelity,
-                        "EMF cannot silently flatten masks or filters.",
-                    ));
-                }
-                for node in group.children() {
-                    self.node(node)?;
-                }
-                Ok(())
-            }
-            usvg::Node::Text(text) => self.group(text.flattened()),
-            usvg::Node::Image(_) => Err(error(
+    fn leaf(&mut self, leaf: &Leaf<'_>) -> ChartResult<()> {
+        let usvg::Paint::Color(color) = leaf.paint else {
+            return Err(error(
                 DiagnosticCode::ExportFidelity,
-                "EMF image must be a retained raster scene item.",
-            )),
-            usvg::Node::Path(path) => {
-                if !path.is_visible() {
-                    return Ok(());
-                }
-                let paints = if path.paint_order() == usvg::PaintOrder::StrokeAndFill {
-                    [true, false]
-                } else {
-                    [false, true]
+                "EMF retained-vector device does not support gradient or pattern paint.",
+            ));
+        };
+        let (geometry, even) = match &leaf.kind {
+            LeafPaint::Stroke(s) => {
+                let style = usvg::tiny_skia_path::Stroke {
+                    width: s.width().get(),
+                    miter_limit: s.miterlimit().get(),
+                    line_cap: match s.linecap() {
+                        usvg::LineCap::Butt => usvg::tiny_skia_path::LineCap::Butt,
+                        usvg::LineCap::Round => usvg::tiny_skia_path::LineCap::Round,
+                        usvg::LineCap::Square => usvg::tiny_skia_path::LineCap::Square,
+                    },
+                    line_join: match s.linejoin() {
+                        usvg::LineJoin::Round => usvg::tiny_skia_path::LineJoin::Round,
+                        usvg::LineJoin::Bevel => usvg::tiny_skia_path::LineJoin::Bevel,
+                        _ => usvg::tiny_skia_path::LineJoin::Miter,
+                    },
+                    dash: s.dasharray().and_then(|d| {
+                        usvg::tiny_skia_path::StrokeDash::new(d.to_vec(), s.dashoffset())
+                    }),
                 };
-                for stroke in paints {
-                    let (paint, alpha, even) = if stroke {
-                        let Some(s) = path.stroke() else {
-                            continue;
-                        };
-                        (s.paint(), s.opacity().get(), false)
-                    } else {
-                        let Some(f) = path.fill() else {
-                            continue;
-                        };
-                        (
-                            f.paint(),
-                            f.opacity().get(),
-                            f.rule() == usvg::FillRule::EvenOdd,
-                        )
-                    };
-                    if !self.alpha(alpha)? {
-                        continue;
-                    }
-                    let usvg::Paint::Color(color) = paint else {
-                        return Err(error(
-                            DiagnosticCode::ExportFidelity,
-                            "EMF retained-vector device does not support gradient or pattern paint.",
-                        ));
-                    };
-                    let geometry = if stroke {
-                        let s = path.stroke().unwrap();
-                        let style = usvg::tiny_skia_path::Stroke {
-                            width: s.width().get(),
-                            miter_limit: s.miterlimit().get(),
-                            line_cap: match s.linecap() {
-                                usvg::LineCap::Butt => usvg::tiny_skia_path::LineCap::Butt,
-                                usvg::LineCap::Round => usvg::tiny_skia_path::LineCap::Round,
-                                usvg::LineCap::Square => usvg::tiny_skia_path::LineCap::Square,
-                            },
-                            line_join: match s.linejoin() {
-                                usvg::LineJoin::Round => usvg::tiny_skia_path::LineJoin::Round,
-                                usvg::LineJoin::Bevel => usvg::tiny_skia_path::LineJoin::Bevel,
-                                _ => usvg::tiny_skia_path::LineJoin::Miter,
-                            },
-                            dash: s.dasharray().and_then(|d| {
-                                usvg::tiny_skia_path::StrokeDash::new(d.to_vec(), s.dashoffset())
-                            }),
-                        };
-                        path.data().stroke(&style, 1.).ok_or_else(|| {
-                            error(
-                                DiagnosticCode::ExportFidelity,
-                                "EMF stroke outline could not be resolved.",
-                            )
-                        })?
-                    } else {
-                        path.data().clone()
-                    };
-                    let geometry = geometry.transform(path.abs_transform()).ok_or_else(|| {
+                (
+                    leaf.path.stroke(&style, 1.).ok_or_else(|| {
                         error(
-                            DiagnosticCode::NumericalDomain,
-                            "EMF path transform failed.",
+                            DiagnosticCode::ExportFidelity,
+                            "EMF stroke outline could not be resolved.",
                         )
-                    })?;
-                    self.fill(&geometry, *color, even)?;
-                }
-                Ok(())
+                    })?,
+                    false,
+                )
             }
-        }
-    }
-    fn group(&mut self, group: &usvg::Group) -> ChartResult<()> {
-        for node in group.children() {
-            self.node(node)?;
-        }
-        Ok(())
+            LeafPaint::Fill { even_odd } => (leaf.path.clone(), *even_odd),
+        };
+        let geometry = geometry.transform(leaf.transform).ok_or_else(|| {
+            error(
+                DiagnosticCode::NumericalDomain,
+                "EMF path transform failed.",
+            )
+        })?;
+        self.fill(&geometry, *color, even)
     }
     fn raster(
         &mut self,
+        alpha: &mut AlphaPolicy,
         bounds: chart_core::Rect,
         raster: &chart_core::grammar::RasterAnnotation,
         interpolate: bool,
@@ -262,7 +180,7 @@ impl Writer {
             let dx = bounds.width() / raster.width as f64;
             let dy = bounds.height() / raster.height as f64;
             for (i, color) in raster.pixels.iter().enumerate() {
-                if !self.alpha(f32::from(color.alpha) / 255.)? {
+                if !alpha.admit(f32::from(color.alpha) / 255.)? {
                     continue;
                 }
                 let rect = usvg::tiny_skia_path::Rect::from_xywh(
@@ -292,12 +210,7 @@ impl Writer {
             )
         })?;
         if pixel_bytes > (u32::MAX as usize).saturating_sub(120)
-            || pixel_bytes.checked_add(120).is_none_or(|n| {
-                self.bytes
-                    .len()
-                    .checked_add(n)
-                    .is_none_or(|n| n > self.limit)
-            })
+            || !self.bytes.fits(pixel_bytes + 120)
         {
             return Err(error(
                 DiagnosticCode::ResourceLimit,
@@ -378,13 +291,14 @@ pub(crate) fn encode(
     };
     let [w, h] = [pixels(width)?, pixels(height)?];
     let mut writer = Writer {
-        bytes: vec![],
-        limit: profile.max_output_bytes,
+        bytes: BoundedBytes::new(profile.max_output_bytes),
         records: 0,
         bounds: [0, 0, w - 1, h - 1],
-        alpha: profile.vector_device.clone().unwrap_or_default().alpha,
-        omitted: 0,
     };
+    let mut alpha = AlphaPolicy::new(
+        profile.vector_device.clone().unwrap_or_default().alpha,
+        "EMF",
+    );
     let header = vec![
         0,
         0,
@@ -442,28 +356,28 @@ pub(crate) fn encode(
             ..
         } = &item.primitive
         {
-            writer.raster(*bounds, raster, *interpolate)?;
+            writer.raster(&mut alpha, *bounds, raster, *interpolate)?;
         } else if let Some(node) = tree.node_by_id(&format!("item-{index}")) {
-            writer.node(node)?;
+            crate::devices::walk(node, &mut alpha, &mut |leaf, _| writer.leaf(&leaf))?;
         }
         writer.record(34, &[u32::MAX])?;
     }
     writer.record(14, &[0, 0, 20])?;
-    let size = u32::try_from(writer.bytes.len()).map_err(|_| {
+    let size = u32::try_from(writer.bytes.bytes.len()).map_err(|_| {
         error(
             DiagnosticCode::ResourceLimit,
             "EMF total byte count overflow.",
         )
     })?;
-    writer.bytes[48..52].copy_from_slice(&size.to_le_bytes());
-    writer.bytes[52..56].copy_from_slice(&writer.records.to_le_bytes());
-    Ok((writer.bytes, writer.omitted))
+    writer.bytes.bytes[48..52].copy_from_slice(&size.to_le_bytes());
+    writer.bytes.bytes[52..56].copy_from_slice(&writer.records.to_le_bytes());
+    Ok((writer.bytes.bytes, alpha.omitted))
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{Format, Output, PageSize, export_options};
+    use crate::{Format, Output, PageSize, VectorAlphaPolicy, export_options};
     use chart_core::prelude::*;
     fn word(bytes: &[u8], at: usize) -> u32 {
         u32::from_le_bytes(bytes[at..at + 4].try_into().unwrap())
@@ -530,18 +444,15 @@ mod tests {
         }
         assert_eq!(crate::host::format("wmf").unwrap(), Format::Emf);
         let mut writer = Writer {
-            bytes: vec![],
-            limit: 7,
+            bytes: BoundedBytes::new(7),
             records: 0,
             bounds: [0; 4],
-            alpha: VectorAlphaPolicy::Reject,
-            omitted: 0,
         };
         assert_eq!(
             writer.record(59, &[]).unwrap_err().code,
             DiagnosticCode::ResourceLimit
         );
-        assert!(writer.bytes.is_empty());
+        assert!(writer.bytes.bytes.is_empty());
         assert!(coordinate(f64::MAX).is_err());
     }
     #[test]
@@ -566,13 +477,11 @@ mod tests {
     #[test]
     fn emf_raster_offsets_and_top_down_bgra_are_independently_decodable() {
         let mut writer = Writer {
-            bytes: vec![],
-            limit: 1024,
+            bytes: BoundedBytes::new(1024),
             records: 0,
             bounds: [0, 0, 2, 1],
-            alpha: VectorAlphaPolicy::Reject,
-            omitted: 0,
         };
+        let mut alpha = AlphaPolicy::new(VectorAlphaPolicy::Reject, "EMF");
         let raster = chart_core::grammar::RasterAnnotation {
             width: 2,
             height: 1,
@@ -593,12 +502,13 @@ mod tests {
         };
         writer
             .raster(
+                &mut alpha,
                 chart_core::Rect::new(1., 2., 3., 4.).unwrap(),
                 &raster,
                 false,
             )
             .unwrap();
-        let record = &writer.bytes[12..];
+        let record = &writer.bytes.bytes[12..];
         assert_eq!(word(record, 0), 81);
         assert_eq!(word(record, 4), 128);
         assert_eq!(word(record, 48), 80);

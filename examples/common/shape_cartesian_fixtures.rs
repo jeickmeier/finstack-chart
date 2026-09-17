@@ -1,4 +1,5 @@
 //! All 20 curve factories and 19 paired-boundary areas through the ordinary chart engine.
+use chart_core::plot::{shape_area, shape_line};
 use chart_core::{ChartResult, prelude::*, shape::CurveSpec};
 pub fn figure(presentation: Option<ThemeBuilder>) -> ChartResult<Plot> {
     let inventory: serde_json::Value =

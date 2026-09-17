@@ -4,10 +4,7 @@ use super::*;
 use crate::data::{DatasetSnapshot, InvalidPolicy, RowView};
 use crate::provenance::Target;
 use crate::{ChartResult, DiagnosticCode, Revision};
-use std::{
-    collections::{BTreeMap, BTreeSet},
-    sync::Arc,
-};
+use std::{collections::BTreeSet, sync::Arc};
 
 /// A registered operation's declarative parameters and statistical population policy.
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
@@ -118,14 +115,7 @@ pub fn extension_input_space(
     value: &Numeric,
     space: &StatSpace,
 ) -> ChartResult<ValueSpace> {
-    let input = stats::numeric_space(data, value)?;
-    Ok(match space {
-        StatSpace::Data => input,
-        StatSpace::Transformed(t) => ValueSpace::Transformed {
-            input: Box::new(input),
-            transform: t.clone(),
-        },
-    })
+    super::statistics::space(data, value, space)
 }
 /// Immutable-by-ownership versioned registry. Install trusted implementations explicitly;
 /// portable JSON can only select an existing entry and never supplies executable code.
@@ -147,8 +137,8 @@ pub struct ExtensionRegistry {
     pub(crate) interpolations: Arc<super::interpolation_extensions::InterpolationRegistrations>,
     pub(crate) guides: Arc<super::guide_extensions::GuideRegistrations>,
     pub(crate) scales: Arc<super::scale_extensions::ScaleRegistrations>,
-    stats: BTreeMap<(String, u64), Arc<dyn CustomStat>>,
-    geoms: BTreeMap<(String, u64), Arc<dyn CustomGeom>>,
+    stats: super::registry::VersionedMap<Arc<dyn CustomStat>>,
+    geoms: super::registry::VersionedMap<Arc<dyn CustomGeom>>,
     pub(crate) shapes: super::shape_extensions::ShapeRegistrations,
 }
 impl ExtensionRegistry {
@@ -159,68 +149,56 @@ impl ExtensionRegistry {
     /// Register one exact version. Duplicate entries and builtin namespace overrides reject.
     pub fn register_stat(&mut self, stat: Arc<dyn CustomStat>) -> ChartResult<()> {
         let d = stat.descriptor();
-        validate_descriptor(&d)?;
-        let key = (d.operation.id.clone(), d.operation.version.get());
-        if self.stats.contains_key(&key) {
-            return Err(error(
-                DiagnosticCode::SchemaConflict,
-                "An extension version is already registered.",
-            ));
-        }
-        if self.stats.len() >= 64 {
-            return Err(error(
-                DiagnosticCode::ResourceLimit,
-                "At most 64 stat extensions can be registered.",
-            ));
-        }
-        self.stats.insert(key, stat);
-        Ok(())
+        self.stats.insert(
+            d,
+            stat,
+            "An extension version is already registered.",
+            "stat extensions",
+        )
     }
     /// Register a custom geometry without replacing builtin geometry/renderer code.
     pub fn register_geom(&mut self, geom: Arc<dyn CustomGeom>) -> ChartResult<()> {
         let d = geom.descriptor();
-        validate_descriptor(&d)?;
-        let key = (d.operation.id.clone(), d.operation.version.get());
-        if self.geoms.contains_key(&key) {
-            return Err(error(
-                DiagnosticCode::SchemaConflict,
-                "A geometry extension version is already registered.",
-            ));
-        }
-        if self.geoms.len() >= 64 {
-            return Err(error(
-                DiagnosticCode::ResourceLimit,
-                "At most 64 geometry extensions can be registered.",
-            ));
-        }
-        self.geoms.insert(key, geom);
-        Ok(())
+        self.geoms.insert(
+            d,
+            geom,
+            "A geometry extension version is already registered.",
+            "geometry extensions",
+        )
     }
     /// Resolve a known geometry version; unknown/native callbacks never load from JSON.
     pub fn geometry_descriptor(&self, op: &OperationRef) -> ChartResult<ExtensionDescriptor> {
         Ok(self.geom(op)?.descriptor())
     }
     pub(crate) fn geom(&self, op: &OperationRef) -> ChartResult<&dyn CustomGeom> {
-        self.geoms
-            .get(&(op.id.clone(), op.version.get()))
-            .map(Arc::as_ref)
-            .ok_or_else(|| {
-                error(
-                    DiagnosticCode::UnsupportedCapability,
-                    format!(
-                        "Geometry {} version {} is not registered.",
-                        op.id,
-                        op.version.get()
-                    ),
+        Ok(self
+            .geoms
+            .get_fmt(op, || {
+                format!(
+                    "Geometry {} version {} is not registered.",
+                    op.id,
+                    op.version.get()
                 )
-            })
+            })?
+            .implementation
+            .as_ref())
     }
     /// Resolve metadata without invoking the implementation.
     pub fn stat_descriptor(&self, operation: &OperationRef) -> ChartResult<ExtensionDescriptor> {
         Ok(self.stat(operation)?.descriptor())
     }
     pub(crate) fn stat(&self, operation: &OperationRef) -> ChartResult<&dyn CustomStat> {
-        self.stats.get(&(operation.id.clone(),operation.version.get())).map(Arc::as_ref).ok_or_else(||error(DiagnosticCode::UnsupportedCapability,format!("Extension {} version {} is not registered; install a known implementation or use a builtin.",operation.id,operation.version.get())))
+        Ok(self
+            .stats
+            .get_fmt(operation, || {
+                format!(
+                    "Extension {} version {} is not registered; install a known implementation or use a builtin.",
+                    operation.id,
+                    operation.version.get()
+                )
+            })?
+            .implementation
+            .as_ref())
     }
     pub(crate) fn validate_portable(&self, definition: &ChartDefinition) -> ChartResult<()> {
         self.validate_portable_hierarchies(definition)?;

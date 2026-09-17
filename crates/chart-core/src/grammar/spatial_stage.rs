@@ -148,15 +148,6 @@ pub(super) fn schema(
     }
     Ok(fields)
 }
-fn transformed(v: Option<f64>, s: &StatSpace) -> Option<f64> {
-    v.and_then(|v| {
-        let v = match s {
-            StatSpace::Data => v,
-            StatSpace::Transformed(t) => t.factor * v + t.offset,
-        };
-        v.is_finite().then_some(v)
-    })
-}
 #[derive(Clone)]
 struct Sample {
     key: crate::RowKey,
@@ -189,12 +180,12 @@ pub(super) fn run(
     for row in rows.iter() {
         let r = index[&row.key];
         let g = group_value(r, &spec.grouping);
-        let x = transformed(number(r, &spec.x), &spec.x_space);
-        let y = transformed(number(r, &spec.y), &spec.y_space);
+        let x = statistics::transformed(number(r, &spec.x), &spec.x_space);
+        let y = statistics::transformed(number(r, &spec.y), &spec.y_space);
         let z = spec
             .z
             .as_ref()
-            .and_then(|v| transformed(number(r, v), &spec.z_space));
+            .and_then(|v| statistics::transformed(number(r, v), &spec.z_space));
         let w = if matches!(
             spec.kind,
             SpatialKind::Density { .. }

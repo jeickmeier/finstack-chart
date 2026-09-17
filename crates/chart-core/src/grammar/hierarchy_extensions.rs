@@ -1,7 +1,10 @@
 //! Captured, versioned hierarchy accessors; no interpreter enters the core loop.
-use super::{ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions};
+use super::{
+    ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions,
+    registry::{VersionedMap, reject_native_only},
+};
 use crate::{ChartResult, DiagnosticCode, hierarchy::*};
-use std::{cmp::Ordering, collections::BTreeMap, sync::Arc};
+use std::{cmp::Ordering, sync::Arc};
 
 /// Purpose of a scalar callback, including the exact treemap padding slot.
 #[derive(Clone, Copy, Debug)]
@@ -90,10 +93,13 @@ pub(crate) struct HierarchyRegistration {
     pub(crate) descriptor: ExtensionDescriptor,
     pub(crate) implementation: Arc<dyn CustomHierarchyOperation>,
 }
-#[derive(Clone, Default)]
-pub(crate) struct HierarchyRegistrations {
-    entries: BTreeMap<(String, u64), HierarchyRegistration>,
+impl std::fmt::Debug for HierarchyRegistration {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        self.descriptor.fmt(f)
+    }
 }
+#[derive(Clone, Default)]
+pub(crate) struct HierarchyRegistrations(VersionedMap<Arc<dyn CustomHierarchyOperation>>);
 impl ExtensionRegistry {
     /// Install an exact version. Existing sessions retain their captured registration.
     pub fn register_hierarchy(
@@ -101,27 +107,12 @@ impl ExtensionRegistry {
         implementation: Arc<dyn CustomHierarchyOperation>,
     ) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        extensions::validate_descriptor(&descriptor)?;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        let entries = &mut Arc::make_mut(&mut self.hierarchies).entries;
-        if entries.contains_key(&key) {
-            return Err(super::error(
-                DiagnosticCode::SchemaConflict,
-                "A hierarchy operation version is already registered.",
-            ));
-        }
-        crate::limits::require_within(entries.len() < 64, "registered hierarchy operation")?;
-        entries.insert(
-            key,
-            HierarchyRegistration {
-                descriptor,
-                implementation,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.hierarchies).0.insert(
+            descriptor,
+            implementation,
+            "A hierarchy operation version is already registered.",
+            "registered hierarchy operation",
+        )
     }
     pub(crate) fn hierarchy_operation(
         &self,
@@ -132,21 +123,17 @@ impl ExtensionRegistry {
         extensions::parameter_size(parameters)?;
         let entry = self
             .hierarchies
-            .entries
-            .get(&(operation.id.clone(), operation.version.get()))
-            .ok_or_else(|| {
-                super::error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "Hierarchy operation version is not registered.",
-                )
-            })?;
-        if portable && !entry.descriptor.portable {
-            return Err(super::error(
-                DiagnosticCode::UnsupportedCapability,
-                "Native-only hierarchy operation cannot execute through a portable boundary.",
-            ));
-        }
+            .0
+            .get(operation, "Hierarchy operation version is not registered.")?;
+        reject_native_only(
+            portable,
+            entry.descriptor.portable,
+            "Native-only hierarchy operation cannot execute through a portable boundary.",
+        )?;
         entry.implementation.validate(parameters)?;
-        Ok(entry.clone())
+        Ok(HierarchyRegistration {
+            descriptor: entry.descriptor.clone(),
+            implementation: entry.implementation.clone(),
+        })
     }
 }

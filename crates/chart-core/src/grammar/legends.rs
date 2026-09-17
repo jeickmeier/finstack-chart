@@ -210,4 +210,22 @@ impl CustomLegend {
         }
         Ok(())
     }
+    /// Resource limits plus the 0.01 lowering envelope against declared local bounds.
+    pub(super) fn validate_local(&self, limits: crate::Limits, overflow: &str) -> ChartResult<()> {
+        self.validate(limits)?;
+        let size = [self.bounds[2], self.bounds[3]];
+        for path in &self.paths {
+            if let Some(b) = path.geometry.bounds(0.01, limits.max_path_commands)? {
+                let tolerance = 0.01 + 1e-8 * size[0].max(size[1]).max(1.);
+                if b.origin().x() < -tolerance
+                    || b.origin().y() < -tolerance
+                    || b.max_x() > size[0] + tolerance
+                    || b.max_y() > size[1] + tolerance
+                {
+                    return Err(super::error(DiagnosticCode::Validation, overflow));
+                }
+            }
+        }
+        Ok(())
+    }
 }

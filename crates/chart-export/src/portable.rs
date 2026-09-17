@@ -267,7 +267,7 @@ impl PortableChart {
             i.profile.layout.limits,
         )?;
         portable::encode(
-            &json!({"version":dense.scene().wire_version(),"stamp":dense.scene().stamp(),"metrics":dense.metrics(),"candles":dense.candles(),"items":dense.scene().items(),"svg":crate::svg::build(dense.scene(),&i.fonts,&i.profile,true)?}),
+            &json!({"version":dense.scene().wire_version(),"stamp":dense.scene().stamp(),"metrics":dense.metrics(),"candles":dense.candles(),"items":dense.scene().items(),"svg":crate::svg::build(dense.scene(),&i.fonts,&i.profile,true,None)?}),
         )
     }
     /// Owned semantic JSON with generated values, domains, exact source payloads and targets.

@@ -12,24 +12,7 @@ pub(crate) fn escape(text: &str) -> String {
         .replace('"', "&quot;")
         .replace('\'', "&apos;")
 }
-struct Writer {
-    text: String,
-    limit: usize,
-}
-impl Write for Writer {
-    fn write_str(&mut self, s: &str) -> std::fmt::Result {
-        if self
-            .text
-            .len()
-            .checked_add(s.len())
-            .is_none_or(|n| n > self.limit)
-        {
-            return Err(std::fmt::Error);
-        }
-        self.text.push_str(s);
-        Ok(())
-    }
-}
+use crate::devices::BoundedString;
 fn color(c: Color) -> String {
     format!("#{:02x}{:02x}{:02x}", c.red, c.green, c.blue)
 }
@@ -59,7 +42,7 @@ fn component_attributes(component: Option<&GuideComponent>) -> String {
     }
 }
 fn guide_groups<'a>(
-    out: &mut Writer,
+    out: &mut BoundedString,
     active: &mut Option<&'a GuideComponent>,
     next: Option<&'a GuideComponent>,
     index: usize,
@@ -115,14 +98,6 @@ pub(crate) fn build(
     fonts: &FontResources,
     p: &PublicationProfile,
     embed: bool,
-) -> ChartResult<String> {
-    build_with_outlines(scene, fonts, p, embed, None)
-}
-fn build_with_outlines(
-    scene: &Scene,
-    fonts: &FontResources,
-    p: &PublicationProfile,
-    embed: bool,
     outlines: Option<&BTreeMap<usize, &str>>,
 ) -> ChartResult<String> {
     scene.require_portable_paint()?;
@@ -152,10 +127,7 @@ fn build_with_outlines(
             }
         })
         .collect::<ChartResult<Vec<_>>>()?;
-    let mut out = Writer {
-        text: String::new(),
-        limit: p.max_output_bytes,
-    };
+    let mut out = BoundedString::new(p.max_output_bytes);
     let result = (|| -> Result<(), std::fmt::Error> {
         write!(
             out,
@@ -181,7 +153,7 @@ fn build_with_outlines(
                     .checked_add(2)
                     .and_then(|n| (n / 3).checked_mul(4))
                     .ok_or(std::fmt::Error)?;
-                if n > out.limit - out.text.len() {
+                if n > out.remaining() {
                     return Err(std::fmt::Error);
                 }
                 out.write_str(&base64::engine::general_purpose::STANDARD.encode(&f.bytes))?;
@@ -590,7 +562,7 @@ pub(crate) fn outline(
             }
         }
         return super::encode::bounded(
-            build_with_outlines(scene, fonts, p, false, Some(&fragments))?.into_bytes(),
+            build(scene, fonts, p, false, Some(&fragments))?.into_bytes(),
             p,
         );
     }
@@ -605,7 +577,7 @@ pub(crate) fn outline(
 }
 
 fn write_gradient(
-    out: &mut Writer,
+    out: &mut BoundedString,
     index: usize,
     attrs: &str,
     bounds: chart_core::Rect,
@@ -640,7 +612,7 @@ fn write_gradient(
     )
 }
 
-fn write_command(out: &mut Writer, c: &PathCommand) -> Result<(), std::fmt::Error> {
+fn write_command(out: &mut BoundedString, c: &PathCommand) -> Result<(), std::fmt::Error> {
     match c {
         PathCommand::MoveTo(a) => write!(out, "M {} {} ", a.x(), a.y()),
         PathCommand::LineTo(a) => write!(out, "L {} {} ", a.x(), a.y()),

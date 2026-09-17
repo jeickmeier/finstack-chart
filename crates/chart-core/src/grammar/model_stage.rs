@@ -90,15 +90,6 @@ pub(super) fn schema(
     fields.push(group_column);
     Ok(fields)
 }
-fn transformed(value: Option<f64>, space: &StatSpace) -> Option<f64> {
-    value.and_then(|v| match space {
-        StatSpace::Data => Some(v),
-        StatSpace::Transformed(t) => {
-            let v = t.factor * v + t.offset;
-            v.is_finite().then_some(v)
-        }
-    })
-}
 struct Sample {
     key: RowKey,
     x: f64,
@@ -132,8 +123,8 @@ pub(super) fn run(
     for row in source.iter() {
         let r = index[&row.key];
         let group = stats::group_value(r, &spec.grouping);
-        let x = transformed(stats::number(r, &spec.x), &spec.x_space);
-        let y = transformed(stats::number(r, &spec.y), &spec.y_space);
+        let x = statistics::transformed(stats::number(r, &spec.x), &spec.x_space);
+        let y = statistics::transformed(stats::number(r, &spec.y), &spec.y_space);
         let w = spec
             .weight
             .as_ref()

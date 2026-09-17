@@ -1,4 +1,5 @@
 //! Arc corners/padding and pie/donut layout through ordinary shared chart geometry.
+use chart_core::plot::{shape_arc, shape_pie};
 use chart_core::{
     ChartResult,
     grammar::NumericAesthetic as A,

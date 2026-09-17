@@ -1,6 +1,9 @@
 //! Explicit typed recipe dispatch; callbacks compose the existing primary builders.
 use super::*;
-use crate::grammar::{ExtensionDescriptor, OperationRef};
+use crate::grammar::{
+    ExtensionDescriptor, OperationRef,
+    registry::{VersionedMap, reject_native_only},
+};
 /// An installed authoring recipe and its immutable declarative parameters.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -37,15 +40,8 @@ pub trait CustomAuthoring: Send + Sync {
     /// Compose ordinary layers over owner-scoped fields; core resolves and validates them.
     fn layers(&self, input: AuthoringInput<'_>) -> ChartResult<Vec<LayerBuilder>>;
 }
-#[derive(Clone)]
-struct Entry {
-    descriptor: ExtensionDescriptor,
-    implementation: Arc<dyn CustomAuthoring>,
-}
 #[derive(Clone, Default)]
-pub(crate) struct AuthoringRegistrations {
-    entries: BTreeMap<(String, u64), Entry>,
-}
+pub(crate) struct AuthoringRegistrations(VersionedMap<Arc<dyn CustomAuthoring>>);
 impl ExtensionRegistry {
     /// Add an immutable authoring adapter; JSON cannot create registrations.
     pub fn register_authoring(
@@ -53,45 +49,27 @@ impl ExtensionRegistry {
         implementation: Arc<dyn CustomAuthoring>,
     ) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        crate::grammar::validate_extension_descriptor(&descriptor)?;
-        let entries = &mut Arc::make_mut(&mut self.authoring).entries;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        if entries.contains_key(&key) {
-            return Err(error(
-                DiagnosticCode::SchemaConflict,
-                "Authoring version is already registered.",
-            ));
-        }
-        crate::limits::require_within(entries.len() < 64, "authoring registrations")?;
-        entries.insert(
-            key,
-            Entry {
-                descriptor,
-                implementation,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.authoring).0.insert(
+            descriptor,
+            implementation,
+            "Authoring version is already registered.",
+            "authoring registrations",
+        )
     }
-    fn authoring_entry(&self, operation: &OperationRef, portable: bool) -> ChartResult<&Entry> {
+    fn authoring_entry(
+        &self,
+        operation: &OperationRef,
+        portable: bool,
+    ) -> ChartResult<&crate::grammar::registry::VersionedEntry<Arc<dyn CustomAuthoring>>> {
         let entry = self
             .authoring
-            .entries
-            .get(&(operation.id.clone(), operation.version.get()))
-            .ok_or_else(|| {
-                error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "Authoring recipe is not registered.",
-                )
-            })?;
-        if portable && !entry.descriptor.portable {
-            return Err(error(
-                DiagnosticCode::UnsupportedCapability,
-                "Native-only authoring cannot dispatch in a portable host.",
-            ));
-        }
+            .0
+            .get(operation, "Authoring recipe is not registered.")?;
+        reject_native_only(
+            portable,
+            entry.descriptor.portable,
+            "Native-only authoring cannot dispatch in a portable host.",
+        )?;
         Ok(entry)
     }
     /// Materialize an explicit application payload once, validating the returned data again.

@@ -57,7 +57,7 @@
 mod after_scale;
 mod ggplot_position;
 mod stack_position;
-pub use after_scale::*;
+pub use after_scale::{AfterScaleAesthetic, AfterScaleRead, ThemeRead};
 pub use ggplot_position::{
     DodgePreserve, GgplotDodgeSpec, GgplotStackSpec, JitterDodgeSpec, NudgeSpec,
 };
@@ -71,26 +71,37 @@ mod shape_encoding;
 pub use numeric_aesthetics::{NumericAesthetic, NumericEncoding};
 pub use radial_shapes::RadialParameters;
 mod compiler;
+mod encode;
 mod incremental_bins;
+mod position_stage;
 pub use incremental_bins::StatUpdateMetrics;
 pub(crate) mod coordinate_policy;
 mod geography;
 mod geography_coordinate;
-pub use geography_coordinate::*;
+pub use geography_coordinate::{
+    GeoAxisLabel, GeoGraticule, GeoLimitsMethod, GeoProjectionSelection, GeographicCoordinate,
+};
 mod geography_crs;
-pub use geography_crs::*;
+pub use geography_crs::GeoTransform;
 mod geography_geometry;
 mod geography_mapproj;
 mod geography_mapproj_complex;
 mod geography_projection;
 mod geography_statistics;
-pub use geography::*;
-pub use geography_projection::*;
+pub use geography::{
+    GeoAxisOrder, GeoCrs, GeoFeature, GeoFeatureCollection, GeoGeometry, GeoLayerSpec, GeoLimits,
+    GeoOperation, GeoPolygon, GeoPosition,
+};
+pub use geography_projection::{MapprojMethod, MapprojProjection};
 mod definition;
 mod expression;
 mod expression_stage;
 mod extensions;
-pub use coordinate_policy::*;
+pub use coordinate_policy::{
+    CartesianCoordinate, CoordinateClip, CoordinateLimits, CoordinateReverse, CoordinateSpec,
+    RadialAxisPlacement, RadialCoordinate, RadialMode, RadialReverse, ThetaAxis,
+    TransformedCoordinate,
+};
 pub(crate) mod facet_policy;
 mod facets;
 pub use facet_policy::{
@@ -115,7 +126,10 @@ mod palette_theme;
 pub use interpolation_extensions::{CustomInterpolationFactory, InterpolationInput};
 mod prepared;
 mod scale_extensions;
-pub use guide_extensions::*;
+pub use guide_extensions::{
+    CustomGuideFormatter, FacetLabelContext, GuideFormatInput, GuideLabelsInput,
+    GuideTemporalContext,
+};
 mod scale_stage;
 mod semantics;
 mod statistical_types;
@@ -123,22 +137,52 @@ mod statistics;
 mod stats;
 mod typed;
 
-pub use colors::*;
+pub(crate) use colors::guide_key_population;
+pub use colors::{ColorEncoding, ColorInput, PaintAesthetic};
 pub use compiler::Compiler;
-pub use definition::*;
-pub use expression::*;
-pub use extensions::*;
-pub use facets::*;
-pub use geometry_extensions::*;
-pub use prepared::*;
-pub use scale_extensions::*;
-pub use scale_stage::*;
-pub use semantics::*;
-pub use shape_extensions::*;
-pub use statistical_types::*;
+pub use definition::{
+    BinAes, BinField, BinNumeric, BinSpec, ChartDefinition, ClipPolicy, CompileLimits, DataRef,
+    Geom, Grouping, Layer, LineOrder, Mappings, Numeric, NumericTransform, OperationRef,
+    OutlierPolicy, Position, ScaleBindings, SourceAes, SourceFilter, StatParameters, StatSpace,
+    Statistic, Style, TransformDefinition,
+};
+pub use expression::{
+    Expression, ExpressionBinary, ExpressionLimits, ExpressionNode, ExpressionReduce,
+    ExpressionType, ExpressionUnary, ExpressionValue, SourceRead,
+};
+pub use extensions::{
+    CustomStat, CustomStatInput, CustomStatOutput, ExtensionDescriptor, ExtensionParameters,
+    ExtensionRegistry, extension_input_space,
+};
+pub use facets::{
+    EmptyPanels, FacetLayout, FacetScales, FacetSpec, FacetTarget, PanelKey, PreparedPanel,
+    StatScope,
+};
+pub(crate) use geometry_extensions::native_parameter_size;
+pub use geometry_extensions::{
+    CandleColors, CustomGeom, CustomGeomInput, CustomMark, GeometryExtension, GeometryInteraction,
+    HitGeometry, SelectionPolicy, SemanticValue, validate_native_paint,
+};
+pub use prepared::{
+    BinnedRow, DomainContributions, Extent, GeneratedField, GeneratedKind, GroupNumber, GroupValue,
+    OperationRecord, OutputSchema, PopulationCounts, PreparationMetrics, PreparedChart,
+    PreparedGeometry, PreparedLayer, PreparedMark, PreparedRows, PreparedTable, PreparedTarget,
+    SourceRow, ValueSpace,
+};
+pub use scale_extensions::{CustomScale, ScaleProviderInput};
+pub use scale_stage::{ScaleOob, ScaleProjection, TimestampProjection};
+pub use semantics::{
+    ExecutionSemantics, GroupPolicy, LayerGrammar, Profile, ScaleStage, TransformGrammar,
+};
+pub use shape_extensions::{CustomShape, ShapeFamily, ShapeOperation, ShapeProtocol};
+pub use statistical_types::{
+    AutoBinSpec, CountSpec, DodgeSpec, IncrementalCapabilities, JitterSpec, JitterUnits, OlsSpec,
+    ShapeStackSpec, StackSpec, StatAes, StatColumn, StatField, StatNumeric, StatOutlier, StatValue,
+    StatisticalRow, SummarySpec,
+};
 mod ggplot_stats;
 pub use ggplot_stats::{BinClosure, BinStatistics, GgplotBinOptions};
-pub use typed::*;
+pub use typed::TypedDataBuilder;
 
 use crate::{Diagnostic, DiagnosticCode};
 fn error(code: DiagnosticCode, message: impl Into<String>) -> Diagnostic {
@@ -201,7 +245,10 @@ pub use row_annotation::{AnnotationContent, RasterAnnotation, RowAnnotation};
 mod ggplot_bin_training;
 
 mod recipe_types;
-pub use recipe_types::*;
+pub use recipe_types::{
+    ArrowEnds, ArrowSpec, BuiltinRecipe, IntervalKind, IntervalPoint, IntervalRecipe,
+    IntervalStroke, PreparedRecipe, RecipeAesthetic, ReferenceKind, ReferenceRecipe, StepDirection,
+};
 mod recipe_emit;
 mod recipe_intervals;
 mod recipe_marks;
@@ -225,7 +272,10 @@ pub use recipe_distributions::{
 pub(crate) mod distributions;
 pub use distributions::{Bandwidth, DensityControls, DensityKernel};
 mod analytic_types;
-pub use analytic_types::*;
+pub use analytic_types::{
+    AnalyticFunction, Connection, DistributionKind, DistributionSpec, DotBinMethod,
+    FunctionArgument, UnivariateKind, UnivariateSpec, ViolinScale,
+};
 mod analytic_functions;
 pub use analytic_functions::CustomAnalyticFunction;
 mod distribution_stage;
@@ -233,7 +283,10 @@ mod univariate_kernels;
 mod univariate_stage;
 
 mod model_types;
-pub use model_types::*;
+pub use model_types::{
+    LoessFamily, LoessSurface, ModelFamily, ModelMethod, ModelOptions, ModelQuantileSolver,
+    ModelSpec, ModelTerm,
+};
 mod model_gam;
 mod model_glm;
 mod model_linear;
@@ -248,7 +301,7 @@ pub use model_extensions::{CustomModel, ModelEstimate, ModelInput};
 
 mod spatial;
 mod spatial_types;
-pub use spatial_types::*;
+pub use spatial_types::{ContourLevels, DensityContour, EllipseKind, SpatialKind, SpatialSpec};
 
 mod recipe_models;
 
@@ -257,15 +310,13 @@ mod spatial_stage;
 mod key_extensions;
 pub use key_extensions::{CustomKeyGlyph, KeyGlyphInput, KeyGlyphOutput, KeyGlyphSelection};
 
-pub(crate) use extensions::{
-    parameter_size as extension_parameter_size,
-    validate_descriptor as validate_extension_descriptor,
-};
+pub(crate) use extensions::parameter_size as extension_parameter_size;
 
 mod guide_drawing;
 pub use guide_drawing::{CustomGuideDrawing, GuideDrawingInput, GuideDrawingSelection};
 
 mod facet_extensions;
+pub(crate) mod registry;
 pub use facet_extensions::{CustomFacet, FacetPlanInput, FacetSelection};
 
 mod coordinate_extensions;

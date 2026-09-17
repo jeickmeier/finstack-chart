@@ -1,7 +1,10 @@
 //! Registered pure functions shared by function sampling and QQ distributions.
-use super::*;
+use super::{
+    registry::{VersionedMap, reject_native_only},
+    *,
+};
 use crate::{ChartResult, DiagnosticCode};
-use std::{collections::BTreeMap, sync::Arc};
+use std::sync::Arc;
 
 /// Trusted immutable numeric function, installed before portable execution.
 pub trait CustomAnalyticFunction: Send + Sync {
@@ -16,15 +19,8 @@ pub trait CustomAnalyticFunction: Send + Sync {
         parameters: &serde_json::Value,
     ) -> ChartResult<Vec<Option<f64>>>;
 }
-#[derive(Clone)]
-struct Registration {
-    descriptor: ExtensionDescriptor,
-    implementation: Arc<dyn CustomAnalyticFunction>,
-}
 #[derive(Clone, Default)]
-pub(crate) struct AnalyticRegistrations {
-    entries: BTreeMap<(String, u64), Registration>,
-}
+pub(crate) struct AnalyticRegistrations(VersionedMap<Arc<dyn CustomAnalyticFunction>>);
 impl ExtensionRegistry {
     /// Install one exact pure analytic function without permitting builtin overrides.
     pub fn register_analytic_function(
@@ -32,48 +28,26 @@ impl ExtensionRegistry {
         function: Arc<dyn CustomAnalyticFunction>,
     ) -> ChartResult<()> {
         let descriptor = function.descriptor();
-        extensions::validate_descriptor(&descriptor)?;
-        let registrations = Arc::make_mut(&mut self.analytic_functions);
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        if registrations.entries.contains_key(&key) {
-            return Err(error(
-                DiagnosticCode::SchemaConflict,
-                "Analytic function version is already registered.",
-            ));
-        }
-        if registrations.entries.len() >= 64 {
-            return Err(error(
-                DiagnosticCode::ResourceLimit,
-                "Analytic function registration budget exceeded.",
-            ));
-        }
-        registrations.entries.insert(
-            key,
-            Registration {
-                descriptor,
-                implementation: function,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.analytic_functions).0.insert(
+            descriptor,
+            function,
+            "Analytic function version is already registered.",
+            "Analytic function registration",
+        )
     }
 }
 impl AnalyticRegistrations {
-    fn registration(&self, operation: &OperationRef) -> ChartResult<&Registration> {
-        self.entries
-            .get(&(operation.id.clone(), operation.version.get()))
-            .ok_or_else(|| {
-                error(
-                    DiagnosticCode::UnsupportedCapability,
-                    format!(
-                        "Analytic function {} version {} is not registered.",
-                        operation.id,
-                        operation.version.get()
-                    ),
-                )
-            })
+    fn registration(
+        &self,
+        operation: &OperationRef,
+    ) -> ChartResult<&super::registry::VersionedEntry<Arc<dyn CustomAnalyticFunction>>> {
+        self.0.get_fmt(operation, || {
+            format!(
+                "Analytic function {} version {} is not registered.",
+                operation.id,
+                operation.version.get()
+            )
+        })
     }
 }
 impl AnalyticFunction {
@@ -106,12 +80,11 @@ impl AnalyticFunction {
             } => {
                 extensions::parameter_size(parameters)?;
                 let registration = registry.analytic_functions.registration(operation)?;
-                if portable && !registration.descriptor.portable {
-                    return Err(error(
-                        DiagnosticCode::UnsupportedCapability,
-                        "Native-only analytic function cannot execute in portable publication.",
-                    ));
-                }
+                reject_native_only(
+                    portable,
+                    registration.descriptor.portable,
+                    "Native-only analytic function cannot execute in portable publication.",
+                )?;
                 registration.implementation.validate(parameters)?;
                 true
             }

@@ -1,4 +1,5 @@
 //! GG11 source and statistic-driven spatial publication controls.
+use chart_core::plot::{contour, contour_filled, density2d, ellipse, hex, spatial_stat};
 use chart_core::{grammar::*, prelude::*};
 pub const CASES: usize = 16;
 pub fn author(mode: usize) -> chart_core::ChartResult<Plot> {

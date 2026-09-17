@@ -185,15 +185,6 @@ struct Sample {
     retained: GroupValue,
     numeric: Vec<(Numeric, Option<f64>)>,
 }
-fn transformed(v: Option<f64>, space: &StatSpace) -> Option<f64> {
-    v.and_then(|v| {
-        let v = match space {
-            StatSpace::Data => v,
-            StatSpace::Transformed(t) => v * t.factor + t.offset,
-        };
-        v.is_finite().then_some(v)
-    })
-}
 fn inverse_input(input: &Numeric, value: f64) -> ChartResult<f64> {
     if let Numeric::Scaled { scale, .. } = input {
         scale
@@ -237,12 +228,12 @@ pub(super) fn run(
         let x = if spec.default_input {
             Some(0.)
         } else {
-            transformed(stats::number(r, &spec.input), &spec.space)
+            statistics::transformed(stats::number(r, &spec.input), &spec.space)
         };
         let y = spec
             .second
             .as_ref()
-            .and_then(|v| transformed(stats::number(r, v), &spec.second_space));
+            .and_then(|v| statistics::transformed(stats::number(r, v), &spec.second_space));
         if group.is_none() || x.is_none() || needs_y && y.is_none() {
             counts.invalid_stat += 1;
             if excluded.len() < 32 {

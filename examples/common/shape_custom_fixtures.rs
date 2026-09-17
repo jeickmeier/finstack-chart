@@ -1,4 +1,8 @@
 //! Cross-host registered protocol gallery over one explicit versioned registry.
+use chart_core::plot::{
+    shape_arc, shape_area, shape_area_radial, shape_line, shape_line_radial, shape_link_horizontal,
+    shape_pie, shape_stack, shape_symbol,
+};
 use chart_core::{
     ChartResult, Revision,
     grammar::{GroupValue, NumericAesthetic as A, OperationRef, ShapeFamily as F, ShapeOperation},

@@ -1,4 +1,8 @@
 //! Shared radial/link gallery: signed radii, gaps, annuli, tangents and edge identities.
+use chart_core::plot::{
+    shape_area_radial, shape_line_radial, shape_link, shape_link_horizontal, shape_link_radial,
+    shape_link_vertical,
+};
 use chart_core::{
     ChartResult, grammar::NumericAesthetic as A, prelude::*, shape::CurveSpec, theme::NamedTheme,
 };

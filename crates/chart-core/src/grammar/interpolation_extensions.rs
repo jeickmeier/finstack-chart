@@ -1,10 +1,13 @@
 //! Captured native interpolation factories behind bounded versioned descriptors.
-use super::{ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions};
+use super::{
+    ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions,
+    registry::{VersionedMap, reject_native_only},
+};
 use crate::{
     ChartResult, DiagnosticCode,
     interpolate::{Sample, Value},
 };
-use std::{collections::BTreeMap, sync::Arc};
+use std::sync::Arc;
 
 /// One pair supplied to a registered factory. Preparation runs before sampling.
 pub struct InterpolationInput<'a> {
@@ -30,34 +33,20 @@ pub trait CustomInterpolationFactory: Send + Sync {
     ) -> ChartResult<Arc<dyn Sample<Value> + Send + Sync>>;
 }
 
-#[derive(Clone)]
-struct Registration {
-    descriptor: ExtensionDescriptor,
-    implementation: Arc<dyn CustomInterpolationFactory>,
-}
-impl std::fmt::Debug for Registration {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.descriptor.fmt(f)
-    }
-}
 #[derive(Clone, Debug, Default)]
-pub(crate) struct InterpolationRegistrations {
-    entries: BTreeMap<(String, u64), Registration>,
-}
+pub(crate) struct InterpolationRegistrations(VersionedMap<Arc<dyn CustomInterpolationFactory>>);
 impl InterpolationRegistrations {
-    fn registration(&self, operation: &OperationRef) -> ChartResult<&Registration> {
-        self.entries
-            .get(&(operation.id.clone(), operation.version.get()))
-            .ok_or_else(|| {
-                super::error(
-                    DiagnosticCode::UnsupportedCapability,
-                    format!(
-                        "Interpolation factory {} version {} is not registered.",
-                        operation.id,
-                        operation.version.get()
-                    ),
-                )
-            })
+    fn registration(
+        &self,
+        operation: &OperationRef,
+    ) -> ChartResult<&super::registry::VersionedEntry<Arc<dyn CustomInterpolationFactory>>> {
+        self.0.get_fmt(operation, || {
+            format!(
+                "Interpolation factory {} version {} is not registered.",
+                operation.id,
+                operation.version.get()
+            )
+        })
     }
     pub(crate) fn validate(
         &self,
@@ -67,12 +56,11 @@ impl InterpolationRegistrations {
     ) -> ChartResult<()> {
         extensions::parameter_size(parameters)?;
         let registration = self.registration(operation)?;
-        if portable && !registration.descriptor.portable {
-            return Err(super::error(
-                DiagnosticCode::UnsupportedCapability,
-                "A native-only interpolation factory cannot serialize or execute in headless publication.",
-            ));
-        }
+        reject_native_only(
+            portable,
+            registration.descriptor.portable,
+            "A native-only interpolation factory cannot serialize or execute in headless publication.",
+        )?;
         registration.implementation.validate(parameters)
     }
     pub(crate) fn compile(
@@ -166,27 +154,12 @@ impl ExtensionRegistry {
         implementation: Arc<dyn CustomInterpolationFactory>,
     ) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        extensions::validate_descriptor(&descriptor)?;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        let entries = &mut Arc::make_mut(&mut self.interpolations).entries;
-        if entries.contains_key(&key) {
-            return Err(super::error(
-                DiagnosticCode::SchemaConflict,
-                "An interpolation factory version is already registered.",
-            ));
-        }
-        crate::limits::require_within(entries.len() < 64, "registered interpolation factory")?;
-        entries.insert(
-            key,
-            Registration {
-                descriptor,
-                implementation,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.interpolations).0.insert(
+            descriptor,
+            implementation,
+            "An interpolation factory version is already registered.",
+            "registered interpolation factory",
+        )
     }
     /// Captured metadata without invoking the implementation.
     pub fn interpolation_descriptor(

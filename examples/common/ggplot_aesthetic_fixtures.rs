@@ -1,4 +1,5 @@
 //! FIX-GG03: independent Rust author of the R glyph publication fixture.
+use chart_core::plot::shape_symbol;
 use chart_core::{ChartResult, prelude::*, shape::SymbolKind};
 
 pub fn figure() -> ChartResult<Plot> {

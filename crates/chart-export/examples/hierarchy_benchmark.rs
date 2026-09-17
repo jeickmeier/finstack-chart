@@ -1,4 +1,5 @@
 //! HIR-08 component measurements for the WP-22 handoff; no native frame-rate claim.
+use chart_core::plot::{hierarchy_pack, hierarchy_tree, hierarchy_treemap};
 use chart_core::{
     ChartResult, Point, Rect,
     hierarchy::{LayoutSpec, Tiler, TreemapOptions},

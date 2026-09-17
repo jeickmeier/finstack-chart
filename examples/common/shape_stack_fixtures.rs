@@ -1,4 +1,5 @@
 //! Shared native/publication gallery: five offsets, sparse tidy cells, bars and areas.
+use chart_core::plot::{shape_area, shape_stack};
 use chart_core::{
     ChartResult,
     grammar::GroupValue,

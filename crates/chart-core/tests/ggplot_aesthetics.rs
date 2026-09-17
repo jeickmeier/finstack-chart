@@ -1,4 +1,5 @@
 //! FIX-GG03: independent aesthetic training, precedence, dimensions and identity.
+use chart_core::plot::shape_line;
 use chart_core::{
     ChartResult, Point, Rect, ResourceId, Revision,
     grammar::{Compiler, NumericAesthetic as A, PaintAesthetic},

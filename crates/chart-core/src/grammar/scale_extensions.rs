@@ -1,11 +1,14 @@
 //! Versioned positional providers use the same immutable registry as other extensions.
-use super::{ExtensionDescriptor, ExtensionRegistry, OperationRef, ValueSpace, extensions};
+use super::{
+    ExtensionDescriptor, ExtensionRegistry, OperationRef, ValueSpace, extensions,
+    registry::{VersionedMap, reject_native_only},
+};
 use crate::{
     ChartResult, DiagnosticCode, Limits,
     scales::{Bounds, OutsidePolicy, PositionalScale},
     state::AxisWindow,
 };
-use std::{collections::BTreeMap, sync::Arc};
+use std::sync::Arc;
 
 /// Destination inputs for one positional scale, before any of its guides are resolved.
 pub struct ScaleProviderInput<'a> {
@@ -40,34 +43,20 @@ pub trait CustomScale: Send + Sync {
     fn resolve(&self, input: ScaleProviderInput<'_>) -> ChartResult<Arc<dyn PositionalScale>>;
 }
 
-#[derive(Clone)]
-struct Registration {
-    descriptor: ExtensionDescriptor,
-    implementation: Arc<dyn CustomScale>,
-}
-impl std::fmt::Debug for Registration {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.descriptor.fmt(f)
-    }
-}
 #[derive(Clone, Debug, Default)]
-pub(crate) struct ScaleRegistrations {
-    entries: BTreeMap<(String, u64), Registration>,
-}
+pub(crate) struct ScaleRegistrations(VersionedMap<Arc<dyn CustomScale>>);
 impl ScaleRegistrations {
-    fn registration(&self, operation: &OperationRef) -> ChartResult<&Registration> {
-        self.entries
-            .get(&(operation.id.clone(), operation.version.get()))
-            .ok_or_else(|| {
-                super::error(
-                    DiagnosticCode::UnsupportedCapability,
-                    format!(
-                        "Positional scale {} version {} is not registered.",
-                        operation.id,
-                        operation.version.get()
-                    ),
-                )
-            })
+    fn registration(
+        &self,
+        operation: &OperationRef,
+    ) -> ChartResult<&super::registry::VersionedEntry<Arc<dyn CustomScale>>> {
+        self.0.get_fmt(operation, || {
+            format!(
+                "Positional scale {} version {} is not registered.",
+                operation.id,
+                operation.version.get()
+            )
+        })
     }
     pub(crate) fn validate(
         &self,
@@ -87,12 +76,11 @@ impl ScaleRegistrations {
     ) -> ChartResult<Arc<dyn PositionalScale>> {
         self.validate(operation, input.parameters)?;
         let registration = self.registration(operation)?;
-        if portable && !registration.descriptor.portable {
-            return Err(super::error(
-                DiagnosticCode::UnsupportedCapability,
-                "A native-only positional provider cannot execute in headless publication.",
-            ));
-        }
+        reject_native_only(
+            portable,
+            registration.descriptor.portable,
+            "A native-only positional provider cannot execute in headless publication.",
+        )?;
         registration.implementation.resolve(input)
     }
 }
@@ -100,27 +88,12 @@ impl ExtensionRegistry {
     /// Register one exact provider version without replacing a builtin scale family.
     pub fn register_scale(&mut self, implementation: Arc<dyn CustomScale>) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        extensions::validate_descriptor(&descriptor)?;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        let entries = &mut Arc::make_mut(&mut self.scales).entries;
-        if entries.contains_key(&key) {
-            return Err(super::error(
-                DiagnosticCode::SchemaConflict,
-                "A positional provider version is already registered.",
-            ));
-        }
-        crate::limits::require_within(entries.len() < 64, "registered positional provider")?;
-        entries.insert(
-            key,
-            Registration {
-                descriptor,
-                implementation,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.scales).0.insert(
+            descriptor,
+            implementation,
+            "A positional provider version is already registered.",
+            "registered positional provider",
+        )
     }
     /// Inspect captured registration metadata without invoking native code.
     pub fn scale_descriptor(&self, operation: &OperationRef) -> ChartResult<ExtensionDescriptor> {

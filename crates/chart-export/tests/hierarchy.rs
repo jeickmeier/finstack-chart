@@ -1,4 +1,8 @@
 //! HIERARCHY-07: destination recipes retain structural provenance and actual path hits.
+use chart_core::plot::{
+    hierarchy_cluster, hierarchy_icicle, hierarchy_pack, hierarchy_sunburst, hierarchy_tree,
+    hierarchy_treemap,
+};
 use chart_core::{
     Point,
     grammar::{HierarchyProjection, HierarchyRadius},

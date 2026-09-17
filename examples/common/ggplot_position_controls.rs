@@ -1,4 +1,5 @@
 //! FIX-GG06 shared native/publication fixture authors; hosts author these independently.
+use chart_core::plot::{ggplot_dodge, ggplot_fill, ggplot_stack, jitter_dodge};
 use chart_core::{
     grammar::{DodgePreserve, Profile},
     prelude::*,

@@ -1,4 +1,5 @@
 //! FIX-GG06: reference position authoring, orientation, wire and legacy isolation.
+use chart_core::plot::{ggplot_dodge, ggplot_fill, ggplot_stack, jitter_dodge};
 use chart_core::{
     grammar::{DodgePreserve, Orientation, PreparedGeometry},
     prelude::*,

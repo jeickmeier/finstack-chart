@@ -1,7 +1,7 @@
 //! Trusted portable model registrations supplement the required built-in algorithms.
-use super::*;
+use super::{registry::VersionedMap, *};
 use crate::{ChartResult, DiagnosticCode};
-use std::{collections::BTreeMap, sync::Arc};
+use std::sync::Arc;
 /// Inputs borrowed by one registered fit/predict operation.
 pub struct ModelInput<'a> {
     /// Predictor observations in declared calculation space.
@@ -42,65 +42,31 @@ pub trait CustomModel: Send + Sync {
         parameters: &serde_json::Value,
     ) -> ChartResult<Vec<ModelEstimate>>;
 }
-#[derive(Clone)]
-struct Registration {
-    descriptor: ExtensionDescriptor,
-    implementation: Arc<dyn CustomModel>,
-}
 #[derive(Clone, Default)]
-pub(crate) struct ModelRegistrations {
-    entries: BTreeMap<(String, u64), Registration>,
-}
+pub(crate) struct ModelRegistrations(VersionedMap<Arc<dyn CustomModel>>);
 impl ExtensionRegistry {
     /// Install an exact model version without overriding built-in operations.
     pub fn register_model(&mut self, model: Arc<dyn CustomModel>) -> ChartResult<()> {
         let descriptor = model.descriptor();
-        extensions::validate_descriptor(&descriptor)?;
-        let entries = &mut Arc::make_mut(&mut self.models).entries;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        if entries.contains_key(&key) {
-            return Err(error(
-                DiagnosticCode::SchemaConflict,
-                "Model version is already registered.",
-            ));
-        }
-        if entries.len() >= 64 {
-            return Err(error(
-                DiagnosticCode::ResourceLimit,
-                "Model registration budget exceeded.",
-            ));
-        }
-        entries.insert(
-            key,
-            Registration {
-                descriptor,
-                implementation: model,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.models).0.insert(
+            descriptor,
+            model,
+            "Model version is already registered.",
+            "model registrations",
+        )
     }
 }
 fn registration<'a>(
     registry: &'a ExtensionRegistry,
     operation: &OperationRef,
-) -> ChartResult<&'a Registration> {
-    registry
-        .models
-        .entries
-        .get(&(operation.id.clone(), operation.version.get()))
-        .ok_or_else(|| {
-            error(
-                DiagnosticCode::UnsupportedCapability,
-                format!(
-                    "Model {} version {} is not registered.",
-                    operation.id,
-                    operation.version.get()
-                ),
-            )
-        })
+) -> ChartResult<&'a super::registry::VersionedEntry<Arc<dyn CustomModel>>> {
+    registry.models.0.get_fmt(operation, || {
+        format!(
+            "Model {} version {} is not registered.",
+            operation.id,
+            operation.version.get()
+        )
+    })
 }
 pub(super) fn validate(
     registry: &ExtensionRegistry,
@@ -114,12 +80,11 @@ pub(super) fn validate(
     {
         extensions::parameter_size(parameters)?;
         let r = registration(registry, operation)?;
-        if portable && !r.descriptor.portable {
-            return Err(error(
-                DiagnosticCode::UnsupportedCapability,
-                "Native-only model cannot enter portable publication.",
-            ));
-        }
+        super::registry::reject_native_only(
+            portable,
+            r.descriptor.portable,
+            "Native-only model cannot enter portable publication.",
+        )?;
         r.implementation.validate(parameters)?;
     }
     Ok(())

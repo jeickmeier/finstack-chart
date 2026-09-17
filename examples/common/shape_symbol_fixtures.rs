@@ -1,4 +1,5 @@
 //! All built-in symbol geometries at multiple sizes and mapped guide glyphs.
+use chart_core::plot::shape_symbol;
 use chart_core::{
     ChartResult,
     grammar::NumericAesthetic as A,

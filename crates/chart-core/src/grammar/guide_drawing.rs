@@ -1,7 +1,10 @@
 //! Registered guides consume trained metadata and lower to the existing vector guide.
-use super::{CustomLegend, ExtensionDescriptor, ExtensionRegistry, LegendOptions, OperationRef};
+use super::{
+    CustomLegend, ExtensionDescriptor, ExtensionRegistry, LegendOptions, OperationRef,
+    registry::{VersionedMap, reject_native_only},
+};
 use crate::{ChartResult, DiagnosticCode, Limits, ScaleId, scene::Color, services::Units};
-use std::{collections::BTreeMap, sync::Arc};
+use std::sync::Arc;
 /// Exact installed guide implementation and bounded declarative parameters.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -43,40 +46,24 @@ pub trait CustomGuideDrawing: Send + Sync {
     /// Emit intrinsic dimensions and portable paths through the common guide renderer.
     fn draw(&self, input: GuideDrawingInput<'_>) -> ChartResult<super::KeyGlyphOutput>;
 }
-#[derive(Clone)]
-struct Entry {
-    descriptor: ExtensionDescriptor,
-    implementation: Arc<dyn CustomGuideDrawing>,
-}
-impl std::fmt::Debug for Entry {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.descriptor.fmt(f)
-    }
-}
 #[derive(Clone, Debug, Default)]
-pub(crate) struct GuideDrawingRegistrations {
-    entries: BTreeMap<(String, u64), Entry>,
-}
+pub(crate) struct GuideDrawingRegistrations(VersionedMap<Arc<dyn CustomGuideDrawing>>);
 impl GuideDrawingRegistrations {
-    fn get(&self, s: &GuideDrawingSelection) -> ChartResult<&Entry> {
-        self.entries
-            .get(&(s.operation.id.clone(), s.operation.version.get()))
-            .ok_or_else(|| {
-                super::error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "Selected guide drawing is not registered.",
-                )
-            })
+    fn get(
+        &self,
+        s: &GuideDrawingSelection,
+    ) -> ChartResult<&super::registry::VersionedEntry<Arc<dyn CustomGuideDrawing>>> {
+        self.0
+            .get(&s.operation, "Selected guide drawing is not registered.")
     }
     pub(crate) fn validate(&self, s: &GuideDrawingSelection, portable: bool) -> ChartResult<()> {
         super::extensions::parameter_size(&s.parameters)?;
         let e = self.get(s)?;
-        if portable && !e.descriptor.portable {
-            return Err(super::error(
-                DiagnosticCode::UnsupportedCapability,
-                "Native-only guide drawing cannot execute in a portable chart.",
-            ));
-        }
+        reject_native_only(
+            portable,
+            e.descriptor.portable,
+            "Native-only guide drawing cannot execute in a portable chart.",
+        )?;
         e.implementation.validate(&s.parameters)
     }
     pub(crate) fn draw(
@@ -98,23 +85,7 @@ impl GuideDrawingRegistrations {
             paths: output.paths,
             options,
         };
-        guide.validate(limits)?;
-        for path in &guide.paths {
-            if let Some(b) = path.geometry.bounds(0.01, limits.max_path_commands)? {
-                // Path bounds deliberately include the 0.01 lowering-error envelope.
-                let tolerance = 0.01 + 1e-8 * output.size[0].max(output.size[1]).max(1.);
-                if b.origin().x() < -tolerance
-                    || b.origin().y() < -tolerance
-                    || b.max_x() > output.size[0] + tolerance
-                    || b.max_y() > output.size[1] + tolerance
-                {
-                    return Err(super::error(
-                        DiagnosticCode::Validation,
-                        "Registered guide path exceeds declared bounds.",
-                    ));
-                }
-            }
-        }
+        guide.validate_local(limits, "Registered guide path exceeds declared bounds.")?;
         Ok(guide)
     }
 }
@@ -125,27 +96,12 @@ impl ExtensionRegistry {
         implementation: Arc<dyn CustomGuideDrawing>,
     ) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        super::extensions::validate_descriptor(&descriptor)?;
-        let entries = &mut Arc::make_mut(&mut self.guide_drawing).entries;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        if entries.contains_key(&key) {
-            return Err(super::error(
-                DiagnosticCode::SchemaConflict,
-                "Guide drawing version is already registered.",
-            ));
-        }
-        crate::limits::require_within(entries.len() < 64, "guide drawing registrations")?;
-        entries.insert(
-            key,
-            Entry {
-                descriptor,
-                implementation,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.guide_drawing).0.insert(
+            descriptor,
+            implementation,
+            "Guide drawing version is already registered.",
+            "guide drawing registrations",
+        )
     }
     pub(crate) fn validate_guide_drawing(
         &self,

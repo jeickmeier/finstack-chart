@@ -1,6 +1,29 @@
 # Implementation status
 
 Updated: 16 September 2026. Specification version: 0.5.0.
+
+## Grammar simplify slices 1–13 — 16 September 2026
+
+Internal `chart-core::grammar` cleanup only. Public `register_*` / `Custom*`
+traits, ggplot/D3/`LibraryV1` forks, `plot::host`, and `ChartDefinition` are
+unchanged. Profile / GuideProfile / ScaleCompatibility, OLS merge, `wire_version`,
+and `PointwiseTransform` were not touched.
+
+Outcome: one private `VersionedMap` installer; shared `StatSpace` / path-bounds
+helpers; `encode_layer`, `position_layer`, and `finish_layer`/`emit_line_block`
+moved out of `compiler.rs`; grammar `pub use` globs replaced with explicit
+lists; prelude no longer re-exports ggplot/D3/hierarchy/spatial constructors
+(those remain on `chart_core::plot`).
+
+Revision: working tree on `5e82865`; not committed.
+Evidence: `mise run check` passed (fmt, Clippy, rustdoc, isolation, licenses).
+`mise run test` passed (1,192 tests, 0 failed, 242 suites, 526s, darwin).
+`mise run primary-authoring-proof` did not run: PATH has wasm-bindgen 0.2.122,
+the proof requires 0.2.128, and the script forbids downloads. Bindings were
+not part of this cleanup (`plot::host` still owns those names).
+Unresolved: H1–H3 unwraps, F14/F15, and constructor-family collapse remain out
+of scope. Next action: commit on request.
+
 Bootstrap committed at `fbc9782` (starting commit: `19f4a27`); WP-01 committed at `dfe38e8`.
 WP-02 committed at `435e127`; WP-03 at `3a86189`; WP-04 at `d0a6c48`.
 WP-05 is committed at `3cf1b33`; WP-06 at `f8657fb`; WP-07/08 at `fac148a`.

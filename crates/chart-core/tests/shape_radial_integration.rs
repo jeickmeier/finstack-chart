@@ -1,4 +1,8 @@
 //! FIX-S05/09: every pinned radial/link path through chart projection and exact provenance.
+use chart_core::plot::{
+    shape_arc, shape_area_radial, shape_line_radial, shape_link, shape_link_horizontal,
+    shape_link_radial,
+};
 use chart_core::{
     ChartResult, Point, Rect, ResourceId, Revision,
     grammar::{Compiler, NumericAesthetic as A, PreparedChart, RadialParameters},

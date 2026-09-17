@@ -8,6 +8,7 @@ pub use save::{
     CustomDevice, DeviceRegistry, FigurePages, SaveDpi, SaveOptions, SavePlan, SaveUnits,
     resolve_save_json,
 };
+mod devices;
 mod devices_metafile;
 mod devices_pictex;
 mod devices_raster;

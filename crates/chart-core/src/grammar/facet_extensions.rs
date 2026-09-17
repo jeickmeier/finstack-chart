@@ -1,7 +1,10 @@
 //! Registered facet planning feeds the existing population, training and layout engine.
-use super::{CompileLimits, ExtensionDescriptor, ExtensionRegistry, FacetSpec, OperationRef};
+use super::{
+    CompileLimits, ExtensionDescriptor, ExtensionRegistry, FacetSpec, OperationRef,
+    registry::{VersionedMap, reject_native_only},
+};
 use crate::{ChartResult, DiagnosticCode};
-use std::{collections::BTreeMap, sync::Arc};
+use std::sync::Arc;
 /// Explicit immutable facet planning selection.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -31,35 +34,26 @@ pub trait CustomFacet: Send + Sync {
     /// Return a concrete plan over the same ordered facet variables.
     fn plan(&self, input: FacetPlanInput<'_>) -> ChartResult<FacetSpec>;
 }
-#[derive(Clone)]
-struct Entry {
-    descriptor: ExtensionDescriptor,
-    implementation: Arc<dyn CustomFacet>,
-}
 #[derive(Clone, Default)]
-pub(crate) struct FacetRegistrations {
-    entries: BTreeMap<(String, u64), Entry>,
-}
+pub(crate) struct FacetRegistrations(VersionedMap<Arc<dyn CustomFacet>>);
 impl FacetRegistrations {
-    fn get(&self, s: &FacetSelection) -> ChartResult<&Entry> {
-        self.entries
-            .get(&(s.operation.id.clone(), s.operation.version.get()))
-            .ok_or_else(|| {
-                super::error(
-                    DiagnosticCode::UnsupportedCapability,
-                    "Selected facet implementation is not registered.",
-                )
-            })
+    fn get(
+        &self,
+        s: &FacetSelection,
+    ) -> ChartResult<&super::registry::VersionedEntry<Arc<dyn CustomFacet>>> {
+        self.0.get(
+            &s.operation,
+            "Selected facet implementation is not registered.",
+        )
     }
     pub(crate) fn validate(&self, s: &FacetSelection, portable: bool) -> ChartResult<()> {
         super::extensions::parameter_size(&s.parameters)?;
         let e = self.get(s)?;
-        if portable && !e.descriptor.portable {
-            return Err(super::error(
-                DiagnosticCode::UnsupportedCapability,
-                "Native-only facet planner cannot execute portably.",
-            ));
-        }
+        reject_native_only(
+            portable,
+            e.descriptor.portable,
+            "Native-only facet planner cannot execute portably.",
+        )?;
         e.implementation.validate(&s.parameters)
     }
 }
@@ -67,27 +61,12 @@ impl ExtensionRegistry {
     /// Install one immutable facet version. Replacing a registry cannot mutate old snapshots.
     pub fn register_facet(&mut self, implementation: Arc<dyn CustomFacet>) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        super::extensions::validate_descriptor(&descriptor)?;
-        let entries = &mut Arc::make_mut(&mut self.facets).entries;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        if entries.contains_key(&key) {
-            return Err(super::error(
-                DiagnosticCode::SchemaConflict,
-                "Facet version is already registered.",
-            ));
-        }
-        crate::limits::require_within(entries.len() < 64, "facet registrations")?;
-        entries.insert(
-            key,
-            Entry {
-                descriptor,
-                implementation,
-            },
-        );
-        Ok(())
+        Arc::make_mut(&mut self.facets).0.insert(
+            descriptor,
+            implementation,
+            "Facet version is already registered.",
+            "facet registrations",
+        )
     }
     pub(crate) fn validate_facet_selection(
         &self,

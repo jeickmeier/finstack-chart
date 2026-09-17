@@ -1,7 +1,10 @@
 //! Pure scale break functions over shared population training.
-use super::{ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions};
-use crate::{ChartResult, DiagnosticCode, scales::ScaleKey};
-use std::{collections::BTreeMap, sync::Arc};
+use super::{
+    ExtensionDescriptor, ExtensionRegistry, OperationRef, extensions,
+    registry::{VersionedMap, reject_native_only},
+};
+use crate::{ChartResult, scales::ScaleKey};
+use std::sync::Arc;
 
 /// Select an installed pure function; JSON never contains executable code.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -64,47 +67,39 @@ pub trait CustomScaleBreaks: Send + Sync {
     fn evaluate(&self, input: ScaleBreaksInput<'_>) -> ChartResult<ScaleBreaksOutput>;
 }
 #[derive(Clone)]
-struct Registration {
-    descriptor: ExtensionDescriptor,
+struct ScaleBreakImpl {
     accepts_n: bool,
     accepts_n_breaks: bool,
     accepts_major_breaks: bool,
     implementation: Arc<dyn CustomScaleBreaks>,
 }
-impl std::fmt::Debug for Registration {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        self.descriptor.fmt(f)
-    }
-}
 #[derive(Clone, Debug, Default)]
-pub(crate) struct ScaleBreakRegistrations {
-    entries: BTreeMap<(String, u64), Registration>,
-}
+pub(crate) struct ScaleBreakRegistrations(VersionedMap<ScaleBreakImpl>);
 impl ScaleBreakRegistrations {
-    fn registration(&self, operation: &OperationRef) -> ChartResult<&Registration> {
-        self.entries
-            .get(&(operation.id.clone(), operation.version.get()))
-            .ok_or_else(|| {
-                super::error(
-                    DiagnosticCode::UnsupportedCapability,
-                    format!(
-                        "Scale breaks {} version {} are not registered.",
-                        operation.id,
-                        operation.version.get()
-                    ),
-                )
-            })
+    fn registration(
+        &self,
+        operation: &OperationRef,
+    ) -> ChartResult<&super::registry::VersionedEntry<ScaleBreakImpl>> {
+        self.0.get_fmt(operation, || {
+            format!(
+                "Scale breaks {} version {} are not registered.",
+                operation.id,
+                operation.version.get()
+            )
+        })
     }
     pub(crate) fn validate(&self, call: &ScaleBreaksOperation, portable: bool) -> ChartResult<()> {
         extensions::parameter_size(&call.parameters)?;
         let registration = self.registration(&call.operation)?;
-        if portable && !registration.descriptor.portable {
-            return Err(super::error(
-                DiagnosticCode::UnsupportedCapability,
-                "Native-only scale breaks cannot serialize or execute in portable publication.",
-            ));
-        }
-        registration.implementation.validate(&call.parameters)
+        reject_native_only(
+            portable,
+            registration.descriptor.portable,
+            "Native-only scale breaks cannot serialize or execute in portable publication.",
+        )?;
+        registration
+            .implementation
+            .implementation
+            .validate(&call.parameters)
     }
     pub(crate) fn evaluate(
         &self,
@@ -182,23 +177,24 @@ impl ScaleBreakRegistrations {
     ) -> ChartResult<ScaleBreaksOutput> {
         self.validate(call, false)?;
         let registration = self.registration(&call.operation)?;
+        let impln = &registration.implementation;
         let count_argument = if count.is_none() {
             None
-        } else if binned && registration.accepts_n_breaks {
+        } else if binned && impln.accepts_n_breaks {
             Some("n.breaks")
-        } else if registration.accepts_n {
+        } else if impln.accepts_n {
             Some("n")
         } else {
             None
         };
-        let result = registration.implementation.evaluate(ScaleBreaksInput {
+        let result = impln.implementation.evaluate(ScaleBreaksInput {
             domain: domain.unwrap_or(&[]),
             domain_is_null: domain.is_none(),
             major_breaks: major_breaks
-                .filter(|_| registration.accepts_major_breaks)
+                .filter(|_| impln.accepts_major_breaks)
                 .map(|(values, _)| values),
             major_break_names: major_breaks
-                .filter(|_| registration.accepts_major_breaks)
+                .filter(|_| impln.accepts_major_breaks)
                 .and_then(|(_, names)| names),
             count: count_argument.and(count),
             count_argument,
@@ -245,30 +241,17 @@ impl ExtensionRegistry {
         implementation: Arc<dyn CustomScaleBreaks>,
     ) -> ChartResult<()> {
         let descriptor = implementation.descriptor();
-        extensions::validate_descriptor(&descriptor)?;
-        let key = (
-            descriptor.operation.id.clone(),
-            descriptor.operation.version.get(),
-        );
-        let entries = &mut Arc::make_mut(&mut self.breaks_function).entries;
-        if entries.contains_key(&key) {
-            return Err(super::error(
-                DiagnosticCode::SchemaConflict,
-                "A scale break function version is already registered.",
-            ));
-        }
-        crate::limits::require_within(entries.len() < 64, "registered scale break function")?;
-        entries.insert(
-            key,
-            Registration {
-                descriptor,
+        Arc::make_mut(&mut self.breaks_function).0.insert(
+            descriptor,
+            ScaleBreakImpl {
                 accepts_n: implementation.accepts_n(),
                 accepts_n_breaks: implementation.accepts_n_breaks(),
                 accepts_major_breaks: implementation.accepts_major_breaks(),
                 implementation,
             },
-        );
-        Ok(())
+            "A scale break function version is already registered.",
+            "registered scale break function",
+        )
     }
     /// Read the captured identity without running the installed function.
     pub fn scale_breaks_descriptor(

@@ -1,4 +1,5 @@
 //! FIX-GG11 actual generated geometry, defaults and replay.
+use chart_core::plot::density2d;
 #[path = "../../../examples/common/ggplot_spatial_controls.rs"]
 mod authors;
 #[test]
