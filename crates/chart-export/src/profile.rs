@@ -35,19 +35,23 @@ impl PageSize {
     }
 }
 /// Which captured domains are laid out; neither mode changes upstream statistics.
-#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum ViewMode {
     /// Honor captured state and named-axis viewports.
+    #[serde(alias = "visible")]
     VisibleView,
     /// Clear primary and named-axis viewports, keeping authored domains and layer visibility.
+    #[serde(alias = "full_domain")]
     FullDomain,
 }
 /// Explicit editing/search tradeoff for vector outputs.
-#[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(serde::Serialize, serde::Deserialize, Clone, Copy, Debug, Eq, PartialEq)]
 pub enum TextMode {
     /// SVG embeds full permitted font bytes; PDF embeds subsets and Unicode maps.
+    #[serde(alias = "preserve")]
     Preserve,
     /// Use shaped vector glyph outlines; logical strings remain in the snapshot/metadata.
+    #[serde(alias = "outline")]
     Outline,
 }
 /// Encoded output representation.
@@ -101,6 +105,21 @@ pub struct ExportCapabilities {
     pub text: TextRepresentation,
 }
 impl Format {
+    /// Canonical device name accepted by the host format parser.
+    pub fn name(self) -> &'static str {
+        match self {
+            Self::Svg => "svg",
+            Self::Pdf => "pdf",
+            Self::Png => "png",
+            Self::Jpeg => "jpeg",
+            Self::Tiff => "tiff",
+            Self::Bmp => "bmp",
+            Self::PostScript => "ps",
+            Self::Eps => "eps",
+            Self::PicTeX => "tex",
+            Self::Emf => "emf",
+        }
+    }
     /// Report representation before encoding. PNG is intentionally raster output.
     pub fn capabilities(self, text: TextMode) -> ExportCapabilities {
         let representation = match (self, text) {

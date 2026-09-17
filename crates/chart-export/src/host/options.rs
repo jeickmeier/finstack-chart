@@ -53,37 +53,9 @@ impl Options {
             "max_output_bytes" => b.max_output_bytes(value(v)?),
             "background" => b.background(chart_core::plot::host::color(v)?),
             "interaction" => b.interaction(value(v)?),
-            "basis" => b.basis(match value::<String>(v)?.as_str() {
-                "presented" | "Presented" => crate::CaptureBasis::Presented,
-                "current" | "Current" => crate::CaptureBasis::Current,
-                "displayed" | "Displayed" => crate::CaptureBasis::Displayed,
-                _ => {
-                    return Err(error(
-                        DiagnosticCode::Validation,
-                        "Capture basis must be presented, current or displayed.",
-                    ));
-                }
-            }),
-            "view" => b.view(match value::<String>(v)?.as_str() {
-                "visible" | "VisibleView" => crate::ViewMode::VisibleView,
-                "full_domain" | "FullDomain" => crate::ViewMode::FullDomain,
-                _ => {
-                    return Err(error(
-                        DiagnosticCode::Validation,
-                        "View must be visible or full_domain.",
-                    ));
-                }
-            }),
-            "text" => b.text(match value::<String>(v)?.as_str() {
-                "preserve" | "Preserve" => crate::TextMode::Preserve,
-                "outline" | "Outline" => crate::TextMode::Outline,
-                _ => {
-                    return Err(error(
-                        DiagnosticCode::Validation,
-                        "Text must be preserve or outline.",
-                    ));
-                }
-            }),
+            "basis" => b.basis(value(v)?),
+            "view" => b.view(value(v)?),
+            "text" => b.text(value(v)?),
             _ => {
                 return Err(error(
                     DiagnosticCode::UnsupportedCapability,

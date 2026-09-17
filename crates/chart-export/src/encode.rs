@@ -1,6 +1,6 @@
 use crate::{FontResources, PublicationProfile, TextMode, error};
 use chart_core::scene::{Color, Primitive, Scene};
-use chart_core::{ChartResult, DiagnosticCode};
+use chart_core::{ChartResult, DiagnosticCode, Rect};
 use krilla::{
     geom::{Path, PathBuilder, Point, Transform},
     num::NormalizedF32,
@@ -70,6 +70,49 @@ pub(crate) fn raster_rgba(
 }
 fn opacity(c: Color) -> NormalizedF32 {
     NormalizedF32::new(f32::from(c.alpha) / 255.).unwrap_or(NormalizedF32::ZERO)
+}
+fn linear_gradient(
+    p: &PublicationProfile,
+    bounds: Rect,
+    direction: chart_core::scene::GradientDirection,
+    stops: impl Iterator<Item = (f64, Color)>,
+) -> ChartResult<Fill> {
+    let x1 = p.f32(bounds.origin().x())?;
+    let y1 = p.f32(bounds.origin().y())?;
+    let (x2, y2) = match direction {
+        chart_core::scene::GradientDirection::Horizontal => (p.f32(bounds.max_x())?, y1),
+        chart_core::scene::GradientDirection::Vertical => (x1, p.f32(bounds.max_y())?),
+    };
+    let stops = stops
+        .map(|(position, c)| {
+            let offset = p.f32(position)?;
+            Ok(krilla::paint::Stop {
+                offset: NormalizedF32::new(offset).ok_or_else(|| {
+                    error(
+                        DiagnosticCode::ExportFidelity,
+                        "Invalid gradient stop offset.",
+                    )
+                })?,
+                color: krilla::color::rgb::Color::new(c.red, c.green, c.blue).into(),
+                opacity: opacity(c),
+            })
+        })
+        .collect::<ChartResult<Vec<_>>>()?;
+    Ok(Fill {
+        paint: krilla::paint::LinearGradient {
+            x1,
+            y1,
+            x2,
+            y2,
+            transform: Transform::identity(),
+            spread_method: krilla::paint::SpreadMethod::Pad,
+            stops,
+            anti_alias: true,
+        }
+        .into(),
+        opacity: NormalizedF32::ONE,
+        rule: FillRule::NonZero,
+    })
 }
 fn fill(c: Color) -> Fill {
     Fill {
@@ -142,13 +185,11 @@ pub(crate) fn pdf_pages(
         for f in fonts.iter() {
             let data: Arc<dyn AsRef<[u8]> + Send + Sync> = Arc::new(f.bytes.clone());
             let font = Font::new(data.into(), 0).ok_or_else(|| {
-                let mut e = error(
+                crate::resource_error(
                     DiagnosticCode::InvalidResource,
                     "PDF font loader rejected the supplied resource.",
-                );
-                e.context.resource = Some(f.descriptor.id);
-                e.context.resource_revision = Some(f.descriptor.revision);
-                e
+                    &f.descriptor,
+                )
             })?;
             pdf_fonts.insert(f.descriptor.id, font);
         }
@@ -392,89 +433,21 @@ pub(crate) fn pdf_pages(
                                 colors,
                                 mode,
                             } => {
-                                let x1 = p.f32(bounds.origin().x())?;
-                                let y1 = p.f32(bounds.origin().y())?;
-                                let (x2, y2) = match direction {
-                                    chart_core::scene::GradientDirection::Horizontal => {
-                                        (p.f32(bounds.max_x())?, y1)
-                                    }
-                                    chart_core::scene::GradientDirection::Vertical => {
-                                        (x1, p.f32(bounds.max_y())?)
-                                    }
-                                };
-                                let stops = mode
-                                    .stops(colors)
-                                    .map(|(position, c)| {
-                                        let offset = p.f32(position)?;
-                                        Ok(krilla::paint::Stop {
-                                            offset: NormalizedF32::new(offset).ok_or_else(
-                                                || {
-                                                    error(
-                                                        DiagnosticCode::ExportFidelity,
-                                                        "Invalid gradient stop offset.",
-                                                    )
-                                                },
-                                            )?,
-                                            color: krilla::color::rgb::Color::new(
-                                                c.red, c.green, c.blue,
-                                            )
-                                            .into(),
-                                            opacity: opacity(c),
-                                        })
-                                    })
-                                    .collect::<ChartResult<Vec<_>>>()?;
-                                surface.set_fill(Some(Fill {
-                                    paint: krilla::paint::LinearGradient {
-                                        x1,
-                                        y1,
-                                        x2,
-                                        y2,
-                                        transform: Transform::identity(),
-                                        spread_method: krilla::paint::SpreadMethod::Pad,
-                                        stops,
-                                        anti_alias: true,
-                                    }
-                                    .into(),
-                                    opacity: NormalizedF32::ONE,
-                                    rule: FillRule::NonZero,
-                                }));
+                                surface.set_fill(Some(linear_gradient(
+                                    p,
+                                    *bounds,
+                                    *direction,
+                                    mode.stops(colors),
+                                )?));
                                 surface.set_stroke(None);
                             }
                             Primitive::GradientRectangle { bounds, gradient } => {
-                                let x1 = p.f32(bounds.origin().x())?;
-                                let y1 = p.f32(bounds.origin().y())?;
-                                let (x2, y2) = match gradient.direction {
-                                    chart_core::scene::GradientDirection::Horizontal => {
-                                        (p.f32(bounds.max_x())?, y1)
-                                    }
-                                    chart_core::scene::GradientDirection::Vertical => {
-                                        (x1, p.f32(bounds.max_y())?)
-                                    }
-                                };
-                                let stop = |c: Color, offset: NormalizedF32| krilla::paint::Stop {
-                                    offset,
-                                    color: krilla::color::rgb::Color::new(c.red, c.green, c.blue)
-                                        .into(),
-                                    opacity: opacity(c),
-                                };
-                                surface.set_fill(Some(Fill {
-                                    paint: krilla::paint::LinearGradient {
-                                        x1,
-                                        y1,
-                                        x2,
-                                        y2,
-                                        transform: Transform::identity(),
-                                        spread_method: krilla::paint::SpreadMethod::Pad,
-                                        stops: vec![
-                                            stop(gradient.start, NormalizedF32::ZERO),
-                                            stop(gradient.end, NormalizedF32::ONE),
-                                        ],
-                                        anti_alias: true,
-                                    }
-                                    .into(),
-                                    opacity: NormalizedF32::ONE,
-                                    rule: FillRule::NonZero,
-                                }));
+                                surface.set_fill(Some(linear_gradient(
+                                    p,
+                                    *bounds,
+                                    gradient.direction,
+                                    [(0., gradient.start), (1., gradient.end)].into_iter(),
+                                )?));
                                 surface.set_stroke(None);
                             }
                             Primitive::Rectangle { fill: c, .. }

@@ -385,7 +385,7 @@ pub(crate) fn encode(
         alpha: profile.vector_device.clone().unwrap_or_default().alpha,
         omitted: 0,
     };
-    let mut header = vec![
+    let header = vec![
         0,
         0,
         w - 1,
@@ -413,7 +413,6 @@ pub(crate) fn encode(
         (height / 72. * 25400.).round() as u32,
     ];
     writer.record(1, &header)?;
-    header.clear();
     writer.record(17, &[8])?;
     writer.record(9, &[coordinate(width)?, coordinate(height)?])?;
     writer.record(11, &[w, h])?;

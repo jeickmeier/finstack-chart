@@ -113,38 +113,32 @@ impl FontResource {
             .chars()
             .find(|c| c.is_control() || font.charmap().map(*c).is_none())
         {
-            let mut e = error(
+            return Err(crate::resource_error(
                 DiagnosticCode::MissingResource,
                 format!(
                     "Declared font cannot paint plain glyph U+{:04X}; implicit fallback is disabled.",
                     c as u32
                 ),
-            );
-            e.context.resource = Some(self.descriptor.id);
-            e.context.resource_revision = Some(self.descriptor.revision);
-            return Err(e);
+                &self.descriptor,
+            ));
         }
         Ok(())
     }
     pub(crate) fn check_mode(&self, format: Format, mode: TextMode) -> ChartResult<()> {
         if format == Format::Svg && mode == TextMode::Preserve && !self.editable_allowed {
-            let mut e = error(
+            return Err(crate::resource_error(
                 DiagnosticCode::ExportFidelity,
                 "Preview/print-only font embedding cannot be offered as editable SVG text; use outline mode or an editable font.",
-            );
-            e.context.resource = Some(self.descriptor.id);
-            e.context.resource_revision = Some(self.descriptor.revision);
-            return Err(e);
+                &self.descriptor,
+            ));
         }
 
         if format == Format::Pdf && mode == TextMode::Preserve && !self.subset_allowed {
-            let mut e = error(
+            return Err(crate::resource_error(
                 DiagnosticCode::ExportFidelity,
                 "Font prohibits subsetting; use permitted outline mode or another font for text-preserving PDF.",
-            );
-            e.context.resource = Some(self.descriptor.id);
-            e.context.resource_revision = Some(self.descriptor.revision);
-            return Err(e);
+                &self.descriptor,
+            ));
         }
         Ok(())
     }
@@ -207,13 +201,11 @@ impl FontResources {
             .get(&descriptor.id)
             .filter(|f| f.descriptor == *descriptor)
             .ok_or_else(|| {
-                let mut e = error(
+                crate::resource_error(
                     DiagnosticCode::MissingResource,
                     "Exact publication font resource/revision is unavailable.",
-                );
-                e.context.resource = Some(descriptor.id);
-                e.context.resource_revision = Some(descriptor.revision);
-                e
+                    descriptor,
+                )
             })
     }
     pub(crate) fn iter(&self) -> impl Iterator<Item = &FontResource> {

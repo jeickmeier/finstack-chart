@@ -343,48 +343,25 @@ fn build_with_outlines(
                     colors,
                     mode,
                 } => {
-                    let (x2, y2) = match direction {
-                        chart_core::scene::GradientDirection::Horizontal => (1, 0),
-                        chart_core::scene::GradientDirection::Vertical => (0, 1),
-                    };
-                    write!(
-                        out,
-                        "<defs><linearGradient id=\"gradient-{index}\" x1=\"0\" y1=\"0\" x2=\"{x2}\" y2=\"{y2}\" color-interpolation=\"sRGB\" spreadMethod=\"pad\">"
-                    )?;
-                    for (offset, sample) in mode.stops(colors) {
-                        write!(
-                            out,
-                            "<stop offset=\"{}\" stop-color=\"{}\" stop-opacity=\"{}\"/>",
-                            offset,
-                            color(sample),
-                            alpha(sample)
-                        )?;
-                    }
-                    write!(
-                        out,
-                        "</linearGradient></defs><rect id=\"item-{index}\"{attrs} x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" fill=\"url(#gradient-{index})\"/>",
-                        bounds.origin().x(),
-                        bounds.origin().y(),
-                        bounds.width(),
-                        bounds.height()
+                    write_gradient(
+                        &mut out,
+                        index,
+                        &attrs,
+                        *bounds,
+                        *direction,
+                        true,
+                        mode.stops(colors),
                     )?;
                 }
                 Primitive::GradientRectangle { bounds, gradient } => {
-                    let (x2, y2) = match gradient.direction {
-                        chart_core::scene::GradientDirection::Horizontal => (1, 0),
-                        chart_core::scene::GradientDirection::Vertical => (0, 1),
-                    };
-                    write!(
-                        out,
-                        "<defs><linearGradient id=\"gradient-{index}\" x1=\"0\" y1=\"0\" x2=\"{x2}\" y2=\"{y2}\" color-interpolation=\"sRGB\"><stop offset=\"0\" stop-color=\"{}\" stop-opacity=\"{}\"/><stop offset=\"1\" stop-color=\"{}\" stop-opacity=\"{}\"/></linearGradient></defs><rect id=\"item-{index}\"{attrs} x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" fill=\"url(#gradient-{index})\"/>",
-                        color(gradient.start),
-                        alpha(gradient.start),
-                        color(gradient.end),
-                        alpha(gradient.end),
-                        bounds.origin().x(),
-                        bounds.origin().y(),
-                        bounds.width(),
-                        bounds.height()
+                    write_gradient(
+                        &mut out,
+                        index,
+                        &attrs,
+                        *bounds,
+                        gradient.direction,
+                        false,
+                        [(0., gradient.start), (1., gradient.end)].into_iter(),
                     )?;
                 }
                 Primitive::Rectangle { bounds, fill } => write!(
@@ -583,20 +560,8 @@ pub(crate) fn lower_path(
         }
         Ok(())
     };
-    for command in &commands {
-        match *command {
-            PathCommand::MoveTo(a) | PathCommand::LineTo(a) => check(a)?,
-            PathCommand::QuadraticTo(a, b) => {
-                check(a)?;
-                check(b)?;
-            }
-            PathCommand::CubicTo(a, b, c) => {
-                check(a)?;
-                check(b)?;
-                check(c)?;
-            }
-            PathCommand::Close => (),
-        }
+    for point in crate::snapshot::command_points(&commands) {
+        check(point)?;
     }
     Ok(commands)
 }
@@ -637,6 +602,42 @@ pub(crate) fn outline(
     })?;
     let result=format!("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"{}pt\" height=\"{}pt\" viewBox=\"0 0 {} {}\">{body}",p.page.width(),p.page.height(),tree.size().width(),tree.size().height()).into_bytes();
     super::encode::bounded(result, p)
+}
+
+fn write_gradient(
+    out: &mut Writer,
+    index: usize,
+    attrs: &str,
+    bounds: chart_core::Rect,
+    direction: chart_core::scene::GradientDirection,
+    pad: bool,
+    stops: impl Iterator<Item = (f64, Color)>,
+) -> Result<(), std::fmt::Error> {
+    let (x2, y2) = match direction {
+        chart_core::scene::GradientDirection::Horizontal => (1, 0),
+        chart_core::scene::GradientDirection::Vertical => (0, 1),
+    };
+    write!(
+        out,
+        "<defs><linearGradient id=\"gradient-{index}\" x1=\"0\" y1=\"0\" x2=\"{x2}\" y2=\"{y2}\" color-interpolation=\"sRGB\"{}>",
+        if pad { " spreadMethod=\"pad\"" } else { "" }
+    )?;
+    for (offset, sample) in stops {
+        write!(
+            out,
+            "<stop offset=\"{offset}\" stop-color=\"{}\" stop-opacity=\"{}\"/>",
+            color(sample),
+            alpha(sample)
+        )?;
+    }
+    write!(
+        out,
+        "</linearGradient></defs><rect id=\"item-{index}\"{attrs} x=\"{}\" y=\"{}\" width=\"{}\" height=\"{}\" fill=\"url(#gradient-{index})\"/>",
+        bounds.origin().x(),
+        bounds.origin().y(),
+        bounds.width(),
+        bounds.height()
+    )
 }
 
 fn write_command(out: &mut Writer, c: &PathCommand) -> Result<(), std::fmt::Error> {

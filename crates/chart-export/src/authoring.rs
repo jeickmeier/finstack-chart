@@ -13,23 +13,18 @@ use chart_core::{
 };
 use std::sync::Arc;
 
-impl ExportArtifact {
-    /// Explicit host filesystem save of already encoded bytes, with the original I/O error.
-    /// Parent directory creation and path selection remain the application's responsibility.
-    pub fn save(&self, path: impl AsRef<std::path::Path>) -> std::io::Result<()> {
-        std::fs::write(path, &self.bytes)
-    }
-}
-
 /// Which coherent live inputs to acquire, independently of projection and interaction policy.
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq, serde::Deserialize)]
 pub enum CaptureBasis {
     /// Last acknowledged inputs, reflowed at publication size; rejects before first presentation.
     #[default]
+    #[serde(alias = "presented")]
     Presented,
     /// Current committed definition/data/state, including before first presentation.
+    #[serde(alias = "current")]
     Current,
     /// Exact displayed geometry, including an in-flight guide sample; page size must match.
+    #[serde(alias = "displayed")]
     Displayed,
 }
 /// Typed optional publication settings; physical page dimensions are always explicit.

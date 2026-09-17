@@ -43,6 +43,16 @@ fn error(code: DiagnosticCode, message: impl Into<String>) -> Diagnostic {
         "Supply a supported point-based publication profile and explicit permitted font bytes, then capture again.",
     )
 }
+fn resource_error(
+    code: DiagnosticCode,
+    message: impl Into<String>,
+    descriptor: &chart_core::services::ResourceDescriptor,
+) -> Diagnostic {
+    let mut e = error(code, message);
+    e.context.resource = Some(descriptor.id);
+    e.context.resource_revision = Some(descriptor.revision);
+    e
+}
 
 /// Shared typed host-language ownership adapters for primary authoring and capture.
 #[doc(hidden)]

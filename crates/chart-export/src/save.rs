@@ -53,12 +53,6 @@ impl SaveDpi {
         }
     }
 }
-fn one() -> f64 {
-    1.
-}
-fn yes() -> bool {
-    true
-}
 /// Portable size/device/path policy. Missing dimensions require an explicit current page.
 #[derive(Clone, Debug, serde::Serialize, serde::Deserialize)]
 #[serde(default, deny_unknown_fields)]
@@ -70,12 +64,10 @@ pub struct SaveOptions {
     /// Physical or pixel units.
     pub units: SaveUnits,
     /// Positive multiplier applied to both physical dimensions.
-    #[serde(default = "one")]
     pub scale: f64,
     /// Density used for pixels and raster metadata.
     pub dpi: SaveDpi,
     /// Reject either scaled dimension at or above fifty inches.
-    #[serde(default = "yes")]
     pub limitsize: bool,
     /// Explicitly allow parent creation at the final host write.
     pub create_dir: bool,
@@ -166,15 +158,7 @@ impl SaveOptions {
         if selected.is_empty() {
             return Err(invalid("Device name must not be empty."));
         }
-        let device = match selected.as_str() {
-            "jpg" => "jpeg",
-            "tif" => "tiff",
-            "postscript" => "ps",
-            "pictex" => "tex",
-            "wmf" => "emf",
-            _ => &selected,
-        }
-        .to_owned();
+        let device = crate::host::format(&selected).map_or(selected, |f| f.name().to_owned());
         Ok(SavePlan {
             path,
             device,

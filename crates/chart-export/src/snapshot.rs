@@ -8,6 +8,7 @@ use chart_core::{
     ChartResult, Diagnostic, DiagnosticCode, Rect, ResourceId, Revision, SceneStamp, SchemaVersion,
     SourceEpoch,
 };
+use serde_json::{Value, json};
 use std::sync::Arc;
 
 /// Exact font bytes identity alongside its reproducibility digest.
@@ -52,6 +53,18 @@ pub struct Reproducibility {
     /// Captured physical dimensions, viewport policy, annotations, text/quality settings.
     pub profile: PublicationProfile,
 }
+impl Reproducibility {
+    /// Emit captured definition/state/profile, exact revisions/font hashes and dependency identities.
+    pub fn manifest(&self) -> Value {
+        json!({"version":1,"displayed":displayed_manifest(self.displayed_layout.as_deref()),"engines":self.engines,"stamp":self.stamp,"origin_scene":self.origin_scene,"origin_layout":self.origin_layout,"definition":self.definition,"source_epoch":self.source_epoch,"datasets":self.datasets,"state":state_manifest(&self.definition,&self.captured_state),"effective_state":state_manifest(&self.definition,&self.effective_state),"interaction_policy":self.interaction,"fonts":self.fonts.iter().map(|f:&FontManifest|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>(),"profile":self.profile,"compile_limits":self.compile_limits})
+    }
+}
+pub(crate) fn state_manifest(definition: &ChartDefinition, state: &ChartState) -> Value {
+    json!({"revision":state.revision(),"viewport_revision":state.viewport_revision(),"viewport":state.viewport(),"committed_viewport":state.committed_viewport(),"windows":state.axis_windows(),"hidden_layers":definition.layers.iter().filter(|l|!state.is_visible(l.id)).map(|l|l.id).collect::<Vec<_>>(),"interaction":state.interaction_snapshot(),"hover":state.hover(),"focus":state.focus(),"active_gesture":state.active_gesture(),"effective_annotations":state.annotations(definition)})
+}
+pub(crate) fn displayed_manifest(layout: Option<&chart_core::layout::LaidOutChart>) -> Value {
+    layout.map_or(Value::Null,|l|json!({"unit_policy":"one scene unit per point","scene":l.scene().items(),"guides":l.guide_presentation()}))
+}
 /// Returned publication bytes, diagnostics and reproduction inputs; saving belongs to the host.
 #[derive(Clone, Debug)]
 pub struct ExportArtifact {
@@ -65,6 +78,13 @@ pub struct ExportArtifact {
     pub diagnostics: Vec<Diagnostic>,
     /// Captured reproducibility settings and exact identities.
     pub metadata: Reproducibility,
+}
+impl ExportArtifact {
+    /// Explicit host filesystem save of already encoded bytes, with the original I/O error.
+    /// Parent directory creation and path selection remain the application's responsibility.
+    pub fn save(&self, path: impl AsRef<std::path::Path>) -> std::io::Result<()> {
+        std::fs::write(path, &self.bytes)
+    }
 }
 /// Immutable publication layout/resources built synchronously from a coherent source snapshot.
 /// Clone shares the retained figure; later data/definition/annotation edits cannot enter it.
@@ -451,6 +471,53 @@ impl FigureSnapshot {
             &self.0.metadata.profile,
         )
     }
+    /// Coherent guide values, labels and configuration, including exact timestamp strings.
+    /// The records use this retained publication layout and never resolve a second state.
+    pub fn presentation_json(&self) -> ChartResult<String> {
+        chart_core::portable::encode(&self.layout().guide_presentation())
+    }
+    /// Coherent selected semantic guide values and labels.
+    pub fn guides_json(&self) -> ChartResult<String> {
+        chart_core::portable::encode(
+            &json!({"version": 1, "guides": self.layout().guide_snapshots()}),
+        )
+    }
+    /// Owned versioned scene values with exact targets, font identities and diagnostics.
+    pub fn scene_json(&self) -> ChartResult<String> {
+        // The publication adds a background and optional decorations around core items.
+        // Preserve one target entry per actual publication item, including decorative empties.
+        let targets: Vec<_> = std::iter::once(Vec::new())
+            .chain(self.layout().targets().iter().cloned())
+            .chain(std::iter::repeat_with(Vec::new).take(self.metadata().profile.annotations.len()))
+            .collect();
+        let item_panels: Vec<_> = std::iter::once(None)
+            .chain(self.layout().item_panels().iter().cloned())
+            .chain(std::iter::repeat_n(
+                None,
+                self.metadata().profile.annotations.len(),
+            ))
+            .collect();
+        let panels = self.layout().panels().iter().map(|p|json!({"key":p.key,"row":p.row,"column":p.column,"bounds":p.bounds,"plot":p.chart.plot()})).collect::<Vec<_>>();
+        let insets = self
+            .layout()
+            .insets()
+            .iter()
+            .map(|i| json!({"id":i.id,"panel":i.panel,"bounds":i.bounds,"plot":i.chart.plot()}))
+            .collect::<Vec<_>>();
+        let interactions: std::collections::BTreeMap<_, _> = self
+            .layout()
+            .interactions()
+            .iter()
+            .map(|(i, v)| (i + 1, v))
+            .collect();
+        let mut value = json!({"interactions":interactions,"insets":insets,"version":self.scene().wire_version(),"stamp":self.scene().stamp(),"units":self.scene().units(),"bounds":self.scene().bounds(),"items":self.scene().items(),"resources":self.scene().resources(),"targets":targets,"item_panels":item_panels,"panels":panels,"diagnostics":self.layout().diagnostics(),"fonts":self.metadata().fonts.iter().map(|f|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>() });
+        let hierarchies = self.layout().hierarchy_snapshots()?;
+        if !hierarchies.is_empty() {
+            value["version"] = json!(15);
+            value["hierarchies"] = json!({"version": 1, "snapshots": hierarchies});
+        }
+        chart_core::portable::encode(&value)
+    }
 }
 /// Fully clipped circular points require no backend coordinate conversion. Keep
 /// the original scene intact, including its retained semantic geometry.
@@ -465,6 +532,19 @@ pub(crate) fn point_is_clipped(item: &SceneItem, bounds: Rect) -> bool {
         || center.x() - radius > clip.max_x()
         || center.y() + radius < clip.origin().y()
         || center.y() - radius > clip.max_y()
+}
+
+pub(crate) fn command_points(
+    commands: &[PathCommand],
+) -> impl Iterator<Item = chart_core::Point> + '_ {
+    commands.iter().flat_map(|c| -> Vec<chart_core::Point> {
+        match *c {
+            PathCommand::MoveTo(a) | PathCommand::LineTo(a) => vec![a],
+            PathCommand::QuadraticTo(a, b) => vec![a, b],
+            PathCommand::CubicTo(a, b, c) => vec![a, b, c],
+            PathCommand::Close => vec![],
+        }
+    })
 }
 
 fn preflight(
@@ -525,20 +605,10 @@ fn preflight(
                     for glyph in &run.glyphs {
                         point(glyph.position)?;
                     }
-                    for c in chart_core::typography::placed_outlines(run, *origin, *rotation)? {
-                        match c {
-                            PathCommand::MoveTo(a) | PathCommand::LineTo(a) => point(a)?,
-                            PathCommand::QuadraticTo(a, b) => {
-                                point(a)?;
-                                point(b)?;
-                            }
-                            PathCommand::CubicTo(a, b, c) => {
-                                point(a)?;
-                                point(b)?;
-                                point(c)?;
-                            }
-                            PathCommand::Close => {}
-                        }
+                    for p in command_points(&chart_core::typography::placed_outlines(
+                        run, *origin, *rotation,
+                    )?) {
+                        point(p)?;
                     }
                 }
                 Primitive::Rule { from, to, stroke } => {
@@ -568,20 +638,8 @@ fn preflight(
                             profile.f32(*dash)?;
                         }
                     }
-                    for c in commands {
-                        match c {
-                            PathCommand::MoveTo(a) | PathCommand::LineTo(a) => point(*a)?,
-                            PathCommand::QuadraticTo(a, b) => {
-                                point(*a)?;
-                                point(*b)?;
-                            }
-                            PathCommand::CubicTo(a, b, c) => {
-                                point(*a)?;
-                                point(*b)?;
-                                point(*c)?;
-                            }
-                            PathCommand::Close => {}
-                        }
+                    for p in command_points(commands) {
+                        point(p)?;
                     }
                 }
                 Primitive::Text {

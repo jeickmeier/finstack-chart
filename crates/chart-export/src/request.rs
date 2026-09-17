@@ -1,6 +1,7 @@
 //! Cheap immutable input acquisition, separate from publication preparation/encoding.
 use crate::{
-    FigureSnapshot, FontManifest, FontResources, PublicationProfile, Reproducibility, error,
+    FigureSnapshot, FontResources, PublicationProfile, error,
+    snapshot::{displayed_manifest, state_manifest},
 };
 use chart_core::{
     ChartResult, DiagnosticCode, SceneStamp,
@@ -167,17 +168,4 @@ fn budget() -> chart_core::Diagnostic {
         DiagnosticCode::ResourceLimit,
         "Captured input accounting overflowed the export budget.",
     )
-}
-pub(crate) fn state_manifest(definition: &ChartDefinition, state: &ChartState) -> Value {
-    json!({"revision":state.revision(),"viewport_revision":state.viewport_revision(),"viewport":state.viewport(),"committed_viewport":state.committed_viewport(),"windows":state.axis_windows(),"hidden_layers":definition.layers.iter().filter(|l|!state.is_visible(l.id)).map(|l|l.id).collect::<Vec<_>>(),"interaction":state.interaction_snapshot(),"hover":state.hover(),"focus":state.focus(),"active_gesture":state.active_gesture(),"effective_annotations":state.annotations(definition)})
-}
-impl Reproducibility {
-    /// Emit captured definition/state/profile, exact revisions/font hashes and dependency identities.
-    pub fn manifest(&self) -> Value {
-        json!({"version":1,"displayed":displayed_manifest(self.displayed_layout.as_deref()),"engines":self.engines,"stamp":self.stamp,"origin_scene":self.origin_scene,"origin_layout":self.origin_layout,"definition":self.definition,"source_epoch":self.source_epoch,"datasets":self.datasets,"state":state_manifest(&self.definition,&self.captured_state),"effective_state":state_manifest(&self.definition,&self.effective_state),"interaction_policy":self.interaction,"fonts":self.fonts.iter().map(|f:&FontManifest|json!({"id":f.id,"revision":f.revision,"sha256":f.sha256})).collect::<Vec<_>>(),"profile":self.profile,"compile_limits":self.compile_limits})
-    }
-}
-
-fn displayed_manifest(layout: Option<&chart_core::layout::LaidOutChart>) -> Value {
-    layout.map_or(Value::Null,|l|json!({"unit_policy":"one scene unit per point","scene":l.scene().items(),"guides":l.guide_presentation()}))
 }
