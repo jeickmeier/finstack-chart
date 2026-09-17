@@ -97,8 +97,8 @@ fn local(
     let fit = model_linear::fit(&design, &response, &w, p)?;
     let mut influence = vec![[0.; 2]; n];
     for (j, &i) in order[..nf].iter().enumerate() {
-        for k in 0..p.min(2) {
-            influence[i][k] = (0..p)
+        for (k, value) in influence[i].iter_mut().enumerate().take(p.min(2)) {
+            *value = (0..p)
                 .map(|c| fit.covariance[k * p + c] * design[j * p + c])
                 .sum::<f64>()
                 * w[j];
@@ -238,7 +238,7 @@ pub(crate) fn fit(
                 .collect();
             let mut sorted = residual.clone();
             sorted.sort_by(f64::total_cmp);
-            let median = if n % 2 == 0 {
+            let median = if n.is_multiple_of(2) {
                 (sorted[n / 2 - 1] + sorted[n / 2]) / 2.
             } else {
                 sorted[n / 2]
@@ -468,7 +468,7 @@ impl LoessFit {
                 .map(|i| (self.y[i] - fitted[i].unwrap()).abs() * libm::sqrt(self.prior[i]))
                 .collect();
             absolute.sort_by(f64::total_cmp);
-            let mad = if n % 2 == 0 {
+            let mad = if n.is_multiple_of(2) {
                 (absolute[n / 2 - 1] + absolute[n / 2]) / 2.
             } else {
                 absolute[n / 2]

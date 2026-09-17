@@ -667,6 +667,16 @@ pub(super) fn source_layer(
                 bind(n)?;
             }
         }
+        StatParameters::Spatial(s) => {
+            for n in s.numerics_mut() {
+                bind(n)?;
+            }
+        }
+        StatParameters::Model(s) => {
+            for n in s.numerics_mut() {
+                bind(n)?;
+            }
+        }
         StatParameters::Univariate(s) => {
             for n in s.numerics_mut() {
                 bind(n)?;

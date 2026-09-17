@@ -8,6 +8,16 @@ enum Target {
 #[derive(Clone)]
 pub struct Draft(Target);
 impl Draft {
+    /// Execute one registered typed recipe through the same builder, preserving other components.
+    pub fn autolayer(&self, selection: AuthoringSelection) -> ChartResult<Self> {
+        let Target::New(builder) = &self.0 else {
+            return Err(unsupported("autolayer in a definition edit"));
+        };
+        Ok(Self(Target::New(Box::new(
+            builder.as_ref().clone().autolayer(selection, true)?,
+        ))))
+    }
+
     /// Begin a primary plot around already normalized owned data.
     pub fn new(data: &Data) -> Self {
         Self(Target::New(Box::new(plot(data.clone()))))
@@ -58,14 +68,36 @@ impl Draft {
         Ok(Self(match &self.0 {
             Target::New(b) => Target::New(Box::new(match method {
                 "profile" => b.as_ref().clone().profile(a.one()?),
+                "coordinate" => b.as_ref().clone().coordinate(a.one()?),
+                "registered_coordinate" => {
+                    a.count(3)?;
+                    b.as_ref().clone().registered_coordinate(
+                        a.at::<String>(0)?,
+                        Revision::new(exact_u64(&a.0[1])?),
+                        a.at::<Value>(2)?,
+                    )
+                }
                 "compile_limits" => b.as_ref().clone().compile_limits(options(a.one()?)?),
                 "data_limits" => b.as_ref().clone().data_limits(options(a.one()?)?),
                 _ => return Err(unsupported(method)),
             })),
             Target::Edit(b) => Target::Edit(Box::new(match method {
                 "profile" => b.as_ref().clone().profile(a.one()?),
+                "coordinate" => b.as_ref().clone().coordinate(a.one()?),
+                "registered_coordinate" => {
+                    a.count(3)?;
+                    b.as_ref().clone().registered_coordinate(
+                        a.at::<String>(0)?,
+                        Revision::new(exact_u64(&a.0[1])?),
+                        a.at::<Value>(2)?,
+                    )
+                }
                 "remove_layer" => b.as_ref().clone().remove_layer(&a.string()?),
                 "remove_annotation" => b.as_ref().clone().remove_annotation(&a.string()?),
+                "clear_coordinate" => {
+                    a.count(0)?;
+                    b.as_ref().clone().clear_coordinate()
+                }
                 "clear_facets" => {
                     a.count(0)?;
                     b.as_ref().clone().clear_facets()

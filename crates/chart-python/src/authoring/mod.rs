@@ -14,6 +14,7 @@ mod shape_registry;
 mod shape_stack;
 mod shape_symbol;
 mod time;
+mod vector;
 use super::failure;
 use chart_core::{
     plot::{
@@ -224,6 +225,13 @@ impl ComponentHandle {
 handle!(DraftHandle, "_Draft", Draft);
 #[pymethods]
 impl DraftHandle {
+    fn autolayer(&self, selection: &str) -> PyResult<Self> {
+        self.get()?
+            .autolayer(portable::decode(selection).map_err(failure)?)
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+
     fn with_shape_registry(
         &self,
         registry: &shape_registry::ShapeRegistryHandle,
@@ -343,6 +351,7 @@ pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<hierarchy::HierarchyHandle>()?;
     module.add_class::<time::TimeScaleHandle>()?;
     module.add_class::<scale::ScaleHandle>()?;
+    module.add_class::<vector::CutHandle>()?;
     module.add_class::<runtime::EditorHandle>()?;
     module.add_class::<runtime::RuntimeHandle>()?;
     module.add_class::<runtime::UpdatesHandle>()?;
@@ -351,6 +360,7 @@ pub(super) fn register(module: &Bound<'_, PyModule>) -> PyResult<()> {
     module.add_class::<output::OutputHandle>()?;
     module.add_class::<output::RequestHandle>()?;
     module.add_class::<output::FrameHandle>()?;
+    module.add_class::<output::PagesHandle>()?;
     module.add_class::<output::TransitionHandle>()?;
     module.add_class::<output::QueueHandle>()?;
     module.add_class::<output::JobHandle>()

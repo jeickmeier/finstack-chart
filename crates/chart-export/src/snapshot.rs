@@ -299,6 +299,7 @@ impl FigureSnapshot {
             for font in self.0.fonts.iter() {
                 font.check_mode(format, profile.text)?;
             }
+            let mut diagnostics = self.0.layout.diagnostics().to_vec();
             let bytes = match format {
                 Format::Svg if profile.text == TextMode::Preserve => {
                     crate::svg::build(&self.0.scene, &self.0.fonts, profile, true)?.into_bytes()
@@ -310,6 +311,64 @@ impl FigureSnapshot {
                     crate::encode::pdf(&self.0.scene, &self.0.tree, &self.0.fonts, profile)?
                 }
                 Format::Png => crate::encode::png(&self.0.tree, profile)?,
+                Format::PostScript | Format::Eps => {
+                    let (bytes, omitted) = crate::devices_vector::postscript(
+                        &self.0.scene,
+                        &self.0.tree,
+                        profile,
+                        format == Format::Eps,
+                    )?;
+                    if omitted > 0 {
+                        let mut warning = error(
+                            DiagnosticCode::ExportFidelity,
+                            format!(
+                                "Explicit PostScript policy omitted {omitted} partially transparent paints."
+                            ),
+                        );
+                        warning.severity = chart_core::Severity::Warning;
+                        diagnostics.push(warning);
+                    }
+                    bytes
+                }
+                Format::Emf => {
+                    let (bytes, omitted) =
+                        crate::devices_metafile::encode(&self.0.scene, &self.0.tree, profile)?;
+                    if omitted > 0 {
+                        let mut warning = error(
+                            DiagnosticCode::ExportFidelity,
+                            format!(
+                                "Explicit EMF policy omitted {omitted} partially transparent paints."
+                            ),
+                        );
+                        warning.severity = chart_core::Severity::Warning;
+                        diagnostics.push(warning);
+                    }
+                    bytes
+                }
+                Format::PicTeX => {
+                    if profile.text == TextMode::Outline {
+                        return Err(error(
+                            DiagnosticCode::ExportFidelity,
+                            "Historical PicTeX uses device fonts and cannot promise supplied-font outlines.",
+                        ));
+                    }
+                    let bytes = crate::devices_pictex::encode(
+                        &self.0.scene,
+                        &self.0.tree,
+                        &self.0.fonts,
+                        profile,
+                    )?;
+                    let mut warning = error(
+                        DiagnosticCode::ExportFidelity,
+                        "Historical PicTeX emits monochrome outlines, ignores fill and ordinary linewidth, and uses Computer Modern device fonts; non-right-angle text rotation is not retained.",
+                    );
+                    warning.severity = chart_core::Severity::Warning;
+                    diagnostics.push(warning);
+                    bytes
+                }
+                Format::Jpeg | Format::Tiff | Format::Bmp => {
+                    crate::devices_raster::encode(&self.0.tree, profile, format)?
+                }
             };
             Ok(ExportArtifact {
                 format,
@@ -329,7 +388,7 @@ impl FigureSnapshot {
                     c
                 },
                 bytes: crate::encode::bounded(bytes, profile)?,
-                diagnostics: self.0.layout.diagnostics().to_vec(),
+                diagnostics,
                 metadata: self.0.metadata.clone(),
             })
         })();
@@ -337,6 +396,50 @@ impl FigureSnapshot {
             e.context.stamp = Some(self.0.scene.stamp());
             e
         })
+    }
+    /// Encode captured pages as one PDF, PostScript or TIFF document (EPS requires one page).
+    /// Each snapshot retains its own reproduction metadata; no current chart is read.
+    pub fn export_pages(pages: &[Self], format: Format) -> ChartResult<Vec<u8>> {
+        if !matches!(
+            format,
+            Format::Pdf | Format::PostScript | Format::Eps | Format::Tiff
+        ) {
+            return Err(error(
+                DiagnosticCode::Validation,
+                "This multi-page encoder requires PDF, PostScript, EPS or TIFF.",
+            ));
+        }
+        if format == Format::Tiff {
+            let input = pages
+                .iter()
+                .map(|p| (&p.0.tree, &p.0.metadata.profile))
+                .collect::<Vec<_>>();
+            return crate::devices_raster::tiff_pages(&input);
+        }
+        for page in pages {
+            for font in page.0.fonts.iter() {
+                font.check_mode(
+                    format,
+                    if format == Format::Pdf {
+                        page.0.metadata.profile.text
+                    } else {
+                        TextMode::Outline
+                    },
+                )?;
+            }
+        }
+        if format == Format::Pdf {
+            let input = pages
+                .iter()
+                .map(|p| (&p.0.scene, &p.0.tree, &p.0.fonts, &p.0.metadata.profile))
+                .collect::<Vec<_>>();
+            return crate::encode::pdf_pages(&input);
+        }
+        let input: Vec<_> = pages
+            .iter()
+            .map(|p| (&p.0.scene, &p.0.tree, &p.0.metadata.profile))
+            .collect();
+        crate::devices_vector::postscript_pages(&input, format == Format::Eps).map(|v| v.0)
     }
     /// Vector preview of this same publication tree. Glyphs are already positioned/outlined;
     /// a host scales the point viewBox uniformly without native font remeasurement.

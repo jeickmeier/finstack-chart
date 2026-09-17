@@ -59,6 +59,20 @@ pub enum Format {
     Pdf,
     /// Raster PNG with explicit physical density.
     Png,
+    /// Lossy JPEG raster with explicit matte, quality and DPI.
+    Jpeg,
+    /// TIFF raster with explicit compression, alpha policy and physical resolution.
+    Tiff,
+    /// Opaque 24-bit BMP raster with physical resolution.
+    Bmp,
+    /// Retained-vector PostScript Level 3 with supplied-font outlines.
+    PostScript,
+    /// Single-page encapsulated PostScript with exact physical bounds.
+    Eps,
+    /// Historical monochrome PicTeX output with Computer Modern device fonts.
+    PicTeX,
+    /// Single-page enhanced metafile with supplied-font vector outlines.
+    Emf,
 }
 /// Text representation promised by the selected output mode.
 #[derive(serde::Serialize, Clone, Copy, Debug, Eq, PartialEq)]
@@ -71,6 +85,8 @@ pub enum TextRepresentation {
     EmbeddedSubsetFonts,
     /// Positioned vector glyph outlines; search/editable text is absent from the output.
     Outlines,
+    /// Historical TeX device fonts; supplied font identity is not retained.
+    DeviceFonts,
     /// Raster pixels; no selectable text or embedded font payload.
     Pixels,
 }
@@ -88,14 +104,20 @@ impl Format {
     /// Report representation before encoding. PNG is intentionally raster output.
     pub fn capabilities(self, text: TextMode) -> ExportCapabilities {
         let representation = match (self, text) {
-            (Self::Png, _) => TextRepresentation::Pixels,
-            (_, TextMode::Outline) => TextRepresentation::Outlines,
+            (Self::PicTeX, _) => TextRepresentation::DeviceFonts,
+            (Self::Png | Self::Jpeg | Self::Tiff | Self::Bmp, _) => TextRepresentation::Pixels,
+            (Self::PostScript | Self::Eps | Self::Emf, _) | (_, TextMode::Outline) => {
+                TextRepresentation::Outlines
+            }
             (Self::Svg, _) => TextRepresentation::EmbeddedFullFonts,
             (Self::Pdf, _) => TextRepresentation::EmbeddedSubsetFonts,
         };
         ExportCapabilities {
             native_painters: false,
-            vector_marks: self != Self::Png,
+            vector_marks: matches!(
+                self,
+                Self::Svg | Self::Pdf | Self::PostScript | Self::Eps | Self::PicTeX | Self::Emf
+            ),
             text: representation,
         }
     }
@@ -113,6 +135,12 @@ pub struct PublicationProfile {
     pub text: TextMode,
     /// Raster dots per inch; uniform scaling, nearest integer dimensions.
     pub dpi: u32,
+    /// Optional additional raster-device controls; absence preserves legacy profile bytes.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub raster_device: Option<crate::RasterDeviceOptions>,
+    /// Explicit retained-vector device policies.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub vector_device: Option<crate::VectorDeviceOptions>,
     /// Figure background; PNG correctly encodes straight alpha, including transparency.
     pub background: chart_core::color::Paint,
     /// Revision of the supplied point-space decoration/annotation items.
@@ -140,6 +168,8 @@ impl PublicationProfile {
             view: ViewMode::VisibleView,
             text: TextMode::Preserve,
             dpi: 300,
+            raster_device: None,
+            vector_device: None,
             background: Color {
                 red: 255,
                 green: 255,
@@ -155,6 +185,9 @@ impl PublicationProfile {
         })
     }
     pub(crate) fn validate(&self) -> ChartResult<()> {
+        if let Some(options) = &self.raster_device {
+            options.validate()?;
+        }
         if self.layout.units != Units::Points {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,

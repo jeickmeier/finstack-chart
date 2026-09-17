@@ -85,6 +85,12 @@ pub struct KeyOverrides {
 #[derive(Clone, Debug, Default, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(default, deny_unknown_fields)]
 pub struct LegendOptions {
+    /// Registered drawing of the fully trained guide.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub registered: Option<super::GuideDrawingSelection>,
+    /// Parse title and labels as mathematical notation using explicitly supplied faces.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub math: Option<crate::typography::MathFonts>,
     /// Explicit title; empty omits it.
     pub title: Option<String>,
     /// Smaller explicit orders are placed first; zero sorts as 99. Ties retain source order.
@@ -108,6 +114,9 @@ pub struct LegendOptions {
 #[derive(Clone, Debug, Default, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(default, deny_unknown_fields)]
 pub struct LayerLegend {
+    /// Registered vector key; a None builtin key still suppresses it.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub registered_key: Option<super::KeyGlyphSelection>,
     /// None uses mapped-channel inclusion; false omits this layer from guides.
     pub show: Option<bool>,
     /// Channel-specific inclusion overrides the whole-layer policy.

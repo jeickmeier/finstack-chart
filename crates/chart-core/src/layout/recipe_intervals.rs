@@ -53,6 +53,18 @@ pub(crate) fn with_arrows(
                     PathCommand::Close => vec![],
                 })
                 .collect(),
+            Primitive::ShapePath { geometry, .. } | Primitive::VectorPath { geometry, .. } => {
+                geometry
+                    .lower(0.01, request.limits.max_path_commands)?
+                    .into_iter()
+                    .flat_map(|c| match c {
+                        PathCommand::MoveTo(p) | PathCommand::LineTo(p) => vec![p],
+                        PathCommand::QuadraticTo(a, b) => vec![a, b],
+                        PathCommand::CubicTo(a, b, c) => vec![a, b, c],
+                        PathCommand::Close => vec![],
+                    })
+                    .collect()
+            }
             _ => vec![],
         };
         if points.len() < 2 {

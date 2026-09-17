@@ -4,7 +4,7 @@ use super::{
     AutoBinSpec, CountSpec, DodgeSpec, JitterSpec, OlsSpec, ShapeStackSpec, StackSpec, StatAes,
     SummarySpec,
 };
-use super::{DistributionSpec, UnivariateSpec};
+use super::{DistributionSpec, ModelSpec, SpatialSpec, UnivariateSpec};
 use super::{ExpressionNode, StatField, StatNumeric};
 use super::{GgplotDodgeSpec, GgplotStackSpec, JitterDodgeSpec, NudgeSpec};
 use crate::data::InvalidPolicy;
@@ -205,6 +205,10 @@ impl BinSpec {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum StatParameters {
+    /// Shared two-dimensional statistical operations.
+    Spatial(Box<SpatialSpec>),
+    /// Shared statistical models, smoothers and quantile regression.
+    Model(ModelSpec),
     /// Built-in boxplot, KDE, violin and dotplot operations.
     Distribution(DistributionSpec),
     /// Built-in ECDF, QQ, sampled function and one-dimensional helpers.
@@ -242,6 +246,8 @@ impl Statistic {
         let staged = |n: &Numeric| matches!(n, Numeric::Scaled { .. } | Numeric::Expression(_));
         match &self.parameters {
             StatParameters::Distribution(s) => s.numerics().any(staged),
+            StatParameters::Spatial(s) => s.numerics().any(staged),
+            StatParameters::Model(s) => s.numerics().any(staged),
             StatParameters::Univariate(s) => s.numerics().any(staged),
             StatParameters::Bin(s) => staged(&s.input),
             StatParameters::AutoBin(s) => staged(&s.input),
@@ -269,6 +275,8 @@ impl Statistic {
     pub fn grouping(&self) -> Option<&Grouping> {
         match &self.parameters {
             StatParameters::Distribution(s) => Some(&s.grouping),
+            StatParameters::Spatial(s) => Some(&s.grouping),
+            StatParameters::Model(s) => Some(&s.grouping),
             StatParameters::Univariate(s) => Some(&s.grouping),
             StatParameters::Identity => None,
             StatParameters::Bin(s) => Some(&s.grouping),
@@ -970,6 +978,9 @@ pub struct Layer {
     /// Built-in recipe over shared encoded values and positioning.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub recipe: Option<super::BuiltinRecipe>,
+    /// Owned geographic features joined to ordinary source rows.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub geography: Option<super::GeoLayerSpec>,
     /// Extra source/statistical inputs read by the existing common reader.
     #[serde(default, skip_serializing_if = "std::collections::BTreeMap::is_empty")]
     pub recipe_aes: std::collections::BTreeMap<super::RecipeAesthetic, super::ColorInput>,
@@ -1068,12 +1079,18 @@ impl Layer {
         }
     }
     pub(crate) fn reference_linewidth(&self) -> bool {
+        if matches!(self.geom, Geom::ShapeLine { .. })
+            && matches!(self.statistic.parameters, super::StatParameters::Spatial(_))
+        {
+            return true;
+        }
         match self.recipe {
             None => self.geom.reference_linewidth(),
             Some(
                 super::BuiltinRecipe::Count(_)
                 | super::BuiltinRecipe::Polygon(_)
                 | super::BuiltinRecipe::Tile(_)
+                | super::BuiltinRecipe::Hexagon(_)
                 | super::BuiltinRecipe::Raster(_),
             ) => false,
             Some(_) => true,
@@ -1083,6 +1100,7 @@ impl Layer {
     pub fn new(id: LayerId, data: impl Into<DataRef>, geom: Geom, mappings: SourceAes) -> Self {
         Self {
             recipe: None,
+            geography: None,
             recipe_aes: Default::default(),
             legend: None,
             text: None,
@@ -1207,6 +1225,12 @@ impl Layer {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ChartDefinition {
+    /// Post-stat coordinate projection, clipping and inverse policy (wire v78).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub coordinate: Option<super::CoordinateSpec>,
+    /// Registered paired map after the base post-stat coordinate projection.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub coordinate_extension: Option<super::CoordinateSelection>,
     /// Portable custom guide content (wire v71).
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub custom_legends: Vec<super::CustomLegend>,
@@ -1246,7 +1270,8 @@ impl ChartDefinition {
         &self,
         required: impl Fn(&crate::scales::GgplotTransform) -> bool + Copy,
     ) -> bool {
-        super::interpolation_extensions::mapped_scales(self)
+        self.coordinate.as_ref().is_some_and(|coordinate| matches!(coordinate, super::CoordinateSpec::Transformed(v) if required(&v.x) || required(&v.y)))
+            || super::interpolation_extensions::mapped_scales(self)
             .any(|s| s.ggplot_transform().is_some_and(required))
             || self.axes.iter().any(|a| {
                 let transform = match &a.scale {
@@ -1290,6 +1315,148 @@ impl ChartDefinition {
     }
     /// Minimum definition-envelope version required by its retained capabilities.
     pub fn wire_version(&self) -> u32 {
+        if self.coordinate_extension.is_some() {
+            return 85;
+        }
+        if self
+            .facets
+            .as_ref()
+            .and_then(|f| f.reference.as_ref())
+            .is_some_and(|p| p.registered.is_some())
+        {
+            return 84;
+        }
+        if self.legends.values().any(|o| o.registered.is_some())
+            || self
+                .custom_legends
+                .iter()
+                .any(|l| l.options.registered.is_some())
+        {
+            return 83;
+        }
+        if self.layers.iter().any(|l| {
+            l.legend
+                .as_ref()
+                .is_some_and(|l| l.registered_key.is_some())
+        }) {
+            return 82;
+        }
+        if self.layers.iter().any(|l| l.geography.is_some())
+            || matches!(self.coordinate, Some(super::CoordinateSpec::Geographic(_)))
+        {
+            return 81;
+        }
+        if self
+            .axes
+            .iter()
+            .filter_map(|a| a.components.as_ref())
+            .chain(self.guides.iter().filter_map(|g| g.components.as_ref()))
+            .any(|c| {
+                std::iter::once(&c.labels)
+                    .chain(c.per_tick.iter().map(|t| &t.label))
+                    .any(|s| {
+                        s.hjust.is_some()
+                            || s.vjust.is_some()
+                            || s.typography.as_ref().is_some_and(|r| r.math.is_some())
+                    })
+            })
+        {
+            return 80;
+        }
+        if self
+            .axes
+            .iter()
+            .filter_map(|a| a.components.as_ref())
+            .chain(self.guides.iter().filter_map(|g| g.components.as_ref()))
+            .any(|c| {
+                [&c.domain, &c.ticks]
+                    .into_iter()
+                    .chain(c.per_tick.iter().map(|t| &t.line))
+                    .any(|s| {
+                        s.line_end.is_some()
+                            || s.line_join.is_some()
+                            || s.arrow.is_some()
+                            || s.arrow_fill.is_some()
+                    })
+            })
+        {
+            return 80;
+        }
+        if self.figure.as_ref().is_some_and(|f| f.tag.is_some())
+            || self
+                .layers
+                .iter()
+                .any(|l| l.grammar.as_ref().is_some_and(|g| g.default_text))
+        {
+            return 80;
+        }
+        let math = |r: &crate::typography::RichText| {
+            r.lines.iter().flatten().any(|run| run.math.is_some())
+        };
+        if self
+            .theme
+            .as_ref()
+            .is_some_and(|t| t.hierarchy.is_some() || !t.fonts.is_empty())
+            || self
+                .layers
+                .iter()
+                .any(|l| l.text.as_ref().is_some_and(|t| t.math.is_some()))
+            || self.legends.values().any(|l| l.math.is_some())
+            || self.custom_legends.iter().any(|l| l.options.math.is_some())
+            || self
+                .facets
+                .as_ref()
+                .and_then(|f| f.reference.as_ref())
+                .is_some_and(|f| f.labeller.math.is_some())
+            || self.axes.iter().any(|a| {
+                a.title.as_ref().is_some_and(&math)
+                    || a.typography.as_ref().is_some_and(|r| r.math.is_some())
+            })
+            || self.figure.as_ref().is_some_and(|f| {
+                f.title
+                    .iter()
+                    .chain(&f.subtitle)
+                    .chain(&f.caption)
+                    .chain(&f.source_notes)
+                    .chain(&f.footnotes)
+                    .chain(f.panel_letters.iter().map(|p| &p.text))
+                    .chain(f.annotations.iter().map(|a| &a.text))
+                    .any(&math)
+            })
+        {
+            return 80;
+        }
+        if self
+            .layers
+            .iter()
+            .any(|l| matches!(l.recipe, Some(super::BuiltinRecipe::Hexagon(_))))
+            || self
+                .layers
+                .iter()
+                .map(|l| &l.statistic)
+                .chain(self.transforms.iter().map(|t| &t.statistic))
+                .any(|s| matches!(s.parameters, StatParameters::Spatial(_)))
+        {
+            return 79;
+        }
+
+        if self.coordinate.is_some() {
+            return 78;
+        }
+        if self
+            .layers
+            .iter()
+            .any(|l| matches!(l.recipe, Some(super::BuiltinRecipe::Smooth)))
+            || self
+                .layers
+                .iter()
+                .map(|l| &l.statistic)
+                .chain(self.transforms.iter().map(|t| &t.statistic))
+                .any(|s| matches!(s.parameters, StatParameters::Model(_)))
+        {
+            return 77;
+        }
+
         if self.facets.as_ref().is_some_and(|f| f.reference.is_some()) {
             return 76;
         }
@@ -1803,7 +1970,6 @@ impl ChartDefinition {
                                 crate::layout::AxisScale::Utc { .. }
                                     | crate::layout::AxisScale::Date { .. }
                                     | crate::layout::AxisScale::Calendar { .. }
-                                    | crate::layout::AxisScale::Auto
                             )
                     })
                 } else {
@@ -2023,6 +2189,8 @@ impl ChartDefinition {
             legends: Default::default(),
             semantics: None,
             facets: None,
+            coordinate: None,
+            coordinate_extension: None,
             theme: None,
             figure: None,
             mappings: SourceAes::new(),
@@ -2164,6 +2332,8 @@ impl ChartDefinition {
         };
         let statistic = |s: &Statistic| match &s.parameters {
             StatParameters::Distribution(s) => s.numerics().any(numeric),
+            StatParameters::Spatial(s) => s.numerics().any(numeric),
+            StatParameters::Model(s) => s.numerics().any(numeric),
             StatParameters::Univariate(s) => s.numerics().any(numeric),
             StatParameters::Bin(s) => numeric(&s.input),
             StatParameters::AutoBin(s) => numeric(&s.input),

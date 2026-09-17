@@ -534,6 +534,7 @@ pub struct PreparedTarget<'a> {
 /// One prepared layer in paint order.
 #[derive(Clone, Debug)]
 pub struct PreparedLayer {
+    pub(crate) geography_vertices: Vec<Point>,
     pub(crate) hierarchy: Option<Arc<super::PreparedHierarchy>>,
     pub(crate) shape_protocols: super::shape_extensions::ResolvedShapes,
     pub(crate) orientation: super::Orientation,
@@ -660,6 +661,9 @@ pub struct PreparationMetrics {
 /// It owns no typed source rows or callbacks; its handle pins one coherent source snapshot.
 #[derive(Clone, Debug)]
 pub struct PreparedChart {
+    pub(crate) guide_drawing: Arc<super::guide_drawing::GuideDrawingRegistrations>,
+    pub(crate) coordinate_registrations: Arc<super::coordinate_extensions::CoordinateRegistrations>,
+    pub(crate) key_registrations: Arc<super::key_extensions::KeyRegistrations>,
     pub(crate) positional_empty: std::collections::BTreeSet<crate::ScaleId>,
     pub(crate) positional_limits: BTreeMap<crate::ScaleId, Vec<crate::interpolate::Number>>,
     pub(crate) palette_registrations:

@@ -92,6 +92,68 @@ rotated inspection regions. None of these paths currently implements math layout
    build and selected native/publication matrix. Do not repeat a full cumulative host
    suite for each theme property or math operator.
 
-Open prerequisites: GG-12 and GG-13 acceptance, final GG-08 integration evidence,
-complete reference graph/preset/math fixtures, and the font/metric strategy for the
-full plotmath symbol set. No GG-14 requirement or gate is closed by this document.
+Updated after GG09/GG12 acceptance: GG05, GG08 and GG12 prerequisites are accepted.
+GG13 remains under coordinated qualification. Its shared coordinate map, curved
+guides and clipping consumers are now the geometry integration owners; the math
+layout owner must supply measured boxes to those consumers without duplicating
+coordinate projection. ThemeSpec remains the flat legacy cascade described above,
+and no math parser/layout was found in the live core/text owners.
+
+Open prerequisites: GG13 acceptance, complete reference graph/preset/math fixtures,
+and the font/metric strategy for the full plotmath symbol set. No GG-14 requirement or gate is closed by this document.
+
+## Offline fixture capture — 16 September 2026
+
+Fixture-only work is now available in `tools/reference/r/theme-math-contracts.R`,
+`fixtures/parity/ggplot2/theme-hierarchy-controls.json` and
+`fixtures/parity/ggplot2/plotmath-syntax-inventory.json`. The generator fails unless
+R is exactly 4.6.1 and ggplot2 exactly 4.0.3. It loads no chart runtime and performs
+no host or renderer implementation. File budgets are 8 MiB for theme vectors and
+128 KiB for math inventory; current files are approximately 4.8 MiB and 25 KiB.
+
+Captured and structurally validated:
+
+- All **160 element nodes**, accepted classes and ordered parent lists, including
+  the two-parent `axis.minor.ticks.length.x.top` case. Every parent resolves to a
+  captured node.
+- All **nine presets**, each with defaults and custom base/header family, text,
+  line/rectangle size and ink/paper/accent controls. Every variant retains authored
+  elements and all 160 resolved results: **2,880 successful resolutions**. The
+  grey/gray alias identity is asserted.
+- **15 inheritance vectors** covering nested relative text/line widths, blank
+  inheritance and skip-blank combinations, blank children, partial/automatic
+  margins, multiple-parent lengths, zero/negative units, complete-theme boundaries,
+  missing roots, unknown nodes and wrong element classes. Source warnings/messages
+  and errors are retained rather than converted into success.
+- Set-return-previous, update property merging, whole-element replacement and
+  separate captured theme objects with an unchanged second context. Global R state
+  is restored within the short-lived oracle process; future Rust contexts must
+  implement the same behavior explicitly without process-global state.
+- All **11 subtheme constructors**, their formals, empty behavior, meaningful
+  argument-to-element expansion and unknown-argument diagnostics.
+- Every **97 documented plotmath syntax-table rows**, descriptions and R parse-only
+  outcomes, plus **53 expanded Greek/variant aliases** from the range/list entries.
+  The comma-separated variant row is source shorthand, so its raw parse failure is
+  retained alongside the individually expanded aliases. No expression is evaluated.
+
+The encoder distinguishes NULL, atomic NA, relative values, typed units/margins and
+S7 element properties; it does not flatten absence into a scalar default. Custom
+font-family strings are retained as parameters, without pretending a font was
+loaded or measured.
+
+Command:
+
+`R_LIBS_USER=/private/tmp/finstack-chart-tools/r-library Rscript tools/reference/r/theme-math-contracts.R`
+
+Generation/replay logs: `/private/tmp/gg14-fixtures-final.log` and
+`/private/tmp/gg14-fixtures-replay.log`. Structural validation and SHA-256 evidence:
+`/private/tmp/gg14-fixture-validation.json`. A second fresh-process generation was
+**byte-identical** for both files. Theme SHA-256:
+`77b17ebf4494f4f63c3870a9c77339bbc259ef250e67d629752440f9dae8eae6`;
+math SHA-256: `6a1172e500adab400a2ecf360dcc379275f0d8e0a776748c3c6e4e6cca387994`.
+
+These are independent source fixtures, not implementation acceptance. Remaining
+GG14 work includes the bounded theme resolver/context, plotmath parser and layout,
+supplied font strategy, all label consumers, measured topology/bounds, invalidation,
+actual host parity and inspected native/text/outline/high-resolution publications.
+GG13 prerequisite acceptance still controls runtime release.

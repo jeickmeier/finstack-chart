@@ -21,8 +21,15 @@ skrifa = "=0.44.0"
 sha2 = "=0.10.9"
 base64 = "=0.22.1"
 png = "=0.17.16"
+jpeg-encoder = { version = "=0.7.1", default-features = false, features = ["std"] }
+tiff = { version = "=0.11.3", default-features = false, features = ["lzw", "deflate"] }
+
+lzma-rust2 = { version = "=0.16.2", default-features = false, features = ["std", "encoder", "xz"] }
+ruzstd = { version = "=0.8.2", default-features = false, features = ["std"] }
+image-webp = { version = "=0.2.4", default-features = false }
 
 [dev-dependencies]
+zune-jpeg = { version = "=0.5.15", default-features = false, features = ["std"] }
 chart-extension-example.workspace = true
 resvg = { version = "=0.45.1", default-features = false, features = ["text"] }
 svg2pdf = { version = "=0.13.0", default-features = false, features = ["text"] }

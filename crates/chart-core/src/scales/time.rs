@@ -714,6 +714,10 @@ impl TimeAxisScale {
             }
         }
     }
+    /// Resolve a typed coordinate limit without applying viewport censoring.
+    pub(crate) fn coordinate_value(&self, value: i64) -> ChartResult<f64> {
+        self.mapping.coordinate(self.relative_guide(value)?)
+    }
     /// Full domain in the numeric output coordinate used by navigation.
     pub fn coordinate_domain(&self) -> ChartResult<super::Bounds> {
         let domain = self.domain();

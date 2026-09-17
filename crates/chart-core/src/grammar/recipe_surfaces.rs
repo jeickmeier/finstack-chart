@@ -123,7 +123,7 @@ impl PreparedSurface {
 }
 pub(super) fn validate(recipe: &BuiltinRecipe) -> ChartResult<()> {
     let valid = match recipe {
-        BuiltinRecipe::Tile(s) => [s.width, s.height]
+        BuiltinRecipe::Tile(s) | BuiltinRecipe::Hexagon(s) => [s.width, s.height]
             .into_iter()
             .flatten()
             .all(|v| v.is_finite() && v >= 0.),
@@ -153,7 +153,7 @@ pub(super) fn setup(
         return Ok(());
     };
     let (width, height, hjust, vjust) = match recipe {
-        BuiltinRecipe::Tile(s) => (s.width, s.height, 0.5, 0.5),
+        BuiltinRecipe::Tile(s) | BuiltinRecipe::Hexagon(s) => (s.width, s.height, 0.5, 0.5),
         BuiltinRecipe::Raster(s) => (None, None, 1. - s.hjust, 1. - s.vjust),
         _ => return Ok(()),
     };
@@ -169,6 +169,11 @@ pub(super) fn setup(
         let h = super::recipe_emit::number(row, RecipeAesthetic::Height)
             .or(height)
             .unwrap_or(dy);
+        let h = if matches!(recipe, BuiltinRecipe::Hexagon(_)) {
+            h * 2. / libm::sqrt(3.)
+        } else {
+            h
+        };
         if !w.is_finite() || !h.is_finite() || w < 0. || h < 0. {
             row.x = None;
             row.y = None;
@@ -233,6 +238,42 @@ pub(super) fn emit(
         return Ok(false);
     };
     match recipe {
+        BuiltinRecipe::Hexagon(_) => {
+            for row in rows {
+                if missing_dimensions(row) {
+                    super::recipe_emit::retain_positions(prepared, row);
+                    continue;
+                }
+                if let (Some(x), Some(y), Some(x2), Some(y2)) = (row.x, row.y, row.x2, row.y2) {
+                    let cx = x.midpoint(x2);
+                    let cy = y.midpoint(y2);
+                    let q = (y2 - y) / 4.;
+                    let contour = vec![
+                        Point::new(cx, y)?,
+                        Point::new(x2, cy - q)?,
+                        Point::new(x2, cy + q)?,
+                        Point::new(cx, y2)?,
+                        Point::new(x, cy + q)?,
+                        Point::new(x, cy - q)?,
+                    ];
+                    charge(vertices, 6, "hexagon vertex")?;
+                    let geometry = PreparedGeometry::Recipe(Box::new(PreparedRecipe::Surface(
+                        PreparedSurface::Polygon {
+                            contours: vec![contour],
+                            anchors: vec![Point::new(cx, cy)?],
+                            rule: FillRule::EvenOdd,
+                        },
+                    )));
+                    include_geometry(&mut prepared.domains, &geometry);
+                    Arc::make_mut(&mut prepared.marks).push(surface_mark(
+                        layer,
+                        row,
+                        geometry,
+                        vec![row.target.clone()],
+                    )?);
+                }
+            }
+        }
         BuiltinRecipe::Tile(_) => {
             for row in rows {
                 if missing_dimensions(row) {

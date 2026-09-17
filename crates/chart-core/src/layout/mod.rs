@@ -6,10 +6,20 @@
 
 mod axes;
 mod composition;
+mod coordinate_clip;
+mod coordinate_guides_training;
+mod coordinate_hit;
+mod coordinate_map;
+mod coordinate_path;
+mod coordinate_primitive;
+mod coordinate_raster;
+mod coordinate_resolve;
 mod coordinates;
 mod engine;
 mod facet_policy;
 mod facets;
+mod geographic;
+mod geographic_guides;
 mod hierarchy;
 mod legend_colorbar;
 mod legend_keys;
@@ -56,3 +66,7 @@ pub use ggplot_axis::{AxisCap, GgplotAxisOptions, LogTickOptions};
 mod stroke_outline;
 
 mod recipe_distributions;
+
+mod coordinate_guides;
+
+mod theme_elements;

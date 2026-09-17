@@ -214,6 +214,12 @@ impl From<crate::grammar::ScalePaletteOperation> for ThemeScalePalette {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub struct ThemeSpec {
+    /// Explicit supplied family/face resources for reference element text.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub fonts: Vec<crate::grammar::TextFont>,
+    /// Optional reference element hierarchy, resolved before flat presentation overrides.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub hierarchy: Option<ElementTheme>,
     /// Reference palettes keyed by `palette.<aesthetic>.<continuous|discrete>`.
     /// They are evaluated by the common scale engine, before guide preparation.
     #[serde(default, skip_serializing_if = "BTreeMap::is_empty")]
@@ -234,7 +240,9 @@ pub struct ThemeSpec {
 }
 impl ThemeSpec {
     pub(crate) fn required_version(&self) -> u32 {
-        if self.scale_palettes.values().any(|p| {
+        if self.hierarchy.is_some() || !self.fonts.is_empty() {
+            6
+        } else if self.scale_palettes.values().any(|p| {
             matches!(p, ThemeScalePalette::Named(_))
                 || matches!(p, ThemeScalePalette::Colors(colors) if colors.len() == 1)
         }) {
@@ -257,6 +265,8 @@ impl ThemeSpec {
     pub fn named(named: NamedTheme) -> Self {
         Self {
             version: 1,
+            hierarchy: None,
+            fonts: Vec::new(),
             scale_palettes: BTreeMap::new(),
             geometry: None,
             named: Some(named),
@@ -300,6 +310,14 @@ impl ThemeSpec {
                 "Supply at most 128 palette.<aesthetic>.<continuous|discrete> registrations.",
             ));
         }
+        let font_options = crate::grammar::TextGeom {
+            fonts: self.fonts.clone(),
+            ..Default::default()
+        };
+        font_options.validate()?;
+        if let Some(hierarchy) = &self.hierarchy {
+            hierarchy.validate()?;
+        }
         if let Some(geometry) = &self.geometry {
             geometry.validate()?;
         }
@@ -312,6 +330,37 @@ impl ThemeSpec {
         t.overlay(&host.clone().map_colors(|p| p.into().resolve()));
         if let Some(n) = self.named {
             t.overlay(&n.tokens());
+        }
+        if let Some(elements) = self.resolved_elements()? {
+            let transparent = Color {
+                red: 0,
+                green: 0,
+                blue: 0,
+                alpha: 0,
+            };
+            for (node, token) in [
+                ("plot.background", &mut t.background),
+                ("panel.background", &mut t.panel),
+            ] {
+                *token = if elements.blank(node) {
+                    Some(transparent)
+                } else {
+                    elements
+                        .paint(node, "fill")?
+                        .map(crate::color::Paint::resolve)
+                };
+            }
+            t.foreground = elements
+                .paint("text", "colour")?
+                .map(crate::color::Paint::resolve);
+            t.annotation = t.foreground;
+            t.grid = if elements.blank("panel.grid.major") {
+                Some(transparent)
+            } else {
+                elements
+                    .paint("panel.grid.major", "colour")?
+                    .map(crate::color::Paint::resolve)
+            };
         }
         t.overlay(&self.plot.resolve());
         Ok(t)
@@ -352,9 +401,9 @@ pub struct GeometryTheme<P = Color> {
     pub paper: P,
     /// Accent geometry color.
     pub accent: P,
-    /// Positive semantic point size.
+    /// Nonnegative semantic point size.
     pub point_size: f64,
-    /// Positive semantic line width.
+    /// Nonnegative semantic line width; zero follows the shared reference hairline policy.
     pub line_width: f64,
 }
 impl<P: From<Color>> Default for GeometryTheme<P> {
@@ -372,14 +421,14 @@ impl<P> GeometryTheme<P> {
     /// Reject invalid size tokens before evaluating any geometry expression.
     pub fn validate(&self) -> ChartResult<()> {
         if !self.point_size.is_finite()
-            || self.point_size <= 0.
+            || self.point_size < 0.
             || !self.line_width.is_finite()
-            || self.line_width <= 0.
+            || self.line_width < 0.
         {
             return Err(Diagnostic::error(
                 DiagnosticCode::NumericalDomain,
-                "Geometry theme sizes must be finite and positive.",
-                "Supply positive point size and line width.",
+                "Geometry theme sizes must be finite and nonnegative.",
+                "Supply nonnegative point size and line width.",
             ));
         }
         Ok(())
@@ -486,3 +535,13 @@ impl ThemeSpec {
             })
     }
 }
+
+mod elements;
+mod hierarchy;
+pub use elements::{ElementKind, ElementTheme, ThemeElement, ThemeEntry, ThemeLength, ThemeValue};
+pub use hierarchy::{ThemeContext, ThemePreset};
+
+mod presets;
+pub use presets::ThemePresetOptions;
+mod consumers;
+pub use consumers::ResolvedElements;

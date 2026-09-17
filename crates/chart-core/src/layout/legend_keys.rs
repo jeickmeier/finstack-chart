@@ -4,6 +4,7 @@ use crate::{ChartResult, ScaleId, grammar::*, interpolate::Value, scene::Color};
 
 #[derive(Clone, Debug, PartialEq)]
 pub(super) struct KeyGlyph {
+    pub custom: Option<crate::grammar::KeyGlyphOutput>,
     pub shape: crate::shape::SymbolKind,
     pub size: f64,
     pub color: Color,
@@ -84,6 +85,7 @@ fn base(chart: &PreparedChart, layer: &Layer, r: &LayoutRequest) -> KeyGlyph {
             }
         });
     KeyGlyph {
+        custom: None,
         shape: match layer.aesthetic_values.get(&ValueAesthetic::Shape) {
             Some(Value::Number(n)) => crate::shape::SymbolKind::Ggplot(n.0 as u8),
             _ => match layer.geom {
@@ -118,7 +120,17 @@ fn base(chart: &PreparedChart, layer: &Layer, r: &LayoutRequest) -> KeyGlyph {
         rectangle: matches!(
             layer.geom,
             Geom::Rectangle | Geom::Bar { .. } | Geom::Area { .. }
-        ),
+        ) || (matches!(
+            layer.statistic.parameters,
+            crate::grammar::StatParameters::Spatial(_)
+        ) && matches!(
+            layer.recipe,
+            Some(
+                crate::grammar::BuiltinRecipe::Polygon(_)
+                    | crate::grammar::BuiltinRecipe::Tile(_)
+                    | crate::grammar::BuiltinRecipe::Hexagon(_)
+            )
+        )),
     }
 }
 fn add(result: &mut Vec<KeyLegend>, next: KeyLegend) {
@@ -553,7 +565,7 @@ pub(super) fn collect(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<V
                     }
                 }
             }
-            for glyphs in &mut legend.glyphs {
+            for (key_index, glyphs) in legend.glyphs.iter_mut().enumerate() {
                 if layer
                     .legend
                     .as_ref()
@@ -622,6 +634,31 @@ pub(super) fn collect(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<V
                     if let Some(v) = o.line_type {
                         glyph.line = Some(v);
                     }
+                    if let Some(selection) = layer
+                        .legend
+                        .as_ref()
+                        .and_then(|l| l.registered_key.as_ref())
+                    {
+                        let size = r.font_size.max(2. * glyph.size + glyph.width);
+                        let bounds = crate::Rect::new(0., 0., size, size)?;
+                        glyph.custom = Some(chart.key_registrations.draw(
+                            selection,
+                            crate::grammar::KeyGlyphInput {
+                                layer: layer.id,
+                                value: &legend.values[key_index],
+                                index: key_index,
+                                parameters: &selection.parameters,
+                                units: r.units,
+                                bounds,
+                                radius: glyph.size,
+                                color: glyph.color,
+                                fill: glyph.fill,
+                                stroke: glyph.stroke,
+                                stroke_width: glyph.width,
+                                limits: r.limits,
+                            },
+                        )?);
+                    }
                 }
             }
             add(&mut result, legend);
@@ -641,6 +678,38 @@ pub(super) fn paint(
     r: &LayoutRequest,
 ) -> ChartResult<()> {
     use crate::scene::{Primitive, SceneItem, Stroke};
+    if let Some(custom) = &g.custom {
+        crate::limits::require_within(
+            items.len().saturating_add(custom.paths.len()) <= r.limits.max_items,
+            "custom key items",
+        )?;
+        for path in &custom.paths {
+            let geometry = path.geometry.transformed(
+                crate::path::Affine::new([
+                    1.,
+                    0.,
+                    0.,
+                    1.,
+                    bounds.origin().x(),
+                    y + (height - custom.size[1]) / 2.,
+                ])?,
+                0.01,
+                r.limits.max_path_commands,
+            )?;
+            items.push(SceneItem {
+                guide: None,
+                layer: None,
+                clip: Some(bounds),
+                primitive: Primitive::VectorPath {
+                    geometry,
+                    fill: path.fill.map(crate::color::Paint::resolve),
+                    stroke: path.stroke,
+                    dashes: vec![],
+                },
+            });
+        }
+        return Ok(());
+    }
     crate::limits::require_within(items.len() < r.limits.max_items, "legend key item")?;
     let stroke = (g.width > 0.).then_some(Stroke {
         color: g.stroke,

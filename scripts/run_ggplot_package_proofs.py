@@ -15,7 +15,7 @@ from build_primary_modules import python_module, wasm_module
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('output',type=Path)
 parser.add_argument('--reuse-modules',action='store_true',help='Reuse existing compiled modules for author/declaration-only corrections.')
-parser.add_argument('--package',action='append',choices=['GG-06','GG-07','GG-08','GG-09','GG-12'],required=True)
+parser.add_argument('--package',action='append',choices=['GG-06','GG-07','GG-08','GG-09','GG-10','GG-11','GG-12','GG-13','GG-14','GG-15','GG-16','GG-17','GG-18'],required=True)
 args=parser.parse_args();ROOT=Path(__file__).resolve().parents[1];output=args.output.resolve();output.mkdir(parents=True,exist_ok=True)
 cli=os.environ.get('WASM_BINDGEN','wasm-bindgen');node=os.environ.get('NODE','node')
 assert subprocess.check_output([cli,'--version'],text=True).strip()=='wasm-bindgen 0.2.128'
@@ -34,7 +34,7 @@ if args.reuse_modules:
  for name in ['authoring.cjs','authoring.d.cts']:shutil.copy2(ROOT/'packages/wasm'/name,wasm/name)
 else:
  module=python_module(ROOT,output,target,run);wasm=wasm_module(ROOT,output,target,run,cli)
-scopes={'GG-06':['ggplot_bin_stat_controls','ggplot_position_controls','ggplot_count_summary'], 'GG-07':['ggplot_interval_recipes','ggplot_surface_recipes','ggplot_recipe_marks','ggplot_stroke_controls'], 'GG-08':['ggplot_text_marks'], 'GG-09':['ggplot_distribution_geometries','ggplot_univariate_controls'], 'GG-12':['ggplot_facet_controls']}
+scopes={'GG-18':['ggplot_integration_controls'],'GG-15':['ggplot_geography_controls'],'GG-17':['ggplot_device_controls'],'GG-06':['ggplot_bin_stat_controls','ggplot_position_controls','ggplot_count_summary'], 'GG-07':['ggplot_interval_recipes','ggplot_surface_recipes','ggplot_recipe_marks','ggplot_stroke_controls'], 'GG-08':['ggplot_text_marks'], 'GG-09':['ggplot_distribution_geometries','ggplot_univariate_controls'], 'GG-10':['ggplot_model_controls'], 'GG-11':['ggplot_spatial_controls'], 'GG-13':['ggplot_coordinate_controls'], 'GG-12':['ggplot_facet_controls'], 'GG-16':['ggplot_extension_controls'], 'GG-14':['ggplot_theme_controls','ggplot_math_controls','ggplot_furniture_controls']}
 consumer=output/'typing';consumer.mkdir(exist_ok=True)
 source=(ROOT/'scripts/bindings/authoring/ggplot_stats_text_types.cts').read_text().replace('../../../target/ggplot-packages/wasm-module/','../wasm-module/')
 (consumer/'consumer.cts').write_text(source)
@@ -57,12 +57,19 @@ for package in dict.fromkeys(args.package):
   record_names=['records.json','kept-limits.json']+[p.name for p in left.glob('horizontal-*.json')]
   for name in record_names:
    if (left/name).exists():assert json.loads((left/name).read_text())==json.loads((right/name).read_text()),name
-  files=[p for p in left.iterdir() if p.suffix in ('.svg','.pdf','.png')];assert files
+  files=[p for p in left.iterdir() if p.suffix in ('.svg','.pdf','.png','.jpeg','.jpg','.tiff','.tif','.bmp','.ps','.eps','.tex','.emf','.wmf')];assert files
   for path in files:
    assert path.read_bytes()==(right/path.name).read_bytes(),path
    assert path.read_bytes()==(base/'rust'/path.name).read_bytes(),path
   for path in left.glob('*.scene.json'):
    assert json.loads(path.read_text())==json.loads((right/path.name).read_text()),path
+   if (base/'rust'/path.name).exists():assert json.loads(path.read_text())==json.loads((base/'rust'/path.name).read_text()),path
   results[scope]={'publications_per_host':len(files),'status':'passed'}
+if 'GG-17' in args.package:
+ base=output/'ggplot_save_controls'
+ for host,command,extension,owner in [('python',[sys.executable],'py',module),('wasm',[node],'cjs',wasm)]:
+  run('ggplot_save_controls-'+host,command+[ROOT/'scripts/bindings'/('ggplot_save_controls.'+extension),owner,base/host])
+ assert json.loads((base/'python/records.json').read_text())==json.loads((base/'wasm/records.json').read_text())
+ results['ggplot_save_controls']={'reference_dimensions':26,'status':'passed'}
 (output/'comparisons.json').write_text(json.dumps(results,indent=2)+'\n')
 print('PASS focused packages:', ', '.join(dict.fromkeys(args.package)))

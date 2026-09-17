@@ -14,6 +14,8 @@ pub fn theme() -> ThemeBuilder {
     ThemeBuilder {
         spec: ThemeSpec {
             version: 1,
+            hierarchy: None,
+            fonts: Vec::new(),
             scale_palettes: Default::default(),
             geometry: None,
             named: None,
@@ -104,6 +106,51 @@ impl ThemeBuilder {
             .collect();
         self.spec.version = self.spec.required_version();
         self
+    }
+    /// Supply exact resources for theme family and face selection.
+    pub fn fonts(mut self, fonts: Vec<crate::grammar::TextFont>) -> Self {
+        self.spec.fonts = fonts;
+        self.spec.version = self.spec.required_version();
+        self
+    }
+    /// Install an isolated reference element hierarchy.
+    pub fn elements(mut self, elements: crate::theme::ElementTheme) -> crate::ChartResult<Self> {
+        elements.validate()?;
+        self.spec.hierarchy = Some(elements);
+        self.spec.version = self.spec.required_version();
+        Ok(self)
+    }
+    /// Merge reference element properties into this retained theme.
+    pub fn update_elements(self, patch: crate::theme::ElementTheme) -> crate::ChartResult<Self> {
+        let next = self
+            .spec
+            .hierarchy
+            .clone()
+            .unwrap_or_default()
+            .update(&patch)?;
+        self.elements(next)
+    }
+    /// Replace authored reference elements as whole values.
+    pub fn replace_elements(self, patch: crate::theme::ElementTheme) -> crate::ChartResult<Self> {
+        let next = self
+            .spec
+            .hierarchy
+            .clone()
+            .unwrap_or_default()
+            .replace(&patch)?;
+        self.elements(next)
+    }
+    /// Select one of the nine reference presets with explicit base controls.
+    pub fn reference_preset(
+        self,
+        preset: crate::theme::ThemePreset,
+        options: crate::theme::ThemePresetOptions,
+    ) -> crate::ChartResult<Self> {
+        self.elements(crate::theme::ElementTheme::preset_with(preset, options)?)
+    }
+    /// Snapshot an isolated context into this chart's retained theme.
+    pub fn context(self, context: &crate::theme::ThemeContext) -> crate::ChartResult<Self> {
+        self.elements(context.get())
     }
     /// Select an existing complete named theme.
     pub fn preset(mut self, preset: NamedTheme) -> Self {

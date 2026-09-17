@@ -32,6 +32,17 @@ impl _ExportOptions {
 handle!(_Output, Output);
 #[wasm_bindgen]
 impl _Output {
+    pub fn resolve_save(
+        &self,
+        filename: &str,
+        options: &str,
+        current: Option<Vec<f64>>,
+        page_number: u32,
+    ) -> Result<String, JsError> {
+        self.get()?;
+        chart_export::resolve_save_json(filename, options, current, page_number).map_err(failure)
+    }
+
     #[wasm_bindgen(constructor)]
     pub fn new(bytes: Vec<u8>) -> Result<Self, JsError> {
         Output::new(bytes).map(Self::wrap).map_err(failure)
@@ -90,6 +101,11 @@ impl _FigureRequest {
 handle!(_FigureSnapshot, FigureSnapshot);
 #[wasm_bindgen]
 impl _FigureSnapshot {
+    pub fn pages(&self) -> Result<_FigurePages, JsError> {
+        Ok(_FigurePages::wrap(chart_export::FigurePages::new(
+            self.get()?.clone(),
+        )))
+    }
     pub fn guide_transition(
         &self,
         previous: &_FigureSnapshot,
@@ -172,6 +188,22 @@ impl _FigureTransition {
         self.get()?
             .sample(fraction)
             .map(_FigureSnapshot::wrap)
+            .map_err(failure)
+    }
+    pub fn dispose(&mut self) {
+        self.inner.take();
+    }
+}
+
+handle!(_FigurePages, chart_export::FigurePages);
+#[wasm_bindgen]
+impl _FigurePages {
+    pub fn append(&mut self, page: &_FigureSnapshot) -> Result<(), JsError> {
+        self.get_mut()?.push(page.get()?.clone()).map_err(failure)
+    }
+    pub fn export(&self, format: &str) -> Result<Vec<u8>, JsError> {
+        self.get()?
+            .export(host::format(format).map_err(failure)?)
             .map_err(failure)
     }
     pub fn dispose(&mut self) {

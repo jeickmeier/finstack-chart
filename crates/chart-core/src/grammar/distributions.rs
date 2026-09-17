@@ -1,5 +1,6 @@
 //! Shared distribution kernels; input indices refer to the caller's group slice.
 mod bandwidth;
+pub(crate) use bandwidth::select as select_bandwidth;
 mod boxplot;
 mod density;
 mod dotplot;

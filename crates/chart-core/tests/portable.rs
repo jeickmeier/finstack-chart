@@ -204,3 +204,22 @@ fn state_restore_cannot_reuse_revision_for_changed_content() {
         .unwrap();
     assert_eq!(s.state().viewport().x, Some((0., 2.)));
 }
+
+#[test]
+fn legacy_family_envelopes_retain_their_frozen_capability_versions() {
+    let cases: Vec<serde_json::Value> = serde_json::from_str(include_str!(
+        "../../../fixtures/families/portable-cases.json"
+    ))
+    .unwrap();
+    for case in cases {
+        let envelope: chart_core::portable::ChartEnvelope =
+            serde_json::from_value(case["chart"].clone()).unwrap();
+        assert_eq!(
+            envelope.definition.wire_version(),
+            envelope.version,
+            "{}",
+            case["name"]
+        );
+        envelope.validate().unwrap();
+    }
+}

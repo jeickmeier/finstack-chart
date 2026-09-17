@@ -1,0 +1,38 @@
+# GG15 geography implementation evidence — 16 September 2026
+
+GG15 remains in progress. This report records focused evidence, not package acceptance.
+
+Typed `GeoFeatureCollection` resources retain exact scalar feature identities, multipart contours, holes, per-feature CRS overrides and explicit axis order. Source field joins preserve original targets. Geometry, borders, ordered vertices, centroid and interior-label operations share the existing prepared geometry and renderer. Resource validation bounds features, vertices and nesting; it performs structural validation rather than claiming complete topological validity.
+
+All 41 pinned mapproj families are implemented in immutable Rust with pinned libm. The 426-call source matrix is qualified as 318 successful projection calls and 108 descriptor-error cases. Original tetra/hex repeated-initializer output is retained; the immutable kernel uses separately committed fresh-process oracle calls because those C initializers mutate static arrays. Independent reinitialization tests confirm immutable output. The ordinary per-coordinate tolerance is `2e-10*(1+abs(expected))`; existing documented square-root cancellation cases use an absolute `8*sqrt(EPSILON)` bound. Fixtures were not weakened or replaced to hide failures.
+
+The explicit portable CRS adapter has identical-source identity preservation, degrees at the public geographic boundary, zero ellipsoidal height, explicit source axis order and no grid/database/file lookup. Native and actual Node WASM Mercator spikes agree exactly. Sixteen independent sf/PROJ anchors across geographic, Web Mercator, UTM and Lambert azimuthal equal-area destinations pass within 10 micrometres. Vendored dependency identity and minimal no-browser changes are recorded in ADR031 and the vendor checksum manifests.
+
+CRS geographic coordinates use source-space overlay limits and projected-space expansion. The distinct Mapproj compatibility selection expands source ranges first and samples the pinned 50-by-50 grid to obtain projected limits. Supplied feature vertices project directly; ordinary overlay paths remain a separate subdivision contract. Polygon holes survive the shared scene and Inspector with their original semantic target. sf label operations calculate their centroid/interior location in the destination projection before transforming the anchor back into overlay calculation coordinates. A geographic-destination aspect correction uses cosine of mean latitude. Prepared feature bounds feed geometry-bound limits. The latter layout additions are under active qualification.
+
+Focused commands and evidence:
+
+- `mise exec -- cargo check -p chart-core --locked`: pass, `/private/tmp/gg15-geographic-enum1.log`.
+- `mise exec -- cargo test -p chart-core --test ggplot_geography --locked`: 9 tests pass, `/private/tmp/gg15-geography-full3.log`; complete projection matrix, resource/CRS and planar labels.
+- Same target: 10 tests pass, `/private/tmp/gg15-geography-layout1.log`; adds actual projected hole geometry, replay and inspection.
+- Same target: 11 tests pass, `/private/tmp/gg15-geography-layout2.log`; adds independent destination-projection sf label locations.
+- Development oracle capture uses `tools/reference/r/run.py` with the isolated R library/work directories, R4.6.1, ggplot2 4.0.3, mapproj 1.2.12 and sf1.1.2 (GEOS3.13.0, GDAL3.8.5, PROJ9.5.1).
+
+Additional scoped evidence:
+
+- Geography integration target: 13 tests pass, `/private/tmp/gg15-geography-dateline1.log`, including source-preserving dateline vertices/holes and geometry-family paint defaults.
+- `cargo test -p chart-core --lib geograph --locked` with the coordinated thin target: 4 tests pass, `/private/tmp/gg15-geographic-final2-unit.log`. They qualify sf graticule levels and 14 projected edge crossings, three Mapproj coordinate bounds, GDAL partial reprojection policy and a 10,001-sample independent Mercator path comparison plus work-limit rejection.
+- Geographic overlay subdivision is a bounded numerical estimate, not a formal interval enclosure. Supplied sf feature vertices remain unmunched; Mapproj features and ordinary overlay paths use shared subdivision. CRS/orientation defines cuts; no unused seam selector or automatic dateline rewriting is exposed.
+- Independent Rust author/replay equality and 57 SVG/PDF/PNG publications pass for 19 cases, `/private/tmp/gg15-rust-graticules-final.log`, artifacts `/private/tmp/gg15-rust-graticules-final`. These include holes/multiparts, mixed CRS, YX order, all feature operations, labels/boxes, explicit paint, overlays, Mapproj families, geometry-bound limits, custom four-edge graticules and datum suppression. Inspection caught inherited top/right label alignment; final delta qualification remains pending.
+- Apache-2.0 distribution selection and canonical text are now retained with upstream notices/provenance in the vendored dependency; ADR031 and its hash manifests describe the bounded patches.
+
+Open acceptance work: final geographic clipping/hit and failed-limit fallback qualification, final publication visual inspection after the guide alignment correction, actual Python/WASM author/replay/publication comparison, all native gallery modes, and consolidated repository gates. These scoped tests and exports do not close GG15.
+
+Final local checkpoint:
+
+- Five source units pass (`/private/tmp/gg15-geographic-qualification.log`); the additional case checks pinned sf failed-limit fallback. Thirteen full integration tests pass (`/private/tmp/gg15-geographic-hits-final.log`), including actual polygon-hole miss and interior original-target hit.
+- Final 19-author/57-file Rust replay/export run passes (`/private/tmp/gg15-rust-final.log`, `/private/tmp/gg15-rust-final`). All 19 PNG panels were inspected; 19 SVG documents parse and the four-edge guide PDF was independently rendered with Poppler and inspected. Mode12's subsequent author-only change requests300dpi for the shared actual-host run; that high-resolution output is not claimed by the earlier144dpi artifact.
+- Native gallery build passes (`/private/tmp/gg15-native-build.log`). All19 modes were launched in four batches, each final presented stamp is nonnull and each diagnostic null. Screenshots and logs are `/private/tmp/gg15-native-0-5.{png,log}`, `gg15-native-6-11.{png,log}`, `gg15-native-12-17.{png,log}`, `gg15-native-18.{png,log}`. The last batch also recaptures mode5 without an incidental navigation window from the first batch. Every panel was inspected and all owned processes closed.
+- Remaining acceptance: fresh actual Python/NodeWASM comparison (including300dpi case), complete shared repository checks and root integration acceptance. Runtime code is frozen at this checkpoint; no projection rounding or host-specific arithmetic has been added.
+
+Fresh cross-host checkpoint: Rust/Python/Node WASM each emitted57 publications and identical scene JSON in `/private/tmp/finstack-chart-proof-20260916/gg15-16-18-final2/ggplot_geography_controls`; root's byte/scene comparison passes. The initial actual-host UTM last-bit mismatch was corrected by routing vendored proj4rs transcendental operations through pinned libm0.2.16, retaining formulas and operation order. No scene/output rounding was introduced. All13 independent geography integration tests pass after that change (`/private/tmp/gg15-pinned-math-tests.log`). ADR031, VENDOR-NOTICE and per-file patch hashes record the change. The final300DPI2500x1500 dateline/holes PNG was inspected directly and retains the source-preserving wide ring and unfilled hole. Only aggregate repository acceptance remains with the integration owner.

@@ -9,6 +9,18 @@ use crate::{
 #[derive(Clone, Debug, PartialEq, Default, serde::Serialize, serde::Deserialize)]
 #[serde(default, deny_unknown_fields)]
 pub struct GuideLineStyle {
+    /// Optional shared physical arrow heads.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub arrow: Option<crate::grammar::ArrowSpec>,
+    /// Independent arrow-head fill, inheriting the line color when absent.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub arrow_fill: Option<Paint>,
+    /// Optional portable stroke endpoint policy.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub line_end: Option<crate::grammar::LineEnd>,
+    /// Optional portable stroke corner policy.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub line_join: Option<crate::grammar::LineJoin>,
     /// Omit this component when false; selection and scale mapping are unchanged.
     pub visible: Option<bool>,
     /// Authored paint, resolved by the common color owner.
@@ -22,6 +34,12 @@ pub struct GuideLineStyle {
 #[derive(Clone, Debug, PartialEq, Default, serde::Serialize, serde::Deserialize)]
 #[serde(default, deny_unknown_fields)]
 pub struct GuideTextStyle {
+    /// Optional horizontal justification relative to the tick anchor.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub hjust: Option<f64>,
+    /// Optional vertical justification in reference bottom-to-top coordinates.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub vjust: Option<f64>,
     /// Hide this label without removing its semantic tick or line.
     pub visible: Option<bool>,
     /// Override the label paint, including rich runs.
@@ -63,6 +81,10 @@ pub struct GuideComponents {
 }
 impl GuideLineStyle {
     fn validate(&self) -> ChartResult<()> {
+        if let Some(a) = &self.arrow {
+            crate::theme::ThemeElement::new(crate::theme::ElementKind::Line)
+                .property("arrow", crate::theme::ThemeValue::Arrow(a.clone()))?;
+        }
         if let Some(width) = self.width {
             crate::geometry::positive(width, "Guide stroke width must be finite and positive.")?;
         }
@@ -79,6 +101,10 @@ impl GuideLineStyle {
             return self.clone();
         };
         Self {
+            arrow: local.arrow.clone().or_else(|| self.arrow.clone()),
+            arrow_fill: local.arrow_fill.or(self.arrow_fill),
+            line_end: local.line_end.or(self.line_end),
+            line_join: local.line_join.or(self.line_join),
             visible: local.visible.or(self.visible),
             color: local.color.or(self.color),
             width: local.width.or(self.width),
@@ -94,6 +120,16 @@ impl GuideLineStyle {
 }
 impl GuideTextStyle {
     fn validate(&self, limits: Limits) -> ChartResult<()> {
+        if [self.hjust, self.vjust]
+            .into_iter()
+            .flatten()
+            .any(|v| !v.is_finite())
+        {
+            return Err(crate::scales::error(
+                DiagnosticCode::Validation,
+                "Guide justification must be finite.",
+            ));
+        }
         if let Some(run) = &self.typography {
             run.validate(limits)?;
         }
@@ -113,6 +149,8 @@ impl GuideTextStyle {
             return self.clone();
         };
         Self {
+            hjust: local.hjust.or(self.hjust),
+            vjust: local.vjust.or(self.vjust),
             visible: local.visible.or(self.visible),
             color: local.color.or(self.color),
             font_size: local.font_size.or(self.font_size),

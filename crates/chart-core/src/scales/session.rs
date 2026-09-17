@@ -150,6 +150,10 @@ impl SessionScale {
             }
         }
     }
+    /// Retain active-time coordinates independently of viewport censoring.
+    pub(crate) fn coordinate_value(&self, value: i64) -> ChartResult<Option<f64>> {
+        self.offset(value).map(|v| v.map(|v| v as f64))
+    }
     /// Map an original timestamp through the explicit calendar policy.
     pub fn map(&self, t: i64) -> ChartResult<Option<f64>> {
         self.offset(t)?
@@ -195,6 +199,12 @@ impl SessionScale {
     /// Exact supplied calendar identity, revision, units and policy.
     pub fn calendar(&self) -> &SessionCalendar {
         &self.calendar
+    }
+    pub(crate) fn coordinate_domain(&self) -> Bounds {
+        self.inner.domain()
+    }
+    pub(crate) fn coordinate_viewport(&self) -> Bounds {
+        self.inner.viewport()
     }
     /// Destination range.
     pub fn range(&self) -> Bounds {

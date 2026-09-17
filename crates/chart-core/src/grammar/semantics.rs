@@ -6,6 +6,9 @@ use crate::ChartResult;
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct LayerGrammar {
+    /// Text defaults were requested without an explicit TextGeom descriptor.
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub default_text: bool,
     /// Independent radius default; absent uses the legacy coupled size flag.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub default_radius: Option<bool>,
@@ -207,6 +210,12 @@ pub(super) fn resolve_scoped<'a>(
         ));
     }
     let mut resolved = definition.clone();
+    if let Some(theme) = &mut resolved.theme
+        && theme.hierarchy.is_some()
+        && theme.geometry.is_none()
+    {
+        theme.geometry = Some(theme.geometry_defaults()?);
+    }
     if policy.profile == Profile::Ggplot2_4_0_3 {
         for statistic in resolved
             .layers
@@ -225,6 +234,12 @@ pub(super) fn resolve_scoped<'a>(
             }
         }
     }
+    let theme_elements = definition
+        .theme
+        .as_ref()
+        .map(|t| t.resolved_elements())
+        .transpose()?
+        .flatten();
     for layer in &mut resolved.layers {
         let mut input = layer.data;
         for _ in 0..=definition.transforms.len() {
@@ -268,7 +283,8 @@ pub(super) fn resolve_scoped<'a>(
             let theme = definition
                 .theme
                 .as_ref()
-                .and_then(|t| t.geometry.clone())
+                .map(|t| t.geometry_defaults())
+                .transpose()?
                 .unwrap_or_default();
             theme.validate()?;
             if grammar.default_radius.unwrap_or(grammar.default_size) {
@@ -286,6 +302,64 @@ pub(super) fn resolve_scoped<'a>(
                 layer.style.color = theme.ink;
             } else {
                 layer.color = None;
+            }
+            if let Some(elements) = &theme_elements {
+                if grammar.default_text && layer.text.is_some() {
+                    if !layer.value_scales.contains_key(&ValueAesthetic::TextSize)
+                        && let Some(size) = elements.number("geom", "fontsize")
+                    {
+                        layer
+                            .aesthetic_values
+                            .entry(ValueAesthetic::TextSize)
+                            .or_insert(crate::interpolate::Value::Number(
+                                crate::interpolate::Number(size),
+                            ));
+                    }
+                    if !layer.value_scales.contains_key(&ValueAesthetic::FontFamily)
+                        && let Some(crate::theme::ThemeValue::Text(family)) =
+                            elements.value("geom", "family")
+                        && !family.is_empty()
+                    {
+                        layer
+                            .aesthetic_values
+                            .entry(ValueAesthetic::FontFamily)
+                            .or_insert_with(|| crate::interpolate::Value::Text(family.clone()));
+                    }
+                    if !layer.value_scales.contains_key(&ValueAesthetic::FontFace)
+                        && let Some(crate::theme::ThemeValue::Text(face)) =
+                            elements.value("geom", "fontface")
+                        && face != "plain"
+                    {
+                        layer
+                            .aesthetic_values
+                            .entry(ValueAesthetic::FontFace)
+                            .or_insert_with(|| crate::interpolate::Value::Text(face.clone()));
+                    }
+                }
+                if grammar.default_color
+                    && layer.color.is_none()
+                    && !layer.paint_scales.contains_key(&PaintAesthetic::Stroke)
+                    && let Some(color) = elements.paint("geom", "colour")?
+                {
+                    layer.style.color = color;
+                }
+                if layer.style.fill.is_none()
+                    && !layer.paint_scales.contains_key(&PaintAesthetic::Fill)
+                {
+                    layer.style.fill = elements.paint("geom", "fill")?;
+                }
+                if layer.reference_point()
+                    && layer.symbol.is_none()
+                    && !layer.value_scales.contains_key(&ValueAesthetic::Shape)
+                    && !layer.aesthetic_values.contains_key(&ValueAesthetic::Shape)
+                    && let Some(shape) = elements.number("geom", "pointshape")
+                    && shape != 19.
+                {
+                    layer.aesthetic_values.insert(
+                        ValueAesthetic::Shape,
+                        crate::interpolate::Value::Number(crate::interpolate::Number(shape)),
+                    );
+                }
             }
             if matches!(layer.recipe, Some(super::BuiltinRecipe::Column(_)))
                 && layer.style.fill.is_none()
@@ -328,6 +402,7 @@ pub(super) fn resolve_scoped<'a>(
                 }
             }
             super::recipe_distributions::apply_defaults(layer, &theme);
+            super::recipe_models::apply_defaults(layer, &theme);
         }
         if policy.grouping == GroupPolicy::DiscreteInteraction {
             let authored = match &layer.mappings {
@@ -485,6 +560,8 @@ fn resolve_group(
 fn set_group(stat: &mut Statistic, group: Grouping) {
     match &mut stat.parameters {
         StatParameters::Distribution(s) => s.grouping = group,
+        StatParameters::Spatial(s) => s.grouping = group,
+        StatParameters::Model(s) => s.grouping = group,
         StatParameters::Univariate(s) => s.grouping = group,
         StatParameters::Identity => {}
         StatParameters::Custom(s) => s.grouping = group,
@@ -530,7 +607,9 @@ fn resolve_transforms(
             // Consumer mappings are generated fields; only node source aesthetics
             // may determine the shared statistic's grouping and input axis.
             layer.mappings = Mappings::Source(SourceAes::default());
+            let default_text = layer.grammar.as_ref().is_some_and(|g| g.default_text);
             layer.grammar = node.grammar.as_ref().map(|g| LayerGrammar {
+                default_text,
                 source: g.source.clone(),
                 stat_grouping: g.stat_grouping.clone(),
                 default_radius: None,

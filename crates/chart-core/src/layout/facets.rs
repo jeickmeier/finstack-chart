@@ -19,6 +19,8 @@ const INK: Color = Color {
 
 #[derive(Clone)]
 struct Label {
+    hidden: bool,
+    rich: Option<super::text::Block>,
     component: Option<crate::scene::GuideComponent>,
     text: String,
     metrics: TextMetrics,
@@ -26,12 +28,21 @@ struct Label {
 }
 
 enum LegendBlock {
+    GuideBox {
+        groups: Vec<Vec<LegendBlock>>,
+        horizontal: bool,
+    },
+    Titled {
+        title: Box<Label>,
+        body: Vec<LegendBlock>,
+        left: bool,
+    },
     Bins {
         key: Box<super::legend_keys::KeyLegend>,
         labels: Vec<Label>,
     },
-    Custom(crate::grammar::CustomLegend),
-    Row(Label),
+    Custom(Box<crate::grammar::CustomLegend>),
+    Row(Box<Label>),
     Grid {
         labels: Vec<Label>,
         columns: usize,
@@ -42,7 +53,7 @@ enum LegendBlock {
 
 #[derive(Clone, PartialEq)]
 enum Legend<'a> {
-    Custom(&'a crate::grammar::CustomLegend),
+    Custom(Box<std::borrow::Cow<'a, crate::grammar::CustomLegend>>),
     Color(Box<std::borrow::Cow<'a, ColorLegend>>),
     Symbol(&'a crate::grammar::SymbolLegend),
     Keys(Box<super::legend_keys::KeyLegend>),
@@ -60,9 +71,12 @@ enum LegendGlyph {
 }
 impl LegendGlyph {
     fn dimensions(&self, r: &LayoutRequest) -> (f64, f64) {
-        match self {
+        let (w, h) = match self {
             Self::Combined(glyphs) => {
                 glyphs.iter().fold((r.font_size, r.font_size), |(w, h), g| {
+                    if let Some(custom) = &g.custom {
+                        return (w.max(custom.size[0]), h.max(custom.size[1]));
+                    }
                     (
                         w.max(if g.line.is_some() {
                             2. * r.font_size
@@ -75,7 +89,17 @@ impl LegendGlyph {
             }
             Self::Color(_) => (r.font_size, r.font_size),
             Self::Symbol { bounds, .. } => (bounds.width(), bounds.height()),
-        }
+        };
+        let key = |name| {
+            r.resolved_theme
+                .as_ref()
+                .and_then(|e| e.destination_length(name, "", 0))
+                .unwrap_or(0.)
+        };
+        (
+            w.max(key("legend.key.width")),
+            h.max(key("legend.key.height")),
+        )
     }
 }
 
@@ -133,7 +157,17 @@ fn legends<'a>(chart: &'a PreparedChart, request: &LayoutRequest) -> ChartResult
     if !chart.state().legend_visible() {
         return Ok(vec![]);
     }
-    let reference = chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3;
+    let reference = chart
+        .definition()
+        .legends
+        .values()
+        .any(|o| o.registered.is_some())
+        || chart.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
+        || chart.definition().layers.iter().any(|l| {
+            l.legend
+                .as_ref()
+                .is_some_and(|l| l.registered_key.is_some())
+        });
     let mut legends = vec![];
     for layer in chart.layers() {
         if chart.definition().layers.iter().any(|definition| {
@@ -196,6 +230,24 @@ fn legends<'a>(chart: &'a PreparedChart, request: &LayoutRequest) -> ChartResult
                 .map(|keys| Legend::Keys(Box::new(keys))),
         );
     }
+    if let Some(elements) = &request.resolved_theme {
+        let position = super::theme_elements::legend_position(elements);
+        let direction = match elements.value("legend.direction", "") {
+            Some(crate::theme::ThemeValue::Text(v)) if v == "horizontal" => {
+                Some(crate::scene::GradientDirection::Horizontal)
+            }
+            Some(crate::theme::ThemeValue::Text(v)) if v == "vertical" => {
+                Some(crate::scene::GradientDirection::Vertical)
+            }
+            _ => None,
+        };
+        for legend in &mut legends {
+            if let Legend::Keys(keys) = legend {
+                keys.options.position = keys.options.position.clone().or(position.clone());
+                keys.options.direction = keys.options.direction.or(direction);
+            }
+        }
+    }
     for legend in &mut legends {
         if let Legend::Color(color) = legend
             && let Some(options) = chart.definition().legends.get(&color.id)
@@ -240,7 +292,60 @@ fn legends<'a>(chart: &'a PreparedChart, request: &LayoutRequest) -> ChartResult
             }
         }
     }
-    legends.extend(chart.definition().custom_legends.iter().map(Legend::Custom));
+    for legend in &mut legends {
+        let (id, options, title, labels, values, colors, color_guide) = match &*legend {
+            Legend::Keys(k) => (
+                k.id,
+                Some(&k.options),
+                k.title.clone(),
+                k.labels.clone(),
+                k.values.clone(),
+                k.glyphs
+                    .iter()
+                    .map(|g| g.first().map_or(crate::theme::rgb(0, 0, 0), |g| g.color))
+                    .collect::<Vec<_>>(),
+                None,
+            ),
+            Legend::Color(c) => (
+                c.id,
+                chart.definition().legends.get(&c.id),
+                c.title.clone().unwrap_or_default(),
+                c.entries.iter().map(|(l, _)| l.clone()).collect(),
+                vec![],
+                c.entries.iter().map(|(_, c)| *c).collect(),
+                Some(c.as_ref().as_ref()),
+            ),
+            _ => continue,
+        };
+        if let Some(options) = options
+            && let Some(selection) = &options.registered
+        {
+            let custom = chart.guide_drawing.draw(
+                selection,
+                crate::grammar::GuideDrawingInput {
+                    scale: id,
+                    title: &title,
+                    labels: &labels,
+                    values: &values,
+                    colors: &colors,
+                    color_guide,
+                    parameters: &selection.parameters,
+                    units: request.units,
+                    font_size: request.font_size,
+                    limits: request.limits,
+                },
+                options.clone(),
+            )?;
+            *legend = Legend::Custom(Box::new(std::borrow::Cow::Owned(custom)));
+        }
+    }
+    legends.extend(
+        chart
+            .definition()
+            .custom_legends
+            .iter()
+            .map(|c| Legend::Custom(Box::new(std::borrow::Cow::Borrowed(c)))),
+    );
     legends.sort_by_key(|legend| {
         let order = match legend {
             Legend::Custom(c) => c.options.order,
@@ -268,6 +373,8 @@ fn measure_labels(
         .map(|(text, glyph)| {
             let metrics = measure_text(measurer, text_request(request, &text), request.limits)?;
             Ok(Label {
+                hidden: false,
+                rich: None,
                 component: None,
                 text,
                 metrics,
@@ -365,14 +472,24 @@ fn legend_values(
 }
 
 fn measure_legends(
+    definition: &crate::grammar::ChartDefinition,
     legends: &[Legend<'_>],
     request: &LayoutRequest,
     measurer: &dyn TextMeasurer,
     remaining: &mut usize,
 ) -> ChartResult<Vec<LegendBlock>> {
+    let elements = request.resolved_theme.as_deref();
     let mut blocks = vec![];
+    let mut guide_groups = Vec::new();
+    let box_layout = elements.is_some() && legends.len() > 1;
     for legend in legends {
         let start = blocks.len();
+        let math = match legend {
+            Legend::Custom(c) => c.options.math.as_ref(),
+            Legend::Keys(k) => k.options.math.as_ref(),
+            Legend::Color(c) => definition.legends.get(&c.id).and_then(|o| o.math.as_ref()),
+            Legend::Symbol(_) => None,
+        };
         if let Legend::Color(color) = legend
             && color.colorsteps.is_empty()
             && step_draw_requires_cells(color)
@@ -396,10 +513,12 @@ fn measure_legends(
                     );
                     component.scope.push("custom".into());
                     row.component = Some(component);
-                    blocks.push(LegendBlock::Row(row));
+                    blocks.push(LegendBlock::Row(Box::new(row)));
                 }
             }
-            blocks.push(LegendBlock::Custom((*custom).clone()));
+            blocks.push(LegendBlock::Custom(Box::new(
+                custom.as_ref().as_ref().clone(),
+            )));
         } else if let Legend::Color(color) = legend
             && (!color.colorbar.is_empty() || !color.colorsteps.is_empty())
         {
@@ -408,11 +527,13 @@ fn measure_legends(
                 blocks.extend(
                     measure_labels(vec![(title, None)], request, measurer, remaining)?
                         .into_iter()
-                        .map(LegendBlock::Row),
+                        .map(|row| LegendBlock::Row(Box::new(row))),
                 );
             }
             blocks.push(LegendBlock::Colorbar(
-                super::legend_colorbar::Colorbar::measure(color, request, measurer, remaining)?,
+                super::legend_colorbar::Colorbar::measure(
+                    color, request, measurer, remaining, math,
+                )?,
             ));
         } else if let Legend::Keys(keys) = legend {
             let mut labels = measure_labels(
@@ -422,7 +543,7 @@ fn measure_legends(
                 remaining,
             )?;
             if !keys.title.is_empty() {
-                blocks.push(LegendBlock::Row(labels.remove(0)));
+                blocks.push(LegendBlock::Row(Box::new(labels.remove(0))));
             }
             let horizontal = keys.options.direction
                 == Some(crate::scene::GradientDirection::Horizontal)
@@ -468,10 +589,20 @@ fn measure_legends(
                 blocks.push(LegendBlock::Grid {
                     labels,
                     columns,
-                    by_row: keys.options.by_row,
+                    by_row: keys.options.by_row
+                        || request.resolved_theme.as_ref().is_some_and(|e| {
+                            matches!(
+                                e.value("legend.byrow", ""),
+                                Some(crate::theme::ThemeValue::Bool(true))
+                            )
+                        }),
                 });
             } else {
-                blocks.extend(labels.into_iter().map(LegendBlock::Row));
+                blocks.extend(
+                    labels
+                        .into_iter()
+                        .map(|row| LegendBlock::Row(Box::new(row))),
+                );
             }
         } else {
             blocks.extend(
@@ -482,8 +613,66 @@ fn measure_legends(
                     remaining,
                 )?
                 .into_iter()
-                .map(LegendBlock::Row),
+                .map(|row| LegendBlock::Row(Box::new(row))),
             );
+        }
+        if math.is_some() || elements.is_some() {
+            for row in blocks[start..].iter_mut().flat_map(|block| match block {
+                LegendBlock::Row(row) => std::slice::from_mut(row.as_mut()),
+                LegendBlock::Grid { labels, .. } | LegendBlock::Bins { labels, .. } => {
+                    labels.as_mut_slice()
+                }
+                _ => &mut [],
+            }) {
+                let text = if let Some(fonts) = math {
+                    crate::typography::RichText::math(&row.text, fonts.clone())?
+                } else {
+                    crate::typography::RichText::plain(&row.text)
+                };
+                let text = if let Some(elements) = &elements {
+                    super::theme_elements::text_style(
+                        elements,
+                        if row.glyph.is_none() {
+                            "legend.title"
+                        } else {
+                            "legend.text"
+                        },
+                        &text,
+                        request,
+                    )?
+                } else {
+                    Some(text)
+                };
+                let Some(text) = text else {
+                    row.hidden = true;
+                    row.metrics = TextMetrics::new(0., 0., 0.)?;
+                    continue;
+                };
+                let mut block = super::text::measure(
+                    &text,
+                    request,
+                    measurer,
+                    request
+                        .host_theme
+                        .foreground
+                        .map(crate::color::Paint::resolve)
+                        .unwrap_or(INK),
+                )?;
+                if let Some(elements) = &elements {
+                    super::theme_elements::margins(
+                        elements,
+                        if row.glyph.is_none() {
+                            "legend.title"
+                        } else {
+                            "legend.text"
+                        },
+                        &mut block,
+                        request,
+                    )?;
+                }
+                row.metrics = TextMetrics::new(block.bounds.width(), block.bounds.height(), 0.)?;
+                row.rich = Some(block);
+            }
         }
         let id = match legend {
             Legend::Color(c) => Some(c.id),
@@ -494,7 +683,7 @@ fn measure_legends(
             let mut index = 0;
             let mut occurrences = std::collections::BTreeMap::<String, usize>::new();
             for row in blocks[start..].iter_mut().flat_map(|block| match block {
-                LegendBlock::Row(row) => std::slice::from_mut(row),
+                LegendBlock::Row(row) => std::slice::from_mut(row.as_mut()),
                 LegendBlock::Grid { labels, .. } | LegendBlock::Bins { labels, .. } => {
                     labels.as_mut_slice()
                 }
@@ -540,6 +729,42 @@ fn measure_legends(
                 }
             }
         }
+        if blocks.len() > start + 1
+            && matches!(&blocks[start],LegendBlock::Row(l) if l.glyph.is_none()&&!l.hidden)
+        {
+            let position = elements
+                .as_ref()
+                .and_then(|e| e.value("legend.title.position", ""));
+            if matches!(position,Some(crate::theme::ThemeValue::Text(v)) if v=="bottom") {
+                let title = blocks.remove(start);
+                blocks.push(title);
+            } else if let Some(crate::theme::ThemeValue::Text(v)) = position
+                && matches!(v.as_str(), "left" | "right")
+            {
+                let mut group = blocks.split_off(start);
+                let LegendBlock::Row(title) = group.remove(0) else {
+                    unreachable!()
+                };
+                blocks.push(LegendBlock::Titled {
+                    title,
+                    body: group,
+                    left: v == "left",
+                });
+            }
+        }
+        blocks.retain(
+            |block| !matches!(block,LegendBlock::Row(row) if row.hidden && row.glyph.is_none()),
+        );
+        if box_layout {
+            guide_groups.push(blocks.split_off(start));
+        }
+    }
+    if box_layout {
+        let horizontal=elements.is_some_and(|e|match e.value("legend.box","") {Some(crate::theme::ThemeValue::Text(v))=>v=="horizontal",_=>matches!(e.value("legend.position",""),Some(crate::theme::ThemeValue::Text(v)) if v=="top"||v=="bottom")});
+        blocks.push(LegendBlock::GuideBox {
+            groups: guide_groups,
+            horizontal,
+        });
     }
     Ok(blocks)
 }
@@ -552,6 +777,21 @@ fn push_text(
     clip: Rect,
     r: &LayoutRequest,
 ) -> ChartResult<()> {
+    if label.hidden {
+        return Ok(());
+    }
+    if let Some(block) = &label.rich {
+        let added = block.items_at(x, y, clip)?;
+        require_within(
+            items.len().saturating_add(added.len()) <= r.limits.max_items,
+            "figure scene items",
+        )?;
+        items.extend(added.into_iter().map(|mut item| {
+            item.guide = label.component.clone();
+            item
+        }));
+        return Ok(());
+    }
     require_within(items.len() < r.limits.max_items, "figure scene item")?;
     items.push(SceneItem {
         guide: label.component.clone(),
@@ -572,6 +812,55 @@ fn push_text(
     Ok(())
 }
 
+fn box_margins(r: &LayoutRequest) -> [f64; 4] {
+    std::array::from_fn(|i| {
+        r.resolved_theme
+            .as_ref()
+            .and_then(|e| e.destination_length("legend.box.margin", "", i))
+            .unwrap_or(0.)
+    })
+}
+fn outer_legend_margins(labels: &[LegendBlock], r: &LayoutRequest) -> [f64; 4] {
+    if matches!(labels, [LegendBlock::GuideBox { .. }]) {
+        box_margins(r)
+    } else {
+        legend_margins(r)
+    }
+}
+fn guide_spacing(r: &LayoutRequest, horizontal: bool) -> f64 {
+    r.resolved_theme
+        .as_ref()
+        .and_then(|e| {
+            e.destination_length(
+                if horizontal {
+                    "legend.spacing.x"
+                } else {
+                    "legend.spacing.y"
+                },
+                "",
+                0,
+            )
+        })
+        .unwrap_or(r.label_gap)
+}
+fn group_dimensions(blocks: &[LegendBlock], r: &LayoutRequest) -> (f64, f64) {
+    let m = legend_margins(r);
+    let (w, h) = blocks
+        .iter()
+        .map(|b| block_dimensions(b, r))
+        .fold((0_f64, 0.), |(w, h), (bw, bh)| {
+            (w.max(bw), h + bh + r.label_gap)
+        });
+    (w + m[1] + m[3], h + m[0] + m[2])
+}
+fn legend_margins(r: &LayoutRequest) -> [f64; 4] {
+    std::array::from_fn(|i| {
+        r.resolved_theme
+            .as_ref()
+            .and_then(|e| e.destination_length("legend.margin", "", i))
+            .unwrap_or(if i == 0 || i == 2 { r.padding } else { 0. })
+    })
+}
 fn paint_legend(
     items: &mut Vec<SceneItem>,
     labels: &[LegendBlock],
@@ -579,10 +868,117 @@ fn paint_legend(
     r: &LayoutRequest,
     diagnostics: &mut Vec<Diagnostic>,
 ) -> ChartResult<()> {
-    let mut y = bounds.origin().y() + r.padding;
+    paint_legend_inner(items, labels, bounds, r, diagnostics, true)
+}
+fn paint_legend_inner(
+    items: &mut Vec<SceneItem>,
+    labels: &[LegendBlock],
+    bounds: Rect,
+    r: &LayoutRequest,
+    diagnostics: &mut Vec<Diagnostic>,
+    inset: bool,
+) -> ChartResult<()> {
+    let margins = if inset {
+        outer_legend_margins(labels, r)
+    } else {
+        [0.; 4]
+    };
+    let bounds = if r.resolved_theme.is_some() {
+        Rect::new(
+            bounds.origin().x() + margins[3],
+            bounds.origin().y() + margins[0],
+            (bounds.width() - margins[1] - margins[3]).max(0.),
+            (bounds.height() - margins[0] - margins[2]).max(0.),
+        )?
+    } else {
+        bounds
+    };
+    let mut y = bounds.origin().y()
+        + if r.resolved_theme.is_none() {
+            r.padding
+        } else {
+            0.
+        };
     let mut constrained = false;
     for block in labels {
         let label = match block {
+            LegendBlock::GuideBox { groups, horizontal } => {
+                let dimensions = block_dimensions(block, r);
+                let mut advance = 0.;
+                let justification = r
+                    .resolved_theme
+                    .as_ref()
+                    .map(|e| super::theme_elements::justification(e, "legend.box.just"))
+                    .unwrap_or([0.5, 0.5]);
+                for group in groups {
+                    let (width, height) = group_dimensions(group, r);
+                    let x = bounds.origin().x()
+                        + if *horizontal {
+                            advance
+                        } else {
+                            (dimensions.0 - width) * justification[0]
+                        };
+                    let top = y + if *horizontal {
+                        (dimensions.1 - height) * (1. - justification[1])
+                    } else {
+                        advance
+                    };
+                    let region = Rect::new(
+                        x,
+                        top,
+                        width.min((bounds.max_x() - x).max(0.)),
+                        height.min((bounds.max_y() - top).max(0.)),
+                    )?;
+                    if let Some(elements) = &r.resolved_theme {
+                        let mut remaining = r.limits.max_path_commands;
+                        for primitive in super::theme_elements::rectangle(
+                            elements,
+                            "legend.background",
+                            region,
+                            r,
+                            &mut remaining,
+                        )? {
+                            require_within(
+                                items.len() < r.limits.max_items,
+                                "legend group background",
+                            )?;
+                            items.push(SceneItem {
+                                guide: None,
+                                layer: None,
+                                clip: Some(bounds),
+                                primitive,
+                            });
+                        }
+                    }
+                    paint_legend_inner(items, group, region, r, diagnostics, true)?;
+                    advance += if *horizontal { width } else { height };
+                    advance += guide_spacing(r, *horizontal);
+                }
+                y += dimensions.1;
+                continue;
+            }
+            LegendBlock::Titled { title, body, left } => {
+                let width = title.metrics.width() + r.label_gap;
+                let height = block_dimensions(block, r).1;
+                let body_x = bounds.origin().x() + if *left { width } else { 0. };
+                let title_x = if *left {
+                    bounds.origin().x()
+                } else {
+                    bounds.max_x() - title.metrics.width()
+                };
+                push_text(items, title, title_x, y, bounds, r)?;
+                let body_bounds = Rect::new(
+                    body_x,
+                    y,
+                    (bounds.width() - width).max(0.),
+                    height.min((bounds.max_y() - y).max(0.)),
+                )?;
+                let mut inner = r.clone();
+                inner.padding = 0.;
+                paint_legend_inner(items, body, body_bounds, &inner, diagnostics, false)?;
+                y += height + r.label_gap;
+                continue;
+            }
             LegendBlock::Bins { key, labels } => {
                 constrained |= paint_bins(key, labels, items, bounds, y, r)?;
                 y += bins_dimensions(key, labels, r).1 + r.label_gap;
@@ -594,10 +990,10 @@ fn paint_legend(
                 by_row,
             } => {
                 let rows = labels.len().div_ceil(*columns);
-                let cell_height =
-                    labels.iter().map(|l| row_height(l, r)).fold(0., f64::max) + r.label_gap;
-                let cell_width =
-                    labels.iter().map(|l| row_width(l, r)).fold(0., f64::max) + r.padding;
+                let cell_height = labels.iter().map(|l| row_height(l, r)).fold(0., f64::max)
+                    + key_spacing(r, false);
+                let cell_width = labels.iter().map(|l| row_width(l, r)).fold(0., f64::max)
+                    + key_spacing(r, true);
                 let mut inner = r.clone();
                 inner.padding = 0.;
                 for (index, label) in labels.iter().enumerate() {
@@ -614,12 +1010,13 @@ fn paint_legend(
                         cell_width.min((bounds.max_x() - x).max(0.)),
                         cell_height.min((bounds.max_y() - top).max(0.)),
                     )?;
-                    paint_legend(
+                    paint_legend_inner(
                         items,
-                        &[LegendBlock::Row(label.clone())],
+                        &[LegendBlock::Row(Box::new(label.clone()))],
                         cell,
                         &inner,
                         diagnostics,
+                        false,
                     )?;
                 }
                 y += rows as f64 * cell_height;
@@ -669,7 +1066,14 @@ fn paint_legend(
             LegendBlock::Row(label) => label,
             LegendBlock::Colorbar(bar) => {
                 let height = bar.height(r);
-                if y + height > bounds.max_y() - r.padding {
+                if y + height
+                    > bounds.max_y()
+                        - if r.resolved_theme.is_none() {
+                            r.padding
+                        } else {
+                            0.
+                        }
+                {
                     constrained = true;
                     break;
                 }
@@ -678,19 +1082,68 @@ fn paint_legend(
                 continue;
             }
         };
-        let height = label
-            .metrics
-            .height()
-            .max(label.glyph.as_ref().map_or(0., |g| g.dimensions(r).1))
-            .max(r.font_size);
-        if y + height > bounds.max_y() - r.padding {
+        let height = row_height(label, r);
+        if y + height
+            > bounds.max_y()
+                - if r.resolved_theme.is_none() {
+                    r.padding
+                } else {
+                    0.
+                }
+        {
             constrained = true;
             break;
         }
         let swatch = if let Some(glyph) = &label.glyph {
             require_within(items.len() < r.limits.max_items, "legend swatch item")?;
             let (width, glyph_height) = glyph.dimensions(r);
+            let position = legend_text_position(r);
+            let y = if position == "top" {
+                y + label.metrics.height() + r.label_gap
+            } else {
+                y
+            };
+            let bounds = if position == "left" {
+                Rect::new(
+                    bounds.origin().x() + label.metrics.width() + r.label_gap,
+                    bounds.origin().y(),
+                    (bounds.width() - label.metrics.width() - r.label_gap).max(0.),
+                    bounds.height(),
+                )?
+            } else {
+                bounds
+            };
+            let height = if matches!(position, "top" | "bottom") {
+                glyph_height
+            } else {
+                height
+            };
             let glyph_start = items.len();
+            if let Some(elements) = &r.resolved_theme {
+                let mut remaining = r.limits.max_path_commands;
+                let key = Rect::new(
+                    bounds.origin().x(),
+                    y + (height - glyph_height) / 2.,
+                    width,
+                    glyph_height,
+                )?;
+                for primitive in super::theme_elements::rectangle(
+                    elements,
+                    "legend.key",
+                    key,
+                    r,
+                    &mut remaining,
+                )? {
+                    require_within(items.len() < r.limits.max_items, "legend key background")?;
+                    items.push(SceneItem {
+                        guide: None,
+                        layer: None,
+                        clip: Some(bounds),
+                        primitive,
+                    });
+                }
+            }
+
             match glyph {
                 LegendGlyph::Combined(glyphs) => {
                     for glyph in glyphs {
@@ -755,9 +1208,22 @@ fn paint_legend(
         } else {
             0.
         };
-        let x = bounds.origin().x() + swatch;
+        let position = legend_text_position(r);
+        let x = bounds.origin().x()
+            + if label.glyph.is_some() && position == "right" {
+                swatch
+            } else {
+                0.
+            };
+        let text_y = if let Some(glyph) = &label.glyph
+            && position == "bottom"
+        {
+            y + glyph.dimensions(r).1 + r.label_gap
+        } else {
+            y
+        };
         constrained |= x + label.metrics.width() > bounds.max_x();
-        push_text(items, label, x, y, bounds, r)?;
+        push_text(items, label, x, text_y, bounds, r)?;
         y += height + r.label_gap;
     }
     if constrained {
@@ -776,21 +1242,111 @@ struct PlacedLegend {
     labels: Vec<LegendBlock>,
 }
 
+fn legend_text_position(r: &LayoutRequest) -> &str {
+    match r
+        .resolved_theme
+        .as_ref()
+        .and_then(|e| e.value("legend.text.position", ""))
+    {
+        Some(crate::theme::ThemeValue::Text(v)) => v,
+        _ => "right",
+    }
+}
+fn key_spacing(r: &LayoutRequest, horizontal: bool) -> f64 {
+    r.resolved_theme
+        .as_ref()
+        .and_then(|e| {
+            e.destination_length(
+                if horizontal {
+                    "legend.key.spacing.x"
+                } else {
+                    "legend.key.spacing.y"
+                },
+                "",
+                0,
+            )
+        })
+        .unwrap_or(if horizontal { r.padding } else { r.label_gap })
+}
 fn row_height(l: &Label, r: &LayoutRequest) -> f64 {
-    l.metrics
-        .height()
-        .max(l.glyph.as_ref().map_or(0., |g| g.dimensions(r).1))
-        .max(r.font_size)
+    let glyph = l.glyph.as_ref().map_or(0., |g| g.dimensions(r).1);
+    if glyph > 0. && matches!(legend_text_position(r), "top" | "bottom") {
+        glyph + l.metrics.height() + r.label_gap
+    } else {
+        l.metrics.height().max(glyph).max(r.font_size)
+    }
 }
 fn row_width(l: &Label, r: &LayoutRequest) -> f64 {
-    l.metrics.width()
-        + l.glyph
-            .as_ref()
-            .map_or(0., |g| g.dimensions(r).0.max(r.font_size) + r.label_gap)
+    let glyph = l
+        .glyph
+        .as_ref()
+        .map_or(0., |g| g.dimensions(r).0.max(r.font_size));
+    if glyph > 0. && matches!(legend_text_position(r), "top" | "bottom") {
+        l.metrics.width().max(glyph)
+    } else {
+        l.metrics.width() + if glyph > 0. { glyph + r.label_gap } else { 0. }
+    }
 }
 fn grid_height(labels: &[Label], columns: usize, r: &LayoutRequest) -> f64 {
-    (labels.iter().map(|l| row_height(l, r)).fold(0., f64::max) + r.label_gap)
+    (labels.iter().map(|l| row_height(l, r)).fold(0., f64::max) + key_spacing(r, false))
         * labels.len().div_ceil(columns) as f64
+}
+fn block_dimensions(block: &LegendBlock, r: &LayoutRequest) -> (f64, f64) {
+    match block {
+        LegendBlock::GuideBox { groups, horizontal } => {
+            let mut size = (0_f64, 0_f64);
+            for group in groups {
+                let (w, h) = group_dimensions(group, r);
+                if *horizontal {
+                    size.0 += w;
+                    size.1 = size.1.max(h);
+                } else {
+                    size.0 = size.0.max(w);
+                    size.1 += h;
+                }
+            }
+            let spacing = guide_spacing(r, *horizontal) * groups.len().saturating_sub(1) as f64;
+            if *horizontal {
+                size.0 += spacing;
+            } else {
+                size.1 += spacing;
+            }
+            size
+        }
+        LegendBlock::Titled { title, body, .. } => {
+            let (w, h) = body
+                .iter()
+                .map(|b| block_dimensions(b, r))
+                .fold((0_f64, 0.), |(w, h), (bw, bh)| {
+                    (w.max(bw), h + bh + r.label_gap)
+                });
+            (
+                title.metrics.width() + r.label_gap + w,
+                title.metrics.height().max(h),
+            )
+        }
+        LegendBlock::Bins { key, labels } => bins_dimensions(key, labels, r),
+        LegendBlock::Custom(c) => (c.bounds[2], c.bounds[3]),
+        LegendBlock::Colorbar(b) => (b.width(r), b.height(r)),
+        LegendBlock::Grid {
+            labels, columns, ..
+        } => (
+            (labels.iter().map(|l| row_width(l, r)).fold(0., f64::max) + key_spacing(r, true))
+                * *columns as f64,
+            grid_height(labels, *columns, r),
+        ),
+        LegendBlock::Row(l) => (
+            if r.resolved_theme.is_none() {
+                l.metrics.width()
+                    + l.glyph.as_ref().map_or(r.font_size + r.label_gap, |g| {
+                        g.dimensions(r).0.max(r.font_size) + r.label_gap
+                    })
+            } else {
+                row_width(l, r)
+            },
+            row_height(l, r),
+        ),
+    }
 }
 fn legend_width(labels: &[LegendBlock], width: f64, request: &LayoutRequest) -> f64 {
     if labels.is_empty() {
@@ -800,8 +1356,14 @@ fn legend_width(labels: &[LegendBlock], width: f64, request: &LayoutRequest) -> 
         // Preserve the legacy column cap for other legends and leave the common
         // solver the requested minimum plot span plus its outer padding.
         let cap = if labels.iter().any(|block| {
-            matches!(block, LegendBlock::Grid { .. })
-                || matches!(block, LegendBlock::Colorbar(bar) if bar.horizontal())
+            matches!(
+                block,
+                LegendBlock::Grid { .. }
+                    | LegendBlock::GuideBox {
+                        horizontal: true,
+                        ..
+                    }
+            ) || matches!(block, LegendBlock::Colorbar(bar) if bar.horizontal())
         }) {
             (width - request.minimum_plot.0 - 2. * request.padding).max(0.)
         } else {
@@ -809,32 +1371,15 @@ fn legend_width(labels: &[LegendBlock], width: f64, request: &LayoutRequest) -> 
         };
         (labels
             .iter()
-            .map(|block| match block {
-                LegendBlock::Bins { key, labels } => bins_dimensions(key, labels, request).0,
-                LegendBlock::Custom(custom) => custom.bounds[2],
-                LegendBlock::Colorbar(bar) => bar.width(request),
-                LegendBlock::Grid {
-                    labels, columns, ..
-                } => {
-                    (labels
-                        .iter()
-                        .map(|l| row_width(l, request))
-                        .fold(0., f64::max)
-                        + request.padding)
-                        * (*columns as f64)
-                }
-                LegendBlock::Row(l) => {
-                    l.metrics.width()
-                        + l.glyph
-                            .as_ref()
-                            .map_or(request.font_size + request.label_gap, |g| {
-                                g.dimensions(request).0.max(request.font_size) + request.label_gap
-                            })
-                }
-            })
+            .map(|block| block_dimensions(block, request).0)
             .fold(0_f64, f64::max)
-            + request.padding)
-            .min(cap)
+            + if request.resolved_theme.is_some() {
+                let m = outer_legend_margins(labels, request);
+                m[1] + m[3]
+            } else {
+                request.padding
+            })
+        .min(cap)
     }
 }
 
@@ -849,7 +1394,7 @@ fn arrange_legends(
     use crate::grammar::LegendPosition as P;
     let mut groups: Vec<(P, Vec<Legend<'_>>)> = vec![];
     for legend in legends {
-        let position = match legend {
+        let override_position = match legend {
             Legend::Custom(c) => c.options.position.clone(),
             Legend::Keys(k) => k.options.position.clone(),
             Legend::Color(c) => definition
@@ -857,8 +1402,17 @@ fn arrange_legends(
                 .get(&c.id)
                 .and_then(|o| o.position.clone()),
             _ => None,
-        }
-        .unwrap_or(P::Right);
+        };
+        let position = override_position
+            .clone()
+            .or_else(|| {
+                request
+                    .resolved_theme
+                    .as_ref()
+                    .and_then(|e| super::theme_elements::legend_position(e))
+            })
+            .unwrap_or(P::Right);
+        if override_position.is_none() && request.resolved_theme.as_ref().is_some_and(|e|matches!(e.value("legend.position",""),Some(crate::theme::ThemeValue::Text(v))if v=="none")) {continue;}
         if let Some((_, group)) = groups.iter_mut().find(|(p, _)| *p == position) {
             group.push(legend.clone());
         } else {
@@ -868,45 +1422,53 @@ fn arrange_legends(
     let mut content = region;
     let mut boxes = vec![];
     for (position, group) in groups {
-        let labels = measure_legends(&group, request, measurer, remaining)?;
+        let labels = measure_legends(definition, &group, request, measurer, remaining)?;
         if labels.is_empty() {
             continue;
         }
         let width = legend_width(&labels, region.width(), request).min(content.width());
-        let desired_height = 2. * request.padding
-            + labels
-                .iter()
-                .map(|b| match b {
-                    LegendBlock::Bins { key, labels } => {
-                        bins_dimensions(key, labels, request).1 + request.label_gap
-                    }
-                    LegendBlock::Custom(custom) => custom.bounds[3] + request.label_gap,
-                    LegendBlock::Colorbar(bar) => bar.height(request) + request.label_gap,
-                    LegendBlock::Grid {
-                        labels, columns, ..
-                    } => grid_height(labels, *columns, request),
-                    LegendBlock::Row(l) => {
-                        l.metrics
-                            .height()
-                            .max(l.glyph.as_ref().map_or(0., |g| g.dimensions(request).1))
-                            .max(request.font_size)
-                            + request.label_gap
-                    }
-                })
-                .sum::<f64>();
+        let desired_height = {
+            let m = outer_legend_margins(&labels, request);
+            m[0] + m[2]
+        } + labels
+            .iter()
+            .map(|b| block_dimensions(b, request).1 + request.label_gap)
+            .sum::<f64>();
         let height = desired_height.min(content.height() * 0.4);
+        let box_spacing = request
+            .resolved_theme
+            .as_ref()
+            .and_then(|e| e.destination_length("legend.box.spacing", "", 0))
+            .unwrap_or(0.)
+            .max(0.);
         let bounds = match position {
             P::Right => {
                 let b = Rect::new(
                     content.max_x() - width,
-                    content.origin().y(),
+                    content.origin().y()
+                        + request.resolved_theme.as_ref().map_or(0., |e| {
+                            (content.height() - desired_height.min(content.height()))
+                                * (1.
+                                    - super::theme_elements::justification(
+                                        e,
+                                        if matches!(position, P::Left) {
+                                            "legend.justification.left"
+                                        } else {
+                                            "legend.justification.right"
+                                        },
+                                    )[1])
+                        }),
                     width,
-                    content.height(),
+                    if request.resolved_theme.is_some() {
+                        desired_height.min(content.height())
+                    } else {
+                        content.height()
+                    },
                 )?;
                 content = Rect::new(
                     content.origin().x(),
                     content.origin().y(),
-                    content.width() - width,
+                    (content.width() - width - box_spacing).max(0.),
                     content.height(),
                 )?;
                 b
@@ -914,45 +1476,83 @@ fn arrange_legends(
             P::Left => {
                 let b = Rect::new(
                     content.origin().x(),
-                    content.origin().y(),
+                    content.origin().y()
+                        + request.resolved_theme.as_ref().map_or(0., |e| {
+                            (content.height() - desired_height.min(content.height()))
+                                * (1.
+                                    - super::theme_elements::justification(
+                                        e,
+                                        if matches!(position, P::Left) {
+                                            "legend.justification.left"
+                                        } else {
+                                            "legend.justification.right"
+                                        },
+                                    )[1])
+                        }),
                     width,
-                    content.height(),
+                    if request.resolved_theme.is_some() {
+                        desired_height.min(content.height())
+                    } else {
+                        content.height()
+                    },
                 )?;
                 content = Rect::new(
-                    content.origin().x() + width,
+                    content.origin().x() + width + box_spacing,
                     content.origin().y(),
-                    content.width() - width,
+                    (content.width() - width - box_spacing).max(0.),
                     content.height(),
                 )?;
                 b
             }
             P::Top => {
                 let b = Rect::new(
-                    content.origin().x(),
+                    content.origin().x()
+                        + request.resolved_theme.as_ref().map_or(0., |e| {
+                            (content.width() - width)
+                                * super::theme_elements::justification(
+                                    e,
+                                    "legend.justification.top",
+                                )[0]
+                        }),
                     content.origin().y(),
-                    content.width(),
+                    if request.resolved_theme.is_some() {
+                        width
+                    } else {
+                        content.width()
+                    },
                     height,
                 )?;
                 content = Rect::new(
                     content.origin().x(),
-                    content.origin().y() + height,
+                    content.origin().y() + height + box_spacing,
                     content.width(),
-                    content.height() - height,
+                    (content.height() - height - box_spacing).max(0.),
                 )?;
                 b
             }
             P::Bottom => {
                 let b = Rect::new(
-                    content.origin().x(),
+                    content.origin().x()
+                        + request.resolved_theme.as_ref().map_or(0., |e| {
+                            (content.width() - width)
+                                * super::theme_elements::justification(
+                                    e,
+                                    "legend.justification.bottom",
+                                )[0]
+                        }),
                     content.max_y() - height,
-                    content.width(),
+                    if request.resolved_theme.is_some() {
+                        width
+                    } else {
+                        content.width()
+                    },
                     height,
                 )?;
                 content = Rect::new(
                     content.origin().x(),
                     content.origin().y(),
                     content.width(),
-                    content.height() - height,
+                    (content.height() - height - box_spacing).max(0.),
                 )?;
                 b
             }
@@ -985,8 +1585,29 @@ fn paint_boxes(
             let width = b.bounds.width().min(plot.width());
             let height = b.bounds.height().min(plot.height());
             Rect::new(
-                plot.origin().x() + (plot.width() - width) * x,
-                plot.origin().y() + (plot.height() - height) * y,
+                plot.origin().x()
+                    + if let Some(e) = &request.resolved_theme {
+                        plot.width() * x
+                            - width
+                                * super::theme_elements::justification(
+                                    e,
+                                    "legend.justification.inside",
+                                )[0]
+                    } else {
+                        (plot.width() - width) * x
+                    },
+                plot.origin().y()
+                    + if let Some(e) = &request.resolved_theme {
+                        plot.height() * y
+                            - height
+                                * (1.
+                                    - super::theme_elements::justification(
+                                        e,
+                                        "legend.justification.inside",
+                                    )[1])
+                    } else {
+                        (plot.height() - height) * y
+                    },
                 width,
                 height,
             )?
@@ -994,6 +1615,31 @@ fn paint_boxes(
             b.bounds
         };
         let start = items.len();
+        if let Some(elements) = &request.resolved_theme {
+            let mut remaining = request.limits.max_path_commands;
+            for name in ["legend.box.background", "legend.background"] {
+                if name == "legend.background"
+                    && matches!(b.labels.as_slice(), [LegendBlock::GuideBox { .. }])
+                {
+                    continue;
+                }
+                for primitive in super::theme_elements::rectangle(
+                    elements,
+                    name,
+                    bounds,
+                    request,
+                    &mut remaining,
+                )? {
+                    require_within(items.len() < request.limits.max_items, "legend background")?;
+                    items.push(SceneItem {
+                        guide: None,
+                        layer: None,
+                        clip: Some(bounds),
+                        primitive,
+                    });
+                }
+            }
+        }
         paint_legend(items, &b.labels, bounds, request, diagnostics)?;
         for item in &mut items[start..] {
             if let Some(c) = &mut item.guide {
@@ -1068,6 +1714,26 @@ pub(super) fn layout_facets(
             "Missing facet specification.",
         )
     })?;
+    if prepared.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3
+        && (spec.scales.free_x || spec.scales.free_y)
+        && matches!(&prepared.definition().coordinate,Some(crate::grammar::CoordinateSpec::Cartesian(coordinate)) if coordinate.ratio.is_some())
+    {
+        return Err(crate::scales::error(
+            crate::DiagnosticCode::UnsupportedCapability,
+            "Reference facets cannot combine free scales with a fixed Cartesian coordinate ratio.",
+        ));
+    }
+    if (spec.scales.free_x || spec.scales.free_y)
+        && matches!(
+            &prepared.definition().coordinate,
+            Some(crate::grammar::CoordinateSpec::Geographic(_))
+        )
+    {
+        return Err(crate::scales::error(
+            crate::DiagnosticCode::UnsupportedCapability,
+            "Geographic facets require fixed positional scales.",
+        ));
+    }
     let rows = prepared
         .panels()
         .iter()
@@ -1114,7 +1780,19 @@ pub(super) fn layout_facets(
     } else {
         vec![]
     };
-    let strip_insets = super::facet_policy::insets(&strips, request.label_gap);
+    let mut strip_insets = super::facet_policy::insets(&strips, request.label_gap);
+    for side in [
+        AxisSide::Left,
+        AxisSide::Right,
+        AxisSide::Top,
+        AxisSide::Bottom,
+    ] {
+        let i = super::facet_policy::side_index(side);
+        if strip_insets[i] > 0. && super::facet_policy::outside(request, side) {
+            strip_insets[i] += super::facet_policy::switch_padding(request, &spec.layout);
+        }
+    }
+
     let header_height = if spec.reference.is_none() {
         labels
             .iter()
@@ -1144,8 +1822,18 @@ pub(super) fn layout_facets(
     } else {
         shared.content
     };
-    let cell_width = (content.width() - spec.gap * (columns - 1) as f64) / columns as f64;
-    let cell_height = (content.height() - spec.gap * (rows - 1) as f64) / rows as f64;
+    let gap_x = request
+        .resolved_theme
+        .as_ref()
+        .and_then(|e| e.destination_length("panel.spacing.x", "", 0))
+        .unwrap_or(spec.gap);
+    let gap_y = request
+        .resolved_theme
+        .as_ref()
+        .and_then(|e| e.destination_length("panel.spacing.y", "", 0))
+        .unwrap_or(spec.gap);
+    let cell_width = (content.width() - gap_x * (columns - 1) as f64) / columns as f64;
+    let cell_height = (content.height() - gap_y * (rows - 1) as f64) / rows as f64;
     if cell_width <= 0. || cell_height <= header_height || prepared.panels().is_empty() {
         // Reuse the ordinary compact-state route with the original snapshot retained afterwards.
         let mut empty = (*prepared).clone();
@@ -1167,6 +1855,31 @@ pub(super) fn layout_facets(
     }
     let mut widths = vec![cell_width; columns];
     let mut heights = vec![cell_height; rows];
+    let explicit_widths = request
+        .resolved_theme
+        .as_ref()
+        .map(|e| {
+            e.panel_sizes(
+                "panel.widths",
+                columns,
+                content.width() - gap_x * (columns - 1) as f64,
+            )
+        })
+        .transpose()?
+        .flatten();
+    let explicit_heights = request
+        .resolved_theme
+        .as_ref()
+        .map(|e| {
+            e.panel_sizes(
+                "panel.heights",
+                rows,
+                content.height() - gap_y * (rows - 1) as f64,
+            )
+        })
+        .transpose()?
+        .flatten();
+
     let mut xweights = vec![1_f64; columns];
     let mut yweights = vec![1_f64; rows];
     if let Some(policy) = &spec.reference {
@@ -1185,7 +1898,9 @@ pub(super) fn layout_facets(
     let weighted = spec
         .reference
         .as_ref()
-        .is_some_and(|p| p.space != crate::grammar::FacetSpace::Fixed);
+        .is_some_and(|p| p.space != crate::grammar::FacetSpace::Fixed)
+        || explicit_widths.is_some()
+        || explicit_heights.is_some();
     for pass in 0..if weighted { 2 } else { 1 } {
         cells.clear();
         local_boxes.clear();
@@ -1194,10 +1909,10 @@ pub(super) fn layout_facets(
             let cell = Rect::new(
                 content.origin().x()
                     + widths[..panel.column].iter().sum::<f64>()
-                    + panel.column as f64 * spec.gap,
+                    + panel.column as f64 * gap_x,
                 content.origin().y()
                     + heights[..panel.row].iter().sum::<f64>()
-                    + panel.row as f64 * spec.gap,
+                    + panel.row as f64 * gap_y,
                 widths[panel.column],
                 heights[panel.row],
             )?;
@@ -1248,7 +1963,9 @@ pub(super) fn layout_facets(
                 let mut offsets = [0.; 4];
                 for strip in panel {
                     let side = super::facet_policy::side_index(strip.side);
-                    offsets[side] = strip_insets[side];
+                    if !super::facet_policy::outside(request, strip.side) {
+                        offsets[side] = strip_insets[side];
+                    }
                 }
                 offsets
             })
@@ -1263,10 +1980,42 @@ pub(super) fn layout_facets(
                     margin[1] = margin[1].max(cell.height() - plot.height());
                 }
             }
+            if let Some(elements) = &request.resolved_theme {
+                if explicit_widths.is_some() {
+                    widths = elements
+                        .panel_sizes(
+                            "panel.widths",
+                            columns,
+                            (content.width()
+                                - gap_x * (columns - 1) as f64
+                                - margin[0] * columns as f64)
+                                .max(0.),
+                        )?
+                        .unwrap()
+                        .into_iter()
+                        .map(|v| v + margin[0])
+                        .collect();
+                }
+                if explicit_heights.is_some() {
+                    heights = elements
+                        .panel_sizes(
+                            "panel.heights",
+                            rows,
+                            (content.height()
+                                - gap_y * (rows - 1) as f64
+                                - margin[1] * rows as f64)
+                                .max(0.),
+                        )?
+                        .unwrap()
+                        .into_iter()
+                        .map(|v| v + margin[1])
+                        .collect();
+                }
+            }
             if let Some(policy) = &spec.reference {
-                if policy.space.free(true) {
+                if policy.space.free(true) && explicit_widths.is_none() {
                     let usable = (content.width()
-                        - spec.gap * (columns - 1) as f64
+                        - gap_x * (columns - 1) as f64
                         - margin[0] * columns as f64)
                         .max(0.);
                     let total = xweights.iter().sum::<f64>();
@@ -1275,9 +2024,9 @@ pub(super) fn layout_facets(
                         .map(|w| margin[0] + usable * w / total)
                         .collect();
                 }
-                if policy.space.free(false) {
+                if policy.space.free(false) && explicit_heights.is_none() {
                     let usable =
-                        (content.height() - spec.gap * (rows - 1) as f64 - margin[1] * rows as f64)
+                        (content.height() - gap_y * (rows - 1) as f64 - margin[1] * rows as f64)
                             .max(0.);
                     let total = yweights.iter().sum::<f64>();
                     heights = yweights
@@ -1351,51 +2100,130 @@ pub(super) fn layout_facets(
                 let cell = cells[index];
                 let side = strip.side;
                 let i = super::facet_policy::side_index(side);
-                let size = strip_insets[i];
+                let outside = super::facet_policy::outside(request, side);
+                let pad = if outside {
+                    super::facet_policy::switch_padding(request, &spec.layout)
+                } else {
+                    0.
+                };
+                let size = (strip_insets[i] - pad).max(0.);
                 let plot = chart.plot().unwrap_or(cell);
-                let bounds = match side {
-                    AxisSide::Top => Rect::new(
-                        plot.origin().x(),
-                        plot.origin().y() - size,
-                        plot.width(),
-                        size,
-                    )?,
-                    AxisSide::Bottom => {
-                        Rect::new(plot.origin().x(), plot.max_y(), plot.width(), size)?
+                let bounds = if outside {
+                    match side {
+                        AxisSide::Top => Rect::new(
+                            plot.origin().x(),
+                            if grid_reference {
+                                cell.origin().y() - size - pad
+                            } else {
+                                cell.origin().y()
+                            },
+                            plot.width(),
+                            size,
+                        )?,
+                        AxisSide::Bottom => Rect::new(
+                            plot.origin().x(),
+                            if grid_reference {
+                                cell.max_y() + pad
+                            } else {
+                                cell.max_y() - size
+                            },
+                            plot.width(),
+                            size,
+                        )?,
+                        AxisSide::Left => Rect::new(
+                            if grid_reference {
+                                cell.origin().x() - size - pad
+                            } else {
+                                cell.origin().x()
+                            },
+                            plot.origin().y(),
+                            size,
+                            plot.height(),
+                        )?,
+                        AxisSide::Right => Rect::new(
+                            if grid_reference {
+                                cell.max_x() + pad
+                            } else {
+                                cell.max_x() - size
+                            },
+                            plot.origin().y(),
+                            size,
+                            plot.height(),
+                        )?,
                     }
-                    AxisSide::Left => Rect::new(
-                        plot.origin().x() - size,
-                        plot.origin().y(),
-                        size,
-                        plot.height(),
-                    )?,
-                    AxisSide::Right => {
-                        Rect::new(plot.max_x(), plot.origin().y(), size, plot.height())?
+                } else {
+                    match side {
+                        AxisSide::Top => Rect::new(
+                            plot.origin().x(),
+                            plot.origin().y() - size,
+                            plot.width(),
+                            size,
+                        )?,
+                        AxisSide::Bottom => {
+                            Rect::new(plot.origin().x(), plot.max_y(), plot.width(), size)?
+                        }
+                        AxisSide::Left => Rect::new(
+                            plot.origin().x() - size,
+                            plot.origin().y(),
+                            size,
+                            plot.height(),
+                        )?,
+                        AxisSide::Right => {
+                            Rect::new(plot.max_x(), plot.origin().y(), size, plot.height())?
+                        }
                     }
                 };
-                require_within(
-                    items.len() < request.limits.max_items,
-                    "facet strip background",
-                )?;
-                items.push(SceneItem {
-                    guide: None,
-                    layer: None,
-                    clip: Some(bounds),
-                    primitive: Primitive::Rectangle {
+                if let Some(elements) = request.resolved_theme.as_deref() {
+                    let name = if side.horizontal() {
+                        "strip.background.x"
+                    } else {
+                        "strip.background.y"
+                    };
+                    let mut remaining = request.limits.max_path_commands;
+                    for primitive in super::theme_elements::rectangle(
+                        elements,
+                        name,
                         bounds,
-                        fill: Color {
-                            red: 217,
-                            green: 217,
-                            blue: 217,
-                            alpha: 255,
+                        request,
+                        &mut remaining,
+                    )? {
+                        require_within(
+                            items.len() < request.limits.max_items,
+                            "facet strip background",
+                        )?;
+                        items.push(SceneItem {
+                            guide: None,
+                            layer: None,
+                            clip: Some(bounds),
+                            primitive,
+                        });
+                    }
+                } else {
+                    require_within(
+                        items.len() < request.limits.max_items,
+                        "facet strip background",
+                    )?;
+                    items.push(SceneItem {
+                        guide: None,
+                        layer: None,
+                        clip: Some(bounds),
+                        primitive: Primitive::Rectangle {
+                            bounds,
+                            fill: Color {
+                                red: 217,
+                                green: 217,
+                                blue: 217,
+                                alpha: 255,
+                            },
                         },
-                    },
-                });
-                let text = strip.block.items_at(
+                    });
+                }
+                let mut text = strip.block.items_at(
                     bounds.origin().x() + (bounds.width() - strip.block.bounds.width()) / 2.,
                     bounds.origin().y() + (bounds.height() - strip.block.bounds.height()) / 2.,
                     bounds,
                 )?;
+                if request.resolved_theme.as_ref().is_some_and(|e|matches!(e.value("strip.clip",""),Some(crate::theme::ThemeValue::Text(v)) if v=="off")) {for item in &mut text {item.clip=None;}}
                 require_within(
                     text.len() <= request.limits.max_items.saturating_sub(items.len()),
                     "facet strip text",

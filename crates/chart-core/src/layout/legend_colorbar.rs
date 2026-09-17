@@ -11,6 +11,7 @@ use crate::{
 };
 
 struct Label {
+    rich: Option<super::text::Block>,
     text: String,
     metrics: TextMetrics,
 }
@@ -36,6 +37,7 @@ impl Colorbar {
         request: &LayoutRequest,
         measurer: &dyn TextMeasurer,
         remaining: &mut usize,
+        math: Option<&crate::typography::MathFonts>,
     ) -> ChartResult<Self> {
         let stepped = !legend.colorsteps.is_empty();
         let count = if stepped {
@@ -74,6 +76,29 @@ impl Colorbar {
             .as_ref()
             .and_then(|m| m.colorbar_options.as_deref())
             .unwrap_or(&defaults);
+        let direction = options
+            .direction
+            .or_else(|| {
+                request.resolved_theme.as_ref().and_then(|e| {
+                    match e.value("legend.direction", "") {
+                        Some(crate::theme::ThemeValue::Text(v)) if v == "horizontal" => {
+                            Some(GradientDirection::Horizontal)
+                        }
+                        Some(crate::theme::ThemeValue::Text(v)) if v == "vertical" => {
+                            Some(GradientDirection::Vertical)
+                        }
+                        _ => match e.value("legend.position", "") {
+                            Some(crate::theme::ThemeValue::Text(v))
+                                if v == "top" || v == "bottom" =>
+                            {
+                                Some(GradientDirection::Horizontal)
+                            }
+                            _ => None,
+                        },
+                    }
+                })
+            })
+            .unwrap_or(GradientDirection::Vertical);
         let nbin = options.nbin();
         let pad = if options.display == GgplotColorbarDisplay::Gradient {
             0.
@@ -108,12 +133,55 @@ impl Colorbar {
             if !position.is_finite() {
                 continue;
             }
-            let label = if let Some(text) = &entry.label {
+            let label = if let Some(text) = &entry.label
+                && !request
+                    .resolved_theme
+                    .as_ref()
+                    .is_some_and(|e| e.blank("legend.text"))
+            {
                 require_within(text.len() <= *remaining, "figure furniture text byte")?;
                 *remaining -= text.len();
+                let rich = if math.is_some() || request.resolved_theme.is_some() {
+                    let rich = if let Some(fonts) = math {
+                        crate::typography::RichText::math(text, fonts.clone())?
+                    } else {
+                        crate::typography::RichText::plain(text)
+                    };
+                    let rich = if let Some(elements) = &request.resolved_theme {
+                        super::theme_elements::text_style(elements, "legend.text", &rich, request)?
+                    } else {
+                        Some(rich)
+                    };
+                    rich.map(|rich| {
+                        super::text::measure(
+                            &rich,
+                            request,
+                            measurer,
+                            request
+                                .host_theme
+                                .foreground
+                                .map(crate::color::Paint::resolve)
+                                .unwrap_or(Color {
+                                    red: 55,
+                                    green: 60,
+                                    blue: 65,
+                                    alpha: 255,
+                                }),
+                        )
+                    })
+                    .transpose()?
+                } else {
+                    None
+                };
+                let metrics = if let Some(block) = &rich {
+                    TextMetrics::new(block.bounds.width(), block.bounds.height(), 0.)?
+                } else {
+                    measure_text(measurer, text_request(request, text), request.limits)?
+                };
                 Some(Label {
                     text: text.clone(),
-                    metrics: measure_text(measurer, text_request(request, text), request.limits)?,
+                    metrics,
+                    rich,
                 })
             } else {
                 None
@@ -135,7 +203,7 @@ impl Colorbar {
                 value: crate::composition::ScaleValue::Number(entry.value.0),
                 occurrence: *occurrence,
             });
-            component.side = if options.direction == Some(GradientDirection::Horizontal) {
+            component.side = if direction == GradientDirection::Horizontal {
                 super::AxisSide::Bottom
             } else {
                 super::AxisSide::Right
@@ -171,7 +239,7 @@ impl Colorbar {
                 legend.colorbar.iter().map(|sample| sample.color).collect()
             },
             keys,
-            direction: options.direction.unwrap_or(GradientDirection::Vertical),
+            direction,
             display: if stepped {
                 GgplotColorbarDisplay::Rectangles
             } else {
@@ -184,7 +252,11 @@ impl Colorbar {
         self.direction == GradientDirection::Horizontal
     }
     fn thickness(request: &LayoutRequest) -> f64 {
-        1.5 * request.font_size
+        request
+            .resolved_theme
+            .as_ref()
+            .and_then(|e| e.destination_length("legend.key.size", "", 0))
+            .unwrap_or(1.5 * request.font_size)
     }
     fn length(request: &LayoutRequest) -> f64 {
         10. * request.font_size
@@ -235,18 +307,43 @@ impl Colorbar {
             Self::length(request)
         }
     }
+    fn labels_before(&self, request: &LayoutRequest) -> bool {
+        request.resolved_theme.as_ref().is_some_and(|e|matches!(e.value("legend.text.position",""),Some(crate::theme::ThemeValue::Text(v)) if (self.horizontal()&&v=="top")||(!self.horizontal()&&v=="left")))
+    }
+    fn label_extent(&self) -> f64 {
+        self.keys
+            .iter()
+            .filter_map(|k| k.label.as_ref())
+            .map(|l| {
+                if self.horizontal() {
+                    l.metrics.height()
+                } else {
+                    l.metrics.width()
+                }
+            })
+            .fold(0., f64::max)
+    }
     fn bar_bounds(&self, bounds: Rect, y: f64, request: &LayoutRequest) -> ChartResult<Rect> {
         if self.horizontal() {
             let (left, right) = self.horizontal_insets(request);
             Rect::new(
                 bounds.origin().x() + left.min(bounds.width()),
-                y,
+                y + if self.labels_before(request) {
+                    self.label_extent() + request.label_gap
+                } else {
+                    0.
+                },
                 Self::length(request).min((bounds.width() - left - right).max(0.)),
                 Self::thickness(request),
             )
         } else {
             Rect::new(
-                bounds.origin().x(),
+                bounds.origin().x()
+                    + if self.labels_before(request) {
+                        self.label_extent() + request.label_gap
+                    } else {
+                        0.
+                    },
                 y,
                 Self::thickness(request).min(bounds.width()),
                 Self::length(request),
@@ -349,6 +446,66 @@ impl Colorbar {
                 &bar_component,
             );
         }
+        let mut remaining = request.limits.max_path_commands;
+        if let Some(elements) = &request.resolved_theme {
+            for primitive in super::theme_elements::rectangle(
+                elements,
+                "legend.frame",
+                bar,
+                request,
+                &mut remaining,
+            )? {
+                push(primitive, &bar_component);
+            }
+            let commands = if horizontal {
+                vec![
+                    PathCommand::MoveTo(Point::new(
+                        bar.origin().x(),
+                        if self.labels_before(request) {
+                            bar.origin().y()
+                        } else {
+                            bar.max_y()
+                        },
+                    )?),
+                    PathCommand::LineTo(Point::new(
+                        bar.max_x(),
+                        if self.labels_before(request) {
+                            bar.origin().y()
+                        } else {
+                            bar.max_y()
+                        },
+                    )?),
+                ]
+            } else {
+                vec![
+                    PathCommand::MoveTo(Point::new(
+                        if self.labels_before(request) {
+                            bar.origin().x()
+                        } else {
+                            bar.max_x()
+                        },
+                        bar.origin().y(),
+                    )?),
+                    PathCommand::LineTo(Point::new(
+                        if self.labels_before(request) {
+                            bar.origin().x()
+                        } else {
+                            bar.max_x()
+                        },
+                        bar.max_y(),
+                    )?),
+                ]
+            };
+            for primitive in super::theme_elements::line_primitives(
+                elements,
+                "legend.axis.line",
+                commands,
+                request,
+                &mut remaining,
+            )? {
+                push(primitive, &bar_component);
+            }
+        }
         let ink = request
             .host_theme
             .foreground
@@ -360,6 +517,24 @@ impl Colorbar {
             bar.width()
         })
         .min(request.font_size * 0.25);
+        let tick = if let Some(elements) = &request.resolved_theme {
+            elements
+                .length(
+                    "legend.ticks.length",
+                    "",
+                    0,
+                    request.units,
+                    request.font_size,
+                    if horizontal {
+                        bar.height()
+                    } else {
+                        bar.width()
+                    },
+                )?
+                .unwrap_or(tick)
+        } else {
+            tick
+        };
         let mut constrained = self.width(request) > bounds.width();
         let mut label_spans = Vec::with_capacity(self.keys.len());
         for key in &self.keys {
@@ -369,16 +544,29 @@ impl Colorbar {
                 bar.max_y() - bar.height() * key.position
             };
             if key.tick {
-                push(
-                    Primitive::Path {
-                        commands: tick_commands(bar, center, tick, horizontal)?,
-                        stroke: Stroke {
-                            color: ink,
-                            width: 0.5,
+                let commands = tick_commands(bar, center, tick, horizontal)?;
+                if let Some(elements) = &request.resolved_theme {
+                    for primitive in super::theme_elements::line_primitives(
+                        elements,
+                        "legend.ticks",
+                        commands,
+                        request,
+                        &mut remaining,
+                    )? {
+                        push(primitive, &key.component);
+                    }
+                } else {
+                    push(
+                        Primitive::Path {
+                            commands,
+                            stroke: Stroke {
+                                color: ink,
+                                width: 0.5,
+                            },
                         },
-                    },
-                    &key.component,
-                );
+                        &key.component,
+                    );
+                }
             }
             let Some(label) = &key.label else {
                 continue;
@@ -386,11 +574,19 @@ impl Colorbar {
             let (left, top) = if horizontal {
                 (
                     center - label.metrics.width() / 2.,
-                    bar.max_y() + request.label_gap,
+                    if self.labels_before(request) {
+                        bar.origin().y() - request.label_gap - label.metrics.height()
+                    } else {
+                        bar.max_y() + request.label_gap
+                    },
                 )
             } else {
                 (
-                    bar.max_x() + request.label_gap,
+                    if self.labels_before(request) {
+                        bar.origin().x() - request.label_gap - label.metrics.width()
+                    } else {
+                        bar.max_x() + request.label_gap
+                    },
                     center - label.metrics.height() / 2.,
                 )
             };
@@ -405,16 +601,22 @@ impl Colorbar {
             });
             let mut component = key.component.clone();
             component.role = crate::scene::GuideRole::LegendLabel;
-            push(
-                Primitive::Text {
-                    origin: Point::new(left, top + label.metrics.ascent())?,
-                    text: label.text.clone(),
-                    font: request.font.id,
-                    font_size: request.font_size,
-                    color: ink,
-                },
-                &component,
-            );
+            if let Some(block) = &label.rich {
+                for item in block.items_at(left, top, bounds)? {
+                    push(item.primitive, &component);
+                }
+            } else {
+                push(
+                    Primitive::Text {
+                        origin: Point::new(left, top + label.metrics.ascent())?,
+                        text: label.text.clone(),
+                        font: request.font.id,
+                        font_size: request.font_size,
+                        color: ink,
+                    },
+                    &component,
+                );
+            }
         }
         label_spans.sort_by(|a, b| a.0.total_cmp(&b.0));
         let mut end = f64::NEG_INFINITY;

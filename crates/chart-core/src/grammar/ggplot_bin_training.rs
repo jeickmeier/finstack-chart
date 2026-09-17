@@ -18,6 +18,7 @@ fn input(stat: &Statistic) -> Option<(&Numeric, &StatSpace)> {
 }
 fn target_axis(layer: &Layer) -> Option<ScaleId> {
     let normalized = match &layer.statistic.parameters {
+        StatParameters::Model(_) | StatParameters::Spatial(_) => 0,
         StatParameters::Distribution(s) => s.sample_axis(),
         StatParameters::Univariate(s)
             if matches!(
@@ -107,6 +108,13 @@ fn source_inputs(layer: &Layer, normalized_x: bool) -> Vec<(&Numeric, &StatSpace
 fn training_inputs(layer: &Layer, axis: ScaleId) -> Vec<(&Numeric, &StatSpace)> {
     let normalized = usize::from(axis != independent_axis(layer));
     match &layer.statistic.parameters {
+        StatParameters::Spatial(s) => {
+            return if normalized == 0 {
+                vec![(&s.x, &s.x_space)]
+            } else {
+                vec![(&s.y, &s.y_space)]
+            };
+        }
         StatParameters::Distribution(s) => {
             return if normalized == s.sample_axis() {
                 vec![(&s.input, &s.space)]
@@ -132,6 +140,7 @@ fn training_inputs(layer: &Layer, axis: ScaleId) -> Vec<(&Numeric, &StatSpace)> 
     if axis != independent_axis(layer) {
         return match &layer.statistic.parameters {
             StatParameters::Ols(s) => vec![(&s.y, &s.y_space)],
+            StatParameters::Model(s) => vec![(&s.y, &s.y_space)],
             StatParameters::Summary(s) => vec![(&s.input, &s.space)],
             _ => source_inputs(layer, false),
         };
@@ -142,6 +151,7 @@ fn training_inputs(layer: &Layer, axis: ScaleId) -> Vec<(&Numeric, &StatSpace)> 
     match &layer.statistic.parameters {
         StatParameters::Bin(s) => vec![(&s.input, &s.space)],
         StatParameters::Ols(s) => vec![(&s.x, &s.x_space)],
+        StatParameters::Model(s) => vec![(&s.x, &s.x_space)],
         StatParameters::Count(s) => s
             .ggplot
             .as_ref()
@@ -171,7 +181,16 @@ pub(super) fn resolve(
     let targets = definitions
         .iter()
         .flat_map(|d| d.layers.iter())
-        .filter_map(|l| target_axis(l).map(|axis| (axis, axis == l.scales.x)))
+        .flat_map(|l| {
+            if matches!(l.statistic.parameters, StatParameters::Spatial(_)) {
+                vec![(l.scales.x, true), (l.scales.y, false)]
+            } else {
+                target_axis(l)
+                    .map(|axis| (axis, axis == l.scales.x))
+                    .into_iter()
+                    .collect()
+            }
+        })
         .collect::<BTreeMap<_, _>>();
     if targets.is_empty() {
         return Ok(());
@@ -291,7 +310,21 @@ pub(super) fn resolve(
             let Some((lo, hi)) = ranges.get(&key(panel_index, axis)).copied() else {
                 continue;
             };
+            let axes = if layer.orientation == Orientation::Horizontal {
+                [layer.scales.y, layer.scales.x]
+            } else {
+                [layer.scales.x, layer.scales.y]
+            };
             match &mut layer.statistic.parameters {
+                StatParameters::Spatial(s) => {
+                    if let (Some(a), Some(b)) = (
+                        ranges.get(&key(panel_index, axes[0])),
+                        ranges.get(&key(panel_index, axes[1])),
+                    ) {
+                        s.training_ranges = Some([[a.0, a.1], [b.0, b.1]]);
+                    }
+                }
+                StatParameters::Model(s) => s.training_range = Some([lo, hi]),
                 StatParameters::Distribution(s) => s.training_range = Some([lo, hi]),
                 StatParameters::Univariate(s) => s.training_range = Some([lo, hi]),
                 StatParameters::AutoBin(s) if s.ggplot.is_some() => {
@@ -334,6 +367,64 @@ pub(super) fn resolve(
                 }
                 _ => {}
             }
+        }
+    }
+    resolve_models(definitions, source, spec, limits)?;
+    Ok(())
+}
+
+fn resolve_models(
+    definitions: &mut [ChartDefinition],
+    source: &StoreSnapshot,
+    facets: Option<&FacetSpec>,
+    limits: CompileLimits,
+) -> ChartResult<()> {
+    let mut largest = BTreeMap::new();
+    for (panel_index, definition) in definitions.iter().enumerate() {
+        let scope = facets.map(|f| super::facets::PanelScope::new(f, f.order[panel_index].clone()));
+        for layer in &definition.layers {
+            let StatParameters::Model(model) = &layer.statistic.parameters else {
+                continue;
+            };
+            let mut filters = layer.filters.iter().collect::<Vec<_>>();
+            let id = root_input(layer.data, definition, &mut filters)?;
+            let data = source.dataset(id)?;
+            let mut groups = BTreeMap::<GroupValue, usize>::new();
+            for row in data.rows() {
+                if layer.scope != StatScope::Chart
+                    && layer.facet == FacetTarget::Match
+                    && scope
+                        .as_ref()
+                        .is_some_and(|s| !super::facets::row_matches(row, s))
+                {
+                    continue;
+                }
+                if !filters
+                    .iter()
+                    .all(|f| super::stats::filter_matches(row, f) == Some(true))
+                {
+                    continue;
+                }
+                if let Some(group) = super::stats::group_value(row, &model.grouping) {
+                    if !groups.contains_key(&group) && groups.len() >= limits.max_groups {
+                        return Err(error(
+                            DiagnosticCode::ResourceLimit,
+                            "Model automatic group budget exceeded.",
+                        ));
+                    }
+                    *groups.entry(group).or_default() += 1;
+                }
+            }
+            let count = groups.values().copied().max().unwrap_or(0);
+            largest
+                .entry(layer.id)
+                .and_modify(|n: &mut usize| *n = (*n).max(count))
+                .or_insert(count);
+        }
+    }
+    for layer in definitions.iter_mut().flat_map(|d| &mut d.layers) {
+        if let StatParameters::Model(model) = &mut layer.statistic.parameters {
+            model.largest_group = largest.get(&layer.id).copied();
         }
     }
     Ok(())

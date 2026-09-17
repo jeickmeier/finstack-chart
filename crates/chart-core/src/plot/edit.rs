@@ -460,6 +460,33 @@ impl PlotEditBuilder {
             Ok(())
         })
     }
+    /// Replace the paired coordinate extension, retaining the current base view.
+    pub fn registered_coordinate(
+        mut self,
+        operation: impl Into<String>,
+        version: crate::Revision,
+        parameters: serde_json::Value,
+    ) -> Self {
+        self.definition
+            .coordinate
+            .get_or_insert_with(|| crate::grammar::CoordinateSpec::Cartesian(Default::default()));
+        self.definition.coordinate_extension = Some(crate::grammar::CoordinateSelection {
+            operation: crate::grammar::OperationRef::new(operation, version),
+            parameters,
+        });
+        self
+    }
+    /// Replace the shared post-stat coordinate policy.
+    pub fn coordinate(mut self, coordinate: crate::grammar::CoordinateSpec) -> Self {
+        self.definition.coordinate = Some(coordinate);
+        self
+    }
+    /// Restore legacy Cartesian coordinates.
+    pub fn clear_coordinate(mut self) -> Self {
+        self.definition.coordinate = None;
+        self.definition.coordinate_extension = None;
+        self
+    }
     /// Replace wrap/grid policy using the retained default data and exact catalog rules.
     pub fn facet(self, facet: FacetBuilder) -> Self {
         self.update(|this| {
@@ -509,7 +536,7 @@ impl PlotEditBuilder {
             let layer = label.into();
             if let PlotLayer::VectorPath(path) = layer {
                 let figure = this.figure_mut();
-                figure.version = 2;
+                figure.version = figure.version.max(2);
                 if let Some(index) = figure.paths.iter().position(|a| a.id == path.0.id) {
                     figure.paths[index] = path.0;
                 } else {

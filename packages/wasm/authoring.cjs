@@ -206,6 +206,8 @@ class Path extends Owned {
   replay(sink){for(const command of decode(this._inner.replay_json()))sink(command);}
 }
 class ShapeRegistry extends Owned {
+  materialize(operation,version,payload){return new Data(this._inner.materialize(encode({id:operation,version:integer(version).toString()}),encode(payload)));}
+
   constructor(){super(new native._ShapeRegistry());}
   static _wrap(inner){const result=new Owned(inner);Object.setPrototypeOf(result,this.prototype);return result;}
   static example(){
@@ -310,6 +312,8 @@ class VectorPath extends Component {
 }
 const vector_path=(id,path)=>new VectorPath(path._inner.annotation(id));
 class PlotBuilder extends Owned {
+  autolayer(operation,version,parameters){return new PlotBuilder(this._inner.autolayer(encode({operation:{id:operation,version:integer(version).toString()},parameters})));}
+
   with_registry(registry){return this.with_shape_registry(registry);}
   with_shape_registry(registry){return new this.constructor(this._inner.with_shape_registry(registry._inner));}
   constructor(inner){super(inner);return fluent(this,(t,name,args)=>{
@@ -343,7 +347,12 @@ class FigureRequest extends Owned {
 class FigureTransition extends Owned {
   sample(fraction){return new FigureSnapshot(this._inner.sample(fraction));}
 }
+class FigurePages extends Owned {
+  append(page){this._inner.append(page._inner);return this;}
+  export(format){return this._inner.export(format);}
+}
 class FigureSnapshot extends Owned {
+  pages(){return new FigurePages(this._inner.pages());}
   guide_transition(previous){return new FigureTransition(this._inner.guide_transition(previous._inner));}
   guideTransition(previous){return this.guide_transition(previous);}
   presentation(){return decode(this._inner.presentation());}
@@ -353,6 +362,18 @@ class FigureSnapshot extends Owned {
   export(format){return this._inner.export(format);}
 }
 class Output extends Owned {
+  resolve_save(path,saveOptions={},currentSize=null,pageNumber=1){return decode(this._inner.resolve_save(path,encode(saveOptions),currentSize===null?undefined:Float64Array.from(currentSize),count(pageNumber)));}
+  save_figure(source,path,saveOptions={}, {options=null,currentSize=null,pageNumber=1,device=null,maxBytes=67108864}={}){
+    const plan=this.resolve_save(path,saveOptions,currentSize,pageNumber);
+    if(!Number.isSafeInteger(maxBytes)||maxBytes<0)throw new RangeError('maxBytes must be a nonnegative safe integer');
+    const base=options||module.exports.export_options(plan.page.width,plan.page.height),temporary=[];
+    try{const sized=base.page(plan.page.width,plan.page.height,'pt');temporary.push(sized);const dense=sized.dpi(plan.dpi);temporary.push(dense);const bounded=dense.max_output_bytes(maxBytes);temporary.push(bounded);const request=this.request(source,bounded);try{const frame=request.prepare();try{
+      const result=device===null?frame.export(plan.device):device(frame);
+      if(!(result instanceof Uint8Array))throw new TypeError('Custom device must return Uint8Array');
+      if(result.length>maxBytes)throw new RangeError('Saved output exceeds its byte budget');
+      return {plan,bytes:result.slice()};
+    }finally{frame.dispose();}}finally{request.dispose();}}finally{for(const handle of temporary.reverse())handle.dispose();if(options===null)base.dispose();}
+  }
   constructor(font){super(new native._Output(bytes(font)));}
   primary_font(){return decode(this._inner.primary_font());}
   register_font(font){return decode(this._inner.register_font(bytes(font)));}
@@ -440,7 +461,7 @@ class Chart extends Owned {
   link_capture(component,event){return decode(this._inner.link_capture(component._inner,encode(event)));}
   link_resolve(component,message){return decode(this._inner.link_resolve(component._inner,encode(message)));}
 }
-const families = {"SourceExpression":"source_expr","StatExpression":"stat_expr","BinExpression":"bin_expr","ScaleExpression":"after_scale_expr from_theme","ScaleAes":"scale_aes","Aes": "aes", "Layer": "blank points linerange pointrange errorbar crossbar segment step abline hline vline line area ribbon hierarchy hierarchy_tree hierarchy_cluster hierarchy_icicle hierarchy_sunburst hierarchy_treemap hierarchy_pack shape_line shape_area shape_line_radial shape_area_radial shape_link shape_link_horizontal shape_link_vertical shape_link_radial shape_arc shape_pie shape_symbol bars volume ohlc rule rectangle cells histogram boxplot violin dotplot density ecdf qq qq_line function_curve", "Stat": "identity_stat bin count summary fit custom_stat boxplot_stat violin_stat dotplot_stat density_stat ecdf_stat qq_stat qq_line_stat unique_stat align_stat function_stat distribution_stat univariate_stat connect_stat", "StatAes": "stat_aes", "BinAes": "bin_aes", "Position": "stack shape_stack dodge jitter ggplot_stack ggplot_fill ggplot_dodge dodge2 nudge jitter_dodge", "Filter": "filter", "Transform": "transform", "Scale": "scale_linear scale_binned scale_reverse scale_sqrt scale_transform scale_log scale_symlog scale_band scale_point scale_utc scale_date scale_duration scale_session", "Axis": "x_axis y_axis xlim ylim", "Guide": "axis_guide", "ColorScale": "color_discrete color_continuous", "Legend": "legend", "Facet": "facet_wrap facet_grid", "Style": "style", "Theme": "theme", "TextStyle": "text_style", "TextRun": "text_run", "RichText": "rich_text", "Title": "title", "Subtitle": "subtitle", "Caption": "caption", "SourceNote": "source_note", "Footnote": "footnote", "Labels": "labels", "Callout": "callout", "PanelLetter": "panel_letter", "Inset": "inset", "NumberFormat": "number_format", "LayoutOptions": "layout_options", "RenderOptions": "render_options", "StreamOptions": "stream_options", "AnnotationEdit": "annotation_edit", "Link": "link"};
+const families = {"SourceExpression":"source_expr","StatExpression":"stat_expr","BinExpression":"bin_expr","ScaleExpression":"after_scale_expr from_theme","ScaleAes":"scale_aes","Aes": "aes", "Layer": "blank points linerange pointrange errorbar crossbar segment step abline hline vline line area ribbon hierarchy hierarchy_tree hierarchy_cluster hierarchy_icicle hierarchy_sunburst hierarchy_treemap hierarchy_pack shape_line shape_area shape_line_radial shape_area_radial shape_link shape_link_horizontal shape_link_vertical shape_link_radial shape_arc shape_pie shape_symbol bars volume ohlc rule rectangle cells histogram bin2d hex density2d contour contour_filled ellipse boxplot violin dotplot density ecdf qq qq_line function_curve smooth quantile", "Stat": "identity_stat bin count summary fit custom_stat boxplot_stat violin_stat dotplot_stat density_stat ecdf_stat qq_stat qq_line_stat unique_stat align_stat function_stat model_stat spatial_stat bin2d_stat hex_stat density2d_stat contour_stat contour_filled_stat ellipse_stat smooth_stat quantile_stat distribution_stat univariate_stat connect_stat", "StatAes": "stat_aes", "BinAes": "bin_aes", "Position": "stack shape_stack dodge jitter ggplot_stack ggplot_fill ggplot_dodge dodge2 nudge jitter_dodge", "Filter": "filter", "Transform": "transform", "Scale": "scale_linear scale_binned scale_reverse scale_sqrt scale_transform scale_log scale_symlog scale_band scale_point scale_utc scale_date scale_duration scale_session", "Axis": "x_axis y_axis xlim ylim", "Guide": "axis_guide", "ColorScale": "color_discrete color_continuous", "Legend": "legend", "Facet": "facet_wrap facet_grid", "Style": "style", "Theme": "theme", "TextStyle": "text_style", "TextRun": "text_run", "RichText": "rich_text math_text", "Title": "title", "Subtitle": "subtitle", "Caption": "caption", "SourceNote": "source_note", "Footnote": "footnote", "Labels": "labels", "Callout": "callout", "PanelLetter": "panel_letter", "Inset": "inset", "NumberFormat": "number_format", "LayoutOptions": "layout_options", "RenderOptions": "render_options", "StreamOptions": "stream_options", "AnnotationEdit": "annotation_edit", "Link": "link"};
 module.exports={ShapeLineRadial,ShapeAreaRadial,ShapeLink,ShapeLinkRadial,point_radial,pointRadial:point_radial,ShapeStack,ShapeSymbol,ShapeRegistry,ShapeLine,ShapeArea,ShapeArc,ShapePie,ColorValue,color,ChartError,LegacyChart:native.Chart,Path,VectorPath,path,path_round,vector_path,Editor,Column,Data,Field,Component,PlotBuilder,PlotEdit,Plot,Chart,Output,ExportOptions,FigureRequest,FigureSnapshot,FigureTransition,ExportQueue,ExportJob,Updates,Transaction,column,categorical,timestamps,plot,export_options};
 for(const [family,names] of Object.entries(families)) {
   const Type=class extends Component {};
@@ -479,3 +500,42 @@ for(const [name,value] of Object.entries(module.exports)) {
     }
   }
 }
+
+class CutResult extends Owned {
+  value(){return decode(this._inner.to_json());}
+  column(){return new Column(this._inner.column());}
+  copy(){return new CutResult(this._inner.copy());}
+}
+function cutValues(values){
+  const input=Array.from(values);
+  if(input.some(v=>v!==null&&(typeof v!=='number'||Number.isInteger(v)&&!Number.isSafeInteger(v))))throw new TypeError('Vector helpers require nullable Float64-compatible numbers.');
+  return [Float64Array.from(input,v=>v??0),Uint8Array.from(input,v=>v===null?0:1)];
+}
+function cut(values,spec,options={}){return new CutResult(native._Cut.create(...cutValues(values),encode(spec),encode(options)));}
+function cut_interval(values,{n=null,length=null,...options}={}){
+  if((n===null)===(length===null))throw new RangeError('Specify exactly one of n and length.');
+  return cut(values,n===null?{IntervalLength:{length}}:{Interval:{bins:n}},options);
+}
+function cut_number(values,n,options={}){return cut(values,{Number:{bins:n}},options);}
+function cut_width(values,width,{center=null,boundary=null,closed='right',...options}={}){
+  if(!['left','right'].includes(closed))throw new RangeError('closed must be left or right.');
+  return cut(values,{Width:{width,center,boundary}},{...options,right:closed==='right'});
+}
+function resolution(values,options={}){return native._Cut.resolution(...cutValues(values),encode(options));}
+Object.assign(module.exports,{CutResult,cut,cut_interval,cut_number,cut_width,resolution,cutInterval:cut_interval,cutNumber:cut_number,cutWidth:cut_width});
+
+module.exports.autoplot=(data,operation,version,parameters,registry)=>module.exports.plot(data).with_registry(registry).autolayer(operation,version,parameters);
+
+module.exports.summarize=(values,helper={MeanSe:{mult:1}})=>decode(native._Cut.summarize(...cutValues(values),encode(helper)));
+
+class ThemeContext {
+  constructor(value) { if(!(value instanceof module.exports.Theme))throw new TypeError('ThemeContext requires a Theme.'); this._theme=value.snapshot(); }
+  get(){return this._theme.snapshot();}
+  set(value){if(!(value instanceof module.exports.Theme))throw new TypeError('ThemeContext requires a Theme.');const replacement=value.snapshot(),previous=this._theme;this._theme=replacement;return previous;}
+  update(elements){const next=this._theme.update_elements(elements);this._theme.dispose();this._theme=next;}
+  replace(elements){const next=this._theme.replace_elements(elements);this._theme.dispose();this._theme=next;}
+  dispose(){this._theme.dispose();}
+}
+module.exports.ThemeContext=ThemeContext;
+
+module.exports.FigurePages=FigurePages;

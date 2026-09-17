@@ -58,6 +58,7 @@ pub(super) fn apply(
     r: &LayoutRequest,
     t: &ThemePatch,
 ) -> ChartResult<()> {
+    let elements = r.resolved_theme.as_deref();
     chart.paint_themes.clear();
     // Update panel views as well as the flattened presented scene, keeping both coherent.
     for p in &mut chart.panels {
@@ -77,7 +78,18 @@ pub(super) fn apply(
         targets.push(vec![]);
         panels.push(None);
     };
-    if let Some(fill) = t.background {
+    let mut coordinate_remaining = r.limits.max_path_commands;
+    if let Some(elements) = &elements {
+        for primitive in super::theme_elements::rectangle(
+            elements,
+            "plot.background",
+            chart.scene.bounds(),
+            r,
+            &mut coordinate_remaining,
+        )? {
+            decoration(primitive, None);
+        }
+    } else if let Some(fill) = t.background {
         decoration(
             Primitive::Rectangle {
                 bounds: chart.scene.bounds(),
@@ -87,56 +99,176 @@ pub(super) fn apply(
         );
     }
     let plots = if chart.panels.is_empty() {
-        vec![(chart.plot, &chart.axes)]
+        vec![(chart.plot, &chart.axes, &chart.guides, &chart.prepared)]
     } else {
         chart
             .panels
             .iter()
-            .map(|p| (p.chart.plot, &p.chart.axes))
+            .map(|p| {
+                (
+                    p.chart.plot,
+                    &p.chart.axes,
+                    &p.chart.guides,
+                    &p.chart.prepared,
+                )
+            })
             .collect()
     };
-    for (plot, axes) in plots {
+    for (plot, axes, guides, prepared) in plots {
         if let Some(plot) = plot {
+            let coordinate = super::coordinate_guides::resolve(prepared, axes, plot)?;
             if let Some(gradient) = t.gradient {
-                decoration(
-                    Primitive::GradientRectangle {
-                        bounds: plot,
-                        gradient,
-                    },
-                    Some(plot),
-                );
+                let primitive = Primitive::GradientRectangle {
+                    bounds: plot,
+                    gradient,
+                };
+                if let Some(map)=coordinate.as_ref().filter(|map|matches!(&map.spec,crate::grammar::CoordinateSpec::Radial(spec) if spec.mode==crate::grammar::RadialMode::Radial)) {
+                    for primitive in super::coordinate_raster::panel_gradient(&primitive,map,r,&mut coordinate_remaining)?{decoration(primitive,Some(plot));}
+                }else{decoration(primitive,Some(plot));}
             } else if let Some(fill) = t.panel {
-                decoration(Primitive::Rectangle { bounds: plot, fill }, Some(plot));
+                let primitive = Primitive::Rectangle { bounds: plot, fill };
+                if let Some(map)=coordinate.as_ref().filter(|map|matches!(&map.spec,crate::grammar::CoordinateSpec::Radial(spec) if spec.mode==crate::grammar::RadialMode::Radial)) {
+                    for primitive in super::coordinate_clip::panel(primitive,map,super::coordinate_path::tolerance(r),&mut coordinate_remaining)?{decoration(primitive,Some(plot));}
+                }else{decoration(primitive,Some(plot));}
             }
-            if let Some(color) = t.grid.filter(|c| c.alpha > 0) {
+            if t.grid.is_some_and(|c| c.alpha > 0) || elements.is_some() {
                 for a in axes.values().filter(|a| a.spec.visible) {
-                    for tick in &a.ticks {
-                        let (from, to) = if a.spec.side.horizontal() {
-                            (
-                                Point::new(tick.position, plot.origin().y())?,
-                                Point::new(tick.position, plot.max_y())?,
-                            )
-                        } else {
-                            (
-                                Point::new(plot.origin().x(), tick.position)?,
-                                Point::new(plot.max_x(), tick.position)?,
-                            )
-                        };
-                        decoration(
-                            Primitive::Rule {
-                                from,
-                                to,
-                                stroke: Stroke {
-                                    color,
-                                    width: t.stroke_width.unwrap_or(1.),
-                                },
-                            },
-                            Some(plot),
+                    for minor in [true, false] {
+                        if minor && elements.is_none() {
+                            continue;
+                        }
+                        let name = format!(
+                            "panel.grid.{}.{}",
+                            if minor { "minor" } else { "major" },
+                            if a.spec.side.horizontal() { "x" } else { "y" }
                         );
+                        if elements.as_ref().is_some_and(|e| e.blank(&name)) {
+                            continue;
+                        }
+                        let color = if let Some(e) = &elements {
+                            e.paint(&name, "colour")?.map(crate::color::Paint::resolve)
+                        } else {
+                            t.grid
+                        };
+                        let Some(color) = color.filter(|c| c.alpha > 0) else {
+                            continue;
+                        };
+                        let width = elements
+                            .as_ref()
+                            .and_then(|e| e.number(&name, "linewidth"))
+                            .map(|v| crate::grammar::reference_linewidth(v, r.units))
+                            .unwrap_or(t.stroke_width.unwrap_or(1.));
+                        if width <= 0. {
+                            continue;
+                        }
+                        let positions: Vec<f64> = if let Some(map) =
+                            coordinate.as_ref().filter(|m| {
+                                matches!(m.spec, crate::grammar::CoordinateSpec::Geographic(_))
+                            }) {
+                            if minor {
+                                vec![]
+                            } else {
+                                super::geographic_guides::levels(map, a.spec.side.horizontal(), r)?
+                            }
+                        } else if minor {
+                            guides
+                                .values()
+                                .filter(|g| g.spec.scale == a.spec.id)
+                                .flat_map(|g| g.minor_ticks.iter().map(|t| t.position))
+                                .collect()
+                        } else {
+                            a.ticks.iter().map(|t| t.position).collect()
+                        };
+                        for position in positions {
+                            let (from, to) = if a.spec.side.horizontal() {
+                                (
+                                    Point::new(position, plot.origin().y())?,
+                                    Point::new(position, plot.max_y())?,
+                                )
+                            } else {
+                                (
+                                    Point::new(plot.origin().x(), position)?,
+                                    Point::new(plot.max_x(), position)?,
+                                )
+                            };
+                            let stroke = Stroke { color, width };
+                            let primitive = if let Some(map) = &coordinate {
+                                Primitive::Path {
+                                    commands: super::coordinate_guides::grid(
+                                        map,
+                                        a.spec.side.horizontal(),
+                                        position,
+                                        r,
+                                        &mut coordinate_remaining,
+                                    )?,
+                                    stroke,
+                                }
+                            } else {
+                                Primitive::Rule { from, to, stroke }
+                            };
+                            if let Some(elements) = &elements {
+                                let commands = match primitive {
+                                    Primitive::Path { commands, .. } => commands,
+                                    Primitive::Rule { from, to, .. } => {
+                                        vec![PathCommand::MoveTo(from), PathCommand::LineTo(to)]
+                                    }
+                                    _ => unreachable!(),
+                                };
+                                for primitive in super::theme_elements::line_primitives(
+                                    elements,
+                                    &name,
+                                    commands,
+                                    r,
+                                    &mut coordinate_remaining,
+                                )? {
+                                    decoration(primitive, Some(plot));
+                                }
+                            } else {
+                                decoration(primitive, Some(plot));
+                            }
+                        }
                     }
+                }
+                let color = t.grid.unwrap_or(crate::theme::rgb(0, 0, 0));
+                if let Some(map) = &coordinate
+                    && let Some(commands) = super::coordinate_guides::polar_outer_grid(
+                        map,
+                        r,
+                        &mut coordinate_remaining,
+                    )?
+                {
+                    decoration(
+                        Primitive::Path {
+                            commands,
+                            stroke: Stroke {
+                                color,
+                                width: t.stroke_width.unwrap_or(1.),
+                            },
+                        },
+                        Some(plot),
+                    );
                 }
             }
         }
+    }
+    let mut overlaid = Vec::new();
+    if elements.as_ref().is_some_and(|e| {
+        matches!(
+            e.value("panel.ontop", ""),
+            Some(crate::theme::ThemeValue::Bool(true))
+        )
+    }) {
+        let mut underlaid = Vec::new();
+        for item in items.drain(..) {
+            if item.clip.is_some() {
+                overlaid.push(item);
+            } else {
+                underlaid.push(item);
+            }
+        }
+        items = underlaid;
+        targets.truncate(items.len());
+        panels.truncate(items.len());
     }
     let interaction_offset = items.len();
     let output_theme = r.output_theme.resolve();
@@ -332,6 +464,34 @@ pub(super) fn apply(
         items.push(item);
         targets.push(chart.targets[index].clone());
         panels.push(chart.item_panels[index].clone());
+    }
+    targets.extend(std::iter::repeat_n(Vec::new(), overlaid.len()));
+    panels.extend(std::iter::repeat_n(None, overlaid.len()));
+    items.extend(overlaid);
+    if let Some(elements) = &elements {
+        let borders = if chart.panels.is_empty() {
+            chart.plot.into_iter().collect::<Vec<_>>()
+        } else {
+            chart.panels.iter().filter_map(|p| p.chart.plot).collect()
+        };
+        for plot in borders {
+            for primitive in super::theme_elements::rectangle(
+                elements,
+                "panel.border",
+                plot,
+                r,
+                &mut coordinate_remaining,
+            )? {
+                items.push(SceneItem {
+                    guide: None,
+                    layer: None,
+                    clip: Some(plot),
+                    primitive,
+                });
+                targets.push(Vec::new());
+                panels.push(None);
+            }
+        }
     }
     chart.scene = Scene::new(
         chart.scene.stamp(),

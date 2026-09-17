@@ -484,7 +484,7 @@ fn beta_regularized(a: f64, b: f64, x: f64) -> ChartResult<f64> {
         Ok(1. - f * beta_cf(b, a, 1. - x)? / b)
     }
 }
-fn student_quantile(p: f64, df: f64) -> ChartResult<f64> {
+pub(crate) fn student_quantile(p: f64, df: f64) -> ChartResult<f64> {
     let tail = 2. * (1. - p);
     let mut lo = 0.;
     let mut hi = 1.;

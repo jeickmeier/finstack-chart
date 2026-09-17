@@ -3,7 +3,18 @@
 //! Construction/encoding need no I/O, system-font scan, GPUI initialization or mandatory workers.
 //! Saving encoded bytes is an explicit optional host operation.
 mod authoring;
+mod save;
+pub use save::{
+    CustomDevice, DeviceRegistry, FigurePages, SaveDpi, SaveOptions, SavePlan, SaveUnits,
+    resolve_save_json,
+};
+mod devices_metafile;
+mod devices_pictex;
+mod devices_raster;
+mod devices_vector;
 mod encode;
+pub use devices_raster::{RasterDeviceOptions, TiffCompression};
+pub use devices_vector::{VectorAlphaPolicy, VectorColorModel, VectorDeviceOptions};
 mod raster;
 pub use authoring::{CaptureBasis, ExportOptions, Output, export_options};
 mod fonts;

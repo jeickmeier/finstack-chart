@@ -73,10 +73,24 @@ pub use radial_shapes::RadialParameters;
 mod compiler;
 mod incremental_bins;
 pub use incremental_bins::StatUpdateMetrics;
+pub(crate) mod coordinate_policy;
+mod geography;
+mod geography_coordinate;
+pub use geography_coordinate::*;
+mod geography_crs;
+pub use geography_crs::*;
+mod geography_geometry;
+mod geography_mapproj;
+mod geography_mapproj_complex;
+mod geography_projection;
+mod geography_statistics;
+pub use geography::*;
+pub use geography_projection::*;
 mod definition;
 mod expression;
 mod expression_stage;
 mod extensions;
+pub use coordinate_policy::*;
 pub(crate) mod facet_policy;
 mod facets;
 pub use facet_policy::{
@@ -217,3 +231,44 @@ pub use analytic_functions::CustomAnalyticFunction;
 mod distribution_stage;
 mod univariate_kernels;
 mod univariate_stage;
+
+mod model_types;
+pub use model_types::*;
+mod model_gam;
+mod model_glm;
+mod model_linear;
+mod model_loess;
+mod model_predict;
+mod model_quantile_fn;
+mod model_stage;
+mod model_symmetric;
+
+mod model_extensions;
+pub use model_extensions::{CustomModel, ModelEstimate, ModelInput};
+
+mod spatial;
+mod spatial_types;
+pub use spatial_types::*;
+
+mod recipe_models;
+
+mod spatial_stage;
+
+mod key_extensions;
+pub use key_extensions::{CustomKeyGlyph, KeyGlyphInput, KeyGlyphOutput, KeyGlyphSelection};
+
+pub(crate) use extensions::{
+    parameter_size as extension_parameter_size,
+    validate_descriptor as validate_extension_descriptor,
+};
+
+mod guide_drawing;
+pub use guide_drawing::{CustomGuideDrawing, GuideDrawingInput, GuideDrawingSelection};
+
+mod facet_extensions;
+pub use facet_extensions::{CustomFacet, FacetPlanInput, FacetSelection};
+
+mod coordinate_extensions;
+pub use coordinate_extensions::{
+    CoordinateSelection, CoordinateTrainInput, CustomCoordinate, TrainedCoordinate,
+};

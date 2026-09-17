@@ -1,6 +1,8 @@
 //! Primary composable authoring API over the shared normalized chart engine.
 //! Builders resolve names once; immutable plots retain exact data and registrations.
+pub(crate) mod authoring;
 mod axis;
+pub use authoring::{AuthoringInput, AuthoringSelection, CustomAuthoring, autoplot};
 mod color;
 mod composition;
 mod data;
@@ -18,6 +20,7 @@ mod text;
 mod theme;
 mod transaction;
 mod transform;
+mod vector;
 mod wire;
 use crate::data::{DataLimits, SnapshotHandle, StoreSnapshot};
 use crate::grammar::{
@@ -47,6 +50,7 @@ pub use text::*;
 pub use theme::*;
 pub use transaction::*;
 pub use transform::*;
+pub use vector::*;
 
 static NEXT_ID: AtomicU64 = AtomicU64::new(1024);
 pub(super) fn fresh_id() -> ChartResult<u64> {
@@ -269,6 +273,8 @@ pub struct PlotBuilder {
     annotations: Vec<LabelsBuilder>,
     insets: Vec<InsetBuilder>,
     facet: Option<FacetBuilder>,
+    coordinate: Option<crate::grammar::CoordinateSpec>,
+    coordinate_extension: Option<crate::grammar::CoordinateSelection>,
     transforms: Vec<TransformBuilder>,
 }
 /// Start the main chart-authoring route with a default owned dataset.
@@ -291,6 +297,8 @@ pub fn plot(data: Data) -> PlotBuilder {
         annotations: vec![],
         insets: vec![],
         facet: None,
+        coordinate: None,
+        coordinate_extension: None,
         transforms: vec![],
     }
 }
@@ -325,6 +333,13 @@ impl From<CalloutBuilder> for PlotLayer {
 }
 macro_rules! figure_methods {
     () => {
+        /// Set a figure-level tag using shared rich text and theme positioning.
+        pub fn tag(mut self, tag: impl Into<crate::typography::RichText>) -> Self {
+            let figure = self.figure_mut();
+            figure.version = figure.version.max(3);
+            figure.tag = Some(tag.into());
+            self
+        }
         /// Set a separate plot title component.
         pub fn title(mut self, title: TitleBuilder) -> Self {
             self.figure_mut().title = Some(title.text);
@@ -410,7 +425,7 @@ impl PlotBuilder {
             PlotLayer::Marks(layer) => self.layers.push(*layer),
             PlotLayer::Annotation(label) => self.annotations.push(*label),
             PlotLayer::VectorPath(path) => {
-                self.figure.version = 2;
+                self.figure.version = self.figure.version.max(2);
                 self.figure.paths.push(path.0);
             }
         };
@@ -419,6 +434,26 @@ impl PlotBuilder {
     /// Add an inset over existing prepared layer handles.
     pub fn inset(mut self, inset: InsetBuilder) -> Self {
         self.insets.push(inset);
+        self
+    }
+    /// Compose a registered paired map after the base coordinate (Cartesian by default).
+    pub fn registered_coordinate(
+        mut self,
+        operation: impl Into<String>,
+        version: crate::Revision,
+        parameters: serde_json::Value,
+    ) -> Self {
+        self.coordinate
+            .get_or_insert_with(|| crate::grammar::CoordinateSpec::Cartesian(Default::default()));
+        self.coordinate_extension = Some(crate::grammar::CoordinateSelection {
+            operation: crate::grammar::OperationRef::new(operation, version),
+            parameters,
+        });
+        self
+    }
+    /// Apply an owned post-stat coordinate projection shared by all destinations.
+    pub fn coordinate(mut self, coordinate: crate::grammar::CoordinateSpec) -> Self {
+        self.coordinate = Some(coordinate);
         self
     }
     /// Configure shared wrap/grid facets with an inferred or explicit fixed catalog.
@@ -493,6 +528,8 @@ impl PlotBuilder {
                 .expect("registered authoring data")]
         };
         let mut definition = ChartDefinition::new(Revision::INITIAL).with_profile(self.profile);
+        definition.coordinate = self.coordinate;
+        definition.coordinate_extension = self.coordinate_extension;
         definition.facets = self
             .facet
             .as_ref()
@@ -712,6 +749,23 @@ impl PlotBuilder {
             }
             .apply(&mut definition, &mut layer, builder, &mapping, data)?;
             definition.layers.push(layer);
+        }
+        if definition.coordinate.is_none()
+            && let Some(geography) = definition.layers.iter().find_map(|l| l.geography.as_ref())
+        {
+            let crs = geography
+                .collection
+                .features
+                .first()
+                .and_then(|f| f.crs.as_ref())
+                .unwrap_or(&geography.collection.crs)
+                .clone();
+            definition.coordinate = Some(crate::grammar::CoordinateSpec::Geographic(
+                crate::grammar::GeographicCoordinate {
+                    projection: crate::grammar::GeoProjectionSelection::Crs(crs),
+                    ..Default::default()
+                },
+            ));
         }
         for legend in self.legends {
             legend.apply(&mut definition, &color_ids)?;

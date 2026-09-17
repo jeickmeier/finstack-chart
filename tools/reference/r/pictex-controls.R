@@ -1,0 +1,5 @@
+stopifnot(as.character(getRversion())=='4.6.1')
+f=tempfile(fileext='.tex');warnings=character()
+withCallingHandlers({grDevices::pictex(f,width=2,height=1,debug=FALSE);grid::grid.lines(x=c(.1,.9),y=c(.2,.8),gp=grid::gpar(col='red',lwd=3,lty=2));grid::grid.rect(x=.5,y=.5,width=.2,height=.4,gp=grid::gpar(fill='blue',col='green'));grid::grid.circle(x=.2,y=.7,r=.1,gp=grid::gpar(fill='orange'));grid::grid.text('a_b%{x}\\',x=.6,y=.3);dev.off()},warning=function(w){warnings<<-c(warnings,conditionMessage(w));invokeRestart('muffleWarning')})
+jsonlite::write_json(list(R=as.character(getRversion()),warnings=as.list(warnings),lines=as.list(readLines(f))),'fixtures/parity/ggplot2/pictex-controls.json',auto_unbox=TRUE,pretty=TRUE,digits=17)
+unlink(f)

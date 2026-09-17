@@ -15,7 +15,7 @@ pub struct ChartEnvelope {
 impl ChartEnvelope {
     /// Check envelope version; preparation additionally validates all operation/data contracts.
     pub fn validate(&self) -> ChartResult<()> {
-        if !matches!(self.version, 1..=76) || self.version != self.definition.wire_version() {
+        if !matches!(self.version, 1..=85) || self.version != self.definition.wire_version() {
             return Err(error(
                 DiagnosticCode::UnsupportedCapability,
                 "Definition envelope version does not match its capabilities.",

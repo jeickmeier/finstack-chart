@@ -151,6 +151,9 @@ pub struct Inset {
 pub struct FigureComposition {
     /// Version one for legacy furniture; version two enables retained paths.
     pub version: u32,
+    /// Figure-level tag, positioned by the shared theme (version three).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub tag: Option<RichText>,
     /// Figure title reserved above all panels.
     #[serde(default)]
     pub title: Option<RichText>,
@@ -184,6 +187,7 @@ impl Default for FigureComposition {
         Self {
             version: 1,
             title: None,
+            tag: None,
             subtitle: None,
             caption: None,
             source_notes: vec![],
@@ -198,11 +202,14 @@ impl Default for FigureComposition {
 impl FigureComposition {
     /// Validate text/identity/count/placement bounds before shaping or cloning inset geometry.
     pub fn validate(&self, limits: Limits) -> ChartResult<()> {
-        if !matches!(self.version, 1 | 2) || (self.version == 1 && !self.paths.is_empty()) {
+        if !matches!(self.version, 1..=3)
+            || (self.version == 1 && !self.paths.is_empty())
+            || (self.version < 3 && self.tag.is_some())
+        {
             return Err(Diagnostic::error(
                 DiagnosticCode::UnsupportedCapability,
                 "Unsupported figure composition version.",
-                "Use composition version two for retained paths, or version one for legacy furniture.",
+                "Use composition version three for tags, two for retained paths, or one for legacy furniture.",
             ));
         }
         if self.annotations.len().saturating_add(self.paths.len()) > 256
@@ -220,6 +227,7 @@ impl FigureComposition {
         for text in self
             .title
             .iter()
+            .chain(&self.tag)
             .chain(&self.subtitle)
             .chain(&self.caption)
             .chain(&self.source_notes)
@@ -429,6 +437,7 @@ impl FigureComposition {
     pub fn has_floating_paint(&self) -> bool {
         self.title
             .iter()
+            .chain(&self.tag)
             .chain(&self.subtitle)
             .chain(&self.caption)
             .chain(&self.source_notes)

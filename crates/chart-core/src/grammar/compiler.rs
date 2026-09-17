@@ -173,6 +173,14 @@ pub(crate) fn retain_facet_raw_domains(
                     mappings.x = Some(s.x.clone());
                     mappings.y = Some(s.y.clone());
                 }
+                StatParameters::Model(s) => {
+                    mappings.x = Some(s.x.clone());
+                    mappings.y = Some(s.y.clone());
+                }
+                StatParameters::Spatial(s) => {
+                    mappings.x = Some(s.x.clone());
+                    mappings.y = Some(s.y.clone());
+                }
                 _ => {}
             }
             let projections = super::scale_stage::layer_projections(layer, &panel.axes);
@@ -402,6 +410,12 @@ impl Compiler {
             false,
         )?;
         let definition = resolved.as_ref();
+        self.extensions.validate_key_selections(definition, false)?;
+        self.extensions
+            .validate_coordinate_selection(definition, false)?;
+        self.extensions
+            .validate_facet_selection(definition, false)?;
+        self.extensions.validate_guide_drawing(definition, false)?;
         let mut custom_ids = std::collections::BTreeSet::new();
         for guide in &definition.custom_legends {
             guide.validate(crate::Limits {
@@ -429,7 +443,8 @@ impl Compiler {
         }
         validate_definition(definition, snapshot, limits, &self.extensions)?;
         if definition.facets.is_some() {
-            let planned = super::facet_policy::resolve(definition, snapshot, limits)?;
+            let planned =
+                super::facet_policy::resolve(definition, snapshot, limits, &self.extensions)?;
             facets::validate_facets(planned.as_ref(), snapshot, limits, &self.extensions)?;
         }
         Ok(())
@@ -471,7 +486,17 @@ impl Compiler {
         )?;
         let palettes = super::palette_theme::resolve(resolved.as_ref())?;
         let mut result = self.prepare_resolved(palettes.as_ref(), source, state, limits)?;
-        result.definition = Arc::new(definition.clone());
+        let mut retained = definition.clone();
+        if definition
+            .facets
+            .as_ref()
+            .and_then(|f| f.reference.as_ref())
+            .is_some_and(|p| p.registered.is_some())
+        {
+            // Destination layout consumes the checked plan from this coherent source snapshot.
+            retained.facets = result.definition.facets.clone();
+        }
+        result.definition = Arc::new(retained);
         Ok(result)
     }
     fn prepare_resolved(
@@ -813,6 +838,13 @@ impl Compiler {
     ) -> ChartResult<PositionedScope> {
         let snapshot = source.get()?;
         let mut budget = GeometryBudget {
+            geography_coordinate: definition.coordinate.as_ref().and_then(|v| {
+                if let CoordinateSpec::Geographic(v) = v {
+                    Some(v)
+                } else {
+                    None
+                }
+            }),
             profile: definition.profile(),
             geometry_theme: definition.theme.as_ref().and_then(|t| t.geometry.as_ref()),
             population_axes: population_axes(definition),
@@ -883,6 +915,13 @@ impl Compiler {
         let mut colors = BTreeMap::new();
         let mut scale_domains = BTreeMap::new();
         let mut budget = GeometryBudget {
+            geography_coordinate: definition.coordinate.as_ref().and_then(|v| {
+                if let CoordinateSpec::Geographic(v) = v {
+                    Some(v)
+                } else {
+                    None
+                }
+            }),
             profile: definition.profile(),
             geometry_theme: definition.theme.as_ref().and_then(|t| t.geometry.as_ref()),
             population_axes: population_axes(definition),
@@ -932,6 +971,9 @@ impl Compiler {
             positional_limits,
             positional_empty,
             scale_registrations: self.extensions.scales.clone(),
+            key_registrations: self.extensions.keys.clone(),
+            coordinate_registrations: self.extensions.coordinates.clone(),
+            guide_drawing: self.extensions.guide_drawing.clone(),
             palette_registrations: self.extensions.palette_function.clone(),
             break_registrations: self.extensions.breaks_function.clone(),
             guide_registrations: self.extensions.guides.clone(),
@@ -1046,6 +1088,9 @@ pub(super) fn validate_definition(
             ));
         }
         stats::validate_stat(&node.statistic, limits)?;
+        if let StatParameters::Model(spec) = &node.statistic.parameters {
+            super::model_extensions::validate(extensions, &spec.options.method, false)?;
+        }
         if let StatParameters::Univariate(spec) = &node.statistic.parameters {
             super::univariate_stage::validate_registry(spec, extensions, false)?;
         }
@@ -1096,6 +1141,9 @@ pub(super) fn validate_definition(
             ));
         }
         stats::validate_stat(&layer.statistic, limits)?;
+        if let StatParameters::Model(spec) = &layer.statistic.parameters {
+            super::model_extensions::validate(extensions, &spec.options.method, false)?;
+        }
         if let StatParameters::Univariate(spec) = &layer.statistic.parameters {
             super::univariate_stage::validate_registry(spec, extensions, false)?;
         }
@@ -1192,6 +1240,7 @@ pub(super) fn validate_definition(
 
 #[derive(Clone)]
 pub(super) struct EncodedRow {
+    pub(super) geo_feature: Option<usize>,
     pub(super) stat_outliers: Vec<StatOutlier>,
     pub(super) outlier_anchor_y: Option<f64>,
     pub(super) recipe_values: BTreeMap<RecipeAesthetic, crate::interpolate::Value>,
@@ -1545,6 +1594,7 @@ fn source_binding(
         return Ok((aes, DomainContributions::default()));
     }
     if layer.geom != Geom::Blank
+        && layer.geography.is_none()
         && !matches!(layer.recipe, Some(BuiltinRecipe::Rug(_)))
         && (aes.x.is_none()
             || (aes.y.is_none() && !matches!(layer.recipe, Some(BuiltinRecipe::Interval(_)))))
@@ -1554,7 +1604,11 @@ fn source_binding(
             "Geometry requires x and y source mappings.",
         ));
     }
-    if layer.recipe.is_none() && endpoints && (aes.x2.is_none() || aes.y2.is_none()) {
+    if layer.recipe.is_none()
+        && layer.geography.is_none()
+        && endpoints
+        && (aes.x2.is_none() || aes.y2.is_none())
+    {
         return Err(error(
             DiagnosticCode::SchemaConflict,
             "Rules/rectangles require both second endpoints; baselines must be explicit.",
@@ -1699,6 +1753,7 @@ fn validate_line_size(layer: &Layer, mapped: bool) -> ChartResult<()> {
 }
 
 struct GeometryBudget<'a> {
+    geography_coordinate: Option<&'a GeographicCoordinate>,
     profile: Profile,
     geometry_theme: Option<&'a crate::theme::GeometryTheme<crate::color::Paint>>,
     population_axes: &'a [crate::layout::AxisSpec],
@@ -1792,6 +1847,7 @@ fn encode_layer(
                 .map(|r| {
                     let row = index[&r.key];
                     EncodedRow {
+                        geo_feature: None,
                         stat_outliers: vec![],
                         outlier_anchor_y: None,
                         missing_aesthetics: 0,
@@ -1877,6 +1933,7 @@ fn encode_layer(
                 rows.iter()
                     .enumerate()
                     .map(|(i, r)| EncodedRow {
+                        geo_feature: None,
                         stat_outliers: r.outliers.clone(),
                         outlier_anchor_y: None,
                         missing_aesthetics: 0,
@@ -1988,6 +2045,7 @@ fn encode_layer(
                 .iter()
                 .enumerate()
                 .map(|(i, r)| EncodedRow {
+                    geo_feature: None,
                     stat_outliers: vec![],
                     outlier_anchor_y: None,
                     missing_aesthetics: 0,
@@ -2074,6 +2132,7 @@ fn encode_layer(
         // positional observation for a summary without any usable input.
         encoded.retain(|row| rows.get(row.ordinal as usize).is_none_or(|r| r.count != 0));
     }
+    super::geography_geometry::resolve(layer, data, &mut encoded, limits)?;
     super::recipe_emit::resolve(layer, data, table, &mut encoded, &domains, limits)?;
     Ok(EncodedLayer {
         domains,
@@ -2199,6 +2258,7 @@ fn position_layer(
     let stack = super::positions::apply(layer, &domains, &mut encoded, limits, &shape_protocols)?;
     super::positions::output_space(layer, &mut domains);
     let prepared = PreparedLayer {
+        geography_vertices: Vec::new(),
         hierarchy,
         shape_protocols,
         orientation: layer.orientation,
@@ -2354,6 +2414,15 @@ fn finish_layer(
         }
     }
     prepared.unpainted_categories = unpainted_categories;
+    if super::geography_geometry::emit(
+        layer,
+        &encoded,
+        &mut prepared,
+        vertices,
+        budget.geography_coordinate,
+    )? {
+        return Ok(prepared);
+    }
     if super::recipe_emit::emit(layer, &encoded, &mut prepared, vertices)? {
         super::orientation::output(&mut prepared)?;
         return Ok(prepared);
@@ -2777,7 +2846,10 @@ pub(super) fn row_style(layer: &Layer, row: &EncodedRow) -> ChartResult<Style> {
         stroke_width: row.stroke_width.unwrap_or(layer.style.stroke_width),
         ..layer.style.resolve()
     };
-    if matches!(layer.recipe, Some(super::BuiltinRecipe::Density(_))) {
+    if matches!(
+        layer.recipe,
+        Some(super::BuiltinRecipe::Density(_) | super::BuiltinRecipe::Smooth)
+    ) {
         style.color = super::numeric_aesthetics::apply_opacity(
             row.color.unwrap_or(layer.style.color),
             row.opacity,
@@ -3152,6 +3224,8 @@ fn stat_shape(
     if matches!(
         stat.parameters,
         StatParameters::Distribution(_)
+            | StatParameters::Spatial(_)
+            | StatParameters::Model(_)
             | StatParameters::Univariate(_)
             | StatParameters::Count(_)
             | StatParameters::Summary(_)

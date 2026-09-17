@@ -1087,6 +1087,7 @@ fn configured_with_names(
             }) => chart.guide_registrations.labels(
                 operation,
                 crate::grammar::GuideLabelsInput {
+                    facet: None,
                     values: temporal_input
                         .as_ref()
                         .map_or(values.as_slice(), |(_, values)| values.as_slice()),

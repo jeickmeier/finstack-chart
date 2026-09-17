@@ -245,17 +245,17 @@ fn preflight(chart: &PreparedChart, r: &LayoutRequest) -> ChartResult<()> {
 }
 
 #[derive(Clone)]
-struct Label {
-    dodge_offset: f64,
-    tick: GuideTick,
-    index: usize,
-    identity: GuideTickIdentity,
-    metrics: TextMetrics,
-    rich: Option<super::text::Block>,
-    font_size: f64,
-    visible: bool,
-    line_style: GuideLineStyle,
-    text_style: GuideTextStyle,
+pub(super) struct Label {
+    pub(super) dodge_offset: f64,
+    pub(super) tick: GuideTick,
+    pub(super) index: usize,
+    pub(super) identity: GuideTickIdentity,
+    pub(super) metrics: TextMetrics,
+    pub(super) rich: Option<super::text::Block>,
+    pub(super) font_size: f64,
+    pub(super) visible: bool,
+    pub(super) line_style: GuideLineStyle,
+    pub(super) text_style: GuideTextStyle,
 }
 fn exposed(spec: &GuideStyle) -> bool {
     spec.ggplot_axis.is_some()
@@ -263,7 +263,11 @@ fn exposed(spec: &GuideStyle) -> bool {
         || spec.geometry.is_some()
         || spec.components.is_some()
 }
-fn component(spec: &GuideSpec, role: GuideRole, label: Option<&Label>) -> Option<GuideComponent> {
+pub(super) fn component(
+    spec: &GuideSpec,
+    role: GuideRole,
+    label: Option<&Label>,
+) -> Option<GuideComponent> {
     exposed(&spec.style).then(|| GuideComponent {
         animation: None,
         scope: vec![],
@@ -368,11 +372,15 @@ fn measure_guides(
                             .split('\n')
                             .map(|line| {
                                 let mut run = run.clone();
-                                run.text = line.into();
-                                vec![run]
+                                run.replace_text(line, r.limits)?;
+                                Ok(vec![run])
                             })
-                            .collect(),
-                        line_spacing: 1.2,
+                            .collect::<ChartResult<Vec<_>>>()?,
+                        line_spacing: r
+                            .resolved_theme
+                            .as_ref()
+                            .and_then(|e| e.number("text", "lineheight"))
+                            .unwrap_or(1.2),
                         rotation,
                     },
                     r,
@@ -523,7 +531,13 @@ fn margins(
     titles: &BTreeMap<GuideId, super::text::Block>,
     r: &LayoutRequest,
     mut m: [f64; 4],
-) -> [f64; 4] {
+) -> ChartResult<[f64; 4]> {
+    let inset = [
+        super::theme_elements::inset(r, 0)?,
+        super::theme_elements::inset(r, 1)?,
+        super::theme_elements::inset(r, 2)?,
+        super::theme_elements::inset(r, 3)?,
+    ];
     for (id, a) in axes {
         if !a.spec.visible {
             continue;
@@ -536,7 +550,7 @@ fn margins(
                 AxisSide::Top => (2, -a.spec.translation[1]),
                 AxisSide::Bottom => (3, a.spec.translation[1]),
             };
-            m[side] = m[side].max(r.padding + guide_extent(a, &labels[id], r) + outward.max(0.));
+            m[side] = m[side].max(inset[side] + guide_extent(a, &labels[id], r) + outward.max(0.));
         }
         if a.spec.profile == GuideProfile::D3_3_0_0 || a.spec.geometry.is_some() {
             let (side, outward) = match a.spec.side {
@@ -545,7 +559,7 @@ fn margins(
                 AxisSide::Top => (2, -a.spec.translation[1]),
                 AxisSide::Bottom => (3, a.spec.translation[1]),
             };
-            m[side] = m[side].max(r.padding + geometry.outer.max(0.) + outward.max(0.));
+            m[side] = m[side].max(inset[side] + geometry.outer.max(0.) + outward.max(0.));
         }
         for l in &labels[id] {
             let w = l.metrics.width();
@@ -571,7 +585,7 @@ fn margins(
                 AxisSide::Bottom => a.spec.translation[1],
             };
             m[side] = m[side].max(
-                r.padding
+                inset[side]
                     + geometry
                         .outer
                         .max(geometry.spacing() + size + l.dodge_offset + title)
@@ -579,15 +593,15 @@ fn margins(
                     + outward.max(0.),
             );
             if a.spec.side.horizontal() {
-                m[0] = m[0].max(r.padding + w / 2.);
-                m[1] = m[1].max(r.padding + w / 2.);
+                m[0] = m[0].max(inset[0] + w / 2.);
+                m[1] = m[1].max(inset[1] + w / 2.);
             } else {
-                m[2] = m[2].max(r.padding + h / 2.);
-                m[3] = m[3].max(r.padding + h / 2.);
+                m[2] = m[2].max(inset[2] + h / 2.);
+                m[3] = m[3].max(inset[3] + h / 2.);
             }
         }
     }
-    m
+    Ok(m)
 }
 fn plot(r: &LayoutRequest, m: [f64; 4]) -> ChartResult<Option<Rect>> {
     let w = r.bounds.width() - m[0] - m[1];
@@ -635,6 +649,19 @@ fn base_label_geometry(
             }
         } else {
             baseline - l.metrics.ascent()
+        };
+        let x = l
+            .text_style
+            .hjust
+            .map_or(x, |j| anchor.x() - j * l.metrics.width());
+        let top = l
+            .text_style
+            .vjust
+            .map_or(top, |j| anchor.y() - (1. - j) * l.metrics.height());
+        let baseline = if l.text_style.vjust.is_some() {
+            top + l.metrics.ascent()
+        } else {
+            baseline
         };
         return Ok((
             Point::new(x, baseline)?,
@@ -716,7 +743,7 @@ fn overlaps(a: Rect, b: Rect, gap: f64) -> bool {
         && a.origin().y() < b.max_y() + gap
         && b.origin().y() < a.max_y() + gap
 }
-fn styled_line(primitive: Primitive, style: &GuideLineStyle) -> Primitive {
+pub(super) fn styled_line(primitive: Primitive, style: &GuideLineStyle) -> Primitive {
     match (primitive, style.dashes.as_deref()) {
         (Primitive::Path { commands, stroke }, Some(dashes)) if !dashes.is_empty() => {
             Primitive::DashedPath {
@@ -735,12 +762,57 @@ fn styled_line(primitive: Primitive, style: &GuideLineStyle) -> Primitive {
         (primitive, _) => primitive,
     }
 }
+fn push_guide_line(
+    out: &mut Output,
+    item: SceneItem,
+    style: &GuideLineStyle,
+    r: &LayoutRequest,
+) -> ChartResult<()> {
+    let stroke = match &item.primitive {
+        Primitive::Rule { stroke, .. }
+        | Primitive::Path { stroke, .. }
+        | Primitive::DashedPath { stroke, .. } => *stroke,
+        _ => style.stroke(INK),
+    };
+    let paint = crate::grammar::Style {
+        color: stroke.color,
+        stroke_width: stroke.width,
+        units: Some(crate::grammar::AestheticUnits::Destination),
+        ..Default::default()
+    };
+    let primitives = super::recipe_intervals::with_arrows(
+        vec![item.primitive.clone()],
+        style.arrow.as_ref(),
+        &paint,
+        r,
+    )?;
+    for (index, mut primitive) in primitives.into_iter().enumerate() {
+        if index > 0
+            && let Primitive::ShapePath { fill, anchors, .. } = &mut primitive
+        {
+            if let Some(color) = style.arrow_fill {
+                *fill = Some(color.resolve());
+            }
+            anchors.clear();
+        }
+        out.push(
+            SceneItem {
+                primitive,
+                ..item.clone()
+            },
+            vec![],
+            r,
+        )?;
+    }
+    Ok(())
+}
 fn guides(
     scales: &BTreeMap<ScaleId, ResolvedAxis>,
     axes: &mut BTreeMap<GuideId, ResolvedGuide>,
     labels: &BTreeMap<GuideId, Vec<Label>>,
     p: Rect,
     r: &LayoutRequest,
+    coordinate: Option<&super::coordinate_map::CoordinateMap>,
     out: &mut Output,
 ) -> ChartResult<bool> {
     let mut pressure = false;
@@ -773,7 +845,15 @@ fn guides(
                 Point::new(p.max_x(), p.max_y())?,
             ),
         };
-        let logticks = super::ggplot_axis::log_ticks(&scales[&a.spec.scale], &a.spec, r)?;
+        let mut logticks = super::ggplot_axis::log_ticks(&scales[&a.spec.scale], &a.spec, r)?;
+        if let Some(map) = coordinate {
+            let source_side = super::coordinate_guides::side(map, a.spec.side);
+            for tick in &mut logticks {
+                tick.1 = super::coordinate_guides::tick_position(map, source_side, tick.1)?
+                    .unwrap_or(f64::NAN);
+            }
+            logticks.retain(|tick| tick.1.is_finite());
+        }
         if let Some(options) = &a.spec.ggplot_axis {
             let positions = if options.logticks.is_some() {
                 logticks.iter().map(|t| t.1).collect::<Vec<_>>()
@@ -801,6 +881,8 @@ fn guides(
         }
         let geometry = super::guide_geometry::Geometry::resolve(&a.spec.style, r);
         let clip = (geometry.overflow == GuideOverflow::Clip).then_some(r.bounds);
+        out.stroke_end = components.domain.line_end;
+        out.stroke_join = components.domain.line_join;
         if components.domain.visible != Some(false) {
             let stroke = components.domain.stroke(color);
             let primitive = if a.spec.ggplot_axis.is_none()
@@ -809,7 +891,15 @@ fn guides(
                 Primitive::Path {
                     commands: super::guide_geometry::domain(
                         &a.spec,
-                        super::guide_geometry::range(&scales[&a.spec.scale], scales),
+                        if coordinate.is_some() {
+                            if a.spec.side.horizontal() {
+                                Bounds::new(p.origin().x(), p.max_x())?
+                            } else {
+                                Bounds::new(p.max_y(), p.origin().y())?
+                            }
+                        } else {
+                            super::guide_geometry::range(&scales[&a.spec.scale], scales)
+                        },
                         p,
                         geometry,
                     )?,
@@ -818,17 +908,20 @@ fn guides(
             } else {
                 Primitive::Rule { from, to, stroke }
             };
-            out.push(
+            push_guide_line(
+                out,
                 SceneItem {
                     guide: component(&a.spec, GuideRole::Domain, None),
                     layer: None,
                     clip,
                     primitive: styled_line(primitive, &components.domain),
                 },
-                vec![],
+                &components.domain,
                 r,
             )?;
         }
+        out.stroke_end = None;
+        out.stroke_join = None;
         a.ticks.clear();
         a.tick_indices.clear();
         let mut seen = BTreeSet::new();
@@ -878,13 +971,16 @@ fn guides(
             if !l.visible {
                 continue;
             }
+            out.stroke_end = l.line_style.line_end;
+            out.stroke_join = l.line_style.line_join;
             if l.line_style.visible != Some(false)
                 && a.spec
                     .ggplot_axis
                     .as_ref()
                     .is_none_or(|o| o.logticks.is_none())
             {
-                out.push(
+                push_guide_line(
+                    out,
                     SceneItem {
                         guide: component(&a.spec, GuideRole::Line, Some(l)),
                         layer: None,
@@ -898,10 +994,12 @@ fn guides(
                             &l.line_style,
                         ),
                     },
-                    vec![],
+                    &l.line_style,
                     r,
                 )?;
             }
+            out.stroke_end = None;
+            out.stroke_join = None;
             if !shown_label || hide_label {
                 continue;
             }
@@ -940,6 +1038,8 @@ fn guides(
         }
         for (index, (value, position, factor)) in logticks.into_iter().enumerate() {
             let style = &components.ticks;
+            out.stroke_end = style.line_end;
+            out.stroke_join = style.line_join;
             if style.visible == Some(false) {
                 continue;
             }
@@ -959,7 +1059,8 @@ fn guides(
                 index: Some(index),
                 label: Some(String::new()),
             });
-            out.push(
+            push_guide_line(
+                out,
                 SceneItem {
                     guide,
                     layer: None,
@@ -973,7 +1074,7 @@ fn guides(
                         style,
                     ),
                 },
-                vec![],
+                &components.ticks,
                 r,
             )?;
         }
@@ -983,15 +1084,18 @@ fn guides(
             .is_some_and(|o| o.minor_ticks && o.logticks.is_none())
         {
             let mut occurrences = std::collections::BTreeMap::<String, usize>::new();
+            let (minor_style, minor_length) = super::theme_elements::minor_line(
+                r,
+                a.spec.side,
+                &components.ticks,
+                geometry.inner / 2.,
+            )?;
             for (index, tick) in a.minor_ticks.iter().enumerate() {
                 let from = super::guide_geometry::point(a.spec.side, tick.position, 0., p)?;
-                let to = super::guide_geometry::point(
-                    a.spec.side,
-                    tick.position,
-                    geometry.inner / 2.,
-                    p,
-                )?;
-                let style = &components.ticks;
+                let to = super::guide_geometry::point(a.spec.side, tick.position, minor_length, p)?;
+                let style = &minor_style;
+                out.stroke_end = style.line_end;
+                out.stroke_join = style.line_join;
                 if style.visible == Some(false) {
                     continue;
                 }
@@ -1018,7 +1122,8 @@ fn guides(
                     index: Some(index),
                     label: Some(String::new()),
                 });
-                out.push(
+                push_guide_line(
+                    out,
                     SceneItem {
                         guide,
                         layer: None,
@@ -1032,7 +1137,7 @@ fn guides(
                             style,
                         ),
                     },
-                    vec![],
+                    &minor_style,
                     r,
                 )?;
             }
@@ -1042,6 +1147,8 @@ fn guides(
             pressure = true;
         }
     }
+    out.stroke_end = None;
+    out.stroke_join = None;
     Ok(pressure)
 }
 fn compact(
@@ -1107,8 +1214,10 @@ pub fn layout(
             "Navigation window names an absent axis.",
         ));
     }
+    super::geographic_guides::configure(&prepared, &mut effective)?;
     let theme = super::theme::tokens(&prepared, &effective)?;
     super::theme::configure(&theme, &mut effective);
+    super::theme_elements::configure(&prepared, &mut effective)?;
     let full_request = effective.clone();
     let furniture = super::composition::prepare(&prepared, &effective, measurer)?;
     if let Some(f) = &furniture {
@@ -1173,7 +1282,7 @@ fn guide_specs(r: &LayoutRequest) -> Vec<GuideSpec> {
         .chain(r.guides.iter().cloned())
         .collect()
 }
-fn resolve_guides(
+pub(super) fn resolve_guides(
     chart: &PreparedChart,
     axes: &BTreeMap<ScaleId, ResolvedAxis>,
     major_values: &BTreeMap<ScaleId, super::guide_ticks::SelectedGuideValues>,
@@ -1313,8 +1422,8 @@ pub(super) fn solve_panels_with_strip_offsets(
     let mut m = [0_f64; 4];
     for (prepared, request) in inputs {
         preflight(&prepared, &request)?;
-        for side in &mut m {
-            *side = side.max(request.padding);
+        for (index, side) in m.iter_mut().enumerate() {
+            *side = side.max(super::theme_elements::inset(&request, index)?);
         }
         let specs = guide_specs(&request);
         let titles = specs
@@ -1376,11 +1485,56 @@ pub(super) fn solve_panels_with_strip_offsets(
                     ))
                 })
                 .collect::<ChartResult<_>>()?;
-            w.guides = resolve_guides(&w.prepared, &w.axes, &major_values, &w.request)?;
+            let aspect = super::coordinate_guides::resolve(&w.prepared, &w.axes, p)?
+                .and_then(|m| m.aspect())
+                .or_else(|| {
+                    w.request
+                        .resolved_theme
+                        .as_ref()
+                        .and_then(|e| e.number("aspect.ratio", ""))
+                });
+            if aspect.is_some() {
+                let fitted = super::coordinate_guides::fit_aspect(p, aspect)?;
+                if fitted != p {
+                    w.plot = Some(fitted);
+                    major_values.clear();
+                    w.axes = w
+                        .request
+                        .axes
+                        .iter()
+                        .map(|spec| {
+                            Ok((
+                                spec.id,
+                                resolve_axis(
+                                    &w.prepared,
+                                    &w.request,
+                                    spec,
+                                    fitted,
+                                    major_values.entry(spec.id).or_default(),
+                                )?,
+                            ))
+                        })
+                        .collect::<ChartResult<_>>()?;
+                }
+            }
+            if let Some(map) =
+                super::coordinate_guides::resolve(&w.prepared, &w.axes, w.plot.unwrap())?
+            {
+                w.guides = super::coordinate_guides_training::resolve(
+                    &w.prepared,
+                    &w.axes,
+                    &w.request,
+                    w.plot.unwrap(),
+                    &map,
+                )?;
+                super::coordinate_guides::relocate(&map, &mut w.guides, &w.request)?;
+            } else {
+                w.guides = resolve_guides(&w.prepared, &w.axes, &major_values, &w.request)?;
+            }
             w.labels = measure_guides(&w.guides, &w.request, measurer)?;
             stack_guides(&mut w.guides, &w.labels, &w.titles, &w.request);
             w.passes = pass + 1;
-            next = margins(&w.guides, &w.labels, &w.titles, &w.request, next);
+            next = margins(&w.guides, &w.labels, &w.titles, &w.request, next)?;
         }
         if next == m {
             break;
@@ -1409,7 +1563,9 @@ pub(super) fn solve_panels_with_strip_offsets(
             });
             let retained_empty_glyphs = w.prepared.definition().profile() == crate::grammar::Profile::Ggplot2_4_0_3 && has_population && output.omitted == 0;
             let status = if !has_population || (output.items.is_empty() && !retained_empty_glyphs) { LayoutStatus::NoData } else { LayoutStatus::Ready };
-            if guides(&w.axes, &mut w.guides, &w.labels, p, request, &mut output)? {
+            let coordinate_map = super::coordinate_guides::resolve(&w.prepared, &w.axes, p)?;
+            let radial_guides = if let Some(map)=&coordinate_map { super::coordinate_guides::radial(map,&w.axes,&mut w.guides,&w.labels,request,measurer,&mut output)? } else {false};
+            if !radial_guides && guides(&w.axes, &mut w.guides, &w.labels, p, request, coordinate_map.as_ref(), &mut output)? {
                 w.diagnostics.push(pressure("Overlapping, duplicate or out-of-figure tick labels were encountered; each guide applied its declared preservation/adaptive policy."));
             }
             for (id,title) in &w.titles {
@@ -1438,7 +1594,7 @@ pub(super) fn solve_panels_with_strip_offsets(
         } else {
             w.axes.clear();
             w.guides.clear();
-            let mut output = Output {stroke_end:None,stroke_join:None,stroke_remaining:request.limits.max_path_commands,diagnostics: Vec::new(),hierarchies:Default::default(),items: vec![],targets:vec![],omitted:0,interactions:Default::default()};
+            let mut output = Output {coordinate:None,coordinate_fixed:None,coordinate_preprojected:false,coordinate_remaining:request.limits.max_path_commands,stroke_end:None,stroke_join:None,stroke_remaining:request.limits.max_path_commands,diagnostics: Vec::new(),hierarchies:Default::default(),items: vec![],targets:vec![],omitted:0,interactions:Default::default()};
             compact("Not enough space",request,measurer,&mut output)?;
             w.diagnostics.push(pressure("Bounds and destination text metrics cannot accommodate the minimum useful plot."));
             (output,LayoutStatus::NoSpace)
@@ -1452,7 +1608,7 @@ pub(super) fn solve_panels_with_strip_offsets(
         for (id, axis) in &mut w.axes {
             if let Some(guide)=w.guides.get(&GuideId::new(id.get())) {axis.ticks.clone_from(&guide.ticks);}
         }
-        let guide_frames = if let Some(plot) = w.plot {super::guide_animation::initial_frames(&w.guides,&w.axes,plot,request)?} else {BTreeMap::new()};
+        let guide_frames = if let Some(plot) = w.plot {super::guide_animation::initial_frames(&w.guides,&w.axes,plot,request,w.prepared.definition().coordinate.as_ref())?} else {BTreeMap::new()};
         Ok(LaidOutChart {hierarchies:output.hierarchies,guide_frames,guide_presentation:None,guides:w.guides,paint_themes:BTreeMap::new(),interactions:output.interactions,insets:vec![],prepared:w.prepared,scene,plot:w.plot,axes:w.axes,
             item_panels: vec![None; output.targets.len()], panels: vec![],
             targets:output.targets,diagnostics:w.diagnostics,status,passes:w.passes})

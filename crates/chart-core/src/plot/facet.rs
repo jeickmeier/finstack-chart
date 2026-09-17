@@ -42,6 +42,22 @@ pub fn facet_grid(rows: impl Into<String>, columns: impl Into<String>) -> FacetB
     }
 }
 impl FacetBuilder {
+    /// Resolve a registered facet plan over the live source catalog at preparation.
+    pub fn registered(
+        mut self,
+        operation: impl Into<String>,
+        version: crate::Revision,
+        parameters: serde_json::Value,
+    ) -> Self {
+        self.reference
+            .get_or_insert_with(Default::default)
+            .registered = Some(crate::grammar::FacetSelection {
+            operation: crate::grammar::OperationRef::new(operation, version),
+            parameters,
+        });
+        self
+    }
+
     /// Select reference catalog, population and scale-sharing semantics explicitly.
     pub fn reference(mut self, policy: FacetPolicy) -> Self {
         self.reference = Some(policy);

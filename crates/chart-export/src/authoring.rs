@@ -40,6 +40,8 @@ pub struct ExportOptions {
     decorations: Vec<chart_core::scene::SceneItem>,
     decoration_revision: Revision,
     dpi: u32,
+    raster_device: Option<crate::RasterDeviceOptions>,
+    vector_device: Option<crate::VectorDeviceOptions>,
     text: TextMode,
     view: ViewMode,
     background: Paint,
@@ -57,6 +59,8 @@ pub fn export_options(page: PageSize) -> ExportOptions {
         decorations: vec![],
         decoration_revision: Revision::INITIAL,
         dpi: 300,
+        raster_device: None,
+        vector_device: None,
         text: TextMode::Preserve,
         view: ViewMode::VisibleView,
         background: chart_core::theme::rgb(255, 255, 255).into(),
@@ -100,6 +104,16 @@ impl ExportOptions {
         self.dpi = dpi;
         self
     }
+    /// Set retained-vector device color and alpha policies.
+    pub fn vector_device(mut self, options: crate::VectorDeviceOptions) -> Self {
+        self.vector_device = Some(options);
+        self
+    }
+    /// Set additional raster-device options.
+    pub fn raster_device(mut self, options: crate::RasterDeviceOptions) -> Self {
+        self.raster_device = Some(options);
+        self
+    }
     /// Set vector text preservation versus outlines.
     pub fn text(mut self, text: TextMode) -> Self {
         self.text = text;
@@ -141,6 +155,8 @@ impl ExportOptions {
         profile.annotations.clone_from(&self.decorations);
         profile.annotation_revision = self.decoration_revision;
         profile.dpi = self.dpi;
+        profile.raster_device.clone_from(&self.raster_device);
+        profile.vector_device.clone_from(&self.vector_device);
         profile.text = self.text;
         profile.view = self.view;
         profile.background = self.background;

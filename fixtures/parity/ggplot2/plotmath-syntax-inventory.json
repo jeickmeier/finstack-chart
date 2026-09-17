@@ -1,0 +1,893 @@
+{
+  "reference": {
+    "R": "4.6.1",
+    "package": "grDevices",
+    "source": "plotmath.Rd"
+  },
+  "tables": [
+    [
+      ["Syntax", "Meaning"],
+      ["x + y", "x plus y"],
+      ["x - y", "x minus y"],
+      ["x*y", "juxtapose x and y"],
+      ["x/y", "x #1forwardslash y", "x forwardslashforwardslash y"],
+      ["x %+-% y", "x plus or minus y"],
+      ["x %/% y", "x divided by y"],
+      ["x %*% y", "x times y"],
+      ["x %.% y", "x #1cdot y", "x cdotcdot y"],
+      ["x[i]", "x subscript i"],
+      ["x^2", "x superscript 2"],
+      ["paste(x, y, z)", "juxtapose x, y, and z"],
+      ["sqrt(x)", "square root of x"],
+      ["sqrt(x, y)", "y-th root of x"],
+      ["x == y", "x equals y"],
+      ["x != y", "x is not equal to y"],
+      ["x < y", "x is less than y"],
+      ["x <= y", "x is less than or equal to y"],
+      ["x > y", "x is greater than y"],
+      ["x >= y", "x is greater than or equal to y"],
+      ["!x", "not x"],
+      ["x %~~% y", "x is approximately equal to y"],
+      ["x %=~% y", "x and y are congruent"],
+      ["x %==% y", "x is defined as y"],
+      ["x %prop% y", "x is proportional to y"],
+      ["x %~% y", "x is distributed as y"],
+      ["plain(x)", "draw x in normal font"],
+      ["bold(x)", "draw x in bold font"],
+      ["italic(x)", "draw x in italic font"],
+      ["bolditalic(x)", "draw x in bold italic font"],
+      ["symbol(x)", "draw x in symbol font"],
+      ["list(x, y, z)", "comma-separated list"],
+      ["...", "ellipsis (height varies)"],
+      ["cdots", "ellipsis (vertically centred)"],
+      ["ldots", "ellipsis (at baseline)"],
+      ["x %subset% y", "x is a proper subset of y"],
+      ["x %subseteq% y", "x is a subset of y"],
+      ["x %notsubset% y", "x is not a subset of y"],
+      ["x %supset% y", "x is a proper superset of y"],
+      ["x %supseteq% y", "x is a superset of y"],
+      ["x %in% y", "x is an element of y"],
+      ["x %notin% y", "x is not an element of y"],
+      ["hat(x)", "x with a circumflex"],
+      ["tilde(x)", "x with a tilde"],
+      ["dot(x)", "x with a dot"],
+      ["ring(x)", "x with a ring"],
+      ["bar(xy)", "#1xy with bar", "xyxy with bar"],
+      ["widehat(xy)", "#1xy with a wide circumflex", "xyxy with a wide circumflex"],
+      ["widetilde(xy)", "#1xy with a wide tilde", "xyxy with a wide tilde"],
+      ["x %<->% y", "x double-arrow y"],
+      ["x %->% y", "x right-arrow y"],
+      ["x %<-% y", "x left-arrow y"],
+      ["x %up% y", "x up-arrow y"],
+      ["x %down% y", "x down-arrow y"],
+      ["x %<=>% y", "x is equivalent to y"],
+      ["x %=>% y", "x implies y"],
+      ["x %<=% y", "y implies x"],
+      ["x %dblup% y", "x double-up-arrow y"],
+      ["x %dbldown% y", "x double-down-arrow y"],
+      ["alpha -- omega", "Greek symbols"],
+      ["Alpha -- Omega", "uppercase Greek symbols"],
+      ["theta1, phi1, sigma1, omega1", "cursive Greek symbols"],
+      ["Upsilon1", "capital upsilon with hook"],
+      ["aleph", "first letter of Hebrew alphabet"],
+      ["infinity", "infinity symbol"],
+      ["partialdiff", "partial differential symbol"],
+      ["nabla", "nabla, gradient symbol"],
+      ["32*degree", "32 degrees"],
+      ["60*minute", "60 minutes of angle"],
+      ["30*second", "30 seconds of angle"],
+      ["displaystyle(x)", "draw x in normal size (extra spacing)"],
+      ["textstyle(x)", "draw x in normal size"],
+      ["scriptstyle(x)", "draw x in small size"],
+      ["scriptscriptstyle(x)", "draw x in very small size"],
+      ["underline(x)", "draw x underlined"],
+      ["x ~~ y", "put extra space between x and y"],
+      ["x + phantom(0) + y", "leave gap for \"0\", but don't draw it"],
+      ["x + over(1, phantom(0))", "leave vertical gap for \"0\" (don't draw)"],
+      ["frac(x, y)", "x over y"],
+      ["over(x, y)", "x over y"],
+      ["atop(x, y)", "x over y (no horizontal bar)"],
+      ["sum(x[i], i==1, n)", "sum x[i] for i equals 1 to n"],
+      ["prod(plain(P)(X==x), x)", "product of P(X=x) for all values of x"],
+      ["integral(f(x)*dx, a, b)", "definite integral of f(x) wrt x"],
+      ["union(A[i], i==1, n)", "union of A[i] for i equals 1 to n"],
+      ["intersect(A[i], i==1, n)", "intersection of A[i]"],
+      ["lim(f(x), x %->% 0)", "limit of f(x) as x tends to 0"],
+      ["min(g(x), x > 0)", "minimum of g(x) for x greater than 0"],
+      ["inf(S)", "infimum of S"],
+      ["sup(S)", "supremum of S"],
+      ["x^y + z", "normal operator precedence"],
+      ["x^(y + z)", "visible grouping of operands"],
+      ["x^{y + z}", "invisible grouping of operands"],
+      ["group(\"(\",list(a, b),\"]\")", "specify left and right delimiters"],
+      ["bgroup(\"(\",atop(x,y),\")\")", "use scalable delimiters"],
+      ["group(lceil, x, rceil)", "special delimiters"],
+      ["group(lfloor, x, rfloor)", "special delimiters"],
+      ["group(langle, list(x, y), rangle)", "special delimiters"]
+    ]
+  ],
+  "syntax": [
+    {
+      "table": 1,
+      "row": 2,
+      "syntax": "x + y",
+      "description": "x plus y",
+      "parseable": true,
+      "parsed": "expression(x + y)"
+    },
+    {
+      "table": 1,
+      "row": 3,
+      "syntax": "x - y",
+      "description": "x minus y",
+      "parseable": true,
+      "parsed": "expression(x - y)"
+    },
+    {
+      "table": 1,
+      "row": 4,
+      "syntax": "x*y",
+      "description": "juxtapose x and y",
+      "parseable": true,
+      "parsed": "expression(x * y)"
+    },
+    {
+      "table": 1,
+      "row": 5,
+      "syntax": "x/y",
+      "description": ["x #1forwardslash y", "x forwardslashforwardslash y"],
+      "parseable": true,
+      "parsed": "expression(x/y)"
+    },
+    {
+      "table": 1,
+      "row": 6,
+      "syntax": "x %+-% y",
+      "description": "x plus or minus y",
+      "parseable": true,
+      "parsed": "expression(x %+-% y)"
+    },
+    {
+      "table": 1,
+      "row": 7,
+      "syntax": "x %/% y",
+      "description": "x divided by y",
+      "parseable": true,
+      "parsed": "expression(x%/%y)"
+    },
+    {
+      "table": 1,
+      "row": 8,
+      "syntax": "x %*% y",
+      "description": "x times y",
+      "parseable": true,
+      "parsed": "expression(x %*% y)"
+    },
+    {
+      "table": 1,
+      "row": 9,
+      "syntax": "x %.% y",
+      "description": ["x #1cdot y", "x cdotcdot y"],
+      "parseable": true,
+      "parsed": "expression(x %.% y)"
+    },
+    {
+      "table": 1,
+      "row": 10,
+      "syntax": "x[i]",
+      "description": "x subscript i",
+      "parseable": true,
+      "parsed": "expression(x[i])"
+    },
+    {
+      "table": 1,
+      "row": 11,
+      "syntax": "x^2",
+      "description": "x superscript 2",
+      "parseable": true,
+      "parsed": "expression(x^2)"
+    },
+    {
+      "table": 1,
+      "row": 12,
+      "syntax": "paste(x, y, z)",
+      "description": "juxtapose x, y, and z",
+      "parseable": true,
+      "parsed": "expression(paste(x, y, z))"
+    },
+    {
+      "table": 1,
+      "row": 13,
+      "syntax": "sqrt(x)",
+      "description": "square root of x",
+      "parseable": true,
+      "parsed": "expression(sqrt(x))"
+    },
+    {
+      "table": 1,
+      "row": 14,
+      "syntax": "sqrt(x, y)",
+      "description": "y-th root of x",
+      "parseable": true,
+      "parsed": "expression(sqrt(x, y))"
+    },
+    {
+      "table": 1,
+      "row": 15,
+      "syntax": "x == y",
+      "description": "x equals y",
+      "parseable": true,
+      "parsed": "expression(x == y)"
+    },
+    {
+      "table": 1,
+      "row": 16,
+      "syntax": "x != y",
+      "description": "x is not equal to y",
+      "parseable": true,
+      "parsed": "expression(x != y)"
+    },
+    {
+      "table": 1,
+      "row": 17,
+      "syntax": "x < y",
+      "description": "x is less than y",
+      "parseable": true,
+      "parsed": "expression(x < y)"
+    },
+    {
+      "table": 1,
+      "row": 18,
+      "syntax": "x <= y",
+      "description": "x is less than or equal to y",
+      "parseable": true,
+      "parsed": "expression(x <= y)"
+    },
+    {
+      "table": 1,
+      "row": 19,
+      "syntax": "x > y",
+      "description": "x is greater than y",
+      "parseable": true,
+      "parsed": "expression(x > y)"
+    },
+    {
+      "table": 1,
+      "row": 20,
+      "syntax": "x >= y",
+      "description": "x is greater than or equal to y",
+      "parseable": true,
+      "parsed": "expression(x >= y)"
+    },
+    {
+      "table": 1,
+      "row": 21,
+      "syntax": "!x",
+      "description": "not x",
+      "parseable": true,
+      "parsed": "expression(!x)"
+    },
+    {
+      "table": 1,
+      "row": 22,
+      "syntax": "x %~~% y",
+      "description": "x is approximately equal to y",
+      "parseable": true,
+      "parsed": "expression(x %~~% y)"
+    },
+    {
+      "table": 1,
+      "row": 23,
+      "syntax": "x %=~% y",
+      "description": "x and y are congruent",
+      "parseable": true,
+      "parsed": "expression(x %=~% y)"
+    },
+    {
+      "table": 1,
+      "row": 24,
+      "syntax": "x %==% y",
+      "description": "x is defined as y",
+      "parseable": true,
+      "parsed": "expression(x %==% y)"
+    },
+    {
+      "table": 1,
+      "row": 25,
+      "syntax": "x %prop% y",
+      "description": "x is proportional to y",
+      "parseable": true,
+      "parsed": "expression(x %prop% y)"
+    },
+    {
+      "table": 1,
+      "row": 26,
+      "syntax": "x %~% y",
+      "description": "x is distributed as y",
+      "parseable": true,
+      "parsed": "expression(x %~% y)"
+    },
+    {
+      "table": 1,
+      "row": 27,
+      "syntax": "plain(x)",
+      "description": "draw x in normal font",
+      "parseable": true,
+      "parsed": "expression(plain(x))"
+    },
+    {
+      "table": 1,
+      "row": 28,
+      "syntax": "bold(x)",
+      "description": "draw x in bold font",
+      "parseable": true,
+      "parsed": "expression(bold(x))"
+    },
+    {
+      "table": 1,
+      "row": 29,
+      "syntax": "italic(x)",
+      "description": "draw x in italic font",
+      "parseable": true,
+      "parsed": "expression(italic(x))"
+    },
+    {
+      "table": 1,
+      "row": 30,
+      "syntax": "bolditalic(x)",
+      "description": "draw x in bold italic font",
+      "parseable": true,
+      "parsed": "expression(bolditalic(x))"
+    },
+    {
+      "table": 1,
+      "row": 31,
+      "syntax": "symbol(x)",
+      "description": "draw x in symbol font",
+      "parseable": true,
+      "parsed": "expression(symbol(x))"
+    },
+    {
+      "table": 1,
+      "row": 32,
+      "syntax": "list(x, y, z)",
+      "description": "comma-separated list",
+      "parseable": true,
+      "parsed": "expression(list(x, y, z))"
+    },
+    {
+      "table": 1,
+      "row": 33,
+      "syntax": "...",
+      "description": "ellipsis (height varies)",
+      "parseable": true,
+      "parsed": "expression(...)"
+    },
+    {
+      "table": 1,
+      "row": 34,
+      "syntax": "cdots",
+      "description": "ellipsis (vertically centred)",
+      "parseable": true,
+      "parsed": "expression(cdots)"
+    },
+    {
+      "table": 1,
+      "row": 35,
+      "syntax": "ldots",
+      "description": "ellipsis (at baseline)",
+      "parseable": true,
+      "parsed": "expression(ldots)"
+    },
+    {
+      "table": 1,
+      "row": 36,
+      "syntax": "x %subset% y",
+      "description": "x is a proper subset of y",
+      "parseable": true,
+      "parsed": "expression(x %subset% y)"
+    },
+    {
+      "table": 1,
+      "row": 37,
+      "syntax": "x %subseteq% y",
+      "description": "x is a subset of y",
+      "parseable": true,
+      "parsed": "expression(x %subseteq% y)"
+    },
+    {
+      "table": 1,
+      "row": 38,
+      "syntax": "x %notsubset% y",
+      "description": "x is not a subset of y",
+      "parseable": true,
+      "parsed": "expression(x %notsubset% y)"
+    },
+    {
+      "table": 1,
+      "row": 39,
+      "syntax": "x %supset% y",
+      "description": "x is a proper superset of y",
+      "parseable": true,
+      "parsed": "expression(x %supset% y)"
+    },
+    {
+      "table": 1,
+      "row": 40,
+      "syntax": "x %supseteq% y",
+      "description": "x is a superset of y",
+      "parseable": true,
+      "parsed": "expression(x %supseteq% y)"
+    },
+    {
+      "table": 1,
+      "row": 41,
+      "syntax": "x %in% y",
+      "description": "x is an element of y",
+      "parseable": true,
+      "parsed": "expression(x %in% y)"
+    },
+    {
+      "table": 1,
+      "row": 42,
+      "syntax": "x %notin% y",
+      "description": "x is not an element of y",
+      "parseable": true,
+      "parsed": "expression(x %notin% y)"
+    },
+    {
+      "table": 1,
+      "row": 43,
+      "syntax": "hat(x)",
+      "description": "x with a circumflex",
+      "parseable": true,
+      "parsed": "expression(hat(x))"
+    },
+    {
+      "table": 1,
+      "row": 44,
+      "syntax": "tilde(x)",
+      "description": "x with a tilde",
+      "parseable": true,
+      "parsed": "expression(tilde(x))"
+    },
+    {
+      "table": 1,
+      "row": 45,
+      "syntax": "dot(x)",
+      "description": "x with a dot",
+      "parseable": true,
+      "parsed": "expression(dot(x))"
+    },
+    {
+      "table": 1,
+      "row": 46,
+      "syntax": "ring(x)",
+      "description": "x with a ring",
+      "parseable": true,
+      "parsed": "expression(ring(x))"
+    },
+    {
+      "table": 1,
+      "row": 47,
+      "syntax": "bar(xy)",
+      "description": ["#1xy with bar", "xyxy with bar"],
+      "parseable": true,
+      "parsed": "expression(bar(xy))"
+    },
+    {
+      "table": 1,
+      "row": 48,
+      "syntax": "widehat(xy)",
+      "description": ["#1xy with a wide circumflex", "xyxy with a wide circumflex"],
+      "parseable": true,
+      "parsed": "expression(widehat(xy))"
+    },
+    {
+      "table": 1,
+      "row": 49,
+      "syntax": "widetilde(xy)",
+      "description": ["#1xy with a wide tilde", "xyxy with a wide tilde"],
+      "parseable": true,
+      "parsed": "expression(widetilde(xy))"
+    },
+    {
+      "table": 1,
+      "row": 50,
+      "syntax": "x %<->% y",
+      "description": "x double-arrow y",
+      "parseable": true,
+      "parsed": "expression(x %<->% y)"
+    },
+    {
+      "table": 1,
+      "row": 51,
+      "syntax": "x %->% y",
+      "description": "x right-arrow y",
+      "parseable": true,
+      "parsed": "expression(x %->% y)"
+    },
+    {
+      "table": 1,
+      "row": 52,
+      "syntax": "x %<-% y",
+      "description": "x left-arrow y",
+      "parseable": true,
+      "parsed": "expression(x %<-% y)"
+    },
+    {
+      "table": 1,
+      "row": 53,
+      "syntax": "x %up% y",
+      "description": "x up-arrow y",
+      "parseable": true,
+      "parsed": "expression(x %up% y)"
+    },
+    {
+      "table": 1,
+      "row": 54,
+      "syntax": "x %down% y",
+      "description": "x down-arrow y",
+      "parseable": true,
+      "parsed": "expression(x %down% y)"
+    },
+    {
+      "table": 1,
+      "row": 55,
+      "syntax": "x %<=>% y",
+      "description": "x is equivalent to y",
+      "parseable": true,
+      "parsed": "expression(x %<=>% y)"
+    },
+    {
+      "table": 1,
+      "row": 56,
+      "syntax": "x %=>% y",
+      "description": "x implies y",
+      "parseable": true,
+      "parsed": "expression(x %=>% y)"
+    },
+    {
+      "table": 1,
+      "row": 57,
+      "syntax": "x %<=% y",
+      "description": "y implies x",
+      "parseable": true,
+      "parsed": "expression(x %<=% y)"
+    },
+    {
+      "table": 1,
+      "row": 58,
+      "syntax": "x %dblup% y",
+      "description": "x double-up-arrow y",
+      "parseable": true,
+      "parsed": "expression(x %dblup% y)"
+    },
+    {
+      "table": 1,
+      "row": 59,
+      "syntax": "x %dbldown% y",
+      "description": "x double-down-arrow y",
+      "parseable": true,
+      "parsed": "expression(x %dbldown% y)"
+    },
+    {
+      "table": 1,
+      "row": 60,
+      "syntax": "alpha -- omega",
+      "description": "Greek symbols",
+      "parseable": true,
+      "parsed": "expression(alpha - -omega)"
+    },
+    {
+      "table": 1,
+      "row": 61,
+      "syntax": "Alpha -- Omega",
+      "description": "uppercase Greek symbols",
+      "parseable": true,
+      "parsed": "expression(Alpha - -Omega)"
+    },
+    {
+      "table": 1,
+      "row": 62,
+      "syntax": "theta1, phi1, sigma1, omega1",
+      "description": "cursive Greek symbols",
+      "parseable": false,
+      "error": "<text>:1:7: unexpected ','\n1: theta1,\n          ^"
+    },
+    {
+      "table": 1,
+      "row": 63,
+      "syntax": "Upsilon1",
+      "description": "capital upsilon with hook",
+      "parseable": true,
+      "parsed": "expression(Upsilon1)"
+    },
+    {
+      "table": 1,
+      "row": 64,
+      "syntax": "aleph",
+      "description": "first letter of Hebrew alphabet",
+      "parseable": true,
+      "parsed": "expression(aleph)"
+    },
+    {
+      "table": 1,
+      "row": 65,
+      "syntax": "infinity",
+      "description": "infinity symbol",
+      "parseable": true,
+      "parsed": "expression(infinity)"
+    },
+    {
+      "table": 1,
+      "row": 66,
+      "syntax": "partialdiff",
+      "description": "partial differential symbol",
+      "parseable": true,
+      "parsed": "expression(partialdiff)"
+    },
+    {
+      "table": 1,
+      "row": 67,
+      "syntax": "nabla",
+      "description": "nabla, gradient symbol",
+      "parseable": true,
+      "parsed": "expression(nabla)"
+    },
+    {
+      "table": 1,
+      "row": 68,
+      "syntax": "32*degree",
+      "description": "32 degrees",
+      "parseable": true,
+      "parsed": "expression(32 * degree)"
+    },
+    {
+      "table": 1,
+      "row": 69,
+      "syntax": "60*minute",
+      "description": "60 minutes of angle",
+      "parseable": true,
+      "parsed": "expression(60 * minute)"
+    },
+    {
+      "table": 1,
+      "row": 70,
+      "syntax": "30*second",
+      "description": "30 seconds of angle",
+      "parseable": true,
+      "parsed": "expression(30 * second)"
+    },
+    {
+      "table": 1,
+      "row": 71,
+      "syntax": "displaystyle(x)",
+      "description": "draw x in normal size (extra spacing)",
+      "parseable": true,
+      "parsed": "expression(displaystyle(x))"
+    },
+    {
+      "table": 1,
+      "row": 72,
+      "syntax": "textstyle(x)",
+      "description": "draw x in normal size",
+      "parseable": true,
+      "parsed": "expression(textstyle(x))"
+    },
+    {
+      "table": 1,
+      "row": 73,
+      "syntax": "scriptstyle(x)",
+      "description": "draw x in small size",
+      "parseable": true,
+      "parsed": "expression(scriptstyle(x))"
+    },
+    {
+      "table": 1,
+      "row": 74,
+      "syntax": "scriptscriptstyle(x)",
+      "description": "draw x in very small size",
+      "parseable": true,
+      "parsed": "expression(scriptscriptstyle(x))"
+    },
+    {
+      "table": 1,
+      "row": 75,
+      "syntax": "underline(x)",
+      "description": "draw x underlined",
+      "parseable": true,
+      "parsed": "expression(underline(x))"
+    },
+    {
+      "table": 1,
+      "row": 76,
+      "syntax": "x ~~ y",
+      "description": "put extra space between x and y",
+      "parseable": true,
+      "parsed": "expression(x ~ ~y)"
+    },
+    {
+      "table": 1,
+      "row": 77,
+      "syntax": "x + phantom(0) + y",
+      "description": "leave gap for \"0\", but don't draw it",
+      "parseable": true,
+      "parsed": "expression(x + phantom(0) + y)"
+    },
+    {
+      "table": 1,
+      "row": 78,
+      "syntax": "x + over(1, phantom(0))",
+      "description": "leave vertical gap for \"0\" (don't draw)",
+      "parseable": true,
+      "parsed": "expression(x + over(1, phantom(0)))"
+    },
+    {
+      "table": 1,
+      "row": 79,
+      "syntax": "frac(x, y)",
+      "description": "x over y",
+      "parseable": true,
+      "parsed": "expression(frac(x, y))"
+    },
+    {
+      "table": 1,
+      "row": 80,
+      "syntax": "over(x, y)",
+      "description": "x over y",
+      "parseable": true,
+      "parsed": "expression(over(x, y))"
+    },
+    {
+      "table": 1,
+      "row": 81,
+      "syntax": "atop(x, y)",
+      "description": "x over y (no horizontal bar)",
+      "parseable": true,
+      "parsed": "expression(atop(x, y))"
+    },
+    {
+      "table": 1,
+      "row": 82,
+      "syntax": "sum(x[i], i==1, n)",
+      "description": "sum x[i] for i equals 1 to n",
+      "parseable": true,
+      "parsed": "expression(sum(x[i], i == 1, n))"
+    },
+    {
+      "table": 1,
+      "row": 83,
+      "syntax": "prod(plain(P)(X==x), x)",
+      "description": "product of P(X=x) for all values of x",
+      "parseable": true,
+      "parsed": "expression(prod(plain(P)(X == x), x))"
+    },
+    {
+      "table": 1,
+      "row": 84,
+      "syntax": "integral(f(x)*dx, a, b)",
+      "description": "definite integral of f(x) wrt x",
+      "parseable": true,
+      "parsed": "expression(integral(f(x) * dx, a, b))"
+    },
+    {
+      "table": 1,
+      "row": 85,
+      "syntax": "union(A[i], i==1, n)",
+      "description": "union of A[i] for i equals 1 to n",
+      "parseable": true,
+      "parsed": "expression(union(A[i], i == 1, n))"
+    },
+    {
+      "table": 1,
+      "row": 86,
+      "syntax": "intersect(A[i], i==1, n)",
+      "description": "intersection of A[i]",
+      "parseable": true,
+      "parsed": "expression(intersect(A[i], i == 1, n))"
+    },
+    {
+      "table": 1,
+      "row": 87,
+      "syntax": "lim(f(x), x %->% 0)",
+      "description": "limit of f(x) as x tends to 0",
+      "parseable": true,
+      "parsed": "expression(lim(f(x), x %->% 0))"
+    },
+    {
+      "table": 1,
+      "row": 88,
+      "syntax": "min(g(x), x > 0)",
+      "description": "minimum of g(x) for x greater than 0",
+      "parseable": true,
+      "parsed": "expression(min(g(x), x > 0))"
+    },
+    {
+      "table": 1,
+      "row": 89,
+      "syntax": "inf(S)",
+      "description": "infimum of S",
+      "parseable": true,
+      "parsed": "expression(inf(S))"
+    },
+    {
+      "table": 1,
+      "row": 90,
+      "syntax": "sup(S)",
+      "description": "supremum of S",
+      "parseable": true,
+      "parsed": "expression(sup(S))"
+    },
+    {
+      "table": 1,
+      "row": 91,
+      "syntax": "x^y + z",
+      "description": "normal operator precedence",
+      "parseable": true,
+      "parsed": "expression(x^y + z)"
+    },
+    {
+      "table": 1,
+      "row": 92,
+      "syntax": "x^(y + z)",
+      "description": "visible grouping of operands",
+      "parseable": true,
+      "parsed": "expression(x^(y + z))"
+    },
+    {
+      "table": 1,
+      "row": 93,
+      "syntax": "x^{y + z}",
+      "description": "invisible grouping of operands",
+      "parseable": true,
+      "parsed": "expression(x^{\n    y + z\n})"
+    },
+    {
+      "table": 1,
+      "row": 94,
+      "syntax": "group(\"(\",list(a, b),\"]\")",
+      "description": "specify left and right delimiters",
+      "parseable": true,
+      "parsed": "expression(group(\"(\", list(a, b), \"]\"))"
+    },
+    {
+      "table": 1,
+      "row": 95,
+      "syntax": "bgroup(\"(\",atop(x,y),\")\")",
+      "description": "use scalable delimiters",
+      "parseable": true,
+      "parsed": "expression(bgroup(\"(\", atop(x, y), \")\"))"
+    },
+    {
+      "table": 1,
+      "row": 96,
+      "syntax": "group(lceil, x, rceil)",
+      "description": "special delimiters",
+      "parseable": true,
+      "parsed": "expression(group(lceil, x, rceil))"
+    },
+    {
+      "table": 1,
+      "row": 97,
+      "syntax": "group(lfloor, x, rfloor)",
+      "description": "special delimiters",
+      "parseable": true,
+      "parsed": "expression(group(lfloor, x, rfloor))"
+    },
+    {
+      "table": 1,
+      "row": 98,
+      "syntax": "group(langle, list(x, y), rangle)",
+      "description": "special delimiters",
+      "parseable": true,
+      "parsed": "expression(group(langle, list(x, y), rangle))"
+    }
+  ],
+  "range_and_list_alias_expansion": {
+    "lowercase_greek": ["alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa", "lambda", "mu", "nu", "xi", "omicron", "pi", "rho", "sigma", "tau", "upsilon", "phi", "chi", "psi", "omega"],
+    "uppercase_greek": ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa", "Lambda", "Mu", "Nu", "Xi", "Omicron", "Pi", "Rho", "Sigma", "Tau", "Upsilon", "Phi", "Chi", "Psi", "Omega"],
+    "variants": ["theta1", "phi1", "sigma1", "omega1", "Upsilon1"]
+  },
+  "scope": "Complete documented syntax tables; parse-only, no expression evaluation or device metric claim."
+}

@@ -1,0 +1,359 @@
+{
+  "candidate": "proj4rs",
+  "version": "0.1.10",
+  "inspected_features": [
+    "wasm-strict"
+  ],
+  "source": "src/projections/mod.rs and named initialization modules in pinned Cargo registry",
+  "rows": [
+    {
+      "method": "mercator",
+      "parameter_names": [],
+      "candidate_kernel": "merc",
+      "required_feature": null,
+      "status": "candidate_unqualified",
+      "notes": "Sphere must be explicit; source excludes points above its 80-degree cap."
+    },
+    {
+      "method": "sinusoidal",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "cylequalarea",
+      "parameter_names": "lat0",
+      "candidate_kernel": "cea",
+      "required_feature": "esri",
+      "status": "candidate_unqualified",
+      "notes": "lat0 maps conceptually to lat_ts; source requires one parameter, candidate defaults scale to k0."
+    },
+    {
+      "method": "cylindrical",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "rectangular",
+      "parameter_names": "lat0",
+      "candidate_kernel": "eqc",
+      "required_feature": null,
+      "status": "candidate_unqualified",
+      "notes": "lat0 maps to lat_ts; candidate defaults0, source requires one parameter; candidate forces sphere."
+    },
+    {
+      "method": "gall",
+      "parameter_names": "lat0",
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "mollweide",
+      "parameter_names": [],
+      "candidate_kernel": "moll",
+      "required_feature": null,
+      "status": "candidate_unqualified",
+      "notes": "Candidate forces sphere; scaling/normalization and boundary equivalence remain unqualified."
+    },
+    {
+      "method": "gilbert",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "azequidistant",
+      "parameter_names": [],
+      "candidate_kernel": "aeqd",
+      "required_feature": "aeqd",
+      "status": "candidate_unqualified",
+      "notes": "Source standard is north-polar; candidate lat_0 defaults0; explicit90 required before comparison."
+    },
+    {
+      "method": "azequalarea",
+      "parameter_names": [],
+      "candidate_kernel": "laea",
+      "required_feature": null,
+      "status": "candidate_unqualified",
+      "notes": "Source standard is north-polar; candidate lat_0 defaults0; explicit90 required before comparison."
+    },
+    {
+      "method": "gnomonic",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "perspective",
+      "parameter_names": "dist",
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "orthographic",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "stereographic",
+      "parameter_names": [],
+      "candidate_kernel": "stere",
+      "required_feature": null,
+      "status": "candidate_unqualified",
+      "notes": "Source standard is north-polar; candidate supports polar/equatorial/oblique and ellipsoid; k0 normalization unqualified."
+    },
+    {
+      "method": "laue",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "fisheye",
+      "parameter_names": "n",
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "newyorker",
+      "parameter_names": "r",
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "conic",
+      "parameter_names": "lat0",
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "simpleconic",
+      "parameter_names": [
+        "lat0",
+        "lat1"
+      ],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "lambert",
+      "parameter_names": [
+        "lat0",
+        "lat1"
+      ],
+      "candidate_kernel": "lcc",
+      "required_feature": null,
+      "status": "candidate_unqualified",
+      "notes": "Source requires lat0,lat1; candidate lat_1/lat_2 defaults differ; origin and spherical convention unqualified."
+    },
+    {
+      "method": "albers",
+      "parameter_names": [
+        "lat0",
+        "lat1"
+      ],
+      "candidate_kernel": "aea",
+      "required_feature": null,
+      "status": "candidate_unqualified",
+      "notes": "Source requires lat0,lat1; candidate defaults both0 and rejects degenerate cone; origin/normalization unqualified."
+    },
+    {
+      "method": "bonne",
+      "parameter_names": "lat0",
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "polyconic",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "aitoff",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "lagrange",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "bicentric",
+      "parameter_names": "lon0",
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "elliptic",
+      "parameter_names": "lon0",
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "globular",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "vandergrinten",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "eisenlohr",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "guyou",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "square",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "tetra",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "hex",
+      "parameter_names": [],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "harrison",
+      "parameter_names": [
+        "dist",
+        "angle"
+      ],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "trapezoidal",
+      "parameter_names": [
+        "lat0",
+        "lat1"
+      ],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "lune",
+      "parameter_names": [
+        "lat",
+        "angle"
+      ],
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "mecca",
+      "parameter_names": "lat0",
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "homing",
+      "parameter_names": "lat0",
+      "candidate_kernel": null,
+      "required_feature": null,
+      "status": "missing_kernel",
+      "notes": "No matching projection kernel in the pinned proj4rs registry; similarly named projections are not substitutes."
+    },
+    {
+      "method": "sp_mercator",
+      "parameter_names": [],
+      "candidate_kernel": "merc",
+      "required_feature": null,
+      "status": "candidate_unqualified",
+      "notes": "Source spheroid constants must be identified; no assumed WGS84 equivalence."
+    },
+    {
+      "method": "sp_albers",
+      "parameter_names": [
+        "lat0",
+        "lat1"
+      ],
+      "candidate_kernel": "aea",
+      "required_feature": null,
+      "status": "candidate_unqualified",
+      "notes": "Two parallels plus exact reference spheroid required; no assumed WGS84 equivalence."
+    }
+  ]
+}

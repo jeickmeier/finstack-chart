@@ -231,6 +231,7 @@ fn fix_gg01_primary_legend_matrix() {
                         let mut pixels = vec![0; reader.output_buffer_size()];
                         reader.next_frame(&mut pixels).unwrap();
                     }
+                    _ => unreachable!("This legend matrix enumerates SVG, PDF and PNG above."),
                 }
                 if let Some(directory) = &directory {
                     artifact

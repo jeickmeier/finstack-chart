@@ -102,10 +102,23 @@ impl Navigator {
             .state()
             .axis_windows()
             .into_owned();
+        let chart = if let Some(key) = panel {
+            &self
+                .presented
+                .panels()
+                .iter()
+                .find(|p| &p.key == key)
+                .ok_or_else(|| error("Navigation panel is absent from the presented scene."))?
+                .chart
+        } else {
+            &self.presented
+        };
         for id in axes {
+            let axis = self.axis(*id, panel)?;
+            let (action, basis) = crate::layout::navigation_basis(chart, *id, action)?;
             windows.insert(
                 *id,
-                navigate_axis(self.axis(*id, panel)?, action, boundary)?,
+                navigate_axis_with_basis(axis, action, boundary, basis)?,
             );
         }
         crate::state::validate_navigation_windows(&windows)?;
@@ -209,13 +222,22 @@ fn absolute(t: f64, origin: i64) -> ChartResult<i64> {
     i64::try_from(i128::from(origin) + t.round() as i128)
         .map_err(|_| error("Time navigation overflows source timestamps."))
 }
+#[cfg(test)]
 fn navigate_axis(
     axis: &ResolvedAxis,
     action: Navigation,
     boundary: NavigationBoundary,
 ) -> ChartResult<AxisWindow> {
+    navigate_axis_with_basis(axis, action, boundary, None)
+}
+fn navigate_axis_with_basis(
+    axis: &ResolvedAxis,
+    action: Navigation,
+    boundary: NavigationBoundary,
+    basis: Option<(Bounds, Bounds)>,
+) -> ChartResult<AxisWindow> {
     let horizontal = axis.spec.side.horizontal();
-    let (domain, view, range) = match &axis.scale {
+    let (domain, mut view, mut range) = match &axis.scale {
         ResolvedScale::Unbounded(_) => {
             return Err(Diagnostic::error(
                 DiagnosticCode::UnsupportedCapability,
@@ -274,6 +296,10 @@ fn navigate_axis(
             ));
         }
     };
+    if let Some((coordinate_view, coordinate_range)) = basis {
+        view = coordinate_view;
+        range = coordinate_range;
+    }
     let next = interval(domain, view, range, horizontal, action, boundary)?;
     match &axis.scale {
         ResolvedScale::Linear(_) => Ok(AxisWindow::Numeric(next.start(), next.end())),

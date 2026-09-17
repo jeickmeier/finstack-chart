@@ -15,9 +15,11 @@ impl LayerHandle {
 #[derive(Clone)]
 pub struct LayerBuilder {
     recipe: Option<BuiltinRecipe>,
+    geography: Option<(GeoFeatureCollection, Mapping, GeoOperation)>,
     recipe_aes: std::collections::BTreeMap<RecipeAesthetic, NumericScaleInput>,
     legend: Option<LayerLegend>,
     text: Option<TextGeom>,
+    pub(super) default_text: bool,
     annotation: Option<RowAnnotation>,
     pub(super) id: ChartResult<LayerId>,
     pub(super) name: Option<String>,
@@ -67,6 +69,24 @@ pub struct LayerBuilder {
     pub(super) failure: Option<crate::Diagnostic>,
 }
 impl LayerBuilder {
+    /// Join typed geographic features to an ordinary source field in the shared compiler.
+    pub fn geography(mut self, collection: GeoFeatureCollection, join: impl Into<Mapping>) -> Self {
+        self.geography = Some((collection, join.into(), GeoOperation::Geometry));
+        self
+    }
+    /// Select a geographic geometry-derived operation without host preprocessing.
+    pub fn geography_operation(mut self, operation: GeoOperation) -> Self {
+        if let Some((_, _, current)) = &mut self.geography {
+            *current = operation;
+        } else {
+            self.failure = Some(error(
+                DiagnosticCode::Validation,
+                "Geographic operation requires a feature collection.",
+            ));
+        }
+        self
+    }
+
     /// Select a built-in recipe over common source/statistical channels.
     pub fn recipe(mut self, recipe: BuiltinRecipe) -> Self {
         self.recipe = Some(recipe);
@@ -93,7 +113,15 @@ impl LayerBuilder {
 
     /// Render retained source/statistical rows as text using mapped Label aesthetics.
     pub fn text_geom(mut self, options: TextGeom) -> Self {
+        self.default_text = false;
         self.text = Some(options);
+        self
+    }
+
+    /// Render text with inherited geom theme defaults; mapped row controls remain authoritative.
+    pub fn text_defaults(mut self) -> Self {
+        self.text = Some(TextGeom::default());
+        self.default_text = true;
         self
     }
 
@@ -125,6 +153,22 @@ impl LayerBuilder {
         )
     }
 
+    /// Select a versioned registered key while retaining guide inclusion controls.
+    pub fn key_glyph(
+        mut self,
+        operation: impl Into<String>,
+        version: crate::Revision,
+        parameters: serde_json::Value,
+    ) -> Self {
+        self.legend
+            .get_or_insert_with(Default::default)
+            .registered_key = Some(crate::grammar::KeyGlyphSelection {
+            operation: crate::grammar::OperationRef::new(operation, version),
+            parameters,
+        });
+        self
+    }
+
     /// Configure layer guide inclusion and key topology without changing marks.
     pub fn legend(mut self, policy: LayerLegend) -> Self {
         self.legend = Some(policy);
@@ -136,9 +180,11 @@ impl LayerBuilder {
             id: fresh_id().map(LayerId::new),
             name: None,
             recipe: None,
+            geography: None,
             recipe_aes: Default::default(),
             legend: None,
             text: None,
+            default_text: false,
             annotation: None,
             data: None,
             input: None,
@@ -602,10 +648,28 @@ impl LayerBuilder {
             .clone()
             .map(|recipe| recipe.try_map_fields(|field| field.field(data)))
             .transpose()?;
+        layer.geography = self
+            .geography
+            .as_ref()
+            .map(|(collection, join, operation)| {
+                Ok(GeoLayerSpec {
+                    collection: collection.clone(),
+                    join: join.field(data)?,
+                    operation: *operation,
+                    default_color: !self.explicit_color,
+                    default_line_width: !self.explicit_line_width,
+                })
+            })
+            .transpose()?;
         layer.style = self.style;
         if matches!(
             self.recipe,
-            Some(BuiltinRecipe::Polygon(_) | BuiltinRecipe::Tile(_) | BuiltinRecipe::Raster(_))
+            Some(
+                BuiltinRecipe::Polygon(_)
+                    | BuiltinRecipe::Tile(_)
+                    | BuiltinRecipe::Hexagon(_)
+                    | BuiltinRecipe::Raster(_)
+            )
         ) {
             if self.explicit_color && layer.style.stroke.is_none() {
                 layer.style.stroke = Some(layer.style.color);
@@ -717,6 +781,35 @@ impl LayerBuilder {
         layer.orientation = orientation;
         if let Some(mappings) = &self.generated {
             layer.mappings = mappings.clone();
+        }
+        if matches!(self.recipe, Some(BuiltinRecipe::Smooth)) {
+            for (channel, field) in [
+                (RecipeAesthetic::Lower, StatField::Lower),
+                (RecipeAesthetic::Upper, StatField::Upper),
+            ] {
+                layer
+                    .recipe_aes
+                    .entry(channel)
+                    .or_insert(ColorInput::Statistical(field));
+            }
+        }
+        if matches!(layer.statistic.parameters, StatParameters::Spatial(_)) {
+            let fields: &[(RecipeAesthetic, StatField)] = match self.recipe {
+                Some(BuiltinRecipe::Tile(_) | BuiltinRecipe::Hexagon(_)) => &[
+                    (RecipeAesthetic::Width, StatField::Width),
+                    (RecipeAesthetic::Height, StatField::Height),
+                ],
+                Some(BuiltinRecipe::Polygon(_)) => {
+                    &[(RecipeAesthetic::Subgroup, StatField::Subgroup)]
+                }
+                _ => &[],
+            };
+            for (channel, field) in fields {
+                layer
+                    .recipe_aes
+                    .entry(*channel)
+                    .or_insert_with(|| ColorInput::Statistical(field.clone()));
+            }
         }
         if matches!(layer.statistic.parameters, StatParameters::Distribution(_)) {
             let fields: &[(RecipeAesthetic, StatField)] = match self.recipe {
@@ -1479,4 +1572,46 @@ pub fn qq_line() -> LayerBuilder {
 /// Sample and draw a portable pure numeric function.
 pub fn function_curve(function: AnalyticFunction) -> LayerBuilder {
     line().stat(super::function_stat(function))
+}
+
+/// Reference model smoother with a confidence ribbon when estimates are available.
+pub fn smooth() -> LayerBuilder {
+    line()
+        .recipe(BuiltinRecipe::Smooth)
+        .stat(super::smooth_stat())
+}
+/// Quantile-regression curves from the shared statistical model owner.
+pub fn quantile() -> LayerBuilder {
+    line().stat(super::quantile_stat())
+}
+
+/// Rectangular weighted spatial bins with shared tile geometry.
+pub fn bin2d() -> LayerBuilder {
+    points()
+        .recipe(BuiltinRecipe::Tile(TileRecipe::default()))
+        .stat(super::bin2d_stat())
+}
+/// Hexagonal weighted spatial bins with shared polygon geometry.
+pub fn hex() -> LayerBuilder {
+    points()
+        .recipe(BuiltinRecipe::Hexagon(TileRecipe::default()))
+        .stat(super::hex_stat())
+}
+/// Product Gaussian density contour paths.
+pub fn density2d() -> LayerBuilder {
+    shape_line().stat(super::density2d_stat())
+}
+/// Contour paths from source grid response values supplied through stat input.
+pub fn contour() -> LayerBuilder {
+    shape_line().stat(super::contour_stat())
+}
+/// Filled contour bands preserving compound holes.
+pub fn contour_filled() -> LayerBuilder {
+    points()
+        .recipe(BuiltinRecipe::Polygon(PolygonRecipe::default()))
+        .stat(super::contour_filled_stat())
+}
+/// Weighted covariance ellipse paths.
+pub fn ellipse() -> LayerBuilder {
+    shape_line().stat(super::ellipse_stat())
 }

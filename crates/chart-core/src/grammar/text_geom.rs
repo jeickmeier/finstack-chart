@@ -30,6 +30,9 @@ pub struct TextGeom {
     pub font: Option<crate::services::ResourceDescriptor>,
     /// Explicit family/face resources for mapped font selectors, without system lookup.
     pub fonts: Vec<TextFont>,
+    /// Parse row labels as plotmath with these explicit faces.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub math: Option<crate::typography::MathFonts>,
 }
 impl Default for TextGeom {
     fn default() -> Self {
@@ -46,11 +49,15 @@ impl Default for TextGeom {
             border_width: 0.25,
             font: None,
             fonts: Vec::new(),
+            math: None,
         }
     }
 }
 impl TextGeom {
     pub(crate) fn validate(&self) -> ChartResult<()> {
+        if let Some(fonts) = &self.math {
+            fonts.validate(crate::Limits::default())?;
+        }
         let finite = [
             self.size,
             self.angle,

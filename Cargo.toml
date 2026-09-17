@@ -10,6 +10,7 @@ members = [
     "examples/chart-gallery",
     "examples/custom-extension",
 ]
+exclude = ["vendor/proj4rs"]
 default-members = ["crates/chart-core", "crates/chart-export", "crates/gpui-charts"]
 
 [workspace.package]
@@ -22,6 +23,7 @@ publish = false
 libm = "=0.2.16"
 ryu-js = "=1.0.3"
 pxfm = "=0.1.30"
+proj4rs = { path = "vendor/proj4rs", version = "=0.1.10", default-features = false, features = ["wasm-strict", "esri"] }
 serde = { version = "=1.0.229", features = ["derive", "rc"] }
 serde_json = { version = "=1.0.151", features = ["float_roundtrip"] }
 chart-core = { path = "crates/chart-core" }

@@ -26,6 +26,14 @@ impl Block {
                         origin.y() + y - self.bounds.origin().y(),
                     )?;
                 }
+                if let Primitive::Path { commands, .. } = &mut item.primitive {
+                    transform_commands(commands, &|p| {
+                        Point::new(
+                            p.x() + x - self.bounds.origin().x(),
+                            p.y() + y - self.bounds.origin().y(),
+                        )
+                    })?;
+                }
                 Ok(item)
             })
             .collect()
@@ -99,6 +107,38 @@ pub(super) fn measure(
         for run in line {
             let mut limits = r.limits;
             limits.max_path_commands = remaining;
+            if let Some(expression) = &run.math {
+                let result = crate::typography::math_layout::layout(
+                    expression,
+                    ShapeRequest {
+                        run,
+                        default_font: &r.font,
+                        font_size: r.font_size,
+                        units: r.units,
+                        limits,
+                    },
+                    measurer,
+                )?;
+                let count = result
+                    .paint
+                    .iter()
+                    .map(|paint| match paint {
+                        crate::typography::math_layout::MathPaint::Glyph { run, .. } => {
+                            run.glyphs.len() + run.outlines.len()
+                        }
+                        crate::typography::math_layout::MathPaint::Stroke { commands, .. } => {
+                            commands.len()
+                        }
+                    })
+                    .sum::<usize>();
+                crate::limits::require_within(count <= remaining, "math block geometry")?;
+                remaining -= count;
+                runs.push((
+                    result,
+                    run.color.map(crate::color::Paint::resolve).unwrap_or(color),
+                ));
+                continue;
+            }
             let result = measurer.shape(ShapeRequest {
                 run,
                 default_font: &r.font,
@@ -123,13 +163,24 @@ pub(super) fn measure(
                 diagnostics.push(d);
             }
             runs.push((
-                result,
+                crate::typography::math_layout::MathBox {
+                    width: result.metrics.width(),
+                    ascent: result.metrics.ascent(),
+                    descent: result.metrics.descent(),
+                    italic: 0.,
+                    paint: vec![crate::typography::math_layout::MathPaint::Glyph {
+                        run: result,
+                        x: 0.,
+                        y: 0.,
+                    }],
+                },
                 run.color.map(crate::color::Paint::resolve).unwrap_or(color),
             ));
         }
         shaped.push(runs);
     }
-    let (sin, cos) = text.rotation.to_radians().sin_cos();
+    let radians = text.rotation.to_radians();
+    let (sin, cos) = (libm::sin(radians), libm::cos(radians));
     let rotate = |x: f64, y: f64| Point::new(cos * x - sin * y, sin * x + cos * y);
     let mut min_x = 0_f64;
     let mut min_y = 0_f64;
@@ -145,55 +196,88 @@ pub(super) fn measure(
     let mut baseline = 0.;
     let mut previous_descent = 0.;
     for (index, line) in shaped.into_iter().enumerate() {
-        let ascent = line
-            .iter()
-            .map(|(s, _)| s.metrics.ascent())
-            .fold(0_f64, f64::max);
-        let descent = line
-            .iter()
-            .map(|(s, _)| s.metrics.descent())
-            .fold(0_f64, f64::max);
+        let ascent = line.iter().map(|(s, _)| s.ascent).fold(0_f64, f64::max);
+        let descent = line.iter().map(|(s, _)| s.descent).fold(0_f64, f64::max);
         if index > 0 {
             baseline += (previous_descent + ascent) * text.line_spacing;
         }
         let mut x = 0.;
-        for (run, color) in line {
-            let origin = rotate(x, baseline)?;
+        for (block, color) in line {
             for point in [
-                rotate(x, baseline - run.metrics.ascent())?,
-                rotate(x + run.metrics.width(), baseline - run.metrics.ascent())?,
-                rotate(x, baseline + run.metrics.descent())?,
-                rotate(x + run.metrics.width(), baseline + run.metrics.descent())?,
+                rotate(x, baseline - block.ascent)?,
+                rotate(x + block.width, baseline - block.ascent)?,
+                rotate(x, baseline + block.descent)?,
+                rotate(x + block.width, baseline + block.descent)?,
             ] {
                 include(point);
             }
-            for c in placed_outlines(&run, origin, text.rotation)? {
-                match c {
-                    PathCommand::MoveTo(a) | PathCommand::LineTo(a) => include(a),
-                    PathCommand::QuadraticTo(a, b) => {
-                        include(a);
-                        include(b);
+            for paint in block.paint {
+                let primitive = match paint {
+                    crate::typography::math_layout::MathPaint::Glyph { run, x: dx, y: dy } => {
+                        let origin = rotate(x + dx, baseline + dy)?;
+                        for command in placed_outlines(&run, origin, text.rotation)? {
+                            match command {
+                                PathCommand::MoveTo(a) | PathCommand::LineTo(a) => include(a),
+                                PathCommand::QuadraticTo(a, b) => {
+                                    include(a);
+                                    include(b);
+                                }
+                                PathCommand::CubicTo(a, b, c) => {
+                                    include(a);
+                                    include(b);
+                                    include(c);
+                                }
+                                PathCommand::Close => {}
+                            }
+                        }
+                        Primitive::GlyphRun {
+                            origin,
+                            rotation: text.rotation,
+                            run,
+                            color,
+                        }
                     }
-                    PathCommand::CubicTo(a, b, c) => {
-                        include(a);
-                        include(b);
-                        include(c);
+                    crate::typography::math_layout::MathPaint::Stroke {
+                        mut commands,
+                        width,
+                    } => {
+                        transform_commands(&mut commands, &|p| {
+                            rotate(x + p.x(), baseline + p.y())
+                        })?;
+                        for command in &commands {
+                            let mut point = |p: Point| -> ChartResult<()> {
+                                include(Point::new(p.x() - width / 2., p.y() - width / 2.)?);
+                                include(Point::new(p.x() + width / 2., p.y() + width / 2.)?);
+                                Ok(())
+                            };
+                            match command {
+                                PathCommand::MoveTo(p) | PathCommand::LineTo(p) => point(*p)?,
+                                PathCommand::QuadraticTo(p, q) => {
+                                    point(*p)?;
+                                    point(*q)?;
+                                }
+                                PathCommand::CubicTo(p, q, r) => {
+                                    point(*p)?;
+                                    point(*q)?;
+                                    point(*r)?;
+                                }
+                                PathCommand::Close => {}
+                            }
+                        }
+                        Primitive::Path {
+                            commands,
+                            stroke: crate::scene::Stroke { color, width },
+                        }
                     }
-                    PathCommand::Close => {}
-                }
+                };
+                items.push(SceneItem {
+                    guide: None,
+                    layer: None,
+                    clip: None,
+                    primitive,
+                });
             }
-            x += run.metrics.width();
-            items.push(SceneItem {
-                guide: None,
-                layer: None,
-                clip: None,
-                primitive: Primitive::GlyphRun {
-                    origin,
-                    rotation: text.rotation,
-                    run,
-                    color,
-                },
-            });
+            x += block.width;
         }
         previous_descent = descent;
     }
@@ -281,4 +365,27 @@ impl TextMeasurer for BoundedMeasurer<'_> {
         )?;
         Ok(result)
     }
+}
+
+/// Apply one geometry mapping to all mathematical rule controls.
+pub(super) fn transform_commands(
+    commands: &mut [PathCommand],
+    map: &dyn Fn(Point) -> ChartResult<Point>,
+) -> ChartResult<()> {
+    for command in commands {
+        match command {
+            PathCommand::MoveTo(p) | PathCommand::LineTo(p) => *p = map(*p)?,
+            PathCommand::QuadraticTo(p, q) => {
+                *p = map(*p)?;
+                *q = map(*q)?;
+            }
+            PathCommand::CubicTo(p, q, r) => {
+                *p = map(*p)?;
+                *q = map(*q)?;
+                *r = map(*r)?;
+            }
+            PathCommand::Close => {}
+        }
+    }
+    Ok(())
 }

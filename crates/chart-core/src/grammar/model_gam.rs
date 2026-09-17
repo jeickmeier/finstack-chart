@@ -3,46 +3,7 @@ use crate::{ChartResult, DiagnosticCode};
 fn fail(s: &str) -> crate::Diagnostic {
     super::error(DiagnosticCode::NumericalDomain, s)
 }
-fn cholesky(a: &[f64], n: usize) -> ChartResult<Vec<f64>> {
-    let mut l = vec![0.; n * n];
-    for i in 0..n {
-        for j in 0..=i {
-            let v = a[i * n + j] - (0..j).map(|k| l[i * n + k] * l[j * n + k]).sum::<f64>();
-            if i == j {
-                if v <= 0. || !v.is_finite() {
-                    return Err(fail("GAM matrix is not positive definite."));
-                }
-                l[i * n + j] = libm::sqrt(v);
-            } else {
-                l[i * n + j] = v / l[j * n + j];
-            }
-        }
-    }
-    Ok(l)
-}
-fn solve(l: &[f64], b: &[f64]) -> Vec<f64> {
-    let n = b.len();
-    let mut x = b.to_vec();
-    for i in 0..n {
-        x[i] = (x[i] - (0..i).map(|j| l[i * n + j] * x[j]).sum::<f64>()) / l[i * n + i];
-    }
-    for i in (0..n).rev() {
-        x[i] = (x[i] - ((i + 1)..n).map(|j| l[j * n + i] * x[j]).sum::<f64>()) / l[i * n + i];
-    }
-    x
-}
-fn inverse(l: &[f64], n: usize) -> Vec<f64> {
-    let mut a = vec![0.; n * n];
-    for j in 0..n {
-        let mut b = vec![0.; n];
-        b[j] = 1.;
-        for (i, v) in solve(l, &b).into_iter().enumerate() {
-            a[i * n + j] = v;
-        }
-    }
-    a
-}
-use super::model_symmetric::eigen;
+use super::model_symmetric::{cholesky, eigen, inverse, solve};
 #[derive(Clone, Debug)]
 pub(crate) struct Controls {
     pub basis_dimension: usize,
@@ -216,8 +177,7 @@ pub(crate) fn fit(
 ) -> ChartResult<GamFit> {
     let n = x.len();
     let k = controls.basis_dimension;
-    if k < 3
-        || k > 64
+    if !(3..=64).contains(&k)
         || n <= k
         || y.len() != n
         || w.len() != n
@@ -298,7 +258,8 @@ pub(crate) fn fit(
             }
         }
     }
-    let objective = |log_lambda: f64| -> ChartResult<(f64, Vec<f64>, Vec<f64>, f64, f64)> {
+    type RemlEvaluation = (f64, Vec<f64>, Vec<f64>, f64, f64);
+    let objective = |log_lambda: f64| -> ChartResult<RemlEvaluation> {
         let lambda = libm::exp(log_lambda);
         let matrix: Vec<_> = cross
             .iter()

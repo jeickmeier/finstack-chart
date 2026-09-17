@@ -6,6 +6,9 @@ use std::collections::BTreeSet;
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(default, deny_unknown_fields)]
 pub struct FacetPolicy {
+    /// Registered planning over the live source catalog.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub registered: Option<super::FacetSelection>,
     /// Grid rows follow table order; false reverses their physical order.
     pub as_table: bool,
     /// Wrap panel growth and starting corner.
@@ -40,6 +43,7 @@ pub struct FacetPolicy {
 impl Default for FacetPolicy {
     fn default() -> Self {
         Self {
+            registered: None,
             as_table: true,
             direction: Default::default(),
             space: Default::default(),
@@ -190,7 +194,7 @@ pub(crate) fn sharing_group(spec: &FacetSpec, key: &PanelKey, horizontal: bool) 
 }
 
 /// Resolve a reference catalog from the same snapshot used by preparation.
-pub(crate) fn resolve<'a>(
+fn resolve_builtin<'a>(
     definition: &'a ChartDefinition,
     snapshot: &crate::data::StoreSnapshot,
     limits: CompileLimits,
@@ -463,6 +467,9 @@ impl FacetAxes {
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(default, deny_unknown_fields)]
 pub struct FacetLabeller {
+    /// Parse each strip line as mathematical notation with explicit font resources.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub math: Option<crate::typography::MathFonts>,
     /// Reuse a registered vector formatter with logical values and canonical variable names.
     pub registered: Option<FacetLabelOperation>,
     /// Prefix each value with its variable name.
@@ -482,6 +489,7 @@ impl Default for FacetLabeller {
     fn default() -> Self {
         Self {
             registered: None,
+            math: None,
             variable_names: false,
             context: false,
             separator: ": ".into(),
@@ -623,4 +631,18 @@ pub(crate) fn row_value(row: crate::data::RowView<'_>, field: crate::FieldId) ->
     stats::group_value(row, &Grouping::Interaction(vec![field]))
         .and_then(|group| group.component(field).cloned())
         .unwrap_or(GroupValue::Missing)
+}
+
+pub(crate) fn resolve<'a>(
+    definition: &'a ChartDefinition,
+    snapshot: &crate::data::StoreSnapshot,
+    limits: CompileLimits,
+    registry: &ExtensionRegistry,
+) -> ChartResult<std::borrow::Cow<'a, ChartDefinition>> {
+    super::facet_extensions::resolve(
+        resolve_builtin(definition, snapshot, limits)?,
+        snapshot,
+        limits,
+        registry,
+    )
 }

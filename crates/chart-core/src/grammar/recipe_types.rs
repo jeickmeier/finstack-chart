@@ -69,6 +69,22 @@ pub struct ArrowSpec {
     /// Filled closed triangle instead of an open tip.
     pub closed: bool,
 }
+impl ArrowSpec {
+    pub(crate) fn validate(&self) -> crate::ChartResult<()> {
+        if !self.angle.is_finite()
+            || self.angle <= 0.
+            || self.angle >= 180.
+            || !self.length_mm.is_finite()
+            || self.length_mm < 0.
+        {
+            return Err(crate::scales::error(
+                crate::DiagnosticCode::Validation,
+                "Arrow angle and length are invalid.",
+            ));
+        }
+        Ok(())
+    }
+}
 impl Default for ArrowSpec {
     fn default() -> Self {
         Self {
@@ -185,6 +201,8 @@ pub enum StepDirection {
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 #[serde(deny_unknown_fields)]
 pub enum BuiltinRecipe {
+    /// Fitted mean line with a separate uncertainty ribbon.
+    Smooth,
     /// Compound interval geometry.
     Interval(IntervalRecipe),
     /// Deferred data-space reference line.
@@ -200,6 +218,8 @@ pub enum BuiltinRecipe {
     Polygon(PolygonRecipe),
     /// Data-space rectangular tiles.
     Tile(TileRecipe),
+    /// Offset-lattice hexagons using shared portable polygon geometry.
+    Hexagon(TileRecipe),
     /// Sampled raster grid.
     Raster(RasterRecipe),
     /// Identity-count columns with data-space widths.

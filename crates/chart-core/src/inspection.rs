@@ -192,9 +192,36 @@ impl Inspector {
                             anchor.x().clamp(left, right),
                             anchor.y().clamp(top, bottom),
                         )?;
+                        let custom_shape = if let crate::grammar::HitGeometry::Path {
+                            geometry,
+                            fill_rule,
+                            ..
+                        } = &info.hit
+                        {
+                            let path = geometry.flatten(0.01, remaining_shape_vertices)?;
+                            remaining_shape_vertices -=
+                                path.subpaths.iter().map(|s| s.points.len()).sum::<usize>();
+                            Some(Arc::new(ShapeHit {
+                                fill_rule: *fill_rule,
+                                path,
+                                dashed_stroke: None,
+                                fill: true,
+                                stroke: None,
+                                sources: vec![InspectedTarget {
+                                    values: info.values.clone(),
+                                    selection: info.selection,
+                                    panel: presented.item_panels()[index].clone(),
+                                    layer,
+                                    target: target.clone(),
+                                    position,
+                                }],
+                            }))
+                        } else {
+                            None
+                        };
                         candidates.push(Candidate {
                             clamped_anchor: false,
-                            shape: None,
+                            shape: custom_shape,
                             source_only: false,
                             custom: Some(info.clone()),
                             hit: InspectedTarget {
@@ -366,6 +393,29 @@ impl Inspector {
                 Primitive::Point { center, .. } | Primitive::Symbol { center, .. } => {
                     if let Some(t) = targets.first() {
                         add(*center, t, None, None);
+                    }
+                }
+                Primitive::RasterImage { hits, .. } if !hits.is_empty() => {
+                    for region in hits {
+                        let target = targets.get(region.target_index).ok_or_else(|| {
+                            error(
+                                DiagnosticCode::SchemaConflict,
+                                "Raster coverage references an absent target.",
+                            )
+                        })?;
+                        let bounds = region.bounds;
+                        let left = bounds.origin().x().max(clip.origin().x());
+                        let right = bounds.max_x().min(clip.max_x());
+                        let top = bounds.origin().y().max(clip.origin().y());
+                        let bottom = bounds.max_y().min(clip.max_y());
+                        if left < right && top < bottom {
+                            add(
+                                Point::new(left.midpoint(right), top.midpoint(bottom))?,
+                                target,
+                                Some(bounds),
+                                None,
+                            );
+                        }
                     }
                 }
                 Primitive::RasterImage { cells, .. } if !cells.is_empty() => {

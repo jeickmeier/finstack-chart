@@ -196,6 +196,7 @@ impl Component {
             ("layer", Kind::VectorPath(v)) => plot.layer(v.clone()),
             ("layer", Kind::Callout(v)) => plot.layer(v.clone()),
             ("title", Kind::Title(v)) => plot.title(v.clone()),
+            ("tag", Kind::Rich(v)) => plot.tag(v.clone()),
             ("subtitle", Kind::Subtitle(v)) => plot.subtitle(v.clone()),
             ("caption", Kind::Caption(v)) => plot.caption(v.clone()),
             ("source_note", Kind::Note(v)) => plot.source_note(v.clone()),
@@ -218,6 +219,7 @@ impl Component {
     pub fn attach_edit(&self, slot: &str, edit: PlotEditBuilder) -> ChartResult<PlotEditBuilder> {
         Ok(match (slot, &self.0) {
             ("title", Kind::Title(v)) => edit.title(v.clone()),
+            ("tag", Kind::Rich(v)) => edit.tag(v.clone()),
             ("subtitle", Kind::Subtitle(v)) => edit.subtitle(v.clone()),
             ("caption", Kind::Caption(v)) => edit.caption(v.clone()),
             ("source_note", Kind::Note(v)) => edit.source_note(v.clone()),

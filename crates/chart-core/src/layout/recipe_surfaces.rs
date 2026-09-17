@@ -155,6 +155,7 @@ pub(super) fn project(
                 *rect = Rect::new(x + col as f64 * dx, y + row as f64 * dy, dx, dy)?;
             }
             Ok(vec![Primitive::RasterImage {
+                hits: vec![],
                 bounds: Rect::new(x, y, maxx - x, maxy - y)?,
                 raster: RasterAnnotation {
                     width,

@@ -2330,7 +2330,13 @@ impl MappedScale {
             {
                 if !entries.is_empty() {
                     mapping.validate_guide_mapping()?;
-                    if mapping.bounds.len() == 1 && entries.len() > 1 {
+                    if mapping.bounds.len() == 1
+                        && entries.len() > 1
+                        && !matches!(
+                            self.spec.guide.as_deref(),
+                            Some(GgplotScaleGuide::Binned(_))
+                        )
+                    {
                         return Err(error(
                             DiagnosticCode::Validation,
                             "Binned color guide values exceed the constant mapped key count.",

@@ -2,11 +2,15 @@
 //! This example is shared by proof hosts; production core/export do not depend on it.
 pub mod authoring;
 pub mod discrete_limits;
+pub mod facet_labels;
 pub mod guides;
 pub mod hierarchy;
 pub mod interpolate;
+pub mod key_glyphs;
+pub mod models;
 pub mod numeric_limits;
 mod probability_transforms;
+pub mod recipe_dispatch;
 pub mod scale_breaks;
 pub mod scale_labels;
 pub mod scale_palettes;
@@ -321,12 +325,19 @@ pub fn registry() -> ChartResult<Arc<ExtensionRegistry>> {
     interpolate::register(&mut registry)?;
     guides::register(&mut registry)?;
     scale_labels::register(&mut registry)?;
+    facet_labels::register(&mut registry)?;
     scale_breaks::register(&mut registry)?;
     scale_palettes::register(&mut registry)?;
     scale_vectors::register(&mut registry)?;
     scale_transforms::register(&mut registry)?;
     probability_transforms::register(&mut registry)?;
     hierarchy::register(&mut registry)?;
+    key_glyphs::register(&mut registry)?;
+    guide_drawing::register(&mut registry)?;
+    facet_planner::register(&mut registry)?;
+    coordinates::register(&mut registry)?;
+    recipe_dispatch::register(&mut registry)?;
+    models::register(&mut registry)?;
     Ok(Arc::new(registry))
 }
 /// Portable/native variants share the exact stat population, scale training and guides.
@@ -425,3 +436,9 @@ pub fn prepare(native: bool) -> ChartResult<PreparedChart> {
         CompileLimits::default(),
     )
 }
+
+pub mod guide_drawing;
+
+pub mod facet_planner;
+
+pub mod coordinates;

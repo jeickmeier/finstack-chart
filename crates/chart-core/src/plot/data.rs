@@ -427,3 +427,15 @@ impl<T> RowsBuilder<T> {
         self.columns.build()
     }
 }
+
+/// Materialize an already ordered category dictionary without rebuilding its order.
+pub(super) fn categorical_codes(codes: Vec<Option<u32>>, dictionary: Vec<String>) -> ColumnData {
+    let validity = codes.iter().map(Option::is_some).collect();
+    let codes = codes.into_iter().map(|c| c.unwrap_or(0)).collect();
+    ColumnData::new(
+        ColumnValues::Categorical { codes, dictionary },
+        FieldKind::Categorical,
+        validity,
+        true,
+    )
+}

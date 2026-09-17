@@ -88,8 +88,20 @@ impl Component {
             }),
             Kind::Layer(b) => Kind::Layer(match method {
                 "legend" => scalar!(a, b, legend),
+                "key_glyph" => {
+                    a.count(3)?;
+                    b.clone().key_glyph(
+                        a.at::<String>(0)?,
+                        Revision::new(exact_u64(&a.0[1])?),
+                        a.at::<Value>(2)?,
+                    )
+                }
                 "annotation" => scalar!(a, b, annotation),
                 "text_geom" => scalar!(a, b, text_geom),
+                "text_defaults" => {
+                    a.count(0)?;
+                    b.clone().text_defaults()
+                }
                 "text_label" => b.clone().text_label(a.mapping()?),
                 "text_stat_label" => scalar!(a, b, text_stat_label),
                 "hierarchy_value" => b.clone().hierarchy_value(a.mapping()?),
@@ -146,6 +158,11 @@ impl Component {
                 "pie_angles" => scalar!(a, b, pie_angles),
                 "pie_order" => scalar!(a, b, pie_order),
                 "pie_grouped" => scalar!(a, b, pie_grouped),
+                "geography" => {
+                    a.count(2)?;
+                    b.clone().geography(a.at(0)?, mapping(&a.0[1])?)
+                }
+                "geography_operation" => scalar!(a, b, geography_operation),
                 "recipe" => scalar!(a, b, recipe),
                 "recipe_stat_value" => pair!(a, b, recipe_stat_value),
                 "recipe_value" => {
@@ -219,6 +236,8 @@ impl Component {
                 "weight" => b.clone().weight(a.mapping()?),
                 "width" => scalar!(a, b, width),
                 "distribution_options" => scalar!(a, b, distribution_options),
+                "model_options" => scalar!(a, b, model_options),
+                "spatial_options" => scalar!(a, b, spatial_options),
                 "univariate_options" => scalar!(a, b, univariate_options),
                 "ggplot_count" => empty!(a, b, ggplot_count),
                 "sum_count" => empty!(a, b, sum_count),
@@ -464,6 +483,14 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Legend(b) => Kind::Legend(match method {
+                "registered" => {
+                    a.count(3)?;
+                    b.clone().registered(
+                        a.at::<String>(0)?,
+                        Revision::new(exact_u64(&a.0[1])?),
+                        a.at::<Value>(2)?,
+                    )
+                }
                 "options" => scalar!(a, b, options),
                 "custom" => scalar!(a, b, custom),
                 "aesthetic" => scalar!(a, b, aesthetic),
@@ -474,6 +501,14 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Facet(b) => Kind::Facet(match method {
+                "registered" => {
+                    a.count(3)?;
+                    b.clone().registered(
+                        a.at::<String>(0)?,
+                        Revision::new(exact_u64(&a.0[1])?),
+                        a.at::<Value>(2)?,
+                    )
+                }
                 "fields" => b.clone().fields(a.one::<Vec<String>>()?),
                 "row_fields" => scalar!(a, b, row_fields),
                 "reference" => scalar!(a, b, reference),
@@ -537,12 +572,25 @@ impl Component {
                                 crate::theme::GeometryTheme<crate::color::Paint>,
                             >(value)?)
                         }
+                        "snapshot" => {
+                            a.count(0)?;
+                            b.clone()
+                        }
+                        "elements" => b.clone().elements(a.one()?)?,
+                        "update_elements" => b.clone().update_elements(a.one()?)?,
+                        "replace_elements" => b.clone().replace_elements(a.one()?)?,
+                        "fonts" => b.clone().fonts(a.one()?),
+                        "reference_preset" => {
+                            a.count(2)?;
+                            b.clone().reference_preset(a.at(0)?, a.at(1)?)?
+                        }
                         "preset" => scalar!(a, b, preset),
                         _ => return Err(unsupported(method)),
                     },
                 )
             }
             Kind::TextStyle(b) => Kind::TextStyle(match method {
+                "math" => b.clone().math(a.one()?)?,
                 "size" => scalar!(a, b, size),
                 "weight" => scalar!(a, b, weight),
                 "font" => scalar!(a, b, font),
@@ -554,6 +602,7 @@ impl Component {
                 _ => return Err(unsupported(method)),
             }),
             Kind::Rich(b) => Kind::Rich(match method {
+                "math" => b.clone().math(a.one()?)?,
                 "line_spacing" => scalar!(a, b, line_spacing),
                 "rotation" => scalar!(a, b, rotation),
                 _ => return Err(unsupported(method)),

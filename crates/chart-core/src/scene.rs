@@ -101,11 +101,22 @@ impl FillRule {
         *self == Self::NonZero
     }
 }
+/// One visible inverse-sampled image region associated with an original semantic target.
+#[derive(serde::Serialize, Clone, Debug, PartialEq)]
+pub struct RasterHitRegion {
+    /// Destination pixel-run coverage, excluding holes and unmapped pixels.
+    pub bounds: Rect,
+    /// Index into the scene item's external semantic targets.
+    pub target_index: usize,
+}
 /// Authored minimal primitive, validated and copied into an immutable scene.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum Primitive {
     /// Bounded portable RGBA image with explicit interpolation and destination extent.
     RasterImage {
+        /// Optional inverse-sampled coverage; indices refer to original semantic targets.
+        #[serde(skip_serializing_if = "Vec::is_empty")]
+        hits: Vec<RasterHitRegion>,
         /// Optional per-source cell hit rectangles, ordered exactly like semantic targets.
         #[serde(skip_serializing_if = "Vec::is_empty")]
         cells: Vec<Rect>,
@@ -349,6 +360,14 @@ impl Scene {
     }
     /// Minimum scene wire version required by the retained primitive capabilities.
     pub fn wire_version(&self) -> u32 {
+        if self
+            .items
+            .iter()
+            .any(|i| matches!(&i.primitive,Primitive::RasterImage{hits,..} if !hits.is_empty()))
+        {
+            return 22;
+        }
+
         if self.items.iter().any(
             |i| matches!(&i.primitive, Primitive::RasterImage { cells, .. } if !cells.is_empty()),
         ) {
@@ -476,13 +495,35 @@ fn validate(
                 Ok(())
             }
 
-            Primitive::RasterImage { raster, cells, .. } => {
+            Primitive::RasterImage {
+                raster,
+                cells,
+                hits,
+                bounds,
+                ..
+            } => {
                 let count = raster
                     .pixels
                     .len()
-                    .saturating_add(cells.len().saturating_mul(4));
+                    .saturating_add(cells.len().saturating_mul(4))
+                    .saturating_add(hits.len().saturating_mul(5));
                 require_within(count <= path_remaining, "total raster pixels and hit cells")?;
                 path_remaining -= count;
+                let tolerance = 16.
+                    * f64::EPSILON
+                    * (bounds.origin().x().abs()
+                        + bounds.origin().y().abs()
+                        + bounds.width()
+                        + bounds.height())
+                    .max(1.);
+                if hits.iter().any(|h| {
+                    h.bounds.origin().x() < bounds.origin().x() - tolerance
+                        || h.bounds.origin().y() < bounds.origin().y() - tolerance
+                        || h.bounds.max_x() > bounds.max_x() + tolerance
+                        || h.bounds.max_y() > bounds.max_y() + tolerance
+                }) {
+                    return Err(path_error());
+                }
                 if raster.width == 0
                     || raster.height == 0
                     || raster.width.checked_mul(raster.height) != Some(raster.pixels.len())

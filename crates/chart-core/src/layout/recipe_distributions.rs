@@ -229,3 +229,31 @@ pub(super) fn density_band(
     }
     Ok(result)
 }
+
+/// Dot diameter and stack displacement are destination glyph dimensions, not a
+/// polygon to warp. The pinned GeomDotplot explicitly disclaims nonlinear coords.
+pub(super) fn project_dot_coordinate(
+    payload: &PreparedDistribution,
+    mark: &PreparedMark,
+    layer: &Layer,
+    request: &LayoutRequest,
+    map: &dyn Fn(Point) -> ChartResult<Option<Point>>,
+    coordinate: &super::coordinate_map::CoordinateMap,
+) -> ChartResult<Vec<Primitive>> {
+    let crate::grammar::CoordinateSpec::Cartesian(spec) = &coordinate.spec else {
+        return Err(crate::scales::error(
+            crate::DiagnosticCode::UnsupportedCapability,
+            "Dotplot does not support nonlinear coordinates; the pinned reference also disclaims this combination.",
+        ));
+    };
+    let mut payload = payload.clone();
+    if let PreparedDistribution::Dot { horizontal, .. } = &mut payload {
+        *horizontal ^= spec.flip;
+    }
+    project(&payload, mark, layer, request, coordinate.plot, &|point| {
+        map(point)?
+            .map(|point| coordinate.project(point))
+            .transpose()
+            .map(Option::flatten)
+    })
+}

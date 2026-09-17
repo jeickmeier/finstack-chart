@@ -655,3 +655,33 @@ fn primary_break_selection_waits_for_the_actual_population() {
         );
     }
 }
+
+#[test]
+fn legacy_binned_candidates_keep_repeated_constant_breaks_through_primary_preparation() {
+    use chart_core::prelude::*;
+    let scale=spec(&serde_json::json!({"transform":"identity","domain":[4,4],"limits":[4,4],"breaks":"equal","count":1.1,"labels":"auto"})).unwrap();
+    let p = plot(
+        Data::columns()
+            .column("x", [0., 1.])
+            .column("v", [4., 4.])
+            .build()
+            .unwrap(),
+    )
+    .profile(Profile::Ggplot2_4_0_3)
+    .aes(aes().x("x").y(1.).color("v").color_scale("v"))
+    .scale(color_mapped("v", scale))
+    .layer(points())
+    .build()
+    .unwrap();
+    let prepared = p.chart().unwrap().prepare().unwrap();
+    let legend = prepared.layers()[0].color_legend().unwrap();
+    assert_eq!(
+        legend
+            .numeric_breaks
+            .iter()
+            .map(|b| (b.value.0, b.label.as_deref(), b.visible))
+            .collect::<Vec<_>>(),
+        vec![(4., Some("4"), true), (4., Some("4"), true)]
+    );
+    assert_eq!(prepared.layers()[0].marks().len(), 2);
+}

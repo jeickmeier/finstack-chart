@@ -10,6 +10,9 @@ pub(crate) fn resolve<'a>(
     registry: &ExtensionRegistry,
     portable: bool,
 ) -> ChartResult<Cow<'a, ChartDefinition>> {
+    if let Some(coordinate) = &definition.coordinate {
+        coordinate.validate()?;
+    }
     if !definition.any_ggplot_transform(crate::scales::GgplotTransform::has_registered) {
         return Ok(Cow::Borrowed(definition));
     }
@@ -27,6 +30,10 @@ pub(crate) fn resolve<'a>(
     }
     let mut result = definition.clone();
     let registrations = &registry.transforms_function;
+    if let Some(CoordinateSpec::Transformed(v)) = &mut result.coordinate {
+        v.x.resolve_registrations(registrations, portable)?;
+        v.y.resolve_registrations(registrations, portable)?;
+    }
     for scale in super::interpolation_extensions::mapped_scales_mut(&mut result) {
         if let Some(t) = scale.ggplot_transform_mut() {
             t.resolve_registrations(registrations, portable)?;
@@ -116,6 +123,16 @@ fn source(a: &mut SourceAes, r: &TransformRegistrations, p: bool) -> ChartResult
 fn statistic(s: &mut Statistic, r: &TransformRegistrations, p: bool) -> ChartResult<()> {
     match &mut s.parameters {
         StatParameters::Distribution(s) => {
+            for n in s.numerics_mut() {
+                numeric(n, r, p)?;
+            }
+        }
+        StatParameters::Spatial(s) => {
+            for n in s.numerics_mut() {
+                numeric(n, r, p)?;
+            }
+        }
+        StatParameters::Model(s) => {
             for n in s.numerics_mut() {
                 numeric(n, r, p)?;
             }

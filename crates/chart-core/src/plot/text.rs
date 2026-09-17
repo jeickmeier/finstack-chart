@@ -1,3 +1,4 @@
+use crate::ChartResult;
 use crate::services::ResourceDescriptor;
 use crate::typography::{RichRun, RichText, TextDirection};
 
@@ -13,6 +14,17 @@ pub fn text_style() -> TextStyle {
     }
 }
 impl TextStyle {
+    /// Parse replacement labels through this mathematical typography template.
+    pub fn math(mut self, fonts: crate::typography::MathFonts) -> ChartResult<Self> {
+        self.run.math = Some(crate::typography::MathExpression::parse(
+            "x",
+            fonts,
+            crate::Limits::default(),
+        )?);
+        self.run.text = "x".into();
+        Ok(self)
+    }
+
     /// Relative size multiplier on the destination label size.
     pub fn size(mut self, size: f64) -> Self {
         self.run.size = size;
@@ -57,7 +69,9 @@ impl TextStyle {
         for line in &mut text.lines {
             for run in line {
                 let value = std::mem::take(&mut run.text);
+                let math = run.math.take();
                 *run = self.run.clone();
+                run.math = math;
                 run.text = value;
             }
         }
@@ -85,7 +99,9 @@ impl TextRunBuilder {
     /// Apply shared typography while retaining the logical text.
     pub fn style(mut self, style: TextStyle) -> Self {
         let text = self.0.text;
+        let math = self.0.math;
         self.0 = style.run;
+        self.0.math = math;
         self.0.text = text;
         self
     }
@@ -97,7 +113,26 @@ pub struct RichTextBuilder(RichText);
 pub fn rich_text(text: impl Into<String>) -> RichTextBuilder {
     RichTextBuilder(plain(text))
 }
+/// Parse one mathematical text block using explicit supplied font resources.
+pub fn math_text(
+    source: impl Into<String>,
+    fonts: crate::typography::MathFonts,
+) -> ChartResult<RichTextBuilder> {
+    Ok(RichTextBuilder(RichText::math(source, fonts)?))
+}
 impl RichTextBuilder {
+    /// Parse each current logical run without executing expressions.
+    pub fn math(mut self, fonts: crate::typography::MathFonts) -> ChartResult<Self> {
+        for run in self.0.lines.iter_mut().flatten() {
+            run.math = Some(crate::typography::MathExpression::parse(
+                &run.text,
+                fonts.clone(),
+                crate::Limits::default(),
+            )?);
+        }
+        Ok(self)
+    }
+
     /// Append a styled run to the last line.
     pub fn run(mut self, run: TextRunBuilder) -> Self {
         self.0.lines.last_mut().expect("initial line").push(run.0);

@@ -83,11 +83,21 @@ pub(super) fn strips(
                     .labels(
                         &call.operation,
                         crate::grammar::GuideLabelsInput {
+                            facet: Some(crate::grammar::FacetLabelContext {
+                                values: &panel.key.values[start..end],
+                                panel: &panel.key,
+                                location: (panel.row, panel.column),
+                                side,
+                                grid: matches!(layout, FacetLayout::Grid),
+                            }),
                             values: &values,
                             names: Some(&policy.field_names[start..end]),
                             temporal: None,
                             parameters: &call.parameters,
-                            limits: r.limits,
+                            limits: crate::Limits {
+                                max_text_bytes: *remaining,
+                                ..r.limits
+                            },
                         },
                         r.units == crate::services::Units::Points,
                     )?
@@ -111,20 +121,73 @@ pub(super) fn strips(
                     blue: 65,
                     alpha: 255,
                 });
-            let block = if side.horizontal() {
-                super::text::plain_lines(&value, r, measurer, color)?
-            } else {
-                let mut rich = crate::typography::RichText::plain("");
-                rich.lines = value
-                    .lines()
-                    .map(|s| vec![crate::typography::RichRun::new(s)])
-                    .collect();
+            if side.horizontal() && policy.labeller.math.is_none() && r.resolved_theme.is_none() {
+                return Ok(Strip {
+                    side,
+                    block: super::text::plain_lines(&value, r, measurer, color)?,
+                });
+            }
+            let mut rich = crate::typography::RichText::plain("");
+            rich.lines = value
+                .lines()
+                .map(|line| {
+                    if let Some(fonts) = &policy.labeller.math {
+                        crate::typography::RichText::math(line, fonts.clone())
+                            .map(|r| r.lines.into_iter().flatten().collect())
+                    } else {
+                        Ok(vec![crate::typography::RichRun::new(line)])
+                    }
+                })
+                .collect::<ChartResult<_>>()?;
+            if !side.horizontal() {
                 rich.rotation = if side == AxisSide::Left { -90. } else { 90. };
-                super::text::measure(&rich, r, measurer, color)?
-            };
+            }
+            let elements = r.resolved_theme.as_deref();
+            if let Some(elements) = &elements {
+                let name = match side {
+                    AxisSide::Top => "strip.text.x.top",
+                    AxisSide::Bottom => "strip.text.x.bottom",
+                    AxisSide::Left => "strip.text.y.left",
+                    AxisSide::Right => "strip.text.y.right",
+                };
+                if let Some(styled) = super::theme_elements::text_style(elements, name, &rich, r)? {
+                    rich = styled;
+                } else {
+                    rich.lines.clear();
+                }
+            }
+            let mut block = super::text::measure(&rich, r, measurer, color)?;
+            if let Some(elements) = &elements {
+                let name = match side {
+                    AxisSide::Top => "strip.text.x.top",
+                    AxisSide::Bottom => "strip.text.x.bottom",
+                    AxisSide::Left => "strip.text.y.left",
+                    AxisSide::Right => "strip.text.y.right",
+                };
+                super::theme_elements::margins(elements, name, &mut block, r)?;
+            }
             Ok(Strip { side, block })
         })
         .collect()
+}
+pub(super) fn outside(r: &LayoutRequest, side: AxisSide) -> bool {
+    r.resolved_theme.as_ref().is_some_and(|e|matches!(e.value(if side.horizontal(){"strip.placement.x"}else{"strip.placement.y"},""),Some(crate::theme::ThemeValue::Text(v)) if v=="outside"))
+}
+pub(super) fn switch_padding(r: &LayoutRequest, layout: &FacetLayout) -> f64 {
+    r.resolved_theme
+        .as_ref()
+        .and_then(|e| {
+            e.destination_length(
+                if matches!(layout, FacetLayout::Grid) {
+                    "strip.switch.pad.grid"
+                } else {
+                    "strip.switch.pad.wrap"
+                },
+                "",
+                0,
+            )
+        })
+        .unwrap_or(0.)
 }
 pub(super) fn side_index(side: AxisSide) -> usize {
     match side {

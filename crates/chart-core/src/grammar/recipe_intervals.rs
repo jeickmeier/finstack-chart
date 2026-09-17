@@ -27,17 +27,8 @@ pub(super) fn validate(recipe: &BuiltinRecipe) -> ChartResult<()> {
         BuiltinRecipe::Spoke(s) => s.arrow.as_ref(),
         _ => None,
     };
-    if arrow.is_some_and(|a| {
-        !a.angle.is_finite()
-            || a.angle <= 0.
-            || a.angle >= 180.
-            || !a.length_mm.is_finite()
-            || a.length_mm < 0.
-    }) {
-        return Err(error(
-            DiagnosticCode::Validation,
-            "Arrow angle and length are invalid.",
-        ));
+    if let Some(arrow) = arrow {
+        arrow.validate()?;
     }
     if matches!(recipe,BuiltinRecipe::Interval(s) if s.width.is_some_and(|w|!w.is_finite()||w<0.))
         || matches!(recipe,BuiltinRecipe::Reference(s)if !s.slope.is_finite()||!s.intercept.is_finite())

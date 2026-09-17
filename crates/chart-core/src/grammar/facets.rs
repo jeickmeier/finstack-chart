@@ -137,6 +137,8 @@ pub(crate) fn scoped_stat(stat: &Statistic, scope: StatScope) -> Statistic {
         match &mut stat.parameters {
             StatParameters::Identity => {}
             StatParameters::Distribution(s) => s.grouping = Grouping::All,
+            StatParameters::Spatial(s) => s.grouping = Grouping::All,
+            StatParameters::Model(s) => s.grouping = Grouping::All,
             StatParameters::Univariate(s) => s.grouping = Grouping::All,
             StatParameters::Custom(s) => s.grouping = Grouping::All,
             StatParameters::AutoBin(s) => s.grouping = Grouping::All,
@@ -373,7 +375,8 @@ pub(crate) fn prepare_facets(
     state: &ChartState,
     limits: CompileLimits,
 ) -> ChartResult<PreparedChart> {
-    let resolved = super::facet_policy::resolve(definition, source.get()?, limits)?;
+    let resolved =
+        super::facet_policy::resolve(definition, source.get()?, limits, &compiler.extensions)?;
     let definition = resolved.as_ref();
     let (mut population_diagnostics, rows, columns) =
         validate_facets(definition, source.get()?, limits, &compiler.extensions)?;
@@ -676,6 +679,9 @@ pub(crate) fn prepare_facets(
         positional_limits: Default::default(),
         positional_empty: Default::default(),
         scale_registrations: compiler.extensions.scales.clone(),
+        key_registrations: compiler.extensions.keys.clone(),
+        coordinate_registrations: compiler.extensions.coordinates.clone(),
+        guide_drawing: compiler.extensions.guide_drawing.clone(),
         palette_registrations: compiler.extensions.palette_function.clone(),
         break_registrations: compiler.extensions.breaks_function.clone(),
         guide_registrations: compiler.extensions.guides.clone(),

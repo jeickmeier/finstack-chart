@@ -1,0 +1,254 @@
+{
+  "reference": {
+    "R": "4.6.1",
+    "device": "cairo_pdf",
+    "api": "GEMetricInfo signed glyph metrics",
+    "font_manifest": {
+      "provenance": "Unmodified DejaVu 2.37 fonts from the bundled LibreOffice runtime; version and license extracted from embedded sfnt name records. Explicit publication resources only; no system lookup.",
+      "license": "LICENSE.txt",
+      "fonts": [
+        {
+          "file": "DejaVuSerif.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Serif",
+          "style": "Book",
+          "sha256": "42d1edeb7952f31b1f96d767ed7030b08a39e0c372b0071641518864e2bffb51",
+          "descriptor": {
+            "id": "9007199254748100",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "380132"
+          }
+        },
+        {
+          "file": "DejaVuSerif-Italic.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Serif",
+          "style": "Italic",
+          "sha256": "2e39b1d50f90b933b00c7bb54a96afd3f86419b3d717c7cf202e36f2d4973e47",
+          "descriptor": {
+            "id": "9007199254748101",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "345996"
+          }
+        },
+        {
+          "file": "DejaVuSerif-Bold.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Serif",
+          "style": "Bold",
+          "sha256": "c47b5527bcdc8dcf9ea8c77054454c5a884beaca2f44851a2a823ee639cbf07f",
+          "descriptor": {
+            "id": "9007199254748102",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "356088"
+          }
+        },
+        {
+          "file": "DejaVuSerif-BoldItalic.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Serif",
+          "style": "Bold Italic",
+          "sha256": "8d3dd3d31350309042ed226af82b34539bd773518e6107cb352712853ba80308",
+          "descriptor": {
+            "id": "9007199254748103",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "347460"
+          }
+        },
+        {
+          "file": "DejaVuSans.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Sans",
+          "style": "Book",
+          "sha256": "7da195a74c55bef988d0d48f9508bd5d849425c1770dba5d7bfc6ce9ed848954",
+          "descriptor": {
+            "id": "9007199254748104",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "757076"
+          }
+        },
+        {
+          "file": "DejaVuMathTeXGyre.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Math TeX Gyre",
+          "style": "Regular",
+          "license": "DejaVuMathTeXGyre-LICENSE.txt",
+          "sha256": "40da67c0b6b03076504fbda4bf3e7b4f20b35999c98063019a3392fe9b1294fe",
+          "descriptor": {
+            "id": "9007199254748105",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "577708"
+          }
+        }
+      ]
+    }
+  },
+  "atoms": [
+    {
+      "text": "x",
+      "code": 120,
+      "face": 3,
+      "base_size": 12,
+      "font_size": 12,
+      "width": 6.9999999999999991,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "code": 88,
+      "face": 1,
+      "base_size": 12,
+      "font_size": 12,
+      "width": 9,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "code": 43,
+      "face": 1,
+      "base_size": 12,
+      "font_size": 12,
+      "width": 10,
+      "ascent": 8,
+      "descent": 0
+    },
+    {
+      "text": "dotmath",
+      "code": -8901,
+      "face": 5,
+      "base_size": 12,
+      "font_size": 12,
+      "width": 3,
+      "ascent": 5,
+      "descent": -2
+    },
+    {
+      "text": "integral-top",
+      "code": -8992,
+      "face": 5,
+      "base_size": 12,
+      "font_size": 12,
+      "width": 8,
+      "ascent": 16,
+      "descent": 0
+    },
+    {
+      "text": "integral-bottom",
+      "code": -8993,
+      "face": 5,
+      "base_size": 12,
+      "font_size": 12,
+      "width": 8,
+      "ascent": 16,
+      "descent": 1
+    },
+    {
+      "text": "a",
+      "code": 97,
+      "face": 3,
+      "base_size": 12,
+      "font_size": 8.3999999999999986,
+      "width": 5,
+      "ascent": 5,
+      "descent": 1
+    },
+    {
+      "text": "b",
+      "code": 98,
+      "face": 3,
+      "base_size": 12,
+      "font_size": 8.3999999999999986,
+      "width": 5,
+      "ascent": 6.9999999999999991,
+      "descent": 1
+    },
+    {
+      "text": "x",
+      "code": 120,
+      "face": 3,
+      "base_size": 24,
+      "font_size": 24,
+      "width": 13.999999999999998,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "code": 88,
+      "face": 1,
+      "base_size": 24,
+      "font_size": 24,
+      "width": 17,
+      "ascent": 18,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "code": 43,
+      "face": 1,
+      "base_size": 24,
+      "font_size": 24,
+      "width": 20,
+      "ascent": 16,
+      "descent": 0
+    },
+    {
+      "text": "dotmath",
+      "code": -8901,
+      "face": 5,
+      "base_size": 24,
+      "font_size": 24,
+      "width": 6.9999999999999991,
+      "ascent": 9,
+      "descent": -5
+    },
+    {
+      "text": "integral-top",
+      "code": -8992,
+      "face": 5,
+      "base_size": 24,
+      "font_size": 24,
+      "width": 17,
+      "ascent": 30.999999999999996,
+      "descent": 0
+    },
+    {
+      "text": "integral-bottom",
+      "code": -8993,
+      "face": 5,
+      "base_size": 24,
+      "font_size": 24,
+      "width": 17,
+      "ascent": 30.999999999999996,
+      "descent": 1
+    },
+    {
+      "text": "a",
+      "code": 97,
+      "face": 3,
+      "base_size": 24,
+      "font_size": 16.799999999999997,
+      "width": 10,
+      "ascent": 9,
+      "descent": 1
+    },
+    {
+      "text": "b",
+      "code": 98,
+      "face": 3,
+      "base_size": 24,
+      "font_size": 16.799999999999997,
+      "width": 10.999999999999998,
+      "ascent": 13,
+      "descent": 1
+    }
+  ]
+}

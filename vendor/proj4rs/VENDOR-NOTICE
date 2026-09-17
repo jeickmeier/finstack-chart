@@ -1,0 +1,16 @@
+proj4rs 0.1.10
+Upstream: https://github.com/3liz/proj4rs
+Revision: bc266a822ee74215814d5478b5de85939c2cd94b (proj4rs subdirectory)
+Upstream author metadata: David Marteau <dmarteau@3liz.com>
+Upstream license declaration: MIT OR Apache-2.0
+
+This distribution selects the offered Apache License, Version 2.0 option.
+LICENSE-APACHE contains the canonical license text obtained from
+https://www.apache.org/licenses/LICENSE-2.0.txt on 2026-09-16.
+All upstream source copyright notices are retained. The upstream registry
+archive does not contain a separate LICENSE or NOTICE file. No new copyright
+ownership or attribution is asserted by this notice.
+
+Local changes: core-only dependency manifest; browser wrapper disabled by
+default; strict Rust numeric parsing on native and WASM. Kernel formula operations are retained; floating transcendental calls use
+the workspace-pinned libm 0.2.16 shim after actual UTM host differences were reproduced. See upstream-checksums.json and patch-manifest.json for identities.

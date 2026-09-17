@@ -59,6 +59,16 @@ fn statistic(
                 f(n)?;
             }
         }
+        StatParameters::Spatial(s) => {
+            for n in s.numerics_mut() {
+                f(n)?;
+            }
+        }
+        StatParameters::Model(s) => {
+            for n in s.numerics_mut() {
+                f(n)?;
+            }
+        }
         StatParameters::Univariate(s) => {
             for n in s.numerics_mut() {
                 f(n)?;
@@ -244,6 +254,8 @@ fn has_stat(s: &Statistic) -> bool {
                     .is_some_and(has_numeric)
         }
         StatParameters::Distribution(s) => s.numerics().any(has_numeric),
+        StatParameters::Spatial(s) => s.numerics().any(has_numeric),
+        StatParameters::Model(s) => s.numerics().any(has_numeric),
         StatParameters::Univariate(s) => s.numerics().any(has_numeric),
         StatParameters::Ols(s) => has_numeric(&s.x) || has_numeric(&s.y),
         StatParameters::Count(s) => {

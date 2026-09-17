@@ -243,6 +243,10 @@ pub(super) fn emit(
     prepared: &mut PreparedLayer,
     vertices: &mut usize,
 ) -> ChartResult<bool> {
+    if matches!(layer.recipe, Some(BuiltinRecipe::Smooth)) {
+        super::recipe_models::emit(layer, rows, prepared, vertices)?;
+        return Ok(false);
+    }
     if layer.recipe.is_none() {
         return Ok(false);
     }

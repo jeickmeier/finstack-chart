@@ -1,0 +1,755 @@
+{
+  "reference": {
+    "R": "4.6.1",
+    "ggplot2": "4.0.3",
+    "platform": "aarch64-apple-darwin23",
+    "capabilities": {
+      "jpeg": true,
+      "png": true,
+      "tiff": true,
+      "tcltk": true,
+      "X11": false,
+      "aqua": true,
+      "http/ftp": true,
+      "sockets": true,
+      "libxml": false,
+      "fifo": true,
+      "cledit": false,
+      "iconv": true,
+      "NLS": true,
+      "Rprof": true,
+      "profmem": true,
+      "cairo": true,
+      "ICU": true,
+      "long.double": false,
+      "libcurl": true
+    }
+  },
+  "devices": [
+    {
+      "name": "jpeg",
+      "formals": {
+        "filename": "\"Rplot%03d.jpeg\"",
+        "width": "480",
+        "height": "480",
+        "units": "\"px\"",
+        "pointsize": "12",
+        "quality": "75",
+        "bg": "\"white\"",
+        "res": "NA",
+        "...": "",
+        "type": "c(\"cairo\", \"Xlib\", \"quartz\")",
+        "antialias": ""
+      }
+    },
+    {
+      "name": "tiff",
+      "formals": {
+        "filename": "\"Rplot%03d.tiff\"",
+        "width": "480",
+        "height": "480",
+        "units": "\"px\"",
+        "pointsize": "12",
+        "compression": "c(\"none\", \"rle\", \"lzw\", \"jpeg\", \"zip\", \"lzw+p\", \"zip+p\", \"lerc\",      \"lzma\", \"zstd\", \"webp\")",
+        "bg": "\"white\"",
+        "res": "NA",
+        "...": "",
+        "type": "c(\"cairo\", \"Xlib\", \"quartz\")",
+        "antialias": ""
+      }
+    },
+    {
+      "name": "bmp",
+      "formals": {
+        "filename": "\"Rplot%03d.bmp\"",
+        "width": "480",
+        "height": "480",
+        "units": "\"px\"",
+        "pointsize": "12",
+        "bg": "\"white\"",
+        "res": "NA",
+        "...": "",
+        "type": "c(\"cairo\", \"Xlib\", \"quartz\")",
+        "antialias": ""
+      }
+    },
+    {
+      "name": "postscript",
+      "formals": {
+        "file": "if (onefile) \"Rplots.ps\" else \"Rplot%03d.ps\"",
+        "onefile": "",
+        "family": "",
+        "title": "",
+        "fonts": "",
+        "encoding": "",
+        "bg": "",
+        "fg": "",
+        "width": "",
+        "height": "",
+        "horizontal": "",
+        "pointsize": "",
+        "paper": "",
+        "pagecentre": "",
+        "print.it": "",
+        "command": "",
+        "colormodel": "",
+        "useKerning": "",
+        "fillOddEven": ""
+      }
+    },
+    {
+      "name": "pictex",
+      "formals": {
+        "file": "\"Rplots.tex\"",
+        "width": "5",
+        "height": "4",
+        "debug": "FALSE",
+        "bg": "\"white\"",
+        "fg": "\"black\""
+      }
+    },
+    {
+      "name": "svg",
+      "formals": {
+        "filename": "if (onefile) \"Rplots.svg\" else \"Rplot%03d.svg\"",
+        "width": "7",
+        "height": "7",
+        "pointsize": "12",
+        "onefile": "FALSE",
+        "family": "\"sans\"",
+        "bg": "\"white\"",
+        "antialias": "c(\"default\", \"none\", \"gray\", \"subpixel\")",
+        "symbolfamily": ""
+      }
+    },
+    {
+      "name": "pdf",
+      "formals": {
+        "file": "if (onefile) \"Rplots.pdf\" else \"Rplot%03d.pdf\"",
+        "width": "",
+        "height": "",
+        "onefile": "",
+        "family": "",
+        "title": "",
+        "fonts": "",
+        "version": "",
+        "paper": "",
+        "encoding": "",
+        "bg": "",
+        "fg": "",
+        "pointsize": "",
+        "pagecentre": "",
+        "colormodel": "",
+        "useDingbats": "",
+        "useKerning": "",
+        "fillOddEven": "",
+        "compress": "",
+        "timestamp": "",
+        "producer": "",
+        "author": ""
+      }
+    },
+    {
+      "name": "png",
+      "formals": {
+        "filename": "\"Rplot%03d.png\"",
+        "width": "480",
+        "height": "480",
+        "units": "\"px\"",
+        "pointsize": "12",
+        "bg": "\"white\"",
+        "res": "NA",
+        "...": "",
+        "type": "c(\"cairo\", \"cairo-png\", \"Xlib\", \"quartz\")",
+        "antialias": ""
+      }
+    }
+  ],
+  "save_formals": {
+    "filename": "",
+    "plot": "get_last_plot()",
+    "device": "NULL",
+    "path": "NULL",
+    "scale": "1",
+    "width": "NA",
+    "height": "NA",
+    "units": "c(\"in\", \"cm\", \"mm\", \"px\")",
+    "dpi": "300",
+    "limitsize": "TRUE",
+    "bg": "NULL",
+    "create.dir": "FALSE",
+    "...": ""
+  },
+  "dimensions": [
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "in",
+        "dpi": 72,
+        "limitsize": true
+      },
+      "result": [
+        10,
+        5
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "in",
+        "dpi": 144,
+        "limitsize": true
+      },
+      "result": [
+        10,
+        5
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "in",
+        "dpi": "screen",
+        "limitsize": true
+      },
+      "result": [
+        10,
+        5
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "in",
+        "dpi": "print",
+        "limitsize": true
+      },
+      "result": [
+        10,
+        5
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "in",
+        "dpi": "retina",
+        "limitsize": true
+      },
+      "result": [
+        10,
+        5
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "cm",
+        "dpi": 72,
+        "limitsize": true
+      },
+      "result": [
+        3.9370078740157481,
+        1.9685039370078741
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "cm",
+        "dpi": 144,
+        "limitsize": true
+      },
+      "result": [
+        3.9370078740157481,
+        1.9685039370078741
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "cm",
+        "dpi": "screen",
+        "limitsize": true
+      },
+      "result": [
+        3.9370078740157481,
+        1.9685039370078741
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "cm",
+        "dpi": "print",
+        "limitsize": true
+      },
+      "result": [
+        3.9370078740157481,
+        1.9685039370078741
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "cm",
+        "dpi": "retina",
+        "limitsize": true
+      },
+      "result": [
+        3.9370078740157481,
+        1.9685039370078741
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "mm",
+        "dpi": 72,
+        "limitsize": true
+      },
+      "result": [
+        0.39370078740157483,
+        0.19685039370078741
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "mm",
+        "dpi": 144,
+        "limitsize": true
+      },
+      "result": [
+        0.39370078740157483,
+        0.19685039370078741
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "mm",
+        "dpi": "screen",
+        "limitsize": true
+      },
+      "result": [
+        0.39370078740157483,
+        0.19685039370078741
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "mm",
+        "dpi": "print",
+        "limitsize": true
+      },
+      "result": [
+        0.39370078740157483,
+        0.19685039370078741
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "mm",
+        "dpi": "retina",
+        "limitsize": true
+      },
+      "result": [
+        0.39370078740157483,
+        0.19685039370078741
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "px",
+        "dpi": 72,
+        "limitsize": true
+      },
+      "result": [
+        0.1388888888888889,
+        0.069444444444444448
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "px",
+        "dpi": 144,
+        "limitsize": true
+      },
+      "result": [
+        0.069444444444444448,
+        0.034722222222222224
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "px",
+        "dpi": "screen",
+        "limitsize": true
+      },
+      "result": [
+        0.1388888888888889,
+        0.069444444444444448
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "px",
+        "dpi": "print",
+        "limitsize": true
+      },
+      "result": [
+        0.033333333333333333,
+        0.016666666666666666
+      ]
+    },
+    {
+      "input": {
+        "width": 10,
+        "height": 5,
+        "scale": 1,
+        "units": "px",
+        "dpi": "retina",
+        "limitsize": true
+      },
+      "result": [
+        0.03125,
+        0.015625
+      ]
+    },
+    {
+      "input": {
+        "width": 49.990000000000002,
+        "height": 1,
+        "units": "in",
+        "limitsize": true
+      },
+      "result": [
+        49.990000000000002,
+        1
+      ]
+    },
+    {
+      "input": {
+        "width": 49.990000000000002,
+        "height": 1,
+        "units": "in",
+        "limitsize": false
+      },
+      "result": [
+        49.990000000000002,
+        1
+      ]
+    },
+    {
+      "input": {
+        "width": 50,
+        "height": 1,
+        "units": "in",
+        "limitsize": true
+      },
+      "result": {
+        "error": "Dimensions exceed 50 inches (`height` and `width` are specified in\ninches not pixels).\ni If you're sure you want a plot that big, use `limitsize = FALSE`."
+      }
+    },
+    {
+      "input": {
+        "width": 50,
+        "height": 1,
+        "units": "in",
+        "limitsize": false
+      },
+      "result": [
+        50,
+        1
+      ]
+    },
+    {
+      "input": {
+        "width": 50.009999999999998,
+        "height": 1,
+        "units": "in",
+        "limitsize": true
+      },
+      "result": {
+        "error": "Dimensions exceed 50 inches (`height` and `width` are specified in\ninches not pixels).\ni If you're sure you want a plot that big, use `limitsize = FALSE`."
+      }
+    },
+    {
+      "input": {
+        "width": 50.009999999999998,
+        "height": 1,
+        "units": "in",
+        "limitsize": false
+      },
+      "result": [
+        50.009999999999998,
+        1
+      ]
+    }
+  ],
+  "tiff_compression_cases": [
+    {
+      "type": "cairo",
+      "compression": "none",
+      "result": {
+        "output_created": true,
+        "bytes": 980
+      },
+      "warnings": []
+    },
+    {
+      "type": "cairo",
+      "compression": "rle",
+      "result": {
+        "output_created": false,
+        "bytes": "NA"
+      },
+      "warnings": []
+    },
+    {
+      "type": "cairo",
+      "compression": "lzw",
+      "result": {
+        "output_created": true,
+        "bytes": 290
+      },
+      "warnings": []
+    },
+    {
+      "type": "cairo",
+      "compression": "jpeg",
+      "result": {
+        "output_created": true,
+        "bytes": 566
+      },
+      "warnings": []
+    },
+    {
+      "type": "cairo",
+      "compression": "zip",
+      "result": {
+        "output_created": true,
+        "bytes": 230
+      },
+      "warnings": []
+    },
+    {
+      "type": "cairo",
+      "compression": "lzw+p",
+      "result": {
+        "output_created": true,
+        "bytes": 294
+      },
+      "warnings": []
+    },
+    {
+      "type": "cairo",
+      "compression": "zip+p",
+      "result": {
+        "output_created": true,
+        "bytes": 244
+      },
+      "warnings": []
+    },
+    {
+      "type": "cairo",
+      "compression": "lerc",
+      "result": {
+        "output_created": false,
+        "bytes": "NA"
+      },
+      "warnings": []
+    },
+    {
+      "type": "cairo",
+      "compression": "lzma",
+      "result": {
+        "output_created": true,
+        "bytes": 284
+      },
+      "warnings": []
+    },
+    {
+      "type": "cairo",
+      "compression": "zstd",
+      "result": {
+        "output_created": true,
+        "bytes": 232
+      },
+      "warnings": []
+    },
+    {
+      "type": "cairo",
+      "compression": "webp",
+      "result": {
+        "output_created": true,
+        "bytes": 280
+      },
+      "warnings": []
+    },
+    {
+      "type": "quartz",
+      "compression": "none",
+      "result": {
+        "output_created": true,
+        "bytes": 3238
+      },
+      "warnings": []
+    },
+    {
+      "type": "quartz",
+      "compression": "rle",
+      "result": {
+        "output_created": true,
+        "bytes": 3238
+      },
+      "warnings": [
+        "compression is not supported for type = \"quartz\""
+      ]
+    },
+    {
+      "type": "quartz",
+      "compression": "lzw",
+      "result": {
+        "output_created": true,
+        "bytes": 3238
+      },
+      "warnings": [
+        "compression is not supported for type = \"quartz\""
+      ]
+    },
+    {
+      "type": "quartz",
+      "compression": "jpeg",
+      "result": {
+        "output_created": true,
+        "bytes": 3238
+      },
+      "warnings": [
+        "compression is not supported for type = \"quartz\""
+      ]
+    },
+    {
+      "type": "quartz",
+      "compression": "zip",
+      "result": {
+        "output_created": true,
+        "bytes": 3238
+      },
+      "warnings": [
+        "compression is not supported for type = \"quartz\""
+      ]
+    },
+    {
+      "type": "quartz",
+      "compression": "lzw+p",
+      "result": {
+        "output_created": true,
+        "bytes": 3238
+      },
+      "warnings": [
+        "compression is not supported for type = \"quartz\""
+      ]
+    },
+    {
+      "type": "quartz",
+      "compression": "zip+p",
+      "result": {
+        "output_created": true,
+        "bytes": 3238
+      },
+      "warnings": [
+        "compression is not supported for type = \"quartz\""
+      ]
+    },
+    {
+      "type": "quartz",
+      "compression": "lerc",
+      "result": {
+        "output_created": true,
+        "bytes": 3238
+      },
+      "warnings": [
+        "compression is not supported for type = \"quartz\""
+      ]
+    },
+    {
+      "type": "quartz",
+      "compression": "lzma",
+      "result": {
+        "output_created": true,
+        "bytes": 3238
+      },
+      "warnings": [
+        "compression is not supported for type = \"quartz\""
+      ]
+    },
+    {
+      "type": "quartz",
+      "compression": "zstd",
+      "result": {
+        "output_created": true,
+        "bytes": 3238
+      },
+      "warnings": [
+        "compression is not supported for type = \"quartz\""
+      ]
+    },
+    {
+      "type": "quartz",
+      "compression": "webp",
+      "result": {
+        "output_created": true,
+        "bytes": 3238
+      },
+      "warnings": [
+        "compression is not supported for type = \"quartz\""
+      ]
+    }
+  ]
+}

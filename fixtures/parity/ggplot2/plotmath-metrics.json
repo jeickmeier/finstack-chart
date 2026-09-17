@@ -1,0 +1,4443 @@
+{
+  "reference": {
+    "R": "4.6.1",
+    "device": "cairo_pdf",
+    "font_family": "DejaVu Serif",
+    "symbol_family": "DejaVu Math TeX Gyre",
+    "symbol_use_PUA": false,
+    "font_manifest": {
+      "provenance": "Unmodified DejaVu 2.37 fonts from the bundled LibreOffice runtime; version and license extracted from embedded sfnt name records. Explicit publication resources only; no system lookup.",
+      "license": "LICENSE.txt",
+      "fonts": [
+        {
+          "file": "DejaVuSerif.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Serif",
+          "style": "Book",
+          "sha256": "42d1edeb7952f31b1f96d767ed7030b08a39e0c372b0071641518864e2bffb51",
+          "descriptor": {
+            "id": "9007199254748100",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "380132"
+          }
+        },
+        {
+          "file": "DejaVuSerif-Italic.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Serif",
+          "style": "Italic",
+          "sha256": "2e39b1d50f90b933b00c7bb54a96afd3f86419b3d717c7cf202e36f2d4973e47",
+          "descriptor": {
+            "id": "9007199254748101",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "345996"
+          }
+        },
+        {
+          "file": "DejaVuSerif-Bold.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Serif",
+          "style": "Bold",
+          "sha256": "c47b5527bcdc8dcf9ea8c77054454c5a884beaca2f44851a2a823ee639cbf07f",
+          "descriptor": {
+            "id": "9007199254748102",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "356088"
+          }
+        },
+        {
+          "file": "DejaVuSerif-BoldItalic.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Serif",
+          "style": "Bold Italic",
+          "sha256": "8d3dd3d31350309042ed226af82b34539bd773518e6107cb352712853ba80308",
+          "descriptor": {
+            "id": "9007199254748103",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "347460"
+          }
+        },
+        {
+          "file": "DejaVuSans.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Sans",
+          "style": "Book",
+          "sha256": "7da195a74c55bef988d0d48f9508bd5d849425c1770dba5d7bfc6ce9ed848954",
+          "descriptor": {
+            "id": "9007199254748104",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "757076"
+          }
+        },
+        {
+          "file": "DejaVuMathTeXGyre.ttf",
+          "version": "Version 2.37",
+          "family": "DejaVu Math TeX Gyre",
+          "style": "Regular",
+          "license": "DejaVuMathTeXGyre-LICENSE.txt",
+          "sha256": "40da67c0b6b03076504fbda4bf3e7b4f20b35999c98063019a3392fe9b1294fe",
+          "descriptor": {
+            "id": "9007199254748105",
+            "revision": "1",
+            "kind": "Font",
+            "byte_len": "577708"
+          }
+        }
+      ]
+    },
+    "units": "big points; measured via grid grob metrics"
+  },
+  "cases": [
+    {
+      "source": "x + y",
+      "font_size": 12,
+      "result": {
+        "width": 28.333333333333339,
+        "ascent": 8,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x - y",
+      "font_size": 12,
+      "result": {
+        "width": 28.333333333333339,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x*y",
+      "font_size": 12,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x/y",
+      "font_size": 12,
+      "result": {
+        "width": 20.999999999999989,
+        "ascent": 11,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %+-% y",
+      "font_size": 12,
+      "result": {
+        "width": 28.333333333333339,
+        "ascent": 8,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %/% y",
+      "font_size": 12,
+      "result": {
+        "width": 28.333333333333339,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %*% y",
+      "font_size": 12,
+      "result": {
+        "width": 27.333333333333343,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %.% y",
+      "font_size": 12,
+      "result": {
+        "width": 22.333333333333329,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x[i]",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 6.9999999999999991,
+        "descent": 2.9999999999999987
+      }
+    },
+    {
+      "source": "x^2",
+      "font_size": 12,
+      "result": {
+        "width": 11.999999999999989,
+        "ascent": 13.649999999999997,
+        "descent": 0
+      }
+    },
+    {
+      "source": "paste(x, y, z)",
+      "font_size": 12,
+      "result": {
+        "width": 20.000000000000025,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "sqrt(x)",
+      "font_size": 12,
+      "result": {
+        "width": 15.133333333333354,
+        "ascent": 9.7999999999999989,
+        "descent": 0
+      }
+    },
+    {
+      "source": "sqrt(x, y)",
+      "font_size": 12,
+      "result": {
+        "width": 15.133333333333354,
+        "ascent": 15.1,
+        "descent": 2
+      }
+    },
+    {
+      "source": "x == y",
+      "font_size": 12,
+      "result": {
+        "width": 29.666666666666647,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x != y",
+      "font_size": 12,
+      "result": {
+        "width": 29.666666666666647,
+        "ascent": 9,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x < y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x <= y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 8,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x > y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x >= y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 8,
+        "descent": 3
+      }
+    },
+    {
+      "source": "!x",
+      "font_size": 12,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 9,
+        "descent": 1
+      }
+    },
+    {
+      "source": "x %~~% y",
+      "font_size": 12,
+      "result": {
+        "width": 29.666666666666647,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %=~% y",
+      "font_size": 12,
+      "result": {
+        "width": 29.666666666666647,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %==% y",
+      "font_size": 12,
+      "result": {
+        "width": 29.666666666666647,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %prop% y",
+      "font_size": 12,
+      "result": {
+        "width": 27.666666666666686,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %~% y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "plain(x)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 6.9999999999999991,
+        "descent": 0
+      }
+    },
+    {
+      "source": "bold(x)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 6.9999999999999991,
+        "descent": 0
+      }
+    },
+    {
+      "source": "italic(x)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 6.9999999999999991,
+        "descent": 0
+      }
+    },
+    {
+      "source": "bolditalic(x)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 6.9999999999999991,
+        "descent": 0
+      }
+    },
+    {
+      "source": "symbol(x)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 10,
+        "descent": 3
+      }
+    },
+    {
+      "source": "list(x, y, z)",
+      "font_size": 12,
+      "result": {
+        "width": 36,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "...",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 5,
+        "descent": 3
+      }
+    },
+    {
+      "source": "cdots",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 5,
+        "descent": 3
+      }
+    },
+    {
+      "source": "ldots",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 2,
+        "descent": 0
+      }
+    },
+    {
+      "source": "x %subset% y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 8,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %subseteq% y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 9,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %notsubset% y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 9,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %supset% y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 8,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %supseteq% y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 9,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %in% y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 8,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %notin% y",
+      "font_size": 12,
+      "result": {
+        "width": 30.666666666666643,
+        "ascent": 9,
+        "descent": 3
+      }
+    },
+    {
+      "source": "hat(x)",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 11.899999999999999,
+        "descent": 0
+      }
+    },
+    {
+      "source": "tilde(x)",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 10.899999999999999,
+        "descent": 0
+      }
+    },
+    {
+      "source": "dot(x)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 10.899999999999999,
+        "descent": 0
+      }
+    },
+    {
+      "source": "ring(x)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 11.899999999999999,
+        "descent": 0
+      }
+    },
+    {
+      "source": "bar(xy)",
+      "font_size": 12,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 8.7999999999999989,
+        "descent": 3
+      }
+    },
+    {
+      "source": "widehat(xy)",
+      "font_size": 12,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 11.5,
+        "descent": 3
+      }
+    },
+    {
+      "source": "widetilde(xy)",
+      "font_size": 12,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 10.149999999999999,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %<->% y",
+      "font_size": 12,
+      "result": {
+        "width": 32.666666666666671,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %->% y",
+      "font_size": 12,
+      "result": {
+        "width": 32.666666666666671,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %<-% y",
+      "font_size": 12,
+      "result": {
+        "width": 32.666666666666671,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %up% y",
+      "font_size": 12,
+      "result": {
+        "width": 27.666666666666686,
+        "ascent": 9,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %down% y",
+      "font_size": 12,
+      "result": {
+        "width": 27.666666666666686,
+        "ascent": 9,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %<=>% y",
+      "font_size": 12,
+      "result": {
+        "width": 32.666666666666671,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %=>% y",
+      "font_size": 12,
+      "result": {
+        "width": 32.666666666666671,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %<=% y",
+      "font_size": 12,
+      "result": {
+        "width": 32.666666666666671,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %dblup% y",
+      "font_size": 12,
+      "result": {
+        "width": 28.666666666666682,
+        "ascent": 9,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x %dbldown% y",
+      "font_size": 12,
+      "result": {
+        "width": 28.666666666666682,
+        "ascent": 9,
+        "descent": 3
+      }
+    },
+    {
+      "source": "alpha -- omega",
+      "font_size": 12,
+      "result": {
+        "width": 45.333333333333343,
+        "ascent": 6.9999999999999991,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Alpha -- Omega",
+      "font_size": 12,
+      "result": {
+        "width": 46.333333333333371,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Upsilon1",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "aleph",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "infinity",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 6,
+        "descent": 1
+      }
+    },
+    {
+      "source": "partialdiff",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 9,
+        "descent": 1
+      }
+    },
+    {
+      "source": "nabla",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 9,
+        "descent": 1
+      }
+    },
+    {
+      "source": "32*degree",
+      "font_size": 12,
+      "result": {
+        "width": 21.999999999999986,
+        "ascent": 9,
+        "descent": 1
+      }
+    },
+    {
+      "source": "60*minute",
+      "font_size": 12,
+      "result": {
+        "width": 20.000000000000025,
+        "ascent": 9,
+        "descent": 1
+      }
+    },
+    {
+      "source": "30*second",
+      "font_size": 12,
+      "result": {
+        "width": 21.999999999999986,
+        "ascent": 9,
+        "descent": 1
+      }
+    },
+    {
+      "source": "displaystyle(x)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 6.9999999999999991,
+        "descent": 0
+      }
+    },
+    {
+      "source": "textstyle(x)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 6.9999999999999991,
+        "descent": 0
+      }
+    },
+    {
+      "source": "scriptstyle(x)",
+      "font_size": 12,
+      "result": {
+        "width": 5.0000000000000142,
+        "ascent": 5,
+        "descent": 0
+      }
+    },
+    {
+      "source": "scriptscriptstyle(x)",
+      "font_size": 12,
+      "result": {
+        "width": 2.9999999999999893,
+        "ascent": 4,
+        "descent": 0
+      }
+    },
+    {
+      "source": "underline(x)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 6.9999999999999991,
+        "descent": 0.90000000000000002
+      }
+    },
+    {
+      "source": "x ~~ y",
+      "font_size": 12,
+      "result": {
+        "width": 21.999999999999986,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x + phantom(0) + y",
+      "font_size": 12,
+      "result": {
+        "width": 50.666666666666636,
+        "ascent": 9,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x + over(1, phantom(0))",
+      "font_size": 12,
+      "result": {
+        "width": 29.333333333333304,
+        "ascent": 20.2408,
+        "descent": 10.190796000000001
+      }
+    },
+    {
+      "source": "frac(x, y)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 18.2408,
+        "descent": 12.190795999999999
+      }
+    },
+    {
+      "source": "over(x, y)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 18.2408,
+        "descent": 12.190795999999999
+      }
+    },
+    {
+      "source": "atop(x, y)",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 18.2408,
+        "descent": 12.190795999999999
+      }
+    },
+    {
+      "source": "sum(x[i], i==1, n)",
+      "font_size": 12,
+      "result": {
+        "width": 27,
+        "ascent": 20.699999999999999,
+        "descent": 12.699999999999998
+      }
+    },
+    {
+      "source": "prod(plain(P)(X==x), x)",
+      "font_size": 12,
+      "result": {
+        "width": 69.666666666666629,
+        "ascent": 14.35,
+        "descent": 10.699999999999998
+      }
+    },
+    {
+      "source": "integral(f(x)*dx, a, b)",
+      "font_size": 12,
+      "result": {
+        "width": 52.999999999999972,
+        "ascent": 24.000000000000004,
+        "descent": 15.840000000000002
+      }
+    },
+    {
+      "source": "union(A[i], i==1, n)",
+      "font_size": 12,
+      "result": {
+        "width": 29.000000000000025,
+        "ascent": 17.699999999999999,
+        "descent": 9.6999999999999993
+      }
+    },
+    {
+      "source": "intersect(A[i], i==1, n)",
+      "font_size": 12,
+      "result": {
+        "width": 29.000000000000025,
+        "ascent": 18.199999999999999,
+        "descent": 10.199999999999999
+      }
+    },
+    {
+      "source": "lim(f(x), x %->% 0)",
+      "font_size": 12,
+      "result": {
+        "width": 43.999999999999972,
+        "ascent": 11.35,
+        "descent": 10.699999999999998
+      }
+    },
+    {
+      "source": "min(g(x), x > 0)",
+      "font_size": 12,
+      "result": {
+        "width": 51.999999999999972,
+        "ascent": 10.999999999999998,
+        "descent": 10.699999999999998
+      }
+    },
+    {
+      "source": "inf(S)",
+      "font_size": 12,
+      "result": {
+        "width": 25.999999999999972,
+        "ascent": 11.35,
+        "descent": 1.3499999999999999
+      }
+    },
+    {
+      "source": "sup(S)",
+      "font_size": 12,
+      "result": {
+        "width": 32.000000000000014,
+        "ascent": 9,
+        "descent": 4.3499999999999996
+      }
+    },
+    {
+      "source": "x^y + z",
+      "font_size": 12,
+      "result": {
+        "width": 32.333333333333357,
+        "ascent": 11.649999999999999,
+        "descent": 1
+      }
+    },
+    {
+      "source": "x^(y + z)",
+      "font_size": 12,
+      "result": {
+        "width": 30.999999999999986,
+        "ascent": 14.649999999999999,
+        "descent": 0
+      }
+    },
+    {
+      "source": "x^{y + z}",
+      "font_size": 12,
+      "result": {
+        "width": 23.000000000000014,
+        "ascent": 11.649999999999999,
+        "descent": 0
+      }
+    },
+    {
+      "source": "group(\"(\",list(a, b),\"]\")",
+      "font_size": 12,
+      "result": {
+        "width": 34.999999999999972,
+        "ascent": 10.999999999999998,
+        "descent": 3
+      }
+    },
+    {
+      "source": "bgroup(\"(\",atop(x,y),\")\")",
+      "font_size": 12,
+      "result": {
+        "width": 20.999999999999989,
+        "ascent": 21.590795999999997,
+        "descent": 13.590796000000001
+      }
+    },
+    {
+      "source": "group(lceil, x, rceil)",
+      "font_size": 12,
+      "result": {
+        "width": 23.000000000000014,
+        "ascent": 20,
+        "descent": 0
+      }
+    },
+    {
+      "source": "group(lfloor, x, rfloor)",
+      "font_size": 12,
+      "result": {
+        "width": 23.000000000000014,
+        "ascent": 20,
+        "descent": 0
+      }
+    },
+    {
+      "source": "group(langle, list(x, y), rangle)",
+      "font_size": 12,
+      "result": {
+        "width": 33.999999999999972,
+        "ascent": 10.999999999999998,
+        "descent": 3
+      }
+    },
+    {
+      "source": "alpha",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 6.9999999999999991,
+        "descent": 1
+      }
+    },
+    {
+      "source": "beta",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 10,
+        "descent": 3
+      }
+    },
+    {
+      "source": "gamma",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "delta",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 10,
+        "descent": 1
+      }
+    },
+    {
+      "source": "epsilon",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 6.9999999999999991,
+        "descent": 1
+      }
+    },
+    {
+      "source": "zeta",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 10,
+        "descent": 3
+      }
+    },
+    {
+      "source": "eta",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "theta",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 10,
+        "descent": 1
+      }
+    },
+    {
+      "source": "iota",
+      "font_size": 12,
+      "result": {
+        "width": 6.0000000000000107,
+        "ascent": 6.9999999999999991,
+        "descent": 1
+      }
+    },
+    {
+      "source": "kappa",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 6.9999999999999991,
+        "descent": 0
+      }
+    },
+    {
+      "source": "lambda",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 10,
+        "descent": 0
+      }
+    },
+    {
+      "source": "mu",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "nu",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 6.9999999999999991,
+        "descent": 0
+      }
+    },
+    {
+      "source": "xi",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 10,
+        "descent": 3
+      }
+    },
+    {
+      "source": "omicron",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 6.9999999999999991,
+        "descent": 1
+      }
+    },
+    {
+      "source": "pi",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 6.9999999999999991,
+        "descent": 0
+      }
+    },
+    {
+      "source": "rho",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "sigma",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 6.9999999999999991,
+        "descent": 1
+      }
+    },
+    {
+      "source": "tau",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 6.9999999999999991,
+        "descent": 1
+      }
+    },
+    {
+      "source": "upsilon",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 6.9999999999999991,
+        "descent": 1
+      }
+    },
+    {
+      "source": "phi",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "chi",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "psi",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "omega",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 6.9999999999999991,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Alpha",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Beta",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Gamma",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Delta",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Epsilon",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Zeta",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Eta",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Theta",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 9,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Iota",
+      "font_size": 12,
+      "result": {
+        "width": 5.0000000000000142,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Kappa",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Lambda",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Mu",
+      "font_size": 12,
+      "result": {
+        "width": 12.999999999999986,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Nu",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 9,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Xi",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Omicron",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 9,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Pi",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Rho",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Sigma",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Tau",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Upsilon",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Phi",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Chi",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Psi",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Omega",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "theta1",
+      "font_size": 12,
+      "result": {
+        "width": 10.000000000000028,
+        "ascent": 10,
+        "descent": 1
+      }
+    },
+    {
+      "source": "phi1",
+      "font_size": 12,
+      "result": {
+        "width": 9,
+        "ascent": 10,
+        "descent": 3
+      }
+    },
+    {
+      "source": "sigma1",
+      "font_size": 12,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 6.9999999999999991,
+        "descent": 3
+      }
+    },
+    {
+      "source": "omega1",
+      "font_size": 12,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 6.9999999999999991,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Upsilon1",
+      "font_size": 12,
+      "result": {
+        "width": 7.9999999999999716,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "x + y",
+      "font_size": 24,
+      "result": {
+        "width": 58.111111111111086,
+        "ascent": 14.999999999999998,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x - y",
+      "font_size": 24,
+      "result": {
+        "width": 58.111111111111086,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x*y",
+      "font_size": 24,
+      "result": {
+        "width": 28.000000000000028,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x/y",
+      "font_size": 24,
+      "result": {
+        "width": 41.000000000000014,
+        "ascent": 22,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %+-% y",
+      "font_size": 24,
+      "result": {
+        "width": 58.111111111111086,
+        "ascent": 14.999999999999998,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %/% y",
+      "font_size": 24,
+      "result": {
+        "width": 58.111111111111086,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %*% y",
+      "font_size": 24,
+      "result": {
+        "width": 55.1111111111111,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %.% y",
+      "font_size": 24,
+      "result": {
+        "width": 46.1111111111111,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x[i]",
+      "font_size": 24,
+      "result": {
+        "width": 19.000000000000028,
+        "ascent": 13,
+        "descent": 5.7999999999999989
+      }
+    },
+    {
+      "source": "x^2",
+      "font_size": 24,
+      "result": {
+        "width": 24.999999999999975,
+        "ascent": 25.349999999999998,
+        "descent": 0
+      }
+    },
+    {
+      "source": "paste(x, y, z)",
+      "font_size": 24,
+      "result": {
+        "width": 41.000000000000014,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "sqrt(x)",
+      "font_size": 24,
+      "result": {
+        "width": 30.177777777777749,
+        "ascent": 18.199999999999999,
+        "descent": 0
+      }
+    },
+    {
+      "source": "sqrt(x, y)",
+      "font_size": 24,
+      "result": {
+        "width": 30.697777777777798,
+        "ascent": 26.899999999999999,
+        "descent": 3
+      }
+    },
+    {
+      "source": "x == y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x != y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 17,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x < y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x <= y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 14.999999999999998,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x > y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x >= y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 14.999999999999998,
+        "descent": 6
+      }
+    },
+    {
+      "source": "!x",
+      "font_size": 24,
+      "result": {
+        "width": 28.166666666666668,
+        "ascent": 18,
+        "descent": 1
+      }
+    },
+    {
+      "source": "x %~~% y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %=~% y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %==% y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %prop% y",
+      "font_size": 24,
+      "result": {
+        "width": 56.888888888888886,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %~% y",
+      "font_size": 24,
+      "result": {
+        "width": 61.8888888888889,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "plain(x)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 13,
+        "descent": 0
+      }
+    },
+    {
+      "source": "bold(x)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 13,
+        "descent": 0
+      }
+    },
+    {
+      "source": "italic(x)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 13,
+        "descent": 0
+      }
+    },
+    {
+      "source": "bolditalic(x)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 13,
+        "descent": 0
+      }
+    },
+    {
+      "source": "symbol(x)",
+      "font_size": 24,
+      "result": {
+        "width": 15.000000000000011,
+        "ascent": 19,
+        "descent": 5
+      }
+    },
+    {
+      "source": "list(x, y, z)",
+      "font_size": 24,
+      "result": {
+        "width": 73.000000000000028,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "...",
+      "font_size": 24,
+      "result": {
+        "width": 21.999999999999986,
+        "ascent": 10,
+        "descent": 6
+      }
+    },
+    {
+      "source": "cdots",
+      "font_size": 24,
+      "result": {
+        "width": 21.999999999999986,
+        "ascent": 10,
+        "descent": 6
+      }
+    },
+    {
+      "source": "ldots",
+      "font_size": 24,
+      "result": {
+        "width": 21.999999999999986,
+        "ascent": 4,
+        "descent": 0
+      }
+    },
+    {
+      "source": "x %subset% y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 14.999999999999998,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %subseteq% y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 17,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %notsubset% y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 17,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %supset% y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 14.999999999999998,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %supseteq% y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 17,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %in% y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 14.999999999999998,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %notin% y",
+      "font_size": 24,
+      "result": {
+        "width": 60.888888888888872,
+        "ascent": 17,
+        "descent": 6
+      }
+    },
+    {
+      "source": "hat(x)",
+      "font_size": 24,
+      "result": {
+        "width": 20.000000000000025,
+        "ascent": 22.799999999999997,
+        "descent": 0
+      }
+    },
+    {
+      "source": "tilde(x)",
+      "font_size": 24,
+      "result": {
+        "width": 20.000000000000025,
+        "ascent": 19.800000000000001,
+        "descent": 0
+      }
+    },
+    {
+      "source": "dot(x)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 18.799999999999997,
+        "descent": 0
+      }
+    },
+    {
+      "source": "ring(x)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 22.799999999999997,
+        "descent": 0
+      }
+    },
+    {
+      "source": "bar(xy)",
+      "font_size": 24,
+      "result": {
+        "width": 28.000000000000028,
+        "ascent": 16.600000000000001,
+        "descent": 6
+      }
+    },
+    {
+      "source": "widehat(xy)",
+      "font_size": 24,
+      "result": {
+        "width": 28.000000000000028,
+        "ascent": 22,
+        "descent": 6
+      }
+    },
+    {
+      "source": "widetilde(xy)",
+      "font_size": 24,
+      "result": {
+        "width": 28.000000000000028,
+        "ascent": 19.300000000000001,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %<->% y",
+      "font_size": 24,
+      "result": {
+        "width": 65.888888888888886,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %->% y",
+      "font_size": 24,
+      "result": {
+        "width": 65.888888888888886,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %<-% y",
+      "font_size": 24,
+      "result": {
+        "width": 65.888888888888886,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %up% y",
+      "font_size": 24,
+      "result": {
+        "width": 55.888888888888857,
+        "ascent": 17,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %down% y",
+      "font_size": 24,
+      "result": {
+        "width": 55.888888888888857,
+        "ascent": 17,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %<=>% y",
+      "font_size": 24,
+      "result": {
+        "width": 65.888888888888886,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %=>% y",
+      "font_size": 24,
+      "result": {
+        "width": 65.888888888888886,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %<=% y",
+      "font_size": 24,
+      "result": {
+        "width": 65.888888888888886,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %dblup% y",
+      "font_size": 24,
+      "result": {
+        "width": 57.888888888888914,
+        "ascent": 17,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x %dbldown% y",
+      "font_size": 24,
+      "result": {
+        "width": 57.888888888888914,
+        "ascent": 17,
+        "descent": 6
+      }
+    },
+    {
+      "source": "alpha -- omega",
+      "font_size": 24,
+      "result": {
+        "width": 92.2777777777778,
+        "ascent": 13,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Alpha -- Omega",
+      "font_size": 24,
+      "result": {
+        "width": 96.277777777777786,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Upsilon1",
+      "font_size": 24,
+      "result": {
+        "width": 16.999999999999972,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "aleph",
+      "font_size": 24,
+      "result": {
+        "width": 20.999999999999989,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "infinity",
+      "font_size": 24,
+      "result": {
+        "width": 19.000000000000028,
+        "ascent": 12,
+        "descent": 2
+      }
+    },
+    {
+      "source": "partialdiff",
+      "font_size": 24,
+      "result": {
+        "width": 15.000000000000011,
+        "ascent": 18,
+        "descent": 1
+      }
+    },
+    {
+      "source": "nabla",
+      "font_size": 24,
+      "result": {
+        "width": 20.999999999999989,
+        "ascent": 18,
+        "descent": 1
+      }
+    },
+    {
+      "source": "32*degree",
+      "font_size": 24,
+      "result": {
+        "width": 42.000000000000014,
+        "ascent": 18,
+        "descent": 1
+      }
+    },
+    {
+      "source": "60*minute",
+      "font_size": 24,
+      "result": {
+        "width": 37.000000000000028,
+        "ascent": 18,
+        "descent": 1
+      }
+    },
+    {
+      "source": "30*second",
+      "font_size": 24,
+      "result": {
+        "width": 41.000000000000014,
+        "ascent": 18,
+        "descent": 1
+      }
+    },
+    {
+      "source": "displaystyle(x)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 13,
+        "descent": 0
+      }
+    },
+    {
+      "source": "textstyle(x)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 13,
+        "descent": 0
+      }
+    },
+    {
+      "source": "scriptstyle(x)",
+      "font_size": 24,
+      "result": {
+        "width": 9,
+        "ascent": 9,
+        "descent": 0
+      }
+    },
+    {
+      "source": "scriptscriptstyle(x)",
+      "font_size": 24,
+      "result": {
+        "width": 6.9999999999999751,
+        "ascent": 6.9999999999999991,
+        "descent": 0
+      }
+    },
+    {
+      "source": "underline(x)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 13,
+        "descent": 1.8
+      }
+    },
+    {
+      "source": "x ~~ y",
+      "font_size": 24,
+      "result": {
+        "width": 43.999999999999972,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x + phantom(0) + y",
+      "font_size": 24,
+      "result": {
+        "width": 103.22222222222226,
+        "ascent": 18,
+        "descent": 6
+      }
+    },
+    {
+      "source": "x + over(1, phantom(0))",
+      "font_size": 24,
+      "result": {
+        "width": 59.111111111111086,
+        "ascent": 36.690800000000003,
+        "descent": 15.590792000000002
+      }
+    },
+    {
+      "source": "frac(x, y)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 31.690800000000003,
+        "descent": 20.590792
+      }
+    },
+    {
+      "source": "over(x, y)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 31.690800000000003,
+        "descent": 20.590792
+      }
+    },
+    {
+      "source": "atop(x, y)",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 31.690800000000003,
+        "descent": 20.590792
+      }
+    },
+    {
+      "source": "sum(x[i], i==1, n)",
+      "font_size": 24,
+      "result": {
+        "width": 52.166666666666643,
+        "ascent": 39.899999999999991,
+        "descent": 24.899999999999995
+      }
+    },
+    {
+      "source": "prod(plain(P)(X==x), x)",
+      "font_size": 24,
+      "result": {
+        "width": 141.05555555555551,
+        "ascent": 28.199999999999996,
+        "descent": 20.899999999999999
+      }
+    },
+    {
+      "source": "integral(f(x)*dx, a, b)",
+      "font_size": 24,
+      "result": {
+        "width": 110.16666666666663,
+        "ascent": 46,
+        "descent": 28.689999999999998
+      }
+    },
+    {
+      "source": "union(A[i], i==1, n)",
+      "font_size": 24,
+      "result": {
+        "width": 55.166666666666636,
+        "ascent": 33.899999999999999,
+        "descent": 18.900000000000002
+      }
+    },
+    {
+      "source": "intersect(A[i], i==1, n)",
+      "font_size": 24,
+      "result": {
+        "width": 55.166666666666636,
+        "ascent": 34.399999999999999,
+        "descent": 19.399999999999999
+      }
+    },
+    {
+      "source": "lim(f(x), x %->% 0)",
+      "font_size": 24,
+      "result": {
+        "width": 92.166666666666629,
+        "ascent": 21.999999999999996,
+        "descent": 19.399999999999999
+      }
+    },
+    {
+      "source": "min(g(x), x > 0)",
+      "font_size": 24,
+      "result": {
+        "width": 105.16666666666669,
+        "ascent": 21.999999999999996,
+        "descent": 19.399999999999999
+      }
+    },
+    {
+      "source": "inf(S)",
+      "font_size": 24,
+      "result": {
+        "width": 52.166666666666643,
+        "ascent": 21.699999999999999,
+        "descent": 2.6999999999999997
+      }
+    },
+    {
+      "source": "sup(S)",
+      "font_size": 24,
+      "result": {
+        "width": 62.166666666666643,
+        "ascent": 18,
+        "descent": 7.7000000000000011
+      }
+    },
+    {
+      "source": "x^y + z",
+      "font_size": 24,
+      "result": {
+        "width": 66.111111111111128,
+        "ascent": 21.350000000000001,
+        "descent": 1
+      }
+    },
+    {
+      "source": "x^(y + z)",
+      "font_size": 24,
+      "result": {
+        "width": 63,
+        "ascent": 28.349999999999998,
+        "descent": 0
+      }
+    },
+    {
+      "source": "x^{y + z}",
+      "font_size": 24,
+      "result": {
+        "width": 45,
+        "ascent": 22.350000000000001,
+        "descent": 0
+      }
+    },
+    {
+      "source": "group(\"(\",list(a, b),\"]\")",
+      "font_size": 24,
+      "result": {
+        "width": 71,
+        "ascent": 21.999999999999996,
+        "descent": 6
+      }
+    },
+    {
+      "source": "bgroup(\"(\",atop(x,y),\")\")",
+      "font_size": 24,
+      "result": {
+        "width": 43.999999999999972,
+        "ascent": 38.690791999999995,
+        "descent": 23.690792000000002
+      }
+    },
+    {
+      "source": "group(lceil, x, rceil)",
+      "font_size": 24,
+      "result": {
+        "width": 46.000000000000028,
+        "ascent": 39,
+        "descent": 0
+      }
+    },
+    {
+      "source": "group(lfloor, x, rfloor)",
+      "font_size": 24,
+      "result": {
+        "width": 46.000000000000028,
+        "ascent": 39,
+        "descent": 0
+      }
+    },
+    {
+      "source": "group(langle, list(x, y), rangle)",
+      "font_size": 24,
+      "result": {
+        "width": 69.999999999999972,
+        "ascent": 20.999999999999996,
+        "descent": 6
+      }
+    },
+    {
+      "source": "alpha",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 13,
+        "descent": 1
+      }
+    },
+    {
+      "source": "beta",
+      "font_size": 24,
+      "result": {
+        "width": 15.000000000000011,
+        "ascent": 19,
+        "descent": 5
+      }
+    },
+    {
+      "source": "gamma",
+      "font_size": 24,
+      "result": {
+        "width": 15.999999999999975,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "delta",
+      "font_size": 24,
+      "result": {
+        "width": 15.999999999999975,
+        "ascent": 19,
+        "descent": 1
+      }
+    },
+    {
+      "source": "epsilon",
+      "font_size": 24,
+      "result": {
+        "width": 14.000000000000014,
+        "ascent": 13,
+        "descent": 1
+      }
+    },
+    {
+      "source": "zeta",
+      "font_size": 24,
+      "result": {
+        "width": 15.000000000000011,
+        "ascent": 19,
+        "descent": 5
+      }
+    },
+    {
+      "source": "eta",
+      "font_size": 24,
+      "result": {
+        "width": 15.999999999999975,
+        "ascent": 13,
+        "descent": 5
+      }
+    },
+    {
+      "source": "theta",
+      "font_size": 24,
+      "result": {
+        "width": 15.999999999999975,
+        "ascent": 19,
+        "descent": 1
+      }
+    },
+    {
+      "source": "iota",
+      "font_size": 24,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 13,
+        "descent": 1
+      }
+    },
+    {
+      "source": "kappa",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 13,
+        "descent": 0
+      }
+    },
+    {
+      "source": "lambda",
+      "font_size": 24,
+      "result": {
+        "width": 16.999999999999972,
+        "ascent": 19,
+        "descent": 0
+      }
+    },
+    {
+      "source": "mu",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 13,
+        "descent": 5
+      }
+    },
+    {
+      "source": "nu",
+      "font_size": 24,
+      "result": {
+        "width": 15.999999999999975,
+        "ascent": 13,
+        "descent": 0
+      }
+    },
+    {
+      "source": "xi",
+      "font_size": 24,
+      "result": {
+        "width": 15.000000000000011,
+        "ascent": 19,
+        "descent": 5
+      }
+    },
+    {
+      "source": "omicron",
+      "font_size": 24,
+      "result": {
+        "width": 15.999999999999975,
+        "ascent": 13,
+        "descent": 1
+      }
+    },
+    {
+      "source": "pi",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 13,
+        "descent": 0
+      }
+    },
+    {
+      "source": "rho",
+      "font_size": 24,
+      "result": {
+        "width": 15.000000000000011,
+        "ascent": 13,
+        "descent": 5
+      }
+    },
+    {
+      "source": "sigma",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 13,
+        "descent": 1
+      }
+    },
+    {
+      "source": "tau",
+      "font_size": 24,
+      "result": {
+        "width": 15.000000000000011,
+        "ascent": 13,
+        "descent": 1
+      }
+    },
+    {
+      "source": "upsilon",
+      "font_size": 24,
+      "result": {
+        "width": 15.999999999999975,
+        "ascent": 13,
+        "descent": 1
+      }
+    },
+    {
+      "source": "phi",
+      "font_size": 24,
+      "result": {
+        "width": 19.000000000000028,
+        "ascent": 13,
+        "descent": 5
+      }
+    },
+    {
+      "source": "chi",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 13,
+        "descent": 6
+      }
+    },
+    {
+      "source": "psi",
+      "font_size": 24,
+      "result": {
+        "width": 20.000000000000025,
+        "ascent": 13,
+        "descent": 5
+      }
+    },
+    {
+      "source": "omega",
+      "font_size": 24,
+      "result": {
+        "width": 20.999999999999989,
+        "ascent": 13,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Alpha",
+      "font_size": 24,
+      "result": {
+        "width": 21.999999999999986,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Beta",
+      "font_size": 24,
+      "result": {
+        "width": 19.000000000000028,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Gamma",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Delta",
+      "font_size": 24,
+      "result": {
+        "width": 19.000000000000028,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Epsilon",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Zeta",
+      "font_size": 24,
+      "result": {
+        "width": 19.000000000000028,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Eta",
+      "font_size": 24,
+      "result": {
+        "width": 21.999999999999986,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Theta",
+      "font_size": 24,
+      "result": {
+        "width": 20.999999999999989,
+        "ascent": 18,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Iota",
+      "font_size": 24,
+      "result": {
+        "width": 11.000000000000025,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Kappa",
+      "font_size": 24,
+      "result": {
+        "width": 20.999999999999989,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Lambda",
+      "font_size": 24,
+      "result": {
+        "width": 21.999999999999986,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Mu",
+      "font_size": 24,
+      "result": {
+        "width": 25.999999999999972,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Nu",
+      "font_size": 24,
+      "result": {
+        "width": 23.000000000000014,
+        "ascent": 18,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Xi",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Omicron",
+      "font_size": 24,
+      "result": {
+        "width": 20.999999999999989,
+        "ascent": 18,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Pi",
+      "font_size": 24,
+      "result": {
+        "width": 21.999999999999986,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Rho",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Sigma",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Tau",
+      "font_size": 24,
+      "result": {
+        "width": 19.000000000000028,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Upsilon",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Phi",
+      "font_size": 24,
+      "result": {
+        "width": 20.999999999999989,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Chi",
+      "font_size": 24,
+      "result": {
+        "width": 20.999999999999989,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Psi",
+      "font_size": 24,
+      "result": {
+        "width": 23.000000000000014,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "Omega",
+      "font_size": 24,
+      "result": {
+        "width": 20.999999999999989,
+        "ascent": 18,
+        "descent": 0
+      }
+    },
+    {
+      "source": "theta1",
+      "font_size": 24,
+      "result": {
+        "width": 19.000000000000028,
+        "ascent": 19,
+        "descent": 1
+      }
+    },
+    {
+      "source": "phi1",
+      "font_size": 24,
+      "result": {
+        "width": 18,
+        "ascent": 19,
+        "descent": 5
+      }
+    },
+    {
+      "source": "sigma1",
+      "font_size": 24,
+      "result": {
+        "width": 15.000000000000011,
+        "ascent": 13,
+        "descent": 5
+      }
+    },
+    {
+      "source": "omega1",
+      "font_size": 24,
+      "result": {
+        "width": 23.000000000000014,
+        "ascent": 13,
+        "descent": 1
+      }
+    },
+    {
+      "source": "Upsilon1",
+      "font_size": 24,
+      "result": {
+        "width": 16.999999999999972,
+        "ascent": 18,
+        "descent": 0
+      }
+    }
+  ],
+  "metric_controls": [
+    {
+      "text": "x",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 2.9999999999999893,
+      "ascent": 4,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 2.9999999999999893,
+      "ascent": 4,
+      "descent": 2
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 2.9999999999999893,
+      "ascent": 4,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 6.0000000000000107,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 3.9999999999999858,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 5.0000000000000142,
+      "ascent": 4,
+      "descent": 0
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 3.9999999999999858,
+      "ascent": 5,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 3.9999999999999858,
+      "ascent": 4,
+      "descent": 2
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 2.0000000000000249,
+      "ascent": 1,
+      "descent": 1
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 2.0000000000000249,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 3.9999999999999858,
+      "ascent": 1,
+      "descent": 1
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 5.0000000000000142,
+      "ascent": 4,
+      "descent": 0
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 5.0000000000000142,
+      "ascent": 4,
+      "descent": 1
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 2.9999999999999893,
+      "ascent": 6,
+      "descent": 2
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 2.9999999999999893,
+      "ascent": 6,
+      "descent": 2
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 2.0000000000000249,
+      "ascent": 3,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Serif",
+      "font_size": 6,
+      "width": 2.9999999999999893,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "x",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 2.9999999999999893,
+      "ascent": 4,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 2.9999999999999893,
+      "ascent": 4,
+      "descent": 2
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 2.9999999999999893,
+      "ascent": 4,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 6.0000000000000107,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 3.9999999999999858,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 5.0000000000000142,
+      "ascent": 4,
+      "descent": 1
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 3.9999999999999858,
+      "ascent": 5,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 3.9999999999999858,
+      "ascent": 4,
+      "descent": 2
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 2.0000000000000249,
+      "ascent": 1,
+      "descent": 1
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 2.0000000000000249,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 3.9999999999999858,
+      "ascent": 1,
+      "descent": 1
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 5.0000000000000142,
+      "ascent": 4,
+      "descent": 1
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 5.0000000000000142,
+      "ascent": 4,
+      "descent": 1
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 3.9999999999999858,
+      "ascent": 8,
+      "descent": 0
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 3.9999999999999858,
+      "ascent": 8,
+      "descent": 1
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 2.0000000000000249,
+      "ascent": 3,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 6,
+      "width": 2.9999999999999893,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "x",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 5.0000000000000142,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 5.0000000000000142,
+      "ascent": 5,
+      "descent": 2
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 3.9999999999999858,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 9,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 6.0000000000000107,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 6.9999999999999751,
+      "ascent": 6,
+      "descent": 0
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 5.0000000000000142,
+      "ascent": 6.9999999999999991,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 5.0000000000000142,
+      "ascent": 5,
+      "descent": 2
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 2.9999999999999893,
+      "ascent": 1,
+      "descent": 2
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 2.9999999999999893,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 6.0000000000000107,
+      "ascent": 1,
+      "descent": 2
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 6.9999999999999751,
+      "ascent": 6,
+      "descent": 0
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 6.9999999999999751,
+      "ascent": 6,
+      "descent": 1
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 3.9999999999999858,
+      "ascent": 8,
+      "descent": 3
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 3.9999999999999858,
+      "ascent": 8,
+      "descent": 2
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 2.9999999999999893,
+      "ascent": 4,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Serif",
+      "font_size": 8.4000000000000004,
+      "width": 3.9999999999999858,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "x",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 5.0000000000000142,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 5.0000000000000142,
+      "ascent": 5,
+      "descent": 2
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 3.9999999999999858,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 9,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 6.0000000000000107,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 6.9999999999999751,
+      "ascent": 5,
+      "descent": 1
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 5.0000000000000142,
+      "ascent": 6.9999999999999991,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 5.0000000000000142,
+      "ascent": 5,
+      "descent": 2
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 2.9999999999999893,
+      "ascent": 1,
+      "descent": 2
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 2.9999999999999893,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 6.0000000000000107,
+      "ascent": 1,
+      "descent": 2
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 6.9999999999999751,
+      "ascent": 6,
+      "descent": 1
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 6.9999999999999751,
+      "ascent": 5,
+      "descent": 1
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 6.0000000000000107,
+      "ascent": 10.999999999999998,
+      "descent": 0
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 6.0000000000000107,
+      "ascent": 10.999999999999998,
+      "descent": 1
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 2.0000000000000249,
+      "ascent": 3,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 8.4000000000000004,
+      "width": 3.9999999999999858,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "x",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 6.9999999999999751,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 6.9999999999999751,
+      "ascent": 6.9999999999999991,
+      "descent": 3
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 6.0000000000000107,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 11.999999999999989,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 9,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 10.000000000000028,
+      "ascent": 8,
+      "descent": 0
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 7.9999999999999716,
+      "ascent": 9,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 7.9999999999999716,
+      "ascent": 6.9999999999999991,
+      "descent": 3
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 3.9999999999999858,
+      "ascent": 2,
+      "descent": 2
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 3.9999999999999858,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 7.9999999999999716,
+      "ascent": 2,
+      "descent": 2
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 10.000000000000028,
+      "ascent": 8,
+      "descent": 0
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 10.000000000000028,
+      "ascent": 8,
+      "descent": 1
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 6.0000000000000107,
+      "ascent": 12,
+      "descent": 3
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 6.0000000000000107,
+      "ascent": 12,
+      "descent": 3
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 3.9999999999999858,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Serif",
+      "font_size": 12,
+      "width": 6.0000000000000107,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "x",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 6.9999999999999751,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 6.9999999999999751,
+      "ascent": 6.9999999999999991,
+      "descent": 3
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 6.0000000000000107,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 11.999999999999989,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 9,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 9,
+      "ascent": 8,
+      "descent": 1
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 7.9999999999999716,
+      "ascent": 9,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 7.9999999999999716,
+      "ascent": 6.9999999999999991,
+      "descent": 3
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 3.9999999999999858,
+      "ascent": 2,
+      "descent": 2
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 3.9999999999999858,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 7.9999999999999716,
+      "ascent": 2,
+      "descent": 2
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 9,
+      "ascent": 8,
+      "descent": 1
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 9,
+      "ascent": 8,
+      "descent": 1
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 7.9999999999999716,
+      "ascent": 16,
+      "descent": 0
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 7.9999999999999716,
+      "ascent": 16,
+      "descent": 1
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 2.9999999999999893,
+      "ascent": 5,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 12,
+      "width": 6.0000000000000107,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "x",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 9,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 9,
+      "ascent": 9,
+      "descent": 4
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 9,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 16.999999999999972,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 11.999999999999989,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 14.000000000000014,
+      "ascent": 10.999999999999998,
+      "descent": 0
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 11.000000000000025,
+      "ascent": 13,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 11.000000000000025,
+      "ascent": 9,
+      "descent": 4
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 5.0000000000000142,
+      "ascent": 2,
+      "descent": 3
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 5.0000000000000142,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 10.000000000000028,
+      "ascent": 2,
+      "descent": 3
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 14.000000000000014,
+      "ascent": 10.999999999999998,
+      "descent": 0
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 14.000000000000014,
+      "ascent": 10.999999999999998,
+      "descent": 1
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 9,
+      "ascent": 16,
+      "descent": 5
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 9,
+      "ascent": 16,
+      "descent": 4
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 6.0000000000000107,
+      "ascent": 6.9999999999999991,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Serif",
+      "font_size": 16.800000000000001,
+      "width": 7.9999999999999716,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "x",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 9,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 9,
+      "ascent": 9,
+      "descent": 4
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 9,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 16.999999999999972,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 11.999999999999989,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 12.999999999999986,
+      "ascent": 10,
+      "descent": 1
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 11.000000000000025,
+      "ascent": 13,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 11.000000000000025,
+      "ascent": 9,
+      "descent": 4
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 5.0000000000000142,
+      "ascent": 2,
+      "descent": 3
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 5.0000000000000142,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 10.000000000000028,
+      "ascent": 2,
+      "descent": 3
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 12.999999999999986,
+      "ascent": 10.999999999999998,
+      "descent": 1
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 12.999999999999986,
+      "ascent": 10,
+      "descent": 1
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 11.999999999999989,
+      "ascent": 21.999999999999996,
+      "descent": 0
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 11.999999999999989,
+      "ascent": 21.999999999999996,
+      "descent": 1
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 5.0000000000000142,
+      "ascent": 6,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 16.800000000000001,
+      "width": 7.9999999999999716,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "x",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 14.000000000000014,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 14.000000000000014,
+      "ascent": 13,
+      "descent": 6
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 12.999999999999986,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 24.999999999999975,
+      "ascent": 18,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 16.999999999999972,
+      "ascent": 18,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 20.000000000000025,
+      "ascent": 16,
+      "descent": 0
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 15.000000000000011,
+      "ascent": 18,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 15.000000000000011,
+      "ascent": 13,
+      "descent": 6
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 7.9999999999999716,
+      "ascent": 3,
+      "descent": 4
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 7.9999999999999716,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 15.999999999999975,
+      "ascent": 3,
+      "descent": 4
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 20.000000000000025,
+      "ascent": 16,
+      "descent": 0
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 20.000000000000025,
+      "ascent": 14.999999999999998,
+      "descent": 1
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 12.999999999999986,
+      "ascent": 23,
+      "descent": 6
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 12.999999999999986,
+      "ascent": 23,
+      "descent": 6
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 7.9999999999999716,
+      "ascent": 10,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Serif",
+      "font_size": 24,
+      "width": 11.999999999999989,
+      "ascent": 18,
+      "descent": 0
+    },
+    {
+      "text": "x",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 14.000000000000014,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 14.000000000000014,
+      "ascent": 13,
+      "descent": 6
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 12.999999999999986,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 24.999999999999975,
+      "ascent": 18,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 16.999999999999972,
+      "ascent": 18,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 19.000000000000028,
+      "ascent": 14.999999999999998,
+      "descent": 1
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 15.000000000000011,
+      "ascent": 18,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 15.000000000000011,
+      "ascent": 13,
+      "descent": 6
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 7.9999999999999716,
+      "ascent": 3,
+      "descent": 4
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 7.9999999999999716,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 15.999999999999975,
+      "ascent": 3,
+      "descent": 4
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 19.000000000000028,
+      "ascent": 14.999999999999998,
+      "descent": 1
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 19.000000000000028,
+      "ascent": 14.999999999999998,
+      "descent": 2
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 16.999999999999972,
+      "ascent": 30.999999999999996,
+      "descent": 0
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 16.999999999999972,
+      "ascent": 30.999999999999996,
+      "descent": 1
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 6.9999999999999751,
+      "ascent": 9,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 24,
+      "width": 11.999999999999989,
+      "ascent": 18,
+      "descent": 0
+    },
+    {
+      "text": "x",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 16.999999999999972,
+      "ascent": 16,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 16.999999999999972,
+      "ascent": 16,
+      "descent": 6.9999999999999991
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 15.999999999999975,
+      "ascent": 16,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 30.999999999999986,
+      "ascent": 21.999999999999996,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 20.999999999999989,
+      "ascent": 21.999999999999996,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 24.999999999999975,
+      "ascent": 19,
+      "descent": 0
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 19.000000000000028,
+      "ascent": 23,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 19.000000000000028,
+      "ascent": 16,
+      "descent": 6.9999999999999991
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 10.000000000000028,
+      "ascent": 4,
+      "descent": 5
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 10.000000000000028,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 20.000000000000025,
+      "ascent": 4,
+      "descent": 5
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 24.999999999999975,
+      "ascent": 19,
+      "descent": 0
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 24.999999999999975,
+      "ascent": 19,
+      "descent": 1
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 15.999999999999975,
+      "ascent": 27.999999999999996,
+      "descent": 8
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 15.999999999999975,
+      "ascent": 28.999999999999996,
+      "descent": 8
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 10.000000000000028,
+      "ascent": 13,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Serif",
+      "font_size": 30,
+      "width": 15.000000000000011,
+      "ascent": 23,
+      "descent": 0
+    },
+    {
+      "text": "x",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 16.999999999999972,
+      "ascent": 16,
+      "descent": 0
+    },
+    {
+      "text": "y",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 16.999999999999972,
+      "ascent": 16,
+      "descent": 6.9999999999999991
+    },
+    {
+      "text": "z",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 15.999999999999975,
+      "ascent": 16,
+      "descent": 0
+    },
+    {
+      "text": "M",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 30.999999999999986,
+      "ascent": 21.999999999999996,
+      "descent": 0
+    },
+    {
+      "text": "X",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 20.999999999999989,
+      "ascent": 21.999999999999996,
+      "descent": 0
+    },
+    {
+      "text": "+",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 24.000000000000011,
+      "ascent": 18,
+      "descent": 2
+    },
+    {
+      "text": "0",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 19.000000000000028,
+      "ascent": 23,
+      "descent": 1
+    },
+    {
+      "text": "g",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 19.000000000000028,
+      "ascent": 16,
+      "descent": 6.9999999999999991
+    },
+    {
+      "text": ",",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 10.000000000000028,
+      "ascent": 4,
+      "descent": 5
+    },
+    {
+      "text": " ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 10.000000000000028,
+      "ascent": 0,
+      "descent": 0
+    },
+    {
+      "text": ", ",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 20.000000000000025,
+      "ascent": 4,
+      "descent": 5
+    },
+    {
+      "text": "∩",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 24.000000000000011,
+      "ascent": 19,
+      "descent": 2
+    },
+    {
+      "text": "∪",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 24.000000000000011,
+      "ascent": 18,
+      "descent": 2
+    },
+    {
+      "text": "⌠",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 20.999999999999989,
+      "ascent": 39,
+      "descent": 0
+    },
+    {
+      "text": "⌡",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 20.999999999999989,
+      "ascent": 38,
+      "descent": 1
+    },
+    {
+      "text": "⋅",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 9,
+      "ascent": 10.999999999999998,
+      "descent": 0
+    },
+    {
+      "text": "°",
+      "font_family": "DejaVu Math TeX Gyre",
+      "font_size": 30,
+      "width": 15.000000000000011,
+      "ascent": 23,
+      "descent": 0
+    }
+  ],
+  "number_controls": [
+    {
+      "source": "1e3",
+      "label": "1000"
+    },
+    {
+      "source": "1e4",
+      "label": "10000"
+    },
+    {
+      "source": "1e5",
+      "label": "1e+05"
+    },
+    {
+      "source": "1e-3",
+      "label": "0.001"
+    },
+    {
+      "source": "1e-4",
+      "label": "1e-04"
+    },
+    {
+      "source": "1.234567890123456",
+      "label": "1.23456789012346"
+    },
+    {
+      "source": "0001.00",
+      "label": "1"
+    }
+  ]
+}

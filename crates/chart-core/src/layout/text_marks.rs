@@ -73,7 +73,18 @@ pub(super) fn project(
     let selected = options
         .fonts
         .iter()
-        .find(|f| f.family.as_str() == family.unwrap_or("") && f.face == face);
+        .find(|f| f.family.as_str() == family.unwrap_or("") && f.face == face)
+        .or_else(|| {
+            if options.font.is_some() && family.is_none() && face == "plain" {
+                return None;
+            }
+            request
+                .resolved_theme
+                .as_ref()?
+                .fonts
+                .iter()
+                .find(|f| f.family.as_str() == family.unwrap_or("") && f.face == face)
+        });
     if (family.is_some() || face != "plain") && selected.is_none() {
         return Err(crate::scales::error(
             DiagnosticCode::MissingResource,
@@ -98,6 +109,12 @@ pub(super) fn project(
             vec![run]
         })
         .collect();
+    if let Some(fonts) = &options.math {
+        let mut parsed = crate::typography::RichText::math(label.clone(), fonts.clone())?;
+        parsed.lines[0][0].size = size / request.font_size;
+        parsed.lines[0][0].font = selected.map(|f| f.font).or(options.font);
+        text = parsed;
+    }
     text.line_spacing = number(mark, A::LineHeight, options.line_height);
     let block = super::text::measure(&text, request, measurer, mark.style.color)?;
     output.diagnostics.extend(block.diagnostics);
@@ -128,15 +145,13 @@ pub(super) fn project(
         return Ok(());
     }
     occupied.push(corners);
-    output.interactions.insert(
-        output.items.len(),
-        crate::grammar::GeometryInteraction {
-            hit: crate::grammar::HitGeometry::Polygon(corners.to_vec()),
-            values: vec![("label".into(), crate::grammar::SemanticValue::Text(label))],
-            selection: crate::grammar::SelectionPolicy::AtomicTarget,
-            keyboard_order: (occupied.len() - 1) as u64,
-        },
-    );
+    let output_start = output.items.len();
+    let interaction = crate::grammar::GeometryInteraction {
+        hit: crate::grammar::HitGeometry::Polygon(corners.to_vec()),
+        values: vec![("label".into(), crate::grammar::SemanticValue::Text(label))],
+        selection: crate::grammar::SelectionPolicy::AtomicTarget,
+        keyboard_order: (occupied.len() - 1) as u64,
+    };
     if let Some(fill) = options.fill {
         use crate::path::Command;
         let geometry = crate::path::PathGeometry::from_commands(
@@ -179,9 +194,20 @@ pub(super) fn project(
             )?;
             *rotation = angle;
         }
+        if let Primitive::Path { commands, .. } = &mut item.primitive {
+            super::text::transform_commands(commands, &|p| {
+                transform(
+                    p.x() - block.bounds.origin().x() + left + pad[0],
+                    p.y() - block.bounds.origin().y() + top + pad[1],
+                )
+            })?;
+        }
         item.layer = Some(layer);
         item.clip = clip;
         output.push(item, mark.targets.clone(), request)?;
+    }
+    for index in output_start..output.items.len() {
+        output.interaction(index, interaction.clone(), request)?;
     }
     Ok(())
 }

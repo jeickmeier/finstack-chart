@@ -374,6 +374,65 @@ fn sampled_gradient_image(
     )])))
 }
 
+/// An exact union of same-RGBA source pixels. Only the previous scanline's
+/// runs stay in the lookup map; both map and output are bounded by raster cells.
+#[derive(Clone, Copy, Debug)]
+struct RasterRectangle {
+    x0: usize,
+    x1: usize,
+    y0: usize,
+    y1: usize,
+    color: Color,
+}
+impl RasterRectangle {
+    fn bounds(self, bounds: Rect, width: usize, height: usize) -> ChartResult<Rect> {
+        let x0 = bounds.origin().x() + bounds.width() * self.x0 as f64 / width as f64;
+        let x1 = bounds.origin().x() + bounds.width() * self.x1 as f64 / width as f64;
+        let y0 = bounds.origin().y() + bounds.height() * self.y0 as f64 / height as f64;
+        let y1 = bounds.origin().y() + bounds.height() * self.y1 as f64 / height as f64;
+        Rect::new(x0, y0, x1 - x0, y1 - y0)
+    }
+}
+fn nearest_raster_rectangles(
+    raster: &chart_core::grammar::RasterAnnotation,
+) -> Vec<RasterRectangle> {
+    let mut rectangles: Vec<RasterRectangle> = Vec::new();
+    let mut previous: BTreeMap<(usize, usize, [u8; 4]), usize> = BTreeMap::new();
+    for y in 0..raster.height {
+        let mut current = BTreeMap::new();
+        let mut x = 0;
+        while x < raster.width {
+            let color = raster.pixels[y * raster.width + x];
+            let x0 = x;
+            x += 1;
+            while x < raster.width && raster.pixels[y * raster.width + x] == color {
+                x += 1;
+            }
+            if color.alpha == 0 {
+                continue;
+            }
+            let key = (x0, x, [color.red, color.green, color.blue, color.alpha]);
+            let index = if let Some(&index) = previous.get(&key) {
+                rectangles[index].y1 = y + 1;
+                index
+            } else {
+                let index = rectangles.len();
+                rectangles.push(RasterRectangle {
+                    x0,
+                    x1: x,
+                    y0: y,
+                    y1: y + 1,
+                    color,
+                });
+                index
+            };
+            current.insert(key, index);
+        }
+        previous = current;
+    }
+    rectangles
+}
+
 fn raster_image(
     raster: &chart_core::grammar::RasterAnnotation,
 ) -> ChartResult<Arc<gpui::RenderImage>> {
@@ -668,26 +727,18 @@ impl NativeFrame {
                                 raster_image(raster)?,
                             )
                         } else {
-                            let mut quads = Vec::with_capacity(raster.pixels.len());
-                            for y in 0..raster.height {
-                                for x in 0..raster.width {
-                                    let x0 =
-                                        r.origin().x() + r.width() * x as f64 / raster.width as f64;
-                                    let x1 = r.origin().x()
-                                        + r.width() * (x + 1) as f64 / raster.width as f64;
-                                    let y0 = r.origin().y()
-                                        + r.height() * y as f64 / raster.height as f64;
-                                    let y1 = r.origin().y()
-                                        + r.height() * (y + 1) as f64 / raster.height as f64;
-                                    quads.push(fill(
+                            let quads = nearest_raster_rectangles(raster)
+                                .into_iter()
+                                .map(|cell| {
+                                    Ok(fill(
                                         rect_at(
-                                            Rect::new(x0, y0, x1 - x0, y1 - y0)?,
+                                            cell.bounds(*r, raster.width, raster.height)?,
                                             bounds.origin,
                                         )?,
-                                        native_color(raster.pixels[y * raster.width + x]),
-                                    ));
-                                }
-                            }
+                                        native_color(cell.color),
+                                    ))
+                                })
+                                .collect::<ChartResult<Vec<_>>>()?;
                             Paint::Quads(quads)
                         }
                     }
@@ -1000,6 +1051,142 @@ fn self_font_missing(font: &NativeFont, descriptor: &ResourceDescriptor) -> bool
 #[cfg(test)]
 mod tests {
     use super::*;
+    fn verify_raster_rectangles(raster: &chart_core::grammar::RasterAnnotation) -> usize {
+        let rectangles = nearest_raster_rectangles(raster);
+        let mut reconstructed = vec![None; raster.pixels.len()];
+        let bounds = Rect::new(7.25, -3.5, 317.125, 121.75).unwrap();
+        for cell in &rectangles {
+            assert!(cell.color.alpha > 0);
+            assert!(cell.x0 < cell.x1 && cell.x1 <= raster.width);
+            assert!(cell.y0 < cell.y1 && cell.y1 <= raster.height);
+            let actual = cell.bounds(bounds, raster.width, raster.height).unwrap();
+            assert_eq!(
+                actual.origin().x(),
+                bounds.origin().x() + bounds.width() * cell.x0 as f64 / raster.width as f64
+            );
+            assert_eq!(
+                actual.origin().y(),
+                bounds.origin().y() + bounds.height() * cell.y0 as f64 / raster.height as f64
+            );
+            assert!(
+                (actual.max_x()
+                    - (bounds.origin().x()
+                        + bounds.width() * cell.x1 as f64 / raster.width as f64))
+                    .abs()
+                    < 1e-12
+            );
+            assert!(
+                (actual.max_y()
+                    - (bounds.origin().y()
+                        + bounds.height() * cell.y1 as f64 / raster.height as f64))
+                    .abs()
+                    < 1e-12
+            );
+            for y in cell.y0..cell.y1 {
+                for x in cell.x0..cell.x1 {
+                    assert!(
+                        reconstructed[y * raster.width + x]
+                            .replace(cell.color)
+                            .is_none(),
+                        "overlap"
+                    );
+                }
+            }
+        }
+        for (actual, expected) in reconstructed.iter().zip(&raster.pixels) {
+            assert_eq!(*actual, (expected.alpha > 0).then_some(*expected));
+        }
+        rectangles.len()
+    }
+    #[test]
+    fn nearest_raster_coalescing_preserves_holes_changes_alpha_and_geometry() {
+        let palette = [
+            Color {
+                red: 123,
+                green: 20,
+                blue: 40,
+                alpha: 0,
+            },
+            Color {
+                red: 123,
+                green: 20,
+                blue: 40,
+                alpha: 128,
+            },
+            Color {
+                red: 123,
+                green: 20,
+                blue: 40,
+                alpha: 255,
+            },
+        ];
+        // Exhaust all 3x3 opaque/translucent/missing arrangements: splits,
+        // disappearing runs, holes and equal RGB with different alpha.
+        for mut code in 0..3_usize.pow(9) {
+            let pixels = (0..9)
+                .map(|_| {
+                    let color = palette[code % 3];
+                    code /= 3;
+                    color
+                })
+                .collect();
+            verify_raster_rectangles(&chart_core::grammar::RasterAnnotation {
+                width: 3,
+                height: 3,
+                pixels,
+            });
+        }
+        let solid = chart_core::grammar::RasterAnnotation {
+            width: 7,
+            height: 5,
+            pixels: vec![palette[1]; 35],
+        };
+        assert_eq!(verify_raster_rectangles(&solid), 1);
+        let empty = chart_core::grammar::RasterAnnotation {
+            pixels: vec![palette[0]; 35],
+            ..solid
+        };
+        assert_eq!(verify_raster_rectangles(&empty), 0);
+    }
+    #[test]
+    fn nearest_raster_sector_gradient_diagnostic() {
+        let (width, height) = (1000, 600);
+        let pixels = (0..height)
+            .flat_map(|y| {
+                (0..width).map(move |x| {
+                    let dx = x as f64 - 500.;
+                    let dy = y as f64 - 300.;
+                    let radius = dx * dx + dy * dy;
+                    Color {
+                        red: (x / 4) as u8,
+                        green: 70,
+                        blue: 120,
+                        alpha: if (10000. ..=90000.).contains(&radius) && x >= 500 {
+                            180
+                        } else {
+                            0
+                        },
+                    }
+                })
+            })
+            .collect();
+        let raster = chart_core::grammar::RasterAnnotation {
+            width,
+            height,
+            pixels,
+        };
+        let started = std::time::Instant::now();
+        let rectangles = nearest_raster_rectangles(&raster);
+        eprintln!(
+            "nearest raster synthetic sector: {} cells -> {} rectangles; helper {:?}",
+            width * height,
+            rectangles.len(),
+            started.elapsed()
+        );
+        assert!(rectangles.len() < width * height / 20);
+        assert_eq!(verify_raster_rectangles(&raster), rectangles.len());
+    }
+
     #[test]
     fn sampled_gradient_image_keeps_channel_order_alpha_and_direction() {
         use chart_core::scene::GradientDirection;

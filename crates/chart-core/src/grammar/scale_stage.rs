@@ -540,6 +540,14 @@ pub(super) fn source_layer(layer: &mut Layer, axes: &[crate::layout::AxisSpec]) 
             wrap(&mut s.x, x.as_ref());
             wrap(&mut s.y, y.as_ref());
         }
+        StatParameters::Model(s) => {
+            wrap(&mut s.x, x.as_ref());
+            wrap(&mut s.y, y.as_ref());
+        }
+        StatParameters::Spatial(s) => {
+            wrap(&mut s.x, x.as_ref());
+            wrap(&mut s.y, y.as_ref());
+        }
         StatParameters::Count(s) => {
             if let Some(n) = s.ggplot.as_mut().and_then(|g| g.joint_position.as_mut()) {
                 wrap(n, y.as_ref());

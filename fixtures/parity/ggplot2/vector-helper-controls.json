@@ -1,0 +1,469 @@
+{
+  "reference": {
+    "R": "4.6.1",
+    "ggplot2": "4.0.3"
+  },
+  "cases": [
+    {
+      "name": "interval-TRUE",
+      "operation": "cut_interval",
+      "x": [-3, -2, -1, 0, 1, 2, 3, null],
+      "integer": false,
+      "options": {
+        "n": 3,
+        "right": true
+      },
+      "result": {
+        "codes": [0, 0, 0, 1, 1, 2, 2, null],
+        "levels": ["[-3,-1]", "(-1,1]", "(1,3]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "number-TRUE",
+      "operation": "cut_number",
+      "x": [0, 1, 2, 4, 8, 16, null],
+      "integer": false,
+      "options": {
+        "n": 3,
+        "right": true
+      },
+      "result": {
+        "codes": [0, 0, 1, 1, 2, 2, null],
+        "levels": ["[0,1.67]", "(1.67,5.33]", "(5.33,16]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "width-TRUE",
+      "operation": "cut_width",
+      "x": [-2, -1, -0.5, 0, 0.5, 1, 2, null],
+      "integer": false,
+      "options": {
+        "width": 1,
+        "closed": "right"
+      },
+      "result": {
+        "codes": [0, 1, 1, 2, 2, 3, 4, null],
+        "levels": ["[-2.5,-1.5]", "(-1.5,-0.5]", "(-0.5,0.5]", "(0.5,1.5]", "(1.5,2.5]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "interval-FALSE",
+      "operation": "cut_interval",
+      "x": [-3, -2, -1, 0, 1, 2, 3, null],
+      "integer": false,
+      "options": {
+        "n": 3,
+        "right": false
+      },
+      "result": {
+        "codes": [0, 0, 1, 1, 2, 2, 2, null],
+        "levels": ["[-3,-1)", "[-1,1)", "[1,3]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "number-FALSE",
+      "operation": "cut_number",
+      "x": [0, 1, 2, 4, 8, 16, null],
+      "integer": false,
+      "options": {
+        "n": 3,
+        "right": false
+      },
+      "result": {
+        "codes": [0, 0, 1, 1, 2, 2, null],
+        "levels": ["[0,1.67)", "[1.67,5.33)", "[5.33,16]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "width-FALSE",
+      "operation": "cut_width",
+      "x": [-2, -1, -0.5, 0, 0.5, 1, 2, null],
+      "integer": false,
+      "options": {
+        "width": 1,
+        "closed": "left"
+      },
+      "result": {
+        "codes": [0, 1, 2, 2, 3, 3, 4, null],
+        "levels": ["[-2.5,-1.5)", "[-1.5,-0.5)", "[-0.5,0.5)", "[0.5,1.5)", "[1.5,2.5]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "interval-length",
+      "operation": "cut_interval",
+      "x": [-1.2, 0, 0.29999999999999999, 2.6000000000000001],
+      "integer": false,
+      "options": {
+        "length": 0.5
+      },
+      "result": {
+        "codes": [0, 2, 3, 8],
+        "levels": ["[-1.5,-1]", "(-1,-0.5]", "(-0.5,0]", "(0,0.5]", "(0.5,1]", "(1,1.5]", "(1.5,2]", "(2,2.5]", "(2.5,3]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "interval-custom-labels",
+      "operation": "cut_interval",
+      "x": [0, 1, 2, 3],
+      "integer": false,
+      "options": {
+        "n": 3,
+        "labels": ["a", "b", "c"],
+        "ordered_result": true
+      },
+      "result": {
+        "codes": [0, 0, 1, 2],
+        "levels": ["a", "b", "c"],
+        "ordered": true
+      }
+    },
+    {
+      "name": "width-center",
+      "operation": "cut_width",
+      "x": [-3, -2, -1, 0, 1, 2, 3],
+      "integer": false,
+      "options": {
+        "width": 2,
+        "center": 0
+      },
+      "result": {
+        "codes": [0, 0, 0, 1, 1, 2, 2],
+        "levels": ["[-3,-1]", "(-1,1]", "(1,3]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "width-boundary",
+      "operation": "cut_width",
+      "x": [-3, -2, -1, 0, 1, 2, 3],
+      "integer": false,
+      "options": {
+        "width": 2,
+        "boundary": 0
+      },
+      "result": {
+        "codes": [0, 0, 1, 1, 2, 2, 3],
+        "levels": ["[-4,-2]", "(-2,0]", "(0,2]", "(2,4]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "interval-single",
+      "operation": "cut_interval",
+      "x": [0, 1, 2],
+      "integer": false,
+      "options": {
+        "n": 1
+      },
+      "result": {
+        "codes": [0, 0, 0],
+        "levels": ["[0,2]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "interval-duplicate-labels",
+      "operation": "cut_interval",
+      "x": [0, 1, 2, 3],
+      "integer": false,
+      "options": {
+        "n": 3,
+        "labels": ["a", "a", "b"]
+      },
+      "result": {
+        "codes": [0, 0, 0, 1],
+        "levels": ["a", "b"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "interval-close-labels",
+      "operation": "cut_interval",
+      "x": [1, 1.0000100000000001, 1.0000199999999999],
+      "integer": false,
+      "options": {
+        "n": 2
+      },
+      "result": {
+        "codes": [0, 0, 1],
+        "levels": ["[1,1.00001]", "(1.00001,1.00002]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "interval-scientific",
+      "operation": "cut_interval",
+      "x": [9.9999999999999995e-07, 1.9999999999999999e-06, 3.0000000000000001e-06],
+      "integer": false,
+      "options": {
+        "n": 2
+      },
+      "result": {
+        "codes": [0, 0, 1],
+        "levels": ["[1e-06,2e-06]", "(2e-06,3e-06]"],
+        "ordered": false
+      }
+    },
+    {
+      "name": "number-ties",
+      "operation": "cut_number",
+      "x": [1, 1, 1, 2],
+      "integer": false,
+      "options": {
+        "n": 3
+      },
+      "result": {
+        "error": "Insufficient data values to produce 3 bins."
+      }
+    },
+    {
+      "name": "interval-constant",
+      "operation": "cut_interval",
+      "x": [1, 1, 1],
+      "integer": false,
+      "options": {
+        "n": 2
+      },
+      "result": {
+        "error": "'breaks' are not unique"
+      }
+    },
+    {
+      "name": "empty",
+      "operation": "cut_interval",
+      "x": [],
+      "integer": false,
+      "options": {
+        "n": 2
+      },
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "name": "width-invalid",
+      "operation": "cut_width",
+      "x": [1, 2, 3],
+      "integer": true,
+      "options": {
+        "width": 0
+      },
+      "result": {
+        "error": "'from' must be a finite number"
+      }
+    },
+    {
+      "name": "width-both",
+      "operation": "cut_width",
+      "x": [1, 2, 3],
+      "integer": true,
+      "options": {
+        "width": 1,
+        "center": 0,
+        "boundary": 0
+      },
+      "result": {
+        "error": "Only one of `boundary` and `center` may be specified."
+      }
+    },
+    {
+      "name": "resolution TRUE 1",
+      "operation": "resolution",
+      "x": [1.1000000000000001, 2.2999999999999998, 3.5],
+      "integer": false,
+      "options": {
+        "zero": true
+      },
+      "result": {
+        "value": 1.1000000000000001
+      }
+    },
+    {
+      "name": "resolution TRUE 2",
+      "operation": "resolution",
+      "x": [4, 4],
+      "integer": false,
+      "options": {
+        "zero": true
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution TRUE 3",
+      "operation": "resolution",
+      "x": [null, 1, 3],
+      "integer": false,
+      "options": {
+        "zero": true
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution TRUE 4",
+      "operation": "resolution",
+      "x": [9.9999999999999998e-13, 2e-12, 3.0000000000000001e-12],
+      "integer": false,
+      "options": {
+        "zero": true
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution TRUE 5",
+      "operation": "resolution",
+      "x": [1000000, 1000000.000000001],
+      "integer": false,
+      "options": {
+        "zero": true
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution TRUE 6",
+      "operation": "resolution",
+      "x": [],
+      "integer": false,
+      "options": {
+        "zero": true
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution TRUE 7",
+      "operation": "resolution",
+      "x": [1, 2, 3, 4],
+      "integer": true,
+      "options": {
+        "zero": true
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution TRUE 8",
+      "operation": "resolution",
+      "x": [1, 1.0000000010000001, 3],
+      "integer": false,
+      "options": {
+        "zero": true
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution FALSE 1",
+      "operation": "resolution",
+      "x": [1.1000000000000001, 2.2999999999999998, 3.5],
+      "integer": false,
+      "options": {
+        "zero": false
+      },
+      "result": {
+        "value": 1.1999999999999997
+      }
+    },
+    {
+      "name": "resolution FALSE 2",
+      "operation": "resolution",
+      "x": [4, 4],
+      "integer": false,
+      "options": {
+        "zero": false
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution FALSE 3",
+      "operation": "resolution",
+      "x": [null, 1, 3],
+      "integer": false,
+      "options": {
+        "zero": false
+      },
+      "result": {
+        "value": 2
+      }
+    },
+    {
+      "name": "resolution FALSE 4",
+      "operation": "resolution",
+      "x": [9.9999999999999998e-13, 2e-12, 3.0000000000000001e-12],
+      "integer": false,
+      "options": {
+        "zero": false
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution FALSE 5",
+      "operation": "resolution",
+      "x": [1000000, 1000000.000000001],
+      "integer": false,
+      "options": {
+        "zero": false
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution FALSE 6",
+      "operation": "resolution",
+      "x": [],
+      "integer": false,
+      "options": {
+        "zero": false
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution FALSE 7",
+      "operation": "resolution",
+      "x": [1, 2, 3, 4],
+      "integer": true,
+      "options": {
+        "zero": false
+      },
+      "result": {
+        "value": 1
+      }
+    },
+    {
+      "name": "resolution FALSE 8",
+      "operation": "resolution",
+      "x": [1, 1.0000000010000001, 3],
+      "integer": false,
+      "options": {
+        "zero": false
+      },
+      "result": {
+        "value": 1.9999999989999999
+      }
+    }
+  ]
+}

@@ -246,6 +246,9 @@ class Path(_Owned):
         for command in _decode(self._inner.replay_json()): sink(command)
 
 class ShapeRegistry(_Owned):
+    def materialize(self, operation, version, payload):
+        return Data(self._inner.materialize(_encode(dict(id=operation,version=str(version))),_encode(payload)))
+
     """Explicit trusted Rust registrations; constructing a registry installs no code."""
     def __init__(self): super().__init__(_native._ShapeRegistry())
     @classmethod
@@ -397,6 +400,9 @@ def vector_path(id, path): return VectorPath(path._inner.annotation(id))
 ExtensionRegistry = ShapeRegistry
 
 class PlotBuilder(_Owned):
+    def autolayer(self, operation, version, parameters):
+        return PlotBuilder(self._inner.autolayer(_encode(dict(operation=dict(id=operation,version=str(version)),parameters=parameters))))
+
     def with_registry(self, registry): return self.with_shape_registry(registry)
     def with_shape_registry(self, registry): return type(self)(self._inner.with_shape_registry(registry._inner))
     def __getattr__(self, name):
@@ -444,7 +450,12 @@ class FigureRequest(_Owned):
 class FigureTransition(_Owned):
     def sample(self, fraction): return FigureSnapshot(self._inner.sample(fraction))
 
+class FigurePages(_Owned):
+    def append(self, page): self._inner.append(page._inner);return self
+    def export(self, format): return bytes(self._inner.export(format))
+
 class FigureSnapshot(_Owned):
+    def pages(self): return FigurePages(self._inner.pages())
     def guide_transition(self, previous): return FigureTransition(self._inner.guide_transition(previous._inner))
     def presentation(self): return _decode(self._inner.presentation())
     def guides(self): return _decode(self._inner.guides())
@@ -454,6 +465,30 @@ class FigureSnapshot(_Owned):
     def save(self, path, format): _Path(path).write_bytes(self.export(format))
 
 class Output(_Owned):
+    def resolve_save(self, path, save_options=None, *, current_size=None, page_number=1):
+        return _decode(self._inner.resolve_save(str(path),_encode(save_options or {}),current_size,page_number))
+    def save_figure(self, source, path, save_options=None, *, options=None, current_size=None, page_number=1, device=None, max_bytes=67108864):
+        plan=self.resolve_save(path,save_options,current_size=current_size,page_number=page_number)
+        if not isinstance(max_bytes,int) or isinstance(max_bytes,bool) or max_bytes<0: raise ValueError("max_bytes must be a nonnegative integer")
+        base=options or export_options(plan['page']['width'],plan['page']['height'])
+        temporary=[]
+        try:
+            sized=base.page(plan['page']['width'],plan['page']['height'],'pt');temporary.append(sized)
+            dense=sized.dpi(plan['dpi']);temporary.append(dense)
+            bounded=dense.max_output_bytes(max_bytes);temporary.append(bounded)
+            with self.request(source,bounded) as request:
+                with request.prepare() as frame:
+                    result=frame.export(plan['device']) if device is None else device(frame)
+                    if not isinstance(result,(bytes,bytearray,memoryview)): raise TypeError("Custom device must return bytes")
+                    result=bytes(result)
+                    if len(result)>max_bytes: raise ValueError("Saved output exceeds its byte budget")
+            target=_Path(plan['path'])
+            if plan['create_dir']: target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_bytes(result)
+            return plan
+        finally:
+            for handle in reversed(temporary): handle.dispose()
+            if options is None: base.dispose()
     def __init__(self, font): super().__init__(_native._Output(bytes(font)))
     def primary_font(self): return _decode(self._inner.primary_font())
     def register_font(self, font): return _decode(self._inner.register_font(bytes(font)))
@@ -562,7 +597,7 @@ class _Expression(Component):
     def __neg__(self): return self.negate()
 
 # Each family has its own public type; implementation and validation remain in Rust.
-_FAMILIES = {'SourceExpression': 'source_expr', 'StatExpression': 'stat_expr', 'BinExpression': 'bin_expr', 'ScaleExpression': 'after_scale_expr from_theme', 'ScaleAes': 'scale_aes', 'Aes': 'aes', 'Layer': 'blank points linerange pointrange errorbar crossbar segment step abline hline vline line area ribbon hierarchy hierarchy_tree hierarchy_cluster hierarchy_icicle hierarchy_sunburst hierarchy_treemap hierarchy_pack shape_line shape_area shape_line_radial shape_area_radial shape_link shape_link_horizontal shape_link_vertical shape_link_radial shape_arc shape_pie shape_symbol bars volume ohlc rule rectangle cells histogram boxplot violin dotplot density ecdf qq qq_line function_curve', 'Stat': 'identity_stat bin count summary fit custom_stat boxplot_stat violin_stat dotplot_stat density_stat ecdf_stat qq_stat qq_line_stat unique_stat align_stat function_stat distribution_stat univariate_stat connect_stat', 'StatAes': 'stat_aes', 'BinAes': 'bin_aes', 'Position': 'stack shape_stack dodge jitter ggplot_stack ggplot_fill ggplot_dodge dodge2 nudge jitter_dodge', 'Filter': 'filter', 'Transform': 'transform', 'Scale': 'scale_linear scale_binned scale_reverse scale_sqrt scale_transform scale_log scale_symlog scale_band scale_point scale_utc scale_date scale_duration scale_session', 'Axis': 'x_axis y_axis xlim ylim', 'Guide': 'axis_guide', 'ColorScale': 'color_discrete color_continuous', 'Legend': 'legend', 'Facet': 'facet_wrap facet_grid', 'Style': 'style', 'Theme': 'theme', 'TextStyle': 'text_style', 'TextRun': 'text_run', 'RichText': 'rich_text', 'Title': 'title', 'Subtitle': 'subtitle', 'Caption': 'caption', 'SourceNote': 'source_note', 'Footnote': 'footnote', 'Labels': 'labels', 'Callout': 'callout', 'PanelLetter': 'panel_letter', 'Inset': 'inset', 'NumberFormat': 'number_format', 'LayoutOptions': 'layout_options', 'RenderOptions': 'render_options', 'StreamOptions': 'stream_options', 'AnnotationEdit': 'annotation_edit', 'Link': 'link'}
+_FAMILIES = {'SourceExpression': 'source_expr', 'StatExpression': 'stat_expr', 'BinExpression': 'bin_expr', 'ScaleExpression': 'after_scale_expr from_theme', 'ScaleAes': 'scale_aes', 'Aes': 'aes', 'Layer': 'blank points linerange pointrange errorbar crossbar segment step abline hline vline line area ribbon hierarchy hierarchy_tree hierarchy_cluster hierarchy_icicle hierarchy_sunburst hierarchy_treemap hierarchy_pack shape_line shape_area shape_line_radial shape_area_radial shape_link shape_link_horizontal shape_link_vertical shape_link_radial shape_arc shape_pie shape_symbol bars volume ohlc rule rectangle cells histogram bin2d hex density2d contour contour_filled ellipse boxplot violin dotplot density ecdf qq qq_line function_curve smooth quantile', 'Stat': 'identity_stat bin count summary fit custom_stat boxplot_stat violin_stat dotplot_stat density_stat ecdf_stat qq_stat qq_line_stat unique_stat align_stat function_stat model_stat spatial_stat bin2d_stat hex_stat density2d_stat contour_stat contour_filled_stat ellipse_stat smooth_stat quantile_stat distribution_stat univariate_stat connect_stat', 'StatAes': 'stat_aes', 'BinAes': 'bin_aes', 'Position': 'stack shape_stack dodge jitter ggplot_stack ggplot_fill ggplot_dodge dodge2 nudge jitter_dodge', 'Filter': 'filter', 'Transform': 'transform', 'Scale': 'scale_linear scale_binned scale_reverse scale_sqrt scale_transform scale_log scale_symlog scale_band scale_point scale_utc scale_date scale_duration scale_session', 'Axis': 'x_axis y_axis xlim ylim', 'Guide': 'axis_guide', 'ColorScale': 'color_discrete color_continuous', 'Legend': 'legend', 'Facet': 'facet_wrap facet_grid', 'Style': 'style', 'Theme': 'theme', 'TextStyle': 'text_style', 'TextRun': 'text_run', 'RichText': 'rich_text math_text', 'Title': 'title', 'Subtitle': 'subtitle', 'Caption': 'caption', 'SourceNote': 'source_note', 'Footnote': 'footnote', 'Labels': 'labels', 'Callout': 'callout', 'PanelLetter': 'panel_letter', 'Inset': 'inset', 'NumberFormat': 'number_format', 'LayoutOptions': 'layout_options', 'RenderOptions': 'render_options', 'StreamOptions': 'stream_options', 'AnnotationEdit': 'annotation_edit', 'Link': 'link'}
 _FACTORY_TYPES = {}
 for _family, _factories in _FAMILIES.items():
     _class = type(_family, (_Expression if _family.endswith("Expression") else Component,), {"__module__": __name__})
@@ -624,3 +659,59 @@ from ._shape import RadialParameters
 from ._shape import ShapeOperationId, ShapeOperation, ShapeFamily
 
 from ._hierarchy import Hierarchy as Hierarchy, pack_siblings as pack_siblings, pack_enclose as pack_enclose
+
+
+class CutResult(_Owned):
+    """Owned interval codes and complete ordered dictionary, calculated in Rust."""
+    def value(self): return _decode(self._inner.to_json())
+    def column(self): return Column(self._inner.column())
+    def copy(self): return CutResult(self._inner.copy())
+
+def _cut_values(values):
+    values=list(values)
+    if any(v is not None and (type(v) not in (int,float) or type(v) is int and abs(v)>2**53-1) for v in values):
+        raise TypeError("Vector helpers require nullable Float64-compatible numbers.")
+    return values
+
+def cut(values, spec, *, right=True, labels=None, ordered=False, digits=3):
+    return CutResult(_native._Cut.create(_cut_values(values),_encode(spec),_encode(dict(right=right,labels=labels,ordered=ordered,digits=digits))))
+
+def cut_interval(values, *, n=None, length=None, **options):
+    if (n is None)==(length is None): raise ValueError("Specify exactly one of n and length.")
+    return cut(values,{"Interval":{"bins":n}} if n is not None else {"IntervalLength":{"length":length}},**options)
+
+def cut_number(values, n, **options): return cut(values,{"Number":{"bins":n}},**options)
+
+def cut_width(values, width, *, center=None, boundary=None, closed="right", **options):
+    if closed not in ("left","right"): raise ValueError("closed must be left or right.")
+    return cut(values,{"Width":dict(width=width,center=center,boundary=boundary)},right=closed=="right",**options)
+
+def resolution(values, *, zero=True, integer=False, discrete=False, mapped_discrete=False):
+    return _native._Cut.resolution(_cut_values(values),_encode(dict(zero=zero,integer=integer,discrete=discrete,mapped_discrete=mapped_discrete)))
+
+
+def autoplot(data, operation, version, parameters, registry):
+    return plot(data).with_registry(registry).autolayer(operation,version,parameters)
+
+def summarize(values, helper=None):
+    """Return center/lower/upper from the shared summary stat, omitting missing values."""
+    return _decode(_native._Cut.summarize(_cut_values(values),_encode({"MeanSe":{"mult":1.}} if helper is None else helper)))
+
+class ThemeContext:
+    """Explicit isolated theme snapshots; inheritance and composition execute in Rust."""
+    def __init__(self, value):
+        if not isinstance(value, Theme): raise TypeError("ThemeContext requires a Theme.")
+        self._theme = value.snapshot()
+    def get(self): return self._theme.snapshot()
+    def set(self, value):
+        if not isinstance(value, Theme): raise TypeError("ThemeContext requires a Theme.")
+        replacement = value.snapshot()
+        previous, self._theme = self._theme, replacement
+        return previous
+    def update(self, elements):
+        replacement = self._theme.update_elements(elements)
+        self._theme.dispose(); self._theme = replacement
+    def replace(self, elements):
+        replacement = self._theme.replace_elements(elements)
+        self._theme.dispose(); self._theme = replacement
+    def dispose(self): self._theme.dispose()

@@ -3,6 +3,8 @@ use crate::{ChartResult, DiagnosticCode, Revision, grammar::*};
 
 #[derive(Clone)]
 enum Kind {
+    Model(ModelOptions),
+    Spatial(SpatialKind),
     Distribution(DistributionKind),
     Univariate(UnivariateKind),
     Identity,
@@ -94,11 +96,94 @@ pub fn summary() -> StatBuilder {
         empty_sum_zero: false,
     })
 }
+/// Reference automatic smoother and prediction controls.
+pub fn smooth_stat() -> StatBuilder {
+    stat(Kind::Model(ModelOptions::default()))
+}
+/// Shared model operation with explicit portable controls.
+pub fn model_stat(options: ModelOptions) -> StatBuilder {
+    stat(Kind::Model(options))
+}
+/// Weighted quantile regression with three default probabilities.
+pub fn quantile_stat() -> StatBuilder {
+    model_stat(ModelOptions {
+        method: ModelMethod::Quantile {
+            solver: ModelQuantileSolver::Br,
+            probabilities: vec![0.25, 0.5, 0.75],
+            iterations: 10000,
+        },
+        n: 100,
+        se: false,
+        ..Default::default()
+    })
+}
 /// Intercept OLS with two fitted endpoints; does not imply LOESS, GAM or confidence bands.
 pub fn fit() -> StatBuilder {
     stat(Kind::Fit)
 }
 /// Built-in distribution statistic with explicit estimator controls.
+/// Two-dimensional statistic with portable controls.
+pub fn spatial_stat(kind: SpatialKind) -> StatBuilder {
+    stat(Kind::Spatial(kind))
+}
+/// Rectangular weighted counts with reference boundary-zero bins.
+pub fn bin2d_stat() -> StatBuilder {
+    let axis = SummaryBins {
+        options: GgplotBinOptions {
+            boundary: Some(0.),
+            ..Default::default()
+        },
+        ..Default::default()
+    };
+    spatial_stat(SpatialKind::Rectangular {
+        axes: [axis.clone(), axis],
+        summary: None,
+        drop: true,
+    })
+}
+/// Hexagonal weighted counts.
+pub fn hex_stat() -> StatBuilder {
+    spatial_stat(SpatialKind::Hexagonal {
+        binwidth: None,
+        bins: [30, 30],
+        summary: None,
+        drop: true,
+    })
+}
+/// Two-dimensional product Gaussian density with contour lines.
+pub fn density2d_stat() -> StatBuilder {
+    spatial_stat(SpatialKind::Density {
+        bandwidth: None,
+        adjust: [1., 1.],
+        n: [100, 100],
+        contour: Some(ContourLevels::default()),
+        contour_var: DensityContour::Density,
+        filled: false,
+    })
+}
+/// Contour lines from an explicit rectangular response grid.
+pub fn contour_stat() -> StatBuilder {
+    spatial_stat(SpatialKind::Contour {
+        levels: ContourLevels::default(),
+        filled: false,
+    })
+}
+/// Filled contours from an explicit rectangular response grid.
+pub fn contour_filled_stat() -> StatBuilder {
+    spatial_stat(SpatialKind::Contour {
+        levels: ContourLevels::default(),
+        filled: true,
+    })
+}
+/// Reference robust Student ellipse.
+pub fn ellipse_stat() -> StatBuilder {
+    spatial_stat(SpatialKind::Ellipse {
+        kind: EllipseKind::T,
+        level: 0.95,
+        segments: 51,
+    })
+}
+/// A one-dimensional distribution statistic with explicit controls.
 pub fn distribution_stat(kind: DistributionKind) -> StatBuilder {
     stat(Kind::Distribution(kind))
 }
@@ -194,6 +279,11 @@ pub fn custom_stat(
     stat(Kind::Custom(OperationRef::new(id, version), parameters))
 }
 impl StatBuilder {
+    /// Select a model operation and its prediction controls.
+    pub fn model_options(mut self, options: ModelOptions) -> Self {
+        self.kind = Kind::Model(options);
+        self
+    }
     /// Set the sample input independently of x/y geometry mappings.
     pub fn input(mut self, mapping: impl Into<Mapping>) -> Self {
         self.analytic_input = Some(mapping.into());
@@ -210,6 +300,12 @@ impl StatBuilder {
         self
     }
     /// Replace the typed distribution controls without changing bound inputs.
+    /// Set two-dimensional statistical controls.
+    pub fn spatial_options(mut self, options: SpatialKind) -> Self {
+        self.kind = Kind::Spatial(options);
+        self
+    }
+    /// Set one-dimensional estimator controls.
     pub fn distribution_options(mut self, options: DistributionKind) -> Self {
         self.kind = Kind::Distribution(options);
         self
@@ -406,8 +502,12 @@ impl StatBuilder {
         if ((self.analytic_input.is_some()
             || self.analytic_weight.is_some()
             || self.analytic_width.is_some())
-            && !matches!(self.kind, Kind::Distribution(_) | Kind::Univariate(_)))
-            || (self.analytic_width.is_some() && matches!(self.kind, Kind::Univariate(_)))
+            && !matches!(
+                self.kind,
+                Kind::Spatial(_) | Kind::Model(_) | Kind::Distribution(_) | Kind::Univariate(_)
+            ))
+            || (self.analytic_width.is_some()
+                && matches!(self.kind, Kind::Model(_) | Kind::Univariate(_)))
             || (self.x.is_some()
                 && !self.reference_count
                 && !matches!(
@@ -415,6 +515,8 @@ impl StatBuilder {
                     Kind::Bin { .. }
                         | Kind::Summary { .. }
                         | Kind::Fit
+                        | Kind::Spatial(_)
+                        | Kind::Model(_)
                         | Kind::Distribution(_)
                         | Kind::Univariate(_)
                 ))
@@ -423,7 +525,11 @@ impl StatBuilder {
                 && self.summary_helper.is_none()
                 && !matches!(
                     self.kind,
-                    Kind::Fit | Kind::Distribution(_) | Kind::Univariate(_)
+                    Kind::Fit
+                        | Kind::Spatial(_)
+                        | Kind::Model(_)
+                        | Kind::Distribution(_)
+                        | Kind::Univariate(_)
                 ))
             || (self.space != StatSpace::Data
                 && !matches!(
@@ -432,13 +538,19 @@ impl StatBuilder {
                         | Kind::Summary { .. }
                         | Kind::Fit
                         | Kind::Custom(..)
+                        | Kind::Spatial(_)
+                        | Kind::Model(_)
                         | Kind::Distribution(_)
                         | Kind::Univariate(_)
                 ))
             || (self.y_space != StatSpace::Data
                 && !matches!(
                     self.kind,
-                    Kind::Fit | Kind::Distribution(_) | Kind::Univariate(_)
+                    Kind::Fit
+                        | Kind::Spatial(_)
+                        | Kind::Model(_)
+                        | Kind::Distribution(_)
+                        | Kind::Univariate(_)
                 ))
             || (matches!(self.kind, Kind::Identity) && (self.group.is_some() || self.all_groups))
         {
@@ -471,6 +583,82 @@ impl StatBuilder {
                 .resolve(data)
         };
         Ok(match &self.kind {
+            Kind::Model(options) => Statistic::model(ModelSpec {
+                x: self
+                    .analytic_input
+                    .as_ref()
+                    .map_or_else(x, |n| n.resolve(data))?,
+                y: self
+                    .y
+                    .as_ref()
+                    .or(aes.y.as_ref())
+                    .ok_or_else(|| {
+                        error(
+                            DiagnosticCode::SchemaConflict,
+                            "Model requires a response field.",
+                        )
+                    })?
+                    .resolve(data)?,
+                weight: self
+                    .analytic_weight
+                    .as_ref()
+                    .map(|n| n.resolve(data))
+                    .transpose()?,
+                grouping: group,
+                x_space: self.space.clone(),
+                y_space: self.y_space.clone(),
+                options: options.clone(),
+                retained_fields: vec![],
+                retained_numeric: vec![],
+                training_range: None,
+                largest_group: None,
+            }),
+            Kind::Spatial(kind) => {
+                let x = self
+                    .x
+                    .as_ref()
+                    .or(aes.x.as_ref())
+                    .ok_or_else(|| {
+                        error(
+                            DiagnosticCode::SchemaConflict,
+                            "Spatial statistics require x.",
+                        )
+                    })?
+                    .resolve(data)?;
+                let y = self
+                    .y
+                    .as_ref()
+                    .or(aes.y.as_ref())
+                    .ok_or_else(|| {
+                        error(
+                            DiagnosticCode::SchemaConflict,
+                            "Spatial statistics require y.",
+                        )
+                    })?
+                    .resolve(data)?;
+                Statistic::spatial(SpatialSpec {
+                    x,
+                    y,
+                    z: self
+                        .analytic_input
+                        .as_ref()
+                        .map(|m| m.resolve(data))
+                        .transpose()?,
+                    weight: self
+                        .analytic_weight
+                        .as_ref()
+                        .map(|m| m.resolve(data))
+                        .transpose()?,
+                    grouping: group,
+                    x_space: self.space.clone(),
+                    y_space: self.y_space.clone(),
+                    z_space: StatSpace::Data,
+                    training_ranges: None,
+                    retained_fields: vec![],
+                    retained_numeric: vec![],
+                    kind: kind.clone(),
+                })
+            }
             Kind::Distribution(kind) => {
                 let sample_y = !matches!(
                     kind,
@@ -743,7 +931,9 @@ impl StatBuilder {
     }
     pub(super) fn default_mappings(&self, geom: Geom) -> ChartResult<Option<Mappings>> {
         let mut aes = match self.kind {
-            Kind::Distribution(_) | Kind::Univariate(_) => StatAes::new(StatField::X, StatField::Y),
+            Kind::Spatial(_) | Kind::Model(_) | Kind::Distribution(_) | Kind::Univariate(_) => {
+                StatAes::new(StatField::X, StatField::Y)
+            }
             Kind::Identity => return Ok(None),
             Kind::Bin { .. } => return Ok(Some(Mappings::Binned(BinAes::histogram()))),
             Kind::Fit => StatAes::new(StatField::X, StatField::Y),

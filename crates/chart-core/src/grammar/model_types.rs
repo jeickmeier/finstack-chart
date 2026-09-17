@@ -1,6 +1,16 @@
 //! Portable model terms and controls; numerical implementation remains shared core.
 use super::*;
 
+/// Numerical algorithm for quantile model fits.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+pub enum ModelQuantileSolver {
+    /// Barrodale–Roberts tableau selection.
+    #[default]
+    Br,
+    /// Frisch–Newton primal-dual interior-point selection.
+    Fn,
+}
+
 /// A model-matrix term evaluated over the predictor, independent of source field IDs.
 #[derive(Clone, Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub enum ModelTerm {
@@ -86,6 +96,9 @@ pub enum ModelMethod {
     },
     /// Weighted check-loss regression using the shared bounded BR tableau.
     Quantile {
+        /// Numerical solver; omitted serialized values retain BR semantics.
+        #[serde(default)]
+        solver: ModelQuantileSolver,
         /// Probabilities in authored output order.
         probabilities: Vec<f64>,
         /// Maximum tableau iterations per probability.
@@ -164,9 +177,25 @@ pub struct ModelSpec {
 }
 impl ModelSpec {
     pub(crate) fn numerics(&self) -> impl Iterator<Item = &Numeric> {
-        [&self.x, &self.y].into_iter().chain(self.weight.iter()).chain(self.retained_numeric.iter())
+        [&self.x, &self.y]
+            .into_iter()
+            .chain(self.weight.iter())
+            .chain(self.retained_numeric.iter())
     }
     pub(crate) fn numerics_mut(&mut self) -> impl Iterator<Item = &mut Numeric> {
-        [&mut self.x, &mut self.y].into_iter().chain(self.weight.iter_mut()).chain(self.retained_numeric.iter_mut())
+        [&mut self.x, &mut self.y]
+            .into_iter()
+            .chain(self.weight.iter_mut())
+            .chain(self.retained_numeric.iter_mut())
+    }
+}
+
+impl Statistic {
+    /// Shared weighted statistical model with explicit prediction controls.
+    pub fn model(spec: ModelSpec) -> Self {
+        Self {
+            operation: OperationRef::builtin("chart.model"),
+            parameters: StatParameters::Model(spec),
+        }
     }
 }

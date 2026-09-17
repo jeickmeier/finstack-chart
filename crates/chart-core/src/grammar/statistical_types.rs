@@ -102,6 +102,13 @@ impl OlsSpec {
     }
 }
 impl Statistic {
+    /// Construct a shared spatial statistic.
+    pub fn spatial(spec: SpatialSpec) -> Self {
+        Self {
+            operation: OperationRef::builtin("chart.spatial"),
+            parameters: StatParameters::Spatial(Box::new(spec)),
+        }
+    }
     /// Select a built-in distribution statistic with explicit estimator controls.
     pub fn distribution(spec: DistributionSpec) -> Self {
         Self {
@@ -171,6 +178,28 @@ pub struct IncrementalCapabilities {
 #[derive(serde::Serialize, serde::Deserialize, Clone, Debug, Eq, PartialEq)]
 #[serde(deny_unknown_fields)]
 pub enum StatField {
+    /// Generated cell height in statistical calculation space.
+    Height,
+    /// Contour threshold or ellipse level.
+    Level,
+    /// Isoband lower threshold.
+    LevelLow,
+    /// Isoband upper threshold.
+    LevelHigh,
+    /// Isoband midpoint between its two thresholds.
+    LevelMid,
+    /// Contour level divided by the largest emitted level (upper edge for bands).
+    NormalizedLevel,
+    /// Stable generated path piece within its level.
+    Piece,
+    /// Ring identity within a filled polygon piece.
+    Subgroup,
+
+    /// Mean-estimation standard error in model calculation or link space.
+    StandardError,
+    /// Requested quantile probability for a quantile regression curve.
+    QuantileProbability,
+
     /// Field in a registered custom generated schema; never a source FieldId.
     Custom(String),
     /// Stable group label, projected through the generated schema catalog.
@@ -179,6 +208,8 @@ pub enum StatField {
     Count,
     /// Signed sum of weights, independently of exact membership count.
     WeightedCount,
+    /// Spatial weighted count divided by its group maximum.
+    NormalizedCount,
     /// Signed count divided by sum of absolute counts within the group.
     Proportion,
     /// Summary lower endpoint.

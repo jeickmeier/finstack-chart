@@ -13,8 +13,109 @@ use std::sync::Arc;
 
 pub(super) struct Furniture {
     pub content: Rect,
-    top: Vec<Block>,
-    bottom: Vec<Block>,
+    inner: Rect,
+    tag: Option<Tag>,
+    top: Vec<(Block, f64)>,
+    bottom: Vec<(Block, f64)>,
+}
+struct Tag {
+    block: Block,
+    position: [f64; 2],
+    numeric: bool,
+    location: String,
+    hjust: f64,
+    vjust: f64,
+}
+fn tag_options(
+    elements: Option<&crate::theme::ResolvedElements>,
+    block: Block,
+) -> ChartResult<Tag> {
+    use crate::theme::ThemeValue as V;
+    let position = elements.and_then(|e| e.value("plot.tag.position", ""));
+    let (position, numeric) = match position {
+        Some(V::Vector(v)) if v.len() == 2 => {
+            let (V::Number(x), V::Number(y)) = (&v[0], &v[1]) else {
+                return Err(invalid("Tag numeric position requires two finite numbers."));
+            };
+            if !x.is_finite() || !y.is_finite() {
+                return Err(invalid("Tag position must be finite."));
+            }
+            ([*x, 1. - *y], true)
+        }
+        Some(V::Text(name)) => (
+            match name.as_str() {
+                "topleft" => [0., 0.],
+                "top" => [0.5, 0.],
+                "topright" => [1., 0.],
+                "left" => [0., 0.5],
+                "right" => [1., 0.5],
+                "bottomleft" => [0., 1.],
+                "bottom" => [0.5, 1.],
+                "bottomright" => [1., 1.],
+                _ => return Err(invalid("Unknown tag position.")),
+            },
+            false,
+        ),
+        None | Some(V::Missing) => ([0., 0.], false),
+        _ => {
+            return Err(invalid(
+                "Tag position requires a named edge or two numeric fractions.",
+            ));
+        }
+    };
+    let location = match elements.and_then(|e| e.value("plot.tag.location", "")) {
+        Some(V::Text(v)) => v.clone(),
+        None | Some(V::Missing) => {
+            if numeric {
+                "plot".into()
+            } else {
+                "margin".into()
+            }
+        }
+        _ => return Err(invalid("Tag location must be plot, panel or margin.")),
+    };
+    if !matches!(location.as_str(), "plot" | "panel" | "margin") || numeric && location == "margin"
+    {
+        return Err(invalid(
+            "Numeric tags require plot/panel location; named tags additionally support margin.",
+        ));
+    }
+    Ok(Tag {
+        block,
+        position,
+        numeric,
+        location,
+        hjust: elements
+            .and_then(|e| e.number("plot.tag", "hjust"))
+            .unwrap_or(0.5),
+        vjust: elements
+            .and_then(|e| e.number("plot.tag", "vjust"))
+            .unwrap_or(0.5),
+    })
+}
+fn panel_bounds(chart: &LaidOutChart) -> Option<Rect> {
+    if chart.panels.is_empty() {
+        return chart.plot;
+    }
+    let bounds = chart
+        .panels
+        .iter()
+        .filter_map(|p| p.chart.plot)
+        .collect::<Vec<_>>();
+    let first = *bounds.first()?;
+    let (mut x0, mut y0, mut x1, mut y1) = (
+        first.origin().x(),
+        first.origin().y(),
+        first.max_x(),
+        first.max_y(),
+    );
+    for b in bounds {
+        x0 = x0.min(b.origin().x());
+        y0 = y0.min(b.origin().y());
+        x1 = x1.max(b.max_x());
+        y1 = y1.max(b.max_y());
+    }
+    Rect::new(x0, y0, x1 - x0, y1 - y0).ok()
 }
 fn ink(r: &LayoutRequest) -> Color {
     r.host_theme
@@ -37,37 +138,99 @@ pub(super) fn prepare(
     let Some(f) = chart.state().figure(chart.definition()) else {
         return Ok(None);
     };
-    let top = f
-        .title
-        .iter()
-        .chain(&f.subtitle)
-        .map(|t| text::measure(t, r, m, ink(r)))
-        .collect::<ChartResult<Vec<_>>>()?;
-    let bottom = f
-        .caption
-        .iter()
-        .chain(&f.source_notes)
-        .chain(&f.footnotes)
-        .map(|t| text::measure(t, r, m, ink(r)))
-        .collect::<ChartResult<Vec<_>>>()?;
+    let elements = r.resolved_theme.as_deref();
+    let measured =
+        |text: &crate::typography::RichText, node: &str| -> ChartResult<Option<(Block, f64)>> {
+            let styled = if let Some(elements) = &elements {
+                super::theme_elements::text_style(elements, node, text, r)?
+            } else {
+                Some(text.clone())
+            };
+            styled
+                .as_ref()
+                .map(|text| {
+                    let mut block = text::measure(text, r, m, ink(r))?;
+                    if let Some(elements) = &elements {
+                        super::theme_elements::margins(elements, node, &mut block, r)?;
+                    }
+                    Ok((
+                        block,
+                        elements
+                            .as_ref()
+                            .and_then(|e| e.number(node, "hjust"))
+                            .unwrap_or(0.),
+                    ))
+                })
+                .transpose()
+        };
+    let tag = f
+        .tag
+        .as_ref()
+        .map(|text| measured(text, "plot.tag"))
+        .transpose()?
+        .flatten()
+        .map(|(block, _)| tag_options(elements, block))
+        .transpose()?;
+    let mut reserve = [0.; 4];
+    if let Some(tag) = &tag
+        && tag.location == "margin"
+    {
+        if tag.position[1] == 0. {
+            reserve[0] = tag.block.bounds.height();
+        }
+        if tag.position[0] == 1. {
+            reserve[1] = tag.block.bounds.width();
+        }
+        if tag.position[1] == 1. {
+            reserve[2] = tag.block.bounds.height();
+        }
+        if tag.position[0] == 0. {
+            reserve[3] = tag.block.bounds.width();
+        }
+    }
+    let inner = Rect::new(
+        r.bounds.origin().x() + reserve[3],
+        r.bounds.origin().y() + reserve[0],
+        (r.bounds.width() - reserve[1] - reserve[3]).max(0.),
+        (r.bounds.height() - reserve[0] - reserve[2]).max(0.),
+    )?;
+    let mut top = Vec::new();
+    if let Some(text) = &f.title
+        && let Some(block) = measured(text, "plot.title")?
+    {
+        top.push(block);
+    }
+    if let Some(text) = &f.subtitle
+        && let Some(block) = measured(text, "plot.subtitle")?
+    {
+        top.push(block);
+    }
+    let mut bottom = Vec::new();
+    for text in f.caption.iter().chain(&f.source_notes).chain(&f.footnotes) {
+        if let Some(block) = measured(text, "plot.caption")? {
+            bottom.push(block);
+        }
+    }
     let top_height = top
         .iter()
-        .map(|b| b.bounds.height() + r.label_gap)
+        .map(|(b, _)| b.bounds.height() + r.label_gap)
         .sum::<f64>();
     let bottom_height = bottom
         .iter()
-        .map(|b| b.bounds.height() + r.label_gap)
+        .map(|(b, _)| b.bounds.height() + r.label_gap)
         .sum::<f64>();
-    let start = (top_height + r.padding).min(r.bounds.height());
-    let height = (r.bounds.height() - start - bottom_height - r.padding).max(0.);
+    let start = (top_height + r.padding).min(inner.height());
+    let height = (inner.height() - start - bottom_height - r.padding).max(0.);
     let content = Rect::new(
-        r.bounds.origin().x(),
-        r.bounds.origin().y() + start,
-        r.bounds.width(),
+        inner.origin().x(),
+        inner.origin().y() + start,
+        inner.width(),
         height,
     )?;
     Ok(Some(Furniture {
         content,
+        inner,
+        tag,
         top,
         bottom,
     }))
@@ -135,7 +298,20 @@ pub(super) fn anchor(
             let (Some(x), Some(y)) = (x_axis.map_value(x)?, y_axis.map_value(y)?) else {
                 return Ok(None);
             };
-            Ok(Some((Point::new(x, y)?, plot)))
+            let point = Point::new(x, y)?;
+            let point = if let Some(spec) = &p.prepared.definition().coordinate {
+                super::coordinate_resolve::resolve_with_windows(
+                    spec,
+                    [x_axis, y_axis],
+                    plot,
+                    Some(&p.prepared.state().axis_windows()),
+                )?
+                .with_chart_resources(&p.prepared)?
+                .project(point)?
+            } else {
+                Some(point)
+            };
+            Ok(point.map(|point| (point, plot)))
         }
     }
 }
@@ -189,14 +365,30 @@ pub(super) fn finish(
         .figure(chart.prepared.definition())
         .ok_or_else(|| invalid("Missing captured figure furniture."))?;
     let mut items = chart.scene.items().to_vec();
+    let elements = r.resolved_theme.as_deref();
+    let span = |name: &str| -> ChartResult<Rect> {
+        match elements.as_ref().and_then(|e| e.value(name, "")) {
+            Some(crate::theme::ThemeValue::Text(v)) if v == "panel" => {
+                Ok(panel_bounds(chart).unwrap_or(furniture.inner))
+            }
+            None | Some(crate::theme::ThemeValue::Missing) => Ok(furniture.inner),
+            Some(crate::theme::ThemeValue::Text(v)) if v == "plot" => Ok(furniture.inner),
+            _ => Err(invalid("Figure text position must be panel or plot.")),
+        }
+    };
+    let top_span = span("plot.title.position")?;
+    let bottom_span = span("plot.caption.position")?;
+    let text_padding = if elements.is_some() { 0. } else { r.padding };
     let mut occupied = vec![];
-    let mut y = r.bounds.origin().y() + r.padding;
-    for b in &furniture.top {
+    let mut y = furniture.inner.origin().y() + r.padding;
+    for (b, align) in &furniture.top {
         occupied.push(append(
             chart,
             &mut items,
             b,
-            r.bounds.origin().x() + r.padding,
+            top_span.origin().x()
+                + text_padding
+                + align * (top_span.width() - 2. * text_padding - b.bounds.width()),
             y,
             r.bounds,
         )?);
@@ -205,19 +397,81 @@ pub(super) fn finish(
     let h = furniture
         .bottom
         .iter()
-        .map(|b| b.bounds.height() + r.label_gap)
+        .map(|(b, _)| b.bounds.height() + r.label_gap)
         .sum::<f64>();
-    y = r.bounds.max_y() - r.padding - h;
-    for b in &furniture.bottom {
+    y = furniture.inner.max_y() - r.padding - h;
+    for (b, align) in &furniture.bottom {
         occupied.push(append(
             chart,
             &mut items,
             b,
-            r.bounds.origin().x() + r.padding,
+            bottom_span.origin().x()
+                + text_padding
+                + align * (bottom_span.width() - 2. * text_padding - b.bounds.width()),
             y,
             r.bounds,
         )?);
         y += b.bounds.height() + r.label_gap;
+    }
+    if let Some(tag) = &furniture.tag {
+        let region = if tag.location == "panel" {
+            panel_bounds(chart).unwrap_or(furniture.inner)
+        } else if tag.location == "plot" {
+            furniture.inner
+        } else {
+            let x = if tag.position[0] == 0. {
+                r.bounds.origin().x()
+            } else if tag.position[0] == 1. {
+                furniture.inner.max_x()
+            } else {
+                furniture.inner.origin().x()
+            };
+            let y = if tag.position[1] == 0. {
+                r.bounds.origin().y()
+            } else if tag.position[1] == 1. {
+                furniture.inner.max_y()
+            } else {
+                furniture.inner.origin().y()
+            };
+            Rect::new(
+                x,
+                y,
+                if tag.position[0] == 0.5 {
+                    furniture.inner.width()
+                } else {
+                    tag.block.bounds.width()
+                },
+                if tag.position[1] == 0.5 {
+                    furniture.inner.height()
+                } else {
+                    tag.block.bounds.height()
+                },
+            )?
+        };
+        let (w, h) = (tag.block.bounds.width(), tag.block.bounds.height());
+        let (x, y) = if tag.numeric {
+            (
+                region.origin().x() + tag.position[0] * region.width() - tag.hjust * w,
+                region.origin().y() + tag.position[1] * region.height() - (1. - tag.vjust) * h,
+            )
+        } else {
+            let x = if tag.position[0] == 0. {
+                (1. - 2. * tag.hjust) * w
+            } else if tag.position[0] == 1. {
+                region.width() - w
+            } else {
+                tag.hjust * (region.width() - w)
+            };
+            let y = if tag.position[1] == 0. {
+                0.
+            } else if tag.position[1] == 1. {
+                region.height() - 2. * (1. - tag.vjust) * h
+            } else {
+                (1. - tag.vjust) * (region.height() - h)
+            };
+            (region.origin().x() + x, region.origin().y() + y)
+        };
+        occupied.push(append(chart, &mut items, &tag.block, x, y, r.bounds)?);
     }
     for letter in &f.panel_letters {
         if let Some(plot) = parent(chart, &letter.panel)?.plot {

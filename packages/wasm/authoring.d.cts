@@ -8,7 +8,7 @@ export type Color = string | Options | ColorValue;
 export type Panel = ReadonlyArray<string | number | boolean | Options> | Options;
 export type ScaleValue = number | string | Options;
 export type MappingValue = string | number | Field | Options;
-export type Format = 'svg' | 'pdf' | 'png';
+export type Format = 'svg' | 'pdf' | 'png' | 'jpeg' | 'jpg' | 'tiff' | 'tif' | 'bmp' | 'ps' | 'postscript' | 'eps' | 'tex' | 'pictex';
 export type ColumnKind = 'float64' | 'int64' | 'uint64' | 'bool' | 'string' | 'category' | 's' | 'ms' | 'us' | 'ns';
 export interface DispatchOutcome { outcome: {changed: boolean; revision: string; viewport_changed: boolean}; event: Record<string, unknown> | null; }
 export interface SelectionResult { targets: Array<Record<string, unknown>>; }
@@ -156,8 +156,12 @@ export type ValueAesthetic = 'Shape'|'LineType'|'Label'|'FontFamily'|'FontFace'|
 export type LineType = 'Blank'|'Solid'|'Dashed'|'Dotted'|'DotDash'|'LongDash'|'TwoDash'|{Custom:number};
 export type AestheticUnits = 'Destination'|'Millimeters'|'Points';
 export class Layer extends Component {
+  key_glyph(operation:string,version:bigint|number,parameters:JSONValue):Layer;
+  keyGlyph(operation:string,version:bigint|number,parameters:JSONValue):Layer;
   legend(value: Record<string, unknown>): this;
   annotation(value: Record<string, unknown>): this;
+  text_defaults(): Layer;
+  textDefaults(): Layer;
   text_geom(value: Record<string, unknown>): this;
   textGeom(value: Record<string, unknown>): this;
   text_label(value: MappingValue | SourceExpression): this;
@@ -192,6 +196,8 @@ export class Layer extends Component {
   shape_protocol(family:ShapeFamily,selection:ShapeOperation):this;
   shapeProtocol(family:ShapeFamily,selection:ShapeOperation):this;
  shape_value(target:ShapeChannel,source:string|number|Field|SourceExpression|Options):this;
+ geography(collection:Options,join:string):this;
+ geography_operation(operation:string):this;
  recipe(options:Options):this;
  recipe_value(target:string,source:MappingValue|SourceExpression):this;
  recipeValue(target:string,source:MappingValue|SourceExpression):this;
@@ -261,6 +267,10 @@ export class Stat extends Component {
   width(value: number): this;
   distribution_options(options: Options): this;
   distributionOptions(options: Options): this;
+  spatial_options(options: Options): this;
+  spatialOptions(options: Options): this;
+  model_options(options: Options): this;
+  modelOptions(options: Options): this;
   univariate_options(options: string | Options): this;
   univariateOptions(options: string | Options): this;
   ggplot_count(): this;
@@ -456,6 +466,7 @@ export class ColorScale extends Component {
 }
 
 export class Legend extends Component {
+  registered(operation:string,version:number|bigint,parameters:JSONValue):this;
   custom(guide:Record<string, unknown>):this;
   options(value: Record<string, unknown>): this;
   aesthetic(value: string): this;
@@ -468,6 +479,7 @@ export class Legend extends Component {
 }
 
 export class Facet extends Component {
+  registered(operation:string,version:number|bigint,parameters:JSONValue):this;
   fields(values: ReadonlyArray<string>): this;
   row_fields(value: number): this;
   rowFields(value: number): this;
@@ -511,6 +523,12 @@ export class Style extends Component {
 }
 
 export class Theme extends Component {
+  snapshot(): this;
+  elements(value: Options): this;
+  update_elements(value: Options): this; updateElements(value: Options): this;
+  replace_elements(value: Options): this; replaceElements(value: Options): this;
+  fonts(values: Options[]): this;
+  reference_preset(preset: string, options: Options): this; referencePreset(preset: string, options: Options): this;
   scale_palettes(values: Record<string, JSONValue>): this; scalePalettes(values: Record<string, JSONValue>): this;
   geometry(value: {ink?: Color; paper?: Color; accent?: Color; point_size?: number; line_width?: number}): this;
   private readonly _family: "Theme";
@@ -520,6 +538,7 @@ export class Theme extends Component {
 }
 
 export class TextStyle extends Component {
+  math(fonts:MathFonts): TextStyle;
   private readonly _family: "TextStyle";
   size(value: number): this;
   weight(value: number): this;
@@ -537,6 +556,7 @@ export class TextRun extends Component {
 }
 
 export class RichText extends Component {
+  math(fonts:MathFonts): RichText;
   private readonly _family: "RichText";
   style(value: TextStyle): this;
   run(value: TextRun): this;
@@ -880,6 +900,11 @@ export function annotation_edit(id: string): AnnotationEdit;
 export function annotationEdit(id: string): AnnotationEdit;
 export function link(origin: string): Link;
 export class PlotBuilder extends Owned {
+  tag(text:RichText):this;
+  registered_coordinate(operation:string,version:number|bigint,parameters:JSONValue):this;
+  registeredCoordinate(operation:string,version:number|bigint,parameters:JSONValue):this;
+  autolayer(operation:string,version:bigint|number,parameters:JSONValue):PlotBuilder;
+ coordinate(options:Options):this;
  with_shape_registry(registry:ShapeRegistry):this;
  with_registry(registry:ShapeRegistry):this;
  withRegistry(registry:ShapeRegistry):this;
@@ -915,6 +940,10 @@ export class PlotBuilder extends Owned {
  build(): Plot;
 }
 export class PlotEdit extends Owned {
+  tag(text:RichText):this;
+  registered_coordinate(operation:string,version:number|bigint,parameters:JSONValue):this;
+  registeredCoordinate(operation:string,version:number|bigint,parameters:JSONValue):this;
+ coordinate(options:Options):this; clear_coordinate():this; clearCoordinate():this;
  profile(value: 'LibraryV1' | 'Ggplot2_4_0_3'): this;
  layer(name: string, value: Layer): this;
  annotation(value: Labels | Callout | VectorPath): this;
@@ -955,7 +984,21 @@ export class Plot extends Owned {
  static from_json(value: string, registry?: ShapeRegistry): Plot;
  static fromJson(value: string, registry?: ShapeRegistry): Plot;
 }
+export interface VectorDeviceOptions {
+ color_model?: 'Srgb' | 'SrgbGray' | 'RgbGray' | 'Rgb' | 'Gray' | 'Cmyk';
+ alpha?: 'Reject' | 'OmitTranslucent';
+}
+export interface RasterDeviceOptions {
+ jpeg_quality?: number;
+ matte?: Color;
+ tiff_compression?: 'None' | 'Lzw' | 'Deflate' | 'PackBits' | 'Jpeg' | 'Lzma' | 'Zstd' | 'Webp';
+ tiff_predictor?: boolean;
+}
 export class ExportOptions extends Owned {
+ vector_device(value: VectorDeviceOptions): this;
+ vectorDevice(value: VectorDeviceOptions): this;
+ raster_device(value: RasterDeviceOptions): this;
+ rasterDevice(value: RasterDeviceOptions): this;
  dpi(value: number): this;
  page(width: number, height: number, unit: 'pt' | 'mm'): this;
  precision(value: number): this;
@@ -979,7 +1022,9 @@ export class FigureRequest extends Owned {
  manifest(): Record<string, unknown>;
 }
 export class FigureTransition extends Owned { sample(fraction: number): FigureSnapshot; }
+export class FigurePages extends Owned {append(page:FigureSnapshot):this;export(format:Format):Uint8Array;}
 export class FigureSnapshot extends Owned {
+ pages():FigurePages;
  guide_transition(previous: FigureSnapshot): FigureTransition;
  guideTransition(previous: FigureSnapshot): FigureTransition;
  presentation(): Record<string, unknown>[];
@@ -988,7 +1033,12 @@ export class FigureSnapshot extends Owned {
  manifest(): Record<string, unknown>;
  export(format: Format): Uint8Array;
 }
+export interface SaveOptions {width?:number|null;height?:number|null;units?:'in'|'cm'|'mm'|'px';scale?:number;dpi?:number|'screen'|'print'|'retina';limitsize?:boolean;create_dir?:boolean;device?:string|null;}
+export interface SavePlan {path:string;device:string;page:{width:number;height:number};dpi:number;create_dir:boolean;}
+export interface SaveFigureOptions {options?:ExportOptions|null;currentSize?:ReadonlyArray<number>|null;pageNumber?:number;device?:((figure:FigureSnapshot)=>Uint8Array)|null;maxBytes?:number;}
 export class Output extends Owned {
+ resolve_save(path:string,options?:SaveOptions,currentSize?:ReadonlyArray<number>|null,pageNumber?:number):SavePlan;
+ save_figure(source:Plot|Chart,path:string,options?:SaveOptions,controls?:SaveFigureOptions):{plan:SavePlan;bytes:Uint8Array};
  constructor(font: Iterable<number>);
  primary_font(): Record<string, unknown>;
  primaryFont(): Record<string, unknown>;
@@ -1169,6 +1219,7 @@ export interface ShapeAreaConfig extends ShapeCommon {x0?: ShapeCoordinate; y0?:
 export interface ShapeOperation {operation:{id:string;version:string|number|bigint};parameters:JSONValue}
 export type ShapeFamily='Curve'|'Symbol'|'PieComparator'|'StackOrder'|'StackOffset';
 export class ShapeRegistry extends Owned {
+  materialize(operation:string,version:bigint|number,payload:JSONValue):Data;
  private readonly __shapeRegistry: void;
  constructor();static example():ShapeRegistry;copy():ShapeRegistry;
  selection(selection:ShapeOperation,family:ShapeFamily):ShapeOperation;
@@ -1374,3 +1425,62 @@ export function univariateStat(options: string | Options): Stat;
 export function univariate_stat(options: string | Options): Stat;
 export function connectStat(connection: string | Options): Stat;
 export function connect_stat(connection: string | Options): Stat;
+
+export function model_stat(options: Options): Stat;
+export function modelStat(options: Options): Stat;
+export function smooth_stat(): Stat;
+export function smoothStat(): Stat;
+export function quantile_stat(): Stat;
+export function quantileStat(): Stat;
+export function smooth(): Layer;
+export function quantile(): Layer;
+
+export function bin2d(): Layer;
+export function hex(): Layer;
+export function density2d(): Layer;
+export function contour(): Layer;
+export function contour_filled(): Layer;
+export function contourFilled(): Layer;
+export function ellipse(): Layer;
+export function bin2d_stat(): Stat;
+export function bin2dStat(): Stat;
+export function hex_stat(): Stat;
+export function hexStat(): Stat;
+export function density2d_stat(): Stat;
+export function density2dStat(): Stat;
+export function contour_stat(): Stat;
+export function contourStat(): Stat;
+export function contour_filled_stat(): Stat;
+export function contourFilledStat(): Stat;
+export function ellipse_stat(): Stat;
+export function ellipseStat(): Stat;
+export function spatial_stat(options: Options): Stat;
+export function spatialStat(options: Options): Stat;
+
+export interface CutOptions {right?: boolean; labels?: ReadonlyArray<string> | null; ordered?: boolean; digits?: number;}
+export interface CutValue {codes: Array<number|null>; levels: string[]; breaks: number[]; ordered: boolean;}
+export type CutSpec = {Interval:{bins:number}} | {IntervalLength:{length:number}} | {Number:{bins:number}} | {Width:{width:number;center:number|null;boundary:number|null}};
+export class CutResult extends Owned {value(): CutValue; column(): Column; copy(): CutResult;}
+export function cut(values: Iterable<number|null>, spec: CutSpec, options?: CutOptions): CutResult;
+export function cut_interval(values: Iterable<number|null>, options: CutOptions & {n?:number|null;length?:number|null}): CutResult;
+export function cut_number(values: Iterable<number|null>, n:number, options?:CutOptions): CutResult;
+export function cut_width(values: Iterable<number|null>, width:number, options?:Omit<CutOptions,'right'> & {center?:number|null;boundary?:number|null;closed?:'left'|'right'}): CutResult;
+export function resolution(values:Iterable<number|null>,options?:{zero?:boolean;integer?:boolean;discrete?:boolean;mapped_discrete?:boolean}):number;
+export {cut_interval as cutInterval,cut_number as cutNumber,cut_width as cutWidth};
+
+export interface MathFonts {regular?:Options|null;italic?:Options|null;bold?:Options|null;bold_italic?:Options|null;symbol?:Options|null;}
+export function math_text(source:string,fonts:MathFonts):RichText;
+export {math_text as mathText};
+
+export function autoplot(data:Data,operation:string,version:bigint|number,parameters:JSONValue,registry:ShapeRegistry):PlotBuilder;
+
+export function summarize(values:Iterable<number|null>,helper?:JSONValue):Array<number|null>;
+
+export class ThemeContext {
+  constructor(value: Theme);
+  get(): Theme;
+  set(value: Theme): Theme;
+  update(elements: Options): void;
+  replace(elements: Options): void;
+  dispose(): void;
+}

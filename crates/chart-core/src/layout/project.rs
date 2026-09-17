@@ -192,6 +192,10 @@ impl ResolvedAxis {
 }
 
 pub(super) struct Output {
+    pub(super) coordinate: Option<super::coordinate_map::CoordinateMap>,
+    pub(super) coordinate_fixed: Option<Point>,
+    pub(super) coordinate_preprojected: bool,
+    pub(super) coordinate_remaining: usize,
     pub(super) stroke_end: Option<crate::grammar::LineEnd>,
     pub(super) stroke_join: Option<crate::grammar::LineJoin>,
     pub(super) stroke_remaining: usize,
@@ -203,7 +207,109 @@ pub(super) struct Output {
     pub omitted: usize,
 }
 impl Output {
+    pub(super) fn interaction(
+        &mut self,
+        index: usize,
+        mut info: crate::grammar::GeometryInteraction,
+        request: &LayoutRequest,
+    ) -> ChartResult<()> {
+        if let Some(map) = &self.coordinate {
+            let hit = if self.coordinate_preprojected {
+                super::coordinate_hit::clip_presented(
+                    info.hit,
+                    map,
+                    request,
+                    &mut self.coordinate_remaining,
+                )?
+            } else {
+                super::coordinate_hit::project(
+                    info.hit,
+                    map,
+                    request,
+                    &mut self.coordinate_remaining,
+                )?
+            };
+            let Some(hit) = hit else { return Ok(()) };
+            info.hit = hit;
+        }
+        self.interactions.insert(index, info);
+        Ok(())
+    }
     pub fn push(
+        &mut self,
+        item: SceneItem,
+        targets: Vec<Target>,
+        request: &LayoutRequest,
+    ) -> ChartResult<()> {
+        self.push_projected(item, targets, request, self.coordinate_preprojected)
+    }
+    fn push_projected(
+        &mut self,
+        item: SceneItem,
+        targets: Vec<Target>,
+        request: &LayoutRequest,
+        projected: bool,
+    ) -> ChartResult<()> {
+        if let Some(map) = self.coordinate.clone() {
+            let primitives = if projected {
+                vec![item.primitive]
+            } else {
+                super::coordinate_primitive::project(
+                    item.primitive,
+                    &map,
+                    self.coordinate_fixed,
+                    targets.len(),
+                    super::coordinate_path::tolerance(request),
+                    &mut self.coordinate_remaining,
+                    request,
+                )?
+            };
+            for primitive in primitives {
+                let clip = if map.clip() == crate::grammar::CoordinateClip::Off {
+                    Some(request.figure_bounds.unwrap_or(request.bounds))
+                } else {
+                    item.clip
+                };
+                let styled = if matches!(&map.spec,crate::grammar::CoordinateSpec::Radial(v) if v.mode==crate::grammar::RadialMode::Radial)
+                    && map.clip() == crate::grammar::CoordinateClip::On
+                {
+                    super::stroke_outline::expand(
+                        primitive,
+                        targets.len(),
+                        Some(self.stroke_end.unwrap_or_default()),
+                        Some(self.stroke_join.unwrap_or_default()),
+                        &mut self.stroke_remaining,
+                    )?
+                } else {
+                    vec![primitive]
+                };
+                for primitive in styled {
+                    let clipped = super::coordinate_clip::clip(
+                        primitive,
+                        &map,
+                        targets.len(),
+                        super::coordinate_path::tolerance(request),
+                        &mut self.coordinate_remaining,
+                    )?;
+                    for primitive in clipped {
+                        self.push_styled(
+                            SceneItem {
+                                primitive,
+                                clip,
+                                guide: item.guide.clone(),
+                                layer: item.layer,
+                            },
+                            targets.clone(),
+                            request,
+                        )?;
+                    }
+                }
+            }
+            return Ok(());
+        }
+        self.push_styled(item, targets, request)
+    }
+    fn push_styled(
         &mut self,
         item: SceneItem,
         targets: Vec<Target>,
@@ -255,6 +361,10 @@ pub(super) fn project(
     measurer: &dyn crate::services::TextMeasurer,
 ) -> ChartResult<Output> {
     let mut out = Output {
+        coordinate: None,
+        coordinate_fixed: None,
+        coordinate_preprojected: false,
+        coordinate_remaining: request.limits.max_path_commands,
         stroke_end: None,
         stroke_join: None,
         stroke_remaining: request.limits.max_path_commands,
@@ -288,6 +398,37 @@ pub(super) fn project(
         });
         let x = &axes[&layer.scales().x];
         let y = &axes[&layer.scales().y];
+        out.coordinate = chart
+            .definition()
+            .coordinate
+            .as_ref()
+            .map(|spec| {
+                super::coordinate_resolve::resolve_with_windows(
+                    spec,
+                    [x, y],
+                    plot,
+                    Some(&chart.state().axis_windows()),
+                )
+                .and_then(|map| map.with_chart_resources(chart))
+            })
+            .transpose()?;
+        if definition.is_some_and(|layer| layer.geography.is_some())
+            && let Some(geographic) = out
+                .coordinate
+                .as_mut()
+                .and_then(|map| map.geographic.as_mut())
+        {
+            // sf transforms supplied feature vertices; overlay paths use coordinate subdivision.
+            geographic.vertices_only = matches!(
+                chart.definition().coordinate,
+                Some(crate::grammar::CoordinateSpec::Geographic(
+                    crate::grammar::GeographicCoordinate {
+                        projection: crate::grammar::GeoProjectionSelection::Crs(_),
+                        ..
+                    }
+                ))
+            );
+        }
         let xspace = layer.domains().x_space.as_ref().unwrap_or(&x.space);
         let yspace = layer.domains().y_space.as_ref().unwrap_or(&y.space);
         let clip = Some(if layer.clip() == ClipPolicy::Plot {
@@ -391,6 +532,18 @@ pub(super) fn project(
             let point =
                 |p: Point, target: &Target, edge: f64| coordinates(p.x(), p.y(), target, edge);
 
+            out.coordinate_fixed = match &mark.geometry {
+                PreparedGeometry::Point(p)
+                | PreparedGeometry::ShapePath { center: p, .. }
+                | PreparedGeometry::ShapePathRun { center: p, .. } => {
+                    point(*p, &mark.targets[0], 0.)?
+                }
+                PreparedGeometry::UnboundedPoint(p) => {
+                    coordinates(p[0].0, p[1].0, &mark.targets[0], 0.)?
+                }
+                _ => None,
+            };
+
             if let Some(annotation) = definition.and_then(|l| l.annotation.as_ref()) {
                 if let PreparedGeometry::Point(center) = &mark.geometry {
                     if let Some(anchor) = point(*center, &mark.targets[0], 0.)? {
@@ -417,9 +570,46 @@ pub(super) fn project(
                 };
                 if let Some(center) = center {
                     if let Some(anchor) = coordinates(center[0], center[1], &mark.targets[0], 0.)? {
+                        let mut transformed_mark = None;
+                        let anchor = if let Some(map) = &out.coordinate {
+                            if let crate::grammar::CoordinateSpec::Radial(v) = &map.spec
+                                && v.rotate_angle
+                            {
+                                let mut copy = mark.clone();
+                                let angle = match copy
+                                    .aesthetics
+                                    .get(&crate::grammar::ValueAesthetic::TextAngle)
+                                {
+                                    Some(crate::interpolate::Value::Number(n)) => n.0,
+                                    _ => options.angle,
+                                };
+                                let mut angle = (angle
+                                    - map.theta_angle(anchor).unwrap_or(0.) * 180.
+                                        / std::f64::consts::PI)
+                                    .rem_euclid(360.);
+                                if angle > 90. && angle < 270. {
+                                    angle = (angle + 180.).rem_euclid(360.);
+                                }
+                                copy.aesthetics.insert(
+                                    crate::grammar::ValueAesthetic::TextAngle,
+                                    crate::interpolate::Value::Number(crate::interpolate::Number(
+                                        angle,
+                                    )),
+                                );
+                                transformed_mark = Some(copy);
+                            }
+                            map.project(anchor)?
+                        } else {
+                            Some(anchor)
+                        };
+                        let Some(anchor) = anchor else {
+                            out.omitted += 1;
+                            continue;
+                        };
+                        out.coordinate_preprojected = out.coordinate.is_some();
                         super::text_marks::project(
                             options,
-                            mark,
+                            transformed_mark.as_ref().unwrap_or(mark),
                             layer.id(),
                             anchor,
                             clip,
@@ -429,6 +619,7 @@ pub(super) fn project(
                             &mut text_bytes,
                             &mut out,
                         )?;
+                        out.coordinate_preprojected = false;
                     } else {
                         out.omitted += 1;
                     }
@@ -591,14 +782,44 @@ pub(super) fn project(
                 color: style.color,
                 width: style.stroke_width,
             };
-            let item = |primitive| -> ChartResult<SceneItem> {
+            let item_with_targets = |primitive, target_count| -> ChartResult<SceneItem> {
                 Ok(SceneItem {
                     guide: None,
                     layer: Some(layer.id()),
                     clip,
-                    primitive: independent_paints(primitive, style, mark.targets.len())?,
+                    primitive: independent_paints(primitive, style, target_count)?,
                 })
             };
+            let item = |primitive| item_with_targets(primitive, mark.targets.len());
+            if let (Some(definition), Some(coordinate)) = (definition, out.coordinate.as_ref())
+                && let PreparedGeometry::Recipe(recipe) = &mark.geometry
+                && let crate::grammar::PreparedRecipe::Distribution(
+                    payload @ crate::grammar::PreparedDistribution::Dot { .. },
+                ) = recipe.as_ref()
+            {
+                let primitives = super::recipe_distributions::project_dot_coordinate(
+                    payload,
+                    mark,
+                    definition,
+                    request,
+                    &|p| point(p, &mark.targets[0], 0.),
+                    coordinate,
+                )?;
+                for primitive in primitives {
+                    out.push_projected(
+                        SceneItem {
+                            guide: None,
+                            layer: Some(layer.id()),
+                            clip,
+                            primitive,
+                        },
+                        mark.targets.clone(),
+                        request,
+                        true,
+                    )?;
+                }
+                continue;
+            }
             if let Some(definition) = definition
                 && let Some(primitives) = super::recipe_intervals::project(
                     mark,
@@ -616,7 +837,37 @@ pub(super) fn project(
                     },
                 )?
             {
+                let arrow = definition.recipe.as_ref().and_then(|r| match r {
+                    crate::grammar::BuiltinRecipe::Segment { arrow } => arrow.as_ref(),
+                    crate::grammar::BuiltinRecipe::Reference(v) => v.arrow.as_ref(),
+                    crate::grammar::BuiltinRecipe::Curve(v) => v.arrow.as_ref(),
+                    crate::grammar::BuiltinRecipe::Spoke(v) => v.arrow.as_ref(),
+                    _ => None,
+                });
+                let projected =
+                    out.coordinate.is_some() && arrow.is_some() && !primitives.is_empty();
+                let primitives = if projected {
+                    let map = out.coordinate.as_ref().expect("coordinate selected");
+                    let stem = primitives.into_iter().next().expect("nonempty recipe");
+                    let stems = super::coordinate_primitive::project(
+                        stem,
+                        map,
+                        None,
+                        mark.targets.len(),
+                        super::coordinate_path::tolerance(request),
+                        &mut out.coordinate_remaining,
+                        request,
+                    )?;
+                    super::recipe_intervals::with_arrows(stems, arrow, &mark.style, request)?
+                } else {
+                    primitives
+                };
                 for mut primitive in primitives {
+                    if matches!(&mark.geometry, PreparedGeometry::Recipe(recipe) if matches!(recipe.as_ref(),crate::grammar::PreparedRecipe::Distribution(crate::grammar::PreparedDistribution::Outlier{..})))
+                        && let Primitive::ShapePath { anchors, .. } = &primitive
+                    {
+                        out.coordinate_fixed = anchors.first().copied();
+                    }
                     if let Primitive::ShapePath { anchors, .. } = &mut primitive
                         && anchors.len() == 1
                         && mark.targets.len() > 1
@@ -635,7 +886,7 @@ pub(super) fn project(
                     } else {
                         item(primitive)?
                     };
-                    out.push(scene_item, mark.targets.clone(), request)?;
+                    out.push_projected(scene_item, mark.targets.clone(), request, projected)?;
                 }
                 continue;
             }
@@ -899,10 +1150,13 @@ pub(super) fn project(
                         let mirrored: Vec<_> = targets.iter().rev().cloned().collect();
                         targets.extend(mirrored);
                         out.push(
-                            item(Primitive::FilledPath {
-                                commands,
-                                fill: style.color,
-                            })?,
+                            item_with_targets(
+                                Primitive::FilledPath {
+                                    commands,
+                                    fill: style.color,
+                                },
+                                targets.len(),
+                            )?,
                             std::mem::take(targets),
                             request,
                         )?;
@@ -1232,11 +1486,58 @@ pub(super) fn project(
                 }
             }
             if let Some(interaction) = layer.interactions().get(&mark_index)
-                && out.items.len() == output_index + 1
+                && out.items.len() > output_index
             {
                 use crate::grammar::HitGeometry;
                 let map = |p| point(p, &mark.targets[0], 0.);
                 let hit = match &interaction.hit {
+                    HitGeometry::Path {
+                        geometry,
+                        fill_rule,
+                        anchor,
+                    } => {
+                        let commands = geometry.lower(0.01, request.limits.max_path_commands)?;
+                        let mut mapped = vec![];
+                        let mut valid = true;
+                        for command in commands {
+                            let command = match command {
+                                PathCommand::MoveTo(p) => map(p)?.map(PathCommand::MoveTo),
+                                PathCommand::LineTo(p) => map(p)?.map(PathCommand::LineTo),
+                                PathCommand::QuadraticTo(a, b) => match (map(a)?, map(b)?) {
+                                    (Some(a), Some(b)) => Some(PathCommand::QuadraticTo(a, b)),
+                                    _ => None,
+                                },
+                                PathCommand::CubicTo(a, b, c) => {
+                                    match (map(a)?, map(b)?, map(c)?) {
+                                        (Some(a), Some(b), Some(c)) => {
+                                            Some(PathCommand::CubicTo(a, b, c))
+                                        }
+                                        _ => None,
+                                    }
+                                }
+                                PathCommand::Close => Some(PathCommand::Close),
+                            };
+                            if let Some(command) = command {
+                                mapped.push(command);
+                            } else {
+                                valid = false;
+                                break;
+                            }
+                        }
+                        if valid {
+                            map(*anchor)?
+                                .map(|anchor| {
+                                    Ok(HitGeometry::Path {
+                                        geometry: crate::path::PathGeometry::from_beziers(&mapped)?,
+                                        fill_rule: *fill_rule,
+                                        anchor,
+                                    })
+                                })
+                                .transpose()?
+                        } else {
+                            None
+                        }
+                    }
                     HitGeometry::Point { center, radius } => {
                         map(*center)?.map(|center| HitGeometry::Point {
                             center,
@@ -1253,20 +1554,34 @@ pub(super) fn project(
                         .collect::<ChartResult<Option<Vec<_>>>>()?
                         .map(HitGeometry::Polygon),
                 };
+                let hit = if let (Some(hit), Some(map)) = (hit.clone(), out.coordinate.as_ref()) {
+                    super::coordinate_hit::project(
+                        hit,
+                        map,
+                        request,
+                        &mut out.coordinate_remaining,
+                    )?
+                } else {
+                    hit
+                };
                 if let Some(hit) = hit {
-                    out.interactions.insert(
-                        output_index,
-                        crate::grammar::GeometryInteraction {
-                            hit,
-                            ..interaction.clone()
-                        },
-                    );
+                    for index in output_index..out.items.len() {
+                        out.interactions.insert(
+                            index,
+                            crate::grammar::GeometryInteraction {
+                                hit: hit.clone(),
+                                ..interaction.clone()
+                            },
+                        );
+                    }
                 }
             }
         }
     }
     out.stroke_end = None;
     out.stroke_join = None;
+    out.coordinate = None;
+    out.coordinate_fixed = None;
     Ok(out)
 }
 
@@ -1365,8 +1680,9 @@ fn independent_paints(
                 fill_rule: crate::scene::FillRule::NonZero,
                 geometry: path.geometry(),
                 fill: Some(style.fill.unwrap_or(*fill)),
-                stroke: outline
-                    .filter(|_| style.line_type != Some(crate::grammar::LineType::Blank)),
+                stroke: outline.filter(|stroke| {
+                    stroke.width > 0. && style.line_type != Some(crate::grammar::LineType::Blank)
+                }),
                 dashes: style
                     .line_type
                     .map(|l| l.pattern(style.stroke_width))
@@ -1387,8 +1703,9 @@ fn independent_paints(
                 fill_rule: crate::scene::FillRule::NonZero,
                 geometry: path.geometry(),
                 fill: Some(style.fill.unwrap_or(*fill)),
-                stroke: outline
-                    .filter(|_| style.line_type != Some(crate::grammar::LineType::Blank)),
+                stroke: outline.filter(|stroke| {
+                    stroke.width > 0. && style.line_type != Some(crate::grammar::LineType::Blank)
+                }),
                 dashes: style
                     .line_type
                     .map(|l| l.pattern(style.stroke_width))
@@ -1406,8 +1723,9 @@ fn independent_paints(
                 anchors: command_anchors(commands, target_count),
                 geometry: crate::path::PathGeometry::from_beziers(commands)?,
                 fill: Some(style.fill.unwrap_or(*fill)),
-                stroke: outline
-                    .filter(|_| style.line_type != Some(crate::grammar::LineType::Blank)),
+                stroke: outline.filter(|stroke| {
+                    stroke.width > 0. && style.line_type != Some(crate::grammar::LineType::Blank)
+                }),
                 dashes: style
                     .line_type
                     .map(|l| l.pattern(style.stroke_width))

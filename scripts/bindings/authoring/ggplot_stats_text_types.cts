@@ -37,3 +37,46 @@ c.connectStat('Hv').x('x').y('y');
 c.univariateStat('Unique');
 c.facetWrap('x').fields(['x','y']).columns(2).reference({drop:false,direction:'Tr',strip_position:'Left',axes:'All',axis_labels:'Margins'});
 c.facetGrid('x','y').fields(['x','y']).rowFields(1).freeX(true).freeY(true).reference({space:'Free',margins:[0,1],shrink:false,switch:'Both',as_table:false});
+
+c.smooth().stat(c.modelStat({method:'Linear',n:12}).modelOptions({method:'Linear'}).input('x').y('y').weight('w'));
+c.quantile().stat(c.quantileStat()); c.smoothStat();
+c.bin2d().stat(c.bin2dStat().spatialOptions({Rectangular:{axes:[{},{}],drop:true}}));
+c.hex().stat(c.hexStat()); c.density2d().stat(c.density2dStat());
+c.contour().stat(c.contourStat()); c.contourFilled().stat(c.contourFilledStat());
+c.ellipse().stat(c.ellipseStat()); c.spatialStat({Ellipse:{level:.95,segments:51,kind:'Normal'}});
+c.plot(data).coordinate({Cartesian:{flip:true}});
+
+c.cutInterval([1,null,3],{n:2}).copy().column();
+c.cutNumber([1,2,3],2).value();
+c.cutWidth([1,2,3],1,{boundary:0}).dispose();
+c.resolution([1,2],{zero:false});
+c.summarize([1,null,3],{MeanSe:{mult:2}});
+c.points().keyGlyph('example.diamond_key',1,{padding:.1});
+const registry=c.ExtensionRegistry.example();
+const materialized=registry.materialize('example.xy_recipe',1,{x:[1],y:[2]});
+c.autoplot(materialized,'example.xy_recipe',1,{line:true},registry);
+c.plot(data).withRegistry(registry).autolayer('example.xy_recipe',1,{line:true});
+
+c.legend().scale("groups").registered("example.strip_guide",1,{});
+c.facetWrap("group").registered("example.reverse_facets",1,{columns:2});
+
+c.plot(data).registeredCoordinate("example.wave_coordinate",1,{amplitude:.1});
+
+const saveOutput=new c.Output(new Uint8Array());
+const saveOptions:c.SaveOptions={width:2,height:1,units:'in',dpi:'retina'};
+const savePlan:c.SavePlan=saveOutput.resolve_save('plot-%03d.png',saveOptions,null,2);
+saveOutput.save_figure(c.plot(data).layer(c.points()).build(),'plot.png',saveOptions,{device:frame=>frame.export('png')});
+c.points().text_defaults();
+
+const referenceTheme=c.theme().referencePreset('Minimal',{base_size:13}).fonts([]).updateElements({complete:false,elements:{'axis.text':'Blank'}}).replaceElements({complete:false,elements:{}});
+const themeContext=new c.ThemeContext(referenceTheme);
+const previousTheme:c.Theme=themeContext.set(themeContext.get());
+previousTheme.dispose();themeContext.update({complete:false,elements:{}});themeContext.replace({complete:false,elements:{}});
+c.plot(data).theme(themeContext.get());themeContext.dispose();
+c.points().textDefaults();
+
+function retainedPageDocuments(frame:c.FigureSnapshot):[Uint8Array,Uint8Array,Uint8Array] {
+ const pages:c.FigurePages=frame.pages().append(frame);
+ try {return [pages.export('pdf'),pages.export('ps'),pages.export('tiff')];}
+ finally {pages.dispose();}
+}

@@ -131,6 +131,24 @@ pub fn legend() -> LegendBuilder {
     LegendBuilder::default()
 }
 impl LegendBuilder {
+    /// Draw a trained guide with an explicitly registered portable implementation.
+    pub fn registered(
+        mut self,
+        operation: impl Into<String>,
+        version: crate::Revision,
+        parameters: serde_json::Value,
+    ) -> Self {
+        self.options.get_or_insert_with(Default::default).registered =
+            Some(crate::grammar::GuideDrawingSelection {
+                operation: crate::grammar::OperationRef {
+                    id: operation.into(),
+                    version,
+                },
+                parameters,
+            });
+        self
+    }
+
     /// Place independent portable vector guide content.
     pub fn custom(mut self, guide: crate::grammar::CustomLegend) -> Self {
         self.custom = Some(guide);

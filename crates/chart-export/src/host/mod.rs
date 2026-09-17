@@ -45,9 +45,16 @@ pub fn format(name: &str) -> ChartResult<Format> {
         "svg" => Ok(Format::Svg),
         "pdf" => Ok(Format::Pdf),
         "png" => Ok(Format::Png),
+        "jpeg" | "jpg" => Ok(Format::Jpeg),
+        "tiff" | "tif" => Ok(Format::Tiff),
+        "bmp" => Ok(Format::Bmp),
+        "ps" | "postscript" => Ok(Format::PostScript),
+        "eps" => Ok(Format::Eps),
+        "tex" | "pictex" => Ok(Format::PicTeX),
+        "emf" | "wmf" => Ok(Format::Emf),
         _ => Err(error(
             DiagnosticCode::UnsupportedCapability,
-            "Format must be svg, pdf or png.",
+            "Format must be svg, pdf, png, jpeg, tiff or bmp.",
         )),
     }
 }

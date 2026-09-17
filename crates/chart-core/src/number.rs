@@ -224,3 +224,29 @@ pub(crate) mod finite_or_special {
         super::Number::deserialize(deserializer).map(|value| value.0)
     }
 }
+
+/// C-style general significant formatting for independently formatted numeric labels.
+/// Rust's binary-to-decimal formatter supplies nearest-even rounding for each endpoint.
+pub(crate) fn general_significant(value: f64, digits: usize) -> String {
+    if value == 0. {
+        return "0".into();
+    }
+    let text = format!("{value:.p$e}", p = digits - 1);
+    let (mantissa, exponent) = text.split_once('e').expect("scientific formatter");
+    let exponent: i32 = exponent.parse().expect("scientific exponent");
+    let trim = |s: &str| {
+        if s.contains('.') {
+            s.trim_end_matches('0').trim_end_matches('.').to_owned()
+        } else {
+            s.to_owned()
+        }
+    };
+    if exponent < -4 || exponent >= digits as i32 {
+        format!("{}e{exponent:+03}", trim(mantissa))
+    } else {
+        trim(&format!(
+            "{value:.p$}",
+            p = (digits as i32 - exponent - 1).max(0) as usize
+        ))
+    }
+}

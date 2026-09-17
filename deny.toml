@@ -23,6 +23,8 @@ allow = [
     "bzip2-1.0.6",
 ]
 exceptions = [
+    # ADR-033: bundled IJG notice and distribution acknowledgement retained.
+    { crate = "jpeg-encoder@0.7.1", allow = ["IJG"] },
     { crate = "cbindgen@0.28.0", allow = ["MPL-2.0"] },
     { crate = "option-ext@0.2.0", allow = ["MPL-2.0"] },
 ]

@@ -111,6 +111,21 @@ impl Inspector {
                     HitGeometry::Point { center, .. } => {
                         contains(c.clip, *center) && shape.contains(*center)
                     }
+                    HitGeometry::Path {
+                        geometry,
+                        fill_rule,
+                        ..
+                    } => geometry.flatten(0.01, 1_000_000).is_ok_and(|flat| {
+                        polygon
+                            .iter()
+                            .any(|p| flat.contains_with_rule(*p, true, None, *fill_rule))
+                            || flat.subpaths.iter().any(|s| {
+                                s.points.iter().any(|p| shape.contains(*p))
+                                    || edges(&s.points).any(|(a, b)| {
+                                        edges(&polygon).any(|(p, q)| segments_intersect(a, b, p, q))
+                                    })
+                            })
+                    }),
                     HitGeometry::Rectangle { .. } | HitGeometry::Polygon(_) => {
                         let vertices = match &custom.hit {
                             HitGeometry::Polygon(p) => p.clone(),

@@ -14,6 +14,7 @@ mod shape_registry;
 mod shape_stack;
 mod shape_symbol;
 mod time;
+mod vector;
 use super::failure;
 use chart_core::{
     plot::{
@@ -229,6 +230,13 @@ impl _Component {
 handle!(_Draft, Draft);
 #[wasm_bindgen]
 impl _Draft {
+    pub fn autolayer(&self, selection: &str) -> Result<Self, JsError> {
+        self.get()?
+            .autolayer(portable::decode(selection).map_err(failure)?)
+            .map(Self::wrap)
+            .map_err(failure)
+    }
+
     pub fn with_shape_registry(
         &self,
         registry: &shape_registry::_ShapeRegistry,

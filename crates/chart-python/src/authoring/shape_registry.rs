@@ -13,6 +13,18 @@ handle!(
 );
 #[pymethods]
 impl ShapeRegistryHandle {
+    fn materialize(&self, operation: &str, payload: &str) -> PyResult<super::data::DataHandle> {
+        self.get()?
+            .materialize(
+                &portable::decode(operation).map_err(failure)?,
+                &portable::decode(payload).map_err(failure)?,
+                Default::default(),
+                true,
+            )
+            .map(super::data::DataHandle::wrap)
+            .map_err(failure)
+    }
+
     #[new]
     fn new() -> Self {
         Self::wrap(Arc::new(ExtensionRegistry::new()))

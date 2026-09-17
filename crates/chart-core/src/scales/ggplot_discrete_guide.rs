@@ -75,6 +75,7 @@ impl GgplotGuideLabels {
         registry.label_vector(
             operation,
             crate::grammar::GuideLabelsInput {
+                facet: None,
                 values,
                 names,
                 temporal,
@@ -266,6 +267,7 @@ impl GgplotDiscreteGuide {
             let labels = registry.label_vector(
                 operation,
                 crate::grammar::GuideLabelsInput {
+                    facet: None,
                     values: &values,
                     names: names.as_deref(),
                     temporal: None,

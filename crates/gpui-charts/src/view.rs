@@ -807,7 +807,13 @@ impl Render for ChartView {
                                     return;
                                 }
                                 let mut inspector =
-                                    Inspector::new(frame.chart.clone(), 10., 32).ok();
+                                    match Inspector::new(frame.chart.clone(), 10., 32) {
+                                        Ok(inspector) => Some(inspector),
+                                        Err(error) => {
+                                            this.last_error = Some(error);
+                                            None
+                                        }
+                                    };
                                 if let Some(focus) = this.state().focus().cloned() {
                                     let restored = inspector
                                         .as_mut()

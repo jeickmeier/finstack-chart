@@ -9,6 +9,22 @@ use wasm_bindgen::prelude::*;
 handle!(_ShapeRegistry, Arc<ExtensionRegistry>);
 #[wasm_bindgen]
 impl _ShapeRegistry {
+    pub fn materialize(
+        &self,
+        operation: &str,
+        payload: &str,
+    ) -> Result<super::data::_Data, JsError> {
+        self.get()?
+            .materialize(
+                &portable::decode(operation).map_err(failure)?,
+                &portable::decode(payload).map_err(failure)?,
+                Default::default(),
+                true,
+            )
+            .map(super::data::_Data::wrap)
+            .map_err(failure)
+    }
+
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
         Self::wrap(Arc::new(ExtensionRegistry::new()))

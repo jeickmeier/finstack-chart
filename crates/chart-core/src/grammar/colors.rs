@@ -122,15 +122,7 @@ pub(super) fn preflight(
             super::stats::validate_group(data, &Grouping::Field(*field))?;
         }
         ColorInput::Statistical(field)
-            if fields.is_some_and(|fields| {
-                fields.iter().any(|c| {
-                    &c.field == field
-                        && !matches!(
-                            c.space,
-                            ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. }
-                        )
-                })
-            }) => {}
+            if fields.is_some_and(|fields| fields.iter().any(|c| &c.field == field)) => {}
         _ => {
             return Err(error(
                 DiagnosticCode::SchemaConflict,
@@ -199,8 +191,30 @@ pub(super) fn apply(
     )?;
     let trained;
     let scale = if let ColorScale::Mapped { scale, missing } = &encoding.scale {
+        let mut owned_scale = scale.clone();
+        if let ColorInput::Statistical(field) = &encoding.input
+            && fields.is_some_and(|fields| {
+                fields
+                    .iter()
+                    .any(|f| &f.field == field && matches!(f.space, ValueSpace::Categorical { .. }))
+            })
+            && let Some(crate::scales::GgplotScalePolicy::Discrete { levels, .. }) =
+                owned_scale.ggplot.as_deref_mut()
+            && levels.is_none()
+        {
+            let catalog = if let Some(crate::scales::ScalePopulation::Keys(keys)) = samples {
+                keys.clone()
+            } else {
+                labels
+                    .iter()
+                    .cloned()
+                    .map(crate::scales::ScaleKey::Text)
+                    .collect()
+            };
+            *levels = Some(catalog);
+        }
         trained = ColorScale::Mapped {
-            scale: scale.trained_population(samples, registry)?,
+            scale: owned_scale.trained_population(samples, registry)?,
             missing: *missing,
         };
         &trained
@@ -266,7 +280,8 @@ pub(super) fn apply(
         } else if matches!(
             encoding.input,
             ColorInput::Category(_) | ColorInput::Group | ColorInput::GroupField(_)
-        ) {
+        ) || matches!(&encoding.input, ColorInput::Statistical(field) if fields.is_some_and(|fields| fields.iter().any(|f| &f.field == field && matches!(f.space, ValueSpace::Categorical { .. }))))
+        {
             let key = keys[i].clone().or_else(|| {
                 categories[i]
                     .as_ref()
@@ -439,20 +454,42 @@ pub(super) fn read_inputs(
                     "Generated color mapping requires statistical rows.",
                 ));
             };
-            if !fields.iter().any(|c| {
-                &c.field == field
-                    && !matches!(
-                        c.space,
-                        ValueSpace::Categorical { .. } | ValueSpace::NullableCategorical { .. }
-                    )
-            }) {
-                return Err(error(
+            let column = fields.iter().find(|c| &c.field == field).ok_or_else(|| {
+                error(
                     DiagnosticCode::SchemaConflict,
-                    "Generated numeric color field is absent or categorical.",
-                ));
-            }
-            for (i, row) in source.iter().enumerate() {
-                values[i] = row.value(field);
+                    "Generated color field is absent.",
+                )
+            })?;
+            if let ValueSpace::Categorical {
+                categories: catalog,
+            } = &column.space
+            {
+                if catalog.len() > limits.max_groups {
+                    return Err(error(
+                        DiagnosticCode::ResourceLimit,
+                        "Generated color catalog exceeds budget.",
+                    ));
+                }
+                if shared.is_none() {
+                    labels = catalog.clone();
+                }
+                for (i, row) in source.iter().enumerate() {
+                    if let Some(value) = row.value(field) {
+                        if value < 0. || value.fract() != 0. || value >= catalog.len() as f64 {
+                            return Err(error(
+                                DiagnosticCode::SchemaConflict,
+                                "Generated category ordinal is outside its catalog.",
+                            ));
+                        }
+                        let label = catalog[value as usize].clone();
+                        keys[i] = Some(crate::scales::ScaleKey::Text(label.clone()));
+                        categories[i] = Some(label);
+                    }
+                }
+            } else {
+                for (i, row) in source.iter().enumerate() {
+                    values[i] = row.value(field);
+                }
             }
         }
     }
@@ -615,7 +652,10 @@ pub(super) fn dropped(input: &ColorInput, table: &PreparedTable) -> bool {
     if !table.population_operation().is_some_and(|op| {
         matches!(
             op.parameters,
-            StatParameters::Distribution(_) | StatParameters::Univariate(_)
+            StatParameters::Spatial(_)
+                | StatParameters::Model(_)
+                | StatParameters::Distribution(_)
+                | StatParameters::Univariate(_)
         )
     }) {
         return false;
@@ -784,6 +824,28 @@ fn key_population(
                     .or_else(|| include_missing.then_some(ScaleKey::Null))
             })
             .collect());
+    }
+    if let ColorInput::Statistical(field) = input
+        && let (
+            PreparedRows::Statistical(rows),
+            OutputSchema::Statistical { fields, .. } | OutputSchema::Custom { fields, .. },
+        ) = (&table.rows, &table.schema)
+        && let Some(ValueSpace::Categorical { categories }) =
+            fields.iter().find(|c| &c.field == field).map(|c| &c.space)
+    {
+        return rows
+            .iter()
+            .filter_map(|row| match row.value(field) {
+                Some(v) if v >= 0. && v.fract() == 0. && v < categories.len() as f64 => {
+                    Some(Ok(ScaleKey::Text(categories[v as usize].clone())))
+                }
+                Some(_) => Some(Err(error(
+                    DiagnosticCode::SchemaConflict,
+                    "Generated category ordinal is outside its catalog.",
+                ))),
+                None => include_missing.then_some(Ok(ScaleKey::Null)),
+            })
+            .collect();
     }
     if matches!(input, ColorInput::Numeric(_) | ColorInput::Statistical(_)) {
         return Ok(numeric_population(input, data, table, include_missing)?

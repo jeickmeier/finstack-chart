@@ -46,6 +46,8 @@ impl Options {
         let b = self.0.clone();
         Ok(Self(match name {
             "dpi" => b.dpi(value(v)?),
+            "raster_device" => b.raster_device(value(v)?),
+            "vector_device" => b.vector_device(value(v)?),
             "precision" => b.precision(value(v)?),
             "max_raster_pixels" => b.max_raster_pixels(exact_u64(v)?),
             "max_output_bytes" => b.max_output_bytes(value(v)?),

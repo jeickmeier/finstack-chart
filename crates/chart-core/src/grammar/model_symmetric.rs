@@ -176,6 +176,49 @@ pub(crate) fn eigen(mut a: Vec<f64>, n: usize) -> crate::ChartResult<(Vec<f64>, 
         .collect();
     Ok((values, vectors))
 }
+pub(crate) fn cholesky(a: &[f64], n: usize) -> crate::ChartResult<Vec<f64>> {
+    let mut l = vec![0.; n * n];
+    for i in 0..n {
+        for j in 0..=i {
+            let v = a[i * n + j] - (0..j).map(|k| l[i * n + k] * l[j * n + k]).sum::<f64>();
+            if i == j {
+                if v <= 0. || !v.is_finite() {
+                    return Err(super::error(
+                        crate::DiagnosticCode::NumericalDomain,
+                        "Matrix is not positive definite.",
+                    ));
+                }
+                l[i * n + j] = libm::sqrt(v);
+            } else {
+                l[i * n + j] = v / l[j * n + j];
+            }
+        }
+    }
+    Ok(l)
+}
+pub(crate) fn solve(l: &[f64], b: &[f64]) -> Vec<f64> {
+    let n = b.len();
+    let mut x = b.to_vec();
+    for i in 0..n {
+        x[i] = (x[i] - (0..i).map(|j| l[i * n + j] * x[j]).sum::<f64>()) / l[i * n + i];
+    }
+    for i in (0..n).rev() {
+        x[i] = (x[i] - ((i + 1)..n).map(|j| l[j * n + i] * x[j]).sum::<f64>()) / l[i * n + i];
+    }
+    x
+}
+pub(crate) fn inverse(l: &[f64], n: usize) -> Vec<f64> {
+    let mut a = vec![0.; n * n];
+    for j in 0..n {
+        let mut b = vec![0.; n];
+        b[j] = 1.;
+        for (i, v) in solve(l, &b).into_iter().enumerate() {
+            a[i * n + j] = v;
+        }
+    }
+    a
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

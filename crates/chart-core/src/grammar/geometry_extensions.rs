@@ -36,6 +36,15 @@ pub enum SemanticValue {
 /// destination units. Point tolerance/radius is always in destination units.
 #[derive(serde::Serialize, Clone, Debug, PartialEq)]
 pub enum HitGeometry {
+    /// Compound coordinate-projected region using the shared path interior test.
+    Path {
+        /// Checked destination geometry, including disconnected contours and holes.
+        geometry: crate::path::PathGeometry,
+        /// Interior rule retained through clipping.
+        fill_rule: crate::scene::FillRule,
+        /// Stable source focus location in the region's coordinate system.
+        anchor: Point,
+    },
     /// Circular hit region.
     Point {
         /// Center.
@@ -57,6 +66,10 @@ impl HitGeometry {
     /// Bounded finite shape validation before allocation/projection/inspection.
     pub fn validate(&self, remaining: usize) -> ChartResult<usize> {
         let n = match self {
+            Self::Path { geometry, .. } => {
+                geometry.validate_for_scene()?;
+                geometry.commands().len()
+            }
             Self::Point { radius, .. } if radius.is_finite() && *radius > 0. => 1,
             Self::Point { .. } => {
                 return Err(error(
@@ -86,6 +99,7 @@ impl HitGeometry {
     /// Anchor for a tooltip/focus overlay, derived from the explicitly supplied hit geometry.
     pub fn anchor(&self) -> ChartResult<Point> {
         match self {
+            Self::Path { anchor, .. } => Ok(*anchor),
             Self::Point { center, .. } => Ok(*center),
             Self::Rectangle { from, to } => {
                 Point::new(from.x().midpoint(to.x()), from.y().midpoint(to.y()))
@@ -103,6 +117,11 @@ impl HitGeometry {
     /// Bounding rectangle in the shape's coordinate system.
     pub fn bounds(&self) -> ChartResult<Rect> {
         let points: Vec<_> = match self {
+            Self::Path { geometry, .. } => {
+                return geometry
+                    .bounds(0.01, 1_000_000)?
+                    .ok_or_else(|| error(DiagnosticCode::Validation, "Empty custom hit path."));
+            }
             Self::Point { center, radius } => {
                 return Rect::new(
                     center.x() - radius,
@@ -129,6 +148,13 @@ impl HitGeometry {
     /// Exact closed region hit, including polygon/rectangle boundaries.
     pub fn contains(&self, p: Point) -> bool {
         match self {
+            Self::Path {
+                geometry,
+                fill_rule,
+                ..
+            } => geometry
+                .flatten(0.01, 1_000_000)
+                .is_ok_and(|flat| flat.contains_with_rule(p, true, None, *fill_rule)),
             Self::Point { center, radius } => {
                 (p.x() - center.x()).hypot(p.y() - center.y()) <= *radius
             }

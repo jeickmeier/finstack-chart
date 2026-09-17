@@ -1,6 +1,6 @@
 # Implementation status
 
-Updated: 15 September 2026. Specification version: 0.5.0.
+Updated: 16 September 2026. Specification version: 0.5.0.
 Bootstrap committed at `fbc9782` (starting commit: `19f4a27`); WP-01 committed at `dfe38e8`.
 WP-02 committed at `435e127`; WP-03 at `3a86189`; WP-04 at `d0a6c48`.
 WP-05 is committed at `3cf1b33`; WP-06 at `f8657fb`; WP-07/08 at `fac148a`.
@@ -8,6 +8,41 @@ WP-09/10 are committed at `c5ec829`; WP-11 at `a6fb2ea`; WP-12 at `63dbcc2`.
 Original reports retain the revision context from their evidence runs.
 
 ## GG-06–18 authorized implementation — 15 September 2026
+
+Current program status: **GG06–GG16 COMPLETE**. GG17 and GG18 implementation and
+local qualification are delivered. Windows GDI playback of EMF is the remaining
+external GG17 gate; GG18 retains that prerequisite. Final GG14–18 proofs produce
+240 identical publications per Rust/Python/Node WASM host. Repository and workspace
+checks completed through recorded resumed commands; 40 final focused regressions
+also pass. Native public-API interaction and presented capture pass.
+The [final wave report](evidence/phase-2-ggplot-final-wave-2026-09-16.md) and
+[source/artifact manifest](evidence/phase-2-ggplot-final-wave-2026-09-16.json)
+record revision `295e7a0` plus the working tree, actual-host proofs, strict typing,
+inspection, resumed-check boundaries and the optional broader runner's partial scope.
+Next: execute the prepared Windows EMF playback verifier, inspect its output and
+record evidence to close GG17 and dependent GG18. GG19 remains outside this assignment.
+The canonical package rows below record the latest status; older dated checkpoints
+are historical.
+The [16 September completion](evidence/phase-2-ggplot-models-spatial-coordinates-completion-2026-09-16.md)
+and [manifest](evidence/phase-2-ggplot-models-spatial-coordinates-completion-2026-09-16.json)
+record 120 identical publications per host, 1,096 workspace tests, 47 final focused
+tests, corrected native inspection/painting and literal aggregate-check boundaries.
+All remaining model/coordinate capability boundaries are retained in that report.
+The dated sections below preserve earlier checkpoint history.
+
+### Windows playback continuation — 16 September 2026
+
+The remaining GG17/GG18 gate was rechecked on revision `295e7a0` plus the
+validated working tree. No Git remote or local Windows VM tooling is configured;
+no actual Windows runtime was found among available execution tools. Prepared
+`/private/tmp/gg17-windows-playback.zip` with the 72/144 DPI EMFs, independently
+exported PNGs, existing GDI verifier, hash manifest and batch runner. Input bytes
+were rechecked equal across Rust/Python/WASM. Packaging is not Windows execution:
+both playback/comparison and image inspection remain pending, including the
+additional raster/hole/alpha cases named in the verifier README. No runtime code
+changed and no completed test suite was repeated. Next action requires an available
+Windows machine/runner; the owner has been asked for its location. GG17/GG18 remain
+open and GG19 has not started.
 
 The owner authorized GG-06 through GG-18 and parallel agents. Starting revision is
 `96d044d`, with a clean worktree. GG-06 statistics/positions and GG-08 text/labels
@@ -30,7 +65,7 @@ cumulative binding, Linux or global certification is claimed.
 
 Evidence: [completion report](evidence/phase-2-ggplot-stats-text-completion-2026-09-15.md)
 and [manifest](evidence/phase-2-ggplot-stats-text-completion-2026-09-15.json).
-GG-07 primitive/interval completion is now **COMPLETE**. GG-09–18 remain unfinished.
+GG-07 primitive/interval completion is now **COMPLETE**. GG-09 and GG-12 are now complete; GG-10/11 and GG-13–18 remain unfinished.
 Numerical/geography/device preparation is in
 [evidence](evidence/gg06-18-dependency-spikes-2026-09-15.md).
 
@@ -56,25 +91,68 @@ and [source/publication manifest](evidence/phase-2-ggplot-primitives-completion-
 Next: GG-09 distribution/univariate work and independent GG-12 facet work.
 No Linux, cumulative bindings or global certification is claimed.
 
-### GG-09 / GG-12 integration in progress — 15 September 2026
+### GG-09 / GG-12 complete — 15 September 2026
 
-GG-09 now implements shared distribution and univariate stages, numerical kernels,
-geometry recipes, authoring factories and portable descriptors on `96d044d` plus
-this worktree. Pinned reference preparation includes 105 distribution cases,
-82 weighted quantile cases and 45 univariate cases. Focused kernel/stage tests,
-24 QQ/QQ-line compiler cases and seven distribution geometry tests pass; eleven
-Rust geometry authors produce 33 publications with replay equality. Actual host
-comparison, univariate integration, vector-scale checks and final package evidence
-remain open. Logs include `/private/tmp/gg09-geometry-tests10.log`,
-`/private/tmp/gg09-stage-final2.log` and `/private/tmp/gg09-univariate-compiler.log`.
+Both packages are **COMPLETE**. Shared analytical statistics, distribution recipes,
+reference facet controls and actual hosts pass their package evidence. The final
+macOS workspace suite passes **1,029 tests across 206 nonempty / 218 total targets**;
+`mise run fmt` and `mise run check` pass. Independent Rust/Python/WASM authors
+produce **120 identical SVG/PDF/PNG publications per host**, with replay equality,
+strict declarations and inspected final native/publication outputs.
 
-GG-12 core/layout and host facet controls are implemented in parallel. Twelve new
-focused tests plus nine legacy facet tests pass
-(`/private/tmp/gg12-facet-focused.log`); 17 independent authors are prepared for
-actual host/publication/native validation. Both packages remain **IN PROGRESS**;
-these focused results do not close their feature gates or prove a fresh full suite.
-Next: finish integration, run the combined host proof once, inspect final artifacts,
-and update package acceptance evidence before advancing dependent packages.
+The work started at `96d044d`; the validated worktree was externally committed as
+`295e7a0` during acceptance. [Completion report](evidence/phase-2-ggplot-analysis-facets-completion-2026-09-15.md)
+and [manifest](evidence/phase-2-ggplot-analysis-facets-completion-2026-09-15.json)
+record source fingerprints, logs, artifacts and the corrected vector/density cases.
+GG10 isolated model kernels are excluded from this acceptance. No Linux, cumulative
+bindings or GG19/global certification is claimed. Next: GG10 model integration and
+parallel GG11 spatial statistics / GG13 coordinates.
+
+### GG-10 / GG-11 / GG-13 implementation checkpoint
+
+GG10 now has 15 integrated numerical tests and two independent public author tests
+passing, plus nine population/authoring tests covering weighted predictions,
+registered models, integer grids, separate quantile paths, ribbons, all three source
+update operations and automatic selection across the 999/1000 facet threshold.
+Ten Rust/Python/WASM authors and a native gallery are prepared. Fresh host/native
+proofs and final integration checks remain open; this is not package acceptance.
+[ADR-028](adr/028-shared-statistical-models.md) records shared model ownership.
+GG11 kernel/stage and GG13 projection/clip/guide work continue in parallel; their
+readiness evidence and unresolved requirements remain package-specific.
+
+GG13 now has one public numeric/sqrt-coordinate guide-view test passing, including
+major/minor reselection, secondary units and unchanged mark-domain training
+(`/private/tmp/gg13-guide-training-tests4.log`). Four raster tests pass, including
+premultiplied interpolation, original cell identity, annular holes and stepped panel
+gradients (`/private/tmp/gg13-raster-tests3.log`); one public warped-raster inspection
+and portable replay test passes (`/private/tmp/gg13-raster-inspection.log`). Raster
+hit coverage uses scene v22 only when present. Python/TypeScript declaration
+consumers include GG10/11/13 and pass; TypeScript used the previous generated generic
+WASM declaration plus current authoring declarations, so this is not a fresh runtime
+binding result. Shared proof runner scopes now cover all three packages. Pending:
+coordinate navigation/custom extension hits, final source guide/geometry checks,
+actual host/native/publication proofs and final repository checks. GG14–18 remain
+unimplemented; dependency and source preparation does not advance their gates.
+
+The 16 September integration pass adds source-only readiness for GG14 (160 theme
+nodes, 2,880 resolved preset records, inheritance/context/subtheme vectors and the
+complete captured plotmath syntax table) and GG15 (41 mapproj methods across 426
+calls plus state reuse; explicit proj4rs candidate/missing matrix). Fixture structure
+and deterministic GG14 regeneration pass. These fixtures do not implement or close
+either package. See [GG14 readiness](evidence/gg14-contract-readiness-2026-09-15.md)
+and [GG15 readiness](evidence/gg15-mapproj-readiness-2026-09-16.md).
+
+Native qualification found and corrected double raster oversampling on Retina
+screens and a shared band-path inspection anchor/target mismatch exposed by model
+confidence ribbons. Five raster tests and the six-model native-sized Inspector
+regression pass. Radial guide transitions now reject explicitly while retaining static
+snapshots; actual flip/sqrt transition samples and two legacy transition tests pass.
+The first aggregate repository check found test-module ordering and a redundant
+Copy clone; these are corrected, with the final rerun pending. The first actual host
+pass proved model publication equality and exposed missing required Arrow/Raster
+fields in independent coordinate authors; those author corrections are in progress.
+[ADR-029](adr/029-post-statistical-coordinate-projection.md) and
+[ADR-030](adr/030-shared-two-dimensional-statistics.md) record shared ownership.
 
 ## GG-08 complete — 15 September 2026
 
@@ -3981,16 +4059,16 @@ work and FIX-GG cases are defined once in the plan.
 | GG-06 — Bin/count/summary and position semantics | COMPLETE | GG2-02/05 | Reference bins/count/summary and positions; physical-axis/facet training, retention, actual hosts and 63 identical publications; see 15 September completion report. |
 | GG-07 — Primitive and interval recipe completion | COMPLETE | GG2-06 | Shared recipes, interval controls, StatSum, polygon/raster and stroke semantics; 111 exact publications per host, inspected native/export, final focused tests and repository checks. See completion evidence for full-suite correction boundary. |
 | GG-08 — Data-driven text, labels and annotations | COMPLETE | GG2-06/09 | Source/stat labels, boxes/units/overlap, vectors and nearest/interpolated raster; 29 identical Rust/Python/WASM publications and native inspection; see 15 September evidence. |
-| GG-09 — Distributional and one-dimensional analytical layers | IN PROGRESS | GG2-05/06 | Kernels/stages/recipes implemented; final integration and host/publication evidence open. |
-| GG-10 — Smoothers, confidence bands and quantile regression | IN PROGRESS | GG2-05/06 | Unwired weighted LM/GLM/LOESS kernels pass isolated pinned checks; GAM eigensystem convention and shared adapters/hosts remain open. [Kernel checkpoint](evidence/gg10-model-kernel-checkpoint-2026-09-15.md). |
-| GG-11 — Two-dimensional statistics and contours | NOT STARTED | GG2-05/06 | Requires GG-06/07/09. |
-| GG-12 — Facet semantics and layout breadth | IN PROGRESS | GG2-07 | Core/catalog/layout and generic hosts implemented; 15 focused controls + 9 legacy facet tests and 20 vector tests pass. All 17 native authors inspected, including six corrected empty-panel recaptures. [Provisional evidence](evidence/phase-2-ggplot-facets-2026-09-15.md); combined host/native/publication qualification and final package checks pending. |
-| GG-13 — Cartesian, transformed and polar/radial coordinates | NOT STARTED | GG2-08 | Requires GG-07/12, WP-S04, WP-AX04. [Read-only inventory](evidence/gg13-coordinate-inventory-2026-09-15.md) and 24 successful pinned source build/project/subdivision/draw cases prepared; no runtime implementation or acceptance claimed. |
-| GG-14 — Theme hierarchy and mathematical typography | NOT STARTED | GG2-09 | Requires GG-05/08/12/13. |
-| GG-15 — Geographic layers and coordinates | NOT STARTED | GG2-08 | Requires GG-07/08/13. |
-| GG-16 — Extensibility and authoring conveniences | NOT STARTED | GG2-10 | Requires GG-02/05/07/12/13. |
-| GG-17 — Saving and device capability completion | NOT STARTED | GG2-11 | Requires GG-08/14/15 and WP-20. |
-| GG-18 — Full grammar, update and host integration | NOT STARTED | GG2-02–12 | Requires GG-03–17 and WP-16–20. |
+| GG-09 — Distributional and one-dimensional analytical layers | COMPLETE | GG2-05/06 | [Combined acceptance](evidence/phase-2-ggplot-analysis-facets-completion-2026-09-15.md):1,029 workspace tests, repository checks,69 analytical publications per actual host and inspected native/export output. |
+| GG-10 — Smoothers, confidence bands and quantile regression | COMPLETE | GG2-05/06 | Weighted LM/canonical GLM, LOESS, automatic cs-REML GAM, BR/FN quantiles, model registration, grids/uncertainty and update/facet/inspection proofs. 30 identical publications per host; [16 September completion](evidence/phase-2-ggplot-models-spatial-coordinates-completion-2026-09-16.md) retains named model capability boundaries. |
+| GG-11 — Two-dimensional statistics and contours | COMPLETE | GG2-05/06 | Shared rectangular/hex bins, KDE, rotated-grid contours/isobands and ellipses, generated fields, colors and guides. 48 identical publications per host and inspected native output; [16 September completion](evidence/phase-2-ggplot-models-spatial-coordinates-completion-2026-09-16.md). |
+| GG-12 — Facet semantics and layout breadth | COMPLETE | GG2-07 | [Combined acceptance](evidence/phase-2-ggplot-analysis-facets-completion-2026-09-15.md): reference populations/layout,51 publications per actual host, all17 native authors,1,029 workspace tests and repository checks pass. Parsed labellers remain GG14. |
+| GG-13 — Cartesian, transformed and polar/radial coordinates | COMPLETE | GG2-08 | Shared post-stat maps, typed views/guides, clipping, raster coverage, inspection/navigation and coordinate-aware static presentation. 42 identical publications per host, all14 native authors inspected; [16 September completion](evidence/phase-2-ggplot-models-spatial-coordinates-completion-2026-09-16.md) retains explicit inverse/animation/Dot boundaries. |
+| GG-14 — Theme hierarchy and mathematical typography | COMPLETE | GG2-09 | 160-node theme/source controls, nine presets and measured furniture; 60 theme, 27 math and 24 furniture publications agree across actual hosts. Signed-atom proofs qualify vertical metric adaptation; rotated multilingual math and text/outline at 300/600 DPI inspected. Final workspace/repository checks pass through resumed runs; see final wave report. |
+| GG-15 — Geographic layers and coordinates | COMPLETE | GG2-08 | All41projection methods,318source successes/108descriptor errors,13integration+five source units and19native modes pass. Fresh Rust/Python/Node WASM57publications per host and scene JSONs match, including300DPI/dateline/holes; pinned libm corrects native/WASM UTM transcendental differences without output rounding. ADR031 records projection/source/license provenance. Final workspace/repository checks complete through resumed runs; see final wave report. |
+| GG-16 — Extensibility and authoring conveniences | COMPLETE | GG2-10 | Ten independent external authors now cover each boundary, including prescribed-slope models and existing registered facet-labeller callbacks with exact typed panel context. Fresh Rust/Python/Node WASM30publications per host and scene JSONs match; native ten cases inspected. Malformed/native-only/replay/copy/disposal,35vector controls and combined update/batch/rollback pass. Final workspace/repository checks complete through resumed runs; see final wave report. |
+| GG-17 — Saving and device capability completion | IN PROGRESS | GG2-11 | Implementation and local qualification pass: 26 save dimensions/custom devices, retained PDF/PS/TIFF pages, independent device decoders and 30 exact publications per actual host. Final checks pass through resumed runs. Windows EMF playback remains the sole package acceptance gap; prepared verifier and device matrix record the next action. |
+| GG-18 — Full grammar, update and host integration | IN PROGRESS | GG2-02–12 | Five Rust integration tests, four independent authors and 12 exact publications per host; updates/batch, source/derived selection, alternate profiles and post-disposal captures pass. Native public-API interaction, presented capture, required legacy host proof and scoped primary proofs pass. Workspace/repository checks complete through resumed runs. Final acceptance awaits GG17 Windows playback; optional broader primary runner was deliberately partial, as recorded in final wave evidence. |
 | GG-19 — Capability certification and handoff | NOT STARTED | GG2-01–12 | Requires GG-00–18 and all eight D3 certification packages; then G-GGPLOT/G-PARITY and WP-21/22. |
 
 Planning evidence: all nine review/plan documents, normative contracts and selected

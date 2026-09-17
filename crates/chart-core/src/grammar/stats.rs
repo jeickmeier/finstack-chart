@@ -22,6 +22,8 @@ pub(crate) fn validate_operation(operation: &OperationRef, expected: &str) -> Ch
 pub(crate) fn validate_stat(stat: &Statistic, limits: CompileLimits) -> ChartResult<()> {
     match &stat.parameters {
         StatParameters::Distribution(_)
+        | StatParameters::Spatial(_)
+        | StatParameters::Model(_)
         | StatParameters::Univariate(_)
         | StatParameters::AutoBin(_)
         | StatParameters::Count(_)
@@ -501,6 +503,8 @@ pub(crate) fn run(
     let (grouping, space) = match resolved.as_ref().unwrap_or(&stat.parameters) {
         StatParameters::AutoBin(_) => unreachable!("resolved above"),
         StatParameters::Distribution(_)
+        | StatParameters::Spatial(_)
+        | StatParameters::Model(_)
         | StatParameters::Univariate(_)
         | StatParameters::Count(_)
         | StatParameters::Summary(_)

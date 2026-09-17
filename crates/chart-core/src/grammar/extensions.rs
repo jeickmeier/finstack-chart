@@ -131,6 +131,12 @@ pub fn extension_input_space(
 /// portable JSON can only select an existing entry and never supplies executable code.
 #[derive(Clone, Default)]
 pub struct ExtensionRegistry {
+    pub(crate) coordinates: Arc<super::coordinate_extensions::CoordinateRegistrations>,
+    pub(crate) facets: Arc<super::facet_extensions::FacetRegistrations>,
+    pub(crate) guide_drawing: Arc<super::guide_drawing::GuideDrawingRegistrations>,
+    pub(crate) authoring: Arc<crate::plot::authoring::AuthoringRegistrations>,
+    pub(crate) keys: Arc<super::key_extensions::KeyRegistrations>,
+    pub(crate) models: Arc<super::model_extensions::ModelRegistrations>,
     pub(crate) analytic_functions: Arc<super::analytic_functions::AnalyticRegistrations>,
     pub(crate) transforms_function: Arc<super::transform_extensions::TransformRegistrations>,
     pub(crate) scale_vectors: Arc<super::scale_vector_extensions::ScaleVectorRegistrations>,
@@ -218,6 +224,10 @@ impl ExtensionRegistry {
     }
     pub(crate) fn validate_portable(&self, definition: &ChartDefinition) -> ChartResult<()> {
         self.validate_portable_hierarchies(definition)?;
+        self.validate_key_selections(definition, true)?;
+        self.validate_coordinate_selection(definition, true)?;
+        self.validate_facet_selection(definition, true)?;
+        self.validate_guide_drawing(definition, true)?;
         self.validate_scale_selections(definition, true)?;
         self.validate_guide_selections(definition, true)?;
         self.validate_interpolation_selections(definition, true)?;
@@ -240,6 +250,9 @@ impl ExtensionRegistry {
             .map(|t| &t.statistic)
             .chain(definition.layers.iter().map(|l| &l.statistic))
         {
+            if let StatParameters::Model(spec) = &stat.parameters {
+                super::model_extensions::validate(self, &spec.options.method, true)?;
+            }
             if let StatParameters::Univariate(spec) = &stat.parameters {
                 super::univariate_stage::validate_registry(spec, self, true)?;
             }
@@ -255,7 +268,7 @@ impl ExtensionRegistry {
         Ok(())
     }
 }
-pub(super) fn validate_descriptor(d: &ExtensionDescriptor) -> ChartResult<()> {
+pub(crate) fn validate_descriptor(d: &ExtensionDescriptor) -> ChartResult<()> {
     validate_name(&d.operation.id)?;
     if !d.operation.id.contains('.')
         || d.operation.id.starts_with("chart.")

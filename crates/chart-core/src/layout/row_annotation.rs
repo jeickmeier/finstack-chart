@@ -58,6 +58,7 @@ pub(super) fn project(
         } => {
             let [x, y, w, h] = *bounds;
             push(Primitive::RasterImage {
+                hits: vec![],
                 cells: vec![],
                 bounds: Rect::new(
                     anchor.x() + factor * x,

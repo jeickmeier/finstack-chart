@@ -41,3 +41,53 @@ c.connect_stat('Hv').x('x').y('y')
 c.univariate_stat('Unique')
 c.facet_wrap('x').fields(['x', 'y']).columns(2).reference({'drop': False, 'direction': 'Tr', 'strip_position': 'Left', 'axes': 'All', 'axis_labels': 'Margins'})
 c.facet_grid('x', 'y').fields(['x', 'y']).row_fields(1).free_x(True).free_y(True).reference({'space': 'Free', 'margins': [0, 1], 'shrink': False, 'switch': 'Both', 'as_table': False})
+
+c.smooth().stat(c.model_stat({'method':'Linear','n':12}).model_options({'method':'Linear'}).input('x').y('y').weight('w'))
+c.quantile().stat(c.quantile_stat())
+c.smooth_stat()
+c.bin2d().stat(c.bin2d_stat().spatial_options({'Rectangular':{'axes':[{},{}],'drop':True}}))
+c.hex().stat(c.hex_stat())
+c.density2d().stat(c.density2d_stat())
+c.contour().stat(c.contour_stat())
+c.contour_filled().stat(c.contour_filled_stat())
+c.ellipse().stat(c.ellipse_stat())
+c.spatial_stat({'Ellipse':{'level':.95,'segments':51,'kind':'Normal'}})
+c.plot(data).coordinate({'Cartesian':{'flip':True}})
+
+c.cut_interval([1.,None,3.],n=2).copy().column()
+c.cut_number([1.,2.,3.],2).value()
+c.cut_width([1.,2.,3.],1.,boundary=0.).dispose()
+c.resolution([1.,2.],zero=False)
+c.summarize([1.,None,3.],{'MeanSe':{'mult':2.}})
+c.points().key_glyph('example.diamond_key',1,{'padding':.1})
+registry=c.ExtensionRegistry.example()
+materialized=registry.materialize('example.xy_recipe',1,{'x':[1.], 'y':[2.]})
+c.autoplot(materialized,'example.xy_recipe',1,{'line':True},registry)
+c.plot(data).with_registry(registry).autolayer('example.xy_recipe',1,{'line':True})
+
+c.legend().scale("groups").registered("example.strip_guide",1,{})
+c.facet_wrap("group").registered("example.reverse_facets",1,{"columns":2})
+
+c.plot(data).registered_coordinate("example.wave_coordinate",1,{"amplitude":.1})
+
+save_output=c.Output(b'font')
+save_options:c.SaveOptions={'width':2.,'height':1.,'units':'in','dpi':'retina'}
+save_plan:c.SavePlan=save_output.resolve_save('plot-%03d.png',save_options,page_number=2)
+save_output.save_figure(c.plot(data).layer(c.points()).build(),'plot.png',save_options,device=lambda frame:frame.export('png'))
+c.points().text_defaults()
+
+reference_theme=c.theme().reference_preset('Minimal',{'base_size':13.}).fonts([])
+reference_theme=reference_theme.update_elements({'complete':False,'elements':{'axis.text':'Blank'}}).replace_elements({'complete':False,'elements':{}})
+theme_context=c.ThemeContext(reference_theme)
+previous_theme:c.Theme=theme_context.set(theme_context.get())
+previous_theme.dispose()
+theme_context.update({'complete':False,'elements':{}})
+theme_context.replace({'complete':False,'elements':{}})
+c.plot(data).theme(theme_context.get())
+theme_context.dispose()
+
+
+def retained_page_documents(frame: c.FigureSnapshot) -> tuple[bytes, bytes, bytes]:
+    with frame.pages() as pages:
+        pages.append(frame)
+        return pages.export('pdf'), pages.export('ps'), pages.export('tiff')

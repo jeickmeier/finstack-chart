@@ -32,6 +32,18 @@ impl OptionsHandle {
 handle!(OutputHandle, "_Output", Output);
 #[pymethods]
 impl OutputHandle {
+    #[pyo3(signature=(filename, options, current=None, page_number=1))]
+    fn resolve_save(
+        &self,
+        filename: &str,
+        options: &str,
+        current: Option<Vec<f64>>,
+        page_number: u32,
+    ) -> PyResult<String> {
+        self.get()?;
+        chart_export::resolve_save_json(filename, options, current, page_number).map_err(failure)
+    }
+
     #[new]
     fn new(py: Python<'_>, bytes: Vec<u8>) -> PyResult<Self> {
         py.detach(|| Output::new(bytes))
@@ -90,6 +102,11 @@ impl RequestHandle {
 handle!(FrameHandle, "_FigureSnapshot", FigureSnapshot);
 #[pymethods]
 impl FrameHandle {
+    fn pages(&self) -> PyResult<PagesHandle> {
+        Ok(PagesHandle::wrap(chart_export::FigurePages::new(
+            self.get()?.clone(),
+        )))
+    }
     fn guide_transition(
         &self,
         py: Python<'_>,
@@ -180,6 +197,22 @@ impl TransitionHandle {
         py.detach(|| t.sample(fraction))
             .map(FrameHandle::wrap)
             .map_err(failure)
+    }
+    fn dispose(&mut self) {
+        self.inner.take();
+    }
+}
+
+handle!(PagesHandle, "_FigurePages", chart_export::FigurePages);
+#[pymethods]
+impl PagesHandle {
+    fn append(&mut self, page: &FrameHandle) -> PyResult<()> {
+        self.get_mut()?.push(page.get()?.clone()).map_err(failure)
+    }
+    fn export(&self, py: Python<'_>, format: &str) -> PyResult<Vec<u8>> {
+        let pages = self.get()?;
+        let format = host::format(format).map_err(failure)?;
+        py.detach(|| pages.export(format)).map_err(failure)
     }
     fn dispose(&mut self) {
         self.inner.take();

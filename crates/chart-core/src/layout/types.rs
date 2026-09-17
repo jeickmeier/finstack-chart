@@ -387,6 +387,9 @@ impl AxisSpec {
 /// Explicit bounded layout request; all dimensions share the destination units.
 #[derive(serde::Serialize, Clone, Debug)]
 pub struct LayoutRequest {
+    /// Execution-local inherited theme, rebuilt from the retained definition before measurement.
+    #[serde(skip)]
+    pub resolved_theme: Option<Arc<crate::theme::ResolvedElements>>,
     /// Explicitly captured history; compatible layouts reuse rows without retaining old scenes.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub hierarchy_scope: Vec<super::GuideScope>,
@@ -442,6 +445,7 @@ impl LayoutRequest {
     /// Two automatic primary axes, explicit destination font, four-pass bounded solving.
     pub fn new(bounds: Rect, units: Units, font: ResourceDescriptor) -> Self {
         Self {
+            resolved_theme: None,
             hierarchy_scope: vec![],
             hierarchy_history: Arc::new(vec![]),
             bounds,

@@ -23,6 +23,29 @@ cargo check --offline --target wasm32-unknown-unknown --manifest-path /private/t
 
 The separate `/private/tmp/gg-proj-spike` pins proj4rs 0.1.10 with defaults off and `wasm-strict`. Its offline check **could not resolve the uncached package**; `/private/tmp/gg-proj-spike.log`. Consequently no local native/WASM projection success is claimed. Obtain the pinned dependency and complete this small experiment before an ADR adopts it. No workspace manifests or dependencies were changed.
 
+## GG-15 portable projection spike follow-up
+
+The pinned `proj4rs = 0.1.10` package is now fetched and its native/WASM spike
+passes on 15 September 2026. Defaults remain disabled and `wasm-strict` is enabled.
+The private spike uses wasm-bindgen 0.2.128 and actually executes in Node, beyond
+compilation. A spherical Mercator anchor (10 degrees east, 45 degrees north,
+radius 6,378,137 m) produces `[1113194.9079327357, 5621521.486192066]` identically
+on native and WASM, checked against independent analytic values at 1e-7 m and
+inverse longitude/latitude at 1e-10 degrees. Explicit longlat and Mercator resources
+use the same sphere; this is not a datum transformation test.
+
+Evidence: `/private/tmp/gg-proj-spike/{Cargo.toml,Cargo.lock,src/lib.rs}`,
+`/private/tmp/gg15-projection-spike-native2.log`,
+`/private/tmp/gg15-projection-spike-wasm.log`, and
+`/private/tmp/gg15-projection-spike-node.log`. Commands: locked offline native
+`cargo run`, wasm32-unknown-unknown build, wasm-bindgen Node output and Node runtime
+assertions. The initial offline fetch failed; an authorized network fetch supplied
+the pinned package and WASM-only dependencies. No workspace dependency is adopted
+by this spike. The installed package declares MIT OR Apache-2.0. Its projection
+modules remain a subset of the required inventory; CRS/datum resources, mapproj
+methods, topology, clipping and actual chart integration remain open. This narrows
+the portability risk and does not close GG-15.
+
 ## GG-10 capability and algorithm matrix
 
 Existing reuse: `grammar/statistics.rs` has stable shifted/scaled simple OLS and grouped preparation/provenance, and `grammar/statistical_types.rs` exposes the fit recipe. This is not a general weighted design-matrix solver or confidence-band engine. Reuse preparation, generated fields, diagnostics, and GG-07 ribbon/path geometry; keep model kernels in chart-core and host adapters thin.
@@ -86,3 +109,7 @@ PicTeX is deprecated but still a documented route: it lacks color and plotmath/f
 ## Fast qualification order
 
 Run matrix/codec micro-proofs first, then frozen independent oracle fixtures, then one focused actual-host matrix per package. Reuse compiled host modules until shared implementation changes. Reserve a complete cumulative run for integration milestones. Numeric fixtures need values/diagnostics, not an export for every parameter combination; export a deliberately selected boundary/geometry matrix. This saves repeated builds and inspections without calling compile-only or uninspected output acceptance. Root owns ledger updates and the adoption ADRs after the remaining experiments pass.
+
+### GG15 mapproj matrix captured (16 September follow-up)
+
+The private oracle now verifies maps 3.4.3 / mapproj 1.2.12 and captures all 41 documented methods in 426 calls plus stateful projection reuse. See [the readiness matrix](gg15-mapproj-readiness-2026-09-16.md), `fixtures/parity/ggplot2/mapproj-controls.json` and the machine-readable `mapproj-proj4rs-capability-matrix.json`. Inspection of the pinned proj4rs 0.1.10 registry identifies nine potentially reusable kernels for eleven rows; thirty methods are absent. All eleven candidate rows remain unqualified for mapproj conventions. `aeqd` and `cea` additionally require features absent from the completed defaults-off Mercator portability spike. No runtime projection or dependency change was made.

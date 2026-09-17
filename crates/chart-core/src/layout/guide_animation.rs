@@ -29,6 +29,7 @@ pub(super) struct Presentation {
 impl LaidOutChart {
     /// Displayed guide geometry from this immutable scene, including interrupted states.
     /// Data scales remain those of the current target; only guide decoration interpolates.
+    /// Radial guides have static snapshots but no Cartesian transition frames.
     pub fn guide_presentation(&self) -> Vec<GuidePresentationSnapshot> {
         capture(self).into_values().collect()
     }
@@ -38,7 +39,13 @@ pub(super) fn initial_frames(
     axes: &BTreeMap<ScaleId, ResolvedAxis>,
     plot: Rect,
     request: &LayoutRequest,
+    coordinate: Option<&crate::grammar::CoordinateSpec>,
 ) -> ChartResult<BTreeMap<GuideId, GuideTransitionFrame>> {
+    if matches!(coordinate, Some(crate::grammar::CoordinateSpec::Radial(_))) {
+        // Scalar Cartesian transition frames cannot describe angular guide arcs.
+        // Static radial snapshots remain available through guide_snapshots().
+        return Ok(BTreeMap::new());
+    }
     guides
         .values()
         .filter(|g| {
@@ -57,16 +64,17 @@ pub(super) fn initial_frames(
             } else {
                 1.
             };
-            let range =
-                if guide.spec.profile == GuideProfile::LibraryV1 && guide.spec.geometry.is_none() {
-                    if horizontal {
-                        crate::scales::Bounds::new(plot.origin().x(), plot.max_x())?
-                    } else {
-                        crate::scales::Bounds::new(plot.origin().y(), plot.max_y())?
-                    }
+            let range = if coordinate.is_some()
+                || (guide.spec.profile == GuideProfile::LibraryV1 && guide.spec.geometry.is_none())
+            {
+                if horizontal {
+                    crate::scales::Bounds::new(plot.origin().x(), plot.max_x())?
                 } else {
-                    guide_geometry::range(&axes[&guide.spec.scale], axes)
-                };
+                    crate::scales::Bounds::new(plot.origin().y(), plot.max_y())?
+                }
+            } else {
+                guide_geometry::range(&axes[&guide.spec.scale], axes)
+            };
             let numbers = match (horizontal, g.outer != 0.) {
                 (true, true) => vec![
                     range.start() + g.offset,
@@ -211,6 +219,16 @@ fn mapped(
         _ if position => axis.guide_value_position(value),
         _ => axis.map_value(value),
     }?;
+    let result = if let Some(plot) = chart.plot
+        && let Some(map) = super::coordinate_guides::resolve(&chart.prepared, &chart.axes, plot)?
+    {
+        result
+            .map(|p| super::coordinate_guides::tick_position(&map, axis.spec.side, p))
+            .transpose()?
+            .flatten()
+    } else {
+        result
+    };
     Ok(result.map(|p| p + if position { pixel_offset } else { 0. }))
 }
 fn key(component: &GuideComponent) -> Key {
@@ -280,11 +298,26 @@ pub struct LayoutGuideTransition {
 impl LayoutGuideTransition {
     /// Prepare from two immutable layouts. Resource replacement requires immediate
     /// presentation instead, so exiting text never resolves against a changed font.
+    /// Radial coordinates require immediate static presentation; their curved guides
+    /// cannot be represented by the scalar Cartesian tick transition contract.
     pub fn new(
         from: Arc<LaidOutChart>,
         target: Arc<LaidOutChart>,
         limits: Limits,
     ) -> ChartResult<Self> {
+        fn radial(chart: &LaidOutChart) -> bool {
+            matches!(
+                chart.prepared.definition().coordinate,
+                Some(crate::grammar::CoordinateSpec::Radial(_))
+            ) || chart.panels.iter().any(|panel| radial(&panel.chart))
+                || chart.insets.iter().any(|inset| radial(&inset.chart))
+        }
+        if radial(&from) || radial(&target) {
+            return Err(crate::scales::error(
+                DiagnosticCode::UnsupportedCapability,
+                "Radial guide transitions are unsupported; replace the static coordinate presentation immediately.",
+            ));
+        }
         if from.scene.resources() != target.scene.resources()
             || from.scene.units() != target.scene.units()
         {
@@ -466,6 +499,11 @@ impl LayoutGuideTransition {
                         match &mut item.primitive {
                             Primitive::Text { origin, .. } | Primitive::GlyphRun { origin, .. } => {
                                 *origin = Point::new(origin.x() + delta[0], origin.y() + delta[1])?
+                            }
+                            Primitive::Path { commands, .. } => {
+                                super::text::transform_commands(commands, &|p| {
+                                    Point::new(p.x() + delta[0], p.y() + delta[1])
+                                })?;
                             }
                             _ => unreachable!("guide label primitive"),
                         }

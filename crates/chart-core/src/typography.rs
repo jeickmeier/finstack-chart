@@ -19,6 +19,9 @@ pub enum TextDirection {
 pub struct RichRun {
     /// Preserved logical UTF-8 text, without line breaks; lines are explicit in RichText.
     pub text: String,
+    /// Parsed plotmath notation; logical text must match its source.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub math: Option<MathExpression>,
     /// Primary face; absent uses the destination's supplied face.
     #[serde(default)]
     pub font: Option<ResourceDescriptor>,
@@ -58,6 +61,7 @@ impl RichRun {
     pub fn new(text: impl Into<String>) -> Self {
         Self {
             text: text.into(),
+            math: None,
             font: None,
             fallback: vec![],
             weight: 400,
@@ -68,8 +72,30 @@ impl RichRun {
             tabular: false,
         }
     }
+    /// Replace a template's label, reparsing mathematical notation when present.
+    pub fn replace_text(&mut self, text: impl Into<String>, limits: Limits) -> ChartResult<()> {
+        let text = text.into();
+        if let Some(math) = &self.math {
+            self.math = Some(MathExpression::parse(
+                text.clone(),
+                math.fonts.clone(),
+                limits,
+            )?);
+        }
+        self.text = text;
+        Ok(())
+    }
     /// Validate work bounds and portable language/typography parameters before shaping.
     pub fn validate(&self, limits: Limits) -> ChartResult<()> {
+        if let Some(math) = &self.math {
+            if math.source != self.text {
+                return Err(crate::scales::error(
+                    DiagnosticCode::Validation,
+                    "Math run source differs from its logical text.",
+                ));
+            }
+            math.validate(limits)?;
+        }
         if self.text.len() > limits.max_text_bytes || self.fallback.len() > 16 {
             return Err(Diagnostic::error(
                 DiagnosticCode::ResourceLimit,
@@ -121,6 +147,17 @@ impl RichText {
             rotation: 0.,
         }
     }
+    /// Parse a mathematical block through the shared nonexecuting plotmath owner.
+    pub fn math(source: impl Into<String>, fonts: MathFonts) -> ChartResult<Self> {
+        let expression = MathExpression::parse(source, fonts, Limits::default())?;
+        let mut run = RichRun::new(expression.source.clone());
+        run.math = Some(expression);
+        Ok(Self {
+            lines: vec![vec![run]],
+            line_spacing: 1.2,
+            rotation: 0.,
+        })
+    }
     /// Check bounded lines/runs and total logical text before allocating shaped geometry.
     pub fn validate(&self, limits: Limits) -> ChartResult<()> {
         if self.lines.len() > 128
@@ -140,7 +177,7 @@ impl RichText {
             ));
         }
         if !self.line_spacing.is_finite()
-            || self.line_spacing < 1.
+            || self.line_spacing <= 0.
             || self.line_spacing > 8.
             || !self.rotation.is_finite()
             || self.rotation.abs() > 360.
@@ -148,7 +185,7 @@ impl RichText {
             return Err(Diagnostic::error(
                 DiagnosticCode::Validation,
                 "Invalid rich text spacing or rotation.",
-                "Use line spacing 1..8 and rotation -360..360 degrees.",
+                "Use positive line spacing up to8 and rotation -360..360 degrees.",
             ));
         }
         for r in self.lines.iter().flatten() {
@@ -377,3 +414,9 @@ mod ggplot_duration;
 pub use ggplot_duration::ggplot_duration_labels;
 
 pub use crate::scales::{TimeFormat, TimeFormatter, TimeLocale};
+
+mod math;
+pub use math::{MathExpression, MathFonts, MathNode};
+
+pub(crate) mod math_layout;
+mod math_symbols;

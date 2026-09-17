@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from build_primary_modules import WASM_ADAPTER_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 output = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else ROOT / "artifacts/bindings"
@@ -20,6 +21,7 @@ for command in (node, "pdfinfo", "pdfimages", "pdffonts"):
     if shutil.which(command) is None: raise SystemExit(f"Required proof tool unavailable: {command}")
 output.mkdir(parents=True, exist_ok=True)
 env = dict(os.environ, PYO3_PYTHON=sys.executable)
+target = Path(env.get("CARGO_TARGET_DIR", ROOT / "target")).resolve()
 
 def run(name, command):
     print("RUN", " ".join(map(str, command)), flush=True)
@@ -35,20 +37,20 @@ def run(name, command):
 run("native", ["cargo","run","-p","chart-export","--example","binding_proof","--locked","--",output / "native"])
 run("python-build", ["cargo","build","-p","chart-python","--features","extension-module,extension-proof","--locked"])
 module = output / "python-module"; module.mkdir(exist_ok=True)
-library = ROOT / "target/debug" / ("libchart_python.dylib" if sys.platform == "darwin" else "libchart_python.so")
+library = target / "debug" / ("libchart_python.dylib" if sys.platform == "darwin" else "libchart_python.so")
 # Keep an owned copy so later default-feature workspace builds cannot replace the loaded extension.
 destination = module / "chart_python.so"
 if destination.is_symlink(): destination.unlink()
 shutil.copy2(library, destination)
 run("python", [sys.executable,ROOT / "scripts/bindings/python_proof.py",module,output / "python"])
 run("wasm-build", ["cargo","build","-p","chart-wasm","--features","extension-proof","--target","wasm32-unknown-unknown","--locked"])
-run("wasm-generate", [cli,ROOT / "target/wasm32-unknown-unknown/debug/chart_wasm.wasm","--target","nodejs","--out-dir",output / "wasm-module"])
+run("wasm-generate", [cli,target / "wasm32-unknown-unknown/debug/chart_wasm.wasm","--target","nodejs","--out-dir",output / "wasm-module"])
 run("wasm", [node,ROOT / "scripts/bindings/wasm_proof.cjs",output / "wasm-module",output / "wasm"])
 run("compare", [sys.executable,ROOT / "scripts/bindings/compare.py",output])
 paths=output/'paths'
 run("path-rust", ["cargo","run","-p","chart-export","--example","path_binding_proof","--locked","--",paths/'rust'])
 run("path-python", [sys.executable,ROOT/'scripts/bindings/path.py',module,paths/'rust',paths/'python'])
-for name in ('authoring.cjs','authoring.d.cts','interpolation.cjs','interpolation.d.cts','scales.cjs','scales.d.cts'):
+for name in WASM_ADAPTER_FILES:
     shutil.copy2(ROOT/'packages/wasm'/name,output/'wasm-module'/name)
 run("path-wasm", [node,ROOT/'scripts/bindings/path.cjs',output/'wasm-module',paths/'rust',paths/'wasm'])
 run("path-compare", [sys.executable,ROOT/'scripts/bindings/path_compare.py',paths])

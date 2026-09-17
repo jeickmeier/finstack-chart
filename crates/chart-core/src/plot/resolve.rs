@@ -300,6 +300,7 @@ impl LayerContext<'_> {
                 *aes = source.clone();
             }
             layer.grammar = Some(crate::grammar::LayerGrammar {
+                default_text: builder.default_text,
                 default_radius: builder.explicit_radius.then_some(false),
                 default_line_width: (builder.explicit_line_width
                     || matches!(
@@ -460,7 +461,9 @@ impl LayerContext<'_> {
             let input = if matches!(layer.mappings, Mappings::Source(_))
                 || matches!(
                     layer.statistic.parameters,
-                    crate::grammar::StatParameters::Distribution(_)
+                    crate::grammar::StatParameters::Spatial(_)
+                        | crate::grammar::StatParameters::Model(_)
+                        | crate::grammar::StatParameters::Distribution(_)
                         | crate::grammar::StatParameters::Univariate(_)
                 )
                 || matches!(layer.recipe, Some(crate::grammar::BuiltinRecipe::Count(_)))
@@ -511,6 +514,91 @@ impl LayerContext<'_> {
                 layer.color = Some(encoding);
             }
         }
+        if definition.profile() == Profile::Ggplot2_4_0_3
+            && mapping.fill.is_none()
+            && builder.style.fill.is_none()
+        {
+            use crate::grammar::{PaintAesthetic, SpatialKind, StatField, StatParameters};
+            let default = if let StatParameters::Spatial(spec) = &layer.statistic.parameters {
+                match &spec.kind {
+                    SpatialKind::Density { contour: None, .. } => {
+                        Some((StatField::Density, false, "density"))
+                    }
+
+                    SpatialKind::Rectangular { summary, .. }
+                    | SpatialKind::Hexagonal { summary, .. } => Some((
+                        if summary.is_some() {
+                            StatField::Mean
+                        } else {
+                            StatField::WeightedCount
+                        },
+                        false,
+                        if summary.is_some() { "value" } else { "count" },
+                    )),
+                    SpatialKind::Contour { filled: true, .. }
+                    | SpatialKind::Density { filled: true, .. } => {
+                        Some((StatField::Level, true, "level"))
+                    }
+                    _ => None,
+                }
+            } else {
+                None
+            };
+            if let Some((field, ordered, title)) = default {
+                let channel = Some(PaintAesthetic::Fill);
+                let name = format!("fill:{title}");
+                let explicit = self.color_scales.get(&name);
+                let automatic = explicit.is_none();
+                let (id, scale) =
+                    if let Some(scale) = explicit {
+                        let id = if let Some(id) = self.color_ids.get(&name) {
+                            *id
+                        } else {
+                            let id = ScaleId::new(fresh_id()?);
+                            self.color_ids.insert(name.clone(), id);
+                            id
+                        };
+                        (id, scale.clone())
+                    } else if let Some(prior) = self.ggplot_paint_scales.get(&channel) {
+                        (prior.id, prior.scale.clone())
+                    } else {
+                        let mut scale = if ordered {
+                            crate::scales::ggplot_color_ordinal()?
+                        } else {
+                            crate::scales::ggplot_color_default(true)?
+                        };
+                        if !ordered
+                            && let crate::scales::ColorScale::Mapped { scale, .. } = &mut scale
+                        {
+                            scale.palette_theme_aesthetics = vec!["fill".into()];
+                            *scale = scale.clone().with_guide(
+                                crate::scales::GgplotScaleGuide::Colorbar(Default::default()),
+                            )?;
+                        }
+                        let id = ScaleId::new(fresh_id()?);
+                        self.color_ids.insert(format!("fill:{title}"), id);
+                        self.ggplot_paint_scales.insert(
+                            channel,
+                            AutomaticPaintScale {
+                                id,
+                                title: title.into(),
+                                scale: scale.clone(),
+                            },
+                        );
+                        (id, scale)
+                    };
+                layer.paint_scales.insert(
+                    PaintAesthetic::Fill,
+                    ColorEncoding {
+                        automatic,
+                        id,
+                        title: Some(title.into()),
+                        input: ColorInput::Statistical(field),
+                        scale,
+                    },
+                );
+            }
+        }
         complete_count_partitions(layer);
         Ok(())
     }
@@ -549,6 +637,14 @@ fn complete_count_partitions(layer: &mut crate::grammar::Layer) {
         }
     }
     match &mut layer.statistic.parameters {
+        StatParameters::Model(spec) => {
+            spec.retained_fields = fields.iter().copied().collect();
+            spec.retained_numeric = numeric.clone();
+        }
+        StatParameters::Spatial(spec) => {
+            spec.retained_fields = fields.iter().copied().collect();
+            spec.retained_numeric = numeric.clone();
+        }
         StatParameters::Distribution(spec) => {
             spec.retained_fields = fields.iter().copied().collect();
             spec.retained_numeric = numeric.clone();

@@ -425,6 +425,7 @@ mod tests {
     use crate::{DatasetId, RowKey};
     fn row(x: f64, y: f64, group: i64) -> EncodedRow {
         EncodedRow {
+            geo_feature: None,
             stat_outliers: vec![],
             outlier_anchor_y: None,
             missing_aesthetics: 0,

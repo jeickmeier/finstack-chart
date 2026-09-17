@@ -46,6 +46,14 @@ fn transformed(value: Option<f64>, space: &StatSpace) -> Option<f64> {
 }
 pub(super) fn validate(stat: &Statistic, limits: CompileLimits) -> ChartResult<()> {
     match &stat.parameters {
+        StatParameters::Spatial(s) => {
+            validate_operation(&stat.operation, "chart.spatial")?;
+            super::spatial_stage::validate(s, limits)
+        }
+        StatParameters::Model(s) => {
+            validate_operation(&stat.operation, "chart.model")?;
+            super::model_stage::validate(s, limits)
+        }
         StatParameters::Distribution(s) => {
             validate_operation(&stat.operation, "chart.distribution")?;
             super::distribution_stage::validate(s, limits)
@@ -116,6 +124,12 @@ pub(super) fn schema(
     limits: CompileLimits,
 ) -> ChartResult<Vec<StatColumn>> {
     validate(stat, limits)?;
+    if let StatParameters::Spatial(s) = &stat.parameters {
+        return super::spatial_stage::schema(s, data, limits);
+    }
+    if let StatParameters::Model(s) = &stat.parameters {
+        return super::model_stage::schema(s, data, limits);
+    }
     if let StatParameters::Distribution(s) = &stat.parameters {
         return super::distribution_stage::schema(s, data, limits);
     }
@@ -336,6 +350,31 @@ pub(super) fn run(
     diagnostics: &mut Vec<Diagnostic>,
     registry: &ExtensionRegistry,
 ) -> ChartResult<(Grouping, StatSpace)> {
+    if let StatParameters::Spatial(s) = &stat.parameters {
+        return super::spatial_stage::run(
+            table,
+            data,
+            s,
+            policy,
+            scope,
+            limits,
+            counts,
+            diagnostics,
+        );
+    }
+    if let StatParameters::Model(s) = &stat.parameters {
+        return super::model_stage::run(
+            table,
+            data,
+            s,
+            policy,
+            scope,
+            limits,
+            counts,
+            diagnostics,
+            registry,
+        );
+    }
     if let StatParameters::Distribution(s) = &stat.parameters {
         return super::distribution_stage::run(
             table,
