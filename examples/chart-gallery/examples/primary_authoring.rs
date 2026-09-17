@@ -51,8 +51,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         (Format::Pdf, "pdf"),
         (Format::Png, "png"),
     ] {
-        let artifact =
-            output.export(&plot, format, export_options(PageSize::points(700., 420.)?))?;
+        let artifact = output
+            .request(&plot, export_options(PageSize::points(700., 420.)?))?
+            .prepare()?
+            .export(format)?;
         artifact.save(artifacts.join(format!("native-primary.{extension}")))?;
     }
     if std::env::args().any(|arg| arg == "--headless") {

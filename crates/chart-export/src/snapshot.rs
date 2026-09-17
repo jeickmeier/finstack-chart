@@ -101,30 +101,14 @@ struct Figure {
 impl FigureSnapshot {
     /// Capture supported definition/theme/state, data, font bytes, annotations and output quality,
     /// then rebuild shared layout in physical points. No screen envelope is used as source data.
+    /// Captures all interaction state with no extensions; use `FigureRequest` for extensions,
+    /// interaction policy or presented-scene provenance.
     pub fn capture(
         definition: &ChartDefinition,
         source: SnapshotHandle<StoreSnapshot>,
         state: &ChartState,
         fonts: FontResources,
         profile: PublicationProfile,
-    ) -> ChartResult<Self> {
-        Self::capture_with_extensions(
-            definition,
-            source,
-            state,
-            fonts,
-            profile,
-            Arc::new(chart_core::grammar::ExtensionRegistry::new()),
-        )
-    }
-    /// Capture with explicitly retained versioned implementations; native-only paint rejects.
-    pub fn capture_with_extensions(
-        definition: &ChartDefinition,
-        source: SnapshotHandle<StoreSnapshot>,
-        state: &ChartState,
-        fonts: FontResources,
-        profile: PublicationProfile,
-        extensions: Arc<chart_core::grammar::ExtensionRegistry>,
     ) -> ChartResult<Self> {
         crate::FigureRequest::new(
             definition.clone(),
@@ -134,7 +118,6 @@ impl FigureSnapshot {
             profile,
             chart_core::state::InteractionCapture::ALL,
         )?
-        .with_extensions(extensions)
         .prepare()
     }
     /// Prepare one previously acquired immutable request on a caller-selected executor.
@@ -421,7 +404,7 @@ impl FigureSnapshot {
     }
     /// Encode captured pages as one PDF, PostScript or TIFF document (EPS requires one page).
     /// Each snapshot retains its own reproduction metadata; no current chart is read.
-    pub fn export_pages(pages: &[Self], format: Format) -> ChartResult<Vec<u8>> {
+    pub(crate) fn export_pages(pages: &[Self], format: Format) -> ChartResult<Vec<u8>> {
         if !matches!(
             format,
             Format::Pdf | Format::PostScript | Format::Eps | Format::Tiff
@@ -711,5 +694,18 @@ impl FigureTransition {
         .with_compile_limits(self.target.metadata().compile_limits)
         .with_displayed_layout(layout)?
         .prepare()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn empty_page_list_rejects() {
+        assert!(
+            super::FigureSnapshot::export_pages(&[], crate::Format::Pdf)
+                .unwrap_err()
+                .code
+                == chart_core::DiagnosticCode::Validation
+        );
     }
 }

@@ -1,7 +1,7 @@
 //! Reusable publication destination for primary immutable plots and retained charts.
 use crate::{
-    ExportArtifact, FigureRequest, FontResource, FontResources, Format, PageSize,
-    PublicationProfile, TextMode, ViewMode, error,
+    FigureRequest, FontResource, FontResources, PageSize, PublicationProfile, TextMode, ViewMode,
+    error,
 };
 use chart_core::{
     ChartResult, DiagnosticCode, ResourceId, Revision,
@@ -300,26 +300,5 @@ impl Output {
                 Ok(request)
             }
         }
-    }
-    /// Prepare and encode a primary static plot with explicit settings.
-    pub fn export(
-        &self,
-        plot: &Plot,
-        format: Format,
-        options: ExportOptions,
-    ) -> ChartResult<ExportArtifact> {
-        self.request(plot, options)?.prepare()?.export(format)
-    }
-    /// Encode SVG bytes using default settings and explicit physical size.
-    pub fn svg(&self, plot: &Plot, page: PageSize) -> ChartResult<Vec<u8>> {
-        Ok(self.export(plot, Format::Svg, export_options(page))?.bytes)
-    }
-    /// Encode PDF bytes using default settings and explicit physical size.
-    pub fn pdf(&self, plot: &Plot, page: PageSize) -> ChartResult<Vec<u8>> {
-        Ok(self.export(plot, Format::Pdf, export_options(page))?.bytes)
-    }
-    /// Encode PNG bytes using default settings and explicit physical size.
-    pub fn png(&self, plot: &Plot, page: PageSize) -> ChartResult<Vec<u8>> {
-        Ok(self.export(plot, Format::Png, export_options(page))?.bytes)
     }
 }

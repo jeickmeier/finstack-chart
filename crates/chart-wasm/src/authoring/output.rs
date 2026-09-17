@@ -52,9 +52,8 @@ impl _Output {
         plot: &_Plot,
         options: &_ExportOptions,
     ) -> Result<_FigureRequest, JsError> {
-        options
-            .get()?
-            .request(self.get()?, plot.get()?)
+        self.get()?
+            .request(plot.get()?, options.get()?.0.clone())
             .map(_FigureRequest::wrap)
             .map_err(failure)
     }

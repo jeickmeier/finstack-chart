@@ -27,7 +27,7 @@ extensions compose through this same API. Start with the
 [capability register](docs/primary-authoring-api.md).
 
 For publication, create a reusable `chart_export::Output` from supplied font bytes and
-call `output.svg(&plot, PageSize::millimeters(180.0, 120.0)?)`. For native use, load a
+call `output.request(&plot, export_options(PageSize::millimeters(180.0, 120.0)?))?.prepare()?.export(Format::Svg)?`. For native use, load a
 `gpui_charts::NativeFont` and retain a `ChartView` created from
 `ChartInput::from_plot(&plot, font)`. Kit is optional. Core never scans system fonts,
 starts a GPUI event loop or requires Python/browser objects.

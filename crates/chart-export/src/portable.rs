@@ -234,14 +234,16 @@ impl PortableChart {
                 )
             });
         }
-        FigureSnapshot::capture_with_extensions(
-            i.core.definition(),
+        crate::FigureRequest::new(
+            i.core.definition().clone(),
             i.core.source(),
-            i.core.state(),
+            i.core.state().clone(),
             i.fonts.clone(),
             i.profile.clone(),
-            i.core.extensions().clone(),
-        )
+            chart_core::state::InteractionCapture::ALL,
+        )?
+        .with_extensions(i.core.extensions().clone())
+        .prepare()
     }
     /// Versioned destination-only density preview. Publication capture remains exact.
     /// Returns reduced paint, exact bucket membership/counts and an editable SVG preview.

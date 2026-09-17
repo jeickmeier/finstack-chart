@@ -51,9 +51,8 @@ impl OutputHandle {
             .map_err(failure)
     }
     fn request(&self, plot: &PlotHandle, options: &OptionsHandle) -> PyResult<RequestHandle> {
-        options
-            .get()?
-            .request(self.get()?, plot.get()?)
+        self.get()?
+            .request(plot.get()?, options.get()?.0.clone())
             .map(RequestHandle::wrap)
             .map_err(failure)
     }

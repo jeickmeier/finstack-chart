@@ -91,28 +91,34 @@ fn registered_geometry_shares_axes_explicit_guides_hit_values_and_keyboard_order
 #[test]
 fn portable_vector_output_and_native_only_export_fail_explicitly() {
     let (fonts, profile) = resources();
-    let f = FigureSnapshot::capture_with_extensions(
-        &definition(false),
+    let f = FigureRequest::new(
+        definition(false),
         store().unwrap().snapshot(),
-        &ChartState::default(),
+        ChartState::default(),
         fonts.clone(),
         profile.clone(),
-        registry().unwrap(),
+        InteractionCapture::ALL,
     )
+    .unwrap()
+    .with_extensions(registry().unwrap())
+    .prepare()
     .unwrap();
     let svg = String::from_utf8(f.export(Format::Svg).unwrap().bytes).unwrap();
     assert!(!svg.contains("<image"));
     assert!(svg.contains("Boundary"));
     assert!(f.export(Format::Pdf).unwrap().bytes.starts_with(b"%PDF-"));
     assert!(f.export(Format::Png).unwrap().bytes.starts_with(b"\x89PNG"));
-    let error = FigureSnapshot::capture_with_extensions(
-        &definition(true),
+    let error = FigureRequest::new(
+        definition(true),
         store().unwrap().snapshot(),
-        &ChartState::default(),
+        ChartState::default(),
         fonts,
         profile,
-        registry().unwrap(),
+        InteractionCapture::ALL,
     )
+    .unwrap()
+    .with_extensions(registry().unwrap())
+    .prepare()
     .err()
     .unwrap();
     assert_eq!(error.code, DiagnosticCode::UnsupportedCapability);

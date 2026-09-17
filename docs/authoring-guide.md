@@ -191,9 +191,12 @@ on this same destination; the composition gallery shows the recipe. Retain the
 `ChartView` entity; do not rebuild a plot on every render.
 
 ```rust
-use chart_export::{Output, PageSize};
+use chart_export::{Format, Output, PageSize, export_options};
 let output = Output::new(font_bytes)?;
-let svg = output.svg(&authored, PageSize::millimeters(180.0, 120.0)?)?;
+let svg = output
+    .request(&authored, export_options(PageSize::millimeters(180.0, 120.0)?))?
+    .prepare()?
+    .export(Format::Svg)?;
 ```
 
 `Output` retains explicit fonts for many plots. `export_options` configures physical

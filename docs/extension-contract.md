@@ -83,7 +83,7 @@ or simultaneous numeric formatting reject. Theme, layout and clipping remain sha
 ## Portable execution and errors
 
 Use `Session::with_extensions`, `PortableChart::with_extensions` or
-`FigureSnapshot::capture_with_extensions` to supply known implementations. Default
+`FigureRequest::with_extensions` to supply known implementations. Default
 constructors have an empty extension registry. Portable session import/export rejects
 unknown names, wrong versions and native-only definitions. Raw Rust serde can represent
 a native descriptor for diagnostics; `Session::chart_json` is the guarded portable

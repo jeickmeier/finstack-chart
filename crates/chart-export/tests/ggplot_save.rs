@@ -152,13 +152,14 @@ fn retained_pdf_pages_preserve_single_page_bytes_and_distinct_pages() {
         .unwrap();
     let b = output.request(&second, options).unwrap().prepare().unwrap();
     assert_eq!(
-        FigureSnapshot::export_pages(std::slice::from_ref(&a), Format::Pdf).unwrap(),
+        FigurePages::new(a.clone()).export(Format::Pdf).unwrap(),
         a.export(Format::Pdf).unwrap().bytes
     );
-    assert!(FigureSnapshot::export_pages(&[], Format::Pdf).is_err());
     let mut pages = FigurePages::new(a.clone());
     pages.push(b.clone()).unwrap();
-    let expected = FigureSnapshot::export_pages(&[a, b], Format::Pdf).unwrap();
+    let mut expected_pages = FigurePages::new(a);
+    expected_pages.push(b).unwrap();
+    let expected = expected_pages.export(Format::Pdf).unwrap();
     drop(output);
     drop(first);
     drop(second);

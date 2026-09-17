@@ -1,7 +1,7 @@
 use super::*;
 /// Actual reusable publication options behind Python/WASM fluent syntax.
 #[derive(Clone)]
-pub struct Options(pub(crate) crate::ExportOptions);
+pub struct Options(pub crate::ExportOptions);
 fn page(width: f64, height: f64, unit: &str) -> ChartResult<crate::PageSize> {
     match unit {
         "pt" => crate::PageSize::points(width, height),
@@ -13,10 +13,6 @@ fn page(width: f64, height: f64, unit: &str) -> ChartResult<crate::PageSize> {
     }
 }
 impl Options {
-    /// Acquire immutable static inputs using these canonical options.
-    pub fn request(&self, output: &Output, plot: &Plot) -> ChartResult<FigureRequest> {
-        output.request(plot, self.0.clone())
-    }
     /// Start the canonical publication defaults with explicit physical dimensions.
     pub fn new(width: f64, height: f64, unit: &str) -> ChartResult<Self> {
         Ok(Self(crate::export_options(page(width, height, unit)?)))

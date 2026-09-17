@@ -1,6 +1,6 @@
 //! FIX-AUTH02/04: one primary plot published through a reusable supplied-font destination.
 use chart_core::prelude::*;
-use chart_export::{Output, PageSize};
+use chart_export::{Format, Output, PageSize, export_options};
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let destination = std::env::args()
         .nth(1)
@@ -28,10 +28,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         include_bytes!("../../../fixtures/capability/fonts/NotoSans-Regular.ttf").as_slice(),
     )?;
     let size = PageSize::millimeters(180., 120.)?;
+    let frame = output.request(&plot, export_options(size))?.prepare()?;
     for (extension, bytes) in [
-        ("svg", output.svg(&plot, size)?),
-        ("pdf", output.pdf(&plot, size)?),
-        ("png", output.png(&plot, size)?),
+        ("svg", frame.export(Format::Svg)?.bytes),
+        ("pdf", frame.export(Format::Pdf)?.bytes),
+        ("png", frame.export(Format::Png)?.bytes),
     ] {
         let path =
             std::path::Path::new(&destination).join(format!("primary-authoring.{extension}"));
